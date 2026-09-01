@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 760">
+<defs>
+ <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#083b49"/><stop offset=".3" stop-color="#0c5360"/><stop offset="1" stop-color="#06323b"/></linearGradient>
+ <linearGradient id="sea" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1d7681"/><stop offset=".6" stop-color="#0c5867"/><stop offset="1" stop-color="#063947"/></linearGradient>
+ <linearGradient id="land" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#779c54"/><stop offset=".5" stop-color="#47713f"/><stop offset="1" stop-color="#285640"/></linearGradient>
+ <linearGradient id="path" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#fff0b0"/><stop offset="1" stop-color="#dbbd68"/></linearGradient>
+ <filter id="ds"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#00171c" flood-opacity=".5"/></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="10"/></filter>
+ <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <pattern id="stars" width="83" height="67" patternUnits="userSpaceOnUse"><circle cx="12" cy="17" r="1.2" fill="#ffe79b" opacity=".7"/><circle cx="61" cy="43" r=".8" fill="#fff4c7" opacity=".7"/><path d="M39 8v6M36 11h6" stroke="#f7db7d" stroke-width="1" opacity=".55"/></pattern>
+</defs>
+<rect width="430" height="760" fill="url(#sky)"/><rect width="430" height="230" fill="url(#stars)"/>
+<g opacity=".62" fill="#d6d9c8"><ellipse cx="60" cy="110" rx="47" ry="14"/><ellipse cx="97" cy="105" rx="34" ry="11"/><ellipse cx="355" cy="128" rx="54" ry="15"/><ellipse cx="323" cy="120" rx="30" ry="10"/></g>
+<path d="M0 185 C57 171 91 190 137 177 C178 164 223 187 264 173 C316 154 361 168 430 145 V760 H0Z" fill="url(#sea)"/>
+<g opacity=".32" stroke="#86c9cf" stroke-width="2" fill="none"><path d="M0 244 Q52 229 104 246 T210 241 T321 245 T430 239"/><path d="M0 284 Q56 268 112 285 T225 279 T337 283 T430 277"/><path d="M0 665 Q55 649 110 666 T223 660 T336 664 T430 658"/></g>
+<!-- distant islands --> <path d="M14 232 q24-37 48 0zM360 209 q26-45 55 0z" fill="#355d47" opacity=".72"/>
+<!-- main island -->
+<path d="M38 222 C54 179 96 166 137 179 C166 142 217 147 243 175 C289 147 340 163 353 204 C396 216 409 257 391 292 C421 330 402 376 370 394 C395 441 367 489 330 504 C305 553 260 570 219 553 C179 582 123 560 105 520 C58 521 25 483 39 441 C7 416 12 365 43 340 C12 310 15 260 38 222Z" fill="url(#land)" filter="url(#ds)"/>
+<path d="M69 234 C92 195 135 197 162 217 C190 183 235 186 260 212 C294 192 332 207 343 239 C370 260 365 292 345 311 C362 343 345 376 320 389 C330 422 308 454 282 466 C260 501 216 510 188 490 C153 516 113 499 103 467 C72 466 52 437 61 410 C39 390 46 355 68 340 C47 315 49 265 69 234Z" fill="#658847" opacity=".72"/>
+<!-- river --> <path d="M254 195 C225 230 245 260 217 294 C187 332 220 359 194 397 C168 436 197 467 169 516" fill="none" stroke="#67c5d0" stroke-width="21" stroke-linecap="round"/><path d="M254 195 C225 230 245 260 217 294 C187 332 220 359 194 397 C168 436 197 467 169 516" fill="none" stroke="#b4e9e8" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+<!-- trail --> <path d="M102 485 C81 448 98 414 131 395 C172 371 144 340 178 316 C218 286 276 309 300 267 C313 246 310 226 293 207" fill="none" stroke="url(#path)" stroke-width="5" stroke-linecap="round" stroke-dasharray="6 10"/>
+<!-- mountains -->
+<g filter="url(#ds)"><path d="M50 303 L99 213 L151 303Z" fill="#304d3d"/><path d="M85 303 L126 235 L169 303Z" fill="#486c46"/><path d="M87 235 L99 213 L111 235 L104 232 L98 241 L93 233Z" fill="#e3ead8"/><path d="M270 430 L314 350 L360 430Z" fill="#31513f"/><path d="M302 430 L337 369 L374 430Z" fill="#476b46"/><path d="M304 372 L314 350 L325 372 L318 369 L313 377 L309 370Z" fill="#dfe6d5"/></g>
+<!-- forest clusters -->
+<g fill="#183f31"><circle cx="78" cy="366" r="17"/><circle cx="96" cy="374" r="15"/><circle cx="67" cy="385" r="14"/><circle cx="327" cy="302" r="18"/><circle cx="347" cy="313" r="15"/><circle cx="315" cy="322" r="14"/><circle cx="249" cy="485" r="17"/><circle cx="268" cy="496" r="15"/><circle cx="236" cy="502" r="14"/></g>
+<g fill="#2a5d3d" opacity=".95"><circle cx="118" cy="335" r="10"/><circle cx="140" cy="358" r="12"/><circle cx="292" cy="335" r="10"/><circle cx="286" cy="459" r="12"/></g>
+<!-- lake --> <ellipse cx="307" cy="274" rx="49" ry="30" fill="#3f9ca7" stroke="#83d1d6" stroke-width="3"/><ellipse cx="307" cy="270" rx="27" ry="12" fill="#92dfe1" opacity=".26"/>
+<!-- cave --> <path d="M86 416 q34-49 68 0 v35 H86Z" fill="#4d4334" stroke="#25372f" stroke-width="5"/><ellipse cx="120" cy="429" rx="18" ry="22" fill="#102529"/><circle cx="104" cy="410" r="7" fill="#e1ad37" filter="url(#glow)"/>
+<!-- camp --> <g transform="translate(245 458)" filter="url(#ds)"><path d="M0 42 L33 0 L66 42Z" fill="#c97232" stroke="#6c3b22" stroke-width="4"/><path d="M33 0V42" stroke="#efb470" stroke-width="3"/><path d="M76 39 q9-16 18 0 q-9 7-18 0" fill="#ffb330" filter="url(#glow)"/></g>
+<!-- lighthouse --> <g transform="translate(59 520)" filter="url(#ds)"><rect x="14" y="18" width="23" height="53" rx="4" fill="#ead9a7"/><path d="M8 18h35L34 2H17Z" fill="#a8473d"/><rect x="17" y="31" width="17" height="9" fill="#66adbc"/><path d="M9 71h34l7 13H1Z" fill="#31453a"/><path d="M8 16h35" stroke="#f2cc69" stroke-width="3"/></g>
+<!-- ship --> <g transform="translate(341 542) rotate(-8)" filter="url(#ds)"><path d="M0 32h57L46 50H12Z" fill="#7a482a"/><path d="M28 1v34" stroke="#493329" stroke-width="4"/><path d="M31 4l24 14-24 6Z" fill="#f4dc99"/><circle cx="18" cy="36" r="3" fill="#e1bd63"/></g>
+<!-- crystal shrine --> <g transform="translate(183 238)" filter="url(#glow)"><path d="M0 27 L13 0 L27 27 L20 44 L7 44Z" fill="#9ce7dd" stroke="#e1fff0" stroke-width="2"/><path d="M13 0v44M0 27h27" stroke="#5cb2ae" stroke-width="1" opacity=".8"/><ellipse cx="13" cy="48" rx="20" ry="6" fill="#3d6248"/></g>
+<!-- decorative compass --> <g transform="translate(31 606)" opacity=".55"><circle r="24" fill="none" stroke="#f0cf79" stroke-width="2"/><circle r="15" fill="none" stroke="#c99b4e"/><path d="M0-20 5 0 0 20 -5 0Z" fill="#edc765"/><path d="M-20 0 0 5 20 0 0-5Z" fill="#b97938"/></g>
+<!-- shore sparkles --> <g fill="#ffe88d" opacity=".72"><circle cx="44" cy="454" r="2"/><circle cx="374" cy="456" r="2"/><circle cx="300" cy="208" r="2"/><circle cx="161" cy="520" r="2"/></g>
+</svg>
