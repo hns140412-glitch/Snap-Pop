@@ -1,12 +1,12 @@
 {
-  "name": "탐험가의 아이디어 노트",
+  "name": "탐험가의 아이디어 노트 V12",
   "short_name": "아이디어 노트",
   "description": "보석을 모으고 레벨업하며 글을 완성하는 어린이 탐험형 글쓰기 앱",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#071f27",
-  "theme_color": "#0a3944",
+  "background_color": "#dff4dc",
+  "theme_color": "#4fc9c8",
   "orientation": "portrait",
   "icons": [
     {
