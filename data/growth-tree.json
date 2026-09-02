@@ -1,0 +1,37 @@
+{
+  "principle": "ONE_PERSISTENT_TREE",
+  "mapUnlockLinked": false,
+  "stages": [
+    {
+      "minLevel": 1,
+      "name": "발아",
+      "asset": "assets/growth/tree_lv01_germination.jpg"
+    },
+    {
+      "minLevel": 5,
+      "name": "새싹",
+      "asset": "assets/growth/tree_lv05_sprout.jpg"
+    },
+    {
+      "minLevel": 10,
+      "name": "묘목",
+      "asset": "assets/growth/tree_lv10_sapling.jpg"
+    },
+    {
+      "minLevel": 15,
+      "name": "젊은 나무",
+      "asset": "assets/growth/tree_lv15_young.jpg"
+    },
+    {
+      "minLevel": 20,
+      "name": "성목",
+      "asset": "assets/growth/tree_lv20_mature.jpg"
+    },
+    {
+      "minLevel": 30,
+      "name": "거목",
+      "asset": "assets/growth/tree_lv30_giant.jpg"
+    }
+  ],
+  "rule": "메인 성장 화면에는 현재 레벨에 해당하는 동일한 한 그루만 표시한다. 과거 단계는 성장 기록에서만 회고한다."
+}

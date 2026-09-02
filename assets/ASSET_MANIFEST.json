@@ -1,0 +1,213 @@
+{
+  "source": "approved revised concept + REV06 Golden Reference",
+  "rule": "approved gems preserved; newly generated gem art is not used as canonical",
+  "assets": {
+    "character/character_master_hd.jpg": {
+      "source_box": [
+        650,
+        800,
+        748,
+        958
+      ],
+      "export_size": [
+        490,
+        790
+      ]
+    },
+    "guide/maltipoo_guide_hd.jpg": {
+      "source_box": [
+        744,
+        804,
+        837,
+        960
+      ],
+      "export_size": [
+        465,
+        780
+      ]
+    },
+    "landmarks/idea_cave_hd.jpg": {
+      "source_box": [
+        827,
+        814,
+        887,
+        955
+      ],
+      "export_size": [
+        300,
+        705
+      ]
+    },
+    "landmarks/emotion_lake_hd.jpg": {
+      "source_box": [
+        884,
+        815,
+        938,
+        955
+      ],
+      "export_size": [
+        270,
+        700
+      ]
+    },
+    "landmarks/viewpoint_hd.jpg": {
+      "source_box": [
+        934,
+        815,
+        994,
+        955
+      ],
+      "export_size": [
+        300,
+        700
+      ]
+    },
+    "landmarks/final_camp_hd.jpg": {
+      "source_box": [
+        988,
+        815,
+        1055,
+        955
+      ],
+      "export_size": [
+        335,
+        700
+      ]
+    },
+    "growth/tree_lv01_germination.jpg": {
+      "source_box": [
+        22,
+        830,
+        105,
+        970
+      ],
+      "export_size": [
+        415,
+        700
+      ]
+    },
+    "growth/tree_lv05_sprout.jpg": {
+      "source_box": [
+        105,
+        825,
+        195,
+        970
+      ],
+      "export_size": [
+        450,
+        725
+      ]
+    },
+    "growth/tree_lv10_sapling.jpg": {
+      "source_box": [
+        192,
+        815,
+        290,
+        970
+      ],
+      "export_size": [
+        490,
+        775
+      ]
+    },
+    "growth/tree_lv15_young.jpg": {
+      "source_box": [
+        284,
+        805,
+        384,
+        970
+      ],
+      "export_size": [
+        500,
+        825
+      ]
+    },
+    "growth/tree_lv20_mature.jpg": {
+      "source_box": [
+        378,
+        797,
+        500,
+        970
+      ],
+      "export_size": [
+        610,
+        865
+      ]
+    },
+    "growth/tree_lv30_giant.jpg": {
+      "source_box": [
+        492,
+        790,
+        625,
+        970
+      ],
+      "export_size": [
+        665,
+        900
+      ]
+    },
+    "nav/map_hd.jpg": {
+      "source_box": [
+        1320,
+        865,
+        1384,
+        936
+      ],
+      "export_size": [
+        320,
+        355
+      ]
+    },
+    "nav/records_hd.jpg": {
+      "source_box": [
+        1380,
+        865,
+        1442,
+        936
+      ],
+      "export_size": [
+        310,
+        355
+      ]
+    },
+    "nav/explore_hd.jpg": {
+      "source_box": [
+        1436,
+        865,
+        1495,
+        936
+      ],
+      "export_size": [
+        295,
+        355
+      ]
+    },
+    "nav/gems_hd.jpg": {
+      "source_box": [
+        1350,
+        935,
+        1414,
+        1000
+      ],
+      "export_size": [
+        320,
+        325
+      ]
+    },
+    "nav/growth_hd.jpg": {
+      "source_box": [
+        1410,
+        935,
+        1475,
+        1000
+      ],
+      "export_size": [
+        325,
+        325
+      ]
+    },
+    "landmarks/description_forest_hd.jpg": {
+      "source": "REV06 previous approved Golden Reference"
+    }
+  }
+}

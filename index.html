@@ -3,468 +3,125 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#52c7d7">
-<meta name="description" content="보석을 모으며 성장하는 어린이 판타지 글쓰기 탐험 PWA">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="아이디어 노트">
-<title>탐험가의 아이디어 노트 V12</title>
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="assets/icon-192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&family=Noto+Serif+KR:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<script src="https://accounts.google.com/gsi/client" async defer>
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
-</script>
+<meta name="theme-color" content="#173e2d">
+<meta name="description" content="아이디어를 발견하고 쓰며 성장하는 가족 글쓰기 탐험">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="stylesheet" href="./styles.css">
+<title>Snap & Pop · 아이디어 탐험대</title>
 </head>
 <body>
-<div id="app">
-<div class="topbar" id="topbar">
-<button class="hud profile-hud" aria-label="작가 성장 보기" onclick="openScreen('levels')">
-<span class="hud-avatar">
-</span>
-<span>
-<small id="hudLevel">Lv.1 견습 탐험가</small>
-<strong id="hudName">탐험가</strong>
-<span class="xp-mini">
-<i id="hudXp" style="width:0%">
-</i>
-</span>
-</span>
-</button>
-<div class="hud-actions">
-<button class="hud wallet" aria-label="보석함 보기" onclick="openScreen('gems')">
-<span class="tiny-gem">
-</span>
-<span id="hudGemCount">0</span>
-</button>
-<button class="menu-hud" aria-label="설정 열기" onclick="openScreen('settings')">
-<span>
-</span>
-<span>
-</span>
-<span>
-</span>
-</button>
-</div>
-</div>
-<section id="home" class="screen map-home active">
-  <div class="home-world">
-    <header class="fantasy-home-header">
-      <div class="home-kicker">IDEA EXPEDITION</div>
-      <h1>
-<span>탐험가의</span>
-<strong>아이디어 노트</strong>
-</h1>
-      <p>오늘 글쓰기에서 어떤 도움이 필요해?</p>
-    </header>
+<div id="appShell">
+<header class="app-header">
+  <div class="brand"><b>SNAP & POP</b><span>아이디어 탐험대</span></div>
+  <button id="settingsButton" class="icon-button" aria-label="설정">설정</button>
+</header>
 
-    <div class="illustrated-map" aria-label="다섯 가지 글쓰기 도움 지도">
-      <button class="map-hotspot hs1" aria-label="아이디어 동굴 — 무엇을 쓸지 떠올리기" onclick="startTopic(1)">
-</button>
-      <button class="map-hotspot hs2" aria-label="감정 호수 — 마음과 감정을 표현하기" onclick="startTopic(2)">
-</button>
-      <button class="map-hotspot hs3" aria-label="묘사 숲 — 장면을 생생하게 묘사하기" onclick="startTopic(3)">
-</button>
-      <button class="map-hotspot hs4" aria-label="관점 전망대 — 내 생각과 이유 정리하기" onclick="startTopic(4)">
-</button>
-      <button class="map-hotspot hs5" aria-label="마무리 캠프 — 글을 정리하고 완성하기" onclick="startTopic(5)">
-</button>
-      <div class="map-help-note">5가지 도움은 언제든 자유롭게 선택할 수 있어!</div>
+<main id="views">
+<section id="mapView" class="view active">
+  <div class="map-world">
+    <img class="map-bg" src="./assets/world/exploration_map_hd.jpg" alt="">
+    <div class="world-vignette"></div>
+
+    <div class="explorer-pair" aria-label="탐험가와 길잡이">
+      <img class="character" src="./assets/character/character_master_hd.jpg" alt="Character Master">
+      <img class="guide" src="./assets/guide/maltipoo_guide_hd.jpg" alt="말티푸 길잡이">
     </div>
 
-    <div class="home-live-rank" aria-label="현재 작가 성장">
-      <span id="homeRankIcon" class="rank-art tier-1">
-</span>
-      <div>
-        <b id="homeRank">Lv.1 첫발견 탐험가</b>
-        <small id="homeNext">다음 레벨까지 100 EXP</small>
-        <div class="level-track">
-<i id="homeXp" style="width:0%">
-</i>
-</div>
+    <div id="landmarkLayer" class="landmark-layer"></div>
+
+    <aside id="landmarkSheet" class="context-sheet" hidden>
+      <button class="close-sheet" id="closeLandmark" aria-label="닫기">×</button>
+      <div class="sheet-landmark">
+        <img id="landmarkArt" alt="">
+        <div><h2 id="landmarkName"></h2><p id="landmarkDescription"></p></div>
       </div>
-    </div>
-
-    <div class="home-start-wrap">
-      <button class="home-start" onclick="beginAdventure()">
-        <img class="compass-mini" src="assets/icon-compass-v10.svg" alt="">
-        <strong>탐험 시작</strong>
-        <span class="arrow" aria-hidden="true">
-</span>
-      </button>
-    </div>
+      <div class="progress-row"><span>현재 탐험</span><b id="landmarkProgress">0 / 3</b></div>
+      <button id="beginExploration" class="primary">탐험 시작</button>
+    </aside>
   </div>
 </section>
-<section id="register" class="screen no-nav">
-<div class="register-wrap">
-<div class="paper register-card">
-<div class="portrait-shell">
-<div class="portrait" id="registerPortrait">
-</div>
-<button class="portrait-edit" type="button" onclick="openCamera()" aria-label="탐험가 사진 설정">
-</button>
-</div>
-<div class="wood-title">탐험가를 소개해줘!</div>
-<h2>이름을 입력해줘</h2>
-<p>사진을 찍으면 얼굴 특징을 유지한 탐험가 프로필로 꾸밀 수 있어.</p>
-<input id="nameInput" class="input" maxlength="12" placeholder="탐험가 이름">
-<div class="photo-actions">
-<button class="secondary" type="button" onclick="openCamera()">사진 찍기</button>
-<label class="secondary upload-label">앨범 선택<input id="avatarFile" type="file" accept="image/*" hidden onchange="loadAvatarFile(event)">
-</label>
-</div>
-<button class="primary" style="margin-top:12px" onclick="saveName()">다음</button>
-</div>
-</div>
+
+<section id="recordsView" class="view content-view">
+  <h1>기록</h1>
+  <p class="intro">완성한 탐험과 특별한 기억이 날짜별로 쌓여요.</p>
+  <div id="recordsList" class="stack"></div>
 </section>
-<section id="topics" class="screen">
-<div class="section-title">
-<div class="wood-title">오늘의 고민이나 아이디어는?</div>
-<p>마음에 드는 탐험지를 골라봐!</p>
-</div>
-<div class="topic-grid" id="topicGrid">
-</div>
-<div class="unlock-note" id="unlockNote">
-</div>
+
+<section id="exploreView" class="view content-view">
+  <div class="section-kicker">3단계 탐험</div>
+  <h1 id="exploreHeading">탐험 진행</h1>
+  <div class="stepper">
+    <button data-step="0" class="active">1 생각 꺼내기</button>
+    <button data-step="1">2 생각 넓히기</button>
+    <button data-step="2">3 표현 완성하기</button>
+  </div>
+  <div class="paper-panel">
+    <h2 id="questionTitle">무엇이 떠올랐어?</h2>
+    <p id="questionHint">완벽한 문장일 필요 없어. 먼저 떠오르는 걸 잡아보자.</p>
+    <textarea id="writingField" rows="9" placeholder="직접 쓰거나 오른쪽 무전기로 말해서 써보세요."></textarea>
+    <div class="writing-actions">
+      <button id="listenButton" class="secondary">다시 듣기</button>
+      <button id="radioButton" class="radio-button">말해서 쓰기</button>
+    </div>
+  </div>
+  <button id="nextStepButton" class="primary sticky-cta">다음 단계</button>
 </section>
-<section id="question" class="screen">
-<div class="quest-head">
-<button class="back" onclick="openScreen('topics')">‹</button>
-<div class="quest-title" id="questLabel">탐험 질문 1/3</div>
-<div style="width:42px">
-</div>
-</div>
-<div class="progress-dots">
-<i id="dot1">
-</i>
-<i id="dot2">
-</i>
-<i id="dot3">
-</i>
-</div>
-<div class="paper question-card">
-<div class="wood-title" id="questionArea">아이디어 동굴</div>
-<div class="qicon illustration" id="questionIcon" aria-hidden="true">
-</div>
-<h2 id="questionText">무엇에 대해 기록하고 싶니?</h2>
-<div class="hint" id="questionHint">생각을 자유롭게 적어봐!</div>
-<textarea id="answerInput" class="answer" maxlength="220" placeholder="여기에 적어줘...">
-</textarea>
-<div class="answer-meta">
-<span id="speechStatus">음성 입력 가능</span>
-<span>
-<b id="charCount">0</b>/220</span>
-</div>
-<div class="answer-buttons">
-<button class="mic" onclick="toggleSpeech()">
-<span class="mic-mark" aria-hidden="true">
-</span>
-</button>
-<button class="primary" onclick="submitAnswer()" id="nextAnswer">다음</button>
-</div>
-</div>
-<div class="question-reward">
-<small>이번 탐험 보상</small>
-<div class="mini-slots">
-<span class="slot" id="slot1">
-</span>
-<span class="slot" id="slot2">
-</span>
-<span class="slot" id="slot3">
-</span>
-</div>
-</div>
+
+<section id="gemsView" class="view content-view">
+  <h1>보석함</h1>
+  <p class="intro">탐험으로 모은 조각과 완성 보석을 확인해요.</p>
+  <div id="gemSummary" class="gem-grid"></div>
+  <img class="reference-panel" src="./assets/rewards/gem_chest_reference_hd.jpg" alt="승인된 보석함 시각 기준">
+  <button id="wishShopButton" class="primary">탐험가의 소원 상점</button>
 </section>
-<section id="report" class="screen">
-<div class="paper report-card" id="reportCard">
-<div class="report-head">
-<span class="badge">탐험 완료!</span>
-<h2>탐험 기록 완성</h2>
-<small id="reportDate">
-</small>
-</div>
-<div class="report-grid">
-<div class="report-copy">
-<small>탐험가</small>
-<strong id="reportName">
-</strong>
-<small style="margin-top:10px">탐험지</small>
-<strong id="reportTopic">
-</strong>
-<div class="final-text" id="reportFinal">
-</div>
-</div>
-<div class="gem-pedestal">
-<div class="gem big" id="reportGem">
-</div>
-<div class="pedestal">
-</div>
-<small style="margin-top:8px">새 보석 획득!</small>
-</div>
-</div>
-<div class="reward-box" id="rewardText">
-</div>
-<div class="report-actions">
-<button class="secondary" onclick="saveReportImage()">이미지 저장</button>
-<button class="secondary" onclick="shareReport()">공유하기</button>
-<button class="purple" id="calendarBtn" onclick="saveToGoogleCalendar()">Google Calendar에 저장</button>
-</div>
-</div>
+
+<section id="growthView" class="view content-view">
+  <div class="section-kicker">한 그루의 성장 기록</div>
+  <h1>성장</h1>
+  <p class="intro">같은 나무가 글쓰기 경험과 함께 땅에서 발아하고, 새싹을 거쳐 점점 거목으로 자랍니다.</p>
+  <div class="growth-stage-card">
+    <span id="growthLevel">Lv.1</span>
+    <b id="growthName">발아</b>
+  </div>
+  <img id="growthTree" class="growth-tree" src="./assets/growth/tree_lv01_germination.jpg" alt="현재 성장나무">
+  <div class="growth-progress"><span id="growthExpText">EXP 0</span><div><i id="growthBar"></i></div></div>
+  <button id="growthHistoryButton" class="secondary full">성장 기록 보기</button>
 </section>
-<section id="records" class="screen">
-<div class="section-title">
-<div class="wood-title">탐험 기록</div>
-<p>지나온 탐험을 다시 펼쳐봐.</p>
-</div>
-<div class="seg">
-<button id="segList" class="on" onclick="setRecordView('list')">기록 보기</button>
-<button id="segCal" onclick="setRecordView('calendar')">달력 보기</button>
-</div>
-<div id="recordList" class="record-list">
-</div>
-<div id="calendarView" class="paper calendar-box" style="display:none">
-<div class="cal-head">
-<button onclick="changeMonth(-1)">‹</button>
-<strong id="calendarTitle">
-</strong>
-<button onclick="changeMonth(1)">›</button>
-</div>
-<div class="calendar-grid" id="calendarGrid">
-</div>
-<div id="calendarDayRecords" class="record-list" style="margin-top:12px">
-</div>
-</div>
+
+<section id="wishView" class="view content-view">
+  <button class="back-link" data-back="gems">보석함으로</button>
+  <h1>탐험가의 소원 상점</h1>
+  <img class="reference-panel" src="./assets/rewards/wish_shop_reference_hd.jpg" alt="소원 상점 시각 기준">
+  <div class="wish-card"><div><b>주말 영화 같이 보기</b><span>완성 보석 2개</span></div><button id="useWishButton">소원 사용하기</button></div>
+  <div id="blessingPanel" class="blessing-panel" hidden>
+    <h2>축복 사용하기</h2>
+    <p>완성 보석 2개를 사용해 이 소원을 확정할까요?</p>
+    <div class="split"><button id="cancelBlessing" class="secondary">취소</button><button id="confirmBlessing" class="primary">축복 사용하기</button></div>
+  </div>
 </section>
-<section id="detail" class="screen">
-<div class="quest-head">
-<button class="back" onclick="openScreen('records')">‹</button>
-<div class="quest-title">기록 상세</div>
-<div style="width:42px">
-</div>
-</div>
-<div id="detailPaper" class="paper record-detail">
-</div>
+
+<section id="settingsView" class="view content-view settings-view">
+  <button id="settingsBack" class="back-link">돌아가기</button>
+  <h1>설정</h1>
+  <div class="setting-row"><b>내 캐릭터</b><span>사진 다시 찍기 · 사진 업로드하기</span></div>
+  <div class="setting-row"><b>나의 길잡이</b><span>길잡이 바꾸기 · 이름 바꾸기</span></div>
+  <label class="setting-toggle"><span><b>자동 읽기</b><small>중요한 질문을 한 번 읽어줘요.</small></span><input id="autoRead" type="checkbox"></label>
+  <label class="setting-toggle"><span><b>Reduce Motion</b><small>애니메이션을 최소화해요.</small></span><input id="reduceMotion" type="checkbox"></label>
 </section>
-<section id="gems" class="screen premium-gems">
-<div class="section-title">
-<div class="wood-title">보석 보관소</div>
-<p>탐험에서 발견한 다섯 가지 빛을 모아봐.</p>
-</div>
-<div class="vault-hero">
-<img src="assets/chest-premium-v12.svg" alt="" class="vault-chest">
-<div>
-<small>수집한 보석</small>
-<strong>
-<b id="totalGems">0</b>
-<span>개</span>
-</strong>
-<p id="gemMilestone">첫 보석을 발견하면 보관소가 빛나기 시작해요.</p>
-</div>
-</div>
-<div class="gem-collection" id="vaultRow">
-</div>
-<div class="subsection-head">
-<strong>최근 발견</strong>
-<small>가장 최근에 얻은 보석 기록</small>
-</div>
-<div class="recent-gems" id="recentGems">
-</div>
-</section>
-<section id="levels" class="screen growth-screen">
-<div class="section-title">
-<div class="wood-title">작가 성장 원정대</div>
-<p>길을 따라 성장하며 새로운 칭호를 발견해요.</p>
-</div>
-<div class="level-hero">
-<div class="level-medal rank-art tier-1" id="levelIcon">
-</div>
-<div class="level-copy">
-<small>현재 칭호</small>
-<h2 id="levelTitle">Lv.1 첫발견 탐험가</h2>
-<p id="levelDesc">첫 문장을 발견한 작은 탐험가</p>
-<div class="xpbar">
-<i id="levelXpBar" style="width:0%">
-</i>
-</div>
-<small id="levelXpText">
-</small>
-</div>
-</div>
-<div class="growth-map" id="rankList">
-</div>
-</section>
-<section id="settings" class="screen settings-screen">
-<div class="section-title">
-<div class="wood-title">탐험 설정</div>
-<p>프로필, 테마, 기록 연결을 한곳에서 관리해요.</p>
-</div>
-<div class="paper settings-list premium-settings">
-<button class="setting" onclick="openNameModal()">
-<img src="assets/icon-compass-v10.svg" alt="">
-<span>
-<strong>탐험가 프로필</strong>
-<small id="settingName">
-</small>
-</span>
-<em>›</em>
-</button>
-<button class="setting" onclick="exportData()">
-<img src="assets/icon-backup-v10.svg" alt="">
-<span>
-<strong>탐험 기록 내보내기</strong>
-<small>기록과 성장 데이터를 파일로 보관</small>
-</span>
-<em>›</em>
-</button>
-<button class="setting" onclick="connectGoogleCalendar()">
-<img src="assets/icon-calendar-v10.svg" alt="">
-<span>
-<strong>Google Calendar</strong>
-<small>탐험 기록을 내 캘린더에 저장</small>
-</span>
-<b id="calendarStatus" class="status-warn">연결 전</b>
-</button>
-<div class="setting theme-setting">
-<img src="assets/icon-map-v10.svg" alt="">
-<span>
-<strong>화면 테마</strong>
-<small>원하는 탐험 분위기를 선택해요.</small>
-<div class="theme-switch" role="group" aria-label="화면 테마 선택">
-<button type="button" id="themeAdventure" onclick="setTheme('adventure')">
-<span class="theme-thumb adventure-thumb">
-</span>
-<b>판타지 어드벤처</b>
-<small>밝은 하늘과 탐험 지도</small>
-</button>
-<button type="button" id="themeStorybook" onclick="setTheme('storybook')">
-<span class="theme-thumb storybook-thumb">
-</span>
-<b>스토리북 탐험</b>
-<small>양피지와 자연색 카드</small>
-</button>
-</div>
-</span>
-</div>
-<button class="setting" onclick="openScreen('levels')">
-<img src="assets/icon-growth-v10.svg" alt="">
-<span>
-<strong>작가 성장 원정대</strong>
-<small>레벨 · EXP · 칭호 성장 경로 보기</small>
-</span>
-<em>›</em>
-</button>
-<div class="setting">
-<img src="assets/icon-info-v10.svg" alt="">
-<span>
-<strong>앱 정보</strong>
-<small>탐험가의 아이디어 노트 · V12</small>
-</span>
-</div>
-</div>
-</section>
-<nav id="bottomNav" class="bottomnav">
-<button class="nav on" data-nav="home" onclick="openScreen('home')">
-<img src="assets/icon-map-v10.svg" alt="">
-<span>지도</span>
-</button>
-<button class="nav" data-nav="records" onclick="openScreen('records')">
-<img src="assets/icon-journal-v10.svg" alt="">
-<span>기록</span>
-</button>
-<button class="plus" onclick="beginAdventure()" aria-label="새 탐험 시작">
-<img src="assets/icon-compass-v10.svg" alt="">
-</button>
-<button class="nav" data-nav="gems" onclick="openScreen('gems')">
-<img src="assets/icon-gemchest-v10.svg" alt="">
-<span>보석함</span>
-</button>
-<button class="nav" data-nav="levels" onclick="openScreen('levels')">
-<img src="assets/icon-growth-v10.svg" alt="">
-<span>성장</span>
-</button>
+</main>
+
+<nav id="bottomNav" class="bottom-nav" aria-label="주요 메뉴">
+  <button data-view="map" class="active"><img src="./assets/nav/map_hd.jpg" alt=""><span>지도</span></button>
+  <button data-view="records"><img src="./assets/nav/records_hd.jpg" alt=""><span>기록</span></button>
+  <button data-view="explore"><img src="./assets/nav/explore_hd.jpg" alt=""><span>탐험</span></button>
+  <button data-view="gems"><img src="./assets/nav/gems_hd.jpg" alt=""><span>보석함</span></button>
+  <button data-view="growth"><img src="./assets/nav/growth_hd.jpg" alt=""><span>성장</span></button>
 </nav>
 
-<div id="cameraModal" class="camera-modal" aria-hidden="true">
-  <div class="camera-panel" id="cameraPanel">
-    <div class="camera-head">
-<button type="button" class="camera-back-mark" onclick="closeCamera()" aria-label="뒤로"></button>
-      <div>
-<b>탐험가 모습을 선택해줘!</b>
-<small>사진을 필터로 꾸며보자</small>
+<div id="toast" role="status" aria-live="polite"></div>
 </div>
-<button type="button" class="camera-close-mark" onclick="closeCamera()" aria-label="닫기"></button>
-    </div>
-    <div class="mode-tabs">
-      <button id="realModeBtn" class="on" onclick="setAvatarMode('real')">실사 모드</button>
-      <button id="illustrationModeBtn" onclick="setAvatarMode('illustration')">일러스트 모드</button>
-    </div>
-    <div class="camera-stage">
-      <video id="cameraVideo" autoplay playsinline muted>
-</video>
-      <canvas id="cameraCanvas">
-</canvas>
-      <div class="focus-frame">
-</div>
-      <div class="camera-corners" aria-hidden="true">
-</div>
-    </div>
-    <p class="camera-tip" id="cameraTip">얼굴을 중앙에 맞춰줘. 얼굴 형태는 그대로 유지해.</p>
-    <div class="filter-row" id="avatarFilterRow">
-      <button class="filter-chip" data-filter="natural" onclick="setAvatarFilter('natural',this)">
-<span class="filter-preview">
-</span>
-<b>원본</b>
-</button>
-      <button class="filter-chip on" data-filter="warm" onclick="setAvatarFilter('warm',this)">
-<span class="filter-preview">
-</span>
-<b>따뜻한</b>
-</button>
-      <button class="filter-chip" data-filter="vintage" onclick="setAvatarFilter('vintage',this)">
-<span class="filter-preview">
-</span>
-<b>빈티지</b>
-</button>
-      <button class="filter-chip" data-filter="forest" onclick="setAvatarFilter('forest',this)">
-<span class="filter-preview">
-</span>
-<b>숲의 빛</b>
-</button>
-      <button class="filter-chip" data-filter="adventure" onclick="setAvatarFilter('adventure',this)">
-<span class="filter-preview">
-</span>
-<b>모험가</b>
-</button>
-    </div>
-    <div class="camera-actions">
-      <button class="secondary camera-switch" onclick="switchCamera()">카메라 전환</button>
-      <button id="shutterBtn" class="shutter" onclick="captureAvatar()" aria-label="사진 촬영">
-</button>
-      <button class="primary mini" onclick="saveAvatar()">선택 완료</button>
-    </div>
-    <input id="cameraFallback" type="file" accept="image/*" capture="user" hidden onchange="loadAvatarFile(event)">
-  </div>
-</div>
-<div id="toast" class="toast">
-</div>
-<div id="nameModal" class="modal">
-<div class="paper">
-<h3>탐험가 이름 바꾸기</h3>
-<input id="modalName" class="input" maxlength="12">
-<div class="modal-actions">
-<button class="secondary" onclick="closeNameModal()">취소</button>
-<button class="primary" onclick="updateName()">저장</button>
-</div>
-</div>
-</div>
-</div>
-<script src="config.js">
-</script>
-<script src="app.js">
-</script>
+<script src="./app.js"></script>
 </body>
 </html>
