@@ -1,0 +1,9 @@
+{
+  "master_safe_name": true,
+  "no_space_or_percent_in_files": true,
+  "live_text": true,
+  "bottom_nav_exact": true,
+  "right_walkie": true,
+  "single_tree_runtime": true,
+  "wish_blessing": true
+}

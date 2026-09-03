@@ -1,24 +1,10 @@
 {
   "name": "Snap & Pop · 아이디어 탐험대",
   "short_name": "Snap & Pop",
-  "description": "아이디어를 발견하고 쓰며 성장하는 가족 글쓰기 탐험 PWA",
-  "lang": "ko-KR",
   "start_url": "./",
-  "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#f4ecd9",
-  "theme_color": "#173e2d",
-  "icons": [
-    {
-      "src": "icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+  "background_color": "#f3e7cc",
+  "theme_color": "#062f2b",
+  "lang": "ko-KR",
+  "icons": []
 }

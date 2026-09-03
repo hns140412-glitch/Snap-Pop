@@ -1,0 +1,37 @@
+[
+  {
+    "min": 1,
+    "name": "발아",
+    "image": "stage_01.png"
+  },
+  {
+    "min": 5,
+    "name": "새싹",
+    "image": "stage_02.png"
+  },
+  {
+    "min": 10,
+    "name": "묘목",
+    "image": "stage_03.png"
+  },
+  {
+    "min": 15,
+    "name": "젊은 나무",
+    "image": "stage_04.png"
+  },
+  {
+    "min": 20,
+    "name": "성목",
+    "image": "stage_05.png"
+  },
+  {
+    "min": 25,
+    "name": "거목",
+    "image": "stage_06.png"
+  },
+  {
+    "min": 30,
+    "name": "대작가의 생명의 나무",
+    "image": "stage_07.png"
+  }
+]

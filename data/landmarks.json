@@ -2,36 +2,36 @@
   {
     "id": "idea",
     "title": "아이디어 동굴",
-    "description": "뭘 쓸지 모르겠어? 아이디어부터 캐보자!",
-    "asset": "assets/landmarks/idea_cave_hd.jpg",
-    "gemKey": "idea"
+    "desc": "뭘 쓸지 모르겠어? 아이디어부터 캐보자!",
+    "x": 26,
+    "y": 31
   },
   {
     "id": "emotion",
     "title": "감정 호수",
-    "description": "내 마음이 좀 복잡해? 슬쩍 들여다보자.",
-    "asset": "assets/landmarks/emotion_lake_hd.jpg",
-    "gemKey": "emotion"
+    "desc": "내 마음이 좀 복잡해? 슬쩍 들여다보자.",
+    "x": 58,
+    "y": 49
   },
   {
     "id": "description",
     "title": "묘사 숲",
-    "description": "어떻게 표현하지? 보고, 듣고, 느껴보자!",
-    "asset": "assets/landmarks/description_forest_hd.jpg",
-    "gemKey": "description"
+    "desc": "어떻게 표현하지? 보고, 듣고, 느껴보자!",
+    "x": 78,
+    "y": 29
   },
   {
     "id": "viewpoint",
     "title": "관점 전망대",
-    "description": "다르게 보면 어떨까? 시선을 한번 뒤집어보자.",
-    "asset": "assets/landmarks/viewpoint_hd.jpg",
-    "gemKey": "viewpoint"
+    "desc": "다르게 보면 어떨까? 시선을 한번 뒤집어보자.",
+    "x": 78,
+    "y": 58
   },
   {
-    "id": "finish",
+    "id": "final",
     "title": "마무리 캠프",
-    "description": "거의 다 썼어? 이제 글을 멋지게 챙겨보자.",
-    "asset": "assets/landmarks/final_camp_hd.jpg",
-    "gemKey": "finish"
+    "desc": "거의 다 썼어? 이제 글을 멋지게 챙겨보자.",
+    "x": 50,
+    "y": 67
   }
 ]
