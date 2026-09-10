@@ -1,10 +1,10 @@
 (() => {
   'use strict';
 
-  const BRIDGE_VERSION = '2026.09.07-a';
+  const BRIDGE_VERSION = '2026.09.10-b';
   const CONTEXT_KEY = 'snap_pop_shared_context_v1';
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
-  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context'];
+  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','target_time_ms','session_start_at','paused_at','issue_ms'];
 
   const iso = () => new Date().toISOString();
   const eventId = () => `snap_event_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
@@ -49,6 +49,7 @@
       goal_id: context.goal_id || null,
       task_id: context.task_id || null,
       lap_id: context.lap_id || null,
+      child_id: context.child_id || null,
       payload
     };
     let outbox = [];
@@ -188,6 +189,7 @@
     const checks = {
       noLocalTimer: true,
       sessionIdPresentWhenLinked: !context.return_target || !!context.session_id,
+      goalIdPresentWhenLinked: !context.return_target || !!context.goal_id,
       taskIdPresentWhenLinked: !context.return_target || !!context.task_id,
       lapIdPresentWhenLinked: !context.return_target || !!context.lap_id,
       safeReturnTarget: !context.return_target || (() => { try { return ['http:','https:'].includes(new URL(context.return_target).protocol); } catch { return false; } })()
