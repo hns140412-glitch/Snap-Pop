@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const BRIDGE_VERSION = '2026.09.10-b';
+  const BRIDGE_VERSION = '2026.09.10-c';
   const CONTEXT_KEY = 'snap_pop_shared_context_v1';
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
   const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','target_time_ms','session_start_at','paused_at','issue_ms'];
@@ -63,7 +63,7 @@
     return event;
   }
 
-  function safeReturnUrl(taskState = 'PARTIAL') {
+  function safeReturnUrl(taskState = 'PARTIAL', eventIdValue = null) {
     if (!context.return_target) return null;
     try {
       const url = new URL(context.return_target, location.href);
@@ -72,6 +72,7 @@
       if (context.goal_id) url.searchParams.set('goal_id', context.goal_id);
       if (context.task_id) url.searchParams.set('task_id', context.task_id);
       if (context.lap_id) url.searchParams.set('lap_id', context.lap_id);
+      if (eventIdValue) url.searchParams.set('event_id', eventIdValue);
       url.searchParams.set('task_state', taskState);
       url.searchParams.set('from_app', 'snap-pop');
       return url.href;
@@ -82,13 +83,13 @@
 
   function returnToBase(taskState = 'PARTIAL', payload = {}) {
     const normalized = ['COMPLETED','PARTIAL','BLOCKED','HELP_NEEDED'].includes(taskState) ? taskState : 'PARTIAL';
-    emit(
+    const event = emit(
       normalized === 'COMPLETED' ? 'TASK_COMPLETED' :
       normalized === 'BLOCKED' ? 'TASK_BLOCKED' :
       normalized === 'HELP_NEEDED' ? 'HELP_NEEDED' : 'TASK_PARTIAL',
       payload
     );
-    const url = safeReturnUrl(normalized);
+    const url = safeReturnUrl(normalized, event.event_id);
     if (url) location.assign(url);
     else toast('베이스캠프 연결 주소가 없어요. 현재 표현 기록은 이 기기에 남아 있어요.');
   }
