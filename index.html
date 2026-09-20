@@ -15,9 +15,9 @@
   <img class="scene" src="assets/world/golden_world_scene.jpg" alt="">
   <div class="atmo"></div>
   <div id="landmarks" class="landmarks"></div>
-  <div id="homeCompanions" class="homeCompanions" aria-label="현재 탐험가와 길잡이">
+  <div id="homeCompanions" class="homeCompanions" aria-label="현재 탐험가와 탐험대">
    <div id="homeCharacter" class="homeCharacter"><div id="homeCharacterVisual" class="characterPlaceholder">탐험가</div><strong id="homeCharacterName">나의 탐험가</strong></div>
-   <div id="homeGuide" class="homeGuide"><div class="guidePlaceholder">Guide</div><div><strong id="homeGuideName">모카</strong><span id="homeGuideLine" class="homeGuideLine"></span></div></div>
+   <div id="homeGuide" class="homeGuide"><div class="guidePlaceholder">대원</div><div><strong id="homeGuideName">모카</strong><span id="homeGuideLine" class="homeGuideLine"></span></div></div>
   </div>
   <button class="specialInvite" id="specialInvite" hidden>특별 탐험 초대장</button>
   <button class="radioFab" id="homeRadio"><img src="assets/icons/radio.svg" alt=""><span>무전</span></button>
@@ -46,7 +46,7 @@
  </div>
  <div id="steps" class="steps"></div>
  <article class="paper">
-  <div class="guideLine"><b>길잡이 모카</b><span id="guideLine">한 조각씩 찾아보자.</span></div>
+  <div class="guideLine"><b>탐험대원 모카</b><span id="guideLine">한 조각씩 찾아보자.</span></div>
   <h2 id="question"></h2><p id="hint"></p>
   <textarea id="answer" placeholder="여기에 직접 써도 좋아요."></textarea>
   <div class="tools">
@@ -142,10 +142,10 @@
   <span id="profilePhotoStatus" class="kicker">원본 사진 없음</span>
   <button class="primary wide" id="characterSave">저장</button>
  </article>
- <div class="setting"><div><b>나의 길잡이</b><span id="guideSummary">말티푸 · 모카</span></div><button class="soft" id="guideBtn">이름 바꾸기</button></div>
+ <div class="setting"><div><b>나의 탐험대원</b><span id="guideSummary">말티푸 · 모카</span></div><button class="soft" id="guideBtn">이름 바꾸기</button></div>
  <article id="guidePanel" class="paper settingPanel" hidden>
-  <span class="kicker">Snap & Pop 길잡이 MASTER · 기능 유불리 없이 표현만 변경</span>
-  <h2>길잡이 종류</h2>
+  <span class="kicker">Snap & Pop 탐험대원 MASTER · 기능 유불리 없이 표현만 변경</span>
+  <h2>탐험대원 선택</h2>
   <div class="guideTypes" id="guideTypes">
    <button class="soft" data-guide-type="maltipoo">말티푸</button>
    <button class="soft" data-guide-type="cat">탐험 고양이</button>
@@ -153,7 +153,7 @@
    <button class="soft" data-guide-type="buddy">동료 탐험가</button>
   </div>
   <p id="guidePersonalityPreview" class="guidePreview"></p>
-  <h2>길잡이 이름</h2>
+  <h2>탐험대원 이름</h2>
   <input id="guideName" class="textInput" maxlength="20" placeholder="모카">
   <button class="soft wide" id="guideSuggest">이름 추천해줘</button>
   <button class="primary wide resultSecondary" id="guideSave">저장</button>
