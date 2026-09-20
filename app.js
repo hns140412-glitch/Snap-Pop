@@ -12,6 +12,7 @@ const uid=p=>`${p}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
 function openDB(){return new Promise((ok,no)=>{const r=indexedDB.open("snap_pop_rev10",1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains("state"))r.result.createObjectStore("state")};r.onsuccess=()=>{db=r.result;ok()};r.onerror=()=>no(r.error)})}
 function get(k){return new Promise(ok=>{const r=db.transaction("state").objectStore("state").get(k);r.onsuccess=()=>ok(r.result)})}
 function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>ok();r.onerror=()=>no(r.error)})}
+function setMany(entries){return new Promise((ok,no)=>{const tx=db.transaction("state","readwrite"),store=tx.objectStore("state");entries.forEach(([k,v])=>store.put(v,k));tx.oncomplete=()=>ok();tx.onerror=()=>no(tx.error);tx.onabort=()=>no(tx.error)})}
 function toast(t){$("#toast").textContent=t;$("#toast").classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>$("#toast").classList.remove("show"),1800)}
 function show(id){$$(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");const sub=["settings","shop"].includes(id);$("#nav").hidden=sub;if(!sub)lastMain=id;$$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.view===id));scrollTo(0,0);if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth()}
 function html(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
@@ -57,14 +58,15 @@ $("#nextBtn").onclick=async()=>{
   const gemLedger=await get("gemLedger")||[];
   gemLedger.push({eventId:completionEventId,type:"SHARD_EARNED",landmark:s.landmark,amount:1,at:now});
   events[completionEventId]={at:now,recordId:record.id};
-  await set("records",records);await set("gems",gems);await set("expLedger",expLedger);await set("gemLedger",gemLedger);await set("completionEvents",events);
-  await set("exp",expLedger.reduce((sum,e)=>sum+(Number(e.amount)||0),0));await set("active",null);
+  const totalExp=expLedger.reduce((sum,e)=>sum+(Number(e.amount)||0),0);
+  await setMany([["records",records],["gems",gems],["expLedger",expLedger],["gemLedger",gemLedger],["completionEvents",events],["exp",totalExp],["active",null]]);
   await updateStatus();
   window.dispatchEvent(new CustomEvent("snap-pop:task-completed",{detail:{completionEventId,landmark:s.landmark,exp:expAward.total}}));
   toast(`탐험 완료! +${expAward.total} EXP · 보석 조각 +1`);show("growth")
 }
 
 function speak(t){if(!("speechSynthesis"in window))return toast("이 브라우저에서는 읽어주기를 지원하지 않아요.");speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ko-KR";speechSynthesis.speak(u)}
+$("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0);s.answers[i]=$("#answer").value;s.updatedAt=new Date().toISOString();await set("active",s)});
 $("#listenBtn").onclick=async()=>{const s=await get("active");speak(STEPS[s?.step||0][1]+" "+STEPS[s?.step||0][2])}
 $("#voiceBtn").onclick=()=>{const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return toast("이 브라우저에서는 음성 인식을 지원하지 않아요.");const r=new R();r.lang="ko-KR";r.interimResults=false;$("#voiceBtn").textContent="듣고 있어요";r.onresult=e=>$("#answer").value+=(($("#answer").value?" ":"")+e.results[0][0].transcript);r.onend=()=>$("#voiceBtn").innerHTML='<img src="assets/icons/radio.svg" alt="">말해서 쓰기';r.start()}
 
@@ -82,7 +84,7 @@ $("#confirmBlessing").onclick=async()=>{
   if(needCompleted)return toast("완성 보석 2개가 필요해요.");
   const id=uid("wish_tx"),at=new Date().toISOString();
   txns.push({id,status:"COMPLETED",wish:"가족과 주말 영화 보기",spend,completedGemCount:2,at});
-  await set("gems",g);await set("wishTransactions",txns);await updateStatus();renderGems();$("#blessing").hidden=true;toast("축복을 사용했어요. 소원 사용 내역에 기록됐어요.")
+  await setMany([["gems",g],["wishTransactions",txns]]);await updateStatus();renderGems();$("#blessing").hidden=true;toast("축복을 사용했어요. 소원 사용 내역에 기록됐어요.")
 }
 $("#historyBtn").onclick=async()=>{const r=await get("records")||[];toast(r.length?`성장 기록 ${r.length}개가 안전하게 쌓여 있어요.`:"아직 성장 기록이 없어요.")};
 $("#settingsBtn").onclick=()=>show("settings");$("#settingsBack").onclick=()=>show(lastMain);$$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
