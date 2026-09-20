@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R6",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R4",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -220,7 +220,7 @@
         "min": 5,
         "max": 6
       },
-      "selection": "CHOOSE_ONE_AS_MAIN_AT_START",
+      "selection": "CHOOSE_ONE_AT_START",
       "definedMembers": [
         "maltipoo",
         "cat",
@@ -229,7 +229,8 @@
       ],
       "status": "STARTER_ROSTER_GAP",
       "releaseGate": "AT_LEAST_5_DEFINED_BEFORE_STARTER_SELECTION_RELEASE",
-      "unknownIdentityPolicy": "DO_NOT_INVENT"
+      "unknownIdentityPolicy": "DO_NOT_INVENT",
+      "capacity": 6
     },
     "worldRegion": {
       "countStatus": "OPEN_CALCULATE_FROM_ACTUAL_HUB_NEED",
@@ -244,13 +245,14 @@
       "presenceDynamic": true,
       "substitutionAllowed": true,
       "returnMemoryAllowed": true,
-      "identitiesStatus": "OPEN"
+      "identitiesStatus": "OPEN",
+      "minimumCapacity": 2
     },
     "special": {
       "maximumCount": 12,
       "definedMembers": [],
       "noPowerAdvantage": true,
-      "principle": "만남 방식·등장 맥락·추억이 특별하며 기능 능력은 동일",
+      "principle": "SPECIAL = ENCOUNTER가 특별함 / POWER 우위 없음",
       "encounterConcepts": [
         "PRESENCE_OR_TRACE",
         "ENCOUNTER_WINDOW",
@@ -277,7 +279,24 @@
       "hubAppearance": {
         "triggerDialogueFromCurrentMainCrew": true,
         "microEpisodeAllowed": true
-      }
+      },
+      "maximumCapacity": 12,
+      "encounterCycle": {
+        "userConfirmedCadence": "1주 또는 2주 간격 등의 주기 요소 필요",
+        "exactPerMemberSchedule": "OPEN",
+        "encounterWindow": "ADOPTED_CONCEPT_FROM_FOLLOWUP_DESIGN",
+        "cooldown": "ADOPTED_CONCEPT_FROM_FOLLOWUP_DESIGN",
+        "farmingPrevention": true
+      },
+      "discoveryFlow": [
+        "미발견",
+        "흔적/그림자",
+        "우연한 조우",
+        "첫 만남",
+        "도감 공개",
+        "메인 탐험대원 선택 가능",
+        "친밀도 시작"
+      ]
     },
     "invariants": {
       "allMembersSameFunctionalAbility": true,
@@ -293,15 +312,22 @@
         "추억"
       ],
       "noInventedMemberIdentity": true
-    }
+    },
+    "totalCapacity": 20,
+    "extensible": true
   },
   "relationship": {
     "enabled": true,
-    "source": "자주 만나고 실제로 함께한 탐험·녹음·사건·재회",
-    "numericScoreVisible": false,
-    "affectsPower": false,
-    "unlocksExpressionOnly": true,
-    "examples": [
+    "powerEffect": false,
+    "basis": [
+      "자주 만남",
+      "함께한 탐험",
+      "녹음 동행",
+      "공동 사건",
+      "배지/기억"
+    ],
+    "exactStageNames": "OPEN",
+    "expressionsOnly": [
       "표정",
       "포즈",
       "인사",
@@ -311,25 +337,22 @@
       "호칭",
       "특별 일러스트"
     ],
-    "historyPreserved": true,
-    "stableMemberId": "crewMemberId"
+    "preservesOnSwitch": true,
+    "memoryJournal": true
   },
   "naming": {
-    "starter": {
-      "directInput": true,
-      "recommendation": true
-    },
-    "discovered": {
-      "randomInitialName": true
-    },
-    "whenSetAsMain": {
-      "renameAllowed": true
-    },
-    "currentNamePersistsWhenMainChanges": true,
-    "previousNameShownInDetail": true,
+    "stableMemberId": true,
+    "starter": [
+      "DIRECT_INPUT",
+      "RECOMMENDED_NAME"
+    ],
+    "discovered": "RANDOM_INITIAL_NAME",
+    "renameWhenSelectedAsMain": true,
+    "currentNameMutable": true,
+    "firstNamePermanent": true,
     "nameHistoryPermanent": true,
-    "stableInternalIdRequired": true,
-    "stableMemberId": "crewMemberId"
+    "compactHistoryDisplay": "직전 이름 1개를 구. 이름 형태로 표시",
+    "affinityAndMemoryBindToStableMemberId": true
   },
   "discovery": {
     "states": [
@@ -400,37 +423,9 @@
     "exactCadencePerMember": "OPEN"
   },
   "classification": {
-    "LOCKED": [
-      "BASE_ROSTER_20_CURRENT",
-      "EXTENSIBLE_ROSTER",
-      "STARTER_MAIN_SELECTION_5_TO_6_LATEST",
-      "SPECIAL_MAX_12",
-      "ALL_MEMBERS_EQUAL_FUNCTIONAL_ABILITY",
-      "SPECIAL_IS_ENCOUNTER_NOT_POWER",
-      "MAIN_MEMBER_TRAVELS_WITH_EXPLORER",
-      "SNAP_FIXED_5_HUBS",
-      "HUB_INFO_MEMBER_ROLE",
-      "AFFINITY_NOT_POWER",
-      "NAME_HISTORY_PRESERVED",
-      "SPECIAL_CYCLE_ELEMENT",
-      "SLOW_DISCOVERY"
-    ],
-    "DERIVED_SUPPORTED": [
-      "ENCOUNTER_WINDOW",
-      "COOLDOWN",
-      "NO_FARMING",
-      "CATALOG_REVEAL_AFTER_FIRST_MEETING",
-      "EVENT_CENTRIC_SHARED_MEMORY"
-    ],
-    "OPEN": [
-      "FULL_20_MEMBER_IDENTITIES",
-      "EXACT_HUB_MEMBER_COUNT",
-      "EXACT_SPECIAL_MEMBER_COUNT_BELOW_12",
-      "PER_MEMBER_SPECIAL_CYCLE",
-      "AFFINITY_LEVEL_NAMES",
-      "EXACT_ENCOUNTER_PROBABILITY",
-      "STARTER_REMAINING_1_TO_2_IDENTITIES"
-    ]
+    "mainHubSpecialAreRolesNotPowerTiers": true,
+    "hubMemberCanBecomeMain": true,
+    "specialCanBecomeMainAfterEncounter": true
   },
   "conflicts": [
     {
@@ -548,5 +543,29 @@
     "latestUserCorrection": "초기 선택 후보는 5~6명",
     "recoveredUserEvidenceDate": "2026-09-08",
     "rule": "LATEST_USER_CORRECTION_OVERRIDES_OLDER_USER_EVIDENCE_AND_ASSISTANT_PROPOSALS"
+  },
+  "provenance": {
+    "source": "DIRECT_RAW_CHAT_2026-09-08",
+    "sourceDriveId": "1GTnatAVOLpbac_qWakAhMdnIu1zkw1lthp2MY04RACY",
+    "confirmedByUser": {
+      "maxRoster20": true,
+      "starter6": true,
+      "remainingAtChapterOrHub": true,
+      "specialShadowCluePresentation": true,
+      "randomRecordingCompanionCanTriggerSpecialEncounter": true,
+      "metSpecialCanBecomeMainCompanion": true,
+      "allFunctionalAbilityEqual": true,
+      "personalityMoodSpeechDiffer": true,
+      "affinityBasedOnRepeatedSharedExperience": true,
+      "initialNamingDirectOrRecommended": true,
+      "discoveredMemberGetsRandomName": true,
+      "renameHistoryPreserved": true,
+      "switchPreservesNameAffinityMemory": true,
+      "specialEncounterCadenceOneOrTwoWeeks": true,
+      "growthAddsMembersGradually": true,
+      "calculateHubNeedBeforeFillingRoster": true,
+      "roster20IsCurrentDefaultButExtensible": true,
+      "specialMax12": true
+    }
   }
 }
