@@ -280,3 +280,12 @@ Authority boundary:
 - **FALSE_CONVERGENCE GUARD:** 현재 six Personality Slots와 Core 6를 의미 유사성만으로 1:1 고정 매핑하지 않는다.
 
 - **Architecture disposition:** current six Personality Slots = **Behavior Archetype / Interaction Mode**, not Character Identity. No fixed Core 6 ↔ Slot 1:1 mapping.
+
+
+## Archived visual-history recovery — 2026-09-21
+- Recovery package: `GUIDE_길잡이_대화정리_첨부결과물_2026-09-06.zip`
+- Separate SHA manifest: `FILE_MANIFEST_SHA256.csv`
+- Historical folder: `04_캐릭터_시각결과_연혁`
+- Detailed lineage ledger: `C2S/SNAP_EXPLORATION_CREW_VISUAL_LINEAGE_LEDGER_2026-09-21.md`
+- Key correction: a superseded visual field does not supersede stable personality/name evidence.
+- Key recovery finding: archive/ZIP materials can be physically preserved even when ordinary Drive keyword search does not surface them.
