@@ -12,9 +12,9 @@
 
 ## Current headline
 
-- FULL SCOPE CODED estimate (ORIGINAL + crew + bridge + expansion): **~67%**
-- ORIGINAL/current-core coded coverage excluding FAMILY Expansion: **~73.9%**
-- STATIC_VERIFIED: partial/strong for existing prototype checks
+- FULL SCOPE CODED estimate: **RECALCULATION REQUIRED — scope expanded**
+- Previous ~67% score is **SUPERSEDED AS SCOPE-INCOMPLETE**
+- Reason: universal `ASK → UNDERSTAND` / child curiosity resolver was missing from the denominator
 - RUNTIME_VERIFIED: **NOT CLOSED**
 - DEVICE_VERIFIED: **NOT ESTABLISHED**
 
@@ -59,3 +59,13 @@
 `DOCUMENTED != CODED != RUNTIME_VERIFIED != DEVICE_VERIFIED`
 
 Prior prototype/static PASS documents must not be interpreted as full Snap & Pop completion.
+
+
+## Universal core correction — 2026-09-21
+Canonical: `SNAP_POP_UNIVERSAL_CORE_2026-09-21.md`
+
+Core is:
+`THINK → EXPRESS + ASK → UNDERSTAND`
+
+Broad child Q&A across society/history/culture/science/etc is CORE, not expansion.
+Current branch does not yet implement a general CuriosityResolver.
