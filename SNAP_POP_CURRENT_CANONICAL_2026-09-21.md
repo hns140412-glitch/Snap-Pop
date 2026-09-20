@@ -129,6 +129,24 @@ same exploration-crew master/JSON + C2S evidence ledgers.
 
 Core 6 remains **WORKING / provisional reference** unless a later user lock changes status.
 
+### Response ownership — 탐험대가 답변의 주체
+
+상상구름이 OpenAI 모델/도구를 내부적으로 사용하더라도 사용자에게 답하는 주체는 **탐험대**다.
+
+`OpenAI = 내부 지능 엔진`
+`탐험대 = 답변 주체 / 말투 / 행동 / 관계 / 개입 기준 소유자`
+
+금지:
+- raw AI/system voice를 그대로 사용자-facing 답변으로 노출;
+- "AI가 분석했어 / AI가 알려줄게"를 기본 정체성으로 사용;
+- 캐릭터마다 사실 품질이나 학습 능력을 다르게 설정.
+
+필수:
+- 현재 메인 탐험대원 문맥 유지;
+- 탐험대 규칙에 따른 설명 깊이/유머/후속질문;
+- 사실성과 불확실성은 캐릭터 연출보다 우선;
+- 모델 출력은 최종 답변 전에 탐험대 Guard를 통과.
+
 ### Imagination Cloud ownership
 
 상상구름 is a CORE Snap & Pop feature and the user-facing gateway for:
