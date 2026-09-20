@@ -142,10 +142,18 @@
  </article>
  <div class="setting"><div><b>나의 길잡이</b><span id="guideSummary">말티푸 · 모카</span></div><button class="soft" id="guideBtn">이름 바꾸기</button></div>
  <article id="guidePanel" class="paper settingPanel" hidden>
-  <span class="kicker">외형/캐릭터 계보 유지</span>
+  <span class="kicker">기능 유불리 없이 표현만 변경</span>
+  <h2>길잡이 종류</h2>
+  <div class="guideTypes" id="guideTypes">
+   <button class="soft" data-guide-type="maltipoo">말티푸</button>
+   <button class="soft" data-guide-type="cat">탐험 고양이</button>
+   <button class="soft" data-guide-type="redpanda">랫서팬더</button>
+   <button class="soft" data-guide-type="buddy">동료 탐험가</button>
+  </div>
   <h2>길잡이 이름</h2>
   <input id="guideName" class="textInput" maxlength="20" placeholder="모카">
-  <button class="primary wide" id="guideSave">저장</button>
+  <button class="soft wide" id="guideSuggest">이름 추천해줘</button>
+  <button class="primary wide resultSecondary" id="guideSave">저장</button>
  </article>
  <div class="setting"><div><b>질문 읽어주기</b><span>6세 음성 접근성</span></div><label class="toggle"><input id="autoRead" type="checkbox"><i></i></label></div>
  <div class="setting"><div><b>움직임 줄이기</b><span>화면 효과 최소화</span></div><label class="toggle"><input id="reduceMotion" type="checkbox"><i></i></label></div>
