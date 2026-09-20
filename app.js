@@ -1,5 +1,5 @@
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
-let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false, SNAP_RULES=null;
+let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false, SNAP_RULES=null, hubLanguage="ko";
 const STEPS=["생각 꺼내기","생각 넓히기","표현 완성하기"];
 const QUESTION_BANK={
  idea:{
@@ -323,6 +323,8 @@ $("#voiceBtn").onclick=async()=>{
 
 async function renderExploreHub(){
   const identity=await resolvedIdentity(),active=await get("active");
+  $("#hubModeKo")?.classList.toggle("on",hubLanguage==="ko");
+  $("#hubModeEn")?.classList.toggle("on",hubLanguage==="en");
   $("#hubCrewName").textContent=`탐험대원 ${crewMemberName(identity)}`;
   $("#hubCrewLine").textContent=(SNAP_RULES?.interactionContract?.homePrompt)||"뭐가 궁금해? 같이 풀어보자.";
   $("#hubResumeBtn").disabled=!active;
@@ -343,7 +345,7 @@ async function runHubCloud(inputOverride){
   if(!window.SnapPopIntelligence)return toast("상상 구름 엔진을 불러오지 못했어요.");
   $("#hubAskBtn").disabled=true;$("#hubAskBtn").textContent="생각 중…";
   try{
-    const result=await window.SnapPopIntelligence.ask({input,language:"ko",context:"UNIVERSAL_HUB",crewMember:{type:identity.crewMember?.type,name:crewMemberName(identity)}});
+    const result=await window.SnapPopIntelligence.ask({input,language:hubLanguage,context:"UNIVERSAL_HUB",crewMember:{type:identity.crewMember?.type,name:crewMemberName(identity)}});
     renderHubCloudResponse(result,identity);
     const history=await get("cloudHistory")||[];history.unshift({id:uid("cloud"),input,intent:result.intent||result.kind,verified:result.verified!==false,provider:result.provider||"unknown",at:new Date().toISOString()});await set("cloudHistory",history.slice(0,100));
     if(result.verified===false)await showCrewReaction(`${crewMemberName(identity)}: 확인이 필요한 건 지어내지 않고 확인부터 할게.`,{persist:false,kind:"observe"});
@@ -351,20 +353,28 @@ async function runHubCloud(inputOverride){
     await showCrewReaction(`${crewMemberName(identity)}: 지금 연결이 매끄럽지 않네. 질문은 그대로 남겨둘게.`,{persist:false});
   }finally{$("#hubAskBtn").disabled=false;$("#hubAskBtn").textContent="탐험대에게 물어보기"}
 }
+$("#hubModeKo").onclick=()=>{hubLanguage="ko";renderExploreHub()};
+$("#hubModeEn").onclick=()=>{hubLanguage="en";renderExploreHub()};
 $("#hubAskBtn").onclick=()=>runHubCloud();
 $("#hubThinkBtn").onclick=()=>{if(!$("#hubCloudInput").value.trim())$("#hubCloudInput").value="내 생각을 펼쳐보고 싶어";runHubCloud()};
 $("#hubMapBtn").onclick=()=>show("map");
 $("#hubResumeBtn").onclick=async()=>{const s=await get("active");if(!s)return toast("이어갈 탐험이 없어요.");renderExplore(s);show("explore")};
-$("#hubSpeakLast").onclick=async()=>{const t=$("#hubCloudAnswer")?.dataset.speakable||"";if(!t)return toast("먼저 탐험대에게 물어봐줘.");await speak(t,"ko")};
+$("#hubSpeakLast").onclick=async()=>{const t=$("#hubCloudAnswer")?.dataset.speakable||"";if(!t)return toast("먼저 탐험대에게 물어봐줘.");await speak(t,hubLanguage)};
 $("#hubVoiceBtn").onclick=async()=>{
   const identity=await resolvedIdentity();
   if(!window.SnapPopVoice)return toast("지금은 음성 입력을 사용할 수 없어요.");
-  try{await window.SnapPopVoice.listen({language:"ko",onStart:()=>{$("#hubVoiceBtn").textContent="듣고 있어요…";showCrewReaction(`${crewMemberName(identity)}: 천천히 말해도 돼.`,{persist:false})},onText:t=>{$("#hubCloudInput").value=t;runHubCloud(t)},onError:()=>showCrewReaction(`${crewMemberName(identity)}: 잘 못 들었어. 다시 말하거나 직접 써도 돼.`,{persist:false}),onEnd:()=>{$("#hubVoiceBtn").textContent="말로 묻기"}})}catch{toast("이 기기에서는 지금 음성 입력을 사용할 수 없어요.")}
+  try{await window.SnapPopVoice.listen({language:hubLanguage,onStart:()=>{$("#hubVoiceBtn").textContent="듣고 있어요…";showCrewReaction(`${crewMemberName(identity)}: 천천히 말해도 돼.`,{persist:false})},onText:t=>{$("#hubCloudInput").value=t;runHubCloud(t)},onError:()=>showCrewReaction(`${crewMemberName(identity)}: 잘 못 들었어. 다시 말하거나 직접 써도 돼.`,{persist:false}),onEnd:()=>{$("#hubVoiceBtn").textContent="말로 묻기"}})}catch{toast("이 기기에서는 지금 음성 입력을 사용할 수 없어요.")}
 };
+async function renderCloudHistory(){
+  const host=$("#cloudHistoryList"); if(!host)return;
+  const history=await get("cloudHistory")||[];
+  host.innerHTML=history.length?history.map(x=>`<article class="card"><b>${x.intent==="ASK_UNDERSTAND"?"궁금증":"생각"} · ${new Date(x.at).toLocaleDateString("ko-KR")}</b><p>${html(x.input||"")}</p><span class="kicker">${x.verified?"확인된 흐름":"확인 필요"} · ${html(x.provider||"")}</span></article>`).join(""):'<article class="card"><b>아직 상상 구름 기록이 없어요.</b><p>궁금한 것과 떠오른 생각을 자유롭게 남겨봐요.</p></article>';
+}
 async function renderRecords(){
   if(!db)return;
   const r=await get("records")||[], special=await get("specialMemories")||[], revisions=await get("recordRevisions")||{};
   renderCalendar(r,special);
+  await renderCloudHistory();
   const normalCards=r.map(x=>{const m=marks.find(z=>z.id===x.landmark),rev=(revisions[x.id]||[]),latest=rev.length?rev[rev.length-1].text:x.answers.join(" "),strengths=(x.strengths||[]).slice(0,3).map(html).join(" · ");return `<article class="card" data-record-date="${x.date}" data-record-id="${x.id}"><b>${m?.title||"탐험"}${x.language==="en"?" · English":""}</b><p>${html(latest)}</p>${rev.length?`<span class="kicker">수정본 ${rev.length}개 · 원문 보존</span><br>`:""}${strengths?`<span class="kicker">오늘 발견한 글쓰기 힘 · ${strengths}</span><br>`:""}<span class="kicker">${new Date(x.date).toLocaleDateString("ko-KR")} · +${x.expAward||0} EXP</span><div class="recordActions"><button class="soft recordEditBtn" data-record-id="${x.id}">기록 다듬기</button></div></article>`});
   const specialCards=special.map(x=>`<article class="card specialMemory" data-record-date="${x.at}"><b>특별 탐험</b><p><strong>${html(x.prompt)}</strong><br>${html(x.text)}</p><span class="kicker">${new Date(x.at).toLocaleDateString("ko-KR")} · 선택 기록 · 보상/실패 없음</span></article>`);
   const all=[...normalCards,...specialCards];
