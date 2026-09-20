@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R8",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R9",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -149,77 +149,47 @@
     },
     "starter": {
       "targetCount": 6,
-      "currentUserRange": "5-6",
+      "currentUserRange": "6_RECOVERED_CORE",
       "canonicalWorkingCount": 6,
       "selection": "MEET_ALL_THEN_CHOOSE_ONE_TO_DEPART_WITH",
       "unselectedState": "KNOWN_FRIEND_NOT_LOCKED",
       "nameFlow": "DIRECT_NAME_OR_RECOMMENDED_NAME",
       "personalitySlots": [
         {
-          "slotId": "START-P01",
-          "archetype": "장난꾸러기",
-          "traits": [
-            "능청",
-            "유머"
-          ],
-          "status": "PERSONALITY_SLOT_CONFIRMED",
-          "species": "OPEN",
-          "name": "OPEN"
+          "slotId": "START-01",
+          "memberId": "dooby",
+          "archetype": "호기심 활력",
+          "status": "RECOVERED_CORE_MEMBER"
         },
         {
-          "slotId": "START-P02",
-          "archetype": "씩씩이",
-          "traits": [
-            "용감",
-            "직진"
-          ],
-          "status": "PERSONALITY_SLOT_CONFIRMED",
-          "species": "OPEN",
-          "name": "OPEN"
+          "slotId": "START-02",
+          "memberId": "lori",
+          "archetype": "다정 공감",
+          "status": "RECOVERED_CORE_MEMBER"
         },
         {
-          "slotId": "START-P03",
-          "archetype": "몽상가",
-          "traits": [
-            "엉뚱",
-            "상상"
-          ],
-          "status": "PERSONALITY_SLOT_CONFIRMED",
-          "species": "OPEN",
-          "name": "OPEN"
+          "slotId": "START-03",
+          "memberId": "ink",
+          "archetype": "관찰 아이디어",
+          "status": "RECOVERED_CORE_MEMBER"
         },
         {
-          "slotId": "START-P04",
-          "archetype": "차분이",
-          "traits": [
-            "느긋",
-            "관찰"
-          ],
-          "status": "PERSONALITY_SLOT_CONFIRMED",
-          "species": "OPEN",
-          "name": "OPEN"
+          "slotId": "START-04",
+          "memberId": "nova",
+          "archetype": "에너지 도전",
+          "status": "RECOVERED_CORE_MEMBER"
         },
         {
-          "slotId": "START-P05",
-          "archetype": "호기심쟁이",
-          "traits": [
-            "질문",
-            "발견"
-          ],
-          "status": "PERSONALITY_SLOT_CONFIRMED",
-          "species": "OPEN",
-          "name": "OPEN"
+          "slotId": "START-05",
+          "memberId": "take",
+          "archetype": "정리 든든함",
+          "status": "RECOVERED_CORE_MEMBER"
         },
         {
-          "slotId": "START-P06",
-          "archetype": "다정이",
-          "traits": [
-            "따뜻",
-            "공감"
-          ],
-          "status": "PERSONALITY_SLOT_CONFIRMED",
-          "species": "OPEN",
-          "name": "OPEN"
+          "slotId": "START-06",
+          "memberId": "zero",
+          "archetype": "음악 여유",
+          "status": "RECOVERED_CORE_MEMBER"
         }
       ],
       "visualRules": [
@@ -229,6 +199,14 @@
         "탐험가 캐릭터보다 시각적으로 앞서지 않음",
         "테마가 바뀌어도 동일 인물로 인식",
         "작은 배지 크기에서도 알아볼 대표 특징"
+      ],
+      "recoveredMemberIds": [
+        "dooby",
+        "lori",
+        "ink",
+        "nova",
+        "take",
+        "zero"
       ]
     },
     "worldRegion": {
@@ -1401,5 +1379,113 @@
       "memoryCount"
     ],
     "note": "재접속 시 필요한 가벼운 상태만 생성. 성능/보상 영향 없음."
+  },
+  "recoveredStarterSix": {
+    "status": "RECOVERED_FROM_GUIDE_LINEAGE_WITH_VISUAL_VALIDATION_GAPS",
+    "sourceNotes": [
+      "GUIDE_길잡이_검토요약_REV_00.docx",
+      "GUIDE_길잡이_재개용_인수인계_2026-09-06.docx",
+      "과거 대화 회수: Core 순서 두비→로리→잉크→노바→테이크→제로"
+    ],
+    "members": [
+      {
+        "id": "dooby",
+        "name": "두비",
+        "species": "dog-like",
+        "personality": [
+          "호기심",
+          "활력"
+        ],
+        "roleFlavor": "막내·호기심",
+        "visualStatus": "RECOVERED_IDENTITY",
+        "notes": "기존 확정 계보"
+      },
+      {
+        "id": "lori",
+        "name": "로리",
+        "species": "rabbit",
+        "personality": [
+          "다정",
+          "공감"
+        ],
+        "visual": [
+          "핑크 브레이드"
+        ],
+        "visualStatus": "RECOVERED_IDENTITY",
+        "notes": "토끼 계열"
+      },
+      {
+        "id": "ink",
+        "name": "잉크",
+        "species": "dark fox",
+        "genderPresentation": "female",
+        "personality": [
+          "관찰",
+          "아이디어"
+        ],
+        "visual": [
+          "고글",
+          "다크톤"
+        ],
+        "visualStatus": "RECOVERED_IDENTITY"
+      },
+      {
+        "id": "nova",
+        "name": "노바",
+        "species": "otter/ferret-like",
+        "personality": [
+          "에너지",
+          "도전"
+        ],
+        "visual": [
+          "브라운 계열",
+          "고글",
+          "포니테일"
+        ],
+        "visualStatus": "RECOVERED_IDENTITY_WITH_SUPERSEDED_VARIANT",
+        "superseded": [
+          "rabbit"
+        ]
+      },
+      {
+        "id": "take",
+        "name": "테이크",
+        "species": "panda",
+        "personality": [
+          "정리",
+          "든든함"
+        ],
+        "roleFlavor": "든든한 형",
+        "visualStatus": "REFERENCE_APPEARANCE_LOCKED",
+        "notes": "과거 대화에서 1번 외형 확정 후 Reference 사용"
+      },
+      {
+        "id": "zero",
+        "name": "제로",
+        "species": "penguin",
+        "personality": [
+          "음악",
+          "여유"
+        ],
+        "roleFlavor": "귀여운 오빠",
+        "visual": [
+          "헤드폰",
+          "캡"
+        ],
+        "visualStatus": "RECOVERED_IDENTITY_WITH_SUPERSEDED_VARIANT",
+        "superseded": [
+          "polar bear"
+        ]
+      }
+    ],
+    "order": [
+      "dooby",
+      "lori",
+      "ink",
+      "nova",
+      "take",
+      "zero"
+    ],
+    "visualApprovalRule": "과거 이미지 시안은 회귀검증 증거. 6종 최종 Visual ID 1:1 검증 전에는 이미지 자체를 자동 승인본으로 간주하지 않는다."
   }
 }
