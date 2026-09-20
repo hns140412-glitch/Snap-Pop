@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.11",
+  "version": "2026-09-21.12",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -1180,6 +1180,69 @@
         "app.js:draft stale guard"
       ],
       "gap": "runtime concurrency validation pending"
+    },
+    {
+      "id": "SP-WRITE-007",
+      "domain": "WRITING_CORE",
+      "title": "Ready Learning Master의 confirmed Learning Unit context를 Snap & Pop 글쓰기 분석에 전달",
+      "authority": [
+        "READY_LEARNING_MASTER_V01",
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_CURRENT_CANONICAL"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "Ready-Set:ready-runtime-v07.js buildSpecialistLearningContext",
+        "snap-bridge.js:decodeLearningContext",
+        "learning-context-runtime.js",
+        "app.js:learnerContext"
+      ],
+      "gap": "cross-app runtime/device verification pending"
+    },
+    {
+      "id": "SP-WRITE-008",
+      "domain": "WRITING_CORE",
+      "title": "Learning Context 저신뢰/미확정 시 글쓰기 방향 강제 금지",
+      "authority": [
+        "TAKY",
+        "READY_LEARNING_MASTER_V01",
+        "SNAP_POP_CURRENT_CANONICAL"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "writing-runtime.js:contextPolicy",
+        "writing-runtime.js:LOW_CONTEXT_CONFIDENCE"
+      ],
+      "gap": "runtime scenarios pending"
+    },
+    {
+      "id": "SP-WRITE-009",
+      "domain": "CONNECTED_APP",
+      "title": "Snap & Pop 완료 시 Learning Unit/글쓰기 분석 provenance를 Ready & Set task로 반환",
+      "authority": [
+        "READY_REV07",
+        "SNAP_POP_CURRENT_CANONICAL",
+        "C2S_NO_SILENT_LOSS"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:snap-pop:task-completed",
+        "snap-bridge.js:TASK_COMPLETED",
+        "Ready-Set:ready-runtime-v07.js specialist_result"
+      ],
+      "gap": "cross-app runtime/device verification pending"
     }
   ]
 }
