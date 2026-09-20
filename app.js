@@ -56,16 +56,17 @@ function crewPerformance(identity,kind="observe"){
   return {gesture,motif:motifs.length?motifs[stableHash((identity.crewMember?.type||"")+"|"+kind)%motifs.length]:""};
 }
 async function synthesizeCrewWorldState(){
-  const identity=await resolvedIdentity(),registry=await ensureCrewRegistry(),id=identity.crewMember?.type,entry=registry[id];if(!entry)return null;
-  const now=new Date(),last=entry.lastMetAt?new Date(entry.lastMetAt):null,days=last?Math.max(0,Math.floor((now-last)/86400000)):0;
-  const states=SNAP_RULES?.worldStateEngine?.states||["AT_HUB"];
-  const seed=stableHash([id,last?.toISOString()?.slice(0,10)||"first",now.toISOString().slice(0,10),entry.memories?.length||0].join("|"));
-  const state=states[seed%states.length];
-  const previous=entry.worldState?.state;
-  entry.worldState={state,generatedAt:now.toISOString(),daysSinceSeen:days,synthetic:true};
-  await set("crewRegistry",registry);
-  if(days>=2){const evId=`reunion_${id}_${now.toISOString().slice(0,10)}`;await recordCrewExperience("REUNION",{eventId:evId,daysAway:days,fromState:previous,toState:state})}
-  return entry.worldState;
+  const identity=await resolvedIdentity(),registry=await ensureCrewRegistry(),mainId=identity.crewMember?.type,now=new Date();
+  const background=(SNAP_RULES?.worldStateEngine?.states||["AT_HUB"]).filter(x=>x!=="MAIN_COMPANION");
+  let mainState=null;
+  for(const [id,entry] of Object.entries(registry)){
+    const last=entry.lastMetAt?new Date(entry.lastMetAt):null,days=last?Math.max(0,Math.floor((now-last)/86400000)):0,previous=entry.worldState?.state;
+    const seed=stableHash([id,last?.toISOString()?.slice(0,10)||"first",now.toISOString().slice(0,10),entry.memories?.length||0].join("|"));
+    const state=id===mainId?"MAIN_COMPANION":background[seed%background.length];
+    entry.worldState={state,generatedAt:now.toISOString(),daysSinceSeen:days,synthetic:true};
+    if(id===mainId){mainState=entry.worldState;if(days>=2){const evId=`reunion_${id}_${now.toISOString().slice(0,10)}`;entry.memories=entry.memories||[];if(!entry.memories.some(x=>x.eventId===evId))entry.memories.push({eventId:evId,type:"REUNION",at:now.toISOString(),daysAway:days,fromState:previous,toState:state})}}
+  }
+  await set("crewRegistry",registry);return mainState;
 }
 
 async function migrateLegacyState(){
