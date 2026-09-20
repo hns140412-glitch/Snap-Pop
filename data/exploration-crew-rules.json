@@ -213,107 +213,89 @@
     }
   },
   "roster": {
-    "currentRoster": 20,
-    "extensible": true,
+    "currentTarget": 20,
+    "expandableByFutureUpdate": true,
     "starter": {
-      "count": 6,
-      "firstRunSelection": "CHOOSE_ONE_MAIN_MEMBER",
-      "selectedRole": "MAIN_CREW_MEMBER",
-      "nonSelectedStarterState": "MET_NOT_YET_TRAVELED_TOGETHER",
-      "slots": [
-        {
-          "slotId": "START-01",
-          "memberId": "maltipoo",
-          "status": "DEFINED"
-        },
-        {
-          "slotId": "START-02",
-          "memberId": "cat",
-          "status": "DEFINED"
-        },
-        {
-          "slotId": "START-03",
-          "memberId": "redpanda",
-          "status": "DEFINED"
-        },
-        {
-          "slotId": "START-04",
-          "memberId": "buddy",
-          "status": "DEFINED"
-        },
-        {
-          "slotId": "START-05",
-          "memberId": null,
-          "status": "OPEN_IDENTITY"
-        },
-        {
-          "slotId": "START-06",
-          "memberId": null,
-          "status": "OPEN_IDENTITY"
-        }
-      ]
-    },
-    "remainingDiscoveryPool": {
-      "count": 14,
-      "initialVisibility": "NOT_ALL_EXPOSED",
-      "discoveryContexts": [
-        "CHAPTER",
-        "HUB",
-        "REGION",
-        "WORLD_EVENT",
-        "RECORDING_COMPANION"
+      "selectableCandidateCount": {
+        "min": 5,
+        "max": 6,
+        "status": "LOCKED_BY_LATEST_USER_CORRECTION"
+      },
+      "olderEvidenceCount": 6,
+      "selection": "CHOOSE_ONE_AT_START",
+      "candidateIdentityStatus": "PARTIALLY_DEFINED",
+      "definedMembers": [
+        "maltipoo",
+        "cat",
+        "redpanda",
+        "buddy"
       ],
-      "roleAssignment": "APP_AND_HUB_CONTEXT_DEPENDENT"
+      "unassignedCandidateSlots": 2,
+      "note": "5~6명 후보 중 선택. 확정되지 않은 후보의 이름/외형은 임의 생성 금지."
+    },
+    "worldRegion": {
+      "countStatus": "OPEN_CALCULATE_FROM_ACTUAL_HUB_NEED",
+      "role": "고정 5거점 및 기능별 거점/지역에서 정보원·한 줄 힌트·만남을 제공",
+      "fixedHubCountSnap": 5,
+      "rule": "거점 탐험대원 수를 먼저 역할 기준으로 계산. 거점당 1명 강제 배치 금지.",
+      "canBecomeMainCompanion": true
     },
     "special": {
-      "maximumWithinRoster": 12,
-      "specialMeans": "ENCOUNTER_NOT_POWER",
-      "abilityEqual": true,
+      "maximumCount": 12,
+      "currentCountStatus": "OPEN",
+      "principle": "SPECIAL_IS_ENCOUNTER_NOT_POWER",
       "preEncounterPresentation": [
-        "SHADOW",
-        "TRACE",
-        "RUMOR",
-        "SILHOUETTE",
-        "VOICE_OR_CLUE"
+        "그림자",
+        "흔적",
+        "이슈",
+        "소문",
+        "실루엣"
       ],
-      "encounterContexts": [
-        "RANDOM_RECORDING_COMPANION",
-        "HUB_SUBSTITUTE",
-        "HUB_MICRO_EPISODE",
-        "EXPEDITION",
-        "VACATION_SUBSTITUTE",
-        "WRONG_PLACE",
-        "REGION_EVENT"
+      "encounterSources": [
+        "녹음 시 랜덤 동행",
+        "탐험",
+        "거점 등장",
+        "챕터/지역 사건"
       ],
-      "afterFirstEncounter": [
-        "REGISTER_IN_CREW_ARCHIVE",
-        "ACCUMULATE_MEETING_HISTORY",
-        "MAY_BECOME_MAIN_IF_ALLOWED_BY_MEMBER_RULE"
-      ],
-      "exactCycle": "OPEN",
-      "exactProbability": "OPEN",
-      "exactUnlockConditions": "OPEN",
-      "missedEncounterPenalty": false
-    },
-    "snapPopWorld": {
-      "fixedLandmarks": 5,
-      "travelingUnit": "EXPLORER_PLUS_MAIN_CREW_MEMBER",
-      "hubCrewRole": [
-        "ONE_LINE_HINT",
-        "LOCAL_INFORMATION",
-        "WORLD_REACTION",
-        "MICRO_EPISODE"
-      ],
-      "hubMemberCount": "DERIVE_FROM_ACTUAL_HUB_ROLES_NOT_ONE_PER_HUB",
-      "functionAvailabilityIndependentOfWorldState": true
+      "encounterCadence": {
+        "principle": "1주 또는 2주 간격 등 주기 요소를 둬 과밀 노출 방지",
+        "exactPerMemberDays": "OPEN",
+        "encounterWindow": "ADOPTED_CONCEPT_NOT_FIXED_NUMERIC_RULE",
+        "cooldown": "ADOPTED_CONCEPT_NOT_FIXED_NUMERIC_RULE"
+      },
+      "afterEncounter": {
+        "selectableAsMainCompanion": true,
+        "recordEncounterMemory": true
+      },
+      "hubAppearance": {
+        "triggerDialogueFromCurrentMainCrew": true,
+        "tone": "재미난 이슈/대화"
+      },
+      "missedEncounterPenalty": false,
+      "noPowerAdvantage": true
     },
     "invariants": {
+      "currentRosterTarget": 20,
+      "starterSelectionMin": 5,
+      "starterSelectionMax": 6,
+      "specialMaximum": 12,
       "allMembersSameFunctionalAbility": true,
-      "rarityIsNotPower": true,
-      "affinityIsNotPower": true,
-      "worldStateIsNotFunctionAvailability": true,
-      "currentRoster20IsNotHardTechnicalLimit": true,
-      "preserveIdentityHistoryOnExpansion": true
+      "growthAddsMembersGradually": true,
+      "avoidTooManyAtStart": true,
+      "futureUpdateMayExpandRoster": true,
+      "differencesOnly": [
+        "성격",
+        "분위기",
+        "말투",
+        "표정",
+        "리액션",
+        "행동 습관",
+        "세계관 이야기",
+        "만남 방식",
+        "지역",
+        "친밀도",
+        "추억"
+      ]
     }
   },
   "evidence": {
@@ -393,32 +375,22 @@
     ]
   },
   "relationship": {
-    "affinityMeaning": "HOW_OFTEN_AND_WHAT_WAS_EXPERIENCED_TOGETHER",
-    "sources": [
-      "TOGETHER_EXPLORATION",
-      "RECORDING_COMPANION",
-      "BADGE_DISCOVERY",
-      "RETURN_AFTER_DIFFICULTY",
-      "SPECIAL_EVENT",
-      "MEMORY_OR_JOURNAL_EVENT"
+    "enabled": true,
+    "source": "자주 만나고 실제로 함께한 경험",
+    "numericScoreVisible": false,
+    "affectsPower": false,
+    "unlocksExpressionOnly": true,
+    "examples": [
+      "표정",
+      "포즈",
+      "인사",
+      "별명",
+      "농담",
+      "축하 동작",
+      "호칭",
+      "특별 일러스트"
     ],
-    "affects": [
-      "DIALOGUE_FAMILIARITY",
-      "GESTURE",
-      "GREETING",
-      "NICKNAME",
-      "JOKE",
-      "CELEBRATION",
-      "SHARED_ILLUSTRATION"
-    ],
-    "neverAffects": [
-      "FUNCTION",
-      "LEARNING_EFFECT",
-      "REWARD_RATE",
-      "SUCCESS_RATE"
-    ],
-    "visibleExactNumericScore": false,
-    "stageNames": "OPEN"
+    "historyPreserved": true
   },
   "identity": {
     "immutableId": "Explorer_ID",
@@ -513,5 +485,37 @@
     "EXACT_SPECIAL_ENCOUNTER_PROBABILITY",
     "EXACT_AFFINITY_STAGE_NAMES",
     "FINAL_VISUAL_SPECIES_AND_NAMES"
-  ]
+  ],
+  "sourceStatus": {
+    "latestUserCorrection": "초기 선택 후보는 5~6명",
+    "recoveredUserEvidenceDate": "2026-09-08",
+    "rule": "LATEST_USER_CORRECTION_OVERRIDES_OLDER_USER_EVIDENCE_AND_ASSISTANT_PROPOSALS"
+  },
+  "naming": {
+    "starter": {
+      "directInput": true,
+      "recommendation": true
+    },
+    "discovered": {
+      "randomInitialName": true
+    },
+    "whenSetAsMain": {
+      "renameAllowed": true
+    },
+    "currentNamePersistsWhenMainChanges": true,
+    "previousNameShownInDetail": true,
+    "nameHistoryPermanent": true,
+    "stableInternalIdRequired": true
+  },
+  "discovery": {
+    "states": [
+      "UNDISCOVERED",
+      "TRACE",
+      "ENCOUNTERED",
+      "KNOWN",
+      "SELECTABLE_MAIN"
+    ],
+    "growthPrinciple": "성장하면서 천천히 추가",
+    "farmingProtection": "발견 속도는 사용량에 정비례하지 않음"
+  }
 }
