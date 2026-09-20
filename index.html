@@ -38,6 +38,26 @@
  </article>
  <div id="recordList" class="cards"></div>
 </section>
+<section id="exploreHub" class="view parchment">
+ <header class="pageTitle"><span>생각 · 궁금증 · 표현</span><h1>탐험</h1><p>궁금한 걸 물어보거나, 떠오른 생각을 펼치거나, 글쓰기 탐험을 시작해요.</p></header>
+ <article class="hubHero">
+  <div class="hubCrewLine"><b id="hubCrewName">탐험대원</b><span id="hubCrewLine">뭐가 궁금해? 같이 풀어보자.</span></div>
+  <div class="hubAsk">
+   <textarea id="hubCloudInput" rows="3" placeholder="궁금한 것, 떠오른 생각, 영어로 표현하고 싶은 말을 적어봐요."></textarea>
+   <div class="hubAskActions">
+    <button class="voice" id="hubVoiceBtn" type="button">말로 묻기</button>
+    <button class="primary" id="hubAskBtn" type="button">탐험대에게 물어보기</button>
+   </div>
+  </div>
+  <div id="hubCloudAnswer" class="cloudAnswer" hidden aria-live="polite"></div>
+  <button class="soft wide" id="hubSpeakLast" type="button">답변 듣기</button>
+ </article>
+ <div class="hubPaths">
+  <button class="hubPath" id="hubThinkBtn" type="button"><b>생각 펼치기</b><span>장면·마음·단서·연결로 아이디어를 넓혀요.</span></button>
+  <button class="hubPath" id="hubMapBtn" type="button"><b>5가지 글쓰기 탐험</b><span>아이디어·감정·묘사·관점·마무리 도구를 골라요.</span></button>
+  <button class="hubPath" id="hubResumeBtn" type="button"><b>이어 하던 탐험</b><span id="hubResumeMeta">진행 중 탐험이 있으면 여기서 이어가요.</span></button>
+ </div>
+</section>
 <section id="explore" class="view parchment">
  <header class="pageTitle"><span>3단계 탐험</span><h1 id="exploreTitle">탐험 진행</h1></header>
  <div class="modeSwitch" role="group" aria-label="표현 언어">
@@ -183,7 +203,7 @@
 <nav id="nav" class="nav">
  <button data-view="map" class="on"><img src="assets/icons/map.svg" alt=""><span>지도</span></button>
  <button data-view="records"><img src="assets/icons/records.svg" alt=""><span>기록</span></button>
- <button data-view="explore"><img src="assets/icons/explore.svg" alt=""><span>탐험</span></button>
+ <button data-view="exploreHub"><img src="assets/icons/explore.svg" alt=""><span>탐험</span></button>
  <button data-view="gems"><img src="assets/icons/gems.svg" alt=""><span>보석함</span></button>
  <button data-view="growth"><img src="assets/icons/growth.svg" alt=""><span>성장</span></button>
 </nav>
