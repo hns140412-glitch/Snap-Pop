@@ -166,6 +166,55 @@ These engines share:
 - voice accessibility;
 - memory/records when appropriate.
 
+## 7.1 Imagination Cloud — OpenAI Intelligence Gateway
+
+상상구름은 단순 아이디어 칩 UI가 아니다.
+
+사용자-facing 기능:
+- 생각 꺼내기;
+- 궁금증 묻기;
+- 설명 듣기;
+- 비교하기;
+- 이유/원인 이해하기;
+- 사회·역사·문화·과학 등 범용 질문 해결;
+- 한글 표현;
+- 영어 표현;
+- 번역/의미 연결;
+- 글/말/탐험으로 확장;
+- 원래 탐험으로 복귀.
+
+Internal role:
+`IMAGINATION_CLOUD = SNAP_POP_INTELLIGENCE_GATEWAY`
+
+Its internal execution layer may use OpenAI model/tool capabilities to:
+- classify intent;
+- answer/explain;
+- search when fresh information is needed;
+- retrieve project/local knowledge when applicable;
+- transform/translate/rephrase without replacing the child's meaning;
+- route to app functions;
+- return bounded results to the Snap & Pop experience.
+
+The child must not be exposed to raw platform/tool complexity.
+
+The exploration crew standard sits **above** the model/tool layer:
+- child agency first;
+- no shame;
+- no teacher/grader persona;
+- no fabricated certainty;
+- smallest useful answer first;
+- no forced writing conversion;
+- no question flooding;
+- age-appropriate explanation;
+- Korean/English meaning preservation.
+
+Important status distinction:
+
+`ARCHITECTURE_CONFIRMED != OPENAI_RUNTIME_CONNECTED`
+
+The current branch contains a local/basic `cloudFragments()` implementation.
+That implementation is a placeholder/minimal residue of the larger Imagination Cloud concept and must not be mistaken for the complete OpenAI-backed gateway.
+
 ## 8. Current implementation diagnosis
 
 Current branch:
