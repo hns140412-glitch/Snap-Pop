@@ -84,3 +84,13 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 
 
 .crewReactionOverlay{display:grid;grid-template-columns:auto 1fr;gap:2px 7px;align-items:center}.crewReactionOverlay .reactionMotif{grid-row:1/3;display:grid;place-items:center;min-width:42px;min-height:34px;border-radius:10px;background:#efe2bd;font-size:9px;font-weight:900;color:#5d694f}.crewReactionOverlay b{font-size:10px;color:#355645}.crewReactionOverlay>span:last-child{font-size:11px}.reduceMotion .crewReactionOverlay .reactionMotif{transform:none!important}
+
+
+/* IMAGINATION CLOUD 2026-09-21 */
+.cloudPanel{margin-top:14px;padding:14px;border:1px solid #aa945f66;border-radius:16px;background:#fffaf0cc}
+.cloudHead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.cloudHead>div{display:flex;flex-direction:column;gap:3px}.cloudHead b{font-family:"Noto Serif CJK KR","Batang",serif;font-size:17px}.cloudHead span{font-size:12px;opacity:.72}
+.cloudMini{padding:7px 9px;white-space:nowrap}.cloudAskRow{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px;align-items:stretch}.cloudAskRow textarea{min-height:74px;resize:vertical;border:1px solid #927c4f55;border-radius:12px;padding:10px;background:#fffdf7;color:var(--ink)}.cloudVoice{min-width:78px;padding:8px}
+.cloudActions{display:flex;align-items:center;gap:8px;margin-top:8px}.cloudActions .primary{flex:1}.cloudMode{font-size:11px;border:1px solid #927c4f44;border-radius:999px;padding:5px 8px;white-space:nowrap}
+.cloudAnswer{margin-top:12px;border-radius:14px;background:#f4ecd8;padding:12px;border:1px solid #ab955f55}.cloudAnswerHead{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.cloudAnswerHead b{font-size:14px}.cloudAnswerHead span{font-size:10px;border:1px solid #927c4f55;border-radius:999px;padding:4px 7px}.cloudCore{margin:9px 0 0;line-height:1.55}
+.mindMap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.mindNode{padding:9px;border-radius:12px;background:#fffdf7;border:1px solid #b7a47744;display:flex;flex-direction:column;gap:4px}.mindNode b{font-size:11px}.mindNode span{font-size:12px;line-height:1.4}.cloudExample{margin:9px 0 0;font-size:12px;opacity:.8;line-height:1.5}
+@media(max-width:360px){.cloudAskRow{grid-template-columns:1fr}.cloudVoice{width:100%}.mindMap{grid-template-columns:1fr}.cloudActions{align-items:stretch;flex-direction:column}.cloudMode{align-self:flex-start}}
