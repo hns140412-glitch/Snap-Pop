@@ -1374,18 +1374,32 @@
       "childAuthorshipRequired": true
     },
     "coreRule": "ONE_EVOLVING_DRAFT_ONE_NEXT_MOVE",
-    "learningProvider": {
-      "role": "ANALYZE_CURRENT_DRAFT_AND_RETURN_ONE_NEXT_MOVE",
-      "childAuthorshipRequired": true,
-      "noFinalAnswerAuthoring": true,
-      "noGrading": true,
-      "fallback": "LOCAL_WRITING_ANALYSIS"
-    },
     "crossLens": {
       "allowed": true,
       "autoSwitch": false,
       "maxSuggestionAtOnce": 1,
       "rule": "현재 lens를 강제로 바꾸지 않고 필요할 때 다른 lens 하나만 보조 제안"
+    },
+    "semanticWritingProvider": {
+      "name": "SnapPopSemanticWritingProvider",
+      "role": "ANALYZE_CHILD_DRAFT_MEANING_ONLY",
+      "backingEngine": "OPENAI_WHEN_CONNECTED",
+      "fallback": "LOCAL_WRITING_ANALYSIS",
+      "forbidden": [
+        "FINAL_DRAFT_AUTHORING",
+        "REWRITE_CHILD_TEXT",
+        "SUGGEST_FULL_SENTENCE",
+        "GRADING",
+        "MULTIPLE_NEXT_MOVES"
+      ],
+      "output": [
+        "FOCUS",
+        "ONE_NEXT_MOVE_QUESTION",
+        "ONE_SMALL_HINT",
+        "OPTIONAL_ONE_LENS",
+        "SEMANTIC_SIGNALS",
+        "CONFIDENCE"
+      ]
     }
   },
   "imaginationCloud": {
