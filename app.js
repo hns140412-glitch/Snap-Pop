@@ -169,19 +169,14 @@ function calcExp(answers,completedCount,language="ko"){
 async function loadSettings(){const s=await get("settings")||{},asset=await get("characterSourceAsset"),identity=await resolvedIdentity();$("#autoRead").checked=!!s.autoRead;$("#reduceMotion").checked=!!s.reduceMotion;document.documentElement.classList.toggle("reduceMotion",!!s.reduceMotion);$("#characterSummary").textContent=identity.profile.name?`탐험가 · ${identity.profile.name}`:"Ready & Set 프로필 연동 대기";$("#crewMemberSummary").textContent=`${crewMemberRule(identity).label} · ${crewMemberName(identity)}`;$("#characterName").value=identity.profile.name||"";$("#crewMemberName").value=identity.crewMember.name||"두비";$$("[data-crew-member-type]").forEach(b=>b.classList.toggle("on",b.dataset.crewMemberType===identity.crewMember.type));if(asset?.originalProfilePhoto||identity.profile.photo){$("#profilePhotoPreview").hidden=false;$("#profilePhotoImage").src=asset?.originalProfilePhoto||identity.profile.photo;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":asset?.characterMasterId?"Character Master 연결됨":"로컬 인트로 프로필 · 통합 시 Ready & Set 우선"}else{$("#profilePhotoPreview").hidden=true;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":"로컬 인트로 프로필 없음"}}
 async function renderCrewRoster(){
   if(!SNAP_RULES?.roster)return;
-  const identity=await resolvedIdentity(),roster=SNAP_RULES.roster,encounters=await get("crewEncounters")||{},board=SNAP_RULES.designBoard20||[];
-  const starter=$("#starterCrewRoster"),runtime=$("#runtimeCrewRoster"),world=$("#worldCrewRoster"),special=$("#specialCrewRoster");
+  const identity=await resolvedIdentity(),roster=SNAP_RULES.roster,encounters=await get("crewEncounters")||{},board=SNAP_RULES.designBoard20||[],pool=SNAP_RULES.definedCharacterLineages||{};
+  const starter=$("#starterCrewRoster"),world=$("#worldCrewRoster"),special=$("#specialCrewRoster");
   const card=x=>`<div class="crewRosterCard ${x.locked?"locked":x.unassigned?"unassigned":""}"><b>${html(x.title)}</b><span>${html(x.meta||"")}</span></div>`;
 
   if(starter){
-    const slots=board.filter(x=>x.role==="STARTER");
-    starter.innerHTML=slots.map(x=>card({title:`${String(x.slot).padStart(2,"0")} · ${x.core}`,meta:`${x.worldFlavor} · ${x.silhouette} · 종족/이름 OPEN`,unassigned:true})).join("");
-  }
-
-  if(runtime){
-    const pool=SNAP_RULES.definedCharacterLineages||{};
-    runtime.innerHTML=Object.entries(pool).map(([id,m])=>{const on=identity.crewMember.type===id;return `<button type="button" class="crewRosterCard ${on?"on":""}" data-crew-member-id="${id}"><b>${html(m.label)}</b><span>${html(m.personality||"")} · 기존 런타임 계보</span></button>`}).join("");
-    runtime.onclick=async e=>{const b=e.target.closest("[data-crew-member-id]");if(!b)return;const id=b.dataset.crewMemberId,pool=SNAP_RULES.definedCharacterLineages||{},rule=pool[id];if(!rule)return;const next=await selectCrewMember(id);$("#crewMemberName").value=next.crewMember.name;$("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""}`;await renderIdentityPresence();await renderCrewRoster()};
+    const order=SNAP_RULES.recoveredStarterSix?.order||Object.keys(pool);
+    starter.innerHTML=order.map(id=>{const m=pool[id];if(!m)return "";const on=identity.crewMember.type===id;const meta=[m.species,m.personality,m.visualStatus==="REFERENCE_APPEARANCE_LOCKED"?"Reference 외형 계보":"Visual ID 검증 필요"].filter(Boolean).join(" · ");return `<button type="button" class="crewRosterCard ${on?"on":""}" data-crew-member-id="${id}"><b>${html(m.label)}</b><span>${html(meta)}</span></button>`}).join("");
+    starter.onclick=async e=>{const b=e.target.closest("[data-crew-member-id]");if(!b)return;const id=b.dataset.crewMemberId,rule=pool[id];if(!rule)return;const next=await selectCrewMember(id);$("#crewMemberName").value=next.crewMember.name;$("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""}`;await renderIdentityPresence();await renderCrewRoster()};
   }
 
   if(world){
