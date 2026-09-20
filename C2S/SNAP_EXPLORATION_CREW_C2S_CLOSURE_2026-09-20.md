@@ -158,3 +158,10 @@ PERSONALITY → HABIT → REACTION → RELATIONSHIP_EXCEPTION → WORLD_ROUTINE 
 - **OPEN_SEMANTICS:** 6~13세 표기의 의미.
 - **ARCHITECTURE CORRECTION:** six Personality Slots는 Character Identity 슬롯이 아니라 Behavior Archetype / Interaction Mode.
 - **FALSE_CONVERGENCE prevention:** 의미 유사성으로 Core 6와 six Personality Slots를 강제 1:1 매핑하지 않음.
+
+
+## Evidence Recovery Pass linkage
+- Recovery record: `C2S/SNAP_EXPLORATION_CREW_EVIDENCE_RECOVERY_PASS_2026-09-20.md`
+- Exact quote misses were explicitly separated from source absence.
+- Legacy/semantic/decision-marker/attachment/reverse-trace search was performed across five source families.
+- Personality Pack detail remains PARTIAL / RECOVERY_REQUIRED rather than falsely ABSENT.
