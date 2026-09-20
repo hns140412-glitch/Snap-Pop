@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.3",
+  "version": "2026-09-21.4",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -803,6 +803,22 @@
       "runtimeVerified": false,
       "deviceVerified": false,
       "gap": "모델/tool 출력 위 중앙 guard 미구현"
+    },
+    {
+      "id": "SP-IMAGINE-006",
+      "domain": "IMAGINATION_CLOUD",
+      "title": "탐험대가 최종 답변 주체가 되는 response ownership",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE",
+        "EXPLORATION_CREW_RULES"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "OpenAI/model/tool 중간 결과를 탐험대 Guard/voice로 변환하는 중앙 response pipeline 미구현"
     }
   ]
 }
