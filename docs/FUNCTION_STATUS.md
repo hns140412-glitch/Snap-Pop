@@ -7,11 +7,13 @@
 > `data/snap-pop-requirement-matrix.json`
 > and summarized by:
 > `C2S/SNAP_POP_FULL_IMPLEMENTATION_AUDIT_2026-09-21.md`
+> and scorecard:
+> `data/snap-pop-implementation-scorecard.json`
 
 ## Current headline
 
-- FULL SCOPE CODED estimate (ORIGINAL + crew + bridge + expansion): **~65%**
-- ORIGINAL/current-core coded coverage excluding FAMILY Expansion: **~79%**
+- FULL SCOPE CODED estimate (ORIGINAL + crew + bridge + expansion): **~67%**
+- ORIGINAL/current-core coded coverage excluding FAMILY Expansion: **~73.9%**
 - STATIC_VERIFIED: partial/strong for existing prototype checks
 - RUNTIME_VERIFIED: **NOT CLOSED**
 - DEVICE_VERIFIED: **NOT ESTABLISHED**
