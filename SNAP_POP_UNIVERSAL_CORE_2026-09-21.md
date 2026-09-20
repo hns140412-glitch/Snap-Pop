@@ -215,6 +215,32 @@ Important status distinction:
 The current branch contains a local/basic `cloudFragments()` implementation.
 That implementation is a placeholder/minimal residue of the larger Imagination Cloud concept and must not be mistaken for the complete OpenAI-backed gateway.
 
+## 7.2 Response ownership — exploration crew is the speaking subject
+
+The response subject is the **exploration crew**, not OpenAI.
+
+Architecture:
+`child input`
+→ `Snap & Pop intent/routing`
+→ `OpenAI model/tools as internal engine when needed`
+→ `exploration crew policy/voice/relationship guard`
+→ `crew-member-facing response`
+
+Hard rules:
+- user-facing answer must be delivered through exploration crew identity/interaction rules;
+- raw "AI answer" voice is not the product voice;
+- model/tool output is intermediate material, not final child-facing copy;
+- current main crew member context should govern delivery when a main companion exists;
+- Guest crew members may participate only under crew orchestration rules;
+- answer depth/tone/humor/follow-up must obey exploration crew rules;
+- factual uncertainty must not be hidden by character voice;
+- character personality must never override truthfulness or clarity;
+- crew members may differ in expression, but not in factual quality or learning power.
+
+Therefore:
+`OPENAI = INTERNAL INTELLIGENCE ENGINE`
+`EXPLORATION_CREW = RESPONSE OWNER / USER-FACING SUBJECT`
+
 ## 8. Current implementation diagnosis
 
 Current branch:
