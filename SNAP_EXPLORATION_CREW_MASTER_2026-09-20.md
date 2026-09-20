@@ -573,3 +573,6 @@ Primary recovered source: Google Drive sanitized transcript `P03_SANITIZED_6aa5d
 
 **Correction:** 과거 임시 Canonical에 들어갔던 `worldRegion.minimumCapacity=2` 같은 역할별 최소 인원은 사용자 직접 확정치가 아니므로 제거한다. 수학적으로 남는 인원이 있더라도 실제 역할 배치는 앱/거점 분석 후 결정한다.
 
+
+### C2S Visual Evidence Clarification
+- 로리 영문 표기는 사용자 제공 확정 보드의 `Tori`와 현행 계보의 `Lori`가 충돌하므로 **OPEN_CORRECTION_CHECK**이다. 한국어 이름 `로리`는 잠금한다.
