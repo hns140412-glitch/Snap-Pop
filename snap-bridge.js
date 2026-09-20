@@ -4,11 +4,42 @@
   const BRIDGE_VERSION = '2026.09.20-a';
   const CONTEXT_KEY = 'snap_pop_shared_context_v1';
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
-  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','target_time_ms','session_start_at','paused_at','issue_ms'];
+  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','target_time_ms','session_start_at','paused_at','issue_ms','learning_context'];
 
   const iso = () => new Date().toISOString();
   const eventId = () => `snap_event_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+  function decodeLearningContext(raw) {
+    if (!raw || typeof raw !== 'string' || raw.length > 6000) return null;
+    try {
+      const normalized=raw.replace(/-/g,'+').replace(/_/g,'/');
+      const padded=normalized+'='.repeat((4-normalized.length%4)%4);
+      const binary=atob(padded);
+      const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
+      const value=JSON.parse(new TextDecoder().decode(bytes));
+      if (!value || value.contract_version!=='READY_LEARNING_CONTEXT_V1') return null;
+      const list=v=>Array.isArray(v)?v.filter(x=>typeof x==='string').slice(0,12):[];
+      return {
+        contract_version:'READY_LEARNING_CONTEXT_V1',
+        learning_unit_id:String(value.learning_unit_id||'').slice(0,120)||null,
+        analysis_id:String(value.analysis_id||'').slice(0,120)||null,
+        assignment_id:String(value.assignment_id||'').slice(0,120)||null,
+        subject:String(value.subject||'').slice(0,80)||null,
+        concept_skill_target:String(value.concept_skill_target||'').slice(0,180)||null,
+        activity_types:list(value.activity_types),
+        cognitive_load_profile:list(value.cognitive_load_profile),
+        divisible_boundary:String(value.divisible_boundary||'').slice(0,80)||null,
+        confidence:Number.isFinite(value.confidence)?Math.max(0,Math.min(1,value.confidence)):null,
+        unresolved_flags:list(value.unresolved_flags),
+        provenance:{
+          engine:String(value.provenance?.engine||'').slice(0,80)||null,
+          version:String(value.provenance?.version||'').slice(0,40)||null,
+          confirmation_state:String(value.provenance?.confirmation_state||'').slice(0,40)||null
+        }
+      };
+    } catch { return null; }
+  }
 
   function readStoredContext() {
     try { return JSON.parse(sessionStorage.getItem(CONTEXT_KEY) || '{}') || {}; }
@@ -237,7 +268,8 @@
       context: () => ({ ...context }),
       emit,
       returnToBase,
-      validate
+      validate,
+      learningContext: () => decodeLearningContext(context.learning_context)
     });
     window.dispatchEvent(new CustomEvent('snap-pop:bridge-ready'));
   }
