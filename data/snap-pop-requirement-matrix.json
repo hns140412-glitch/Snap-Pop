@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.10",
+  "version": "2026-09-21.11",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -1092,15 +1092,16 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": true,
+      "coded": "PARTIAL",
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "writing-runtime.js",
-        "app.js:refreshWritingMove"
+        "writing-runtime.js:analyze",
+        "app.js:analyzeWritingMove",
+        "app.js:writingAnalysisSeq"
       ],
-      "gap": "Learning Engine/provider-backed deeper analysis pending"
+      "gap": "Learning Provider interface implemented; actual external Learning Engine not yet connected"
     },
     {
       "id": "SP-WRITE-003",
@@ -1116,9 +1117,10 @@
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "writing-runtime.js landmark-specific moves"
+        "writing-runtime.js:suggestedLens",
+        "app.js:renderWritingBridge"
       ],
-      "gap": "cross-lens routing and automatic lens suggestion pending"
+      "gap": "one optional cross-lens suggestion implemented; semantic provider depth pending"
     },
     {
       "id": "SP-WRITE-004",
@@ -1135,9 +1137,49 @@
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:focusGuide",
-        "app.js:stepSpecificReaction"
+        "app.js:stepSpecificReaction",
+        "app.js:analyzeWritingMove"
       ],
-      "gap": "semantic/learning-engine grounding pending"
+      "gap": "external Learning Engine semantic grounding not connected"
+    },
+    {
+      "id": "SP-WRITE-005",
+      "domain": "WRITING_CORE",
+      "title": "Learning Engine provider는 현재 초안을 분석해 한 가지 next move만 반환",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE",
+        "GUIDE_RULES"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "writing-runtime.js:SnapPopLearningProvider contract",
+        "app.js:analyzeWritingMove"
+      ],
+      "gap": "actual Learning Engine provider/backend connection pending"
+    },
+    {
+      "id": "SP-WRITE-006",
+      "domain": "WRITING_CORE",
+      "title": "느린 분석 결과가 최신 초안을 덮어쓰지 않는 stale-result guard",
+      "authority": [
+        "TAKY",
+        "WRITING_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:writingAnalysisSeq",
+        "app.js:draft stale guard"
+      ],
+      "gap": "runtime concurrency validation pending"
     }
   ]
 }
