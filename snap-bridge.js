@@ -232,6 +232,7 @@
       ensureBaseCampChip();
     });
 
+    window.dispatchEvent(new CustomEvent('snap-pop:bridge-ready'));
     window.SnapPopBridge = Object.freeze({
       version: BRIDGE_VERSION,
       context: () => ({ ...context }),
