@@ -136,27 +136,33 @@ function calcExp(answers,completedCount,language="ko"){
 async function loadSettings(){const s=await get("settings")||{},asset=await get("characterSourceAsset"),identity=await resolvedIdentity();$("#autoRead").checked=!!s.autoRead;$("#reduceMotion").checked=!!s.reduceMotion;document.documentElement.classList.toggle("reduceMotion",!!s.reduceMotion);$("#characterSummary").textContent=identity.profile.name?`탐험가 · ${identity.profile.name}`:"Ready & Set 프로필 연동 대기";$("#crewMemberSummary").textContent=`${crewMemberRule(identity).label} · ${crewMemberName(identity)}`;$("#characterName").value=identity.profile.name||"";$("#crewMemberName").value=identity.crewMember.name||"모카";$$("[data-crew-member-type]").forEach(b=>b.classList.toggle("on",b.dataset.crewMemberType===identity.crewMember.type));if(asset?.originalProfilePhoto||identity.profile.photo){$("#profilePhotoPreview").hidden=false;$("#profilePhotoImage").src=asset?.originalProfilePhoto||identity.profile.photo;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":asset?.characterMasterId?"Character Master 연결됨":"로컬 인트로 프로필 · 통합 시 Ready & Set 우선"}else{$("#profilePhotoPreview").hidden=true;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":"로컬 인트로 프로필 없음"}}
 async function renderCrewRoster(){
   if(!SNAP_RULES?.roster)return;
-  const identity=await resolvedIdentity(),roster=SNAP_RULES.roster,encounters=await get("crewEncounters")||{};
+  const identity=await resolvedIdentity(),roster=SNAP_RULES.roster,encounters=await get("crewEncounters")||{},board=SNAP_RULES.designBoard20||[];
   const starter=$("#starterCrewRoster"),runtime=$("#runtimeCrewRoster"),world=$("#worldCrewRoster"),special=$("#specialCrewRoster");
+  const card=x=>`<div class="crewRosterCard ${x.locked?"locked":x.unassigned?"unassigned":""}"><b>${html(x.title)}</b><span>${html(x.meta||"")}</span></div>`;
+
   if(starter){
-    const slots=roster.starter?.personalitySlots||[];
-    starter.innerHTML=slots.map((x,i)=>`<div class="crewRosterCard unassigned"><b>${i+1}. ${html(x.archetype||"OPEN")}</b><span>${html((x.traits||[]).join(" · "))} · 종족/외형 OPEN</span></div>`).join("");
+    const slots=board.filter(x=>x.role==="STARTER");
+    starter.innerHTML=slots.map(x=>card({title:`${String(x.slot).padStart(2,"0")} · ${x.core}`,meta:`${x.worldFlavor} · ${x.silhouette} · 종족/이름 OPEN`,unassigned:true})).join("");
   }
+
   if(runtime){
     const pool=SNAP_RULES.definedCharacterLineages||{};
-    runtime.innerHTML=Object.entries(pool).map(([id,m])=>{const on=identity.crewMember.type===id;return `<button type="button" class="crewRosterCard ${on?"on":""}" data-crew-member-id="${id}"><b>${html(m.label)}</b><span>${html(m.personality||"")} · 임시 런타임 계보</span></button>`}).join("");
+    runtime.innerHTML=Object.entries(pool).map(([id,m])=>{const on=identity.crewMember.type===id;return `<button type="button" class="crewRosterCard ${on?"on":""}" data-crew-member-id="${id}"><b>${html(m.label)}</b><span>${html(m.personality||"")} · 기존 런타임 계보</span></button>`}).join("");
     runtime.onclick=async e=>{const b=e.target.closest("[data-crew-member-id]");if(!b)return;const id=b.dataset.crewMemberId,pool=SNAP_RULES.definedCharacterLineages||{},rule=pool[id];if(!rule)return;const next=await selectCrewMember(id);$("#crewMemberName").value=next.crewMember.name;$("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""}`;await renderIdentityPresence();await renderCrewRoster()};
   }
+
   if(world){
-    const working=roster.worldRegion?.laterDesignBoardCount;
-    world.innerHTML=`<div class="crewRosterCard unassigned"><b>세계·거점 탐험대원 · 인원 OPEN</b><span>역할 수를 먼저 계산 · 설계판 ${working||"OPEN"}명은 WORKING 값</span></div>`;
+    const slots=board.filter(x=>x.role==="WORLD");
+    world.innerHTML=slots.map(x=>card({title:`${String(x.slot).padStart(2,"0")} · ${x.core}`,meta:`${x.worldFlavor} · ${x.visualCue} · WORKING ROLE SLOT`,unassigned:true})).join("")+
+      card({title:"거점 인원 규칙",meta:"6명은 WORKING 설계판 · 실제 인원은 앱/거점 역할 계산 후 확정",unassigned:true});
   }
+
   if(special){
-    const max=roster.special?.hardMaximum||12,working=roster.special?.laterDesignBoardCount||0;
-    const known=Object.entries(encounters).filter(([,v])=>v&&v.status&&v.status!=="UNDISCOVERED");
-    const cards=known.map(([id,v])=>`<div class="crewRosterCard ${v.status==="SELECTABLE"?"":"locked"}"><b>${html(id)}</b><span>${html(v.status)} · 실제 만남 이력</span></div>`);
-    cards.push(`<div class="crewRosterCard unassigned"><b>스페셜 규모 OPEN</b><span>WORKING ${working||"OPEN"}명 · 최대 ${max}명 이하 · Encounter Gimmick 우선</span></div>`);
-    special.innerHTML=cards.join("");
+    const slots=board.filter(x=>x.role==="SPECIAL"),max=roster.special?.hardMaximum||12;
+    special.innerHTML=slots.map(x=>{
+      const state=encounters[`slot-${x.slot}`]?.status||"UNDISCOVERED";
+      return card({title:`${String(x.slot).padStart(2,"0")} · ${x.core}`,meta:`${x.encounterGimmick||x.worldFlavor} · ${state==="UNDISCOVERED"?"미발견/설계 슬롯":state}`,locked:state==="UNDISCOVERED"});
+    }).join("")+card({title:`확장 여유 · 최대 ${max}명 이하`,meta:"현재 8개 WORKING 스페셜 슬롯 + 추가 최대 4개 여유 · 실제 인원 OPEN",unassigned:true});
   }
 }
 function promptFor(landmark,step,language="ko"){const bank=QUESTION_BANK[landmark]||QUESTION_BANK.idea;return (bank[language]||bank.ko)[Math.min(2,step)]}
