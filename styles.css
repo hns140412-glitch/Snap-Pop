@@ -63,3 +63,6 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 .handoffWord{margin-top:10px;padding:9px 11px;border:1px solid #a4b48e;border-radius:12px;background:#edf4e8;font-size:11px;font-weight:800}
 .cloudPanel{margin-top:10px;padding:12px;border:1px dashed #9eae93;border-radius:16px;background:#eef5e8}.cloudPanel b{font-family:"Noto Serif CJK KR","Batang",serif}.cloudPanel p{font-size:11px;line-height:1.5;color:#5b6d62}.cloudChips{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0 11px}.cloudChips button{border:1px solid #adbd9e;background:#fffdf4;border-radius:99px;padding:7px 9px;font-size:10px;color:#315244}
 .specialInvite{position:absolute;z-index:11;left:14px;bottom:22px;border:1px solid #c8ab61;background:#fff2c9e8;color:#23483a;border-radius:999px;padding:10px 12px;font-weight:900;box-shadow:0 10px 24px #17302535}
+
+
+.modeSwitch{display:flex;gap:7px;margin:8px 0 12px}.modeSwitch .on{background:#0c4036;color:#fff4c7;border-color:#0c4036}.bonusPanel{margin-top:10px}.bonusPanel textarea{min-height:120px}
