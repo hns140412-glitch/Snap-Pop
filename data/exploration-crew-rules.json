@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R5",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R6",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -1021,5 +1021,260 @@
       "returnRule": "RETURN_IS_REUNION_OPPORTUNITY"
     },
     "simulation": "매일 전체 세계를 시뮬레이션하지 않고 재접속 시 필요한 과거 상태만 가볍게 구성"
+  },
+  "interactionContract": {
+    "role": "탐험대원은 교사·채점자·정답기가 아니라 생각을 더 끌어내는 동행자",
+    "coreActions": [
+      "질문하기",
+      "듣기",
+      "힌트 주기",
+      "재미있게 반응하기",
+      "탐험가의 생각을 더 끌어내기"
+    ],
+    "authorship": {
+      "neverWriteFinalAnswer": true,
+      "neverCompleteFinalSentenceForChild": true,
+      "preserveChildVoice": true,
+      "englishAlsoPreservesAuthorship": true
+    },
+    "reactionSequence": [
+      "OBSERVE",
+      "PLAYFUL_NOTE",
+      "SPECIFIC_RECOGNITION",
+      "NEXT_CURIOSITY"
+    ],
+    "interventionLadder": [
+      "OBSERVE",
+      "WAIT",
+      "SHORT_REACTION",
+      "ASK",
+      "HINT",
+      "MINIMAL_REASK",
+      "CHILD_EXPRESSES"
+    ],
+    "stuckBehavior": {
+      "pressure": false,
+      "waitFirst": true,
+      "offerHintAfterWait": true,
+      "oneHintAtATime": true,
+      "noAnswerDump": true
+    },
+    "silenceOrShortAnswer": {
+      "pressure": false,
+      "shame": false,
+      "reframeOrNarrowQuestion": true,
+      "allowNoIdeaState": true
+    },
+    "specificity": {
+      "reactToActualChildContent": true,
+      "genericPraiseForbidden": true,
+      "bannedRepeatedPraise": [
+        "최고야!",
+        "대단해!",
+        "천재야!"
+      ]
+    },
+    "copyPriority": {
+      "clarity": 35,
+      "kindness": 30,
+      "wit": 20,
+      "playfulness": 10,
+      "chic": 5
+    },
+    "copyRules": {
+      "functionUnderstandingWinsOverJoke": true,
+      "oneJokePerLineMax": true,
+      "shortSpeakableKorean": true,
+      "childishBabyTalk": false,
+      "preaching": false,
+      "grading": false,
+      "sarcasmAtChild": false,
+      "jokeTargets": [
+        "상황",
+        "탐험 세계",
+        "탐험대원 자신"
+      ]
+    },
+    "contextBehavior": {
+      "writingStuck": "재촉하지 않고 기다린 뒤 작은 힌트",
+      "ideaFound": "놀람·관심·가까이 보기",
+      "canBeMoreSpecific": "고개 갸웃·후속 질문",
+      "longVoiceInput": "집중해서 듣기·가볍게 끄덕임",
+      "funnyExpression": "웃음·장난스러운 짧은 반응",
+      "completion": "절제된 인정·다음 행동 선택을 열어둠"
+    },
+    "dialoguePresence": {
+      "persistentLargeBubble": false,
+      "appearWhen": [
+        "랜드마크 선택",
+        "망설임",
+        "특정 반응 필요",
+        "탐험 단계 전환",
+        "완료"
+      ],
+      "inputBlockingForbidden": true,
+      "forcedModalForbidden": true,
+      "smallCTAOnlyWhenChoiceNeeded": true,
+      "sameMotionOrPraiseRepeatForbidden": true
+    }
+  },
+  "voiceAccessibility": {
+    "principle": "읽기 능력이 낮아도 같은 ORIGINAL 흐름을 수행",
+    "questionReadAloud": true,
+    "autoReadCoreQuestionOptional": true,
+    "replayAnytime": true,
+    "textAlwaysRemainsVisible": true,
+    "flow": [
+      "질문 듣기",
+      "생각하기",
+      "무전기로 말하기",
+      "음성 인식",
+      "텍스트/기록 변환",
+      "탐험대원 반응"
+    ],
+    "ageAdaptation": [
+      "문장 길이",
+      "어휘 난이도",
+      "자동 읽기 강도",
+      "음성 안내량"
+    ],
+    "personalityMustNotChangeByAge": true,
+    "radio": {
+      "role": "COMMON_INPUT_LAYER",
+      "isSixthWritingTool": false,
+      "placement": "RIGHT_OR_RIGHT_BOTTOM_SAFE_MARGIN",
+      "states": [
+        "IDLE",
+        "LISTENING",
+        "TRANSCRIBING",
+        "COMPLETE"
+      ],
+      "userFacingName": "말해서 쓰기",
+      "worldTerm": "무전 보내기",
+      "listeningAndSpeakingSeparated": true
+    }
+  },
+  "reactionPerformance": {
+    "purpose": "탐험가의 글/음성을 실제로 듣고 반응하는 살아 있는 동행감",
+    "unit": [
+      "CHILD_TEXT_OR_VOICE",
+      "CONTEXT_EMOTION_READ",
+      "CREW_EXPRESSION_GESTURE",
+      "SHORT_WITTY_LINE",
+      "REACTION_OVERLAY",
+      "NEXT_WRITING_ACTION"
+    ],
+    "visuals": [
+      "표정",
+      "몸짓",
+      "시선",
+      "귀/꼬리/손짓",
+      "캐릭터별 소품"
+    ],
+    "overlay": {
+      "durationSeconds": [
+        0.8,
+        2
+      ],
+      "lowOpacity": true,
+      "textReadabilityFirst": true,
+      "motifs": {
+        "curiosity": [
+          "물음표",
+          "작은 확대경",
+          "갸웃 실루엣"
+        ],
+        "idea": [
+          "빛나는 씨앗",
+          "작은 별지도 조각"
+        ],
+        "surprise": [
+          "튀어오르는 귀/꼬리",
+          "작은 바람선"
+        ],
+        "play": [
+          "낙서 수염",
+          "발자국"
+        ],
+        "thinking": [
+          "빙글도는 연필선",
+          "작은 구름"
+        ],
+        "recognition": [
+          "잎사귀",
+          "종이조각",
+          "작은 빛 점"
+        ]
+      },
+      "forbidden": [
+        "폭죽 남용",
+        "글리터",
+        "강한 Glow",
+        "금속광",
+        "텍스트 가림",
+        "상시 장식"
+      ]
+    },
+    "reduceMotion": {
+      "supported": true,
+      "performanceAnimationMinimized": true,
+      "overlayStaticOrOff": true,
+      "noFunctionalInfoAnimationOnly": true
+    }
+  },
+  "questionEngine": {
+    "loop": [
+      "생각 꺼내기",
+      "생각 넓히기",
+      "표현 완성하기"
+    ],
+    "internalDimensions": [
+      "RECALL",
+      "UNDERSTAND",
+      "REASON",
+      "CONNECT",
+      "EVIDENCE",
+      "PERSPECTIVE",
+      "EXPRESS",
+      "REVISE"
+    ],
+    "exposeTaxonomyToChild": false,
+    "adaptTo": [
+      "맥락",
+      "언어",
+      "연령"
+    ],
+    "english": {
+      "flow": [
+        "word/idea recall",
+        "sentence expansion",
+        "speak/write in own words",
+        "optional revise"
+      ],
+      "grammarDrillForbidden": true,
+      "childAuthorshipRequired": true
+    }
+  },
+  "imaginationCloud": {
+    "role": "ON_DEMAND_EXPRESSION_EXPANSION",
+    "flow": [
+      "CHILD_SPEAKS",
+      "MEANING_MOOD_SCENE_IDEA_FRAGMENTS",
+      "CHILD_NOTICES_SELECTS",
+      "CREW_MINIMAL_FOLLOWUP",
+      "CHILD_EXPANDS",
+      "RETURN_TO_EXPRESSION_TASK"
+    ],
+    "triggers": [
+      "아이 질문",
+      "표현 막힘",
+      "장면/감정/아이디어 시각화가 도움될 때",
+      "아이가 직접 요청"
+    ],
+    "decorativeOnlyForbidden": true,
+    "finalAnswerGenerationForbidden": true,
+    "preserveChildOwnership": true,
+    "preserveSharedSessionContext": true,
+    "mustReturnToOriginalTask": true
   }
 }
