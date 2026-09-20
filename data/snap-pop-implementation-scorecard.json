@@ -1,0 +1,169 @@
+{
+  "version": "2026-09-21.1",
+  "basis": "Evidence-backed domain scorecard; percentages are implementation estimates, not runtime/device verification.",
+  "fullScopeMax": 100,
+  "verificationBoundary": "CODED_SCORE_ONLY",
+  "domains": [
+    {
+      "domain": "ORIGINAL_CORE",
+      "max": 20,
+      "score": 17.5,
+      "status": "STRONG_PARTIAL",
+      "evidence": [
+        "5 landmarks",
+        "3-step exploration",
+        "persistence",
+        "fixed question bank"
+      ],
+      "gaps": [
+        "adaptive question engine depth"
+      ]
+    },
+    {
+      "domain": "GUIDE_RULES",
+      "max": 15,
+      "score": 10.5,
+      "status": "PARTIAL",
+      "evidence": [
+        "blank-answer wait",
+        "one-hint flow",
+        "input-specific reaction",
+        "child wording preservation",
+        "transient reaction UI",
+        "main continuity"
+      ],
+      "gaps": [
+        "Guest weighted orchestration",
+        "central authorship guard",
+        "copy regression guard"
+      ]
+    },
+    {
+      "domain": "EXPLORATION_CREW",
+      "max": 15,
+      "score": 10,
+      "status": "PARTIAL",
+      "evidence": [
+        "crewRegistry",
+        "rename/nameHistory",
+        "affinity",
+        "memories",
+        "world state",
+        "role rosters"
+      ],
+      "gaps": [
+        "full roster/content",
+        "encounter lifecycle depth",
+        "pairwise relationship behavior"
+      ]
+    },
+    {
+      "domain": "RECORD_GROWTH_REWARD",
+      "max": 10,
+      "score": 8,
+      "status": "STRONG_PARTIAL",
+      "evidence": [
+        "records",
+        "revisions",
+        "gems",
+        "wish/blessing",
+        "single tree",
+        "timeline"
+      ],
+      "gaps": [
+        "final approved assets",
+        "some long-term semantics"
+      ]
+    },
+    {
+      "domain": "SPECIAL_IMAGINATION_VOICE",
+      "max": 10,
+      "score": 7,
+      "status": "PARTIAL",
+      "evidence": [
+        "weekend special",
+        "basic Imagination Cloud",
+        "TTS",
+        "STT fallback"
+      ],
+      "gaps": [
+        "context-adaptive cloud",
+        "production speech/device behavior"
+      ]
+    },
+    {
+      "domain": "CONNECTED_APP",
+      "max": 10,
+      "score": 7,
+      "status": "PARTIAL",
+      "evidence": [
+        "snap-bridge session/task/lap/return context",
+        "Hide handoff display"
+      ],
+      "gaps": [
+        "real app-switch idempotency",
+        "partial-return runtime closure",
+        "device behavior"
+      ]
+    },
+    {
+      "domain": "PWA_DATA",
+      "max": 5,
+      "score": 4,
+      "status": "STRONG_PARTIAL",
+      "evidence": [
+        "manifest",
+        "service worker",
+        "IndexedDB",
+        "offline shell"
+      ],
+      "gaps": [
+        "current real-device install/offline regression"
+      ]
+    },
+    {
+      "domain": "UI_ASSET",
+      "max": 5,
+      "score": 2.5,
+      "status": "PARTIAL",
+      "evidence": [
+        "live DOM UI",
+        "asset structure",
+        "Golden preview images"
+      ],
+      "gaps": [
+        "current runtime visual regression",
+        "final asset fidelity"
+      ]
+    },
+    {
+      "domain": "FAMILY_EXPANSION",
+      "max": 10,
+      "score": 0.5,
+      "status": "SPECIFICATION_DOMINANT",
+      "evidence": [
+        "canonical/recovery specs"
+      ],
+      "gaps": [
+        "feature flags",
+        "diary",
+        "letters",
+        "penpal",
+        "sharing",
+        "joint exploration",
+        "multi-child",
+        "family backend/runtime"
+      ]
+    }
+  ],
+  "fullCodedScore": 67,
+  "coreWithoutFamilyScore": 66.5,
+  "coreWithoutFamilyMax": 90,
+  "coreWithoutFamilyPercent": 73.9,
+  "notes": [
+    "This supersedes the earlier provisional 65% headline for current CODED estimation.",
+    "The change is mainly due to direct code review finding more Guide-derived behavior already implemented.",
+    "RUNTIME_VERIFIED and DEVICE_VERIFIED remain separate and are not implied by this score.",
+    "Expansion pack remains almost entirely unimplemented and is included in full-scope denominator."
+  ]
+}
