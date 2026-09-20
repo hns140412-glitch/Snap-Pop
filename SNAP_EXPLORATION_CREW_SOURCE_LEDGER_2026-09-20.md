@@ -167,8 +167,8 @@ Explorer_ID에 귀속:
 - 6+6+8=20 배분: 후속 설계판 WORKING, 최종 고정 아님.
 - 각 스페셜 정확 Encounter Cycle/확률.
 - 친밀도 단계의 최종 사용자-facing 이름.
-- 20명 최종 종족/외형/고유 이름.
-- 현재 정의된 4개 캐릭터 계보와 시작 6 성격 슬롯의 최종 매핑.
+- 20명 전체의 최종 종족/외형/고유 이름. 단, 시작 Core 6의 이름·종족 방향·성격 계보 자체는 RECOVERED.
+- 시작 Core 6와 시작 6 Personality Slot의 최종 1:1 매핑. 의미 유사성만으로 추정 금지.
 
 ## SUPERSEDED / REJECT
 - 세계/거점 최소 2명 고정: 사용자 직접 확정 아님 → REJECT.
@@ -264,3 +264,5 @@ Authority boundary:
 - Names/species/personality lineage = RECOVERED
 - Past generated visual images = candidate/regression evidence
 - Final six Visual IDs = still require 1:1 validation before image assets are treated as approved Golden Reference
+- Starter 6 ↔ current 6 Personality Slot mapping = OPEN; no direct approved 1:1 mapping recovered
+- Semantic similarity between trait words is not approval evidence and must not be auto-promoted
