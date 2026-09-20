@@ -1,5 +1,5 @@
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
-let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date();
+let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false;
 const STEPS=["생각 꺼내기","생각 넓히기","표현 완성하기"];
 const QUESTION_BANK={
  idea:{
@@ -131,15 +131,18 @@ async function renderWishHistory(){const txns=await get("wishTransactions")||[],
 
 $("#shopBtn").onclick=()=>show("shop");$("#useWish").onclick=()=>$("#blessing").hidden=false;
 $("#confirmBlessing").onclick=async()=>{
-  const txns=await get("wishTransactions")||[];
-  if(txns.some(x=>x.status==="PENDING"))return toast("처리 중인 소원이 있어요.");
-  const g={...(await get("gems")||{})},gemLedger=await get("gemLedger")||[];let needCompleted=2;const spend={};
-  for(const m of marks){const complete=Math.floor((g[m.id]||0)/6);const take=Math.min(complete,needCompleted);if(take){spend[m.id]=take;g[m.id]-=take*6;needCompleted-=take}if(!needCompleted)break}
-  if(needCompleted)return toast("완성 보석 2개가 필요해요.");
-  const id=uid("wish_tx"),at=new Date().toISOString();
-  Object.entries(spend).forEach(([landmark,count])=>gemLedger.push({eventId:id,type:"GEM_SPENT",landmark,completedGemDelta:-count,sourceShards:-count*6,at,reason:"WISH_BLESSING"}));
-  txns.push({id,status:"COMPLETED",wish:"가족과 주말 영화 보기",spend,completedGemCount:2,at});
-  await setMany([["gems",g],["gemLedger",gemLedger],["wishTransactions",txns]]);await updateStatus();renderGems();$("#blessing").hidden=true;if(!$("#wishHistoryList").hidden)renderWishHistory();toast("축복을 사용했어요. 소원 사용 내역에 기록됐어요.")
+  if(wishBusy)return toast("소원을 처리하고 있어요.");
+  wishBusy=true;$("#confirmBlessing").disabled=true;
+  try{
+    const txns=await get("wishTransactions")||[];
+    const g={...(await get("gems")||{})},gemLedger=await get("gemLedger")||[];let needCompleted=2;const spend={};
+    for(const m of marks){const complete=Math.floor((g[m.id]||0)/6);const take=Math.min(complete,needCompleted);if(take){spend[m.id]=take;g[m.id]-=take*6;needCompleted-=take}if(!needCompleted)break}
+    if(needCompleted){toast("완성 보석 2개가 필요해요.");return}
+    const id=uid("wish_tx"),at=new Date().toISOString();
+    Object.entries(spend).forEach(([landmark,count])=>gemLedger.push({eventId:id,type:"GEM_SPENT",landmark,completedGemDelta:-count,sourceShards:-count*6,at,reason:"WISH_BLESSING"}));
+    txns.push({id,status:"COMPLETED",wish:"가족과 주말 영화 보기",spend,completedGemCount:2,at});
+    await setMany([["gems",g],["gemLedger",gemLedger],["wishTransactions",txns]]);await updateStatus();renderGems();$("#blessing").hidden=true;if(!$("#wishHistoryList").hidden)renderWishHistory();toast("축복을 사용했어요. 소원 사용 내역에 기록됐어요.")
+  }finally{wishBusy=false;$("#confirmBlessing").disabled=false}
 }
 function isWeekend(d=new Date()){const day=d.getDay();return day===0||day===6}
 function specialPromptFor(d=new Date()){const seed=(d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate())%4;return [
