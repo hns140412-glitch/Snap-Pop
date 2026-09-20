@@ -289,3 +289,6 @@ Authority boundary:
 - Detailed lineage ledger: `C2S/SNAP_EXPLORATION_CREW_VISUAL_LINEAGE_LEDGER_2026-09-21.md`
 - Key correction: a superseded visual field does not supersede stable personality/name evidence.
 - Key recovery finding: archive/ZIP materials can be physically preserved even when ordinary Drive keyword search does not surface them.
+
+- Invariant: `SUPERSEDED VISUAL != SUPERSEDED PERSONALITY`.
+- Personality Pack detail: `PARTIAL / RECOVERY_REQUIRED`; absence claim forbidden while recoverable paths remain.
