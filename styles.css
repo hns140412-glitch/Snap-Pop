@@ -94,3 +94,13 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 .cloudAnswer{margin-top:12px;border-radius:14px;background:#f4ecd8;padding:12px;border:1px solid #ab955f55}.cloudAnswerHead{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.cloudAnswerHead b{font-size:14px}.cloudAnswerHead span{font-size:10px;border:1px solid #927c4f55;border-radius:999px;padding:4px 7px}.cloudCore{margin:9px 0 0;line-height:1.55}
 .mindMap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.mindNode{padding:9px;border-radius:12px;background:#fffdf7;border:1px solid #b7a47744;display:flex;flex-direction:column;gap:4px}.mindNode b{font-size:11px}.mindNode span{font-size:12px;line-height:1.4}.cloudExample{margin:9px 0 0;font-size:12px;opacity:.8;line-height:1.5}
 @media(max-width:360px){.cloudAskRow{grid-template-columns:1fr}.cloudVoice{width:100%}.mindMap{grid-template-columns:1fr}.cloudActions{align-items:stretch;flex-direction:column}.cloudMode{align-self:flex-start}}
+
+
+/* UNIVERSAL EXPLORE HUB 2026-09-21 */
+.hubHero{margin:12px 14px;padding:15px;border-radius:18px;background:#fffaf0;border:1px solid #aa945f55;box-shadow:0 10px 24px #5b4d2b12}
+.hubCrewLine{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}.hubCrewLine b{font-family:"Noto Serif CJK KR","Batang",serif;font-size:16px}.hubCrewLine span{font-size:12px;line-height:1.5;opacity:.78}
+.hubAsk textarea{width:100%;min-height:88px;resize:vertical;border:1px solid #927c4f55;border-radius:14px;padding:12px;background:#fffdf8;color:var(--ink)}
+.hubAskActions{display:grid;grid-template-columns:auto 1fr;gap:8px;margin-top:8px}.hubAskActions button{min-height:44px}
+.hubHero>.cloudAnswer{margin-top:12px}.hubHero>#hubSpeakLast{margin-top:9px}
+.hubPaths{display:grid;gap:10px;margin:12px 14px 24px}.hubPath{text-align:left;border:1px solid #9d875755;border-radius:16px;padding:14px;background:#f8f0dc;color:var(--ink);display:flex;flex-direction:column;gap:5px}.hubPath b{font-family:"Noto Serif CJK KR","Batang",serif;font-size:15px}.hubPath span{font-size:12px;line-height:1.45;opacity:.76}.hubPath:disabled{opacity:.45;cursor:default}
+@media(max-width:360px){.hubAskActions{grid-template-columns:1fr}}
