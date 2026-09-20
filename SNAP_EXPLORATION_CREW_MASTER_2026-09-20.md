@@ -461,6 +461,27 @@ word/idea recall → sentence expansion → own words speak/write → optional r
 - Ready & Set 세션 문맥 분실
 - 원래 과제로 돌아가지 않음
 
+### Recovered Core 6 profile evidence — 2026-09-20
+
+Direct user-provided historical boards add voice/profile evidence without changing the locked Character Identity:
+
+- **두비:** "와! 해보자!" · 호기심 / 활력 / 막내 결.
+- **로리:** "괜찮아, 천천히 해도 돼!" · 다정 / 공감 / 따뜻함.
+- **잉크:** "음... 다른 방법도 있지." · 관찰 / 아이디어 / 신중함. Detailed profile additionally shows 지능적 / 호기심 / 시크 / 전략가, 관찰력·통찰력, 탐험과 새로운 아이디어, 혼자 있는 시간도 즐김.
+- **노바:** "가보자! 하면 되지!" · 에너지 / 도전 / 활동적.
+- **테이크:** "차근차근 같이 해보자." · 든든함 / 정리 / 차분함.
+- **제로:** "언제나, 네 이야기를 응원해!" · 음악 / 여유 / 챙김.
+
+These are **recovered evidence**, not a license to invent missing Personality Pack details.
+
+Current Personality Pack depth:
+- Core Personality / Visual Identity / signature voice direction: **RECOVERED**
+- HABIT / REACTION / RELATIONSHIP EXCEPTION / WORLD ROUTINE / MEMORY: **PARTIAL / RECOVERY_REQUIRED**
+- Missing historical details SHALL remain `NOT_FOUND_IN_CHECKED_SOURCES / RECOVERY_REQUIRED`, not `ABSENT`.
+
+Recovery record:
+`C2S/SNAP_EXPLORATION_CREW_EVIDENCE_RECOVERY_PASS_2026-09-20.md`
+
 ## 9. 화면별 계약
 
 - **홈:** 탐험가 + 현재 탐험대원이 같은 세계에 존재. 상시 큰 말풍선 금지.
