@@ -148,7 +148,7 @@ async function renameCurrentCrewMember(nextName){
 }
 
 function toast(t){$("#toast").textContent=t;$("#toast").classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>$("#toast").classList.remove("show"),1800)}
-function show(id){$$(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");const sub=["settings","shop","result","special","recordEdit"].includes(id);$("#nav").hidden=sub;if(!sub)lastMain=id;$$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.view===id));scrollTo(0,0);if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="result")renderLastResult()}
+function show(id){$(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");const sub=["settings","shop","result","special","recordEdit","explore"].includes(id);$("#nav").hidden=sub;if(!sub)lastMain=id;$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.view===id));scrollTo(0,0);if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="result")renderLastResult();if(id==="exploreHub")renderExploreHub()}
 function html(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function levelFromExp(exp){let level=1;for(let i=1;i<LEVEL_THRESHOLDS.length;i++){if(exp>=LEVEL_THRESHOLDS[i])level=i+1;else break}return Math.min(25,level)}
 function levelProgress(exp){const level=levelFromExp(exp);if(level>=25)return {level,within:1,remaining:0};const floor=LEVEL_THRESHOLDS[level-1],ceil=LEVEL_THRESHOLDS[level];return {level,within:Math.max(0,Math.min(1,(exp-floor)/(ceil-floor))),remaining:Math.max(0,ceil-exp)}}
@@ -321,6 +321,46 @@ $("#voiceBtn").onclick=async()=>{
   }catch{toast("이 기기에서는 지금 음성 입력을 사용할 수 없어요.")}
 };
 
+async function renderExploreHub(){
+  const identity=await resolvedIdentity(),active=await get("active");
+  $("#hubCrewName").textContent=`탐험대원 ${crewMemberName(identity)}`;
+  $("#hubCrewLine").textContent=(SNAP_RULES?.interactionContract?.homePrompt)||"뭐가 궁금해? 같이 풀어보자.";
+  $("#hubResumeBtn").disabled=!active;
+  $("#hubResumeMeta").textContent=active?`${marks.find(x=>x.id===active.landmark)?.title||"탐험"} · ${(active.step||0)+1}/3 단계`:"진행 중 탐험이 없어요.";
+}
+function renderHubCloudResponse(result,identity){
+  const host=$("#hubCloudAnswer"); if(!host)return;
+  const nodes=Array.isArray(result?.nodes)?result.nodes:[];
+  const badge=result?.verified===false?"확인 필요":result?.kind==="ASK_UNDERSTAND"?"궁금증 해결":"생각 펼치기";
+  host.innerHTML=`<div class="cloudAnswerHead"><b>${html(crewMemberName(identity))} · ${html(result?.title||"상상 구름")}</b><span>${html(badge)}</span></div>`+
+    `<p class="cloudCore">${html(result?.core||"")}</p>`+
+    (nodes.length?`<div class="mindMap">${nodes.map(n=>`<div class="mindNode"><b>${html(n.label||"")}</b><span>${html(n.value||"")}</span></div>`).join("")}</div>`:"")+
+    (result?.example?`<p class="cloudExample">${html(result.example)}</p>`:"");
+  host.hidden=false;host.dataset.speakable=result?.speakable||result?.core||"";
+}
+async function runHubCloud(inputOverride){
+  const input=(inputOverride??$("#hubCloudInput").value).trim(),identity=await resolvedIdentity();
+  if(!window.SnapPopIntelligence)return toast("상상 구름 엔진을 불러오지 못했어요.");
+  $("#hubAskBtn").disabled=true;$("#hubAskBtn").textContent="생각 중…";
+  try{
+    const result=await window.SnapPopIntelligence.ask({input,language:"ko",context:"UNIVERSAL_HUB",crewMember:{type:identity.crewMember?.type,name:crewMemberName(identity)}});
+    renderHubCloudResponse(result,identity);
+    const history=await get("cloudHistory")||[];history.unshift({id:uid("cloud"),input,intent:result.intent||result.kind,verified:result.verified!==false,provider:result.provider||"unknown",at:new Date().toISOString()});await set("cloudHistory",history.slice(0,100));
+    if(result.verified===false)await showCrewReaction(`${crewMemberName(identity)}: 확인이 필요한 건 지어내지 않고 확인부터 할게.`,{persist:false,kind:"observe"});
+  }catch{
+    await showCrewReaction(`${crewMemberName(identity)}: 지금 연결이 매끄럽지 않네. 질문은 그대로 남겨둘게.`,{persist:false});
+  }finally{$("#hubAskBtn").disabled=false;$("#hubAskBtn").textContent="탐험대에게 물어보기"}
+}
+$("#hubAskBtn").onclick=()=>runHubCloud();
+$("#hubThinkBtn").onclick=()=>{if(!$("#hubCloudInput").value.trim())$("#hubCloudInput").value="내 생각을 펼쳐보고 싶어";runHubCloud()};
+$("#hubMapBtn").onclick=()=>show("map");
+$("#hubResumeBtn").onclick=async()=>{const s=await get("active");if(!s)return toast("이어갈 탐험이 없어요.");renderExplore(s);show("explore")};
+$("#hubSpeakLast").onclick=async()=>{const t=$("#hubCloudAnswer")?.dataset.speakable||"";if(!t)return toast("먼저 탐험대에게 물어봐줘.");await speak(t,"ko")};
+$("#hubVoiceBtn").onclick=async()=>{
+  const identity=await resolvedIdentity();
+  if(!window.SnapPopVoice)return toast("지금은 음성 입력을 사용할 수 없어요.");
+  try{await window.SnapPopVoice.listen({language:"ko",onStart:()=>{$("#hubVoiceBtn").textContent="듣고 있어요…";showCrewReaction(`${crewMemberName(identity)}: 천천히 말해도 돼.`,{persist:false})},onText:t=>{$("#hubCloudInput").value=t;runHubCloud(t)},onError:()=>showCrewReaction(`${crewMemberName(identity)}: 잘 못 들었어. 다시 말하거나 직접 써도 돼.`,{persist:false}),onEnd:()=>{$("#hubVoiceBtn").textContent="말로 묻기"}})}catch{toast("이 기기에서는 지금 음성 입력을 사용할 수 없어요.")}
+};
 async function renderRecords(){
   if(!db)return;
   const r=await get("records")||[], special=await get("specialMemories")||[], revisions=await get("recordRevisions")||{};
@@ -390,7 +430,7 @@ $("#profilePhotoInput").onchange=async e=>{const file=e.target.files?.[0];if(!fi
 $("#characterSave").onclick=async()=>{const name=$("#characterName").value.trim(),identity=await resolvedIdentity();identity.profile.name=name;await set("identityFallback",identity);$("#characterSummary").textContent=name?`탐험가 · ${name}`:"Ready & Set 프로필 연동 대기";$("#characterPanel").hidden=true;await renderIdentityPresence();toast(sharedIdentity?"공유 프로필은 Ready & Set 기준을 유지합니다. 로컬 fallback만 저장했어요.":"인트로용 로컬 프로필을 저장했어요. 통합 시 Ready & Set 기준이 우선합니다.")};
 $("#crewMemberSuggest").onclick=async()=>{const identity=await resolvedIdentity(),suggestions={maltipoo:["모카","토리","콩"],cat:["루루","모노","살짝"],redpanda:["포포","단추","뒤적"],buddy:["하루","담이","솔"]},arr=suggestions[identity.crewMember.type]||[crewMemberRule(identity).defaultName||"두비"];$("#crewMemberName").value=arr[Math.floor(Date.now()/1000)%arr.length]};
 $("#crewMemberSave").onclick=async()=>{const identity=await renameCurrentCrewMember($("#crewMemberName").value);const name=identity.crewMember.name;$("#crewMemberSummary").textContent=`${crewMemberRule(identity).label} · ${name}`;$(".crewMemberLine b").forEach(el=>el.textContent=`탐험대원 ${name}`);$("#crewMemberPanel").hidden=true;await renderIdentityPresence();toast("탐험대원 이름과 이력을 저장했어요.")};
-$("#homeRadio").onclick=()=>toast("탐험 안에서 말해서 쓰기를 사용할 수 있어요.");
+$("#homeRadio").onclick=()=>{show("exploreHub");setTimeout(()=>$("#hubCloudInput")?.focus(),0)};
 $("#autoRead").onchange=$("#reduceMotion").onchange=async()=>{const s=await get("settings")||{};s.autoRead=$("#autoRead").checked;s.reduceMotion=$("#reduceMotion").checked;await set("settings",s);document.documentElement.classList.toggle("reduceMotion",s.reduceMotion)}
 $("#nav").onclick=e=>{const b=e.target.closest("button[data-view]");if(b)show(b.dataset.view)}
 if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
