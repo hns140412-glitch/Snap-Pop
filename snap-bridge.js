@@ -174,7 +174,7 @@
       await original.call(this, event);
       const after = await activeExploration();
       const completedNow = before && Number(before.step || 0) >= 2 && !after;
-      if (completedNow && context.session_id && context.task_id) {
+      if (completedNow && context.session_id && context.task_id && !context.task_completed) {
         context.task_completed = true;
         context.completed_at = iso();
         const resultEvent = emit('TASK_COMPLETED', {
