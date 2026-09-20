@@ -482,6 +482,30 @@ Current Personality Pack depth:
 Recovery record:
 `C2S/SNAP_EXPLORATION_CREW_EVIDENCE_RECOVERY_PASS_2026-09-20.md`
 
+### Visual lineage / personality split rule
+
+Historical archive recovery proved that some boards combined a **wrong/superseded visual** with a **stable personality/name lineage**. Therefore C2S SHALL split those fields instead of deleting the entire character record.
+
+`SUPERSEDED VISUAL != SUPERSEDED PERSONALITY`
+
+Corroborated Core 6 trait lineage:
+- 두비: 호기심 / 활발함 / 친화력 / 긍정에너지
+- 로리: 다정함 / 공감 / 세심함 / 따뜻함
+- 잉크: 지적 / 관찰력 / 아이디어 / 독립심
+- 노바: 에너지 / 도전 / 긍정적 / 활동적
+- 테이크: 책임감 / 차분함 / 믿음직함 / 리더십
+- 제로: 음악 / 여유 / 감성 / 친구사랑
+
+Ink direct profile evidence additionally recovers:
+- habits: 관찰하기 / 기록하기 / 아이디어 생각하기 / 친구들과 토론하기
+- reaction direction: `생각해보자!` / `다르게 보면 어때?`
+- relationship evidence: 친구와 함께 / 친구들과 토론하기
+
+Legacy boards with superseded visuals may still contain behavior candidates. Those candidates require cross-artifact corroboration before promotion.
+
+Visual lineage record:
+`C2S/SNAP_EXPLORATION_CREW_VISUAL_LINEAGE_LEDGER_2026-09-21.md`
+
 ## 9. 화면별 계약
 
 - **홈:** 탐험가 + 현재 탐험대원이 같은 세계에 존재. 상시 큰 말풍선 금지.
