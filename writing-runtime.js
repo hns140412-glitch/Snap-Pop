@@ -49,6 +49,27 @@
     if(step>=2&&landmark!=="final"&&!f.ending) return "final";
     return null;
   }
+  function contextPolicy(payload={}){
+    const ctx=payload.learnerContext;
+    if(!ctx||ctx.source!=="READY_SET_LEARNING_MASTER") return {used:false,allowCrossLens:true,goal:null,reason:null};
+    const loads=Array.isArray(ctx.cognitive_load_profile)?ctx.cognitive_load_profile:[];
+    const unresolved=Array.isArray(ctx.unresolved_flags)?ctx.unresolved_flags:[];
+    const confidence=Number.isFinite(ctx.confidence)?ctx.confidence:null;
+    const languageHeavy=loads.includes("LANGUAGE_PRODUCTION")||loads.includes("LANGUAGE_INTEGRATION");
+    const lowTrust=(confidence!==null&&confidence<0.5)||unresolved.length>2;
+    return {
+      used:true,
+      allowCrossLens:!(languageHeavy && Number(payload.step||0)===0) && !lowTrust,
+      goal:ctx.concept_skill_target||null,
+      subject:ctx.subject||null,
+      activity_types:Array.isArray(ctx.activity_types)?ctx.activity_types.slice(0,8):[],
+      cognitive_load_profile:loads.slice(0,8),
+      confidence,
+      unresolved_flags:unresolved.slice(0,8),
+      reason:lowTrust?"LOW_CONTEXT_CONFIDENCE":languageHeavy?"LANGUAGE_LOAD_BOUND":"READY_CONTEXT"
+    };
+  }
+
   function normalizeAnalysis(raw,fallback){
     if(!raw||typeof raw!=="object")return {...fallback,provider:"local-writing-fallback"};
     const safeFocus=typeof raw.focus==="string"&&raw.focus.length<48?raw.focus:fallback.focus;
@@ -69,7 +90,8 @@
   }
   async function analyze(payload={}){
     const local=move(payload);
-    const fallback={...local,suggestedLens:suggestedLens(payload),provider:"local-writing-fallback",grounded:true};
+    const policy=contextPolicy(payload);
+    const fallback={...local,suggestedLens:policy.allowCrossLens?suggestedLens(payload):null,provider:"local-writing-fallback",grounded:true,learningContextUsed:policy.used,learningGoal:policy.goal,learningContextPolicy:policy};
     const provider=window.SnapPopLearningProvider;
     if(!provider||typeof provider.analyzeWriting!=="function")return fallback;
     try{
@@ -94,5 +116,5 @@
       return {...fallback,provider:"local-writing-fallback",providerError:true};
     }
   }
-  window.SnapPopWriting=Object.freeze({version:VERSION,features,move,analyze,suggestedLens});
+  window.SnapPopWriting=Object.freeze({version:VERSION,features,move,analyze,suggestedLens,contextPolicy});
 })();
