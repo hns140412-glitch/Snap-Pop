@@ -1,7 +1,7 @@
 [
   {
     "min": 1,
-    "name": "발아",
+    "name": "씨앗",
     "image": "stage_01.png"
   },
   {
@@ -10,28 +10,23 @@
     "image": "stage_02.png"
   },
   {
-    "min": 10,
-    "name": "묘목",
+    "min": 9,
+    "name": "어린나무",
     "image": "stage_03.png"
   },
   {
-    "min": 15,
-    "name": "젊은 나무",
+    "min": 13,
+    "name": "성장한 나무",
     "image": "stage_04.png"
   },
   {
-    "min": 20,
-    "name": "성목",
+    "min": 18,
+    "name": "이야기 나무",
     "image": "stage_05.png"
   },
   {
-    "min": 25,
-    "name": "거목",
+    "min": 23,
+    "name": "대작가",
     "image": "stage_06.png"
-  },
-  {
-    "min": 30,
-    "name": "대작가의 생명의 나무",
-    "image": "stage_07.png"
   }
 ]
