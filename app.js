@@ -44,7 +44,7 @@ async function recordCrewExperience(type,meta={}){
   const entry=registry[id],eventId=meta.eventId||uid("crewmem");
   entry.memories=entry.memories||[];
   if(entry.memories.some(x=>x.eventId===eventId))return entry;
-  const weight={EXPLORATION_COMPLETE:2,SPECIAL_MEMORY:2,REUNION:1,VOICE_EXPRESSION:1,SHARED_MICRO_EPISODE:1}[type]||1;
+  const weight={EXPLORATION_COMPLETE:2,SPECIAL_MEMORY:2,SHARED_MICRO_EPISODE:1,REUNION:0,VOICE_EXPRESSION:0}[type]??0;
   entry.memories.push({eventId,type,at:new Date().toISOString(),...meta});
   entry.affinity=entry.affinity||{levelKey:"KNOWN",scoreInternal:0};
   entry.affinity.scoreInternal=(entry.affinity.scoreInternal||0)+weight;
