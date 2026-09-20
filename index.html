@@ -15,6 +15,10 @@
   <img class="scene" src="assets/world/golden_world_scene.jpg" alt="">
   <div class="atmo"></div>
   <div id="landmarks" class="landmarks"></div>
+  <div id="homeCompanions" class="homeCompanions" aria-label="현재 탐험가와 길잡이">
+   <div id="homeCharacter" class="homeCharacter"><div id="homeCharacterVisual" class="characterPlaceholder">탐험가</div><strong id="homeCharacterName">나의 탐험가</strong></div>
+   <div id="homeGuide" class="homeGuide"><div class="guidePlaceholder">Guide</div><strong id="homeGuideName">모카</strong></div>
+  </div>
   <button class="specialInvite" id="specialInvite" hidden>특별 탐험 초대장</button>
   <button class="radioFab" id="homeRadio"><img src="assets/icons/radio.svg" alt=""><span>무전</span></button>
   <div class="selection" id="selection" hidden>
@@ -87,7 +91,7 @@
  <header class="pageTitle"><span>한 그루가 계속 자라요</span><h1>성장</h1></header>
  <div class="growthCard">
   <div class="growthTop"><b id="growthLv">Lv.1</b><strong id="growthName">발아</strong></div>
-  <div class="treeStage"><img id="treeImage" src="assets/growth/stage_01.png" alt="현재 성장나무"></div>
+  <div class="treeStage"><img id="treeImage" src="assets/growth/stage_01.png" alt="현재 성장나무"><div id="growthCompanion" class="growthCompanion"></div></div>
   <div class="exp"><i id="expBar"></i></div><p id="expText">EXP 0</p>
  </div>
  <button class="soft wide" id="historyBtn">성장 기록 보기</button>
