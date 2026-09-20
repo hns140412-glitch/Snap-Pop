@@ -311,3 +311,23 @@ No Netlify/deploy/merge in this branch-only phase.
 - 기본: 지도/5개 장소 → 3단계 글쓰기.
 - 상상구름: 글쓰기 중 호출, 홈 무전 호출, 궁금증/막힘 시 호출.
 - 닫으면 원래 글쓰기 문맥/포커스로 복귀.
+
+
+### Ready Learning Context bridge — 2026-09-21
+
+Runtime integration is now defined as a reference bridge, not ownership transfer.
+
+Flow:
+
+`Ready & Set confirmed Assignment Fact → Ready Learning Master → Learning Unit → minimal Learning Context → Snap & Pop Writing Engine → child-authored final draft → minimal specialist provenance → Ready & Set task`
+
+Hard rules:
+- only `FACT_CONFIRMED` Learning Units may be transferred;
+- Snap & Pop must not read Ready & Set localStorage directly across app boundaries;
+- transfer only minimal learning metadata, not assignment artifacts/answers;
+- Ready Learning Master provides subject/activity/cognitive-load/unit context;
+- Snap & Pop owns writing-help orchestration and continuous-draft flow;
+- Learning Context may guide assistance but must not author the child's final text;
+- low-confidence/unresolved context must not strongly steer writing;
+- completed writing returns provenance/status, not the child's full draft;
+- record keeps only Learning Unit references needed for traceability.
