@@ -266,3 +266,15 @@ Authority boundary:
 - Final six Visual IDs = still require 1:1 validation before image assets are treated as approved Golden Reference
 - Starter 6 ↔ current 6 Personality Slot mapping = OPEN; no direct approved 1:1 mapping recovered
 - Semantic similarity between trait words is not approval evidence and must not be auto-promoted
+
+
+## 2026-09-20 Direct Visual Evidence Addendum
+- **Source class:** USER_PROVIDED_LOCKED_VISUAL_BOARD_2026-09-20
+- **Authority:** direct user-provided image evidence
+- **Recovered labels:** `6명의 Visual ID (확정)`, `Visual ID Lock`, 01~06 PASS
+- **Recovered Core 6 order:** 두비 → 로리 → 잉크 → 노바 → 테이크 → 제로
+- **Recovered visual identity:** 두비 dog-like/cap/backpack; 로리 pink rabbit/braids; 잉크 dark fox/goggles/tablet; 노바 brown otter/ferret-like/goggles/ponytail; 테이크 panda/blue neckwear; 제로 penguin/headphones/cap
+- **Recovered core personality:** 두비 호기심·활력; 로리 다정·공감·따뜻함; 잉크 관찰·아이디어·신중; 노바 에너지·도전·활동적; 테이크 든든·정리·차분; 제로 음악·여유·챙김
+- **OPEN_CORRECTION_CHECK:** 로리 영문 표기 `Tori` vs current canonical `Lori`
+- **OPEN_SEMANTICS:** 6~13세 표기의 의미
+- **FALSE_CONVERGENCE GUARD:** 현재 six Personality Slots와 Core 6를 의미 유사성만으로 1:1 고정 매핑하지 않는다.
