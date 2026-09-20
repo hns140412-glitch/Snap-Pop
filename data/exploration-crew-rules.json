@@ -232,7 +232,11 @@
         "redpanda",
         "buddy"
       ],
-      "undefinedSlots": 2,
+      "undefinedSlots": {
+        "min": 1,
+        "max": 2,
+        "status": "OPEN_IDENTITY"
+      },
       "namePolicy": {
         "atStart": [
           "DIRECT_INPUT",
@@ -288,6 +292,12 @@
         "CHAPTER_OR_HUB_EVENT"
       ],
       "missedEncounterPenalty": false
+    },
+    "partitionSemantics": {
+      "baseRosterCount": 20,
+      "note": "starter / hub-region / special은 20명 기본 로스터 안의 역할·발견 상태 분류이며 서로 더해지는 별도 정원이 아니다.",
+      "noDoubleCount": true,
+      "memberMayHaveMultipleAppRoles": true
     }
   },
   "evidence": {
@@ -455,14 +465,14 @@
       "EVENT_CENTRIC_SHARED_MEMORY"
     ],
     "OPEN": [
-      "STARTER_MEMBER_5_AND_6_IDENTITIES",
       "FULL_20_MEMBER_IDENTITIES",
       "EXACT_HUB_MEMBER_COUNT",
       "EXACT_SPECIAL_MEMBER_COUNT_BELOW_12",
       "PER_MEMBER_SPECIAL_CYCLE",
       "AFFINITY_LEVEL_NAMES",
       "EXACT_ENCOUNTER_PROBABILITY",
-      "WHICH_DISCOVERED_MEMBERS_CAN_BECOME_MAIN"
+      "WHICH_DISCOVERED_MEMBERS_CAN_BECOME_MAIN",
+      "STARTER_REMAINING_1_TO_2_IDENTITIES"
     ]
   }
 }
