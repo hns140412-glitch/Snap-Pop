@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.7",
+  "version": "2026-09-21.8",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -1001,7 +1001,46 @@
         "app.js:renderCloudHistory",
         "index.html:cloudHistoryList"
       ],
-      "gap": "answer/result snapshot persistence depth pending"
+      "gap": "full answer provenance/source snapshot and cross-device sync pending"
+    },
+    {
+      "id": "SP-UNIV-009",
+      "domain": "UNIVERSAL_CORE",
+      "title": "홈에서 궁금증/생각/음성으로 바로 진입",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "index.html:homeQuickStart",
+        "app.js:homeAskQuick/homeThinkQuick/homeRadio"
+      ],
+      "gap": "device visual/runtime validation pending"
+    },
+    {
+      "id": "SP-GROWTH-003",
+      "domain": "GROWTH_REWARD",
+      "title": "궁금증/생각 활동은 성장 흔적에 반영하되 EXP/보석 파밍과 분리",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE",
+        "GUIDE_RULES"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:renderGrowth",
+        "app.js:renderGrowthTimeline"
+      ],
+      "gap": "Learning Engine 기반 질적 성장 모델은 추후 연결"
     }
   ]
 }
