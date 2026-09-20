@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R4",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R5",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -256,24 +256,16 @@
       ]
     },
     "worldRegion": {
-      "minimumCount": 2,
-      "status": "IDENTITIES_OPEN",
-      "role": "5개 고정 거점/지역에서 한 줄 힌트·정보·동행 연결을 제공하는 탐험대원",
+      "exactCount": "OPEN_ROLE_ANALYSIS_REQUIRED",
+      "status": "COUNT_AND_IDENTITIES_OPEN",
       "fiveFixedHubs": true,
+      "role": "고정 5거점/지역에서 정보·한 줄 힌트·지역 반응·만남 연결을 담당할 수 있음",
       "oneLineHintRole": true,
+      "fixedOnePerHub": false,
+      "substitutionAndAbsenceAllowed": true,
+      "returnMemoryAllowed": true,
       "memberIdentityStatus": "OPEN",
-      "slots": [
-        {
-          "slotId": "WORLD-01",
-          "memberId": null,
-          "status": "UNASSIGNED_REQUIRED"
-        },
-        {
-          "slotId": "WORLD-02",
-          "memberId": null,
-          "status": "UNASSIGNED_REQUIRED"
-        }
-      ]
+      "slots": []
     },
     "special": {
       "maximumCount": 12,
@@ -353,12 +345,23 @@
           "memberId": null,
           "status": "UNASSIGNED"
         }
-      ]
+      ],
+      "separateFromSpecialExploration": true,
+      "microEpisodeAllowed": true,
+      "currentMainMemberReaction": true,
+      "encounterSurfaces": [
+        "녹음 랜덤 동행",
+        "일반 탐험",
+        "거점 등장",
+        "챕터/지역 사건"
+      ],
+      "cycleConcept": "1주/2주 간격 등의 주기 요소는 채택, 개별 정확 수치는 OPEN"
     },
     "invariants": {
-      "totalRosterCapacity": 20,
+      "currentRosterTarget": 20,
+      "futureExpansionAllowed": true,
       "starterCandidateRange": "5-6",
-      "worldRegionMinimum": 2,
+      "worldRegionExactCount": "OPEN_ROLE_ANALYSIS_REQUIRED",
       "specialMaximum": 12,
       "allMembersSameFunctionalAbility": true,
       "differencesOnly": [
@@ -374,7 +377,6 @@
       ],
       "noInventedMemberIdentity": true
     },
-    "totalCapacity": 20,
     "relationship": {
       "preserveName": true,
       "preserveAffinity": true,
@@ -411,8 +413,41 @@
         "item": "스페셜 정확한 해금 일수/챕터/거점 조건",
         "disposition": "OPEN",
         "rule": "Encounter Window/Cooldown 개념만 보존하고 수치 임의 구현 금지"
+      },
+      {
+        "id": "CREW-WORLD-MIN-002",
+        "olderClaim": "세계/거점 탐험대 최소 2명",
+        "disposition": "REJECT",
+        "reason": "사용자 직접 확정치 아님. 거점 역할 계산 후 정확 인원 결정"
       }
-    ]
+    ],
+    "currentRosterTarget": 20,
+    "futureExpansionAllowed": true,
+    "discovery": {
+      "states": [
+        "UNDISCOVERED",
+        "TRACE",
+        "FIRST_ENCOUNTER",
+        "CATALOG_REVEALED",
+        "SELECTABLE_AS_MAIN",
+        "RELATIONSHIP_MEMORY",
+        "REUNION"
+      ],
+      "antiFarm": true,
+      "usageLinearUnlock": false
+    },
+    "naming": {
+      "starter": [
+        "직접 이름 입력",
+        "추천 이름"
+      ],
+      "discovered": [
+        "첫 만남 랜덤 이름 가능",
+        "메인 설정 시 이름 변경 가능"
+      ],
+      "preservePreviousNames": true,
+      "stableInternalId": true
+    }
   },
   "evidence": {
     "primarySource": "Google Drive sanitized transcript P03_SANITIZED_6aa5d901-2c80-83e8-aaa2-3f6a57902a8a_연결 대화 재개",
