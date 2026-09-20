@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.2",
+  "version": "2026-09-21.3",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -740,6 +740,69 @@
       "runtimeVerified": false,
       "deviceVerified": false,
       "gap": "Question→Understand→optional Express routing 미구현"
+    },
+    {
+      "id": "SP-IMAGINE-002",
+      "domain": "IMAGINATION_CLOUD",
+      "title": "상상구름 = 범용 Think/Ask intelligence gateway",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:cloudFragments",
+        "index.html:cloudPanel"
+      ],
+      "gap": "현재 local fragment UI만 존재; OpenAI-backed routing/tool gateway 미연결"
+    },
+    {
+      "id": "SP-IMAGINE-003",
+      "domain": "IMAGINATION_CLOUD",
+      "title": "상상구름 내부 intent routing",
+      "authority": [
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "QUESTION/EXPLAIN/SEARCH/THINK/EXPAND/COMPARE/TRANSLATE/EXPRESS/REVISE routing 미구현"
+    },
+    {
+      "id": "SP-IMAGINE-004",
+      "domain": "IMAGINATION_CLOUD",
+      "title": "상상구름 OpenAI model/tool execution layer",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "현재 branch에서 OpenAI API/tool connection evidence 없음"
+    },
+    {
+      "id": "SP-IMAGINE-005",
+      "domain": "IMAGINATION_CLOUD",
+      "title": "상상구름 결과에 탐험대 Guard 적용",
+      "authority": [
+        "GUIDE_RULES",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "POLICY_ONLY",
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "모델/tool 출력 위 중앙 guard 미구현"
     }
   ]
 }
