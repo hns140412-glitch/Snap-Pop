@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R3",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R4",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -213,155 +213,256 @@
     }
   },
   "roster": {
-    "totalCapacity": 20,
-    "starter": {
-      "capacity": 6,
-      "selection": "CHOOSE_ONE_AT_START",
-      "slots": [
-        {
-          "slotId": "START-01",
-          "memberId": "maltipoo",
-          "status": "DEFINED"
-        },
-        {
-          "slotId": "START-02",
-          "memberId": "cat",
-          "status": "DEFINED"
-        },
-        {
-          "slotId": "START-03",
-          "memberId": "redpanda",
-          "status": "DEFINED"
-        },
-        {
-          "slotId": "START-04",
-          "memberId": "buddy",
-          "status": "DEFINED"
-        },
-        {
-          "slotId": "START-05",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "START-06",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        }
-      ]
+    "baseRoster": {
+      "count": 20,
+      "extensible": true,
+      "status": "LOCKED",
+      "note": "현재 기본 정원은 20명. 향후 업데이트로 20명 초과 추가 가능."
     },
-    "worldRegion": {
-      "minimumCapacity": 2,
-      "role": "거점/지역에서 만나 한 줄 힌트·정보·동행 연결을 제공하는 탐험대원",
-      "slots": [
-        {
-          "slotId": "WORLD-01",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "WORLD-02",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        }
+    "starterMainCandidates": {
+      "min": 5,
+      "max": 6,
+      "previousLockedCount": 6,
+      "currentStatus": "LATEST_USER_RANGE",
+      "selection": "CHOOSE_ONE_MAIN_MEMBER",
+      "role": "탐험가와 함께 이동하는 메인 탐험대원",
+      "definedMembers": [
+        "maltipoo",
+        "cat",
+        "redpanda",
+        "buddy"
       ],
-      "canExpand": true
+      "undefinedSlots": 2,
+      "namePolicy": {
+        "atStart": [
+          "DIRECT_INPUT",
+          "RECOMMENDED_NAME"
+        ],
+        "afterDiscovery": "RANDOM_INITIAL_NAME",
+        "whenSetAsMain": [
+          "KEEP_NAME",
+          "RENAME_ALLOWED"
+        ],
+        "immutableMemberId": true,
+        "preserveFirstName": true,
+        "preserveNameHistory": true,
+        "preserveAffinityAndMemoriesOnMainChange": true
+      }
+    },
+    "hubAndRegionMembers": {
+      "count": "CALCULATE_BY_ROLE_NOT_ONE_PER_HUB",
+      "snapFixedHubs": 5,
+      "role": "현지 정보원/한 줄 힌트/거점 분위기 형성",
+      "status": "LOCKED_PRINCIPLE_COUNT_OPEN",
+      "selectableAsMain": "NOT_GLOBALLY_ASSUMED",
+      "note": "메인 후보와 거점 탐험대원 역할은 구분. 필요한 인원 수는 거점 기능 기준으로 산정."
     },
     "special": {
-      "maximumCapacity": 12,
-      "reservedSlots": [
-        {
-          "slotId": "SPECIAL-01",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-02",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-03",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-04",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-05",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-06",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-07",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-08",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-09",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-10",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-11",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-12",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        }
+      "max": 12,
+      "status": "LOCKED_MAX",
+      "powerAdvantage": false,
+      "principle": "SPECIAL_EQUALS_SPECIAL_ENCOUNTER_NOT_POWER",
+      "revealFlow": [
+        "UNDISCOVERED",
+        "TRACE_OR_SHADOW",
+        "ENCOUNTER_WINDOW",
+        "RANDOM_ENCOUNTER",
+        "FIRST_MEETING",
+        "CATALOG_REVEAL",
+        "MAIN_SELECTABLE_IF_ELIGIBLE",
+        "AFFINITY_START"
       ],
-      "principle": "능력 우위가 아니라 만남 자체가 특별하다",
-      "selectionFlow": [
-        "ENCOUNTER_AVAILABLE",
-        "ENCOUNTER",
-        "MEMORY_RECORDED",
-        "SELECTABLE"
+      "encounterCycle": {
+        "userSpecifiedExamples": [
+          "1_WEEK",
+          "2_WEEKS"
+        ],
+        "exactPerMemberCycle": "OPEN",
+        "useWindowNotGuaranteedExactDay": true,
+        "cooldownBetweenNewSpecials": true,
+        "preventFarming": true
+      },
+      "encounterSurfaces": [
+        "RECORDING_RANDOM_COMPANION",
+        "EXPLORATION",
+        "CHAPTER_OR_HUB_EVENT"
       ],
-      "noPowerAdvantage": true,
-      "optional": true,
-      "missedEncounterPenalty": false,
-      "encounterWindow": true,
-      "cooldown": true,
-      "unlockConditionsStatus": "OPEN_FOR_FUTURE_DEFINITION"
-    },
-    "invariants": {
-      "totalMustRemain": 20,
-      "starterMustRemain": 6,
-      "worldRegionMinimum": 2,
-      "specialMaximum": 12,
-      "allMembersSameFunctionalAbility": true,
-      "differencesOnly": [
-        "외형",
-        "성격",
-        "말투",
-        "분위기",
-        "리액션",
-        "만남 방식",
-        "지역",
-        "친밀도",
-        "추억"
-      ]
+      "missedEncounterPenalty": false
     }
+  },
+  "evidence": {
+    "primarySource": "Google Drive sanitized transcript P03_SANITIZED_6aa5d901-2c80-83e8-aaa2-3f6a57902a8a_연결 대화 재개",
+    "sourceDriveId": "1GTnatAVOLpbac_qWakAhMdnIu1zkw1lthp2MY04RACY",
+    "userNodes": [
+      {
+        "nodeId": "4338afbb-1fcf-4e27-a01b-0a61e4bd721e",
+        "at": "2026-09-08T07:36:59.186Z",
+        "locks": [
+          "ROSTER_20",
+          "STARTER_6_OLD",
+          "CHAPTER_OR_HUB_DISCOVERY",
+          "SPECIAL_TRACE_ENCOUNTER",
+          "RANDOM_RECORDING_COMPANION",
+          "EQUAL_ABILITY"
+        ]
+      },
+      {
+        "nodeId": "afbd16cda-c446-4804-86f5-cbc36f4cf1f0",
+        "at": "2026-09-08T07:40:19.188Z",
+        "locks": [
+          "NAME_CUSTOM_OR_RECOMMENDED",
+          "RANDOM_NAME_ON_DISCOVERY",
+          "NAME_PERSISTS",
+          "NAME_HISTORY"
+        ]
+      },
+      {
+        "nodeId": "2426c93f-3b83-4892-adae-cc2767a99b31",
+        "at": "2026-09-08T07:41:59.435Z",
+        "locks": [
+          "SPECIAL_1_OR_2_WEEK_CYCLE"
+        ]
+      },
+      {
+        "nodeId": "9b2a70b6-689d-44a4-9b31-0f809b4e5245",
+        "at": "2026-09-08T07:42:59.226Z",
+        "locks": [
+          "GROWTH_ADDS_MEMBERS",
+          "DO_NOT_OVERLOAD_START",
+          "CALCULATE_HUB_MEMBER_NEED"
+        ]
+      },
+      {
+        "nodeId": "ebdc58b8-b231-46bd-8cc6-c3ecf906a7f1",
+        "at": "2026-09-08T07:44:36.157Z",
+        "locks": [
+          "MAIN_MEMBER_TRAVELS_WITH_EXPLORER",
+          "SNAP_FIXED_5_HUBS",
+          "HUB_INFO_MEMBER_ONE_LINE_HINT"
+        ]
+      },
+      {
+        "nodeId": "cffdd6fd-970f-4865-a801-0dad05f64654",
+        "at": "2026-09-08T07:47:58.010Z",
+        "locks": [
+          "BASE_ROSTER_20",
+          "EXTENSIBLE_AFTER_UPDATE"
+        ]
+      },
+      {
+        "nodeId": "009f5687-9724-4ae5-9944-314483350417",
+        "at": "2026-09-08T07:48:17.662Z",
+        "locks": [
+          "SPECIAL_MAX_12"
+        ]
+      },
+      {
+        "nodeId": "CURRENT_CONVERSATION",
+        "at": "2026-09-20",
+        "locks": [
+          "STARTER_CURRENT_RANGE_5_TO_6",
+          "CREW_RULES_SNAP_OWNED"
+        ]
+      }
+    ]
+  },
+  "relationship": {
+    "affinity": {
+      "status": "LOCKED_CONCEPT_LEVELS_OPEN",
+      "meaning": "함께한 실제 경험의 누적",
+      "sources": [
+        "함께 탐험/학습",
+        "녹음 동행",
+        "배지 발견",
+        "어려움 후 복귀",
+        "특별 사건",
+        "일기/자랑 기록"
+      ],
+      "affects": [
+        "말투 친숙도",
+        "표정",
+        "포즈",
+        "인사",
+        "별명",
+        "농담",
+        "축하 동작",
+        "아이를 부르는 방식",
+        "특별 일러스트"
+      ],
+      "neverAffects": [
+        "학습 기능",
+        "성공률",
+        "보상",
+        "EXP",
+        "보석",
+        "정답 품질"
+      ],
+      "levelNames": "OPEN"
+    },
+    "memories": {
+      "memberDetail": [
+        "첫 만남",
+        "함께한 탐험",
+        "최근 동행",
+        "같이 발견한 배지",
+        "기억에 남는 사건",
+        "이름 이력"
+      ],
+      "eventCentric": true
+    }
+  },
+  "identity": {
+    "immutableId": "Explorer_ID",
+    "fields": [
+      "appearanceIdentity",
+      "personality",
+      "speechStyle",
+      "firstName",
+      "currentName",
+      "nameHistory",
+      "firstEncounter",
+      "affinity",
+      "sharedEvents"
+    ],
+    "appSpecificProjection": [
+      "APP_ROLE",
+      "LOCATION",
+      "DIALOGUE",
+      "THEME_APPEARANCE"
+    ],
+    "sameIdentityAcrossApps": true
+  },
+  "classification": {
+    "LOCKED": [
+      "BASE_ROSTER_20",
+      "EXTENSIBLE_ROSTER",
+      "STARTER_MAIN_SELECTION_5_TO_6_LATEST",
+      "SPECIAL_MAX_12",
+      "ALL_MEMBERS_EQUAL_FUNCTIONAL_ABILITY",
+      "SPECIAL_IS_ENCOUNTER_NOT_POWER",
+      "MAIN_MEMBER_TRAVELS_WITH_EXPLORER",
+      "HUB_INFO_MEMBER_ROLE",
+      "AFFINITY_NOT_POWER",
+      "NAME_HISTORY_PRESERVED",
+      "SPECIAL_1_OR_2_WEEK_CYCLE_ELEMENT",
+      "SLOW_DISCOVERY"
+    ],
+    "DERIVED_SUPPORTED": [
+      "ENCOUNTER_WINDOW",
+      "COOLDOWN",
+      "NO_FARMING",
+      "CATALOG_REVEAL_AFTER_FIRST_MEETING",
+      "EVENT_CENTRIC_SHARED_MEMORY"
+    ],
+    "OPEN": [
+      "STARTER_MEMBER_5_AND_6_IDENTITIES",
+      "FULL_20_MEMBER_IDENTITIES",
+      "EXACT_HUB_MEMBER_COUNT",
+      "EXACT_SPECIAL_MEMBER_COUNT_BELOW_12",
+      "PER_MEMBER_SPECIAL_CYCLE",
+      "AFFINITY_LEVEL_NAMES",
+      "EXACT_ENCOUNTER_PROBABILITY",
+      "WHICH_DISCOVERED_MEMBERS_CAN_BECOME_MAIN"
+    ]
   }
 }
