@@ -35,6 +35,10 @@
 </section>
 <section id="explore" class="view parchment">
  <header class="pageTitle"><span>3단계 탐험</span><h1 id="exploreTitle">탐험 진행</h1></header>
+ <div class="modeSwitch" role="group" aria-label="표현 언어">
+  <button class="soft on" id="modeKo" type="button">한국어</button>
+  <button class="soft" id="modeEn" type="button">English</button>
+ </div>
  <div id="steps" class="steps"></div>
  <article class="paper">
   <div class="guideLine"><b>길잡이 모카</b><span id="guideLine">한 조각씩 찾아보자.</span></div>
@@ -64,6 +68,13 @@
   <div id="resultStrengths" class="strengths"></div>
  </article>
  <button class="primary wide" id="resultRecords">기록에서 보기</button>
+ <button class="soft wide resultSecondary" id="bonusStart">추가 연습</button>
+ <article id="bonusPanel" class="paper bonusPanel" hidden>
+  <span class="kicker">선택 연습 · EXP 없음</span>
+  <h2 id="bonusQuestion">한 문장 더 만들어볼까?</h2>
+  <textarea id="bonusAnswer" placeholder="네 말로 한 문장만 더 남겨봐요."></textarea>
+  <button class="primary wide" id="bonusSave">추가 연습 완료</button>
+ </article>
  <button class="soft wide resultSecondary" id="resultGrowth">성장 확인하기</button>
 </section>
 <section id="gems" class="view parchment">
