@@ -20,10 +20,6 @@
    <div id="homeCrewMember" class="homeCrewMember"><div class="crewMemberPlaceholder">대원</div><div><strong id="homeCrewMemberName">모카</strong><span id="homeCrewMemberLine" class="homeCrewMemberLine"></span></div></div>
   </div>
   <button class="specialInvite" id="specialInvite" hidden>특별 탐험 초대장</button>
-  <div id="homeQuickStart" class="homeQuickStart" aria-label="빠른 시작">
-   <button id="homeAskQuick" type="button"><b>궁금한 것</b><span>탐험대에게 물어보기</span></button>
-   <button id="homeThinkQuick" type="button"><b>떠오른 생각</b><span>상상 구름 펼치기</span></button>
-  </div>
   <button class="radioFab" id="homeRadio"><img src="assets/icons/radio.svg" alt=""><span>무전</span></button>
   <div class="selection" id="selection" hidden>
    <span class="kicker">선택한 탐험지</span><h2 id="selTitle"></h2><p id="selDesc"></p>
@@ -46,30 +42,6 @@
   <div id="cloudHistoryList" class="cards"></div>
  </section>
 </section>
-<section id="exploreHub" class="view parchment">
- <header class="pageTitle"><span>생각 · 궁금증 · 표현</span><h1>탐험</h1><p>궁금한 걸 물어보거나, 떠오른 생각을 펼치거나, 글쓰기 탐험을 시작해요.</p></header>
- <article class="hubHero">
-  <div class="modeSwitch hubModeSwitch" role="group" aria-label="상상구름 언어">
-   <button class="soft on" id="hubModeKo" type="button">한국어</button>
-   <button class="soft" id="hubModeEn" type="button">English</button>
-  </div>
-  <div class="hubCrewLine"><b id="hubCrewName">탐험대원</b><span id="hubCrewLine">뭐가 궁금해? 같이 풀어보자.</span></div>
-  <div class="hubAsk">
-   <textarea id="hubCloudInput" rows="3" placeholder="궁금한 것, 떠오른 생각, 영어로 표현하고 싶은 말을 적어봐요."></textarea>
-   <div class="hubAskActions">
-    <button class="voice" id="hubVoiceBtn" type="button">말로 묻기</button>
-    <button class="primary" id="hubAskBtn" type="button">탐험대에게 물어보기</button>
-   </div>
-  </div>
-  <div id="hubCloudAnswer" class="cloudAnswer" hidden aria-live="polite"></div>
-  <button class="soft wide" id="hubSpeakLast" type="button">답변 듣기</button>
- </article>
- <div class="hubPaths">
-  <button class="hubPath" id="hubThinkBtn" type="button"><b>생각 펼치기</b><span>장면·마음·단서·연결로 아이디어를 넓혀요.</span></button>
-  <button class="hubPath" id="hubMapBtn" type="button"><b>5가지 글쓰기 탐험</b><span>아이디어·감정·묘사·관점·마무리 도구를 골라요.</span></button>
-  <button class="hubPath" id="hubResumeBtn" type="button"><b>이어 하던 탐험</b><span id="hubResumeMeta">진행 중 탐험이 있으면 여기서 이어가요.</span></button>
- </div>
-</section>
 <section id="explore" class="view parchment">
  <header class="pageTitle"><span>3단계 탐험</span><h1 id="exploreTitle">탐험 진행</h1></header>
  <div class="modeSwitch" role="group" aria-label="표현 언어">
@@ -87,23 +59,6 @@
    <button class="voice" id="voiceBtn"><img src="assets/icons/radio.svg" alt="">말해서 쓰기</button>
   </div>
   <div id="handoffWord" class="handoffWord" hidden></div>
-  <div id="cloudPanel" class="cloudPanel" hidden>
-   <div class="cloudHead">
-    <div><b>상상 구름</b><span>생각을 펼치거나, 궁금한 걸 물어봐도 돼요.</span></div>
-    <button class="soft cloudMini" id="cloudSpeakLast" type="button">답변 듣기</button>
-   </div>
-   <div class="cloudAskRow">
-    <textarea id="cloudInput" rows="2" placeholder="예: 조선시대엔 왜 상투를 틀었어? / 이 생각을 영어로 표현하고 싶어"></textarea>
-    <button class="voice cloudVoice" id="cloudVoiceBtn" type="button">말로 묻기</button>
-   </div>
-   <div class="cloudActions">
-    <button class="primary" id="cloudAskBtn" type="button">탐험대에게 물어보기</button>
-    <span id="cloudMode" class="cloudMode">생각 펼치기</span>
-   </div>
-   <div id="cloudAnswer" class="cloudAnswer" hidden aria-live="polite"></div>
-   <div id="cloudChips" class="cloudChips"></div>
-   <button class="soft wide" id="cloudClose">내 문장으로 돌아가기</button>
-  </div>
  </article>
  <button class="primary wide" id="nextBtn">다음 단계</button>
 </section>
@@ -213,10 +168,31 @@
  <div class="setting"><div><b>움직임 줄이기</b><span>화면 효과 최소화</span></div><label class="toggle"><input id="reduceMotion" type="checkbox"><i></i></label></div>
 </section>
 </main>
+<div id="imaginationLayer" class="imaginationLayer" hidden aria-hidden="true">
+ <div class="imaginationBackdrop" id="imaginationBackdrop"></div>
+ <section class="imaginationSheet" role="dialog" aria-modal="true" aria-labelledby="imaginationTitle">
+  <header class="imaginationHead">
+   <div><span>필요할 때만 꺼내는 생각 도구</span><h2 id="imaginationTitle">상상 구름</h2></div>
+   <button class="round imaginationClose" id="imaginationClose" type="button" aria-label="상상 구름 닫기">×</button>
+  </header>
+  <div class="modeSwitch imaginationMode" role="group" aria-label="상상구름 언어">
+   <button class="soft on" id="imaginationModeKo" type="button">한국어</button>
+   <button class="soft" id="imaginationModeEn" type="button">English</button>
+  </div>
+  <div class="imaginationCrew"><b id="imaginationCrewName">탐험대원</b><span id="imaginationCrewLine">필요한 만큼만 같이 생각해보자.</span></div>
+  <textarea id="imaginationInput" rows="3" placeholder="막힌 생각이나 궁금한 걸 말하거나 적어봐요."></textarea>
+  <div class="imaginationActions">
+   <button class="voice" id="imaginationVoiceBtn" type="button">말로 묻기</button>
+   <button class="primary" id="imaginationAskBtn" type="button">도움 받기</button>
+  </div>
+  <div id="imaginationAnswer" class="cloudAnswer" hidden aria-live="polite"></div>
+  <button class="soft wide" id="imaginationSpeakLast" type="button">답변 듣기</button>
+ </section>
+</div>
 <nav id="nav" class="nav">
  <button data-view="map" class="on"><img src="assets/icons/map.svg" alt=""><span>지도</span></button>
  <button data-view="records"><img src="assets/icons/records.svg" alt=""><span>기록</span></button>
- <button data-view="exploreHub"><img src="assets/icons/explore.svg" alt=""><span>탐험</span></button>
+ <button data-view="explore"><img src="assets/icons/explore.svg" alt=""><span>탐험</span></button>
  <button data-view="gems"><img src="assets/icons/gems.svg" alt=""><span>보석함</span></button>
  <button data-view="growth"><img src="assets/icons/growth.svg" alt=""><span>성장</span></button>
 </nav>
