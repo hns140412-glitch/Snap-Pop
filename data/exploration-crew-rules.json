@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R4",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R5",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -701,5 +701,325 @@
         "final": "핵심은 남기고 군더더기만 챙겨보자."
       }
     }
+  },
+  "personalityPackSchema": {
+    "fields": [
+      "PERSONALITY",
+      "HABIT",
+      "REACTION",
+      "RELATIONSHIP_EXCEPTION",
+      "WORLD_ROUTINE",
+      "MEMORY"
+    ],
+    "invariant": "친밀도는 Personality를 바꾸지 않고 원래 성격 안에서 관계 표현만 깊게 한다",
+    "weaknessRule": "약점/싫어하는 것은 실패 페널티나 기능 저하가 아니라 Micro Story 재료",
+    "performanceRule": "모든 탐험대원 학습 기능·보상·성공률은 동일"
+  },
+  "designBoard20": [
+    {
+      "slot": 1,
+      "role": "STARTER",
+      "core": "능청 장난",
+      "worldFlavor": "뭐든 놀이로 바꿈",
+      "chemistry": "진지한 친구를 장난스럽게 흔듦",
+      "speech": "뭐~ 그럴 수도 있지.",
+      "likes": "장난·의외의 상황",
+      "weakness": "진지한 분위기",
+      "relationshipException": "아이만 알아듣는 반복 농담",
+      "silhouette": "작고 둥글 + 긴 귀/꼬리 계열",
+      "visualCue": "삐딱한 표정·작은 주머니"
+    },
+    {
+      "slot": 2,
+      "role": "STARTER",
+      "core": "씩씩 직진",
+      "worldFlavor": "일단 출발",
+      "chemistry": "망설이는 친구를 끌고 감",
+      "speech": "가자! 해보면 알지!",
+      "likes": "도전·출발",
+      "weakness": "기다리기",
+      "relationshipException": "먼저 출발했다가 아이를 기다리러 돌아옴",
+      "silhouette": "짧고 단단한 삼각형",
+      "visualCue": "뒤로 날리는 스카프"
+    },
+    {
+      "slot": 3,
+      "role": "STARTER",
+      "core": "엉뚱 상상",
+      "worldFlavor": "평범한 것도 사건으로 봄",
+      "chemistry": "말도 안 되는 가설 제시",
+      "speech": "혹시 이거…",
+      "likes": "구름·이상한 물건",
+      "weakness": "뻔한 답",
+      "relationshipException": "둘만의 황당한 가설이 쌓임",
+      "silhouette": "머리가 조금 크고 몽글몽글",
+      "visualCue": "큰 모자·구름형 소품"
+    },
+    {
+      "slot": 4,
+      "role": "STARTER",
+      "core": "차분 관찰",
+      "worldFlavor": "남들이 놓친 걸 발견",
+      "chemistry": "엉뚱한 말에서 진짜 단서를 찾음",
+      "speech": "잠깐. 저거 봤어?",
+      "likes": "작은 변화",
+      "weakness": "소란",
+      "relationshipException": "아이의 예전 행동을 조용히 기억해냄",
+      "silhouette": "길쭉하고 안정적",
+      "visualCue": "작은 망원경"
+    },
+    {
+      "slot": 5,
+      "role": "STARTER",
+      "core": "호기심 질문",
+      "worldFlavor": "뭐든 왜?",
+      "chemistry": "정보통에게 질문 폭격",
+      "speech": "왜? 근데 그건?",
+      "likes": "새로운 것",
+      "weakness": "설명 안 해주는 것",
+      "relationshipException": "아이에게만 질문이 더 많아짐",
+      "silhouette": "작은 몸 + 큰 눈/귀",
+      "visualCue": "확대경·관찰 주머니"
+    },
+    {
+      "slot": 6,
+      "role": "STARTER",
+      "core": "다정 공감",
+      "worldFlavor": "친구 상태부터 살핌",
+      "chemistry": "티격태격하는 둘을 중재",
+      "speech": "오늘은 좀 다르네?",
+      "likes": "함께하기",
+      "weakness": "친구가 힘든 것",
+      "relationshipException": "아이 컨디션을 먼저 알아채는 표현 증가",
+      "silhouette": "포근하고 둥근 형태",
+      "visualCue": "작은 담요·파우치"
+    },
+    {
+      "slot": 7,
+      "role": "WORLD",
+      "core": "수다 정보통",
+      "worldFlavor": "온갖 소문을 알고 있음",
+      "chemistry": "비밀을 말할 듯 말 듯",
+      "speech": "이거 비밀인데…",
+      "likes": "소문",
+      "weakness": "혼자 있는 것",
+      "relationshipException": "비밀이라면서 아이에게 거의 다 말함",
+      "silhouette": "통통 + 빠른 제스처",
+      "visualCue": "삐져나온 메모 쪽지"
+    },
+    {
+      "slot": 8,
+      "role": "WORLD",
+      "core": "깜빡 허당",
+      "worldFlavor": "정보는 있는데 하나씩 빠짐",
+      "chemistry": "다른 친구가 정정",
+      "speech": "잠깐… 뭐였더라?",
+      "likes": "메모",
+      "weakness": "복잡한 순서",
+      "relationshipException": "아이가 대신 기억해준 일을 나중에 언급",
+      "silhouette": "약간 비대칭",
+      "visualCue": "열린 가방"
+    },
+    {
+      "slot": 9,
+      "role": "WORLD",
+      "core": "시크 귀찮",
+      "worldFlavor": "귀찮다면서 다 해줌",
+      "chemistry": "장난형과 티격태격",
+      "speech": "꼭 지금 해야 돼?",
+      "likes": "조용함",
+      "weakness": "호들갑",
+      "relationshipException": "툴툴대면서 아이 자리를 먼저 마련함",
+      "silhouette": "낮고 길쭉한 형태",
+      "visualCue": "반쯤 감긴 눈"
+    },
+    {
+      "slot": 10,
+      "role": "WORLD",
+      "core": "초진지 기록",
+      "worldFlavor": "모든 걸 기록",
+      "chemistry": "사소한 사건도 보고서 취급",
+      "speech": "기록해두지.",
+      "likes": "관찰·정리",
+      "weakness": "예상 밖 사건",
+      "relationshipException": "아이 관련 쓸데없는 기록까지 모음",
+      "silhouette": "각지고 반듯함",
+      "visualCue": "수첩·연필"
+    },
+    {
+      "slot": 11,
+      "role": "WORLD",
+      "core": "느긋 마이웨이",
+      "worldFlavor": "급한 일이 별로 없음",
+      "chemistry": "직진형을 답답하게 만듦",
+      "speech": "천천히 가도 도착해.",
+      "likes": "낮잠·풍경",
+      "weakness": "재촉",
+      "relationshipException": "아이와 있을 때 평소보다 아주 조금 빨라짐",
+      "silhouette": "넓고 말랑한 형태",
+      "visualCue": "큰 모자·작은 베개"
+    },
+    {
+      "slot": 12,
+      "role": "WORLD",
+      "core": "떠돌이 탐험",
+      "worldFlavor": "자기 거점보다 밖에 자주 있음",
+      "chemistry": "파견 소식의 주요 출처",
+      "speech": "나? 저쪽 갔다 왔지.",
+      "likes": "파견·새 장소",
+      "weakness": "오래 머무르기",
+      "relationshipException": "여행에서 아이 줄 작은 이야기를 가져옴",
+      "silhouette": "날렵하고 이동감 있음",
+      "visualCue": "낡은 여행가방·지도"
+    },
+    {
+      "slot": 13,
+      "role": "SPECIAL",
+      "core": "대타 전문",
+      "worldFlavor": "이상하게 남의 자리에 자주 있음",
+      "chemistry": "오늘도 네가 왜 여기 있어?",
+      "speech": "오늘도 나야.",
+      "likes": "남의 거점 구경",
+      "weakness": "자기 일정",
+      "relationshipException": "대타 이유가 둘만의 농담으로 발전",
+      "silhouette": "평범해 보이나 소품이 자주 바뀜",
+      "visualCue": "거점별 임시 명찰",
+      "encounterGimmick": "담당 부재/대타 상황에 반복 출현"
+    },
+    {
+      "slot": 14,
+      "role": "SPECIAL",
+      "core": "흔적쟁이",
+      "worldFlavor": "본인보다 흔적이 먼저 발견",
+      "chemistry": "다른 탐험대가 목격담 제공",
+      "speech": "말보다 흔적",
+      "likes": "몰래 관찰",
+      "weakness": "정면 등장",
+      "relationshipException": "친해질수록 숨어 있는 거리가 짧아짐",
+      "silhouette": "가늘고 작은 형태",
+      "visualCue": "긴 꼬리·발자국",
+      "encounterGimmick": "발자국·소지품·목격담이 먼저 축적"
+    },
+    {
+      "slot": 15,
+      "role": "SPECIAL",
+      "core": "길치",
+      "worldFlavor": "파견지가 아닌 곳에 출현",
+      "chemistry": "여기 ○○섬 아니야?",
+      "speech": "여기 맞지?",
+      "likes": "지도",
+      "weakness": "실제 지도 읽기",
+      "relationshipException": "길을 잃으면 아이를 기준점으로 삼음",
+      "silhouette": "둥근 몸 + 방향이 엉뚱한 소품",
+      "visualCue": "거꾸로 든 지도",
+      "encounterGimmick": "예상과 다른 거점에 우연히 등장"
+    },
+    {
+      "slot": 16,
+      "role": "SPECIAL",
+      "core": "조용한 동행",
+      "worldFlavor": "어느 순간 옆에 있음",
+      "chemistry": "뒤늦게 따라온 걸 알아챔",
+      "speech": "응. 나도 갈게.",
+      "likes": "같이 걷기",
+      "weakness": "큰 소리",
+      "relationshipException": "말 대신 제스처·둘만의 인사 증가",
+      "silhouette": "작고 단정함",
+      "visualCue": "작은 랜턴",
+      "encounterGimmick": "조용히 따라오다 뒤늦게 발견"
+    },
+    {
+      "slot": 17,
+      "role": "SPECIAL",
+      "core": "사고뭉치 호기심",
+      "worldFlavor": "거점 물건을 자꾸 건드림",
+      "chemistry": "담당 탐험대와 Micro Episode",
+      "speech": "이거 눌러봐도 돼?",
+      "likes": "버튼·장치",
+      "weakness": "만지지 마",
+      "relationshipException": "아이 눈치를 보지만 호기심은 유지",
+      "silhouette": "팔다리/귀 움직임이 큼",
+      "visualCue": "공구가방·버튼 집착",
+      "encounterGimmick": "거점 장치 사건으로 첫 등장"
+    },
+    {
+      "slot": 18,
+      "role": "SPECIAL",
+      "core": "휴가 여행",
+      "worldFlavor": "쉬러 갔다가 엉뚱한 곳에서 발견",
+      "chemistry": "휴가라며 왜 여기 있어?",
+      "speech": "쉬는 것도 탐험이야.",
+      "likes": "여행·간식",
+      "weakness": "빡빡한 일정",
+      "relationshipException": "여행지에서 아이 생각난 흔적을 남김",
+      "silhouette": "느슨하고 편안함",
+      "visualCue": "여행모자·엽서",
+      "encounterGimmick": "휴가지/여행지 소식 뒤 뜻밖의 조우"
+    },
+    {
+      "slot": 19,
+      "role": "SPECIAL",
+      "core": "미스터리 파견",
+      "worldFlavor": "여러 지역에서 소문만 들림",
+      "chemistry": "장기 Encounter Story",
+      "speech": "그건 아직 말 못 해.",
+      "likes": "비밀 임무",
+      "weakness": "질문 공세",
+      "relationshipException": "친해질수록 파견 이야기를 조금씩 공유",
+      "silhouette": "길고 선명함",
+      "visualCue": "케이프·탐험가방",
+      "encounterGimmick": "여러 지역 소문과 흔적이 장기적으로 연결"
+    },
+    {
+      "slot": 20,
+      "role": "SPECIAL",
+      "core": "예측불가",
+      "worldFlavor": "등장 방식 자체가 매번 다름",
+      "chemistry": "세계의 깜짝 사건 담당",
+      "speech": "왜 내가 여기 있냐고? 나도 몰라.",
+      "likes": "즉흥",
+      "weakness": "정해진 패턴",
+      "relationshipException": "예전 공동 사건을 엉뚱하게 재현",
+      "silhouette": "가장 독특한 비대칭",
+      "visualCue": "방문마다 이상한 물건 하나",
+      "encounterGimmick": "고정 패턴 없이 이전 사건과 연결된 깜짝 등장"
+    }
+  ],
+  "visualSystem": {
+    "rule": "IDENTITY_FIXED_THEME_VARIABLE",
+    "layers": [
+      "IDENTITY_BODY",
+      "PERSONALITY_PROP",
+      "THEME_GEAR"
+    ],
+    "speciesPolicy": "종족을 먼저 고정하지 않는다. 현실 동물 + 상상 생명체 사이의 고유 실루엣도 허용.",
+    "propRule": "대표 소품은 기능 능력치가 아니라 Personality 연출 장치",
+    "memoryOnProps": "소품에 공동 사건의 작은 흔적이 남을 수 있으나 장비/아이템 성장 시스템으로 만들지 않는다",
+    "visualGrowth": "레벨업으로 화려해지는 것보다 함께한 시간이 외형에 미세하게 남는 방식"
+  },
+  "worldBehaviorGrammar": {
+    "common": [
+      "PERSONALITY",
+      "HABIT",
+      "REACTION",
+      "RELATIONSHIP_EXCEPTION",
+      "WORLD_ROUTINE",
+      "MEMORY"
+    ],
+    "dayPatterns": {
+      "normal": "탐험가+메인 탐험대 도착 → 담당 탐험대 있음 → 한 줄 정보/반응 → 기능 실행",
+      "lifestyleVariation": "도착 → 담당 없음 → 생활형 사유 → 대타 → 짧은 농담 → 정상 기능",
+      "vacation": "도착 → 휴가 팻말/대타 → 휴가지 소식 → 며칠 뒤 복귀",
+      "expedition": "도착 → 담당 파견 → 대타가 소식 전달 → 중간 흔적/소식 → 타지역 실제 조우 가능 → 복귀",
+      "special": "도착 → 뭔가 이상함 → 기존 담당+스페셜 또는 대타 스페셜 → Micro Episode → 조우 이력",
+      "mystery": "도착 → 담당 상태가 조금 이상함 → 흔적 → 목격담 → 후속 방문에서 이야기 진행"
+    },
+    "absence": {
+      "rule": "ABSENCE_NEVER_PENALIZES_EXPLORER",
+      "affinityDecay": false,
+      "streakPenalty": false,
+      "returnRule": "RETURN_IS_REUNION_OPPORTUNITY"
+    },
+    "simulation": "매일 전체 세계를 시뮬레이션하지 않고 재접속 시 필요한 과거 상태만 가볍게 구성"
   }
 }
