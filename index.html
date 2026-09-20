@@ -56,8 +56,19 @@
   </div>
   <div id="handoffWord" class="handoffWord" hidden></div>
   <div id="cloudPanel" class="cloudPanel" hidden>
-   <b>상상 구름</b>
-   <p>정답을 만드는 곳이 아니라, 네 생각에서 장면·기분·연결고리를 꺼내 보는 곳이에요.</p>
+   <div class="cloudHead">
+    <div><b>상상 구름</b><span>생각을 펼치거나, 궁금한 걸 물어봐도 돼요.</span></div>
+    <button class="soft cloudMini" id="cloudSpeakLast" type="button">답변 듣기</button>
+   </div>
+   <div class="cloudAskRow">
+    <textarea id="cloudInput" rows="2" placeholder="예: 조선시대엔 왜 상투를 틀었어? / 이 생각을 영어로 표현하고 싶어"></textarea>
+    <button class="voice cloudVoice" id="cloudVoiceBtn" type="button">말로 묻기</button>
+   </div>
+   <div class="cloudActions">
+    <button class="primary" id="cloudAskBtn" type="button">탐험대에게 물어보기</button>
+    <span id="cloudMode" class="cloudMode">생각 펼치기</span>
+   </div>
+   <div id="cloudAnswer" class="cloudAnswer" hidden aria-live="polite"></div>
    <div id="cloudChips" class="cloudChips"></div>
    <button class="soft wide" id="cloudClose">내 문장으로 돌아가기</button>
   </div>
@@ -177,4 +188,6 @@
  <button data-view="growth"><img src="assets/icons/growth.svg" alt=""><span>성장</span></button>
 </nav>
 <div id="toast" role="status" aria-live="polite"></div>
-</div><script src="app.js"></script><script src="snap-bridge.js"></script></body></html>
+</div><script src="app.js"></script><script src="snap-bridge.js"></script>
+<script src="intelligence-runtime.js"></script>
+<script src="voice-runtime.js"></script></body></html>
