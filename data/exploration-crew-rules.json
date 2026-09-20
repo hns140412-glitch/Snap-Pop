@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R5",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R4",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -216,87 +216,203 @@
     "currentTarget": 20,
     "expandableByFutureUpdate": true,
     "starter": {
-      "selectableCandidateCount": {
-        "min": 5,
-        "max": 6,
-        "status": "LOCKED_BY_LATEST_USER_CORRECTION"
-      },
-      "olderEvidenceCount": 6,
+      "candidateMin": 5,
+      "candidateMax": 6,
       "selection": "CHOOSE_ONE_AT_START",
-      "candidateIdentityStatus": "PARTIALLY_DEFINED",
-      "definedMembers": [
-        "maltipoo",
-        "cat",
-        "redpanda",
-        "buddy"
-      ],
-      "unassignedCandidateSlots": 2,
-      "note": "5~6명 후보 중 선택. 확정되지 않은 후보의 이름/외형은 임의 생성 금지."
+      "currentDefinedCount": 4,
+      "releaseGate": "AT_LEAST_5_DEFINED_BEFORE_STARTER_SELECTION_RELEASE",
+      "status": "STARTER_ROSTER_GAP",
+      "slots": [
+        {
+          "slotId": "START-01",
+          "memberId": "maltipoo",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-02",
+          "memberId": "cat",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-03",
+          "memberId": "redpanda",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-04",
+          "memberId": "buddy",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-05",
+          "memberId": null,
+          "status": "UNASSIGNED_REQUIRED"
+        },
+        {
+          "slotId": "START-06",
+          "memberId": null,
+          "status": "UNASSIGNED_OPTIONAL_UNTIL_CONFIRMED"
+        }
+      ]
     },
     "worldRegion": {
-      "countStatus": "OPEN_CALCULATE_FROM_ACTUAL_HUB_NEED",
-      "role": "고정 5거점 및 기능별 거점/지역에서 정보원·한 줄 힌트·만남을 제공",
-      "fixedHubCountSnap": 5,
-      "rule": "거점 탐험대원 수를 먼저 역할 기준으로 계산. 거점당 1명 강제 배치 금지.",
-      "canBecomeMainCompanion": true
+      "minimumCount": 2,
+      "status": "IDENTITIES_OPEN",
+      "role": "5개 고정 거점/지역에서 한 줄 힌트·정보·동행 연결을 제공하는 탐험대원",
+      "fiveFixedHubs": true,
+      "oneLineHintRole": true,
+      "memberIdentityStatus": "OPEN",
+      "slots": [
+        {
+          "slotId": "WORLD-01",
+          "memberId": null,
+          "status": "UNASSIGNED_REQUIRED"
+        },
+        {
+          "slotId": "WORLD-02",
+          "memberId": null,
+          "status": "UNASSIGNED_REQUIRED"
+        }
+      ]
     },
     "special": {
       "maximumCount": 12,
-      "currentCountStatus": "OPEN",
-      "principle": "SPECIAL_IS_ENCOUNTER_NOT_POWER",
-      "preEncounterPresentation": [
-        "그림자",
-        "흔적",
-        "이슈",
-        "소문",
-        "실루엣"
+      "status": "IDENTITIES_AND_EXACT_UNLOCK_OPEN",
+      "principle": "능력 우위가 아니라 만남 방식·등장 맥락·추억이 특별하다",
+      "selectionFlow": [
+        "PRESENCE_OR_TRACE",
+        "ENCOUNTER_WINDOW",
+        "FIRST_ENCOUNTER",
+        "EVENT_MEMORY",
+        "SELECTABLE"
       ],
-      "encounterSources": [
-        "녹음 시 랜덤 동행",
-        "탐험",
-        "거점 등장",
-        "챕터/지역 사건"
-      ],
-      "encounterCadence": {
-        "principle": "1주 또는 2주 간격 등 주기 요소를 둬 과밀 노출 방지",
-        "exactPerMemberDays": "OPEN",
-        "encounterWindow": "ADOPTED_CONCEPT_NOT_FIXED_NUMERIC_RULE",
-        "cooldown": "ADOPTED_CONCEPT_NOT_FIXED_NUMERIC_RULE"
-      },
-      "afterEncounter": {
-        "selectableAsMainCompanion": true,
-        "recordEncounterMemory": true
-      },
-      "hubAppearance": {
-        "triggerDialogueFromCurrentMainCrew": true,
-        "tone": "재미난 이슈/대화"
-      },
+      "noPowerAdvantage": true,
+      "optional": true,
       "missedEncounterPenalty": false,
-      "noPowerAdvantage": true
+      "encounterWindow": true,
+      "cooldown": true,
+      "exactTriggerThresholds": "OPEN_DO_NOT_INVENT",
+      "reservedSlots": [
+        {
+          "slotId": "SPECIAL-01",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-02",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-03",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-04",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-05",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-06",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-07",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-08",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-09",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-10",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-11",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-12",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        }
+      ]
     },
     "invariants": {
-      "currentRosterTarget": 20,
-      "starterSelectionMin": 5,
-      "starterSelectionMax": 6,
+      "totalRosterCapacity": 20,
+      "starterCandidateRange": "5-6",
+      "worldRegionMinimum": 2,
       "specialMaximum": 12,
       "allMembersSameFunctionalAbility": true,
-      "growthAddsMembersGradually": true,
-      "avoidTooManyAtStart": true,
-      "futureUpdateMayExpandRoster": true,
       "differencesOnly": [
+        "외형",
         "성격",
-        "분위기",
         "말투",
-        "표정",
+        "분위기",
         "리액션",
-        "행동 습관",
-        "세계관 이야기",
         "만남 방식",
         "지역",
         "친밀도",
         "추억"
+      ],
+      "noInventedMemberIdentity": true
+    },
+    "totalCapacity": 20,
+    "relationship": {
+      "preserveName": true,
+      "preserveAffinity": true,
+      "preserveMemories": true,
+      "switchingMemberDoesNotResetProgress": true,
+      "affinityAffects": [
+        "대사 변주",
+        "추억 회상",
+        "재회 표현"
+      ],
+      "affinityMustNotAffect": [
+        "학습 난이도",
+        "EXP",
+        "보석",
+        "기능 접근",
+        "평가"
       ]
-    }
+    },
+    "conflicts": [
+      {
+        "id": "CREW-CONFLICT-001",
+        "olderClaim": "Special Guest 20명 별도 풀",
+        "disposition": "SUPERSEDED",
+        "reason": "최신 사용자 직접 정정: 기본 탐험대 로스터 20명, 스페셜 탐험대 최대 12명 이하"
+      },
+      {
+        "id": "CREW-OPEN-001",
+        "item": "START-05/START-06 개별 정체성",
+        "disposition": "OPEN",
+        "rule": "임의 이름·외형·성격 생성 금지"
+      },
+      {
+        "id": "CREW-OPEN-002",
+        "item": "스페셜 정확한 해금 일수/챕터/거점 조건",
+        "disposition": "OPEN",
+        "rule": "Encounter Window/Cooldown 개념만 보존하고 수치 임의 구현 금지"
+      }
+    ]
   },
   "evidence": {
     "primarySource": "Google Drive sanitized transcript P03_SANITIZED_6aa5d901-2c80-83e8-aaa2-3f6a57902a8a_연결 대화 재개",
