@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R7",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R8",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -1369,7 +1369,15 @@
       "축하 동작",
       "부르는 방식",
       "특별 일러스트"
-    ]
+    ],
+    "scoring": {
+      "EXPLORATION_COMPLETE": 2,
+      "SPECIAL_MEMORY": 2,
+      "SHARED_MICRO_EPISODE": 1,
+      "REUNION": 0,
+      "VOICE_EXPRESSION": 0
+    },
+    "antiFarming": "단순 입력 횟수·재접속·음성 횟수로 친밀도 점수를 올리지 않는다"
   },
   "worldStateEngine": {
     "lightweight": true,
