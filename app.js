@@ -306,7 +306,20 @@ $("#nextBtn").onclick=async()=>{
   await setMany([["records",records],["gems",gems],["expLedger",expLedger],["gemLedger",gemLedger],["completionEvents",events],["exp",totalExp],["lastResult",record],["active",null]]);
   await updateStatus();
   await recordCrewExperience("EXPLORATION_COMPLETE",{eventId:completionEventId,landmark:s.landmark,recordId:record.id,snippet:crewSnippet(s.answers.join(" "))});
-  window.dispatchEvent(new CustomEvent("snap-pop:task-completed",{detail:{completionEventId,landmark:s.landmark,exp:expAward.total}}));
+  const learningCtx=learnerContext();
+  window.dispatchEvent(new CustomEvent("snap-pop:task-completed",{detail:{
+    completionEventId,
+    landmark:s.landmark,
+    exp:expAward.total,
+    child_authored:true,
+    learning_unit_id:learningCtx?.learning_unit_id||null,
+    analysis_id:learningCtx?.analysis_id||null,
+    subject:learningCtx?.subject||null,
+    writing_focus:s.crewState?.writingAnalysis?.focus||null,
+    writing_provider:s.crewState?.writingAnalysis?.provider||null,
+    learning_context_used:!!s.crewState?.writingAnalysis?.learningContextUsed||!!learningCtx,
+    final_draft_chars:(s.draft||"").length
+  }}));
   toast(`탐험 완료! +${expAward.total} EXP · 보석 조각 +1`);show("result")
 }
 
