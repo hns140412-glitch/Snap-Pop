@@ -213,91 +213,107 @@
     }
   },
   "roster": {
-    "baseRoster": {
-      "count": 20,
-      "extensible": true,
-      "status": "LOCKED",
-      "note": "현재 기본 정원은 20명. 향후 업데이트로 20명 초과 추가 가능."
+    "currentRoster": 20,
+    "extensible": true,
+    "starter": {
+      "count": 6,
+      "firstRunSelection": "CHOOSE_ONE_MAIN_MEMBER",
+      "selectedRole": "MAIN_CREW_MEMBER",
+      "nonSelectedStarterState": "MET_NOT_YET_TRAVELED_TOGETHER",
+      "slots": [
+        {
+          "slotId": "START-01",
+          "memberId": "maltipoo",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-02",
+          "memberId": "cat",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-03",
+          "memberId": "redpanda",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-04",
+          "memberId": "buddy",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-05",
+          "memberId": null,
+          "status": "OPEN_IDENTITY"
+        },
+        {
+          "slotId": "START-06",
+          "memberId": null,
+          "status": "OPEN_IDENTITY"
+        }
+      ]
     },
-    "starterMainCandidates": {
-      "min": 5,
-      "max": 6,
-      "previousLockedCount": 6,
-      "currentStatus": "LATEST_USER_RANGE",
-      "selection": "CHOOSE_ONE_MAIN_MEMBER",
-      "role": "탐험가와 함께 이동하는 메인 탐험대원",
-      "definedMembers": [
-        "maltipoo",
-        "cat",
-        "redpanda",
-        "buddy"
+    "remainingDiscoveryPool": {
+      "count": 14,
+      "initialVisibility": "NOT_ALL_EXPOSED",
+      "discoveryContexts": [
+        "CHAPTER",
+        "HUB",
+        "REGION",
+        "WORLD_EVENT",
+        "RECORDING_COMPANION"
       ],
-      "undefinedSlots": {
-        "min": 1,
-        "max": 2,
-        "status": "OPEN_IDENTITY"
-      },
-      "namePolicy": {
-        "atStart": [
-          "DIRECT_INPUT",
-          "RECOMMENDED_NAME"
-        ],
-        "afterDiscovery": "RANDOM_INITIAL_NAME",
-        "whenSetAsMain": [
-          "KEEP_NAME",
-          "RENAME_ALLOWED"
-        ],
-        "immutableMemberId": true,
-        "preserveFirstName": true,
-        "preserveNameHistory": true,
-        "preserveAffinityAndMemoriesOnMainChange": true
-      }
-    },
-    "hubAndRegionMembers": {
-      "count": "CALCULATE_BY_ROLE_NOT_ONE_PER_HUB",
-      "snapFixedHubs": 5,
-      "role": "현지 정보원/한 줄 힌트/거점 분위기 형성",
-      "status": "LOCKED_PRINCIPLE_COUNT_OPEN",
-      "selectableAsMain": "NOT_GLOBALLY_ASSUMED",
-      "note": "메인 후보와 거점 탐험대원 역할은 구분. 필요한 인원 수는 거점 기능 기준으로 산정."
+      "roleAssignment": "APP_AND_HUB_CONTEXT_DEPENDENT"
     },
     "special": {
-      "max": 12,
-      "status": "LOCKED_MAX",
-      "powerAdvantage": false,
-      "principle": "SPECIAL_EQUALS_SPECIAL_ENCOUNTER_NOT_POWER",
-      "revealFlow": [
-        "UNDISCOVERED",
-        "TRACE_OR_SHADOW",
-        "ENCOUNTER_WINDOW",
-        "RANDOM_ENCOUNTER",
-        "FIRST_MEETING",
-        "CATALOG_REVEAL",
-        "MAIN_SELECTABLE_IF_ELIGIBLE",
-        "AFFINITY_START"
+      "maximumWithinRoster": 12,
+      "specialMeans": "ENCOUNTER_NOT_POWER",
+      "abilityEqual": true,
+      "preEncounterPresentation": [
+        "SHADOW",
+        "TRACE",
+        "RUMOR",
+        "SILHOUETTE",
+        "VOICE_OR_CLUE"
       ],
-      "encounterCycle": {
-        "userSpecifiedExamples": [
-          "1_WEEK",
-          "2_WEEKS"
-        ],
-        "exactPerMemberCycle": "OPEN",
-        "useWindowNotGuaranteedExactDay": true,
-        "cooldownBetweenNewSpecials": true,
-        "preventFarming": true
-      },
-      "encounterSurfaces": [
-        "RECORDING_RANDOM_COMPANION",
-        "EXPLORATION",
-        "CHAPTER_OR_HUB_EVENT"
+      "encounterContexts": [
+        "RANDOM_RECORDING_COMPANION",
+        "HUB_SUBSTITUTE",
+        "HUB_MICRO_EPISODE",
+        "EXPEDITION",
+        "VACATION_SUBSTITUTE",
+        "WRONG_PLACE",
+        "REGION_EVENT"
       ],
+      "afterFirstEncounter": [
+        "REGISTER_IN_CREW_ARCHIVE",
+        "ACCUMULATE_MEETING_HISTORY",
+        "MAY_BECOME_MAIN_IF_ALLOWED_BY_MEMBER_RULE"
+      ],
+      "exactCycle": "OPEN",
+      "exactProbability": "OPEN",
+      "exactUnlockConditions": "OPEN",
       "missedEncounterPenalty": false
     },
-    "partitionSemantics": {
-      "baseRosterCount": 20,
-      "note": "starter / hub-region / special은 20명 기본 로스터 안의 역할·발견 상태 분류이며 서로 더해지는 별도 정원이 아니다.",
-      "noDoubleCount": true,
-      "memberMayHaveMultipleAppRoles": true
+    "snapPopWorld": {
+      "fixedLandmarks": 5,
+      "travelingUnit": "EXPLORER_PLUS_MAIN_CREW_MEMBER",
+      "hubCrewRole": [
+        "ONE_LINE_HINT",
+        "LOCAL_INFORMATION",
+        "WORLD_REACTION",
+        "MICRO_EPISODE"
+      ],
+      "hubMemberCount": "DERIVE_FROM_ACTUAL_HUB_ROLES_NOT_ONE_PER_HUB",
+      "functionAvailabilityIndependentOfWorldState": true
+    },
+    "invariants": {
+      "allMembersSameFunctionalAbility": true,
+      "rarityIsNotPower": true,
+      "affinityIsNotPower": true,
+      "worldStateIsNotFunctionAvailability": true,
+      "currentRoster20IsNotHardTechnicalLimit": true,
+      "preserveIdentityHistoryOnExpansion": true
     }
   },
   "evidence": {
@@ -377,49 +393,32 @@
     ]
   },
   "relationship": {
-    "affinity": {
-      "status": "LOCKED_CONCEPT_LEVELS_OPEN",
-      "meaning": "함께한 실제 경험의 누적",
-      "sources": [
-        "함께 탐험/학습",
-        "녹음 동행",
-        "배지 발견",
-        "어려움 후 복귀",
-        "특별 사건",
-        "일기/자랑 기록"
-      ],
-      "affects": [
-        "말투 친숙도",
-        "표정",
-        "포즈",
-        "인사",
-        "별명",
-        "농담",
-        "축하 동작",
-        "아이를 부르는 방식",
-        "특별 일러스트"
-      ],
-      "neverAffects": [
-        "학습 기능",
-        "성공률",
-        "보상",
-        "EXP",
-        "보석",
-        "정답 품질"
-      ],
-      "levelNames": "OPEN"
-    },
-    "memories": {
-      "memberDetail": [
-        "첫 만남",
-        "함께한 탐험",
-        "최근 동행",
-        "같이 발견한 배지",
-        "기억에 남는 사건",
-        "이름 이력"
-      ],
-      "eventCentric": true
-    }
+    "affinityMeaning": "HOW_OFTEN_AND_WHAT_WAS_EXPERIENCED_TOGETHER",
+    "sources": [
+      "TOGETHER_EXPLORATION",
+      "RECORDING_COMPANION",
+      "BADGE_DISCOVERY",
+      "RETURN_AFTER_DIFFICULTY",
+      "SPECIAL_EVENT",
+      "MEMORY_OR_JOURNAL_EVENT"
+    ],
+    "affects": [
+      "DIALOGUE_FAMILIARITY",
+      "GESTURE",
+      "GREETING",
+      "NICKNAME",
+      "JOKE",
+      "CELEBRATION",
+      "SHARED_ILLUSTRATION"
+    ],
+    "neverAffects": [
+      "FUNCTION",
+      "LEARNING_EFFECT",
+      "REWARD_RATE",
+      "SUCCESS_RATE"
+    ],
+    "visibleExactNumericScore": false,
+    "stageNames": "OPEN"
   },
   "identity": {
     "immutableId": "Explorer_ID",
@@ -474,5 +473,45 @@
       "WHICH_DISCOVERED_MEMBERS_CAN_BECOME_MAIN",
       "STARTER_REMAINING_1_TO_2_IDENTITIES"
     ]
-  }
+  },
+  "worldState": {
+    "principle": "CREW_MEMBERS_HAVE_LIVES_BEYOND_STATIC_NPC_POSITIONS",
+    "possibleStates": [
+      "AT_HUB",
+      "EXPEDITION",
+      "VACATION",
+      "SICK",
+      "SUPPORTING_OTHER_HUB",
+      "WANDERING",
+      "SPECIAL_EVENT",
+      "MAIN_COMPANION"
+    ],
+    "storyReasons": [
+      "생활형",
+      "탐험 파견",
+      "다른 거점 지원",
+      "휴가",
+      "아픔",
+      "미스터리/스페셜 관련"
+    ],
+    "playerFacingPresentation": "WORLD_STORY_NOT_SYSTEM_STATE",
+    "mainCrewCanReactToHubChanges": true,
+    "preserveFunctionAvailability": true
+  },
+  "eventTruth": {
+    "realActivityAndFictionalWorldStorySeparated": true,
+    "activityEventRequiresEvidence": true,
+    "worldEventMayBeFictional": true,
+    "encounterLinksWorldAndActivityWithoutInventingLearningFacts": true
+  },
+  "openItems": [
+    "STARTER_SLOT_05_IDENTITY",
+    "STARTER_SLOT_06_IDENTITY",
+    "REMAINING_14_IDENTITIES",
+    "EXACT_SPECIAL_COUNT_WITHIN_MAX_12",
+    "EXACT_SPECIAL_ENCOUNTER_CYCLE",
+    "EXACT_SPECIAL_ENCOUNTER_PROBABILITY",
+    "EXACT_AFFINITY_STAGE_NAMES",
+    "FINAL_VISUAL_SPECIES_AND_NAMES"
+  ]
 }
