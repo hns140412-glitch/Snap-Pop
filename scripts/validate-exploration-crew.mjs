@@ -44,8 +44,11 @@ ok(rules.roster?.relationship?.affinity?.neverDecreasesForAbsence===true,'affini
 
 ok(rules.roster?.invariants?.allMembersSameFunctionalAbility===true,'all members equal ability');
 ok(rules.roster?.invariants?.discoveryRateNotProportionalToUsage===true,'no discovery farming');
-ok(rules.definedCharacterLineages&&Object.keys(rules.definedCharacterLineages).length===4,'legacy four lineages preserved');
-ok(Object.keys(rules.members||{}).length===0,'starter slots not falsely mapped to legacy lineages');
+ok(rules.definedCharacterLineages&&Object.keys(rules.definedCharacterLineages).length===6,'recovered Core 6 lineages');
+ok((rules.recoveredStarterSix?.order||[]).join(',')==='dooby,lori,ink,nova,take,zero','Core 6 order');
+ok(rules.legacyCharacterLineages&&Object.keys(rules.legacyCharacterLineages).length===4,'legacy four lineages preserved for migration');
+ok(rules.definedCharacterLineages?.nova?.superseded?.includes('rabbit'),'Nova rabbit superseded');
+ok(rules.definedCharacterLineages?.zero?.superseded?.includes('polar bear'),'Zero polar bear superseded');
 
 
 ok(Array.isArray(rules.designBoard20)&&rules.designBoard20.length===20,'20-slot design board');
@@ -88,7 +91,9 @@ ok(ledger.includes('6+6+8=20 배분'),'source ledger working allocation');
 
 ok(!/길잡이|Guide Companion|>Guide</.test(index),'legacy user-facing terminology');
 for(const fn of ['function openDB','function get(','function set(','function setMany','migrateIdentityFallback','resolvedIdentity','loadSettings','renderCrewRoster','ensureCrewRegistry','renameCurrentCrewMember'])ok(app.includes(fn),'runtime definition missing: '+fn);
-ok(app.includes('definedCharacterLineages'),'runtime preserves defined lineages');
+ok(app.includes('definedCharacterLineages'),'runtime uses Core 6 lineages');
+ok(app.includes('legacyCharacterLineages'),'runtime preserves legacy migration lineages');
+ok(app.includes('recoveredStarterSix'),'runtime renders recovered starter order');
 ok(app.includes('designBoard20'),'runtime reads 20-slot design board');
 ok(app.includes('role===\"STARTER\"')&&app.includes('role===\"WORLD\"')&&app.includes('role===\"SPECIAL\"'),'runtime renders role design slots');
 ok(app.includes('hardMaximum')&&app.includes('specialCrewRoster'),'runtime reads special maximum');
