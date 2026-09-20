@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.9",
+  "version": "2026-09-21.10",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -1062,6 +1062,82 @@
         "app.js:closeImagination"
       ],
       "gap": "device focus/keyboard behavior validation pending"
+    },
+    {
+      "id": "SP-WRITE-001",
+      "domain": "WRITING_CORE",
+      "title": "하나의 초안을 단계 전체에서 계속 키우기",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:ensureWritingState",
+        "app.js:draft/snapshots",
+        "app.js:finalDraft"
+      ],
+      "gap": "runtime/device writing-flow validation pending"
+    },
+    {
+      "id": "SP-WRITE-002",
+      "domain": "WRITING_CORE",
+      "title": "현재 초안을 보고 다음 한 가지 도움을 동적으로 결정",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "writing-runtime.js",
+        "app.js:refreshWritingMove"
+      ],
+      "gap": "Learning Engine/provider-backed deeper analysis pending"
+    },
+    {
+      "id": "SP-WRITE-003",
+      "domain": "WRITING_CORE",
+      "title": "5개 장소를 나열형 메뉴가 아니라 글쓰기 lens로 사용",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "writing-runtime.js landmark-specific moves"
+      ],
+      "gap": "cross-lens routing and automatic lens suggestion pending"
+    },
+    {
+      "id": "SP-WRITE-004",
+      "domain": "WRITING_CORE",
+      "title": "탐험대 반응은 실제 아이 문장을 보고 한 가지 다음 방향만 제시",
+      "authority": [
+        "GUIDE_RULES",
+        "LATEST_DIRECT_USER_2026-09-21"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:focusGuide",
+        "app.js:stepSpecificReaction"
+      ],
+      "gap": "semantic/learning-engine grounding pending"
     }
   ]
 }
