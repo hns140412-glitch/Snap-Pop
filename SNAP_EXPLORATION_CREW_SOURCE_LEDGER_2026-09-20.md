@@ -292,3 +292,15 @@ Authority boundary:
 
 - Invariant: `SUPERSEDED VISUAL != SUPERSEDED PERSONALITY`.
 - Personality Pack detail: `PARTIAL / RECOVERY_REQUIRED`; absence claim forbidden while recoverable paths remain.
+
+
+## Guest selection / banter lineage — recovered
+Historical GUIDE review source preserves:
+- Main companion continuity within the day/activity context;
+- Smart Random Guest selection weighted by recent appearance frequency and mood conflict;
+- humor from Main↔Guest chemistry rather than mocking the child.
+
+Current disposition:
+- terminology migrated to `메인 탐험대원 / 장면 Guest 탐험대원`;
+- behavior grammar **ADOPTED into 탐험대 규칙**;
+- legacy GUIDE terminology remains source/history only.
