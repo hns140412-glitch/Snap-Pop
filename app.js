@@ -1,5 +1,5 @@
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
-let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false, SNAP_RULES=null;
+let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false, SNAP_RULES=null, writingAnalysisSeq=0;
 const STEPS=["초안 잡기","이어 쓰기","다듬어 완성"];
 const QUESTION_BANK={
  idea:{
@@ -215,7 +215,7 @@ function setModeButtons(language){$("#modeKo")?.classList.toggle("on",language!=
 async function init(){await openDB();await migrateLegacyState();SNAP_RULES=await fetch("data/exploration-crew-rules.json").then(r=>r.json());marks=await fetch("data/landmarks.json").then(r=>r.json());await migrateIdentityFallback();await ensureCrewRegistry();await synthesizeCrewWorldState();renderLandmarks();await loadSettings();await renderIdentityPresence();await updateStatus();renderRecords();renderGems();renderGrowth();await renderIncomingHandoff();renderSpecialInvite();const active=await get("active");if(active)renderExplore(active)}
 
 function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;$$(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await get("active"),g=await get("gems")||{};$("#selTitle").textContent=m.title;$("#selDesc").textContent=m.desc;const identity=await resolvedIdentity();$("#selCrewMemberReaction").textContent=`${crewMemberName(identity)} · ${crewReaction(identity,m.id)}`;$("#selProgress").textContent="진행 "+(a?.landmark===m.id?(Math.min(3,(a.step||0)+1)):0)+" / 3";$("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";$("#selection").hidden=false};host.appendChild(b)})}
-$("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active");if(!s||s.landmark!==selected.id)s={id:uid("explore"),landmark:selected.id,step:0,answers:["","",""],snapshots:["","",""],draft:"",language:"ko",startedAt:new Date().toISOString()};if(!s.language)s.language="ko";ensureWritingState(s);await set("active",s);renderExplore(s);show("explore");if($("#autoRead").checked){const p=promptFor(s.landmark,s.step,s.language,s.draft);speak(p[0]+" "+p[1],s.language)}}
+$("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active");if(!s||s.landmark!==selected.id)s={id:uid("explore"),landmark:selected.id,step:0,answers:["","",""],snapshots:["","",""],draft:"",language:"ko",startedAt:new Date().toISOString()};if(!s.language)s.language="ko";ensureWritingState(s);await set("active",s);renderExplore(s);show("explore");setTimeout(()=>analyzeWritingMove(s),0);if($("#autoRead").checked){const p=promptFor(s.landmark,s.step,s.language,s.draft);speak(p[0]+" "+p[1],s.language)}}
 
 
 function crewSnippet(text){const clean=(text||"").trim().replace(/\s+/g," ");return clean.length>18?clean.slice(0,18)+"…":clean}
@@ -234,6 +234,41 @@ async function showCrewReaction(message,{persist=true,kind="observe"}={}){const 
 function hideCrewReaction(){const box=$("#crewReactionOverlay");if(box){box.hidden=true;box.classList.remove("show")}}
 async function revealHint(){const s=await get("active");if(!s)return;const p=promptFor(s.landmark,s.step||0,s.language||"ko",ensureWritingState(s).draft);s.crewState=s.crewState||{};s.crewState.hintLevel=Math.max(1,s.crewState.hintLevel||0);s.crewState.lastHintAt=new Date().toISOString();await set("active",s);$("#hint").textContent=p[1];$("#hint").hidden=false;$("#hintBtn").disabled=true;const identity=await resolvedIdentity();await showCrewReaction((s.language||"ko")==="en"?`${crewMemberName(identity)}: Just one hint. The rest is yours.`:`${crewMemberName(identity)}: 힌트는 하나만. 나머지는 네 생각으로 가보자.`)}
 async function resetStepCrewState(s){s.crewState={hintLevel:0,lastReaction:"",cloudReturn:null,lastVoiceLength:0};await set("active",s)}
+function writingLensLabel(id,language='ko'){
+  const ko={idea:'아이디어 동굴',emotion:'감정 호수',description:'묘사 숲',viewpoint:'관점 전망대',final:'마무리 캠프'};
+  const en={idea:'Idea Cave',emotion:'Emotion Lake',description:'Description Forest',viewpoint:'Viewpoint Lookout',final:'Finishing Camp'};
+  return (language==='en'?en:ko)[id]||'';
+}
+function learnerContext(){
+  try{return window.SnapPopLearningContextProvider?.context?.()||null}catch{return null}
+}
+function renderWritingBridge(result,language='ko'){
+  const el=$('#writingBridge');if(!el)return;
+  const lens=result?.suggestedLens;
+  if(!lens){el.hidden=true;el.textContent='';return}
+  const name=writingLensLabel(lens,language);
+  el.textContent=language==='en'?`Optional lens · ${name}`:`필요하면 ${name} 관점으로도 한 번 볼 수 있어.`;
+  el.hidden=false;
+}
+async function analyzeWritingMove(s){
+  if(!s||!window.SnapPopWriting?.analyze)return refreshWritingMove(s);
+  ensureWritingState(s);
+  const seq=++writingAnalysisSeq,draft=s.draft,step=Math.min(2,s.step||0),language=s.language||'ko';
+  const previousSnapshot=(s.snapshots||[])[Math.max(0,step-1)]||'';
+  const result=await window.SnapPopWriting.analyze({landmark:s.landmark,step,draft,previousSnapshot,language,learnerContext:learnerContext()});
+  const cur=await get('active');
+  if(seq!==writingAnalysisSeq||!cur||cur.id!==s.id)return null;
+  ensureWritingState(cur);
+  if(cur.draft!==draft||Math.min(2,cur.step||0)!==step)return null;
+  $('#question').textContent=result.question;
+  if(cur.crewState?.hintLevel>0)$('#hint').textContent=result.hint;
+  renderWritingBridge(result,language);
+  cur.crewState=cur.crewState||{};
+  cur.crewState.currentFocus=result.focus||null;
+  cur.crewState.writingAnalysis={focus:result.focus||null,suggestedLens:result.suggestedLens||null,provider:result.provider||'unknown',confidence:result.confidence??null,grounded:result.grounded!==false,at:new Date().toISOString()};
+  await set('active',cur);
+  return result;
+}
 function refreshWritingMove(s){
   if(!s)return null;
   ensureWritingState(s);
@@ -244,14 +279,14 @@ function refreshWritingMove(s){
   return move;
 }
 
-function renderExplore(s){ensureWritingState(s);const m=marks.find(x=>x.id===s.landmark)||marks[0],i=Math.min(2,s.step||0),language=s.language||"ko",p=promptFor(s.landmark,i,language,s.draft);$("#exploreTitle").textContent="탐험 진행 · "+m.title;$("#question").textContent=p[0];$("#hint").textContent=p[1];$("#hint").hidden=!(s.crewState?.hintLevel>0);$("#hintBtn").disabled=!!(s.crewState?.hintLevel>0);$("#answer").value=s.draft||"";setModeButtons(language);hideCrewReaction();resolvedIdentity().then(identity=>{const name=crewMemberName(identity),base=crewReaction(identity,s.landmark),stepLine=language==="en"?["Start small. One idea is enough.","Add one more piece.","Finish it in your own words."][i]:["작은 조각 하나부터 잡아보자.","좋아, 하나만 더 붙여보자.","이제 네 말로 마무리해보자."][i];$(".crewMemberLine b").textContent=`탐험대원 ${name}`;$("#crewMemberLine").textContent=`${base} ${stepLine}`});$("#nextBtn").textContent=i===2?(language==="en"?"Finish exploration":"탐험 완료"):(language==="en"?"Next step":"다음 단계");$("#steps").innerHTML=STEPS.map((x,n)=>`<span class="${n===i?"on":n<i?"done":""}">${n+1}. ${x}</span>`).join("")}
+function renderExplore(s){ensureWritingState(s);const m=marks.find(x=>x.id===s.landmark)||marks[0],i=Math.min(2,s.step||0),language=s.language||"ko",p=promptFor(s.landmark,i,language,s.draft);$("#exploreTitle").textContent="탐험 진행 · "+m.title;$("#question").textContent=p[0];$("#hint").textContent=p[1];$("#hint").hidden=!(s.crewState?.hintLevel>0);$("#hintBtn").disabled=!!(s.crewState?.hintLevel>0);$("#answer").value=s.draft||"";setModeButtons(language);renderWritingBridge(null,language);hideCrewReaction();resolvedIdentity().then(identity=>{const name=crewMemberName(identity),base=crewReaction(identity,s.landmark),stepLine=language==="en"?["Start small. One idea is enough.","Add one more piece.","Finish it in your own words."][i]:["작은 조각 하나부터 잡아보자.","좋아, 하나만 더 붙여보자.","이제 네 말로 마무리해보자."][i];$(".crewMemberLine b").textContent=`탐험대원 ${name}`;$("#crewMemberLine").textContent=`${base} ${stepLine}`});$("#nextBtn").textContent=i===2?(language==="en"?"Finish exploration":"탐험 완료"):(language==="en"?"Next step":"다음 단계");$("#steps").innerHTML=STEPS.map((x,n)=>`<span class="${n===i?"on":n<i?"done":""}">${n+1}. ${x}</span>`).join("")}
 
 $("#nextBtn").onclick=async()=>{
   let s=await get("active");
   if(!s){toast("지도에서 탐험지를 먼저 골라줘.");show("map");return}
   ensureWritingState(s);const i=s.step||0;s.draft=$("#answer").value.trim();s.answers[i]=s.draft;s.snapshots[i]=s.draft;
   if(!s.draft){s.crewState=s.crewState||{};s.crewState.emptyAdvanceAttempts=(s.crewState.emptyAdvanceAttempts||0)+1;await set("active",s);const identity=await resolvedIdentity();await showCrewReaction((s.language||"ko")==="en"?`${crewMemberName(identity)}: No rush. We can wait. If you want, take one hint.`:`${crewMemberName(identity)}: 급할 건 없어. 잠깐 생각해도 돼. 필요하면 힌트 하나만 보자.`);return}
-  if(i<2){s.step=i+1;s.crewState={hintLevel:0,lastReaction:"",cloudReturn:null,lastVoiceLength:0};await set("active",s);renderExplore(s);return}
+  if(i<2){writingAnalysisSeq++;s.step=i+1;s.crewState={hintLevel:0,lastReaction:"",cloudReturn:null,lastVoiceLength:0};await set("active",s);renderExplore(s);setTimeout(()=>analyzeWritingMove(s),0);return}
   const events=await get("completionEvents")||{};
   const completionEventId=s.completionEventId||`completion_${s.id}`;
   if(events[completionEventId]){await set("active",null);toast("이미 기록된 탐험이에요.");show("growth");return}
@@ -276,7 +311,7 @@ $("#nextBtn").onclick=async()=>{
 }
 
 async function speak(t,language="ko"){try{if(window.SnapPopVoice)return await window.SnapPopVoice.speak(t,{language,voiceRole:"crew"});if(!("speechSynthesis"in window))throw new Error("TTS_UNAVAILABLE");speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=language==="en"?"en-US":"ko-KR";speechSynthesis.speak(u)}catch{return toast("지금은 음성으로 읽어주기 어려워요. 글로 계속 볼 수 있어요.")}}
-$("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0),text=$("#answer").value;ensureWritingState(s);s.draft=text;s.updatedAt=new Date().toISOString();await set("active",s);clearTimeout(window.crewInputTimer);if(text.trim().length>=8){window.crewInputTimer=setTimeout(async()=>{const cur=await get("active");if(!cur||Math.min(2,cur.step||0)!==i)return;ensureWritingState(cur);cur.draft=$("#answer").value;const move=refreshWritingMove(cur);await set("active",cur);const msg=stepSpecificReaction(cur.draft,cur.language||"ko",move);if(msg&&msg!==cur.crewState?.lastReaction)await showCrewReaction(msg)},850)}});
+$("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0),text=$("#answer").value;ensureWritingState(s);s.draft=text;s.updatedAt=new Date().toISOString();await set("active",s);clearTimeout(window.crewInputTimer);if(text.trim().length>=8){window.crewInputTimer=setTimeout(async()=>{const cur=await get("active");if(!cur||Math.min(2,cur.step||0)!==i)return;ensureWritingState(cur);cur.draft=$("#answer").value;await set("active",cur);const move=await analyzeWritingMove(cur)||refreshWritingMove(cur);const msg=stepSpecificReaction(cur.draft,cur.language||"ko",move);if(msg&&msg!==cur.crewState?.lastReaction)await showCrewReaction(msg)},850)}});
 function currentBridgeContext(){try{return window.SnapPopBridge?.context?.()||{}}catch{return {}}}
 async function renderIncomingHandoff(){const ctx=currentBridgeContext();const box=$("#handoffWord");if(!box)return;if(ctx.word){box.hidden=false;box.textContent=`Hide & Seek에서 찾은 단어 · ${ctx.word}${ctx.word_context?" · "+ctx.word_context:""}`}else box.hidden=true}
 window.addEventListener("snap-pop:bridge-ready",renderIncomingHandoff);
