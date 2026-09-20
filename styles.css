@@ -104,3 +104,12 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 .hubHero>.cloudAnswer{margin-top:12px}.hubHero>#hubSpeakLast{margin-top:9px}
 .hubPaths{display:grid;gap:10px;margin:12px 14px 24px}.hubPath{text-align:left;border:1px solid #9d875755;border-radius:16px;padding:14px;background:#f8f0dc;color:var(--ink);display:flex;flex-direction:column;gap:5px}.hubPath b{font-family:"Noto Serif CJK KR","Batang",serif;font-size:15px}.hubPath span{font-size:12px;line-height:1.45;opacity:.76}.hubPath:disabled{opacity:.45;cursor:default}
 @media(max-width:360px){.hubAskActions{grid-template-columns:1fr}}
+
+
+/* HOME UNIVERSAL QUICK START 2026-09-21 */
+.homeQuickStart{position:absolute;left:14px;right:72px;bottom:92px;z-index:12;display:grid;grid-template-columns:1fr 1fr;gap:7px;pointer-events:none}
+.homeQuickStart button{pointer-events:auto;text-align:left;border:1px solid #efe0b766;border-radius:13px;padding:9px 10px;background:#092f2bd9;color:#fff;backdrop-filter:blur(7px);box-shadow:0 8px 18px #10251e30;display:flex;flex-direction:column;gap:2px}
+.homeQuickStart b{font-size:12px;color:#f5df9f}.homeQuickStart span{font-size:10px;line-height:1.25;color:#f4efdf;opacity:.9}
+.growthActivitySummary{margin:12px 14px;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:12px;border-radius:16px;background:#f8f0dc;border:1px solid #a9925d55}.growthActivitySummary div{display:flex;flex-direction:column;align-items:center;gap:3px}.growthActivitySummary b{font-size:10px;font-weight:600;text-align:center}.growthActivitySummary strong{font-size:18px}.growthActivitySummary p{grid-column:1/-1;margin:4px 0 0;font-size:10px;line-height:1.4;opacity:.7;text-align:center}
+.cloudHistoryAnswer{padding:8px 9px;border-radius:10px;background:#f7f0de;margin:7px 0}.cloudHistoryNodes{display:grid;gap:4px;margin:6px 0 9px}.cloudHistoryNodes span{font-size:11px;line-height:1.4}.cloudHistoryNodes b{font-size:10px;margin-right:4px}
+@media(max-width:360px){.homeQuickStart{right:66px;grid-template-columns:1fr}.growthActivitySummary{grid-template-columns:repeat(2,1fr)}}
