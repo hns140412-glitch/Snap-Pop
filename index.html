@@ -128,9 +128,12 @@
  <header class="pageTitle"><span>탐험 준비</span><h1>설정</h1></header>
  <div class="setting"><div><b>내 캐릭터</b><span id="characterSummary">Character Master 기록 보존</span></div><button class="soft" id="characterBtn">관리</button></div>
  <article id="characterPanel" class="paper settingPanel" hidden>
-  <span class="kicker">승인 자산은 변경하지 않음</span>
+  <span class="kicker">원본 사진과 Character Master 자산은 분리 보존</span>
   <h2>캐릭터 표시 이름</h2>
   <input id="characterName" class="textInput" maxlength="20" placeholder="탐험가 이름">
+  <div id="profilePhotoPreview" class="photoSourcePreview" hidden><img id="profilePhotoImage" alt="캐릭터 원본 사진 미리보기"></div>
+  <label class="soft wide fileButton">사진 촬영/업로드<input id="profilePhotoInput" type="file" accept="image/*" capture="user"></label>
+  <span id="profilePhotoStatus" class="kicker">원본 사진 없음</span>
   <button class="primary wide" id="characterSave">저장</button>
  </article>
  <div class="setting"><div><b>나의 길잡이</b><span id="guideSummary">말티푸 · 모카</span></div><button class="soft" id="guideBtn">이름 바꾸기</button></div>
