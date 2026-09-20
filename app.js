@@ -132,6 +132,37 @@ function calcExp(answers,completedCount,language="ko"){
   return {total:34+initial+mastery,base:34,initial,mastery,strengths};
 }
 async function loadSettings(){const s=await get("settings")||{},asset=await get("characterSourceAsset"),identity=await resolvedIdentity();$("#autoRead").checked=!!s.autoRead;$("#reduceMotion").checked=!!s.reduceMotion;document.documentElement.classList.toggle("reduceMotion",!!s.reduceMotion);$("#characterSummary").textContent=identity.profile.name?`탐험가 · ${identity.profile.name}`:"Ready & Set 프로필 연동 대기";$("#crewMemberSummary").textContent=`${crewMemberRule(identity).label} · ${crewMemberName(identity)}`;$("#characterName").value=identity.profile.name||"";$("#crewMemberName").value=identity.crewMember.name||"모카";await renderCrewRoster();if(asset?.originalProfilePhoto||identity.profile.photo){$("#profilePhotoPreview").hidden=false;$("#profilePhotoImage").src=asset?.originalProfilePhoto||identity.profile.photo;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":asset?.characterMasterId?"Character Master 연결됨":"로컬 인트로 프로필 · 통합 시 Ready & Set 우선"}else{$("#profilePhotoPreview").hidden=true;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":"로컬 인트로 프로필 없음"}}
+async function renderCrewRoster(){
+  if(!SNAP_RULES?.roster)return;
+  const identity=await resolvedIdentity(), roster=SNAP_RULES.roster, encounters=await get("crewEncounters")||{};
+  const starter=$("#starterCrewRoster"), world=$("#worldCrewRoster"), special=$("#specialCrewRoster");
+  if(starter){
+    starter.innerHTML=(roster.starter?.slots||[]).map(slot=>{
+      if(!slot.memberId)return `<button type="button" class="crewRosterCard unassigned" disabled><b>${slot.slotId}</b><span>${slot.status==="UNASSIGNED_REQUIRED"?"추가 확정 필요":"후보 상한 예약 · OPEN"}</span></button>`;
+      const m=SNAP_RULES.members?.[slot.memberId],on=identity.crewMember.type===slot.memberId;
+      return `<button type="button" class="crewRosterCard ${on?"on":""}" data-crew-member-id="${slot.memberId}"><b>${html(m?.label||slot.memberId)}</b><span>${html(m?.personality||"")}</span></button>`;
+    }).join("");
+    starter.onclick=async e=>{
+      const b=e.target.closest("[data-crew-member-id]");if(!b)return;
+      const next=await resolvedIdentity(),id=b.dataset.crewMemberId,rule=SNAP_RULES.members?.[id];if(!rule)return;
+      next.crewMember={...next.crewMember,type:id,name:rule.defaultName||next.crewMember.name||"모카"};
+      next.explorationCrewRulesVersion=SNAP_RULES.version;
+      await set("identityFallback",next);$("#crewMemberName").value=next.crewMember.name;
+      $("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""}`;
+      await renderIdentityPresence();await renderCrewRoster();
+    };
+  }
+  if(world){
+    world.innerHTML=(roster.worldRegion?.slots||[]).map(slot=>`<div class="crewRosterCard unassigned"><b>${slot.slotId}</b><span>거점 탐험대원 · 정체성 OPEN · 한 줄 힌트 역할</span></div>`).join("");
+  }
+  if(special){
+    special.innerHTML=(roster.special?.reservedSlots||[]).map(slot=>{
+      const met=slot.memberId&&encounters[slot.memberId]?.status==="SELECTABLE",m=slot.memberId?SNAP_RULES.members?.[slot.memberId]:null;
+      if(!slot.memberId)return `<div class="crewRosterCard locked"><b>${slot.slotId}</b><span>아직 만나지 않은 스페셜 슬롯</span></div>`;
+      return `<button type="button" class="crewRosterCard ${met?"":"locked"}" ${met?`data-crew-member-id="${slot.memberId}"`:"disabled"}><b>${html(m?.label||slot.memberId)}</b><span>${met?"만남 완료 · 선택 가능":"Encounter 전 · 선택 불가"}</span></button>`;
+    }).join("");
+  }
+}
 function promptFor(landmark,step,language="ko"){const bank=QUESTION_BANK[landmark]||QUESTION_BANK.idea;return (bank[language]||bank.ko)[Math.min(2,step)]}
 function setModeButtons(language){$("#modeKo")?.classList.toggle("on",language!=="en");$("#modeEn")?.classList.toggle("on",language==="en")}
 async function init(){await openDB();await migrateLegacyState();SNAP_RULES=await fetch("data/exploration-crew-rules.json").then(r=>r.json());marks=await fetch("data/landmarks.json").then(r=>r.json());await migrateIdentityFallback();renderLandmarks();await loadSettings();await renderIdentityPresence();await updateStatus();renderRecords();renderGems();renderGrowth();await renderIncomingHandoff();renderSpecialInvite();const active=await get("active");if(active)renderExplore(active)}
