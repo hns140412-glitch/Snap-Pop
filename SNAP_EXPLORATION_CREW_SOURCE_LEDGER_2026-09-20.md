@@ -195,3 +195,41 @@ Explorer_ID에 귀속:
 - 과거 REV10의 말티푸/탐험 고양이/랫서팬더/동료 탐험가 Personality 계보는 삭제하지 않는다.
 - 다만 이 4개가 시작 6 성격 슬롯 중 어느 자리에 해당하는지는 미확정.
 - Character Master / 탐험대 / 배지 / 친밀도 / World State는 서로 다른 성장축으로 유지한다.
+
+
+## LEGACY GUIDE RULE ABSORPTION — VERIFIED FROM REV10/REV11
+
+These rules are no longer independent Guide rules. They are absorbed into the canonical **탐험대원 상호작용 계약**.
+
+### REV10 source areas
+- Voice Accessibility: 질문 자동 읽기 옵션 / 다시 듣기 / 텍스트 유지 / 듣기와 말하기 분리.
+- Radio Lock: 오른쪽·오른쪽 하단 Safe Margin / 공통 입력 레이어 / 여섯 번째 도구 아님.
+- User-facing AI identity: 교사·채점자·정답기 금지.
+- Personality Lock: 친절 + 장난 + 위트 + 약간의 시크함 + 약간의 엉뚱함.
+- Dialogue rules: 과잉 칭찬 금지 / 실제 아이의 표현을 구체적으로 짚기 / 침묵·짧은 답 압박 금지 / 가르치려 들지 않기.
+- Reaction sequence: 관찰 → 장난 → 인정 → 다음 호기심.
+- Performance System: 막힘·아이디어 발견·구체화 가능·긴 음성·재미있는 표현·완료 상황별 행동.
+- Interaction rules: 입력 영역 가림 금지 / 강제 확인 모달 금지 / 같은 모션·같은 칭찬 반복 금지.
+- Reaction Overlay: 짧은 저강도 연출 / 텍스트 가독성 우선 / 폭죽·글리터·강한 Glow·금속광·상시 장식 금지.
+- Reaction Unit: 아이의 글/음성 → 문맥/감정 → 표정/제스처 → 짧은 대사 → Overlay → 다음 행동.
+- Copy priority: 직관성 35 / 친절함 30 / 위트 20 / 장난기 10 / 시크함 5.
+- Dialogue presence: 홈 상시 큰 말풍선 금지 / 필요한 순간에만 짧게 등장.
+- Settings: 탐험대원 변경/이름 변경/추천/Personality 미리보기 / 변경해도 기록·성장·보석 등 보존.
+
+### REV11 source areas
+- Question Engine: 3단계 유지 / RECALL~REVISE 내부 차원 / 아이에게 시험처럼 노출 금지.
+- English: own words 중심 / grammar drill 금지 / child authorship 유지.
+- Imagination Cloud: 표현 확장용 / 최소 후속 질문 / 완성답 생성 금지 / 원래 과제로 복귀.
+- Radio continuity: 공통 입력/연결 레이어.
+- Ready & Set handoff: session/task/lap 유지 / app switch로 pause·lap end 금지.
+
+### Disposition
+- All items above: **ABSORBED_INTO_CANONICAL_CREW_MASTER**
+- Canonical destination:
+  - SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md §8C
+  - data/exploration-crew-rules.json:
+    - interactionContract
+    - voiceAccessibility
+    - reactionPerformance
+    - questionEngine
+    - imaginationCloud
