@@ -129,6 +129,23 @@ same exploration-crew master/JSON + C2S evidence ledgers.
 
 Core 6 remains **WORKING / provisional reference** unless a later user lock changes status.
 
+### Imagination Cloud ownership
+
+상상구름 is a CORE Snap & Pop feature and the user-facing gateway for:
+- `THINK → EXPRESS`;
+- `ASK → UNDERSTAND`;
+- Korean/English expression;
+- broad child curiosity resolution.
+
+Architecture:
+`상상구름 UI / world feature`
+→ `Snap & Pop routing/guard layer`
+→ `OpenAI model/tools when needed`
+→ `bounded child-facing result`
+
+Current runtime note:
+the existing `cloudFragments()` code is only a basic local implementation and does not prove that the full OpenAI-backed intelligence gateway is connected.
+
 ### Connected-app bridge
 Product contract:
 REV11/REV12.
