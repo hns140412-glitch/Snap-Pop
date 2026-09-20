@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.4",
+  "version": "2026-09-21.5",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -819,6 +819,83 @@
       "runtimeVerified": false,
       "deviceVerified": false,
       "gap": "OpenAI/model/tool 중간 결과를 탐험대 Guard/voice로 변환하는 중앙 response pipeline 미구현"
+    },
+    {
+      "id": "SP-IMAGINE-007",
+      "domain": "IMAGINATION_CLOUD",
+      "title": "개념·원리·어원·관계 중심 scaffold",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "현재 cloudFragments는 범용 개념 scaffold/mind-map composer가 아님"
+    },
+    {
+      "id": "SP-IMAGINE-008",
+      "domain": "IMAGINATION_CLOUD",
+      "title": "간단한 마인드맵/원인-과정-결과/비교/타임라인 출력",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "구조화된 학습 scaffold renderer 미구현"
+    },
+    {
+      "id": "SP-TRUTH-001",
+      "domain": "TRUTH_GUARD",
+      "title": "hallucination 방지 사실성 gate",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE",
+        "TAKY"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "fact/interpretation/hypothesis 분류, confidence, verification routing 미구현"
+    },
+    {
+      "id": "SP-TRUTH-002",
+      "domain": "TRUTH_GUARD",
+      "title": "어원·역사·사회·과학 고위험 사실 검증",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "신뢰 소스 검색/검증 및 folk-etymology 차단 미구현"
+    },
+    {
+      "id": "SP-TRUTH-003",
+      "domain": "TRUTH_GUARD",
+      "title": "확실하지 않을 때 추정 금지 및 불확실성 표현",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE",
+        "EXPLORATION_CREW_RULES"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "POLICY_ONLY",
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "중앙 truth guard pipeline 미구현"
     }
   ]
 }
