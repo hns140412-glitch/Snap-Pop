@@ -35,6 +35,64 @@ Core 6:
 - does not own overall product behavior;
 - does not replace Guide-derived interaction rules.
 
+## 2.1 Universal product purpose — HARD LOCK
+
+Snap & Pop is not a narrow writing tutor.
+
+Its universal core has two equal product axes:
+
+### A. THINK → EXPRESS
+Help the child turn an internal thought, feeling, observation, memory, imagination or opinion into an external expression.
+
+Expression modes include:
+- Korean writing;
+- English writing;
+- spoken expression;
+- idea fragments;
+- scene/story building;
+- explanation/opinion;
+- revision and refinement.
+
+### B. ASK → UNDERSTAND
+Act as a child-friendly curiosity resolver when the child asks about something they do not know or understand.
+
+Question domains are broad and may include:
+- society;
+- history;
+- culture;
+- science;
+- language;
+- geography;
+- everyday life;
+- arts;
+- people/events/concepts appropriate to the child's context.
+
+The system should help the child:
+- ask freely;
+- receive a clear answer;
+- understand why/how;
+- connect the answer to what they already know;
+- optionally turn the new understanding into speaking/writing/exploration.
+
+Therefore the product formula is:
+
+`THINK → EXPRESS`
++
+`ASK → UNDERSTAND`
++
+`UNDERSTAND → EXPRESS/EXPLORE when useful`
+
+Writing support is a major subsystem, but it is not the entire product.
+
+The exploration crew/Guide standard applies across both axes:
+- do not over-teach;
+- do not shame ignorance;
+- answer clearly;
+- adapt depth/language;
+- distinguish known fact from uncertainty;
+- preserve child agency;
+- invite one useful next curiosity when appropriate.
+
 ## 3. Domain ownership
 
 ### ORIGINAL product / UI / data / reward / PWA
