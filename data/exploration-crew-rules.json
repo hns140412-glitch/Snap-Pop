@@ -64,9 +64,9 @@
     ]
   },
   "loop": [
-    "생각 꺼내기",
-    "생각 넓히기",
-    "표현 완성하기"
+    "초안 잡기",
+    "이어 쓰기",
+    "다듬어 완성"
   ],
   "landmarks": {
     "idea": {
@@ -1340,9 +1340,9 @@
   },
   "questionEngine": {
     "loop": [
-      "생각 꺼내기",
-      "생각 넓히기",
-      "표현 완성하기"
+      "초안 잡기",
+      "이어 쓰기",
+      "다듬어 완성"
     ],
     "internalDimensions": [
       "RECALL",
@@ -1356,9 +1356,12 @@
     ],
     "exposeTaxonomyToChild": false,
     "adaptTo": [
+      "현재 초안",
+      "이전 snapshot",
+      "현재 글쓰기 lens",
       "맥락",
       "언어",
-      "연령"
+      "연령/학습자 상태"
     ],
     "english": {
       "flow": [
@@ -1369,10 +1372,24 @@
       ],
       "grammarDrillForbidden": true,
       "childAuthorshipRequired": true
+    },
+    "coreRule": "ONE_EVOLVING_DRAFT_ONE_NEXT_MOVE",
+    "learningProvider": {
+      "role": "ANALYZE_CURRENT_DRAFT_AND_RETURN_ONE_NEXT_MOVE",
+      "childAuthorshipRequired": true,
+      "noFinalAnswerAuthoring": true,
+      "noGrading": true,
+      "fallback": "LOCAL_WRITING_ANALYSIS"
+    },
+    "crossLens": {
+      "allowed": true,
+      "autoSwitch": false,
+      "maxSuggestionAtOnce": 1,
+      "rule": "현재 lens를 강제로 바꾸지 않고 필요할 때 다른 lens 하나만 보조 제안"
     }
   },
   "imaginationCloud": {
-    "role": "ON_DEMAND_EXPRESSION_EXPANSION",
+    "role": "HIDDEN_ON_DEMAND_THINKING_CURIOSITY_EXPRESSION_LAYER",
     "flow": [
       "CHILD_SPEAKS",
       "MEANING_MOOD_SCENE_IDEA_FRAGMENTS",
@@ -1388,10 +1405,21 @@
       "아이가 직접 요청"
     ],
     "decorativeOnlyForbidden": true,
-    "finalAnswerGenerationForbidden": true,
+    "finalAnswerGenerationForbidden": false,
     "preserveChildOwnership": true,
     "preserveSharedSessionContext": true,
-    "mustReturnToOriginalTask": true
+    "mustReturnToOriginalTask": true,
+    "defaultVisibility": "HIDDEN",
+    "invokeFrom": [
+      "WRITING_STUCK",
+      "CHILD_REQUEST",
+      "HOME_RADIO",
+      "CURIOSITY_QUESTION",
+      "CREW_SMALL_SUGGESTION"
+    ],
+    "answerOwnership": "EXPLORATION_CREW",
+    "truthGuardRequired": true,
+    "note": "질문 해결은 가능하지만 최종 답변 주체는 탐험대이며, 글쓰기 문맥에서는 아이 글을 대신 완성하지 않는다."
   },
   "affinityEngine": {
     "sourceEvents": [
