@@ -47,6 +47,16 @@ ok(rules.roster?.invariants?.discoveryRateNotProportionalToUsage===true,'no disc
 ok(rules.definedCharacterLineages&&Object.keys(rules.definedCharacterLineages).length===4,'legacy four lineages preserved');
 ok(Object.keys(rules.members||{}).length===0,'starter slots not falsely mapped to legacy lineages');
 
+
+ok(Array.isArray(rules.designBoard20)&&rules.designBoard20.length===20,'20-slot design board');
+ok(rules.designBoard20.filter(x=>x.role==='STARTER').length===6,'starter design slots 6');
+ok(rules.designBoard20.filter(x=>x.role==='WORLD').length===6,'world working slots 6');
+ok(rules.designBoard20.filter(x=>x.role==='SPECIAL').length===8,'special working slots 8');
+ok(rules.designBoard20.filter(x=>x.role==='SPECIAL').every(x=>x.encounterGimmick),'all working special slots have encounter gimmick');
+ok(rules.personalityPackSchema?.fields?.join('>')==='PERSONALITY>HABIT>REACTION>RELATIONSHIP_EXCEPTION>WORLD_ROUTINE>MEMORY','personality pack schema');
+ok(rules.visualSystem?.rule==='IDENTITY_FIXED_THEME_VARIABLE','visual identity fixed/theme variable');
+ok(rules.worldBehaviorGrammar?.absence?.affinityDecay===false,'absence does not decay affinity');
+ok(rules.worldBehaviorGrammar?.absence?.streakPenalty===false,'absence no streak penalty');
 ok(master.includes('시작 6명 성격 슬롯'),'master starter slots');
 ok(master.includes('WORKING DESIGN BOARD'),'master working-board distinction');
 ok(master.includes('Explorer_ID'),'master Explorer_ID');
@@ -56,7 +66,8 @@ ok(ledger.includes('6+6+8=20 배분'),'source ledger working allocation');
 ok(!/길잡이|Guide Companion|>Guide</.test(index),'legacy user-facing terminology');
 for(const fn of ['function openDB','function get(','function set(','function setMany','migrateIdentityFallback','resolvedIdentity','loadSettings','renderCrewRoster','ensureCrewRegistry','renameCurrentCrewMember'])ok(app.includes(fn),'runtime definition missing: '+fn);
 ok(app.includes('definedCharacterLineages'),'runtime preserves defined lineages');
-ok(app.includes('personalitySlots'),'runtime reads starter personality slots');
+ok(app.includes('designBoard20'),'runtime reads 20-slot design board');
+ok(app.includes('role===\"STARTER\"')&&app.includes('role===\"WORLD\"')&&app.includes('role===\"SPECIAL\"'),'runtime renders role design slots');
 ok(app.includes('hardMaximum')&&app.includes('specialCrewRoster'),'runtime reads special maximum');
 ok(app.includes('crewRegistry')&&app.includes('nameHistory'),'per-member name history runtime');
 ok(app.includes('data/exploration-crew-rules.json'),'canonical rules fetch');
