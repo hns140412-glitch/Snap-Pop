@@ -1504,7 +1504,15 @@
           "활발함",
           "친화력",
           "긍정에너지"
-        ]
+        ],
+        "reactionEvidence": {
+          "status": "RECOVERED_CORROBORATED",
+          "lines": [
+            "와! 해보자!",
+            "작은 호기심이 큰 이야기가 될 거야."
+          ],
+          "usageRule": "VOICE_IDENTITY_EVIDENCE_NOT_FIXED_REPEATED_SCRIPT"
+        }
       },
       {
         "id": "lori",
@@ -1530,7 +1538,15 @@
           "공감",
           "세심함",
           "따뜻함"
-        ]
+        ],
+        "reactionEvidence": {
+          "status": "RECOVERED_CORROBORATED",
+          "lines": [
+            "괜찮아, 천천히 해도 돼.",
+            "언제나 네 마음을 응원할게."
+          ],
+          "usageRule": "VOICE_IDENTITY_EVIDENCE_NOT_FIXED_REPEATED_SCRIPT"
+        }
       },
       {
         "id": "ink",
@@ -1581,6 +1597,14 @@
           "worldRoutineStatus": "OPEN",
           "memoryStatus": "OPEN",
           "authority": "DIRECT_PROFILE_ARTIFACT"
+        },
+        "reactionEvidence": {
+          "status": "RECOVERED_CORROBORATED",
+          "lines": [
+            "음... 다른 방법도 있지.",
+            "생각이 모이면 더 좋은 답이 보여."
+          ],
+          "usageRule": "VOICE_IDENTITY_EVIDENCE_NOT_FIXED_REPEATED_SCRIPT"
         }
       },
       {
@@ -1608,7 +1632,15 @@
           "도전",
           "긍정적",
           "활동적"
-        ]
+        ],
+        "reactionEvidence": {
+          "status": "RECOVERED_CORROBORATED",
+          "lines": [
+            "가보자! 하면 되지!",
+            "지금 이 순간도 멋진 모험이야."
+          ],
+          "usageRule": "VOICE_IDENTITY_EVIDENCE_NOT_FIXED_REPEATED_SCRIPT"
+        }
       },
       {
         "id": "take",
@@ -1647,6 +1679,14 @@
             "간식"
           ],
           "promotionRule": "CROSS_ARTIFACT_CORROBORATION_REQUIRED"
+        },
+        "reactionEvidence": {
+          "status": "RECOVERED_CORROBORATED",
+          "lines": [
+            "차근차근 같이 해보자.",
+            "하나씩 하면 정말 할 수 있어."
+          ],
+          "usageRule": "VOICE_IDENTITY_EVIDENCE_NOT_FIXED_REPEATED_SCRIPT"
         }
       },
       {
@@ -1687,6 +1727,14 @@
             "음악"
           ],
           "promotionRule": "CROSS_ARTIFACT_CORROBORATION_REQUIRED"
+        },
+        "reactionEvidence": {
+          "status": "RECOVERED_CORROBORATED",
+          "lines": [
+            "언제나, 네 이야기를 응원해!",
+            "좋은 친구는 언제나 옆에 있어."
+          ],
+          "usageRule": "VOICE_IDENTITY_EVIDENCE_NOT_FIXED_REPEATED_SCRIPT"
         }
       }
     ],
@@ -1715,13 +1763,14 @@
       "recovered": [
         "corePersonality",
         "visualIdentity",
-        "signatureVoiceDirection"
+        "signatureVoiceDirection",
+        "reactionDirection",
+        "crewGroupRoutine"
       ],
       "partialOrOpen": [
-        "habit",
-        "reaction",
-        "relationshipException",
-        "worldRoutine",
+        "habitBeyondDirectEvidence",
+        "relationshipExceptionPairwise",
+        "worldRoutinePerCharacter",
         "memory"
       ],
       "absenceClaimForbidden": true,
@@ -1738,6 +1787,19 @@
         "SUPERSEDED_VISUAL != SUPERSEDED_PERSONALITY",
         "HANDOFF_HOLD != GLOBAL_HISTORICAL_ABSENCE"
       ]
+    },
+    "crewGroupRoutineEvidence": {
+      "status": "RECOVERED",
+      "scenes": [
+        "같이 공부할 때",
+        "쉬는 시간에도",
+        "가끔은 장난도 치고",
+        "힘든 날엔 언제나 옆에",
+        "그리고, 더 멀리 함께"
+      ],
+      "scope": "CREW_LEVEL_NOT_PAIRWISE_RELATIONSHIP_EXCEPTION",
+      "sourceArtifact": "a_wide_detailed_character_lineup_and_concept_post.png",
+      "sha256": "0c93c51ebe4f1512a1caadb9f490aca4d8dfcf306ba1309dc8a5db6f6ddd1e8a"
     }
   },
   "legacyCharacterLineages": {
