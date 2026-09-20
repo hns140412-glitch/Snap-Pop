@@ -1,6 +1,6 @@
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
 let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false, SNAP_RULES=null;
-const STEPS=["생각 꺼내기","생각 넓히기","표현 완성하기"];
+const STEPS=["초안 잡기","이어 쓰기","다듬어 완성"];
 const QUESTION_BANK={
  idea:{
   ko:[["무엇이 먼저 떠올랐어?","작은 소재 하나만 잡아보자."],["그 아이디어에서 더 궁금한 건 뭐야?","이유나 다음 장면 하나를 붙여봐."],["이제 네 아이디어를 한 문장으로 묶어볼까?","네 말투 그대로 끝내면 돼."]],
@@ -219,11 +219,30 @@ $("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active");i
 
 
 function crewSnippet(text){const clean=(text||"").trim().replace(/\s+/g," ");return clean.length>18?clean.slice(0,18)+"…":clean}
-function stepSpecificReaction(text,language="ko"){const sn=crewSnippet(text);if(!sn)return language==="en"?"I’m listening. One small piece is enough.":"듣고 있어. 작은 조각 하나면 충분해.";return language==="en"?`“${sn}” — that part stands out. What would you add next?`:`“${sn}” 이 부분이 눈에 들어오네. 여기서 하나만 더 붙이면 뭐가 올까?`}
+function focusGuide(focus,language='ko'){
+  const ko={START:'첫 생각 하나면 돼.',CONNECT:'이제 이유나 연결 하나만 붙이면 돼.',NEXT_SCENE:'다음 장면 하나만 이어보자.',SHAPE:'중심 문장을 살려보자.',FEELING:'마음의 단서 하나만 더 잡아보자.',WHY_FEEL:'그 마음이 생긴 장면 하나만 붙여보자.',CHANGE:'마음이 어떻게 달라졌는지 보면 돼.',SENSORY:'감각 단서 하나만 더 있으면 장면이 살아나.',SPECIFIC:'지금 단서 하나만 더 구체적으로 해보자.',OWN_VIEW:'네 생각 한 줄이 중심이야.',OTHER_VIEW:'다른 시선 하나만 더 보면 돼.',REASON:'이유 하나만 붙이면 생각이 선명해져.',POSITION:'네 입장이 보이는 한 문장을 남겨보자.',ENDING:'끝에 남길 생각 하나만 잡아보자.',REVISE:'전체 말고 한 곳만 다듬자.'};
+  const en={START:'One small thought is enough.',CONNECT:'Add just one reason or connection.',NEXT_SCENE:'Add one next scene.',SHAPE:'Keep the central sentence strong.',FEELING:'Add one clue about the feeling.',WHY_FEEL:'Add one small moment that caused the feeling.',CHANGE:'Notice whether the feeling changed.',SENSORY:'One sensory clue will bring the scene closer.',SPECIFIC:'Make just one detail more specific.',OWN_VIEW:'Your own view is the center.',OTHER_VIEW:'Add one other point of view.',REASON:'One reason will make the idea clearer.',POSITION:'Leave one sentence that shows your position.',ENDING:'Choose one thought to leave at the end.',REVISE:'Revise one spot, not the whole piece.'};
+  return (language==='en'?en:ko)[focus]||(language==='en'?'Keep your own words.':'네 말은 그대로 두고 한 가지만 더 보자.');
+}
+function stepSpecificReaction(text,language='ko',move=null){
+  const sn=crewSnippet(text);
+  if(!sn)return language==='en'?'I’m listening. One small piece is enough.':'듣고 있어. 작은 조각 하나면 충분해.';
+  const guide=focusGuide(move?.focus,language);
+  return language==='en'?'“'+sn+'” — I’m following. '+guide:'“'+sn+'” 여기까지 이어졌어. '+guide;
+}
 async function showCrewReaction(message,{persist=true,kind="observe"}={}){const box=$("#crewReactionOverlay");if(!box||!message)return;const identity=await resolvedIdentity(),perf=crewPerformance(identity,kind);box.innerHTML=`<span class="reactionMotif">${html(perf.motif)}</span><b>${html(perf.gesture)}</b><span>${html(message)}</span>`;box.hidden=false;box.classList.add("show");box.dataset.kind=kind;if(persist){const s=await get("active");if(s){s.crewState=s.crewState||{};s.crewState.lastReaction=message;s.crewState.reactionAt=new Date().toISOString();await set("active",s)}}if(!document.documentElement.classList.contains("reduceMotion")){clearTimeout(window.crewReactionTimer);window.crewReactionTimer=setTimeout(()=>{box.classList.remove("show")},2200)}}
 function hideCrewReaction(){const box=$("#crewReactionOverlay");if(box){box.hidden=true;box.classList.remove("show")}}
 async function revealHint(){const s=await get("active");if(!s)return;const p=promptFor(s.landmark,s.step||0,s.language||"ko",ensureWritingState(s).draft);s.crewState=s.crewState||{};s.crewState.hintLevel=Math.max(1,s.crewState.hintLevel||0);s.crewState.lastHintAt=new Date().toISOString();await set("active",s);$("#hint").textContent=p[1];$("#hint").hidden=false;$("#hintBtn").disabled=true;const identity=await resolvedIdentity();await showCrewReaction((s.language||"ko")==="en"?`${crewMemberName(identity)}: Just one hint. The rest is yours.`:`${crewMemberName(identity)}: 힌트는 하나만. 나머지는 네 생각으로 가보자.`)}
 async function resetStepCrewState(s){s.crewState={hintLevel:0,lastReaction:"",cloudReturn:null,lastVoiceLength:0};await set("active",s)}
+function refreshWritingMove(s){
+  if(!s)return null;
+  ensureWritingState(s);
+  const i=Math.min(2,s.step||0),language=s.language||'ko',p=promptFor(s.landmark,i,language,s.draft),move=p[2];
+  $('#question').textContent=p[0];
+  if(s.crewState?.hintLevel>0)$('#hint').textContent=p[1];
+  if(move){s.crewState=s.crewState||{};s.crewState.currentFocus=move.focus;}
+  return move;
+}
 
 function renderExplore(s){ensureWritingState(s);const m=marks.find(x=>x.id===s.landmark)||marks[0],i=Math.min(2,s.step||0),language=s.language||"ko",p=promptFor(s.landmark,i,language,s.draft);$("#exploreTitle").textContent="탐험 진행 · "+m.title;$("#question").textContent=p[0];$("#hint").textContent=p[1];$("#hint").hidden=!(s.crewState?.hintLevel>0);$("#hintBtn").disabled=!!(s.crewState?.hintLevel>0);$("#answer").value=s.draft||"";setModeButtons(language);hideCrewReaction();resolvedIdentity().then(identity=>{const name=crewMemberName(identity),base=crewReaction(identity,s.landmark),stepLine=language==="en"?["Start small. One idea is enough.","Add one more piece.","Finish it in your own words."][i]:["작은 조각 하나부터 잡아보자.","좋아, 하나만 더 붙여보자.","이제 네 말로 마무리해보자."][i];$(".crewMemberLine b").textContent=`탐험대원 ${name}`;$("#crewMemberLine").textContent=`${base} ${stepLine}`});$("#nextBtn").textContent=i===2?(language==="en"?"Finish exploration":"탐험 완료"):(language==="en"?"Next step":"다음 단계");$("#steps").innerHTML=STEPS.map((x,n)=>`<span class="${n===i?"on":n<i?"done":""}">${n+1}. ${x}</span>`).join("")}
 
@@ -257,7 +276,7 @@ $("#nextBtn").onclick=async()=>{
 }
 
 async function speak(t,language="ko"){try{if(window.SnapPopVoice)return await window.SnapPopVoice.speak(t,{language,voiceRole:"crew"});if(!("speechSynthesis"in window))throw new Error("TTS_UNAVAILABLE");speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=language==="en"?"en-US":"ko-KR";speechSynthesis.speak(u)}catch{return toast("지금은 음성으로 읽어주기 어려워요. 글로 계속 볼 수 있어요.")}}
-$("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0),text=$("#answer").value;ensureWritingState(s);s.draft=text;s.updatedAt=new Date().toISOString();await set("active",s);clearTimeout(window.crewInputTimer);if(text.trim().length>=8){window.crewInputTimer=setTimeout(async()=>{const cur=await get("active");if(!cur||Math.min(2,cur.step||0)!==i)return;const msg=stepSpecificReaction($("#answer").value,cur.language||"ko");if(msg&&msg!==cur.crewState?.lastReaction)await showCrewReaction(msg)},850)}});
+$("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0),text=$("#answer").value;ensureWritingState(s);s.draft=text;s.updatedAt=new Date().toISOString();await set("active",s);clearTimeout(window.crewInputTimer);if(text.trim().length>=8){window.crewInputTimer=setTimeout(async()=>{const cur=await get("active");if(!cur||Math.min(2,cur.step||0)!==i)return;ensureWritingState(cur);cur.draft=$("#answer").value;const move=refreshWritingMove(cur);await set("active",cur);const msg=stepSpecificReaction(cur.draft,cur.language||"ko",move);if(msg&&msg!==cur.crewState?.lastReaction)await showCrewReaction(msg)},850)}});
 function currentBridgeContext(){try{return window.SnapPopBridge?.context?.()||{}}catch{return {}}}
 async function renderIncomingHandoff(){const ctx=currentBridgeContext();const box=$("#handoffWord");if(!box)return;if(ctx.word){box.hidden=false;box.textContent=`Hide & Seek에서 찾은 단어 · ${ctx.word}${ctx.word_context?" · "+ctx.word_context:""}`}else box.hidden=true}
 window.addEventListener("snap-pop:bridge-ready",renderIncomingHandoff);
