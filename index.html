@@ -17,13 +17,13 @@
   <div id="landmarks" class="landmarks"></div>
   <div id="homeCompanions" class="homeCompanions" aria-label="현재 탐험가와 탐험대">
    <div id="homeCharacter" class="homeCharacter"><div id="homeCharacterVisual" class="characterPlaceholder">탐험가</div><strong id="homeCharacterName">나의 탐험가</strong></div>
-   <div id="homeGuide" class="homeGuide"><div class="guidePlaceholder">대원</div><div><strong id="homeGuideName">모카</strong><span id="homeGuideLine" class="homeGuideLine"></span></div></div>
+   <div id="homeCrewMember" class="homeCrewMember"><div class="crewMemberPlaceholder">대원</div><div><strong id="homeCrewMemberName">모카</strong><span id="homeCrewMemberLine" class="homeCrewMemberLine"></span></div></div>
   </div>
   <button class="specialInvite" id="specialInvite" hidden>특별 탐험 초대장</button>
   <button class="radioFab" id="homeRadio"><img src="assets/icons/radio.svg" alt=""><span>무전</span></button>
   <div class="selection" id="selection" hidden>
    <span class="kicker">선택한 탐험지</span><h2 id="selTitle"></h2><p id="selDesc"></p>
-   <p id="selGuideReaction" class="guidePreview"></p>
+   <p id="selCrewMemberReaction" class="crewMemberPreview"></p>
    <div class="meta"><span id="selProgress">진행 0 / 3</span><span id="selShard">보석 조각 0 / 6</span></div>
    <button class="primary" id="startBtn">탐험 시작</button>
   </div>
@@ -46,7 +46,7 @@
  </div>
  <div id="steps" class="steps"></div>
  <article class="paper">
-  <div class="guideLine"><b>탐험대원 모카</b><span id="guideLine">한 조각씩 찾아보자.</span></div>
+  <div class="crewMemberLine"><b>탐험대원 모카</b><span id="crewMemberLine">한 조각씩 찾아보자.</span></div>
   <h2 id="question"></h2><p id="hint"></p>
   <textarea id="answer" placeholder="여기에 직접 써도 좋아요."></textarea>
   <div class="tools">
@@ -71,7 +71,7 @@
   <div class="resultReward"><strong id="resultExp">+0 EXP</strong><span id="resultGem">보석 조각 +1</span></div>
   <h2 id="resultDraft">네 글이 여기에 보여요.</h2>
   <div id="resultStrengths" class="strengths"></div>
-  <p id="resultGuideLine" class="guidePreview"></p>
+  <p id="resultCrewMemberLine" class="crewMemberPreview"></p>
  </article>
  <button class="primary wide" id="resultRecords">기록에서 보기</button>
  <button class="soft wide resultSecondary" id="bonusStart">추가 연습</button>
@@ -142,21 +142,21 @@
   <span id="profilePhotoStatus" class="kicker">원본 사진 없음</span>
   <button class="primary wide" id="characterSave">저장</button>
  </article>
- <div class="setting"><div><b>나의 탐험대원</b><span id="guideSummary">말티푸 · 모카</span></div><button class="soft" id="guideBtn">이름 바꾸기</button></div>
- <article id="guidePanel" class="paper settingPanel" hidden>
+ <div class="setting"><div><b>나의 탐험대원</b><span id="crewMemberSummary">말티푸 · 모카</span></div><button class="soft" id="crewMemberBtn">이름 바꾸기</button></div>
+ <article id="crewMemberPanel" class="paper settingPanel" hidden>
   <span class="kicker">Snap & Pop 탐험대원 MASTER · 기능 유불리 없이 표현만 변경</span>
   <h2>탐험대원 선택</h2>
-  <div class="guideTypes" id="guideTypes">
-   <button class="soft" data-guide-type="maltipoo">말티푸</button>
-   <button class="soft" data-guide-type="cat">탐험 고양이</button>
-   <button class="soft" data-guide-type="redpanda">랫서팬더</button>
-   <button class="soft" data-guide-type="buddy">동료 탐험가</button>
+  <div class="crewMemberTypes" id="crewMemberTypes">
+   <button class="soft" data-crew-member-type="maltipoo">말티푸</button>
+   <button class="soft" data-crew-member-type="cat">탐험 고양이</button>
+   <button class="soft" data-crew-member-type="redpanda">랫서팬더</button>
+   <button class="soft" data-crew-member-type="buddy">동료 탐험가</button>
   </div>
-  <p id="guidePersonalityPreview" class="guidePreview"></p>
+  <p id="crewMemberPersonalityPreview" class="crewMemberPreview"></p>
   <h2>탐험대원 이름</h2>
-  <input id="guideName" class="textInput" maxlength="20" placeholder="모카">
-  <button class="soft wide" id="guideSuggest">이름 추천해줘</button>
-  <button class="primary wide resultSecondary" id="guideSave">저장</button>
+  <input id="crewMemberName" class="textInput" maxlength="20" placeholder="모카">
+  <button class="soft wide" id="crewMemberSuggest">이름 추천해줘</button>
+  <button class="primary wide resultSecondary" id="crewMemberSave">저장</button>
  </article>
  <div class="setting"><div><b>질문 읽어주기</b><span>6세 음성 접근성</span></div><label class="toggle"><input id="autoRead" type="checkbox"><i></i></label></div>
  <div class="setting"><div><b>움직임 줄이기</b><span>화면 효과 최소화</span></div><label class="toggle"><input id="reduceMotion" type="checkbox"><i></i></label></div>
