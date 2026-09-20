@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R4",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R5",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -390,7 +390,8 @@
       "호칭",
       "특별 일러스트"
     ],
-    "historyPreserved": true
+    "historyPreserved": true,
+    "stableMemberId": "crewMemberId"
   },
   "identity": {
     "immutableId": "Explorer_ID",
@@ -505,7 +506,8 @@
     "currentNamePersistsWhenMainChanges": true,
     "previousNameShownInDetail": true,
     "nameHistoryPermanent": true,
-    "stableInternalIdRequired": true
+    "stableInternalIdRequired": true,
+    "stableMemberId": "crewMemberId"
   },
   "discovery": {
     "states": [
@@ -517,5 +519,60 @@
     ],
     "growthPrinciple": "성장하면서 천천히 추가",
     "farmingProtection": "발견 속도는 사용량에 정비례하지 않음"
+  },
+  "worldSimulation": {
+    "hubPresenceIsDynamic": true,
+    "absenceReasons": {
+      "lifestyle": [
+        "배 아픔",
+        "휴가",
+        "늦잠",
+        "소풍",
+        "간식 사러 감",
+        "낮잠"
+      ],
+      "duty": [
+        "다른 거점 지원",
+        "탐험 파견"
+      ],
+      "mystery": [
+        "길 잃음",
+        "뭔가 찾으러 감",
+        "이유를 아무도 모름",
+        "스페셜 관련"
+      ]
+    },
+    "substituteMemberAllowed": true,
+    "currentMainCrewReactsToUnexpectedPresence": true,
+    "returnFollowupDialogue": true,
+    "expeditionCanBring": [
+      "새 지역 소문",
+      "스페셜 흔적",
+      "다음 챕터 힌트",
+      "새 거점 이야기"
+    ],
+    "systemLogicHiddenBehindWorldStory": true
+  },
+  "specialCrewEncounter": {
+    "separateFromSpecialExploration": true,
+    "stateKey": "crewEncounters",
+    "eventMemoryKey": "crewEncounterMemories",
+    "flow": [
+      "TRACE",
+      "ENCOUNTER_WINDOW",
+      "RANDOM_OR_HUB_ENCOUNTER",
+      "FIRST_MEETING",
+      "KNOWN",
+      "SELECTABLE_MAIN",
+      "REVISIT"
+    ],
+    "microEpisode": true,
+    "dialogueParticipants": [
+      "현재 메인 탐험대원",
+      "거점 탐험대원",
+      "스페셜 탐험대원"
+    ],
+    "exactProbability": "OPEN",
+    "exactCadencePerMember": "OPEN"
   }
 }
