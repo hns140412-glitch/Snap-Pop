@@ -36,6 +36,26 @@ function normalizeIdentity(x={}){
 function crewMemberRule(identity){const type=normalizeCrewType(identity?.crewMember?.type);return SNAP_RULES?.members?.[type]||SNAP_RULES?.members?.maltipoo||{label:"탐험대원",defaultName:"모카",home:"같이 가자.",reactions:{},behavior:{}}}
 function crewReaction(identity,landmark){return crewMemberRule(identity).reactions?.[landmark]||"한 조각씩 같이 찾아보자."}
 function crewMemberName(identity){return identity?.crewMember?.name||crewMemberRule(identity).defaultName||"모카"}
+function crewMemberCard(slot,identity){
+  if(!slot.memberId)return `<button class="crewRosterCard unassigned" type="button" disabled><b>정체 미확정</b><span>${slot.slotId} · 원자료 확정 전 임의 생성 안 함</span></button>`;
+  const rule=SNAP_RULES?.members?.[slot.memberId],on=identity?.crewMember?.type===slot.memberId;
+  return `<button class="crewRosterCard ${on?"on":""}" type="button" data-crew-member-type="${slot.memberId}"><b>${html(rule?.label||slot.memberId)}</b><span>${html(rule?.personality||"")}</span></button>`;
+}
+async function renderCrewRoster(){
+  if(!SNAP_RULES)return;
+  const identity=await resolvedIdentity(),starter=SNAP_RULES.roster?.starter?.slots||[],remaining=SNAP_RULES.roster?.remainingDiscoveryPool,sp=SNAP_RULES.roster?.special;
+  const starterHost=$("#starterCrewRoster");if(starterHost)starterHost.innerHTML=starter.map(s=>crewMemberCard(s,identity)).join("");
+  const worldHost=$("#worldCrewRoster");if(worldHost)worldHost.innerHTML=`<div class="crewRosterCard locked"><b>세계에서 만날 친구들</b><span>나머지 ${remaining?.count??14}명은 챕터·거점·지역·세계 사건에서 순차적으로 만나요.</span></div>`;
+  const specialHost=$("#specialCrewRoster");if(specialHost)specialHost.innerHTML=`<div class="crewRosterCard locked"><b>아직 정체불명</b><span>스페셜은 최대 ${sp?.maximumWithinRoster??12}명 이하 · 그림자/흔적/소문/우연한 조우로 만나요.</span></div>`;
+  $("#starterCrewRoster [data-crew-member-type]").forEach(b=>b.onclick=()=>selectStarterCrewMember(b.dataset.crewMemberType));
+}
+async function selectStarterCrewMember(type){
+  const identity=await resolvedIdentity();identity.crewMember.type=normalizeCrewType(type);
+  const rule=crewMemberRule(identity);identity.crewMember.name=rule.defaultName||identity.crewMember.name||"모카";
+  identity.explorationCrewRulesVersion=SNAP_RULES.version;await set("identityFallback",identity);
+  $("#crewMemberName").value=identity.crewMember.name;$("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""}`;
+  await renderIdentityPresence();await renderCrewRoster();
+}
 async function migrateLegacyState(){
   const marker=await get("migration_20260920_state_v1");
   if(marker)return;
@@ -95,7 +115,7 @@ function calcExp(answers,completedCount,language="ko"){
   mastery=Math.min(14,mastery);
   return {total:34+initial+mastery,base:34,initial,mastery,strengths};
 }
-async function loadSettings(){const s=await get("settings")||{},asset=await get("characterSourceAsset"),identity=await resolvedIdentity();$("#autoRead").checked=!!s.autoRead;$("#reduceMotion").checked=!!s.reduceMotion;document.documentElement.classList.toggle("reduceMotion",!!s.reduceMotion);$("#characterSummary").textContent=identity.profile.name?`탐험가 · ${identity.profile.name}`:"Ready & Set 프로필 연동 대기";$("#crewMemberSummary").textContent=`${crewMemberRule(identity).label} · ${crewMemberName(identity)}`;$("#characterName").value=identity.profile.name||"";$("#crewMemberName").value=identity.crewMember.name||"모카";$$("[data-crew-member-type]").forEach(b=>b.classList.toggle("on",b.dataset.crewMemberType===identity.crewMember.type));if(asset?.originalProfilePhoto||identity.profile.photo){$("#profilePhotoPreview").hidden=false;$("#profilePhotoImage").src=asset?.originalProfilePhoto||identity.profile.photo;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":asset?.characterMasterId?"Character Master 연결됨":"로컬 인트로 프로필 · 통합 시 Ready & Set 우선"}else{$("#profilePhotoPreview").hidden=true;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":"로컬 인트로 프로필 없음"}}
+async function loadSettings(){const s=await get("settings")||{},asset=await get("characterSourceAsset"),identity=await resolvedIdentity();$("#autoRead").checked=!!s.autoRead;$("#reduceMotion").checked=!!s.reduceMotion;document.documentElement.classList.toggle("reduceMotion",!!s.reduceMotion);$("#characterSummary").textContent=identity.profile.name?`탐험가 · ${identity.profile.name}`:"Ready & Set 프로필 연동 대기";$("#crewMemberSummary").textContent=`${crewMemberRule(identity).label} · ${crewMemberName(identity)}`;$("#characterName").value=identity.profile.name||"";$("#crewMemberName").value=identity.crewMember.name||"모카";await renderCrewRoster();if(asset?.originalProfilePhoto||identity.profile.photo){$("#profilePhotoPreview").hidden=false;$("#profilePhotoImage").src=asset?.originalProfilePhoto||identity.profile.photo;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":asset?.characterMasterId?"Character Master 연결됨":"로컬 인트로 프로필 · 통합 시 Ready & Set 우선"}else{$("#profilePhotoPreview").hidden=true;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":"로컬 인트로 프로필 없음"}}
 function promptFor(landmark,step,language="ko"){const bank=QUESTION_BANK[landmark]||QUESTION_BANK.idea;return (bank[language]||bank.ko)[Math.min(2,step)]}
 function setModeButtons(language){$("#modeKo")?.classList.toggle("on",language!=="en");$("#modeEn")?.classList.toggle("on",language==="en")}
 async function renderCrewRosters(){
@@ -231,7 +251,7 @@ $("#wishHistoryBtn").onclick=renderWishHistory;
 $("#historyBtn").onclick=renderGrowthTimeline;$("#resultBack").onclick=()=>show("map");$("#resultRecords").onclick=()=>show("records");$("#resultGrowth").onclick=()=>show("growth");$("#calPrev").onclick=()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()-1,1);renderRecords()};$("#calNext").onclick=()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+1,1);renderRecords()};
 $("#settingsBtn").onclick=()=>show("settings");$("#settingsBack").onclick=()=>show(lastMain);$$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
 $("#characterBtn").onclick=()=>$("#characterPanel").hidden=!$("#characterPanel").hidden;
-$("#crewMemberBtn").onclick=()=>$("#crewMemberPanel").hidden=!$("#crewMemberPanel").hidden;
+$("#crewMemberBtn").onclick=async()=>{$("#crewMemberPanel").hidden=!$("#crewMemberPanel").hidden;if(!$("#crewMemberPanel").hidden)await renderCrewRoster()};
 $("#profilePhotoInput").onchange=async e=>{const file=e.target.files?.[0];if(!file)return;if(!file.type.startsWith("image/"))return toast("이미지 파일만 사용할 수 있어요.");const reader=new FileReader();reader.onload=async()=>{const data=String(reader.result||""),previous=await get("characterSourceAsset"),history=await get("characterSourceHistory")||[];if(previous?.originalProfilePhoto)history.push({...previous,archivedAt:new Date().toISOString()});const asset={assetId:uid("profile_source"),originalProfilePhoto:data,processedProfilePhoto:null,characterMasterId:previous?.characterMasterId||null,status:"SOURCE_READY",createdAt:new Date().toISOString(),sourceName:file.name||"camera"};const identity=await resolvedIdentity();identity.profile.photo=data;await setMany([["characterSourceAsset",asset],["characterSourceHistory",history],["identityFallback",identity]]);$("#profilePhotoPreview").hidden=false;$("#profilePhotoImage").src=data;$("#profilePhotoStatus").textContent="로컬 인트로 프로필 · 통합 시 Ready & Set 우선";await renderIdentityPresence();toast("인트로용 로컬 프로필 사진을 보존했어요. 통합 시 Ready & Set 프로필이 우선합니다.")};reader.onerror=()=>toast("사진을 읽지 못했어요.");reader.readAsDataURL(file)};
 $("#characterSave").onclick=async()=>{const name=$("#characterName").value.trim(),identity=await resolvedIdentity();identity.profile.name=name;await set("identityFallback",identity);$("#characterSummary").textContent=name?`탐험가 · ${name}`:"Ready & Set 프로필 연동 대기";$("#characterPanel").hidden=true;await renderIdentityPresence();toast(sharedIdentity?"공유 프로필은 Ready & Set 기준을 유지합니다. 로컬 fallback만 저장했어요.":"인트로용 로컬 프로필을 저장했어요. 통합 시 Ready & Set 기준이 우선합니다.")};
 $("#starterCrewRoster").onclick=e=>{const b=e.target.closest("button[data-crew-member-type]");if(b)chooseStarterCrewMember(b.dataset.crewMemberType)};
