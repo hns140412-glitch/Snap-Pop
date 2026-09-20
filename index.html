@@ -15,6 +15,7 @@
   <img class="scene" src="assets/world/golden_world_scene.jpg" alt="">
   <div class="atmo"></div>
   <div id="landmarks" class="landmarks"></div>
+  <button class="specialInvite" id="specialInvite" hidden>특별 탐험 초대장</button>
   <button class="radioFab" id="homeRadio"><img src="assets/icons/radio.svg" alt=""><span>무전</span></button>
   <div class="selection" id="selection" hidden>
    <span class="kicker">선택한 탐험지</span><h2 id="selTitle"></h2><p id="selDesc"></p>
@@ -41,7 +42,15 @@
   <textarea id="answer" placeholder="여기에 직접 써도 좋아요."></textarea>
   <div class="tools">
    <button class="soft" id="listenBtn"><img src="assets/icons/speaker.svg" alt="">다시 듣기</button>
+   <button class="soft" id="cloudBtn">상상 구름</button>
    <button class="voice" id="voiceBtn"><img src="assets/icons/radio.svg" alt="">말해서 쓰기</button>
+  </div>
+  <div id="handoffWord" class="handoffWord" hidden></div>
+  <div id="cloudPanel" class="cloudPanel" hidden>
+   <b>상상 구름</b>
+   <p>정답을 만드는 곳이 아니라, 네 생각에서 장면·기분·연결고리를 꺼내 보는 곳이에요.</p>
+   <div id="cloudChips" class="cloudChips"></div>
+   <button class="soft wide" id="cloudClose">내 문장으로 돌아가기</button>
   </div>
  </article>
  <button class="primary wide" id="nextBtn">다음 단계</button>
@@ -72,6 +81,18 @@
  </div>
  <button class="soft wide" id="historyBtn">성장 기록 보기</button>
  <div id="growthTimeline" class="timeline" hidden></div>
+</section>
+<section id="special" class="view parchment subflow">
+ <button class="back" id="specialBack">← 지도</button>
+ <header class="pageTitle"><span>선택 이벤트</span><h1>특별 탐험 초대장</h1><p>하고 싶을 때만 열어봐요. 참여하지 않아도 실패나 손해는 없어요.</p></header>
+ <article class="paper">
+  <span class="kicker" id="specialDate"></span>
+  <h2 id="specialPrompt">오늘의 특별 탐험</h2>
+  <p id="specialHint"></p>
+  <textarea id="specialAnswer" placeholder="떠오른 생각을 네 말로 남겨봐요."></textarea>
+  <button class="primary wide" id="specialSave">특별 탐험 기록하기</button>
+  <button class="soft wide resultSecondary" id="specialLater">다음에 할래요</button>
+ </article>
 </section>
 <section id="shop" class="view parchment subflow">
  <button class="back" data-back="gems">← 보석함으로</button>
