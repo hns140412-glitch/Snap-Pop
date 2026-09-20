@@ -37,7 +37,7 @@ ok(rules.specialCrewEncounter?.separateFromSpecialExploration===true,'special cr
 ok(rules.specialCrewEncounter?.exactProbability==='OPEN','special exact probability remains OPEN');
 ok(rules.specialCrewEncounter?.exactCadencePerMember==='OPEN','special exact cadence remains OPEN');
 ok(!('minimumCapacity' in (rules.roster?.worldRegion||{})),'stale world minimum removed');
-ok(!master.includes('세계/거점 최소 2명'),'stale minimum-two rule absent');
+ok(master.includes('세계/거점 최소 2명 → 근거 부족, **폐기**'),'stale minimum-two rule must remain explicitly rejected');
 ok(master.includes('스페셜 3~4명')&&master.includes('폐기'),'old special 3-4 proposal explicitly rejected');
 ok(!/길잡이|Guide Companion|>Guide</.test(index),'legacy user-facing terminology');
 ok(app.includes('crewMember')&&app.includes('explorationCrewRulesVersion'),'canonical runtime schema');
