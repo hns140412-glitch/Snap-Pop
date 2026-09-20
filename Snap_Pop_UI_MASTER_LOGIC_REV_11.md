@@ -1,3 +1,6 @@
+> **CANONICAL TERMINOLOGY / AUTHORITY OVERRIDE — 2026-09-20**  
+> 탐험대·탐험대원·탐험대 규칙 관련 용어/소유권/행동 기준은 `SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md` 및 `data/exploration-crew-rules.json`이 우선한다. 본 문서의 Guide / Guide Companion / 길잡이 표현은 모두 레거시 용어이며 **탐험대원**으로 해석한다. 관련 규칙이 충돌하면 새 탐험대 MASTER가 승계·대체한다.
+
 # Snap & Pop Ui Master Logic — REV_11
 
 > Status: FORMAL BASELINE / SOURCE OF TRUTH
