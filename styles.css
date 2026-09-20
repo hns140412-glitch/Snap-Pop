@@ -66,3 +66,6 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 
 
 .modeSwitch{display:flex;gap:7px;margin:8px 0 12px}.modeSwitch .on{background:#0c4036;color:#fff4c7;border-color:#0c4036}.bonusPanel{margin-top:10px}.bonusPanel textarea{min-height:120px}
+
+
+.settingPanel{margin:-2px 0 10px}.textInput{width:100%;border:1px solid #d9c9a8;border-radius:12px;padding:11px 12px;background:#fffdf7;color:#18372e;margin:8px 0 10px}.recordActions{display:flex;justify-content:flex-end;margin-top:8px}.recordActions button{padding:7px 10px;border-radius:10px}.specialMemory{border-style:dashed}
