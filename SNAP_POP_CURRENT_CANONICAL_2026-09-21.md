@@ -300,3 +300,14 @@ Priority:
 6. then expansion implementation after unresolved lineage/conflicts are classified.
 
 No Netlify/deploy/merge in this branch-only phase.
+
+
+### Writing-first surface correction — 2026-09-21
+
+최신 직접 정정:
+- Snap & Pop의 기본 상태는 **글쓰기 탐험**.
+- 상상구름은 핵심 엔진이지만 **무의식처럼 숨겨진 on-demand 레이어**.
+- 별도 `exploreHub`를 기본 사용자 허브로 두지 않는다.
+- 기본: 지도/5개 장소 → 3단계 글쓰기.
+- 상상구름: 글쓰기 중 호출, 홈 무전 호출, 궁금증/막힘 시 호출.
+- 닫으면 원래 글쓰기 문맥/포커스로 복귀.
