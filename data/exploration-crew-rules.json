@@ -1498,7 +1498,13 @@
           "fluffy tail"
         ],
         "voiceEvidence": "와! 해보자!",
-        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL"
+        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL",
+        "corroboratedTraits": [
+          "호기심",
+          "활발함",
+          "친화력",
+          "긍정에너지"
+        ]
       },
       {
         "id": "lori",
@@ -1518,7 +1524,13 @@
         "notes": "토끼 계열",
         "englishNameStatus": "OPEN_CORRECTION_CHECK_TORI_VS_LORI",
         "voiceEvidence": "괜찮아, 천천히 해도 돼!",
-        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL"
+        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL",
+        "corroboratedTraits": [
+          "다정함",
+          "공감",
+          "세심함",
+          "따뜻함"
+        ]
       },
       {
         "id": "ink",
@@ -1544,7 +1556,32 @@
           "전략가"
         ],
         "voiceEvidence": "음... 다른 방법도 있지.",
-        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL"
+        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL",
+        "corroboratedTraits": [
+          "지적",
+          "관찰력",
+          "아이디어",
+          "독립심"
+        ],
+        "recoveredBehaviorEvidence": {
+          "habits": [
+            "관찰하기",
+            "기록하기",
+            "아이디어 생각하기",
+            "친구들과 토론하기"
+          ],
+          "reactionDirections": [
+            "생각해보자!",
+            "다르게 보면 어때?"
+          ],
+          "relationshipEvidence": [
+            "친구와 함께",
+            "친구들과 토론하기"
+          ],
+          "worldRoutineStatus": "OPEN",
+          "memoryStatus": "OPEN",
+          "authority": "DIRECT_PROFILE_ARTIFACT"
+        }
       },
       {
         "id": "nova",
@@ -1565,7 +1602,13 @@
           "rabbit"
         ],
         "voiceEvidence": "가보자! 하면 되지!",
-        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL"
+        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL",
+        "corroboratedTraits": [
+          "에너지",
+          "도전",
+          "긍정적",
+          "활동적"
+        ]
       },
       {
         "id": "take",
@@ -1585,7 +1628,26 @@
           "backpack"
         ],
         "voiceEvidence": "차근차근 같이 해보자.",
-        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL"
+        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL",
+        "corroboratedTraits": [
+          "책임감",
+          "차분함",
+          "믿음직함",
+          "리더십"
+        ],
+        "legacyBehaviorCandidates": {
+          "sourceVisualStatus": "SUPERSEDED_TURTLE_VISUAL",
+          "candidates": [
+            "계획 세우기",
+            "지도 그리기",
+            "기록하기",
+            "친구들 이야기 듣기",
+            "정리 돕기",
+            "자연",
+            "간식"
+          ],
+          "promotionRule": "CROSS_ARTIFACT_CORROBORATION_REQUIRED"
+        }
       },
       {
         "id": "zero",
@@ -1607,7 +1669,25 @@
           "polar bear"
         ],
         "voiceEvidence": "언제나, 네 이야기를 응원해!",
-        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL"
+        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL",
+        "corroboratedTraits": [
+          "음악",
+          "여유",
+          "감성",
+          "친구사랑"
+        ],
+        "legacyBehaviorCandidates": {
+          "sourceVisualStatus": "SUPERSEDED_POLAR_BEAR_VISUAL",
+          "candidates": [
+            "친구들과 모험하기",
+            "사진 찍기",
+            "새로운 곳 탐험",
+            "간식",
+            "지도 보기",
+            "음악"
+          ],
+          "promotionRule": "CROSS_ARTIFACT_CORROBORATION_REQUIRED"
+        }
       }
     ],
     "order": [
@@ -1646,6 +1726,18 @@
       ],
       "absenceClaimForbidden": true,
       "recoveryRecord": "C2S/SNAP_EXPLORATION_CREW_EVIDENCE_RECOVERY_PASS_2026-09-20.md"
+    },
+    "visualLineageLedger": "C2S/SNAP_EXPLORATION_CREW_VISUAL_LINEAGE_LEDGER_2026-09-21.md",
+    "archiveEvidence": {
+      "package": "GUIDE_길잡이_대화정리_첨부결과물_2026-09-06.zip",
+      "packageSizeBytes": 27469838,
+      "manifest": "FILE_MANIFEST_SHA256.csv",
+      "visualHistoryFolder": "04_캐릭터_시각결과_연혁",
+      "invariants": [
+        "ARCHIVE_NOT_SEARCH_INDEXED != ARCHIVE_ABSENT",
+        "SUPERSEDED_VISUAL != SUPERSEDED_PERSONALITY",
+        "HANDOFF_HOLD != GLOBAL_HISTORICAL_ABSENCE"
+      ]
     }
   },
   "legacyCharacterLineages": {
