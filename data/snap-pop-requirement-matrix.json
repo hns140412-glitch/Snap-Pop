@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.1",
+  "version": "2026-09-21.2",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -42,7 +42,9 @@
     "CODED != RUNTIME_VERIFIED",
     "RUNTIME_VERIFIED != DEVICE_VERIFIED",
     "EXPANSION_PACK_INCLUDED_IN_FULL_SCOPE_IMPLEMENTATION_RATE",
-    "CONFLICT != PERMISSION_TO_GUESS"
+    "CONFLICT != PERMISSION_TO_GUESS",
+    "SNAP_POP != WRITING_ONLY",
+    "CURIOSITY_RESOLVER_IS_CORE"
   ],
   "requirements": [
     {
@@ -639,6 +641,105 @@
       "staticVerified": false,
       "runtimeVerified": false,
       "deviceVerified": false
+    },
+    {
+      "id": "SP-UNIV-001",
+      "domain": "UNIVERSAL_CORE",
+      "title": "Think→Express 범용 생각 구현",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js QUESTION_BANK",
+        "voice",
+        "Imagination Cloud"
+      ],
+      "gap": "현재 고정 글쓰기 루프 중심"
+    },
+    {
+      "id": "SP-UNIV-002",
+      "domain": "UNIVERSAL_CORE",
+      "title": "한글·영어 두 기준의 표현 지원",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "REV11",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js language ko/en"
+      ],
+      "gap": "교차언어 표현/의미 보존 엔진 미완료"
+    },
+    {
+      "id": "SP-UNIV-003",
+      "domain": "UNIVERSAL_CORE",
+      "title": "Ask→Understand 범용 궁금증 해결",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "현재 범용 Q&A/설명 엔진 없음"
+    },
+    {
+      "id": "SP-UNIV-004",
+      "domain": "UNIVERSAL_CORE",
+      "title": "사회·역사·문화·과학 등 폭넓은 지식 질문",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "도메인 일반 지식 resolver 미구현"
+    },
+    {
+      "id": "SP-UNIV-005",
+      "domain": "UNIVERSAL_CORE",
+      "title": "답변의 사실/불확실성 구분 및 쉬운 설명",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "신뢰도/출처/설명 깊이 조절 엔진 미구현"
+    },
+    {
+      "id": "SP-UNIV-006",
+      "domain": "UNIVERSAL_CORE",
+      "title": "질문 해결 후 필요할 때만 표현/탐험으로 연결",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "Question→Understand→optional Express routing 미구현"
     }
   ]
 }
