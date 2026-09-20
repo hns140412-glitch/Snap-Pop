@@ -36,20 +36,36 @@ function normalizeIdentity(x={}){
 function crewMemberRule(identity){const type=normalizeCrewType(identity?.crewMember?.type);return SNAP_RULES?.members?.[type]||SNAP_RULES?.members?.maltipoo||{label:"탐험대원",defaultName:"모카",home:"같이 가자.",reactions:{},behavior:{}}}
 function crewReaction(identity,landmark){return crewMemberRule(identity).reactions?.[landmark]||"한 조각씩 같이 찾아보자."}
 function crewMemberName(identity){return identity?.crewMember?.name||crewMemberRule(identity).defaultName||"모카"}
-function crewMemberCard(slot,identity){
-  if(!slot.memberId)return `<button class="crewRosterCard unassigned" type="button" disabled><b>정체 미확정</b><span>${slot.slotId} · 원자료 확정 전 임의 생성 안 함</span></button>`;
-  const rule=SNAP_RULES?.members?.[slot.memberId],on=identity?.crewMember?.type===slot.memberId;
-  return `<button class="crewRosterCard ${on?"on":""}" type="button" data-crew-member-type="${slot.memberId}"><b>${html(rule?.label||slot.memberId)}</b><span>${html(rule?.personality||"")}</span></button>`;
+function crewMemberCard(memberId,identity){
+  const rule=SNAP_RULES?.members?.[memberId],on=identity?.crewMember?.type===memberId;
+  return `<button class="crewRosterCard ${on?"on":""}" type="button" data-crew-member-type="${memberId}"><b>${html(rule?.label||memberId)}</b><span>${html(rule?.personality||"")}</span></button>`;
+}
+function unassignedCrewCard(slot){
+  return `<button class="crewRosterCard unassigned" type="button" disabled><b>미확정 탐험대원</b><span>${html(slot)} · 원자료 확정 전 임의 생성 안 함</span></button>`;
 }
 async function renderCrewRoster(){
   if(!SNAP_RULES)return;
-  const identity=await resolvedIdentity(),starter=SNAP_RULES.roster?.starter?.slots||[],remaining=SNAP_RULES.roster?.remainingDiscoveryPool,sp=SNAP_RULES.roster?.special;
-  const starterHost=$("#starterCrewRoster");if(starterHost)starterHost.innerHTML=starter.map(s=>crewMemberCard(s,identity)).join("");
-  const worldHost=$("#worldCrewRoster");if(worldHost)worldHost.innerHTML=`<div class="crewRosterCard locked"><b>세계에서 만날 친구들</b><span>나머지 ${remaining?.count??14}명은 챕터·거점·지역·세계 사건에서 순차적으로 만나요.</span></div>`;
-  const specialHost=$("#specialCrewRoster");if(specialHost)specialHost.innerHTML=`<div class="crewRosterCard locked"><b>아직 정체불명</b><span>스페셜은 최대 ${sp?.maximumWithinRoster??12}명 이하 · 그림자/흔적/소문/우연한 조우로 만나요.</span></div>`;
-  $("#starterCrewRoster [data-crew-member-type]").forEach(b=>b.onclick=()=>selectStarterCrewMember(b.dataset.crewMemberType));
+  const identity=await resolvedIdentity(),starter=SNAP_RULES.roster?.starter||{},world=SNAP_RULES.roster?.worldRegion||{},sp=SNAP_RULES.roster?.special||{};
+  const defined=starter.definedMembers||[],max=starter.selectableCandidateCount?.max||6,min=starter.selectableCandidateCount?.min||5;
+  const slots=[...defined.map(id=>({id})),...Array.from({length:Math.max(0,max-defined.length)},(_,i)=>({slot:`START-${String(defined.length+i+1).padStart(2,"0")}`}))];
+  const starterHost=$("#starterCrewRoster");
+  if(starterHost)starterHost.innerHTML=slots.map(x=>x.id?crewMemberCard(x.id,identity):unassignedCrewCard(x.slot)).join("")+`<div class="crewRosterCard locked"><b>최신 기준</b><span>초기 선택 후보 ${min}~${max}명 · 현재 정체성 확정 ${defined.length}명</span></div>`;
+  const worldHost=$("#worldCrewRoster");
+  if(worldHost)worldHost.innerHTML=`<div class="crewRosterCard locked"><b>거점 탐험대원 수는 OPEN</b><span>Snap 고정 5거점 + 기능별 거점의 실제 역할을 계산한 뒤 정해요. 정보원·한 줄 힌트·대타·탐험 파견 상태를 가질 수 있어요.</span></div>`;
+  const encountered=await get("crewEncounters")||{};
+  const specialKnown=Object.values(encountered).filter(x=>x?.state==="KNOWN"||x?.state==="SELECTABLE_MAIN").length;
+  const specialHost=$("#specialCrewRoster");
+  if(specialHost){
+    const cards=Array.from({length:sp.maximumCount||12},(_,i)=>{
+      const n=i+1;return `<div class="crewRosterCard locked"><b>${n<=specialKnown?"만난 스페셜":"???"}</b><span>${n<=specialKnown?"도감/관계 기록에서 확인":"그림자·흔적·소문·우연한 조우 후 공개"}</span></div>`;
+    });
+    specialHost.innerHTML=cards.join("");
+  }
+  $$("#starterCrewRoster [data-crew-member-type]").forEach(b=>b.onclick=()=>selectStarterCrewMember(b.dataset.crewMemberType));
 }
 async function selectStarterCrewMember(type){
+  const allowed=SNAP_RULES?.roster?.starter?.definedMembers||[];
+  if(!allowed.includes(type))return toast("아직 확정되지 않은 탐험대원이에요.");
   const identity=await resolvedIdentity();identity.crewMember.type=normalizeCrewType(type);
   const rule=crewMemberRule(identity);identity.crewMember.name=rule.defaultName||identity.crewMember.name||"모카";
   identity.explorationCrewRulesVersion=SNAP_RULES.version;await set("identityFallback",identity);
