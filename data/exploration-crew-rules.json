@@ -1470,11 +1470,14 @@
     "note": "재접속 시 필요한 가벼운 상태만 생성. 성능/보상 영향 없음."
   },
   "recoveredStarterSix": {
-    "status": "RECOVERED_FROM_GUIDE_LINEAGE_WITH_VISUAL_VALIDATION_GAPS",
+    "status": "RECOVERED_WITH_USER_PROVIDED_VISUAL_ID_LOCK_EVIDENCE",
     "sourceNotes": [
       "GUIDE_길잡이_검토요약_REV_00.docx",
       "GUIDE_길잡이_재개용_인수인계_2026-09-06.docx",
-      "과거 대화 회수: Core 순서 두비→로리→잉크→노바→테이크→제로"
+      "과거 대화 회수: Core 순서 두비→로리→잉크→노바→테이크→제로",
+      "2026-09-20 user-provided locked Visual ID boards: '6명의 Visual ID (확정)', 'Visual ID Lock', 01~06 PASS",
+      "2026-09-20 user-provided six-character turnaround board",
+      "2026-09-20 user-provided Ink detailed profile/turnaround"
     ],
     "members": [
       {
@@ -1486,8 +1489,14 @@
           "활력"
         ],
         "roleFlavor": "막내·호기심",
-        "visualStatus": "RECOVERED_IDENTITY",
-        "notes": "기존 확정 계보"
+        "visualStatus": "VISUAL_ID_LOCK_RECOVERED",
+        "notes": "기존 확정 계보",
+        "visual": [
+          "cap",
+          "backpack",
+          "large ears",
+          "fluffy tail"
+        ]
       },
       {
         "id": "lori",
@@ -1495,13 +1504,17 @@
         "species": "rabbit",
         "personality": [
           "다정",
-          "공감"
+          "공감",
+          "따뜻함"
         ],
         "visual": [
-          "핑크 브레이드"
+          "pink rabbit",
+          "long ears",
+          "pink braids"
         ],
-        "visualStatus": "RECOVERED_IDENTITY",
-        "notes": "토끼 계열"
+        "visualStatus": "VISUAL_ID_LOCK_RECOVERED",
+        "notes": "토끼 계열",
+        "englishNameStatus": "OPEN_CORRECTION_CHECK_TORI_VS_LORI"
       },
       {
         "id": "ink",
@@ -1510,13 +1523,22 @@
         "genderPresentation": "female",
         "personality": [
           "관찰",
-          "아이디어"
+          "아이디어",
+          "신중"
         ],
         "visual": [
-          "고글",
-          "다크톤"
+          "dark fox",
+          "goggles",
+          "tablet",
+          "dark tone"
         ],
-        "visualStatus": "RECOVERED_IDENTITY"
+        "visualStatus": "VISUAL_ID_LOCK_RECOVERED",
+        "profileEvidence": [
+          "지능적",
+          "호기심",
+          "시크",
+          "전략가"
+        ]
       },
       {
         "id": "nova",
@@ -1524,14 +1546,15 @@
         "species": "otter/ferret-like",
         "personality": [
           "에너지",
-          "도전"
+          "도전",
+          "활동적"
         ],
         "visual": [
-          "브라운 계열",
-          "고글",
-          "포니테일"
+          "brown otter/ferret-like",
+          "goggles",
+          "ponytail"
         ],
-        "visualStatus": "RECOVERED_IDENTITY_WITH_SUPERSEDED_VARIANT",
+        "visualStatus": "VISUAL_ID_LOCK_RECOVERED_WITH_SUPERSEDED_VARIANT",
         "superseded": [
           "rabbit"
         ]
@@ -1541,12 +1564,18 @@
         "name": "테이크",
         "species": "panda",
         "personality": [
+          "든든함",
           "정리",
-          "든든함"
+          "차분"
         ],
         "roleFlavor": "든든한 형",
-        "visualStatus": "REFERENCE_APPEARANCE_LOCKED",
-        "notes": "과거 대화에서 1번 외형 확정 후 Reference 사용"
+        "visualStatus": "VISUAL_ID_LOCK_RECOVERED",
+        "notes": "과거 대화에서 1번 외형 확정 후 Reference 사용",
+        "visual": [
+          "panda",
+          "blue neckwear",
+          "backpack"
+        ]
       },
       {
         "id": "zero",
@@ -1554,14 +1583,16 @@
         "species": "penguin",
         "personality": [
           "음악",
-          "여유"
+          "여유",
+          "챙김"
         ],
         "roleFlavor": "귀여운 오빠",
         "visual": [
-          "헤드폰",
-          "캡"
+          "penguin",
+          "headphones",
+          "cap"
         ],
-        "visualStatus": "RECOVERED_IDENTITY_WITH_SUPERSEDED_VARIANT",
+        "visualStatus": "VISUAL_ID_LOCK_RECOVERED_WITH_SUPERSEDED_VARIANT",
         "superseded": [
           "polar bear"
         ]
@@ -1575,11 +1606,17 @@
       "take",
       "zero"
     ],
-    "visualApprovalRule": "과거 이미지 시안은 회귀검증 증거. 6종 최종 Visual ID 1:1 검증 전에는 이미지 자체를 자동 승인본으로 간주하지 않는다.",
+    "visualApprovalRule": "User-provided historical boards explicitly show '6명의 Visual ID (확정)', 'Visual ID Lock', and PASS for all 01~06. Treat these boards/turnarounds as recovered Visual Golden Reference evidence; keep conflicting past variants superseded.",
     "personalitySlotMapping": {
-      "status": "OPEN_NO_DIRECT_APPROVED_MAPPING_RECOVERED",
+      "status": "SEPARATED_ARCHITECTURE_NO_FIXED_1_TO_1",
       "autoInferenceForbidden": true,
-      "note": "Core 6 identity lineage is recovered, but the current six Personality Slots were recovered as a separate unnamed design. Trait similarity is not sufficient approval evidence."
+      "slotRole": "BEHAVIOR_ARCHETYPE_OR_INTERACTION_MODE",
+      "identityRole": "CHARACTER_IDENTITY_WITH_CORE_PERSONALITY",
+      "note": "Core 6 identities are recovered and visually locked. The six Personality Slots are a separate behavior/interaction axis and must not be forced into a fixed one-to-one mapping."
+    },
+    "ageLabelSemantics": {
+      "status": "OPEN_SEMANTICS",
+      "note": "6~13세 labels are visible on the board, but whether they mean character age or target/feel age is not directly proven."
     }
   },
   "legacyCharacterLineages": {
