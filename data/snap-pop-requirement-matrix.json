@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.14",
+  "version": "2026-09-21.15",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -1287,11 +1287,12 @@
     {
       "id": "SP-BADGE-001",
       "domain": "BADGE_SYSTEM",
-      "title": "배지 시스템 — 독립 성장축 복원",
+      "title": "배지 시스템 — Character/친밀도/EXP·보석/World State와 분리된 독립 성장·기록 축",
       "authority": [
+        "USER_DIRECT_RECOVERY_2026-09-08",
         "SNAP_EXPLORATION_CREW_SOURCE_LEDGER",
         "SNAP_EXPLORATION_CREW_MASTER",
-        "REV10",
+        "LATEST_DIRECT_USER_2026-09-21",
         "C2S_NO_SILENT_LOSS"
       ],
       "classification": "RECOVERY_REQUIRED",
@@ -1301,11 +1302,56 @@
       "deviceVerified": false,
       "codeEvidence": [],
       "recoveryEvidence": [
+        "USER_DIRECT_RECOVERY_2026-09-08: 원형 배지 + 손그림 느낌 + 파스텔 색감 + 전체를 관통하는 요소 희망",
         "SNAP_EXPLORATION_CREW_SOURCE_LEDGER: Character Master / 탐험대 / 배지 / 친밀도 / World State는 서로 다른 성장축",
-        "SNAP_EXPLORATION_CREW_MASTER: 특정 행동/배지가 Special Encounter 조건 예시",
-        "REV10: 레벨 이정표는 성장 칭호/나무 변화/기념 기록에 사용 가능"
+        "READY_REV06: avatar visual master에 작은 mission badge motif",
+        "READY_REV06 HOLD: 캐릭터 레벨/성장 경제"
       ],
-      "gap": "배지 종류, 획득 조건, 표시 위치, 중복/등급 여부, 성장/스페셜 연계의 원래 확정안 미회수. 추정 구현 금지."
+      "gap": "배지 카탈로그, 획득 조건, 표시 위치, cross-app ownership/event contract는 미회수. 캐릭터 레벨/EXP/보석과 동일시 금지."
+    },
+    {
+      "id": "SP-BADGE-002",
+      "domain": "BADGE_SYSTEM",
+      "title": "배지 비주얼 — 원형 / 손그림 느낌 / 파스텔 계열",
+      "authority": [
+        "USER_DIRECT_RECOVERY_2026-09-08"
+      ],
+      "classification": "PRESERVE_LINEAGE",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "exact visual tokens/assets not yet recovered or implemented"
+    },
+    {
+      "id": "SP-BADGE-003",
+      "domain": "BADGE_SYSTEM",
+      "title": "Ready & Set 포함 전체 앱을 관통하는 cross-app badge direction",
+      "authority": [
+        "USER_DIRECT_RECOVERY_2026-09-08",
+        "LATEST_DIRECT_USER_2026-09-21"
+      ],
+      "classification": "RECOVERY_REQUIRED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "historical event taxonomy, ownership, shared collection surface must be recovered before implementation"
+    },
+    {
+      "id": "SP-BADGE-004",
+      "domain": "BADGE_SYSTEM",
+      "title": "배지를 캐릭터 레벨/성장 경제와 자동 동일시 금지",
+      "authority": [
+        "READY_REV06_HOLD",
+        "C2S_NO_FALSE_CONVERGENCE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "badge runtime not implemented; rule prevents false reconstruction"
     }
   ]
 }
