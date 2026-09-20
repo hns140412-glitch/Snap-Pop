@@ -112,3 +112,7 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 #imaginationSpeakLast{margin-top:9px}
 .imaginationOpen body{overflow:hidden}
 @media(max-width:360px){.imaginationActions{grid-template-columns:1fr}}
+
+
+/* WRITING BRIDGE 2026-09-21 */
+.writingBridge{margin:7px 0 0;padding:7px 9px;border-left:2px solid #9d8757;font-size:11px;line-height:1.45;opacity:.76;background:#f7f1e3;border-radius:0 8px 8px 0}
