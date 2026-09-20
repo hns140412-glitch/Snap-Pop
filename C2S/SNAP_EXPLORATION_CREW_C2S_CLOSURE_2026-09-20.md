@@ -148,3 +148,13 @@ PERSONALITY → HABIT → REACTION → RELATIONSHIP_EXCEPTION → WORLD_ROUTINE 
 - SILENT_LOSS = 0 within recovered current-conversation scope.
 - FALSE_CONVERGENCE prevention: 시작 6명 Identity 계보는 RECOVERED. 다만 Personality Slot 1:1 매핑과 최종 Visual Golden Reference는 직접 근거가 없어 OPEN 유지.
 - Reverse Reconstruction: 이 문서 + Canonical Master + Source Ledger로 현재 대화의 탐험대 결정/정정/미확정 항목 재구성 가능.
+
+
+## DIRECT_VISUAL_EVIDENCE_2026-09-20
+- 사용자 직접 제공 이미지 7장으로 과거 Core 6 확정 보드/턴어라운드/잉크 상세 프로필을 회수.
+- 보드 명시: `6명의 Visual ID (확정)`, `Visual ID Lock`, 두비/로리/잉크/노바/테이크/제로 01~06 PASS.
+- **CLOSED:** Core 6 이름·순서·종족/외형·핵심 성격·주요 소품/실루엣.
+- **OPEN_CORRECTION_CHECK:** 로리 영문명 `Tori` vs canonical `Lori`.
+- **OPEN_SEMANTICS:** 6~13세 표기의 의미.
+- **ARCHITECTURE CORRECTION:** six Personality Slots는 Character Identity 슬롯이 아니라 Behavior Archetype / Interaction Mode.
+- **FALSE_CONVERGENCE prevention:** 의미 유사성으로 Core 6와 six Personality Slots를 강제 1:1 매핑하지 않음.
