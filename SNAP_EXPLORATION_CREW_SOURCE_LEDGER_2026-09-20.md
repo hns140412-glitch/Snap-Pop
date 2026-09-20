@@ -233,3 +233,34 @@ These rules are no longer independent Guide rules. They are absorbed into the ca
     - reactionPerformance
     - questionEngine
     - imaginationCloud
+
+
+## RECOVERED CORE 6 — 2026-09-20
+
+Recovered from GUIDE lineage/recovery evidence and prior conversation context.
+
+Core order:
+1. 두비 — dog-like · 호기심/활력 · 막내/호기심
+2. 로리 — rabbit · 다정/공감 · 핑크 브레이드 시안 계보
+3. 잉크 — 여성형 dark fox · 관찰/아이디어 · 고글/다크톤
+4. 노바 — brown otter/ferret-like · 에너지/도전 · 고글/포니테일
+5. 테이크 — panda · 정리/든든함 · 든든한 형
+6. 제로 — penguin · 음악/여유 · headphones/cap · 귀여운 오빠
+
+Source evidence:
+- GUIDE_길잡이_검토요약_REV_00.docx
+- GUIDE_길잡이_재개용_인수인계_2026-09-06.docx
+- README_인수인계_로드순서.md: 04_캐릭터_시각결과_연혁 contains candidate/regression visual evidence
+- Prior conversation recovery: Core 순서 두비→로리→잉크→노바→테이크→제로; Take 1번 외형을 Reference로 사용
+
+Superseded visual variants:
+- Nova rabbit
+- Zero polar bear
+- Ink cat-like substitution
+- Take turtle/panda confusion
+- Lori↔Nova swap
+
+Authority boundary:
+- Names/species/personality lineage = RECOVERED
+- Past generated visual images = candidate/regression evidence
+- Final six Visual IDs = still require 1:1 validation before image assets are treated as approved Golden Reference
