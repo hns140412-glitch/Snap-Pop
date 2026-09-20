@@ -178,3 +178,11 @@ Result:
 `RECOVERED_DIRECT + RECOVERED_CORROBORATED + RECOVERY_REQUIRED(PARTIAL PACK DETAILS)`
 
 This record does not claim that every inaccessible historical chat/image asset has been recovered.
+
+## 11. Archived package recovery follow-up — 2026-09-21
+- Archived package physically recovered: `GUIDE_길잡이_대화정리_첨부결과물_2026-09-06.zip`.
+- Separate manifest recovered: `FILE_MANIFEST_SHA256.csv`.
+- Visual history folder recovered: `04_캐릭터_시각결과_연혁`.
+- Invariant confirmed: `SUPERSEDED VISUAL != SUPERSEDED PERSONALITY`.
+- Personality Pack remains `PARTIAL / RECOVERY_REQUIRED` beyond directly recovered evidence.
+- Detailed artifact classification: `C2S/SNAP_EXPLORATION_CREW_VISUAL_LINEAGE_LEDGER_2026-09-21.md`.
