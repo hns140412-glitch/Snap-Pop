@@ -268,3 +268,24 @@ Snap은 전체 세션을 닫지 않는다.
 10. PWA 오프라인에서도 같은 규칙 파일을 사용하는가?
 
 이 MASTER가 과거 REV10/REV11/REV12의 Guide/길잡이/Guide Companion 관련 조항을 **용어·소유권·행동 규칙에 한해 승계 및 대체**한다. 그 외 UI/보상/성장/세션 규칙은 각 최신 MASTER를 계속 따른다.
+
+## 14. Source Evidence Ledger
+
+Primary recovered source: Google Drive sanitized transcript `P03_SANITIZED_6aa5d901-2c80-83e8-aaa2-3f6a57902a8a_연결 대화 재개` (Drive ID: `1GTnatAVOLpbac_qWakAhMdnIu1zkw1lthp2MY04RACY`).
+
+| User source node | User-confirmed material | Canonical disposition |
+|---|---|---|
+| 4338afbb-1fcf-4e27-a01b-0a61e4bd721e | 최대 20명, 기본 6명, 챕터/거점, 스페셜 흔적, 녹음 랜덤 조우, 능력 동일 | LOCKED; starter count superseded by latest 5~6 range only |
+| afb0abfd-f651-4692-a02f-f0980a0325ad | 직접/추천 이름, 발견 대원 랜덤 이름, 메인 변경 후 이름 유지, 이름 이력 | LOCKED |
+| 2426c93f-3b83-4892-adae-cc2767a99b31 | 스페셜 만남 주기 1주/2주 요소 | LOCKED concept; exact per-member cycle OPEN |
+| 9b2a70b6-689d-44a4-9b31-0f809b4e5245 | 성장하며 추가, 초반 과밀 금지, 거점 인원 역할 기준 산정 | LOCKED principle |
+| ebdc58b8-b231-46bd-8cc6-c3ecf906a7f1 | 6명 중 메인 선택, Snap 고정 5거점, 거점 정보원/한 줄 힌트, 탐험가+메인 동행 | LOCKED; starter number updated by latest 5~6 correction |
+| cffdd6fd-970f-4865-a801-0dad05f64654 | 현재 20명, 앱별 컨셉, 향후 추가 가능 | LOCKED |
+| 009f5687-9724-4ae5-9944-314483350417 | 스페셜 탐험대 12명 이하 | LOCKED MAX |
+| current conversation 2026-09-20 | 초기 5~6명 중 선택, 탐험대 규칙은 Snap & Pop 주도 | LATEST LOCKED |
+
+### Rejected as non-authoritative if unsupported by user correction
+- “초기 메인 3 + 거점 3”은 과거 assistant 제안이며 사용자 확정값으로 사용하지 않는다.
+- “스페셜 3~4명이 적당”은 과거 assistant 제안이며 상한 규칙으로 사용하지 않는다.
+- 거점 탐험대원 정확 인원은 아직 OPEN이다.
+- 20명의 전체 개별 종/이름/성격은 아직 확정되지 않았다.
