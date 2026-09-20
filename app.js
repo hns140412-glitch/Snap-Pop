@@ -32,6 +32,30 @@ function normalizeIdentity(x={}){
   const p=x.profile||{},g=x.guide||{};
   return {profile:{...IDENTITY_DEFAULT.profile,...p},guide:{...IDENTITY_DEFAULT.guide,...g}};
 }
+async function migrateLegacyState(){
+  const marker=await get("migration_20260920_state_v1");
+  if(marker)return;
+  const entries=[],records=await get("records")||[],events=await get("completionEvents")||{},expLedger=await get("expLedger")||[],legacyExp=Number(await get("exp")||0),active=await get("active");
+  let changedRecords=false;
+  records.forEach((r,i)=>{
+    if(!r.id){r.id=uid("record");changedRecords=true}
+    if(!r.completionEventId){r.completionEventId=`legacy_completion_${r.id}`;changedRecords=true}
+    if(!r.language){r.language="ko";changedRecords=true}
+    if(r.completionEventId&&!events[r.completionEventId])events[r.completionEventId]={at:r.date||new Date(0).toISOString(),recordId:r.id,legacy:true};
+  });
+  if(changedRecords)entries.push(["records",records]);
+  entries.push(["completionEvents",events]);
+  const ledgerTotal=expLedger.reduce((s,e)=>s+(Number(e.amount)||0),0);
+  if(legacyExp>ledgerTotal){
+    expLedger.unshift({eventId:"legacy_exp_baseline_20260920",type:"LEGACY_EXP_BASELINE",amount:legacyExp-ledgerTotal,at:new Date().toISOString(),legacy:true});
+    entries.push(["expLedger",expLedger],["exp",legacyExp]);
+  }else if(ledgerTotal>legacyExp){
+    entries.push(["exp",ledgerTotal]);
+  }
+  if(active&&!active.id){active.id=uid("explore_legacy");active.language=active.language||"ko";entries.push(["active",active])}
+  entries.push(["migration_20260920_state_v1",{at:new Date().toISOString(),records:records.length,legacyExp,ledgerTotalBefore:ledgerTotal}]);
+  await setMany(entries);
+}
 async function migrateIdentityFallback(){
   const existing=await get("identityFallback");
   if(existing)return normalizeIdentity(existing);
@@ -70,7 +94,7 @@ function calcExp(answers,completedCount,language="ko"){
 async function loadSettings(){const s=await get("settings")||{},asset=await get("characterSourceAsset"),identity=await resolvedIdentity();$("#autoRead").checked=!!s.autoRead;$("#reduceMotion").checked=!!s.reduceMotion;document.documentElement.classList.toggle("reduceMotion",!!s.reduceMotion);$("#characterSummary").textContent=identity.profile.name?`탐험가 · ${identity.profile.name}`:"Ready & Set 프로필 연동 대기";$("#guideSummary").textContent=`${identity.guide.type} · ${identity.guide.name}`;$("#characterName").value=identity.profile.name||"";$("#guideName").value=identity.guide.name||"루미";$("[data-guide-type]").forEach(b=>b.classList.toggle("on",b.dataset.guideType===identity.guide.type));if(asset?.originalProfilePhoto||identity.profile.photo){$("#profilePhotoPreview").hidden=false;$("#profilePhotoImage").src=asset?.originalProfilePhoto||identity.profile.photo;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":asset?.characterMasterId?"Character Master 연결됨":"로컬 인트로 프로필 · 통합 시 Ready & Set 우선"}else{$("#profilePhotoPreview").hidden=true;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":"로컬 인트로 프로필 없음"}}
 function promptFor(landmark,step,language="ko"){const bank=QUESTION_BANK[landmark]||QUESTION_BANK.idea;return (bank[language]||bank.ko)[Math.min(2,step)]}
 function setModeButtons(language){$("#modeKo")?.classList.toggle("on",language!=="en");$("#modeEn")?.classList.toggle("on",language==="en")}
-async function init(){await openDB();marks=await fetch("data/landmarks.json").then(r=>r.json());await migrateIdentityFallback();renderLandmarks();await loadSettings();await renderIdentityPresence();await updateStatus();renderRecords();renderGems();renderGrowth();await renderIncomingHandoff();renderSpecialInvite();const active=await get("active");if(active)renderExplore(active)}
+async function init(){await openDB();await migrateLegacyState();marks=await fetch("data/landmarks.json").then(r=>r.json());await migrateIdentityFallback();renderLandmarks();await loadSettings();await renderIdentityPresence();await updateStatus();renderRecords();renderGems();renderGrowth();await renderIncomingHandoff();renderSpecialInvite();const active=await get("active");if(active)renderExplore(active)}
 
 function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;$$(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await get("active"),g=await get("gems")||{};$("#selTitle").textContent=m.title;$("#selDesc").textContent=m.desc;$("#selProgress").textContent="진행 "+(a?.landmark===m.id?(Math.min(3,(a.step||0)+1)):0)+" / 3";$("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";$("#selection").hidden=false};host.appendChild(b)})}
 $("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active");if(!s||s.landmark!==selected.id)s={id:uid("explore"),landmark:selected.id,step:0,answers:["","",""],language:"ko",startedAt:new Date().toISOString()};if(!s.language)s.language="ko";await set("active",s);renderExplore(s);show("explore");if($("#autoRead").checked){const p=promptFor(s.landmark,s.step,s.language);speak(p[0]+" "+p[1],s.language)}}
