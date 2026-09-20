@@ -94,6 +94,9 @@ Machine-readable current matrix:
 Human audit:
 `C2S/SNAP_POP_FULL_IMPLEMENTATION_AUDIT_2026-09-21.md`
 
+Evidence-backed scorecard:
+`data/snap-pop-implementation-scorecard.json`
+
 Every meaningful status claim must distinguish:
 - `CODED`;
 - `STATIC_VERIFIED`;
@@ -105,8 +108,8 @@ Do not use plain `IMPLEMENTED` when these differ.
 ## 5. Full-scope implementation snapshot
 
 Current provisional estimate:
-- full product including expansion lineage: **CODED ~65%**
-- current ORIGINAL/core excluding FAMILY Expansion: **CODED ~79%**
+- full product including expansion lineage: **CODED ~67%**
+- current ORIGINAL/core excluding FAMILY Expansion: **CODED ~73.9%**
 - runtime verification: not closed
 - device verification: not established
 
