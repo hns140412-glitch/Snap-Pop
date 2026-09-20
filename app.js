@@ -36,15 +36,17 @@ function show(id){$$(".view").forEach(v=>v.classList.remove("active"));$("#"+id)
 function html(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function levelFromExp(exp){let level=1;for(let i=1;i<LEVEL_THRESHOLDS.length;i++){if(exp>=LEVEL_THRESHOLDS[i])level=i+1;else break}return Math.min(25,level)}
 function levelProgress(exp){const level=levelFromExp(exp);if(level>=25)return {level,within:1,remaining:0};const floor=LEVEL_THRESHOLDS[level-1],ceil=LEVEL_THRESHOLDS[level];return {level,within:Math.max(0,Math.min(1,(exp-floor)/(ceil-floor))),remaining:Math.max(0,ceil-exp)}}
-function calcExp(answers,completedCount){
+function calcExp(answers,completedCount,language="ko"){
   const text=answers.join(" ").trim(),len=text.length;
   const initial=completedCount<5?12:completedCount<15?7:3;
   const strengths=[];let mastery=0;
-  if(len>=80){mastery+=3;strengths.push("길게 이어 쓰기")}
-  if(len>=150){mastery+=3;strengths.push("생각 충분히 펼치기")}
-  if(/왜|이유|때문|느낌|기분|생각|아이디어|마음/.test(text)){mastery+=3;strengths.push("이유·감정·아이디어")}
-  if(/보이|들리|냄새|향|맛|촉감|따뜻|차갑|밝|어둡|장면|풍경|소리/.test(text)){mastery+=3;strengths.push("감각·장면")}
-  if(/[.!?。！？]/.test(text)){mastery+=2;strengths.push("문장 나누기")}
+  if(len>=80){mastery+=3;strengths.push(language==="en"?"writing longer":"길게 이어 쓰기")}
+  if(len>=150){mastery+=3;strengths.push(language==="en"?"expanding an idea":"생각 충분히 펼치기")}
+  const reason=language==="en"?/because|think|feel|idea|reason|so/i:/왜|이유|때문|느낌|기분|생각|아이디어|마음/;
+  const sensory=language==="en"?/see|saw|hear|heard|sound|smell|taste|touch|warm|cold|bright|dark|scene/i:/보이|들리|냄새|향|맛|촉감|따뜻|차갑|밝|어둡|장면|풍경|소리/;
+  if(reason.test(text)){mastery+=3;strengths.push(language==="en"?"reason·feeling·idea":"이유·감정·아이디어")}
+  if(sensory.test(text)){mastery+=3;strengths.push(language==="en"?"sensory detail":"감각·장면")}
+  if(/[.!?。！？]/.test(text)){mastery+=2;strengths.push(language==="en"?"sentence control":"문장 나누기")}
   mastery=Math.min(14,mastery);
   return {total:34+initial+mastery,base:34,initial,mastery,strengths};
 }
@@ -68,9 +70,9 @@ $("#nextBtn").onclick=async()=>{
   const completionEventId=s.completionEventId||`completion_${s.id}`;
   if(events[completionEventId]){await set("active",null);toast("이미 기록된 탐험이에요.");show("growth");return}
   const records=await get("records")||[];
-  const expAward=calcExp(s.answers,records.length);
+  const expAward=calcExp(s.answers,records.length,s.language||"ko");
   const now=new Date().toISOString();
-  const record={id:uid("record"),completionEventId,landmark:s.landmark,answers:[...s.answers],date:now,expAward:expAward.total,strengths:expAward.strengths};
+  const record={id:uid("record"),completionEventId,landmark:s.landmark,language:s.language||"ko",answers:[...s.answers],date:now,expAward:expAward.total,strengths:expAward.strengths};
   records.unshift(record);
   const gems=await get("gems")||{},beforeShard=gems[s.landmark]||0;gems[s.landmark]=beforeShard+1;
   const expLedger=await get("expLedger")||[];
@@ -90,6 +92,7 @@ function speak(t,language="ko"){if(!("speechSynthesis"in window))return toast("�
 $("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0);s.answers[i]=$("#answer").value;s.updatedAt=new Date().toISOString();await set("active",s)});
 function currentBridgeContext(){try{return window.SnapPopBridge?.context?.()||{}}catch{return {}}}
 async function renderIncomingHandoff(){const ctx=currentBridgeContext();const box=$("#handoffWord");if(!box)return;if(ctx.word){box.hidden=false;box.textContent=`Hide & Seek에서 찾은 단어 · ${ctx.word}${ctx.word_context?" · "+ctx.word_context:""}`}else box.hidden=true}
+window.addEventListener("snap-pop:bridge-ready",renderIncomingHandoff);
 function cloudFragments(text){const t=(text||"").trim();const out=[];if(t)out.push(`장면: ${t.slice(0,32)}`);out.push("어디에서 일어났을까?","그때 어떤 기분이었을까?","무엇이 보이거나 들렸을까?","왜 그렇게 생각했을까?");return [...new Set(out)].slice(0,5)}
 $("#cloudBtn").onclick=()=>{const panel=$("#cloudPanel"),chips=$("#cloudChips"),frags=cloudFragments($("#answer").value);chips.innerHTML=frags.map(x=>`<button type="button">${html(x)}</button>`).join("");panel.hidden=false;chips.onclick=e=>{const b=e.target.closest("button");if(!b)return;toast("좋아. 그 힌트를 참고해서 네 문장으로 이어가봐.")}};
 $("#cloudClose").onclick=()=>$("#cloudPanel").hidden=true;
@@ -102,7 +105,7 @@ async function renderRecords(){
   if(!db)return;
   const r=await get("records")||[], special=await get("specialMemories")||[];
   renderCalendar(r,special);
-  const normalCards=r.map(x=>{const m=marks.find(z=>z.id===x.landmark);const strengths=(x.strengths||[]).slice(0,3).map(html).join(" · ");return `<article class="card" data-record-date="${x.date}"><b>${m?.title||"탐험"}</b><p>${x.answers.map(html).join(" ")}</p>${strengths?`<span class="kicker">오늘 발견한 글쓰기 힘 · ${strengths}</span><br>`:""}<span class="kicker">${new Date(x.date).toLocaleDateString("ko-KR")} · +${x.expAward||0} EXP</span></article>`});
+  const normalCards=r.map(x=>{const m=marks.find(z=>z.id===x.landmark);const strengths=(x.strengths||[]).slice(0,3).map(html).join(" · ");return `<article class="card" data-record-date="${x.date}"><b>${m?.title||"탐험"}${x.language==="en"?" · English":""}</b><p>${x.answers.map(html).join(" ")}</p>${strengths?`<span class="kicker">오늘 발견한 글쓰기 힘 · ${strengths}</span><br>`:""}<span class="kicker">${new Date(x.date).toLocaleDateString("ko-KR")} · +${x.expAward||0} EXP</span></article>`});
   const specialCards=special.map(x=>`<article class="card specialMemory" data-record-date="${x.at}"><b>특별 탐험</b><p><strong>${html(x.prompt)}</strong><br>${html(x.text)}</p><span class="kicker">${new Date(x.at).toLocaleDateString("ko-KR")} · 선택 기록 · 보상/실패 없음</span></article>`);
   const all=[...normalCards,...specialCards];
   $("#recordList").innerHTML=all.length?all.join(""):'<article class="card"><b>첫 기록을 기다리고 있어요.</b><p>지도에서 탐험지를 골라 시작해봐요.</p></article>';
