@@ -278,3 +278,5 @@ Authority boundary:
 - **OPEN_CORRECTION_CHECK:** 로리 영문 표기 `Tori` vs current canonical `Lori`
 - **OPEN_SEMANTICS:** 6~13세 표기의 의미
 - **FALSE_CONVERGENCE GUARD:** 현재 six Personality Slots와 Core 6를 의미 유사성만으로 1:1 고정 매핑하지 않는다.
+
+- **Architecture disposition:** current six Personality Slots = **Behavior Archetype / Interaction Mode**, not Character Identity. No fixed Core 6 ↔ Slot 1:1 mapping.
