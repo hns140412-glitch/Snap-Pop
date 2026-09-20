@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const BRIDGE_VERSION = '2026.09.10-c';
+  const BRIDGE_VERSION = '2026.09.20-a';
   const CONTEXT_KEY = 'snap_pop_shared_context_v1';
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
   const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','target_time_ms','session_start_at','paused_at','issue_ms'];
@@ -83,12 +83,22 @@
 
   function returnToBase(taskState = 'PARTIAL', payload = {}) {
     const normalized = ['COMPLETED','PARTIAL','BLOCKED','HELP_NEEDED'].includes(taskState) ? taskState : 'PARTIAL';
-    const event = emit(
-      normalized === 'COMPLETED' ? 'TASK_COMPLETED' :
-      normalized === 'BLOCKED' ? 'TASK_BLOCKED' :
-      normalized === 'HELP_NEEDED' ? 'HELP_NEEDED' : 'TASK_PARTIAL',
-      payload
-    );
+    let event;
+    if (normalized === 'COMPLETED' && context.completion_event_id) {
+      event = { event_id: context.completion_event_id };
+    } else {
+      event = emit(
+        normalized === 'COMPLETED' ? 'TASK_COMPLETED' :
+        normalized === 'BLOCKED' ? 'TASK_BLOCKED' :
+        normalized === 'HELP_NEEDED' ? 'HELP_NEEDED' : 'TASK_PARTIAL',
+        payload
+      );
+      if (normalized === 'COMPLETED') {
+        context.completion_event_id = event.event_id;
+        context.task_completed = true;
+        persistContext(context);
+      }
+    }
     const url = safeReturnUrl(normalized, event.event_id);
     if (url) location.assign(url);
     else toast('베이스캠프 연결 주소가 없어요. 현재 표현 기록은 이 기기에 남아 있어요.');
@@ -167,12 +177,13 @@
       if (completedNow && context.session_id && context.task_id) {
         context.task_completed = true;
         context.completed_at = iso();
-        persistContext(context);
-        emit('TASK_COMPLETED', {
+        const resultEvent = emit('TASK_COMPLETED', {
           landmark: before.landmark || null,
           used_handoff_word: context.word || null,
           child_authored: true
         });
+        context.completion_event_id = resultEvent.event_id;
+        persistContext(context);
         ensureBaseCampChip();
       }
     };
@@ -207,6 +218,20 @@
     wrapCompletion();
     cleanIncomingQuery();
     if (context.session_id && context.task_id) emit('APP_ENTERED', { from_app: context.from_app || null, word: context.word || null });
+    window.addEventListener('snap-pop:task-completed', event => {
+      if (!(context.session_id && context.task_id) || context.task_completed) return;
+      const resultEvent = emit('TASK_COMPLETED', {
+        ...(event.detail || {}),
+        used_handoff_word: context.word || null,
+        child_authored: true
+      });
+      context.task_completed = true;
+      context.completed_at = iso();
+      context.completion_event_id = resultEvent.event_id;
+      persistContext(context);
+      ensureBaseCampChip();
+    });
+
     window.SnapPopBridge = Object.freeze({
       version: BRIDGE_VERSION,
       context: () => ({ ...context }),
