@@ -78,7 +78,7 @@ function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","r
 function setMany(entries){return new Promise((ok,no)=>{const tx=db.transaction("state","readwrite"),store=tx.objectStore("state");entries.forEach(([k,v])=>store.put(v,k));tx.oncomplete=()=>ok();tx.onerror=()=>no(tx.error);tx.onabort=()=>no(tx.error)})}
 async function ensureCrewRegistry(){
   const registry=await get("crewRegistry")||{},identity=await resolvedIdentity();
-  for(const [id,rule] of Object.entries(SNAP_RULES?.members||{})){
+  for(const [id,rule] of Object.entries(SNAP_RULES?.definedCharacterLineages||SNAP_RULES?.members||{})){
     registry[id]=registry[id]||{memberId:id,firstName:rule.defaultName||"",currentName:rule.defaultName||"",nameHistory:[],affinity:{levelKey:"OPEN",scoreInternal:0},memories:[],firstMetAt:null,lastMetAt:null,encounterStatus:"STARTER_AVAILABLE"};
   }
   const current=identity.crewMember?.type;
@@ -92,7 +92,7 @@ async function ensureCrewRegistry(){
   return registry;
 }
 async function selectCrewMember(memberId){
-  const rule=SNAP_RULES?.members?.[memberId];if(!rule)return;
+  const pool=SNAP_RULES?.definedCharacterLineages||SNAP_RULES?.members||{},rule=pool[memberId];if(!rule)return;
   const registry=await ensureCrewRegistry(),entry=registry[memberId];
   const identity=await resolvedIdentity();
   identity.crewMember={...identity.crewMember,type:memberId,name:entry.currentName||entry.firstName||rule.defaultName||"모카"};
@@ -137,22 +137,25 @@ async function loadSettings(){const s=await get("settings")||{},asset=await get(
 async function renderCrewRoster(){
   if(!SNAP_RULES?.roster)return;
   const identity=await resolvedIdentity(),roster=SNAP_RULES.roster,encounters=await get("crewEncounters")||{};
-  const starter=$("#starterCrewRoster"),world=$("#worldCrewRoster"),special=$("#specialCrewRoster");
+  const starter=$("#starterCrewRoster"),runtime=$("#runtimeCrewRoster"),world=$("#worldCrewRoster"),special=$("#specialCrewRoster");
   if(starter){
-    const slots=roster.starter?.slots||[],min=roster.starter?.minCandidates||5,max=roster.starter?.maxCandidates||6;
-    const defined=slots.filter(x=>x.memberId&&SNAP_RULES.members?.[x.memberId]);
-    const cards=defined.map(x=>{const m=SNAP_RULES.members[x.memberId],on=identity.crewMember.type===x.memberId;return `<button type="button" class="crewRosterCard ${on?"on":""}" data-crew-member-id="${x.memberId}"><b>${html(m.label)}</b><span>${html(m.personality||"")}</span></button>`});
-    const requiredGap=Math.max(0,min-defined.length),optionalGap=Math.max(0,max-Math.max(min,defined.length));
-    for(let i=0;i<requiredGap;i++)cards.push('<button type="button" class="crewRosterCard unassigned" disabled><b>추가 시작 대원 필요</b><span>원자료/사용자 확정 전 임의 생성 금지</span></button>');
-    for(let i=0;i<optionalGap;i++)cards.push('<button type="button" class="crewRosterCard unassigned" disabled><b>후보 확장 슬롯</b><span>5~6명 범위 내 OPEN</span></button>');
-    starter.innerHTML=cards.join("");
-    starter.onclick=async e=>{const b=e.target.closest("[data-crew-member-id]");if(!b)return;const id=b.dataset.crewMemberId,rule=SNAP_RULES.members?.[id];if(!rule)return;const next=await selectCrewMember(id);$("#crewMemberName").value=next.crewMember.name;$("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""}`;await renderIdentityPresence();await renderCrewRoster()};
+    const slots=roster.starter?.personalitySlots||[];
+    starter.innerHTML=slots.map((x,i)=>`<div class="crewRosterCard unassigned"><b>${i+1}. ${html(x.archetype||"OPEN")}</b><span>${html((x.traits||[]).join(" · "))} · 종족/외형 OPEN</span></div>`).join("");
   }
-  if(world)world.innerHTML='<div class="crewRosterCard unassigned"><b>거점 탐험대원 · 인원 OPEN</b><span>앱별 거점/지역 역할을 계산한 뒤 필요한 수를 확정합니다.</span></div>';
+  if(runtime){
+    const pool=SNAP_RULES.definedCharacterLineages||{};
+    runtime.innerHTML=Object.entries(pool).map(([id,m])=>{const on=identity.crewMember.type===id;return `<button type="button" class="crewRosterCard ${on?"on":""}" data-crew-member-id="${id}"><b>${html(m.label)}</b><span>${html(m.personality||"")} · 임시 런타임 계보</span></button>`}).join("");
+    runtime.onclick=async e=>{const b=e.target.closest("[data-crew-member-id]");if(!b)return;const id=b.dataset.crewMemberId,pool=SNAP_RULES.definedCharacterLineages||{},rule=pool[id];if(!rule)return;const next=await selectCrewMember(id);$("#crewMemberName").value=next.crewMember.name;$("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""}`;await renderIdentityPresence();await renderCrewRoster()};
+  }
+  if(world){
+    const working=roster.worldRegion?.laterDesignBoardCount;
+    world.innerHTML=`<div class="crewRosterCard unassigned"><b>세계·거점 탐험대원 · 인원 OPEN</b><span>역할 수를 먼저 계산 · 설계판 ${working||"OPEN"}명은 WORKING 값</span></div>`;
+  }
   if(special){
-    const max=roster.special?.maximumCapacity||12,defined=roster.special?.definedMembers||[],cards=[];
-    for(const id of defined){const state=encounters[id]?.status||"UNDISCOVERED",m=SNAP_RULES.members?.[id],selectable=state==="SELECTABLE_MAIN";cards.push(`<button type="button" class="crewRosterCard ${selectable?"":"locked"}" ${selectable?`data-crew-member-id="${id}"`:"disabled"}><b>${html(m?.label||id)}</b><span>${selectable?"첫 만남 완료 · 메인 선택 가능":"아직 선택 불가 · 만남 필요"}</span></button>`)}
-    for(let i=defined.length;i<max;i++)cards.push(`<div class="crewRosterCard locked"><b>스페셜 슬롯 ${String(i+1).padStart(2,"0")}</b><span>정체성 OPEN · 흔적/만남 전 과도한 노출 금지</span></div>`);
+    const max=roster.special?.hardMaximum||12,working=roster.special?.laterDesignBoardCount||0;
+    const known=Object.entries(encounters).filter(([,v])=>v&&v.status&&v.status!=="UNDISCOVERED");
+    const cards=known.map(([id,v])=>`<div class="crewRosterCard ${v.status==="SELECTABLE"?"":"locked"}"><b>${html(id)}</b><span>${html(v.status)} · 실제 만남 이력</span></div>`);
+    cards.push(`<div class="crewRosterCard unassigned"><b>스페셜 규모 OPEN</b><span>WORKING ${working||"OPEN"}명 · 최대 ${max}명 이하 · Encounter Gimmick 우선</span></div>`);
     special.innerHTML=cards.join("");
   }
 }
