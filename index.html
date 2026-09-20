@@ -25,6 +25,11 @@
 </section>
 <section id="records" class="view parchment">
  <header class="pageTitle"><span>나의 탐험 기록</span><h1>기록</h1><p>완료한 탐험과 기억이 한 권의 탐험일지처럼 쌓여요.</p></header>
+ <article class="calendarCard">
+  <div class="calendarHead"><button class="soft mini" id="calPrev" aria-label="이전 달">←</button><b id="calTitle">탐험 달력</b><button class="soft mini" id="calNext" aria-label="다음 달">→</button></div>
+  <div class="weekRow"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+  <div id="calendarGrid" class="calendarGrid"></div>
+ </article>
  <div id="recordList" class="cards"></div>
 </section>
 <section id="explore" class="view parchment">
@@ -41,6 +46,17 @@
  </article>
  <button class="primary wide" id="nextBtn">다음 단계</button>
 </section>
+<section id="result" class="view parchment subflow">
+ <button class="back" id="resultBack">← 지도</button>
+ <header class="pageTitle"><span>탐험 완료</span><h1 id="resultTitle">오늘의 탐험</h1><p>네가 남긴 생각과 오늘 발견한 글쓰기 힘을 확인해봐요.</p></header>
+ <article class="resultCard">
+  <div class="resultReward"><strong id="resultExp">+0 EXP</strong><span id="resultGem">보석 조각 +1</span></div>
+  <h2 id="resultDraft">네 글이 여기에 보여요.</h2>
+  <div id="resultStrengths" class="strengths"></div>
+ </article>
+ <button class="primary wide" id="resultRecords">기록에서 보기</button>
+ <button class="soft wide resultSecondary" id="resultGrowth">성장 확인하기</button>
+</section>
 <section id="gems" class="view parchment">
  <header class="pageTitle"><span>탐험의 흔적</span><h1>보석함</h1><p>승인된 MASTER GEM ASSET은 원본 연결 전까지 새 디자인으로 대체하지 않아요.</p></header>
  <div class="gemHold"><div class="gemVoid"></div><div><b>MASTER GEM ASSET</b><span>기존 승인 원본 연결 대기</span></div></div>
@@ -55,6 +71,7 @@
   <div class="exp"><i id="expBar"></i></div><p id="expText">EXP 0</p>
  </div>
  <button class="soft wide" id="historyBtn">성장 기록 보기</button>
+ <div id="growthTimeline" class="timeline" hidden></div>
 </section>
 <section id="shop" class="view parchment subflow">
  <button class="back" data-back="gems">← 보석함으로</button>
