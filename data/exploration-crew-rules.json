@@ -1,5 +1,6 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R2",
+  "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
     "crew": "탐험대",
@@ -9,26 +10,125 @@
   "ownership": {
     "profile": "READY_SET_SHARED_WHEN_CONNECTED",
     "explorationCrew": "SNAP_POP_OWNED",
-    "crewBehaviorRules": "SNAP_POP_OWNED"
+    "crewBehaviorRules": "SNAP_POP_OWNED",
+    "readySetSessionTimer": "READY_SET_OWNED",
+    "hideSeekVocabularyMemory": "HIDE_SEEK_OWNED"
   },
-  "principles": {
+  "invariants": {
     "childAuthored": true,
     "crewMemberNeverWritesFinalAnswer": true,
     "fiveLandmarksAlwaysFree": true,
     "noFailurePenalty": true,
     "specialExplorationOptional": true,
-    "tone": "친절 + 장난 + 위트 + 약간의 시크함/엉뚱함",
-    "loop": [
-      "생각 꺼내기",
-      "생각 넓히기",
-      "표현 완성하기"
+    "noFunctionalAdvantageByMember": true,
+    "memberChangeMustPreserveProgress": true,
+    "appSwitchIsNotPause": true
+  },
+  "interventionLadder": [
+    "OBSERVE",
+    "SHORT_REACTION",
+    "ASK",
+    "HINT",
+    "WAIT",
+    "MINIMAL_REASK",
+    "CHILD_EXPRESSES"
+  ],
+  "forbidden": [
+    "FINAL_ANSWER_AUTHORING",
+    "GRADING",
+    "SYSTEM_AI_TONE",
+    "MOCK_CHILD",
+    "OVERPRAISE",
+    "FUNCTIONAL_REWARD_BIAS",
+    "SESSION_TIMER_OWNERSHIP",
+    "VOCABULARY_AUTHORITY_DUPLICATION"
+  ],
+  "tone": {
+    "base": [
+      "친절",
+      "위트",
+      "장난기",
+      "약간의 시크함/엉뚱함"
     ],
-    "intervention": {
-      "observeBeforeHelping": true,
-      "askBeforeExplaining": true,
-      "hintBeforeAnswer": true,
-      "stopBeforeFinalSentence": true,
-      "preserveExplorerVoice": true
+    "jokeTargets": [
+      "상황",
+      "탐험 세계",
+      "탐험대원 자신"
+    ],
+    "neverJokeTargets": [
+      "탐험가의 실수",
+      "성취 수준",
+      "감정",
+      "언어 능력",
+      "외모/정체성"
+    ]
+  },
+  "loop": [
+    "생각 꺼내기",
+    "생각 넓히기",
+    "표현 완성하기"
+  ],
+  "landmarks": {
+    "idea": {
+      "name": "아이디어 동굴",
+      "purpose": "소재 발견·연결·다음 가능성"
+    },
+    "emotion": {
+      "name": "감정 호수",
+      "purpose": "감정 인식·이유·마음의 변화"
+    },
+    "description": {
+      "name": "묘사 숲",
+      "purpose": "오감·장면·구체화"
+    },
+    "viewpoint": {
+      "name": "관점 전망대",
+      "purpose": "다른 입장·방향·이유"
+    },
+    "final": {
+      "name": "마무리 캠프",
+      "purpose": "핵심 유지·순서·제목·끝맺음·수정"
+    }
+  },
+  "surfaces": {
+    "home": {
+      "memberPresence": true,
+      "persistentLargeSpeechBubble": false
+    },
+    "landmark": {
+      "previewReaction": true,
+      "showProgress": true,
+      "showGemProgress": true
+    },
+    "explore": {
+      "memberReaction": true,
+      "placePurposeWinsOverPersona": true
+    },
+    "imaginationCloud": {
+      "fragmentsOnly": true,
+      "finalSentence": false
+    },
+    "result": {
+      "evaluation": false,
+      "affirmAuthorship": true
+    },
+    "bonus": {
+      "optional": true,
+      "expAward": 0
+    },
+    "growth": {
+      "singleTree": true,
+      "memberPresence": true
+    },
+    "special": {
+      "optional": true,
+      "noPenalty": true,
+      "eventMemory": true
+    },
+    "settings": {
+      "memberSelectable": true,
+      "nameEditable": true,
+      "personalityPreview": true
     }
   },
   "members": {
