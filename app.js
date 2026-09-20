@@ -153,7 +153,8 @@ async function renderCrewRoster(){
     };
   }
   if(world){
-    world.innerHTML=(roster.worldRegion?.slots||[]).map(slot=>`<div class="crewRosterCard unassigned"><b>${slot.slotId}</b><span>거점 탐험대원 · 정체성 OPEN · 한 줄 힌트 역할</span></div>`).join("");
+    const slots=roster.worldRegion?.slots||[];
+    world.innerHTML=slots.length?slots.map(slot=>`<div class="crewRosterCard unassigned"><b>${slot.slotId}</b><span>거점 탐험대원 · 정체성 OPEN · 한 줄 힌트 역할</span></div>`).join(""):`<div class="crewRosterCard unassigned"><b>거점 탐험대원 · 인원 OPEN</b><span>고정 5거점의 역할을 먼저 계산한 뒤 인원·정체성을 확정해요. 거점당 1명 고정 규칙은 없어요.</span></div>`;
   }
   if(special){
     special.innerHTML=(roster.special?.reservedSlots||[]).map(slot=>{
