@@ -33,7 +33,7 @@ function normalizeIdentity(x={}){
   const p=x.profile||{},legacy=x.guide||{},member=x.crewMember||legacy,type=normalizeCrewType(member.type);
   return {profile:{...IDENTITY_DEFAULT.profile,...p},crewMember:{...IDENTITY_DEFAULT.crewMember,...member,type},explorationCrewRulesVersion:SNAP_RULES?.version||x.explorationCrewRulesVersion||"PENDING"};
 }
-function crewMemberRule(identity){const type=normalizeCrewType(identity?.crewMember?.type);return SNAP_RULES?.members?.[type]||SNAP_RULES?.members?.maltipoo||{label:"탐험대원",defaultName:"모카",home:"같이 가자.",reactions:{},behavior:{}}}
+function crewMemberRule(identity){const type=normalizeCrewType(identity?.crewMember?.type),pool=SNAP_RULES?.definedCharacterLineages||SNAP_RULES?.members||{};return pool[type]||pool.maltipoo||{label:"탐험대원",defaultName:"모카",home:"같이 가자.",reactions:{},behavior:{}}}
 function crewReaction(identity,landmark){return crewMemberRule(identity).reactions?.[landmark]||"한 조각씩 같이 찾아보자."}
 function crewMemberName(identity){return identity?.crewMember?.name||crewMemberRule(identity).defaultName||"모카"}
 async function migrateLegacyState(){
