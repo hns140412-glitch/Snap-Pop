@@ -110,12 +110,36 @@
  <header class="pageTitle"><span>나의 바람</span><h1>탐험가의 소원 상점</h1></header>
  <article class="wish"><div><b>가족과 주말 영화 보기</b><span>완성 보석 2개</span></div><button id="useWish" class="soft">소원 사용하기</button></article>
  <article id="blessing" class="paper" hidden><span class="kicker">마지막 확인</span><h2>축복 사용하기</h2><p>완성 보석 2개를 사용해 이 소원을 확정할까요?</p><button class="primary wide" id="confirmBlessing">축복 사용하기</button></article>
+ <button class="soft wide resultSecondary" id="wishHistoryBtn">소원 사용 내역</button>
+ <div id="wishHistoryList" class="timeline" hidden></div>
+</section>
+<section id="recordEdit" class="view parchment subflow">
+ <button class="back" id="recordEditBack">← 기록</button>
+ <header class="pageTitle"><span>원문 보존 편집</span><h1>기록 다듬기</h1><p>처음 쓴 글은 지우지 않고 보존해요. 수정본은 새 버전으로 남습니다.</p></header>
+ <article class="paper">
+  <span class="kicker" id="recordEditMeta"></span>
+  <textarea id="recordEditText" placeholder="수정할 글을 입력해요."></textarea>
+  <button class="primary wide" id="recordEditSave">수정본 저장</button>
+ </article>
+ <div id="recordRevisionList" class="timeline"></div>
 </section>
 <section id="settings" class="view parchment subflow">
  <button class="back" id="settingsBack">← 돌아가기</button>
  <header class="pageTitle"><span>탐험 준비</span><h1>설정</h1></header>
- <div class="setting"><div><b>내 캐릭터</b><span>Character Master 기록 보존</span></div><button class="soft" id="characterBtn">관리</button></div>
- <div class="setting"><div><b>나의 길잡이</b><span>말티푸 · 모카</span></div><button class="soft" id="guideBtn">이름 바꾸기</button></div>
+ <div class="setting"><div><b>내 캐릭터</b><span id="characterSummary">Character Master 기록 보존</span></div><button class="soft" id="characterBtn">관리</button></div>
+ <article id="characterPanel" class="paper settingPanel" hidden>
+  <span class="kicker">승인 자산은 변경하지 않음</span>
+  <h2>캐릭터 표시 이름</h2>
+  <input id="characterName" class="textInput" maxlength="20" placeholder="탐험가 이름">
+  <button class="primary wide" id="characterSave">저장</button>
+ </article>
+ <div class="setting"><div><b>나의 길잡이</b><span id="guideSummary">말티푸 · 모카</span></div><button class="soft" id="guideBtn">이름 바꾸기</button></div>
+ <article id="guidePanel" class="paper settingPanel" hidden>
+  <span class="kicker">외형/캐릭터 계보 유지</span>
+  <h2>길잡이 이름</h2>
+  <input id="guideName" class="textInput" maxlength="20" placeholder="모카">
+  <button class="primary wide" id="guideSave">저장</button>
+ </article>
  <div class="setting"><div><b>질문 읽어주기</b><span>6세 음성 접근성</span></div><label class="toggle"><input id="autoRead" type="checkbox"><i></i></label></div>
  <div class="setting"><div><b>움직임 줄이기</b><span>화면 효과 최소화</span></div><label class="toggle"><input id="reduceMotion" type="checkbox"><i></i></label></div>
 </section>
