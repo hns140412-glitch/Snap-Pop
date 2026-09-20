@@ -14,7 +14,7 @@ function get(k){return new Promise(ok=>{const r=db.transaction("state").objectSt
 function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>ok();r.onerror=()=>no(r.error)})}
 function setMany(entries){return new Promise((ok,no)=>{const tx=db.transaction("state","readwrite"),store=tx.objectStore("state");entries.forEach(([k,v])=>store.put(v,k));tx.oncomplete=()=>ok();tx.onerror=()=>no(tx.error);tx.onabort=()=>no(tx.error)})}
 function toast(t){$("#toast").textContent=t;$("#toast").classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>$("#toast").classList.remove("show"),1800)}
-function show(id){$$(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");const sub=["settings","shop","result"].includes(id);$("#nav").hidden=sub;if(!sub)lastMain=id;$$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.view===id));scrollTo(0,0);if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="result")renderLastResult()}
+function show(id){$$(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");const sub=["settings","shop","result","special"].includes(id);$("#nav").hidden=sub;if(!sub)lastMain=id;$$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.view===id));scrollTo(0,0);if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="result")renderLastResult()}
 function html(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function levelFromExp(exp){let level=1;for(let i=1;i<LEVEL_THRESHOLDS.length;i++){if(exp>=LEVEL_THRESHOLDS[i])level=i+1;else break}return Math.min(25,level)}
 function levelProgress(exp){const level=levelFromExp(exp);if(level>=25)return {level,within:1,remaining:0};const floor=LEVEL_THRESHOLDS[level-1],ceil=LEVEL_THRESHOLDS[level];return {level,within:Math.max(0,Math.min(1,(exp-floor)/(ceil-floor))),remaining:Math.max(0,ceil-exp)}}
@@ -31,7 +31,7 @@ function calcExp(answers,completedCount){
   return {total:34+initial+mastery,base:34,initial,mastery,strengths};
 }
 async function loadSettings(){const s=await get("settings")||{};$("#autoRead").checked=!!s.autoRead;$("#reduceMotion").checked=!!s.reduceMotion;document.documentElement.classList.toggle("reduceMotion",!!s.reduceMotion)}
-async function init(){await openDB();marks=await fetch("data/landmarks.json").then(r=>r.json());renderLandmarks();await loadSettings();await updateStatus();renderRecords();renderGems();renderGrowth();const active=await get("active");if(active)renderExplore(active)}
+async function init(){await openDB();marks=await fetch("data/landmarks.json").then(r=>r.json());renderLandmarks();await loadSettings();await updateStatus();renderRecords();renderGems();renderGrowth();await renderIncomingHandoff();renderSpecialInvite();const active=await get("active");if(active)renderExplore(active)}
 
 function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;$$(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await get("active"),g=await get("gems")||{};$("#selTitle").textContent=m.title;$("#selDesc").textContent=m.desc;$("#selProgress").textContent="진행 "+(a?.landmark===m.id?(Math.min(3,(a.step||0)+1)):0)+" / 3";$("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";$("#selection").hidden=false};host.appendChild(b)})}
 $("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active");if(!s||s.landmark!==selected.id)s={id:uid("explore"),landmark:selected.id,step:0,answers:["","",""],startedAt:new Date().toISOString()};await set("active",s);renderExplore(s);show("explore");if($("#autoRead").checked)speak(STEPS[s.step][1]+" "+STEPS[s.step][2])}
@@ -67,22 +67,27 @@ $("#nextBtn").onclick=async()=>{
 
 function speak(t){if(!("speechSynthesis"in window))return toast("이 브라우저에서는 읽어주기를 지원하지 않아요.");speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ko-KR";speechSynthesis.speak(u)}
 $("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0);s.answers[i]=$("#answer").value;s.updatedAt=new Date().toISOString();await set("active",s)});
+function currentBridgeContext(){try{return window.SnapPopBridge?.context?.()||{}}catch{return {}}}
+async function renderIncomingHandoff(){const ctx=currentBridgeContext();const box=$("#handoffWord");if(!box)return;if(ctx.word){box.hidden=false;box.textContent=`Hide & Seek에서 찾은 단어 · ${ctx.word}${ctx.word_context?" · "+ctx.word_context:""}`}else box.hidden=true}
+function cloudFragments(text){const t=(text||"").trim();const out=[];if(t)out.push(`장면: ${t.slice(0,32)}`);out.push("어디에서 일어났을까?","그때 어떤 기분이었을까?","무엇이 보이거나 들렸을까?","왜 그렇게 생각했을까?");return [...new Set(out)].slice(0,5)}
+$("#cloudBtn").onclick=()=>{const panel=$("#cloudPanel"),chips=$("#cloudChips"),frags=cloudFragments($("#answer").value);chips.innerHTML=frags.map(x=>`<button type="button">${html(x)}</button>`).join("");panel.hidden=false;chips.onclick=e=>{const b=e.target.closest("button");if(!b)return;toast("좋아. 그 힌트를 참고해서 네 문장으로 이어가봐.")}};
+$("#cloudClose").onclick=()=>$("#cloudPanel").hidden=true;
 $("#listenBtn").onclick=async()=>{const s=await get("active");speak(STEPS[s?.step||0][1]+" "+STEPS[s?.step||0][2])}
 $("#voiceBtn").onclick=()=>{const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return toast("이 브라우저에서는 음성 인식을 지원하지 않아요.");const r=new R();r.lang="ko-KR";r.interimResults=false;$("#voiceBtn").textContent="듣고 있어요";r.onresult=e=>$("#answer").value+=(($("#answer").value?" ":"")+e.results[0][0].transcript);r.onend=()=>$("#voiceBtn").innerHTML='<img src="assets/icons/radio.svg" alt="">말해서 쓰기';r.start()}
 
 async function renderRecords(){
   if(!db)return;
-  const r=await get("records")||[];
-  renderCalendar(r);
+  const r=await get("records")||[], special=await get("specialMemories")||[];
+  renderCalendar(r,special);
   $("#recordList").innerHTML=r.length?r.map(x=>{const m=marks.find(z=>z.id===x.landmark);const strengths=(x.strengths||[]).slice(0,3).map(html).join(" · ");return `<article class="card" data-record-date="${x.date}"><b>${m?.title||"탐험"}</b><p>${x.answers.map(html).join(" ")}</p>${strengths?`<span class="kicker">오늘 발견한 글쓰기 힘 · ${strengths}</span><br>`:""}<span class="kicker">${new Date(x.date).toLocaleDateString("ko-KR")} · +${x.expAward||0} EXP</span></article>`}).join(""):'<article class="card"><b>첫 기록을 기다리고 있어요.</b><p>지도에서 탐험지를 골라 시작해봐요.</p></article>';
 }
-function renderCalendar(records){
+function renderCalendar(records,special=[]){
   const y=calendarCursor.getFullYear(),m=calendarCursor.getMonth(),first=new Date(y,m,1),days=new Date(y,m+1,0).getDate(),offset=first.getDay();
   $("#calTitle").textContent=`${y}년 ${m+1}월`;
-  const count={};records.forEach(r=>{const d=new Date(r.date);if(d.getFullYear()===y&&d.getMonth()===m)count[d.getDate()]=(count[d.getDate()]||0)+1});
+  const count={},specialCount={};records.forEach(r=>{const d=new Date(r.date);if(d.getFullYear()===y&&d.getMonth()===m)count[d.getDate()]=(count[d.getDate()]||0)+1});special.forEach(r=>{const d=new Date(r.at);if(d.getFullYear()===y&&d.getMonth()===m)specialCount[d.getDate()]=(specialCount[d.getDate()]||0)+1});
   const today=new Date();let cells="";
   for(let i=0;i<offset;i++)cells+='<button class="blank" tabindex="-1"></button>';
-  for(let d=1;d<=days;d++){const has=count[d]>0,isToday=today.getFullYear()===y&&today.getMonth()===m&&today.getDate()===d;cells+=`<button data-day="${d}" class="${has?"hasRecord ":""}${isToday?"today":""}" aria-label="${m+1}월 ${d}일${has?", 탐험 기록 "+count[d]+"개":""}">${d}</button>`;}
+  for(let d=1;d<=days;d++){const has=(count[d]||0)+(specialCount[d]||0)>0,isToday=today.getFullYear()===y&&today.getMonth()===m&&today.getDate()===d;cells+=`<button data-day="${d}" class="${has?"hasRecord ":""}${isToday?"today":""}" aria-label="${m+1}월 ${d}일${has?", 기록 있음":""}">${d}</button>`;}
   $("#calendarGrid").innerHTML=cells;
   $("#calendarGrid").onclick=e=>{const b=e.target.closest("button[data-day]");if(!b)return;const d=Number(b.dataset.day);const hit=records.find(r=>{const x=new Date(r.date);return x.getFullYear()===y&&x.getMonth()===m&&x.getDate()===d});if(hit){const el=document.querySelector(`[data-record-date="${hit.date}"]`);el?.scrollIntoView({behavior:document.documentElement.classList.contains("reduceMotion")?"auto":"smooth",block:"center"})}else toast("이날은 아직 탐험 기록이 없어요.")};
 }
@@ -103,6 +108,18 @@ $("#confirmBlessing").onclick=async()=>{
   txns.push({id,status:"COMPLETED",wish:"가족과 주말 영화 보기",spend,completedGemCount:2,at});
   await setMany([["gems",g],["wishTransactions",txns]]);await updateStatus();renderGems();$("#blessing").hidden=true;toast("축복을 사용했어요. 소원 사용 내역에 기록됐어요.")
 }
+function isWeekend(d=new Date()){const day=d.getDay();return day===0||day===6}
+function specialPromptFor(d=new Date()){const seed=(d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate())%4;return [
+ {q:"오늘 본 것 중 하나를 완전히 다른 물건처럼 설명해볼까?",h:"정답은 없어요. 네가 본 장면을 바꿔 상상해봐요."},
+ {q:"오늘 가장 기억나는 소리를 이야기 속 단서로 바꿔볼까?",h:"소리에서 시작해서 장면을 하나 만들어봐요."},
+ {q:"누군가의 입장에서 오늘 하루를 다시 보면 뭐가 달라질까?",h:"다른 시선 하나만 골라도 충분해요."},
+ {q:"평범한 장소에 비밀 하나가 숨어 있다면 무엇일까?",h:"작은 이상함 하나를 네 이야기로 키워봐요."}
+ ][seed]}
+function renderSpecialInvite(){const invite=$("#specialInvite");if(!invite)return;invite.hidden=!isWeekend()}
+async function openSpecial(){const p=specialPromptFor();$("#specialDate").textContent=new Date().toLocaleDateString("ko-KR");$("#specialPrompt").textContent=p.q;$("#specialHint").textContent=p.h;const draft=await get("specialDraft")||"";$("#specialAnswer").value=draft;show("special")}
+$("#specialInvite").onclick=openSpecial;$("#specialBack").onclick=()=>show("map");$("#specialLater").onclick=()=>show("map");
+$("#specialAnswer").addEventListener("input",()=>set("specialDraft",$("#specialAnswer").value));
+$("#specialSave").onclick=async()=>{const text=$("#specialAnswer").value.trim();if(!text)return toast("한 줄이라도 네 생각을 남겨볼까?");const memories=await get("specialMemories")||[];const id=uid("special"),at=new Date().toISOString(),p=specialPromptFor(new Date(at));memories.unshift({id,at,prompt:p.q,text});await setMany([["specialMemories",memories],["specialDraft",""]]);$("#specialAnswer").value="";toast("특별 탐험 기억을 남겼어요.");show("records")};
 $("#historyBtn").onclick=renderGrowthTimeline;$("#resultBack").onclick=()=>show("map");$("#resultRecords").onclick=()=>show("records");$("#resultGrowth").onclick=()=>show("growth");$("#calPrev").onclick=()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()-1,1);renderRecords()};$("#calNext").onclick=()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+1,1);renderRecords()};
 $("#settingsBtn").onclick=()=>show("settings");$("#settingsBack").onclick=()=>show(lastMain);$$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
 $("#characterBtn").onclick=()=>toast("Character Master 원본 파이프라인은 승인 자산 연결 전까지 보존 상태예요.");
