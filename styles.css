@@ -96,20 +96,19 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 @media(max-width:360px){.cloudAskRow{grid-template-columns:1fr}.cloudVoice{width:100%}.mindMap{grid-template-columns:1fr}.cloudActions{align-items:stretch;flex-direction:column}.cloudMode{align-self:flex-start}}
 
 
-/* UNIVERSAL EXPLORE HUB 2026-09-21 */
-.hubHero{margin:12px 14px;padding:15px;border-radius:18px;background:#fffaf0;border:1px solid #aa945f55;box-shadow:0 10px 24px #5b4d2b12}
-.hubCrewLine{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}.hubCrewLine b{font-family:"Noto Serif CJK KR","Batang",serif;font-size:16px}.hubCrewLine span{font-size:12px;line-height:1.5;opacity:.78}
-.hubAsk textarea{width:100%;min-height:88px;resize:vertical;border:1px solid #927c4f55;border-radius:14px;padding:12px;background:#fffdf8;color:var(--ink)}
-.hubAskActions{display:grid;grid-template-columns:auto 1fr;gap:8px;margin-top:8px}.hubAskActions button{min-height:44px}
-.hubHero>.cloudAnswer{margin-top:12px}.hubHero>#hubSpeakLast{margin-top:9px}
-.hubPaths{display:grid;gap:10px;margin:12px 14px 24px}.hubPath{text-align:left;border:1px solid #9d875755;border-radius:16px;padding:14px;background:#f8f0dc;color:var(--ink);display:flex;flex-direction:column;gap:5px}.hubPath b{font-family:"Noto Serif CJK KR","Batang",serif;font-size:15px}.hubPath span{font-size:12px;line-height:1.45;opacity:.76}.hubPath:disabled{opacity:.45;cursor:default}
-@media(max-width:360px){.hubAskActions{grid-template-columns:1fr}}
 
 
-/* HOME UNIVERSAL QUICK START 2026-09-21 */
-.homeQuickStart{position:absolute;left:14px;right:72px;bottom:92px;z-index:12;display:grid;grid-template-columns:1fr 1fr;gap:7px;pointer-events:none}
-.homeQuickStart button{pointer-events:auto;text-align:left;border:1px solid #efe0b766;border-radius:13px;padding:9px 10px;background:#092f2bd9;color:#fff;backdrop-filter:blur(7px);box-shadow:0 8px 18px #10251e30;display:flex;flex-direction:column;gap:2px}
-.homeQuickStart b{font-size:12px;color:#f5df9f}.homeQuickStart span{font-size:10px;line-height:1.25;color:#f4efdf;opacity:.9}
-.growthActivitySummary{margin:12px 14px;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:12px;border-radius:16px;background:#f8f0dc;border:1px solid #a9925d55}.growthActivitySummary div{display:flex;flex-direction:column;align-items:center;gap:3px}.growthActivitySummary b{font-size:10px;font-weight:600;text-align:center}.growthActivitySummary strong{font-size:18px}.growthActivitySummary p{grid-column:1/-1;margin:4px 0 0;font-size:10px;line-height:1.4;opacity:.7;text-align:center}
-.cloudHistoryAnswer{padding:8px 9px;border-radius:10px;background:#f7f0de;margin:7px 0}.cloudHistoryNodes{display:grid;gap:4px;margin:6px 0 9px}.cloudHistoryNodes span{font-size:11px;line-height:1.4}.cloudHistoryNodes b{font-size:10px;margin-right:4px}
-@media(max-width:360px){.homeQuickStart{right:66px;grid-template-columns:1fr}.growthActivitySummary{grid-template-columns:repeat(2,1fr)}}
+/* IMAGINATION OVERLAY 2026-09-21 */
+.imaginationLayer{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center}
+.imaginationLayer[hidden]{display:none}
+.imaginationBackdrop{position:absolute;inset:0;background:#061f1c78;backdrop-filter:blur(2px)}
+.imaginationSheet{position:relative;width:min(100%,430px);max-height:min(78svh,720px);overflow:auto;border-radius:22px 22px 0 0;background:#f8f0dc;padding:16px 14px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -18px 48px #071e1b45;border:1px solid #b49c6555}
+.imaginationHead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.imaginationHead span{font-size:10px;opacity:.7}.imaginationHead h2{margin:2px 0 0;font-family:"Noto Serif CJK KR","Batang",serif;font-size:20px}.imaginationClose{flex:none}
+.imaginationMode{margin-top:10px}
+.imaginationCrew{display:flex;flex-direction:column;gap:3px;margin:12px 0 8px}.imaginationCrew b{font-size:13px}.imaginationCrew span{font-size:12px;opacity:.75;line-height:1.45}
+#imaginationInput{width:100%;min-height:84px;resize:vertical;border:1px solid #927c4f55;border-radius:14px;padding:11px;background:#fffdf8;color:var(--ink)}
+.imaginationActions{display:grid;grid-template-columns:auto 1fr;gap:8px;margin-top:8px}.imaginationActions button{min-height:44px}
+#imaginationAnswer{margin-top:12px}
+#imaginationSpeakLast{margin-top:9px}
+.imaginationOpen body{overflow:hidden}
+@media(max-width:360px){.imaginationActions{grid-template-columns:1fr}}
