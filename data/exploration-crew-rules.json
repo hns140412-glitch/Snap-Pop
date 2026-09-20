@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R4",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R5",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -216,37 +216,54 @@
     "currentTarget": 20,
     "expandableByFutureUpdate": true,
     "starter": {
-      "selectableCandidateCount": {
-        "min": 5,
-        "max": 6
-      },
+      "minCandidates": 5,
+      "maxCandidates": 6,
+      "exactCount": "OPEN_PENDING_ROSTER_DESIGN",
       "selection": "CHOOSE_ONE_AT_START",
-      "definedMembers": [
-        "maltipoo",
-        "cat",
-        "redpanda",
-        "buddy"
+      "slots": [
+        {
+          "slotId": "START-01",
+          "memberId": "maltipoo",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-02",
+          "memberId": "cat",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-03",
+          "memberId": "redpanda",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-04",
+          "memberId": "buddy",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-05",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "START-06",
+          "memberId": null,
+          "status": "OPTIONAL_UNASSIGNED"
+        }
       ],
-      "status": "STARTER_ROSTER_GAP",
-      "releaseGate": "AT_LEAST_5_DEFINED_BEFORE_STARTER_SELECTION_RELEASE",
-      "unknownIdentityPolicy": "DO_NOT_INVENT",
-      "capacity": 6
+      "provenance": {
+        "historicalDirectUser": "기본 6명으로 시작",
+        "latestUserCorrection": "초기 5-6명중에 선택",
+        "resolution": "LATEST_USER_CORRECTION_WINS"
+      }
     },
     "worldRegion": {
-      "countStatus": "OPEN_CALCULATE_FROM_ACTUAL_HUB_NEED",
-      "fixedHubCountSnap": 5,
-      "fixedOnePerHub": false,
-      "roles": [
-        "정보원",
-        "한 줄 힌트",
-        "지역 반응",
-        "만남 연결"
-      ],
-      "presenceDynamic": true,
-      "substitutionAllowed": true,
-      "returnMemoryAllowed": true,
-      "identitiesStatus": "OPEN",
-      "minimumCapacity": 2
+      "count": "CALCULATE_FROM_APP_HUB_ROLE_NEED",
+      "role": "챕터/거점/지역에서 만나며 정보·짧은 힌트·동행 연결을 제공할 수 있는 탐험대원",
+      "canBecomeMain": true,
+      "fixedMinimum": null,
+      "provenance": "사용자: 메인 탐험대 말고 거점 탐험대원 몇명이 필요할지 먼저 계산"
     },
     "special": {
       "maximumCount": 12,
@@ -299,6 +316,11 @@
       ]
     },
     "invariants": {
+      "currentRosterTarget": 20,
+      "extensibleBeyond20": true,
+      "starterCandidates": "5_TO_6",
+      "hubCountMustBeRoleCalculated": true,
+      "specialMaximum": 12,
       "allMembersSameFunctionalAbility": true,
       "differencesOnly": [
         "외형",
@@ -306,12 +328,12 @@
         "말투",
         "분위기",
         "리액션",
+        "행동 습관",
         "만남 방식",
-        "지역",
+        "활동 지역",
         "친밀도",
         "추억"
-      ],
-      "noInventedMemberIdentity": true
+      ]
     },
     "totalCapacity": 20,
     "extensible": true
@@ -549,7 +571,7 @@
     "sourceDriveId": "1GTnatAVOLpbac_qWakAhMdnIu1zkw1lthp2MY04RACY",
     "confirmedByUser": {
       "maxRoster20": true,
-      "starter6": true,
+      "starter6": false,
       "remainingAtChapterOrHub": true,
       "specialShadowCluePresentation": true,
       "randomRecordingCompanionCanTriggerSpecialEncounter": true,
@@ -565,7 +587,9 @@
       "growthAddsMembersGradually": true,
       "calculateHubNeedBeforeFillingRoster": true,
       "roster20IsCurrentDefaultButExtensible": true,
-      "specialMax12": true
+      "specialMax12": true,
+      "starterFiveToSixLatest": true,
+      "hubCountMustBeCalculatedFirst": true
     }
   }
 }
