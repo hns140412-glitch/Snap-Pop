@@ -146,6 +146,9 @@ Current expansion runtime is largely absent.
 
 ## 4. Current requirement-to-code truth
 
+Universal product core:
+`SNAP_POP_UNIVERSAL_CORE_2026-09-21.md`
+
 Machine-readable current matrix:
 `data/snap-pop-requirement-matrix.json`
 
@@ -165,11 +168,13 @@ Do not use plain `IMPLEMENTED` when these differ.
 
 ## 5. Full-scope implementation snapshot
 
-Current provisional estimate:
-- full product including expansion lineage: **CODED ~67%**
-- current ORIGINAL/core excluding FAMILY Expansion: **CODED ~73.9%**
-- runtime verification: not closed
-- device verification: not established
+Current implementation percentage is **temporarily invalidated for recalculation**.
+
+Reason:
+the previous score omitted the now-restored core axis:
+`ASK → UNDERSTAND` / broad child curiosity resolver.
+
+The former ~67% figure is retained only as a historical pre-correction audit snapshot and must not be used as current full-scope completion.
 
 These values are audit snapshots, not permanent requirements.
 
