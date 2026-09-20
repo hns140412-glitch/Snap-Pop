@@ -37,10 +37,18 @@
   <div id="calendarGrid" class="calendarGrid"></div>
  </article>
  <div id="recordList" class="cards"></div>
+ <section class="cloudHistorySection">
+  <header class="sectionTitle"><span>상상 구름</span><h2>궁금증 · 생각 기록</h2></header>
+  <div id="cloudHistoryList" class="cards"></div>
+ </section>
 </section>
 <section id="exploreHub" class="view parchment">
  <header class="pageTitle"><span>생각 · 궁금증 · 표현</span><h1>탐험</h1><p>궁금한 걸 물어보거나, 떠오른 생각을 펼치거나, 글쓰기 탐험을 시작해요.</p></header>
  <article class="hubHero">
+  <div class="modeSwitch hubModeSwitch" role="group" aria-label="상상구름 언어">
+   <button class="soft on" id="hubModeKo" type="button">한국어</button>
+   <button class="soft" id="hubModeEn" type="button">English</button>
+  </div>
   <div class="hubCrewLine"><b id="hubCrewName">탐험대원</b><span id="hubCrewLine">뭐가 궁금해? 같이 풀어보자.</span></div>
   <div class="hubAsk">
    <textarea id="hubCloudInput" rows="3" placeholder="궁금한 것, 떠오른 생각, 영어로 표현하고 싶은 말을 적어봐요."></textarea>
