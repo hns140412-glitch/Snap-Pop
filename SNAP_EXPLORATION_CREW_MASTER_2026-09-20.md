@@ -503,6 +503,8 @@ Ink direct profile evidence additionally recovers:
 
 Legacy boards with superseded visuals may still contain behavior candidates. Those candidates require cross-artifact corroboration before promotion.
 
+Historical archive package: `GUIDE_길잡이_대화정리_첨부결과물_2026-09-06.zip`
+
 Visual lineage record:
 `C2S/SNAP_EXPLORATION_CREW_VISUAL_LINEAGE_LEDGER_2026-09-21.md`
 
