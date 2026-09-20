@@ -1496,7 +1496,9 @@
           "backpack",
           "large ears",
           "fluffy tail"
-        ]
+        ],
+        "voiceEvidence": "와! 해보자!",
+        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL"
       },
       {
         "id": "lori",
@@ -1514,7 +1516,9 @@
         ],
         "visualStatus": "VISUAL_ID_LOCK_RECOVERED",
         "notes": "토끼 계열",
-        "englishNameStatus": "OPEN_CORRECTION_CHECK_TORI_VS_LORI"
+        "englishNameStatus": "OPEN_CORRECTION_CHECK_TORI_VS_LORI",
+        "voiceEvidence": "괜찮아, 천천히 해도 돼!",
+        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL"
       },
       {
         "id": "ink",
@@ -1538,7 +1542,9 @@
           "호기심",
           "시크",
           "전략가"
-        ]
+        ],
+        "voiceEvidence": "음... 다른 방법도 있지.",
+        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL"
       },
       {
         "id": "nova",
@@ -1557,7 +1563,9 @@
         "visualStatus": "VISUAL_ID_LOCK_RECOVERED_WITH_SUPERSEDED_VARIANT",
         "superseded": [
           "rabbit"
-        ]
+        ],
+        "voiceEvidence": "가보자! 하면 되지!",
+        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL"
       },
       {
         "id": "take",
@@ -1575,7 +1583,9 @@
           "panda",
           "blue neckwear",
           "backpack"
-        ]
+        ],
+        "voiceEvidence": "차근차근 같이 해보자.",
+        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL"
       },
       {
         "id": "zero",
@@ -1595,7 +1605,9 @@
         "visualStatus": "VISUAL_ID_LOCK_RECOVERED_WITH_SUPERSEDED_VARIANT",
         "superseded": [
           "polar bear"
-        ]
+        ],
+        "voiceEvidence": "언제나, 네 이야기를 응원해!",
+        "packDepth": "CORE_RECOVERED_DETAILS_PARTIAL"
       }
     ],
     "order": [
@@ -1617,6 +1629,23 @@
     "ageLabelSemantics": {
       "status": "OPEN_SEMANTICS",
       "note": "6~13세 labels are visible on the board, but whether they mean character age or target/feel age is not directly proven."
+    },
+    "personalityPackRecovery": {
+      "status": "PARTIAL_RECOVERY_REQUIRED",
+      "recovered": [
+        "corePersonality",
+        "visualIdentity",
+        "signatureVoiceDirection"
+      ],
+      "partialOrOpen": [
+        "habit",
+        "reaction",
+        "relationshipException",
+        "worldRoutine",
+        "memory"
+      ],
+      "absenceClaimForbidden": true,
+      "recoveryRecord": "C2S/SNAP_EXPLORATION_CREW_EVIDENCE_RECOVERY_PASS_2026-09-20.md"
     }
   },
   "legacyCharacterLineages": {
