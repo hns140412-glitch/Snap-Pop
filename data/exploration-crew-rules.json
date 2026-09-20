@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R6",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R7",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -645,7 +645,19 @@
         "description": "여긴 눈만 쓰면 손해야. 귀랑 코도 데려가자.",
         "viewpoint": "네 쪽에선 그렇게 보이네. 반대편으로 가면 뭐가 보일까?",
         "final": "좋아, 가져온 생각들 한번 펼쳐보자. 두고 온 건 없나?"
-      }
+      },
+      "reactionMotifs": [
+        "발자국",
+        "귀가 쫑긋",
+        "꼬리 흔들림"
+      ],
+      "gestures": {
+        "observe": "고개를 살짝 기울임",
+        "listen": "가볍게 끄덕임",
+        "idea": "귀가 쫑긋",
+        "complete": "작게 꼬리를 흔듦"
+      },
+      "relationshipException": "친해질수록 먼저 아는 척하지만 답은 대신 말하지 않음"
     },
     "cat": {
       "label": "탐험 고양이",
@@ -663,7 +675,19 @@
         "description": "눈만 믿지 마. 수염이 먼저 알아채는 것도 있거든.",
         "viewpoint": "한쪽만 보면 재미없지. 반대편 난간도 한번 가보자.",
         "final": "마지막은 중요해. 괜히 멋있는 척 말고 네 식으로 끝내."
-      }
+      },
+      "reactionMotifs": [
+        "수염",
+        "앞발",
+        "꼬리"
+      ],
+      "gestures": {
+        "observe": "눈을 가늘게 뜨고 봄",
+        "listen": "조용히 귀를 기울임",
+        "idea": "앞발을 살짝 내밈",
+        "complete": "꼬리를 한 번 흔듦"
+      },
+      "relationshipException": "친해져도 시크함은 유지하고 기다렸다는 티만 아주 조금 남김"
     },
     "redpanda": {
       "label": "랫서팬더",
@@ -681,7 +705,19 @@
         "description": "뒤적뒤적… 색, 소리, 냄새 중 하나는 건질 수 있어.",
         "viewpoint": "이쪽 주머니 말고 저쪽 주머니도 뒤져보자.",
         "final": "좋아. 이제 흩어진 걸 가방에 제대로 넣을 시간."
-      }
+      },
+      "reactionMotifs": [
+        "줄무늬 꼬리",
+        "뒤적이는 손",
+        "작은 가방"
+      ],
+      "gestures": {
+        "observe": "가방을 뒤적임",
+        "listen": "손을 멈추고 집중함",
+        "idea": "뭔가 찾은 듯 손을 번쩍 듦",
+        "complete": "가방을 탁 닫음"
+      },
+      "relationshipException": "친해질수록 둘만 아는 물건/기억을 자주 꺼내봄"
     },
     "buddy": {
       "label": "동료 탐험가",
@@ -699,7 +735,20 @@
         "description": "장면을 같이 보자. 눈에 먼저 들어오는 게 뭐야?",
         "viewpoint": "네 시선은 잡았어. 이제 한 걸음 옆으로 가보자.",
         "final": "핵심은 남기고 군더더기만 챙겨보자."
-      }
+      },
+      "reactionMotifs": [
+        "지도",
+        "연필",
+        "손짓",
+        "메모"
+      ],
+      "gestures": {
+        "observe": "옆에서 같은 방향을 봄",
+        "listen": "말없이 고개를 끄덕임",
+        "idea": "지도 한쪽을 짚음",
+        "complete": "짧게 엄지 대신 고개로 인정"
+      },
+      "relationshipException": "친해질수록 말은 늘지 않고 먼저 자리를 내주거나 준비해 둠"
     }
   },
   "personalityPackSchema": {
@@ -1276,5 +1325,73 @@
     "preserveChildOwnership": true,
     "preserveSharedSessionContext": true,
     "mustReturnToOriginalTask": true
+  },
+  "affinityEngine": {
+    "sourceEvents": [
+      "EXPLORATION_COMPLETE",
+      "SPECIAL_MEMORY",
+      "REUNION",
+      "VOICE_EXPRESSION",
+      "SHARED_MICRO_EPISODE"
+    ],
+    "scoreIsInternal": true,
+    "noDecay": true,
+    "noPowerBoost": true,
+    "tiers": [
+      {
+        "key": "KNOWN",
+        "min": 0,
+        "label": "아는 친구"
+      },
+      {
+        "key": "TOGETHER",
+        "min": 3,
+        "label": "함께 탐험"
+      },
+      {
+        "key": "FAMILIAR",
+        "min": 8,
+        "label": "자주 만남"
+      },
+      {
+        "key": "CLOSE",
+        "min": 16,
+        "label": "단짝 관계"
+      }
+    ],
+    "expressionOnlyUnlocks": true,
+    "unlockExamples": [
+      "표정",
+      "포즈",
+      "인사",
+      "별명",
+      "농담",
+      "축하 동작",
+      "부르는 방식",
+      "특별 일러스트"
+    ]
+  },
+  "worldStateEngine": {
+    "lightweight": true,
+    "fullDailySimulation": false,
+    "states": [
+      "AT_HUB",
+      "EXPEDITION",
+      "SUPPORTING_OTHER_HUB",
+      "VACATION",
+      "RESTING",
+      "FREE_EXPLORING",
+      "SPECIAL_EVENT",
+      "MAIN_COMPANION"
+    ],
+    "returnSynthesis": true,
+    "absencePenalty": false,
+    "deterministicSeedInputs": [
+      "crewMemberId",
+      "lastSeenDate",
+      "currentDate",
+      "memoryCount"
+    ],
+    "note": "재접속 시 필요한 가벼운 상태만 생성. 성능/보상 영향 없음."
   }
 }
