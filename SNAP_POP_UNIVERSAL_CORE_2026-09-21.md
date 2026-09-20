@@ -298,7 +298,42 @@ NOT:
 
 `MODEL GUESS → CHARACTER FLAVOR → CONFIDENT ANSWER`
 
-## 8. Current implementation diagnosis
+## 7.4 Writing-first surface / hidden Imagination Cloud
+
+Latest direct correction:
+
+Snap & Pop의 **기본 사용자 상태는 글쓰기 탐험**이다.
+
+상상구름은 제품의 핵심 지능 레이어이지만, 기본 메뉴/전면 허브가 아니다.
+
+User-facing hierarchy:
+
+`DEFAULT = WRITING EXPLORATION`
+
+`IMAGINATION_CLOUD = HIDDEN / ON-DEMAND THINKING LAYER`
+
+기본 흐름:
+- 탐험 세계 / 5개 글쓰기 장소;
+- 장소 선택;
+- 3단계 글쓰기;
+- 기록 / 성장.
+
+상상구름 호출 조건:
+- 아이가 직접 상상구름을 부름;
+- 무전으로 질문;
+- 글쓰기가 막혔을 때 도움 요청;
+- 탐험대가 작은 도움을 제안할 때;
+- 어원·역사·사회·문화·과학 등 궁금증이 생겼을 때.
+
+행동 원칙:
+- 평소에는 숨김;
+- 호출 시 오버레이/보조 레이어로 등장;
+- 현재 글쓰기 문맥을 잃지 않음;
+- 닫으면 원래 입력 위치로 복귀;
+- 상상구름 사용을 강제하지 않음;
+- 별도 범용 허브 화면을 기본 네비게이션으로 두지 않음.
+
+
 
 Current branch:
 - Korean writing: PARTIAL/CODED
