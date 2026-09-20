@@ -1924,5 +1924,38 @@
       },
       "relationshipException": "친해질수록 말은 늘지 않고 먼저 자리를 내주거나 준비해 둠"
     }
+  },
+  "crewInteractionOrchestration": {
+    "status": "RECOVERED_FROM_LEGACY_GUIDE_AND_ADOPTED",
+    "ownership": "EXPLORATION_CREW_RULES",
+    "mainCompanionContinuity": true,
+    "guestSelection": {
+      "enabled": true,
+      "weightedBy": [
+        "recentAppearanceFrequency",
+        "moodStateConflictAvoidance"
+      ],
+      "functionalAdvantageForbidden": true,
+      "purpose": "RELATIONSHIP_AND_SCENE_VARIETY"
+    },
+    "humor": {
+      "childDeficitAsComedyForbidden": true,
+      "source": "CREW_MEMBER_TO_CREW_MEMBER_CHEMISTRY",
+      "childFacingPriority": [
+        "응원",
+        "실제 도움"
+      ]
+    },
+    "groupRoutineEvidence": [
+      "같이 공부할 때",
+      "쉬는 시간에도",
+      "가끔은 장난도 치고",
+      "힘든 날엔 언제나 옆에",
+      "그리고, 더 멀리 함께"
+    ],
+    "legacyMapping": {
+      "Main Guide": "현재 메인 탐험대원",
+      "Guest Guide": "장면 Guest 탐험대원"
+    }
   }
 }
