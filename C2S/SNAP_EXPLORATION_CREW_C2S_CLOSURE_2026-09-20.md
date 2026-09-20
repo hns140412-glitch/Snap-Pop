@@ -33,12 +33,25 @@ Latest user correction > direct raw user evidence > live canonical/runtime > val
 5. 호기심쟁이 — 질문·발견
 6. 다정이 — 따뜻·공감
 
-### OPEN — previously approved six visual prototypes
-- 사용자는 과거에 실제 시작 탐험대원 6명 시안까지 잡았다고 명시.
-- 현재 확보된 원자료에서는 성격 슬롯/행동 설계는 확인했으나, 최종 확정된 6명의 개별 이름·종족·이미지 매핑은 아직 회수하지 못함.
+### RECOVERED — previously approved starter six identity lineage
+- 과거 대화/Google Drive의 GUIDE 회수 자료에서 시작 6명 계보를 복원함.
+- Core 순서: **두비 → 로리 → 잉크 → 노바 → 테이크 → 제로**.
+- 회수된 정체성:
+  1. 두비 — dog-like · 호기심/활력
+  2. 로리 — rabbit · 다정/공감 · 핑크 브레이드 계보
+  3. 잉크 — 여성형 dark fox · 관찰/아이디어 · 고글/다크톤
+  4. 노바 — brown otter/ferret-like · 에너지/도전 · 고글/포니테일
+  5. 테이크 — panda · 정리/든든함
+  6. 제로 — penguin · 음악/여유 · 헤드폰/캡
+- 과거 이미지 결과물은 **후보/회귀검증 증거**이며, 6종 최종 Visual ID의 Golden Reference 1:1 검증은 아직 OPEN.
+- SUPERSEDED 회수: 노바 rabbit / 제로 polar bear / 잉크 cat-like substitution / 테이크 turtle 혼동 / 로리↔노바 swap.
+
+### OPEN — starter six ↔ Personality Slot 1:1 mapping
+- 2026-09-08 원자료에서 6 Personality Slot은 이름 없이 별도 설계된 것을 확인함.
+- 회수된 6명의 성격 계보와 일부 의미상 유사성은 있으나, **사용자가 6명을 6개 Slot에 1:1 확정 매핑한 원자료는 회수되지 않음**.
+- 따라서 의미 유사성만으로 자동 매핑하지 않는다.
+- 기존 4개 레거시 계보를 시작 6명에 자동 배치하지 않는 규칙도 그대로 유지한다.
 - 추정/재창작 금지.
-- 다음 회수 작업은 과거 대화/Drive의 이미지·캐릭터 시안 흔적을 직접 찾는 것.
-- 회수 전 현재 4개 계보를 확정 6명으로 승격하지 않음.
 
 ### DECISION — roster architecture
 - 장기 로스터 Ceiling=20명.
@@ -112,7 +125,8 @@ PERSONALITY → HABIT → REACTION → RELATIONSHIP_EXCEPTION → WORLD_ROUTINE 
 - Reduce Motion 연동.
 
 ### OPEN — runtime gaps
-- 최종 확정 6명 시안 회수 및 시작 6 슬롯과 매핑.
+- 시작 6명 ↔ Personality Slot 1:1 매핑 원자료 회수/확정.
+- 6종 최종 Visual ID Golden Reference 1:1 검증.
 - 20개 슬롯 전체의 실제 캐릭터 Identity 확정.
 - Reaction Overlay의 최종 시각 자산.
 - 거점 실제 역할 수/인원 확정.
@@ -132,5 +146,5 @@ PERSONALITY → HABIT → REACTION → RELATIONSHIP_EXCEPTION → WORLD_ROUTINE 
 ## C2S Closure
 - UNMAPPED_MATERIAL = 0 within recovered current-conversation scope.
 - SILENT_LOSS = 0 within recovered current-conversation scope.
-- FALSE_CONVERGENCE prevention: 확정 6명 시안은 미회수 상태이므로 OPEN 유지.
+- FALSE_CONVERGENCE prevention: 시작 6명 Identity 계보는 RECOVERED. 다만 Personality Slot 1:1 매핑과 최종 Visual Golden Reference는 직접 근거가 없어 OPEN 유지.
 - Reverse Reconstruction: 이 문서 + Canonical Master + Source Ledger로 현재 대화의 탐험대 결정/정정/미확정 항목 재구성 가능.
