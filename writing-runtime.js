@@ -84,7 +84,8 @@
       suggestedLens:safeLens,
       rationale:typeof raw.rationale==="string"?raw.rationale.slice(0,180):"",
       confidence:Number.isFinite(raw.confidence)?Math.max(0,Math.min(1,raw.confidence)):null,
-      provider:raw.provider||"learning-provider",
+      provider:raw.provider||"semantic-writing-provider",
+      semanticSignals:raw.semanticSignals&&typeof raw.semanticSignals==="object"?raw.semanticSignals:null,
       grounded:raw.grounded!==false
     };
   }
@@ -92,7 +93,7 @@
     const local=move(payload);
     const policy=contextPolicy(payload);
     const fallback={...local,suggestedLens:policy.allowCrossLens?suggestedLens(payload):null,provider:"local-writing-fallback",grounded:true,learningContextUsed:policy.used,learningGoal:policy.goal,learningContextPolicy:policy};
-    const provider=window.SnapPopLearningProvider;
+    const provider=window.SnapPopSemanticWritingProvider;
     if(!provider||typeof provider.analyzeWriting!=="function")return fallback;
     try{
       const raw=await provider.analyzeWriting({
