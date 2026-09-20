@@ -1575,7 +1575,12 @@
       "take",
       "zero"
     ],
-    "visualApprovalRule": "과거 이미지 시안은 회귀검증 증거. 6종 최종 Visual ID 1:1 검증 전에는 이미지 자체를 자동 승인본으로 간주하지 않는다."
+    "visualApprovalRule": "과거 이미지 시안은 회귀검증 증거. 6종 최종 Visual ID 1:1 검증 전에는 이미지 자체를 자동 승인본으로 간주하지 않는다.",
+    "personalitySlotMapping": {
+      "status": "OPEN_NO_DIRECT_APPROVED_MAPPING_RECOVERED",
+      "autoInferenceForbidden": true,
+      "note": "Core 6 identity lineage is recovered, but the current six Personality Slots were recovered as a separate unnamed design. Trait similarity is not sufficient approval evidence."
+    }
   },
   "legacyCharacterLineages": {
     "maltipoo": {
