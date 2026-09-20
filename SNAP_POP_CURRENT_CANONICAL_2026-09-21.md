@@ -331,3 +331,31 @@ Hard rules:
 - low-confidence/unresolved context must not strongly steer writing;
 - completed writing returns provenance/status, not the child's full draft;
 - record keeps only Learning Unit references needed for traceability.
+
+
+### Semantic Writing Provider boundary — 2026-09-21
+
+Terminology correction:
+
+`SnapPopLearningProvider` is superseded because it conflicts with the role of Ready Learning Master.
+
+Use:
+
+`SnapPopSemanticWritingProvider`
+
+Role split:
+- Ready Learning Master = subject / learning-unit / activity / cognitive-load context.
+- SnapPopSemanticWritingProvider = semantic analysis of the child's current draft.
+- Snap & Pop Writing Engine = selects/bounds the next writing move.
+- Exploration Crew = user-facing response subject.
+- Child = final author.
+
+Semantic provider hard limits:
+- analysis only;
+- no final-draft generation;
+- no rewriting the child's text;
+- no full-sentence answer suggestion by default;
+- no grading;
+- one next move at a time;
+- OpenAI may back the provider internally when securely connected;
+- if the provider is unavailable, local writing analysis remains the fallback.
