@@ -1,5 +1,5 @@
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
-let db, marks=[], selected=null, lastMain="map";
+let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date();
 const STEPS=[
   ["생각 꺼내기","무엇이 먼저 떠올랐어?","완벽한 문장이 아니어도 좋아. 작은 조각 하나만 잡아보자."],
   ["생각 넓히기","그 생각 옆에는 뭐가 더 있을까?","이유, 느낌, 장면 중 하나를 더 붙여보자."],
@@ -14,7 +14,7 @@ function get(k){return new Promise(ok=>{const r=db.transaction("state").objectSt
 function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>ok();r.onerror=()=>no(r.error)})}
 function setMany(entries){return new Promise((ok,no)=>{const tx=db.transaction("state","readwrite"),store=tx.objectStore("state");entries.forEach(([k,v])=>store.put(v,k));tx.oncomplete=()=>ok();tx.onerror=()=>no(tx.error);tx.onabort=()=>no(tx.error)})}
 function toast(t){$("#toast").textContent=t;$("#toast").classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>$("#toast").classList.remove("show"),1800)}
-function show(id){$$(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");const sub=["settings","shop"].includes(id);$("#nav").hidden=sub;if(!sub)lastMain=id;$$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.view===id));scrollTo(0,0);if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth()}
+function show(id){$$(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");const sub=["settings","shop","result"].includes(id);$("#nav").hidden=sub;if(!sub)lastMain=id;$$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.view===id));scrollTo(0,0);if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="result")renderLastResult()}
 function html(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function levelFromExp(exp){let level=1;for(let i=1;i<LEVEL_THRESHOLDS.length;i++){if(exp>=LEVEL_THRESHOLDS[i])level=i+1;else break}return Math.min(25,level)}
 function levelProgress(exp){const level=levelFromExp(exp);if(level>=25)return {level,within:1,remaining:0};const floor=LEVEL_THRESHOLDS[level-1],ceil=LEVEL_THRESHOLDS[level];return {level,within:Math.max(0,Math.min(1,(exp-floor)/(ceil-floor))),remaining:Math.max(0,ceil-exp)}}
@@ -59,10 +59,10 @@ $("#nextBtn").onclick=async()=>{
   gemLedger.push({eventId:completionEventId,type:"SHARD_EARNED",landmark:s.landmark,amount:1,at:now});
   events[completionEventId]={at:now,recordId:record.id};
   const totalExp=expLedger.reduce((sum,e)=>sum+(Number(e.amount)||0),0);
-  await setMany([["records",records],["gems",gems],["expLedger",expLedger],["gemLedger",gemLedger],["completionEvents",events],["exp",totalExp],["active",null]]);
+  await setMany([["records",records],["gems",gems],["expLedger",expLedger],["gemLedger",gemLedger],["completionEvents",events],["exp",totalExp],["lastResult",record],["active",null]]);
   await updateStatus();
   window.dispatchEvent(new CustomEvent("snap-pop:task-completed",{detail:{completionEventId,landmark:s.landmark,exp:expAward.total}}));
-  toast(`탐험 완료! +${expAward.total} EXP · 보석 조각 +1`);show("growth")
+  toast(`탐험 완료! +${expAward.total} EXP · 보석 조각 +1`);show("result")
 }
 
 function speak(t){if(!("speechSynthesis"in window))return toast("이 브라우저에서는 읽어주기를 지원하지 않아요.");speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ko-KR";speechSynthesis.speak(u)}
@@ -70,9 +70,26 @@ $("#answer").addEventListener("input",async()=>{const s=await get("active");if(!
 $("#listenBtn").onclick=async()=>{const s=await get("active");speak(STEPS[s?.step||0][1]+" "+STEPS[s?.step||0][2])}
 $("#voiceBtn").onclick=()=>{const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return toast("이 브라우저에서는 음성 인식을 지원하지 않아요.");const r=new R();r.lang="ko-KR";r.interimResults=false;$("#voiceBtn").textContent="듣고 있어요";r.onresult=e=>$("#answer").value+=(($("#answer").value?" ":"")+e.results[0][0].transcript);r.onend=()=>$("#voiceBtn").innerHTML='<img src="assets/icons/radio.svg" alt="">말해서 쓰기';r.start()}
 
-async function renderRecords(){if(!db)return;const r=await get("records")||[];$("#recordList").innerHTML=r.length?r.map(x=>{const m=marks.find(z=>z.id===x.landmark);const strengths=(x.strengths||[]).slice(0,3).map(html).join(" · ");return `<article class="card"><b>${m?.title||"탐험"}</b><p>${x.answers.map(html).join(" ")}</p>${strengths?`<span class="kicker">오늘 발견한 글쓰기 힘 · ${strengths}</span><br>`:""}<span class="kicker">${new Date(x.date).toLocaleDateString("ko-KR")} · +${x.expAward||0} EXP</span></article>`}).join(""):'<article class="card"><b>첫 기록을 기다리고 있어요.</b><p>지도에서 탐험지를 골라 시작해봐요.</p></article>'}
+async function renderRecords(){
+  if(!db)return;
+  const r=await get("records")||[];
+  renderCalendar(r);
+  $("#recordList").innerHTML=r.length?r.map(x=>{const m=marks.find(z=>z.id===x.landmark);const strengths=(x.strengths||[]).slice(0,3).map(html).join(" · ");return `<article class="card" data-record-date="${x.date}"><b>${m?.title||"탐험"}</b><p>${x.answers.map(html).join(" ")}</p>${strengths?`<span class="kicker">오늘 발견한 글쓰기 힘 · ${strengths}</span><br>`:""}<span class="kicker">${new Date(x.date).toLocaleDateString("ko-KR")} · +${x.expAward||0} EXP</span></article>`}).join(""):'<article class="card"><b>첫 기록을 기다리고 있어요.</b><p>지도에서 탐험지를 골라 시작해봐요.</p></article>';
+}
+function renderCalendar(records){
+  const y=calendarCursor.getFullYear(),m=calendarCursor.getMonth(),first=new Date(y,m,1),days=new Date(y,m+1,0).getDate(),offset=first.getDay();
+  $("#calTitle").textContent=`${y}년 ${m+1}월`;
+  const count={};records.forEach(r=>{const d=new Date(r.date);if(d.getFullYear()===y&&d.getMonth()===m)count[d.getDate()]=(count[d.getDate()]||0)+1});
+  const today=new Date();let cells="";
+  for(let i=0;i<offset;i++)cells+='<button class="blank" tabindex="-1"></button>';
+  for(let d=1;d<=days;d++){const has=count[d]>0,isToday=today.getFullYear()===y&&today.getMonth()===m&&today.getDate()===d;cells+=`<button data-day="${d}" class="${has?"hasRecord ":""}${isToday?"today":""}" aria-label="${m+1}월 ${d}일${has?", 탐험 기록 "+count[d]+"개":""}">${d}</button>`;}
+  $("#calendarGrid").innerHTML=cells;
+  $("#calendarGrid").onclick=e=>{const b=e.target.closest("button[data-day]");if(!b)return;const d=Number(b.dataset.day);const hit=records.find(r=>{const x=new Date(r.date);return x.getFullYear()===y&&x.getMonth()===m&&x.getDate()===d});if(hit){const el=document.querySelector(`[data-record-date="${hit.date}"]`);el?.scrollIntoView({behavior:document.documentElement.classList.contains("reduceMotion")?"auto":"smooth",block:"center"})}else toast("이날은 아직 탐험 기록이 없어요.")};
+}
 async function renderGems(){if(!db)return;const g=await get("gems")||{};$("#gemRows").innerHTML=marks.map(m=>{const n=g[m.id]||0;return `<article class="gemRow"><div><b>${m.title}</b><span>보석 조각 ${n%6}/6</span></div><strong>완성 ${Math.floor(n/6)}</strong></article>`}).join("")}
 async function renderGrowth(){if(!db)return;const cfg=await fetch("data/growth.json").then(r=>r.json()),exp=await get("exp")||0,p=levelProgress(exp);let stage=cfg[0];cfg.forEach(x=>{if(p.level>=x.min)stage=x});$("#growthLv").textContent="Lv."+p.level;$("#growthName").textContent=stage.name;$("#treeImage").src="assets/growth/"+stage.image;$("#expBar").style.width=(p.within*100)+"%";$("#expText").textContent=p.level>=25?`EXP ${exp} · 최고 성장 단계`:`EXP ${exp} · 다음 성장까지 ${p.remaining} EXP`}
+async function renderGrowthTimeline(){const r=await get("records")||[],host=$("#growthTimeline");host.hidden=false;host.innerHTML=r.length?r.slice(0,20).map(x=>{const m=marks.find(z=>z.id===x.landmark);return `<div class="timelineItem"><b>${m?.title||"탐험"} · +${x.expAward||0} EXP</b><span>${new Date(x.date).toLocaleString("ko-KR")}${x.strengths?.length?" · "+x.strengths.slice(0,2).map(html).join(" · "):""}</span></div>`}).join(""):'<div class="timelineItem"><b>첫 성장 기록을 기다리고 있어요.</b><span>탐험을 완료하면 여기에 시간이 쌓여요.</span></div>'}
+async function renderLastResult(){const r=await get("lastResult");if(!r){$("#resultTitle").textContent="아직 완료한 탐험이 없어요.";$("#resultDraft").textContent="지도에서 탐험을 시작해봐요.";$("#resultExp").textContent="+0 EXP";$("#resultGem").textContent="보석 조각 +0";$("#resultStrengths").innerHTML="";return}const m=marks.find(x=>x.id===r.landmark);$("#resultTitle").textContent=m?.title||"오늘의 탐험";$("#resultDraft").textContent=r.answers.join(" ");$("#resultExp").textContent=`+${r.expAward||0} EXP`;$("#resultGem").textContent="보석 조각 +1";$("#resultStrengths").innerHTML=(r.strengths||[]).length?(r.strengths||[]).map(s=>`<span>${html(s)}</span>`).join(""):'<span>내 문장으로 끝까지 완성하기</span>'}
 async function updateStatus(){const exp=await get("exp")||0,g=await get("gems")||{},lv=levelFromExp(exp),complete=Object.values(g).reduce((a,n)=>a+Math.floor(n/6),0);$("#levelChip").textContent="Lv."+lv;$("#gemChip").textContent="보석 "+complete}
 
 $("#shopBtn").onclick=()=>show("shop");$("#useWish").onclick=()=>$("#blessing").hidden=false;
@@ -86,7 +103,7 @@ $("#confirmBlessing").onclick=async()=>{
   txns.push({id,status:"COMPLETED",wish:"가족과 주말 영화 보기",spend,completedGemCount:2,at});
   await setMany([["gems",g],["wishTransactions",txns]]);await updateStatus();renderGems();$("#blessing").hidden=true;toast("축복을 사용했어요. 소원 사용 내역에 기록됐어요.")
 }
-$("#historyBtn").onclick=async()=>{const r=await get("records")||[];toast(r.length?`성장 기록 ${r.length}개가 안전하게 쌓여 있어요.`:"아직 성장 기록이 없어요.")};
+$("#historyBtn").onclick=renderGrowthTimeline;$("#resultBack").onclick=()=>show("map");$("#resultRecords").onclick=()=>show("records");$("#resultGrowth").onclick=()=>show("growth");$("#calPrev").onclick=()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()-1,1);renderRecords()};$("#calNext").onclick=()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+1,1);renderRecords()};
 $("#settingsBtn").onclick=()=>show("settings");$("#settingsBack").onclick=()=>show(lastMain);$$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
 $("#characterBtn").onclick=()=>toast("Character Master 원본 파이프라인은 승인 자산 연결 전까지 보존 상태예요.");
 $("#guideBtn").onclick=()=>toast("현재 길잡이 디자인 계보는 유지하고 이름 변경은 별도 승인 후 연결해요.");
