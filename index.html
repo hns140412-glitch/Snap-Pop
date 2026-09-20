@@ -17,7 +17,7 @@
   <div id="landmarks" class="landmarks"></div>
   <div id="homeCompanions" class="homeCompanions" aria-label="현재 탐험가와 길잡이">
    <div id="homeCharacter" class="homeCharacter"><div id="homeCharacterVisual" class="characterPlaceholder">탐험가</div><strong id="homeCharacterName">나의 탐험가</strong></div>
-   <div id="homeGuide" class="homeGuide"><div class="guidePlaceholder">Guide</div><strong id="homeGuideName">모카</strong></div>
+   <div id="homeGuide" class="homeGuide"><div class="guidePlaceholder">Guide</div><div><strong id="homeGuideName">모카</strong><span id="homeGuideLine" class="homeGuideLine"></span></div></div>
   </div>
   <button class="specialInvite" id="specialInvite" hidden>특별 탐험 초대장</button>
   <button class="radioFab" id="homeRadio"><img src="assets/icons/radio.svg" alt=""><span>무전</span></button>
@@ -71,6 +71,7 @@
   <div class="resultReward"><strong id="resultExp">+0 EXP</strong><span id="resultGem">보석 조각 +1</span></div>
   <h2 id="resultDraft">네 글이 여기에 보여요.</h2>
   <div id="resultStrengths" class="strengths"></div>
+  <p id="resultGuideLine" class="guidePreview"></p>
  </article>
  <button class="primary wide" id="resultRecords">기록에서 보기</button>
  <button class="soft wide resultSecondary" id="bonusStart">추가 연습</button>
@@ -151,6 +152,7 @@
    <button class="soft" data-guide-type="redpanda">랫서팬더</button>
    <button class="soft" data-guide-type="buddy">동료 탐험가</button>
   </div>
+  <p id="guidePersonalityPreview" class="guidePreview"></p>
   <h2>길잡이 이름</h2>
   <input id="guideName" class="textInput" maxlength="20" placeholder="모카">
   <button class="soft wide" id="guideSuggest">이름 추천해줘</button>
