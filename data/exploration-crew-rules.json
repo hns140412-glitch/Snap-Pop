@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R5",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R4",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -132,211 +132,242 @@
       "rosterSections": [
         "STARTER",
         "WORLD_REGION",
-        "SPECIAL"
+        "SPECIAL",
+        "RELATIONSHIP_RECORD"
       ],
       "showUnassignedSlots": true,
       "specialSelectOnlyAfterEncounter": true
     }
   },
-  "members": {
-    "maltipoo": {
-      "label": "말티푸",
-      "defaultName": "모카",
-      "personality": "밝음 + 영리함 + 사람을 잘 따름 + 애교 + 장난기 + 눈치 빠름 + 살짝 덤벙거림",
-      "behavior": {
-        "role": "탐험가 옆에서 발견을 돕는 탐험대원",
-        "never": "정답 작성·대필·채점·과도한 칭찬",
-        "default": "관찰 → 짧은 반응 → 질문/힌트 → 아이 표현 기다리기"
-      },
-      "home": "같이 가자. 내가 먼저 아는 척은 해볼게.",
-      "reactions": {
-        "idea": "뭔가 있긴 한데… 아이디어인지 돌멩이인지는 캐봐야 알겠어.",
-        "emotion": "오늘 마음은 잔잔한가? 아니면 안에서 파도 치는 중?",
-        "description": "여긴 눈만 쓰면 손해야. 귀랑 코도 데려가자.",
-        "viewpoint": "네 쪽에선 그렇게 보이네. 반대편으로 가면 뭐가 보일까?",
-        "final": "좋아, 가져온 생각들 한번 펼쳐보자. 두고 온 건 없나?"
-      }
-    },
-    "cat": {
-      "label": "탐험 고양이",
-      "defaultName": "루루",
-      "personality": "살짝 시크 + 능청 + 친절 + 관찰력",
-      "behavior": {
-        "role": "탐험가 옆에서 발견을 돕는 탐험대원",
-        "never": "정답 작성·대필·채점·과도한 칭찬",
-        "default": "관찰 → 짧은 반응 → 질문/힌트 → 아이 표현 기다리기"
-      },
-      "home": "내가 먼저 가볼게. 겁나서 그런 건 아니고… 순서가 그런 거야.",
-      "reactions": {
-        "idea": "흠. 냄새는 나는데 아직 아이디어 얼굴은 안 보이네.",
-        "emotion": "마음은 숨는 데 선수야. 그래도 꼬리는 보일 때가 있지.",
-        "description": "눈만 믿지 마. 수염이 먼저 알아채는 것도 있거든.",
-        "viewpoint": "한쪽만 보면 재미없지. 반대편 난간도 한번 가보자.",
-        "final": "마지막은 중요해. 괜히 멋있는 척 말고 네 식으로 끝내."
-      }
-    },
-    "redpanda": {
-      "label": "랫서팬더",
-      "defaultName": "포포",
-      "personality": "장난스러움 + 호기심 + 뒤적이는 탐험가 기질",
-      "behavior": {
-        "role": "탐험가 옆에서 발견을 돕는 탐험대원",
-        "never": "정답 작성·대필·채점·과도한 칭찬",
-        "default": "관찰 → 짧은 반응 → 질문/힌트 → 아이 표현 기다리기"
-      },
-      "home": "가방 열어봐. 분명 쓸 만한 생각 하나쯤 굴러다닐걸?",
-      "reactions": {
-        "idea": "잠깐만, 가방 밑에 뭐 하나 굴러다니는데?",
-        "emotion": "마음 주머니가 좀 복잡하네. 하나씩 꺼내보자.",
-        "description": "뒤적뒤적… 색, 소리, 냄새 중 하나는 건질 수 있어.",
-        "viewpoint": "이쪽 주머니 말고 저쪽 주머니도 뒤져보자.",
-        "final": "좋아. 이제 흩어진 걸 가방에 제대로 넣을 시간."
-      }
-    },
-    "buddy": {
-      "label": "동료 탐험가",
-      "defaultName": "하루",
-      "personality": "담백 + 위트 + 든든함",
-      "behavior": {
-        "role": "탐험가 옆에서 발견을 돕는 탐험대원",
-        "never": "정답 작성·대필·채점·과도한 칭찬",
-        "default": "관찰 → 짧은 반응 → 질문/힌트 → 아이 표현 기다리기"
-      },
-      "home": "네가 앞장서. 나는 옆에서 놓치는 것만 같이 볼게.",
-      "reactions": {
-        "idea": "처음 생각 하나만 잡자. 나머지는 걸으면서 붙이면 돼.",
-        "emotion": "정답 찾지 말고 지금 네 마음부터 보자.",
-        "description": "장면을 같이 보자. 눈에 먼저 들어오는 게 뭐야?",
-        "viewpoint": "네 시선은 잡았어. 이제 한 걸음 옆으로 가보자.",
-        "final": "핵심은 남기고 군더더기만 챙겨보자."
-      }
-    }
-  },
+  "members": {},
   "roster": {
-    "currentTarget": 20,
-    "expandableByFutureUpdate": true,
+    "total": {
+      "longTermCeiling": 20,
+      "launchFillRequired": false,
+      "status": "CONFIRMED_DIRECTION",
+      "rationale": "20명은 즉시 채우는 목표가 아니라 장기 세계관 상한. 성장하며 천천히 추가."
+    },
     "starter": {
-      "minCandidates": 5,
-      "maxCandidates": 6,
-      "exactCount": "OPEN_PENDING_ROSTER_DESIGN",
-      "selection": "CHOOSE_ONE_AT_START",
-      "slots": [
+      "targetCount": 6,
+      "currentUserRange": "5-6",
+      "canonicalWorkingCount": 6,
+      "selection": "MEET_ALL_THEN_CHOOSE_ONE_TO_DEPART_WITH",
+      "unselectedState": "KNOWN_FRIEND_NOT_LOCKED",
+      "nameFlow": "DIRECT_NAME_OR_RECOMMENDED_NAME",
+      "personalitySlots": [
         {
-          "slotId": "START-01",
-          "memberId": "maltipoo",
-          "status": "DEFINED"
+          "slotId": "START-P01",
+          "archetype": "장난꾸러기",
+          "traits": [
+            "능청",
+            "유머"
+          ],
+          "status": "PERSONALITY_SLOT_CONFIRMED",
+          "species": "OPEN",
+          "name": "OPEN"
         },
         {
-          "slotId": "START-02",
-          "memberId": "cat",
-          "status": "DEFINED"
+          "slotId": "START-P02",
+          "archetype": "씩씩이",
+          "traits": [
+            "용감",
+            "직진"
+          ],
+          "status": "PERSONALITY_SLOT_CONFIRMED",
+          "species": "OPEN",
+          "name": "OPEN"
         },
         {
-          "slotId": "START-03",
-          "memberId": "redpanda",
-          "status": "DEFINED"
+          "slotId": "START-P03",
+          "archetype": "몽상가",
+          "traits": [
+            "엉뚱",
+            "상상"
+          ],
+          "status": "PERSONALITY_SLOT_CONFIRMED",
+          "species": "OPEN",
+          "name": "OPEN"
         },
         {
-          "slotId": "START-04",
-          "memberId": "buddy",
-          "status": "DEFINED"
+          "slotId": "START-P04",
+          "archetype": "차분이",
+          "traits": [
+            "느긋",
+            "관찰"
+          ],
+          "status": "PERSONALITY_SLOT_CONFIRMED",
+          "species": "OPEN",
+          "name": "OPEN"
         },
         {
-          "slotId": "START-05",
-          "memberId": null,
-          "status": "UNASSIGNED"
+          "slotId": "START-P05",
+          "archetype": "호기심쟁이",
+          "traits": [
+            "질문",
+            "발견"
+          ],
+          "status": "PERSONALITY_SLOT_CONFIRMED",
+          "species": "OPEN",
+          "name": "OPEN"
         },
         {
-          "slotId": "START-06",
-          "memberId": null,
-          "status": "OPTIONAL_UNASSIGNED"
+          "slotId": "START-P06",
+          "archetype": "다정이",
+          "traits": [
+            "따뜻",
+            "공감"
+          ],
+          "status": "PERSONALITY_SLOT_CONFIRMED",
+          "species": "OPEN",
+          "name": "OPEN"
         }
       ],
-      "provenance": {
-        "historicalDirectUser": "기본 6명으로 시작",
-        "latestUserCorrection": "초기 5-6명중에 선택",
-        "resolution": "LATEST_USER_CORRECTION_WINS"
-      }
+      "visualRules": [
+        "실루엣만 봐도 구별",
+        "얼굴형·귀·꼬리 반복 최소화",
+        "성격은 소품보다 몸짓에서 먼저 표현",
+        "탐험가 캐릭터보다 시각적으로 앞서지 않음",
+        "테마가 바뀌어도 동일 인물로 인식",
+        "작은 배지 크기에서도 알아볼 대표 특징"
+      ]
     },
     "worldRegion": {
-      "count": "CALCULATE_FROM_APP_HUB_ROLE_NEED",
-      "role": "챕터/거점/지역에서 만나며 정보·짧은 힌트·동행 연결을 제공할 수 있는 탐험대원",
-      "canBecomeMain": true,
-      "fixedMinimum": null,
-      "provenance": "사용자: 메인 탐험대 말고 거점 탐험대원 몇명이 필요할지 먼저 계산"
+      "count": "ROLE_DRIVEN_OPEN",
+      "laterDesignBoardCount": 6,
+      "status": "COUNT_NOT_HARD_LOCKED",
+      "role": "거점에서 처음 만날 수 있으나 NPC 고정이 아닌 살아 있는 탐험대원",
+      "states": [
+        "거점 근무",
+        "탐험 파견",
+        "다른 거점 지원",
+        "휴가",
+        "아픔",
+        "자유 탐험",
+        "스페셜 사건",
+        "메인 동행"
+      ],
+      "rules": [
+        "거점당 1명 고정 배치 금지",
+        "한 대원이 여러 거점을 오갈 수 있음",
+        "관계가 생기면 메인 동행 탐험대원으로 선택 가능",
+        "메인/거점은 등급이 아니라 현재 역할·위치 상태"
+      ]
     },
     "special": {
-      "maximumCount": 12,
-      "definedMembers": [],
-      "noPowerAdvantage": true,
-      "principle": "SPECIAL = ENCOUNTER가 특별함 / POWER 우위 없음",
-      "encounterConcepts": [
-        "PRESENCE_OR_TRACE",
+      "countRange": "3-12_DESIGN_SPACE",
+      "laterDesignBoardCount": 8,
+      "hardMaximum": 12,
+      "status": "COUNT_OPEN_WITH_MAXIMUM",
+      "principle": "능력이 특별한 것이 아니라 만나는 방식과 사건이 특별함",
+      "encounterGimmickRequired": true,
+      "lifecycle": [
+        "UNKNOWN",
+        "CLUE",
         "ENCOUNTER_WINDOW",
-        "FIRST_ENCOUNTER",
-        "EVENT_MEMORY",
-        "SELECTABLE_MAIN",
-        "REVISIT"
+        "RANDOM_ENCOUNTER",
+        "FIRST_MEETING",
+        "KNOWN_FRIEND",
+        "SELECTABLE_COMPANION"
       ],
-      "encounterSurfaces": [
-        "녹음 랜덤 동행",
-        "일반 탐험",
-        "거점 등장",
-        "챕터/지역 사건"
+      "clues": [
+        "그림자",
+        "발자국",
+        "소문",
+        "목소리",
+        "소지품",
+        "짧은 목격"
       ],
-      "exactProbability": "OPEN",
-      "exactCadencePerMember": "OPEN",
-      "cycleConcept": "1주/2주 간격 등의 주기 요소는 채택하되 개별 정확 수치는 OPEN",
-      "missedEncounterPenalty": false,
-      "afterEncounter": {
-        "catalogReveal": true,
-        "selectableAsMainCompanion": true,
-        "memoryPreserved": true
-      },
-      "hubAppearance": {
-        "triggerDialogueFromCurrentMainCrew": true,
-        "microEpisodeAllowed": true
-      },
-      "maximumCapacity": 12,
-      "encounterCycle": {
-        "userConfirmedCadence": "1주 또는 2주 간격 등의 주기 요소 필요",
-        "exactPerMemberSchedule": "OPEN",
-        "encounterWindow": "ADOPTED_CONCEPT_FROM_FOLLOWUP_DESIGN",
-        "cooldown": "ADOPTED_CONCEPT_FROM_FOLLOWUP_DESIGN",
-        "farmingPrevention": true
-      },
-      "discoveryFlow": [
-        "미발견",
-        "흔적/그림자",
-        "우연한 조우",
+      "encounterCycleExamples": [
+        "7일 이후",
+        "14일 이후",
+        "특정 거점 + 기간",
+        "특정 행동/배지 + 주기"
+      ],
+      "exactCycles": "OPEN_NOT_LOCKED",
+      "cooldown": true,
+      "farmingPrevention": true,
+      "noPowerAdvantage": true,
+      "noMissPenalty": true,
+      "noProbabilityDisplayToChild": true
+    },
+    "relationship": {
+      "key": "Explorer_ID",
+      "persistence": [
+        "외형 Identity",
+        "성격",
+        "말투",
+        "최초 이름",
+        "현재 이름",
+        "이름 이력",
         "첫 만남",
-        "도감 공개",
-        "메인 탐험대원 선택 가능",
-        "친밀도 시작"
+        "친밀도",
+        "함께한 사건",
+        "공동기억"
+      ],
+      "stages": [
+        "아직 모름",
+        "단서 발견",
+        "첫 만남",
+        "아는 친구",
+        "함께 탐험",
+        "자주 만남",
+        "단짝 관계"
+      ],
+      "affinity": {
+        "basedOn": "실제로 함께한 경험",
+        "neverDecreasesForAbsence": true,
+        "noPowerBoost": true,
+        "unlocks": [
+          "표정",
+          "포즈",
+          "인사",
+          "별명",
+          "농담",
+          "축하 동작",
+          "부르는 방식",
+          "특별 일러스트"
+        ],
+        "rule": "친밀도 상승은 성격 변화가 아니라 관계 거리의 변화"
+      }
+    },
+    "vocabulary": {
+      "avoid": [
+        "보유 탐험대",
+        "획득",
+        "장착",
+        "레어",
+        "가챠"
+      ],
+      "prefer": [
+        "만난 친구",
+        "함께 탐험",
+        "메인 탐험대",
+        "첫 만남",
+        "다시 만남",
+        "함께한 기록"
       ]
     },
     "invariants": {
-      "currentRosterTarget": 20,
-      "extensibleBeyond20": true,
-      "starterCandidates": "5_TO_6",
-      "hubCountMustBeRoleCalculated": true,
-      "specialMaximum": 12,
       "allMembersSameFunctionalAbility": true,
+      "performanceDifferenceForbidden": true,
       "differencesOnly": [
         "외형",
         "성격",
         "말투",
-        "분위기",
-        "리액션",
-        "행동 습관",
+        "유머 방식",
+        "감탄 방식",
+        "위로 방식",
+        "기다리는 방식",
+        "축하 방식",
+        "표정·제스처",
         "만남 방식",
-        "활동 지역",
+        "지역",
         "친밀도",
         "추억"
-      ]
-    },
-    "totalCapacity": 20,
-    "extensible": true
+      ],
+      "growthAddsMembersGradually": true,
+      "discoveryRateNotProportionalToUsage": true
+    }
   },
   "relationship": {
     "enabled": true,
@@ -590,6 +621,85 @@
       "specialMax12": true,
       "starterFiveToSixLatest": true,
       "hubCountMustBeCalculatedFirst": true
+    }
+  },
+  "evidenceStatus": {
+    "source": "P03_SANITIZED_6aa5d901-2c80-83e8-aaa2-3f6a57902a8a_연결 대화 재개",
+    "sourceType": "TRANSCRIPT_ONLY_ACCOUNT_AUDIT_INPUT",
+    "note": "과거 설계 대화 근거. 현재 사용자 정정과 충돌 시 현재 사용자 정정 우선."
+  },
+  "definedCharacterLineages": {
+    "maltipoo": {
+      "label": "말티푸",
+      "defaultName": "모카",
+      "personality": "밝음 + 영리함 + 사람을 잘 따름 + 애교 + 장난기 + 눈치 빠름 + 살짝 덤벙거림",
+      "behavior": {
+        "role": "탐험가 옆에서 발견을 돕는 탐험대원",
+        "never": "정답 작성·대필·채점·과도한 칭찬",
+        "default": "관찰 → 짧은 반응 → 질문/힌트 → 아이 표현 기다리기"
+      },
+      "home": "같이 가자. 내가 먼저 아는 척은 해볼게.",
+      "reactions": {
+        "idea": "뭔가 있긴 한데… 아이디어인지 돌멩이인지는 캐봐야 알겠어.",
+        "emotion": "오늘 마음은 잔잔한가? 아니면 안에서 파도 치는 중?",
+        "description": "여긴 눈만 쓰면 손해야. 귀랑 코도 데려가자.",
+        "viewpoint": "네 쪽에선 그렇게 보이네. 반대편으로 가면 뭐가 보일까?",
+        "final": "좋아, 가져온 생각들 한번 펼쳐보자. 두고 온 건 없나?"
+      }
+    },
+    "cat": {
+      "label": "탐험 고양이",
+      "defaultName": "루루",
+      "personality": "살짝 시크 + 능청 + 친절 + 관찰력",
+      "behavior": {
+        "role": "탐험가 옆에서 발견을 돕는 탐험대원",
+        "never": "정답 작성·대필·채점·과도한 칭찬",
+        "default": "관찰 → 짧은 반응 → 질문/힌트 → 아이 표현 기다리기"
+      },
+      "home": "내가 먼저 가볼게. 겁나서 그런 건 아니고… 순서가 그런 거야.",
+      "reactions": {
+        "idea": "흠. 냄새는 나는데 아직 아이디어 얼굴은 안 보이네.",
+        "emotion": "마음은 숨는 데 선수야. 그래도 꼬리는 보일 때가 있지.",
+        "description": "눈만 믿지 마. 수염이 먼저 알아채는 것도 있거든.",
+        "viewpoint": "한쪽만 보면 재미없지. 반대편 난간도 한번 가보자.",
+        "final": "마지막은 중요해. 괜히 멋있는 척 말고 네 식으로 끝내."
+      }
+    },
+    "redpanda": {
+      "label": "랫서팬더",
+      "defaultName": "포포",
+      "personality": "장난스러움 + 호기심 + 뒤적이는 탐험가 기질",
+      "behavior": {
+        "role": "탐험가 옆에서 발견을 돕는 탐험대원",
+        "never": "정답 작성·대필·채점·과도한 칭찬",
+        "default": "관찰 → 짧은 반응 → 질문/힌트 → 아이 표현 기다리기"
+      },
+      "home": "가방 열어봐. 분명 쓸 만한 생각 하나쯤 굴러다닐걸?",
+      "reactions": {
+        "idea": "잠깐만, 가방 밑에 뭐 하나 굴러다니는데?",
+        "emotion": "마음 주머니가 좀 복잡하네. 하나씩 꺼내보자.",
+        "description": "뒤적뒤적… 색, 소리, 냄새 중 하나는 건질 수 있어.",
+        "viewpoint": "이쪽 주머니 말고 저쪽 주머니도 뒤져보자.",
+        "final": "좋아. 이제 흩어진 걸 가방에 제대로 넣을 시간."
+      }
+    },
+    "buddy": {
+      "label": "동료 탐험가",
+      "defaultName": "하루",
+      "personality": "담백 + 위트 + 든든함",
+      "behavior": {
+        "role": "탐험가 옆에서 발견을 돕는 탐험대원",
+        "never": "정답 작성·대필·채점·과도한 칭찬",
+        "default": "관찰 → 짧은 반응 → 질문/힌트 → 아이 표현 기다리기"
+      },
+      "home": "네가 앞장서. 나는 옆에서 놓치는 것만 같이 볼게.",
+      "reactions": {
+        "idea": "처음 생각 하나만 잡자. 나머지는 걸으면서 붙이면 돼.",
+        "emotion": "정답 찾지 말고 지금 네 마음부터 보자.",
+        "description": "장면을 같이 보자. 눈에 먼저 들어오는 게 뭐야?",
+        "viewpoint": "네 시선은 잡았어. 이제 한 걸음 옆으로 가보자.",
+        "final": "핵심은 남기고 군더더기만 챙겨보자."
+      }
     }
   }
 }
