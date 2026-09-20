@@ -207,3 +207,50 @@ This directly prevents the previous loss pattern.
 `SUPERSEDED VISUAL != SUPERSEDED PERSONALITY`
 `HANDOFF HOLD != GLOBAL HISTORICAL ABSENCE`
 `ONE WRONG FIELD != DELETE WHOLE CHARACTER ATOM`
+
+
+## 2.1 Current-compatible reaction / group-routine evidence
+
+**Artifact:** `a_wide_detailed_character_lineup_and_concept_post.png`
+**Manifest SHA-256:** `0c93c51ebe4f1512a1caadb9f490aca4d8dfcf306ba1309dc8a5db6f6ddd1e8a`
+
+This artifact is materially closer to the recovered current Core 6 visual lineage:
+- 두비 dog-like
+- 로리 rabbit
+- 잉크 dark fox/cat-like explorer silhouette
+- 노바 brown otter/ferret-like
+- 테이크 panda
+- 제로 penguin
+
+Recovered reaction/voice directions:
+- **두비:** `와! 해보자!` / 작은 호기심이 큰 이야기가 될 거야.
+- **로리:** `괜찮아, 천천히 해도 돼.` / 언제나 네 마음을 응원할게.
+- **잉크:** `음... 다른 방법도 있지.` / 생각이 모이면 더 좋은 답이 보여.
+- **노바:** `가보자! 하면 되지!` / 지금 이 순간도 멋진 모험이야.
+- **테이크:** `차근차근 같이 해보자.` / 하나씩 하면 정말 할 수 있어.
+- **제로:** `언제나, 네 이야기를 응원해!` / 좋은 친구는 언제나 옆에 있어.
+
+Disposition:
+- signature reaction direction: **RECOVERED / CORROBORATED**
+- exact runtime dialogue templates: **NOT LOCKED**; these lines are identity/voice evidence, not mandatory repeated scripts.
+
+Recovered crew-level relationship/routine scenes:
+- 같이 공부할 때
+- 쉬는 시간에도
+- 가끔은 장난도 치고
+- 힘든 날엔 언제나 옆에
+- 그리고, 더 멀리 함께
+
+Disposition:
+- **CREW_GROUP_ROUTINE_EVIDENCE = RECOVERED**
+- this supports a group-relationship axis but does not prove individualized relationship exceptions for every pair.
+- per-character `RELATIONSHIP EXCEPTION` remains PARTIAL / RECOVERY_REQUIRED.
+
+### Additional corroborating lineup
+**Artifact:** `a_wide_colorful_polished_3d_cg_character_lineup.png`
+**Manifest SHA-256:** `d12b9473ee1cb4f9b313284f675e2cc4a9bc66bf5085d8c6014a20e5720d6cb7c`
+
+This board contains some superseded visual assignments (notably Lori/Nova lineage mixing), but preserves materially consistent personality/voice text and the same crew-group scenes.
+
+Rule:
+`MIXED VISUAL BOARD MAY CORROBORATE TEXT, BUT SHALL NOT OVERRIDE CURRENT VISUAL ID`.
