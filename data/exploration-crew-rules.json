@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R5",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R6",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -216,153 +216,70 @@
     "currentTarget": 20,
     "expandableByFutureUpdate": true,
     "starter": {
-      "candidateMin": 5,
-      "candidateMax": 6,
-      "selection": "CHOOSE_ONE_AT_START",
-      "currentDefinedCount": 4,
-      "releaseGate": "AT_LEAST_5_DEFINED_BEFORE_STARTER_SELECTION_RELEASE",
+      "selectableCandidateCount": {
+        "min": 5,
+        "max": 6
+      },
+      "selection": "CHOOSE_ONE_AS_MAIN_AT_START",
+      "definedMembers": [
+        "maltipoo",
+        "cat",
+        "redpanda",
+        "buddy"
+      ],
       "status": "STARTER_ROSTER_GAP",
-      "slots": [
-        {
-          "slotId": "START-01",
-          "memberId": "maltipoo",
-          "status": "DEFINED"
-        },
-        {
-          "slotId": "START-02",
-          "memberId": "cat",
-          "status": "DEFINED"
-        },
-        {
-          "slotId": "START-03",
-          "memberId": "redpanda",
-          "status": "DEFINED"
-        },
-        {
-          "slotId": "START-04",
-          "memberId": "buddy",
-          "status": "DEFINED"
-        },
-        {
-          "slotId": "START-05",
-          "memberId": null,
-          "status": "UNASSIGNED_REQUIRED"
-        },
-        {
-          "slotId": "START-06",
-          "memberId": null,
-          "status": "UNASSIGNED_OPTIONAL_UNTIL_CONFIRMED"
-        }
-      ]
+      "releaseGate": "AT_LEAST_5_DEFINED_BEFORE_STARTER_SELECTION_RELEASE",
+      "unknownIdentityPolicy": "DO_NOT_INVENT"
     },
     "worldRegion": {
-      "exactCount": "OPEN_ROLE_ANALYSIS_REQUIRED",
-      "status": "COUNT_AND_IDENTITIES_OPEN",
-      "fiveFixedHubs": true,
-      "role": "고정 5거점/지역에서 정보·한 줄 힌트·지역 반응·만남 연결을 담당할 수 있음",
-      "oneLineHintRole": true,
+      "countStatus": "OPEN_CALCULATE_FROM_ACTUAL_HUB_NEED",
+      "fixedHubCountSnap": 5,
       "fixedOnePerHub": false,
-      "substitutionAndAbsenceAllowed": true,
+      "roles": [
+        "정보원",
+        "한 줄 힌트",
+        "지역 반응",
+        "만남 연결"
+      ],
+      "presenceDynamic": true,
+      "substitutionAllowed": true,
       "returnMemoryAllowed": true,
-      "memberIdentityStatus": "OPEN",
-      "slots": []
+      "identitiesStatus": "OPEN"
     },
     "special": {
       "maximumCount": 12,
-      "status": "IDENTITIES_AND_EXACT_UNLOCK_OPEN",
-      "principle": "능력 우위가 아니라 만남 방식·등장 맥락·추억이 특별하다",
-      "selectionFlow": [
+      "definedMembers": [],
+      "noPowerAdvantage": true,
+      "principle": "만남 방식·등장 맥락·추억이 특별하며 기능 능력은 동일",
+      "encounterConcepts": [
         "PRESENCE_OR_TRACE",
         "ENCOUNTER_WINDOW",
         "FIRST_ENCOUNTER",
         "EVENT_MEMORY",
-        "SELECTABLE"
+        "SELECTABLE_MAIN",
+        "REVISIT"
       ],
-      "noPowerAdvantage": true,
-      "optional": true,
-      "missedEncounterPenalty": false,
-      "encounterWindow": true,
-      "cooldown": true,
-      "exactTriggerThresholds": "OPEN_DO_NOT_INVENT",
-      "reservedSlots": [
-        {
-          "slotId": "SPECIAL-01",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-02",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-03",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-04",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-05",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-06",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-07",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-08",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-09",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-10",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-11",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        },
-        {
-          "slotId": "SPECIAL-12",
-          "memberId": null,
-          "status": "UNASSIGNED"
-        }
-      ],
-      "separateFromSpecialExploration": true,
-      "microEpisodeAllowed": true,
-      "currentMainMemberReaction": true,
       "encounterSurfaces": [
         "녹음 랜덤 동행",
         "일반 탐험",
         "거점 등장",
         "챕터/지역 사건"
       ],
-      "cycleConcept": "1주/2주 간격 등의 주기 요소는 채택, 개별 정확 수치는 OPEN"
+      "exactProbability": "OPEN",
+      "exactCadencePerMember": "OPEN",
+      "cycleConcept": "1주/2주 간격 등의 주기 요소는 채택하되 개별 정확 수치는 OPEN",
+      "missedEncounterPenalty": false,
+      "afterEncounter": {
+        "catalogReveal": true,
+        "selectableAsMainCompanion": true,
+        "memoryPreserved": true
+      },
+      "hubAppearance": {
+        "triggerDialogueFromCurrentMainCrew": true,
+        "microEpisodeAllowed": true
+      }
     },
     "invariants": {
-      "currentRosterTarget": 20,
-      "futureExpansionAllowed": true,
-      "starterCandidateRange": "5-6",
-      "worldRegionExactCount": "OPEN_ROLE_ANALYSIS_REQUIRED",
-      "specialMaximum": 12,
       "allMembersSameFunctionalAbility": true,
       "differencesOnly": [
         "외형",
@@ -376,79 +293,181 @@
         "추억"
       ],
       "noInventedMemberIdentity": true
-    },
-    "relationship": {
-      "preserveName": true,
-      "preserveAffinity": true,
-      "preserveMemories": true,
-      "switchingMemberDoesNotResetProgress": true,
-      "affinityAffects": [
-        "대사 변주",
-        "추억 회상",
-        "재회 표현"
-      ],
-      "affinityMustNotAffect": [
-        "학습 난이도",
-        "EXP",
-        "보석",
-        "기능 접근",
-        "평가"
-      ]
-    },
-    "conflicts": [
-      {
-        "id": "CREW-CONFLICT-001",
-        "olderClaim": "Special Guest 20명 별도 풀",
-        "disposition": "SUPERSEDED",
-        "reason": "최신 사용자 직접 정정: 기본 탐험대 로스터 20명, 스페셜 탐험대 최대 12명 이하"
-      },
-      {
-        "id": "CREW-OPEN-001",
-        "item": "START-05/START-06 개별 정체성",
-        "disposition": "OPEN",
-        "rule": "임의 이름·외형·성격 생성 금지"
-      },
-      {
-        "id": "CREW-OPEN-002",
-        "item": "스페셜 정확한 해금 일수/챕터/거점 조건",
-        "disposition": "OPEN",
-        "rule": "Encounter Window/Cooldown 개념만 보존하고 수치 임의 구현 금지"
-      },
-      {
-        "id": "CREW-WORLD-MIN-002",
-        "olderClaim": "세계/거점 탐험대 최소 2명",
-        "disposition": "REJECT",
-        "reason": "사용자 직접 확정치 아님. 거점 역할 계산 후 정확 인원 결정"
-      }
-    ],
-    "currentRosterTarget": 20,
-    "futureExpansionAllowed": true,
-    "discovery": {
-      "states": [
-        "UNDISCOVERED",
-        "TRACE",
-        "FIRST_ENCOUNTER",
-        "CATALOG_REVEALED",
-        "SELECTABLE_AS_MAIN",
-        "RELATIONSHIP_MEMORY",
-        "REUNION"
-      ],
-      "antiFarm": true,
-      "usageLinearUnlock": false
-    },
-    "naming": {
-      "starter": [
-        "직접 이름 입력",
-        "추천 이름"
-      ],
-      "discovered": [
-        "첫 만남 랜덤 이름 가능",
-        "메인 설정 시 이름 변경 가능"
-      ],
-      "preservePreviousNames": true,
-      "stableInternalId": true
     }
   },
+  "relationship": {
+    "enabled": true,
+    "source": "자주 만나고 실제로 함께한 탐험·녹음·사건·재회",
+    "numericScoreVisible": false,
+    "affectsPower": false,
+    "unlocksExpressionOnly": true,
+    "examples": [
+      "표정",
+      "포즈",
+      "인사",
+      "별명",
+      "농담",
+      "축하 동작",
+      "호칭",
+      "특별 일러스트"
+    ],
+    "historyPreserved": true,
+    "stableMemberId": "crewMemberId"
+  },
+  "naming": {
+    "starter": {
+      "directInput": true,
+      "recommendation": true
+    },
+    "discovered": {
+      "randomInitialName": true
+    },
+    "whenSetAsMain": {
+      "renameAllowed": true
+    },
+    "currentNamePersistsWhenMainChanges": true,
+    "previousNameShownInDetail": true,
+    "nameHistoryPermanent": true,
+    "stableInternalIdRequired": true,
+    "stableMemberId": "crewMemberId"
+  },
+  "discovery": {
+    "states": [
+      "UNDISCOVERED",
+      "TRACE",
+      "FIRST_ENCOUNTER",
+      "CATALOG_REVEALED",
+      "SELECTABLE_MAIN",
+      "RELATIONSHIP_MEMORY",
+      "REUNION"
+    ],
+    "growthPrinciple": "성장하면서 천천히 추가",
+    "farmingProtection": "발견 속도는 사용량에 정비례하지 않음"
+  },
+  "worldSimulation": {
+    "hubPresenceIsDynamic": true,
+    "absenceReasons": {
+      "lifestyle": [
+        "배 아픔",
+        "휴가",
+        "늦잠",
+        "소풍",
+        "간식 사러 감",
+        "낮잠"
+      ],
+      "duty": [
+        "다른 거점 지원",
+        "탐험 파견"
+      ],
+      "mystery": [
+        "길 잃음",
+        "뭔가 찾으러 감",
+        "이유를 아무도 모름",
+        "스페셜 관련"
+      ]
+    },
+    "substituteMemberAllowed": true,
+    "currentMainCrewReactsToUnexpectedPresence": true,
+    "returnFollowupDialogue": true,
+    "expeditionCanBring": [
+      "새 지역 소문",
+      "스페셜 흔적",
+      "다음 챕터 힌트",
+      "새 거점 이야기"
+    ],
+    "systemLogicHiddenBehindWorldStory": true
+  },
+  "specialCrewEncounter": {
+    "separateFromSpecialExploration": true,
+    "stateKey": "crewEncounters",
+    "eventMemoryKey": "crewEncounterMemories",
+    "flow": [
+      "TRACE",
+      "ENCOUNTER_WINDOW",
+      "RANDOM_OR_HUB_ENCOUNTER",
+      "FIRST_MEETING",
+      "KNOWN",
+      "SELECTABLE_MAIN",
+      "REVISIT"
+    ],
+    "microEpisode": true,
+    "dialogueParticipants": [
+      "현재 메인 탐험대원",
+      "거점 탐험대원",
+      "스페셜 탐험대원"
+    ],
+    "exactProbability": "OPEN",
+    "exactCadencePerMember": "OPEN"
+  },
+  "classification": {
+    "LOCKED": [
+      "BASE_ROSTER_20_CURRENT",
+      "EXTENSIBLE_ROSTER",
+      "STARTER_MAIN_SELECTION_5_TO_6_LATEST",
+      "SPECIAL_MAX_12",
+      "ALL_MEMBERS_EQUAL_FUNCTIONAL_ABILITY",
+      "SPECIAL_IS_ENCOUNTER_NOT_POWER",
+      "MAIN_MEMBER_TRAVELS_WITH_EXPLORER",
+      "SNAP_FIXED_5_HUBS",
+      "HUB_INFO_MEMBER_ROLE",
+      "AFFINITY_NOT_POWER",
+      "NAME_HISTORY_PRESERVED",
+      "SPECIAL_CYCLE_ELEMENT",
+      "SLOW_DISCOVERY"
+    ],
+    "DERIVED_SUPPORTED": [
+      "ENCOUNTER_WINDOW",
+      "COOLDOWN",
+      "NO_FARMING",
+      "CATALOG_REVEAL_AFTER_FIRST_MEETING",
+      "EVENT_CENTRIC_SHARED_MEMORY"
+    ],
+    "OPEN": [
+      "FULL_20_MEMBER_IDENTITIES",
+      "EXACT_HUB_MEMBER_COUNT",
+      "EXACT_SPECIAL_MEMBER_COUNT_BELOW_12",
+      "PER_MEMBER_SPECIAL_CYCLE",
+      "AFFINITY_LEVEL_NAMES",
+      "EXACT_ENCOUNTER_PROBABILITY",
+      "STARTER_REMAINING_1_TO_2_IDENTITIES"
+    ]
+  },
+  "conflicts": [
+    {
+      "id": "CREW-CONFLICT-001",
+      "olderClaim": "Special Guest 20명 별도 풀",
+      "disposition": "SUPERSEDED",
+      "reason": "최신 사용자 직접 정정: 현재 로스터 20명, 스페셜 최대 12명 이하"
+    },
+    {
+      "id": "CREW-WORLD-MIN-002",
+      "olderClaim": "세계/거점 탐험대 최소 2명",
+      "disposition": "REJECT",
+      "reason": "사용자 직접 확정치 아님. 실제 5거점 역할 분석 후 인원 결정"
+    },
+    {
+      "id": "CREW-SPECIAL-COUNT-003",
+      "olderClaim": "스페셜 3~4명",
+      "disposition": "REJECT",
+      "reason": "과거 assistant 제안이며 최신 사용자 상한 12명 이하보다 하위"
+    },
+    {
+      "id": "CREW-STARTER-COUNT-004",
+      "olderClaim": "시작 6명 고정",
+      "disposition": "SUPERSEDED_PARTIAL",
+      "reason": "최신 사용자 정정은 초기 5~6명 중 선택"
+    }
+  ],
+  "openItems": [
+    "STARTER_REMAINING_1_TO_2_IDENTITIES",
+    "FULL_20_MEMBER_IDENTITIES",
+    "EXACT_HUB_MEMBER_COUNT",
+    "EXACT_SPECIAL_MEMBER_COUNT_WITHIN_MAX_12",
+    "EXACT_SPECIAL_ENCOUNTER_CYCLE",
+    "EXACT_SPECIAL_ENCOUNTER_PROBABILITY",
+    "EXACT_AFFINITY_STAGE_NAMES",
+    "FINAL_VISUAL_SPECIES_AND_NAMES"
+  ],
   "evidence": {
     "primarySource": "Google Drive sanitized transcript P03_SANITIZED_6aa5d901-2c80-83e8-aaa2-3f6a57902a8a_연결 대화 재개",
     "sourceDriveId": "1GTnatAVOLpbac_qWakAhMdnIu1zkw1lthp2MY04RACY",
@@ -525,205 +544,9 @@
       }
     ]
   },
-  "relationship": {
-    "enabled": true,
-    "source": "자주 만나고 실제로 함께한 경험",
-    "numericScoreVisible": false,
-    "affectsPower": false,
-    "unlocksExpressionOnly": true,
-    "examples": [
-      "표정",
-      "포즈",
-      "인사",
-      "별명",
-      "농담",
-      "축하 동작",
-      "호칭",
-      "특별 일러스트"
-    ],
-    "historyPreserved": true,
-    "stableMemberId": "crewMemberId"
-  },
-  "identity": {
-    "immutableId": "Explorer_ID",
-    "fields": [
-      "appearanceIdentity",
-      "personality",
-      "speechStyle",
-      "firstName",
-      "currentName",
-      "nameHistory",
-      "firstEncounter",
-      "affinity",
-      "sharedEvents"
-    ],
-    "appSpecificProjection": [
-      "APP_ROLE",
-      "LOCATION",
-      "DIALOGUE",
-      "THEME_APPEARANCE"
-    ],
-    "sameIdentityAcrossApps": true
-  },
-  "classification": {
-    "LOCKED": [
-      "BASE_ROSTER_20",
-      "EXTENSIBLE_ROSTER",
-      "STARTER_MAIN_SELECTION_5_TO_6_LATEST",
-      "SPECIAL_MAX_12",
-      "ALL_MEMBERS_EQUAL_FUNCTIONAL_ABILITY",
-      "SPECIAL_IS_ENCOUNTER_NOT_POWER",
-      "MAIN_MEMBER_TRAVELS_WITH_EXPLORER",
-      "HUB_INFO_MEMBER_ROLE",
-      "AFFINITY_NOT_POWER",
-      "NAME_HISTORY_PRESERVED",
-      "SPECIAL_1_OR_2_WEEK_CYCLE_ELEMENT",
-      "SLOW_DISCOVERY"
-    ],
-    "DERIVED_SUPPORTED": [
-      "ENCOUNTER_WINDOW",
-      "COOLDOWN",
-      "NO_FARMING",
-      "CATALOG_REVEAL_AFTER_FIRST_MEETING",
-      "EVENT_CENTRIC_SHARED_MEMORY"
-    ],
-    "OPEN": [
-      "FULL_20_MEMBER_IDENTITIES",
-      "EXACT_HUB_MEMBER_COUNT",
-      "EXACT_SPECIAL_MEMBER_COUNT_BELOW_12",
-      "PER_MEMBER_SPECIAL_CYCLE",
-      "AFFINITY_LEVEL_NAMES",
-      "EXACT_ENCOUNTER_PROBABILITY",
-      "WHICH_DISCOVERED_MEMBERS_CAN_BECOME_MAIN",
-      "STARTER_REMAINING_1_TO_2_IDENTITIES"
-    ]
-  },
-  "worldState": {
-    "principle": "CREW_MEMBERS_HAVE_LIVES_BEYOND_STATIC_NPC_POSITIONS",
-    "possibleStates": [
-      "AT_HUB",
-      "EXPEDITION",
-      "VACATION",
-      "SICK",
-      "SUPPORTING_OTHER_HUB",
-      "WANDERING",
-      "SPECIAL_EVENT",
-      "MAIN_COMPANION"
-    ],
-    "storyReasons": [
-      "생활형",
-      "탐험 파견",
-      "다른 거점 지원",
-      "휴가",
-      "아픔",
-      "미스터리/스페셜 관련"
-    ],
-    "playerFacingPresentation": "WORLD_STORY_NOT_SYSTEM_STATE",
-    "mainCrewCanReactToHubChanges": true,
-    "preserveFunctionAvailability": true
-  },
-  "eventTruth": {
-    "realActivityAndFictionalWorldStorySeparated": true,
-    "activityEventRequiresEvidence": true,
-    "worldEventMayBeFictional": true,
-    "encounterLinksWorldAndActivityWithoutInventingLearningFacts": true
-  },
-  "openItems": [
-    "STARTER_SLOT_05_IDENTITY",
-    "STARTER_SLOT_06_IDENTITY",
-    "REMAINING_14_IDENTITIES",
-    "EXACT_SPECIAL_COUNT_WITHIN_MAX_12",
-    "EXACT_SPECIAL_ENCOUNTER_CYCLE",
-    "EXACT_SPECIAL_ENCOUNTER_PROBABILITY",
-    "EXACT_AFFINITY_STAGE_NAMES",
-    "FINAL_VISUAL_SPECIES_AND_NAMES"
-  ],
   "sourceStatus": {
     "latestUserCorrection": "초기 선택 후보는 5~6명",
     "recoveredUserEvidenceDate": "2026-09-08",
     "rule": "LATEST_USER_CORRECTION_OVERRIDES_OLDER_USER_EVIDENCE_AND_ASSISTANT_PROPOSALS"
-  },
-  "naming": {
-    "starter": {
-      "directInput": true,
-      "recommendation": true
-    },
-    "discovered": {
-      "randomInitialName": true
-    },
-    "whenSetAsMain": {
-      "renameAllowed": true
-    },
-    "currentNamePersistsWhenMainChanges": true,
-    "previousNameShownInDetail": true,
-    "nameHistoryPermanent": true,
-    "stableInternalIdRequired": true,
-    "stableMemberId": "crewMemberId"
-  },
-  "discovery": {
-    "states": [
-      "UNDISCOVERED",
-      "TRACE",
-      "ENCOUNTERED",
-      "KNOWN",
-      "SELECTABLE_MAIN"
-    ],
-    "growthPrinciple": "성장하면서 천천히 추가",
-    "farmingProtection": "발견 속도는 사용량에 정비례하지 않음"
-  },
-  "worldSimulation": {
-    "hubPresenceIsDynamic": true,
-    "absenceReasons": {
-      "lifestyle": [
-        "배 아픔",
-        "휴가",
-        "늦잠",
-        "소풍",
-        "간식 사러 감",
-        "낮잠"
-      ],
-      "duty": [
-        "다른 거점 지원",
-        "탐험 파견"
-      ],
-      "mystery": [
-        "길 잃음",
-        "뭔가 찾으러 감",
-        "이유를 아무도 모름",
-        "스페셜 관련"
-      ]
-    },
-    "substituteMemberAllowed": true,
-    "currentMainCrewReactsToUnexpectedPresence": true,
-    "returnFollowupDialogue": true,
-    "expeditionCanBring": [
-      "새 지역 소문",
-      "스페셜 흔적",
-      "다음 챕터 힌트",
-      "새 거점 이야기"
-    ],
-    "systemLogicHiddenBehindWorldStory": true
-  },
-  "specialCrewEncounter": {
-    "separateFromSpecialExploration": true,
-    "stateKey": "crewEncounters",
-    "eventMemoryKey": "crewEncounterMemories",
-    "flow": [
-      "TRACE",
-      "ENCOUNTER_WINDOW",
-      "RANDOM_OR_HUB_ENCOUNTER",
-      "FIRST_MEETING",
-      "KNOWN",
-      "SELECTABLE_MAIN",
-      "REVISIT"
-    ],
-    "microEpisode": true,
-    "dialogueParticipants": [
-      "현재 메인 탐험대원",
-      "거점 탐험대원",
-      "스페셜 탐험대원"
-    ],
-    "exactProbability": "OPEN",
-    "exactCadencePerMember": "OPEN"
   }
 }
