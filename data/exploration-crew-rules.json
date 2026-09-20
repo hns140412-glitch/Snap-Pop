@@ -1,5 +1,5 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R2",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R3",
   "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
   "terminology": {
     "explorer": "탐험가",
@@ -128,7 +128,14 @@
     "settings": {
       "memberSelectable": true,
       "nameEditable": true,
-      "personalityPreview": true
+      "personalityPreview": true,
+      "rosterSections": [
+        "STARTER",
+        "WORLD_REGION",
+        "SPECIAL"
+      ],
+      "showUnassignedSlots": true,
+      "specialSelectOnlyAfterEncounter": true
     }
   },
   "members": {
@@ -203,6 +210,158 @@
         "viewpoint": "네 시선은 잡았어. 이제 한 걸음 옆으로 가보자.",
         "final": "핵심은 남기고 군더더기만 챙겨보자."
       }
+    }
+  },
+  "roster": {
+    "totalCapacity": 20,
+    "starter": {
+      "capacity": 6,
+      "selection": "CHOOSE_ONE_AT_START",
+      "slots": [
+        {
+          "slotId": "START-01",
+          "memberId": "maltipoo",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-02",
+          "memberId": "cat",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-03",
+          "memberId": "redpanda",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-04",
+          "memberId": "buddy",
+          "status": "DEFINED"
+        },
+        {
+          "slotId": "START-05",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "START-06",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        }
+      ]
+    },
+    "worldRegion": {
+      "minimumCapacity": 2,
+      "role": "거점/지역에서 만나 한 줄 힌트·정보·동행 연결을 제공하는 탐험대원",
+      "slots": [
+        {
+          "slotId": "WORLD-01",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "WORLD-02",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        }
+      ],
+      "canExpand": true
+    },
+    "special": {
+      "maximumCapacity": 12,
+      "reservedSlots": [
+        {
+          "slotId": "SPECIAL-01",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-02",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-03",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-04",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-05",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-06",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-07",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-08",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-09",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-10",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-11",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        },
+        {
+          "slotId": "SPECIAL-12",
+          "memberId": null,
+          "status": "UNASSIGNED"
+        }
+      ],
+      "principle": "능력 우위가 아니라 만남 자체가 특별하다",
+      "selectionFlow": [
+        "ENCOUNTER_AVAILABLE",
+        "ENCOUNTER",
+        "MEMORY_RECORDED",
+        "SELECTABLE"
+      ],
+      "noPowerAdvantage": true,
+      "optional": true,
+      "missedEncounterPenalty": false,
+      "encounterWindow": true,
+      "cooldown": true,
+      "unlockConditionsStatus": "OPEN_FOR_FUTURE_DEFINITION"
+    },
+    "invariants": {
+      "totalMustRemain": 20,
+      "starterMustRemain": 6,
+      "worldRegionMinimum": 2,
+      "specialMaximum": 12,
+      "allMembersSameFunctionalAbility": true,
+      "differencesOnly": [
+        "외형",
+        "성격",
+        "말투",
+        "분위기",
+        "리액션",
+        "만남 방식",
+        "지역",
+        "친밀도",
+        "추억"
+      ]
     }
   }
 }
