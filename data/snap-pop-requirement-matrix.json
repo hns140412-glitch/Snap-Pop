@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.13",
+  "version": "2026-09-21.14",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -1283,6 +1283,29 @@
         "semantic-writing-runtime.js:SEMANTIC_PROVIDER_UNAVAILABLE"
       ],
       "gap": "live failure-path runtime validation pending"
+    },
+    {
+      "id": "SP-BADGE-001",
+      "domain": "BADGE_SYSTEM",
+      "title": "배지 시스템 — 독립 성장축 복원",
+      "authority": [
+        "SNAP_EXPLORATION_CREW_SOURCE_LEDGER",
+        "SNAP_EXPLORATION_CREW_MASTER",
+        "REV10",
+        "C2S_NO_SILENT_LOSS"
+      ],
+      "classification": "RECOVERY_REQUIRED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [],
+      "recoveryEvidence": [
+        "SNAP_EXPLORATION_CREW_SOURCE_LEDGER: Character Master / 탐험대 / 배지 / 친밀도 / World State는 서로 다른 성장축",
+        "SNAP_EXPLORATION_CREW_MASTER: 특정 행동/배지가 Special Encounter 조건 예시",
+        "REV10: 레벨 이정표는 성장 칭호/나무 변화/기념 기록에 사용 가능"
+      ],
+      "gap": "배지 종류, 획득 조건, 표시 위치, 중복/등급 여부, 성장/스페셜 연계의 원래 확정안 미회수. 추정 구현 금지."
     }
   ]
 }
