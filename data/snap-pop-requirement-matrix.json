@@ -1,0 +1,644 @@
+{
+  "version": "2026-09-21.1",
+  "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
+  "authorityOrder": [
+    "LATEST_DIRECT_USER",
+    "TAKY_C2S",
+    "REV12",
+    "REV11",
+    "REV10",
+    "EXPLORATION_CREW_MASTER",
+    "EXPLORATION_CREW_RULES_JSON",
+    "ACTUAL_CODE",
+    "HISTORICAL_EVIDENCE"
+  ],
+  "statusSemantics": {
+    "classification": [
+      "CONFIRMED",
+      "WORKING",
+      "PRESERVE_LINEAGE",
+      "RECOVERY_REQUIRED",
+      "RECOVERY_CANDIDATE",
+      "CONFLICT",
+      "SUPERSEDED"
+    ],
+    "implementation": [
+      "true",
+      "PARTIAL",
+      "POLICY_ONLY",
+      "false"
+    ],
+    "verification": [
+      "true",
+      "PARTIAL",
+      "HISTORICAL_PARTIAL",
+      "false"
+    ]
+  },
+  "invariants": [
+    "CORE_6_IS_PROVISIONAL_REFERENCE_NOT_PROJECT_CENTER",
+    "GUIDE_RULES_ARE_PROJECT_WIDE_BEHAVIOR_STANDARD",
+    "DOCUMENTED != CODED",
+    "CODED != RUNTIME_VERIFIED",
+    "RUNTIME_VERIFIED != DEVICE_VERIFIED",
+    "EXPANSION_PACK_INCLUDED_IN_FULL_SCOPE_IMPLEMENTATION_RATE",
+    "CONFLICT != PERMISSION_TO_GUESS"
+  ],
+  "requirements": [
+    {
+      "id": "SP-CORE-001",
+      "domain": "ORIGINAL_CORE",
+      "title": "5개 탐험 장소 자유 이용",
+      "authority": [
+        "REV10",
+        "REV11",
+        "REV12"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "data/landmarks.json",
+        "app.js:renderLandmarks"
+      ],
+      "notes": "지도/레벨/EXP/보석으로 잠금 금지"
+    },
+    {
+      "id": "SP-CORE-002",
+      "domain": "ORIGINAL_CORE",
+      "title": "3단계 탐험 루프",
+      "authority": [
+        "REV10",
+        "REV11"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:renderExplore",
+        "app.js:next"
+      ],
+      "notes": "생각 꺼내기→넓히기→표현 완성"
+    },
+    {
+      "id": "SP-GUIDE-001",
+      "domain": "GUIDE_RULES",
+      "title": "아이 최종 답안 대필 금지",
+      "authority": [
+        "REV11",
+        "REV12",
+        "EXPLORATION_CREW_MASTER",
+        "exploration-crew-rules.json"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "data/exploration-crew-rules.json:interactionContract.authorship"
+      ],
+      "gap": "정책 JSON은 있으나 모든 생성/반응 경로의 executable guard는 미완료"
+    },
+    {
+      "id": "SP-GUIDE-002",
+      "domain": "GUIDE_RULES",
+      "title": "기다림→작은 힌트→최소 개입",
+      "authority": [
+        "GUIDE_RECOVERY",
+        "EXPLORATION_CREW_MASTER",
+        "exploration-crew-rules.json"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:revealHint",
+        "data/exploration-crew-rules.json:interactionContract.stuckBehavior"
+      ],
+      "gap": "한 힌트는 구현, 침묵/막힘 판정과 단계적 개입 엔진은 미완료"
+    },
+    {
+      "id": "SP-GUIDE-003",
+      "domain": "GUIDE_RULES",
+      "title": "아이 실수를 농담 소재로 사용 금지",
+      "authority": [
+        "GUIDE_RECOVERY",
+        "EXPLORATION_CREW_MASTER"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "POLICY_ONLY",
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "data/exploration-crew-rules.json"
+      ],
+      "gap": "런타임 생성/문구 필터 없음"
+    },
+    {
+      "id": "SP-GUIDE-004",
+      "domain": "GUIDE_RULES",
+      "title": "상시 큰 말풍선/입력 방해 금지",
+      "authority": [
+        "REV10",
+        "EXPLORATION_CREW_MASTER"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "index.html",
+        "styles.css",
+        "data/exploration-crew-rules.json:interactionContract.dialoguePresence"
+      ],
+      "gap": "구조상 준수하나 런타임 visual regression 미검증"
+    },
+    {
+      "id": "SP-GUIDE-005",
+      "domain": "GUIDE_RULES",
+      "title": "Main 연속성 + Guest 가중 등장",
+      "authority": [
+        "GUIDE_RECOVERY",
+        "EXPLORATION_CREW_MASTER"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "data/exploration-crew-rules.json:crewInteractionOrchestration"
+      ],
+      "gap": "규칙 JSON만 있고 Guest weighted-selection runtime 없음"
+    },
+    {
+      "id": "SP-CREW-001",
+      "domain": "EXPLORATION_CREW",
+      "title": "Explorer_ID 안정성/이름 이력/관계 기억",
+      "authority": [
+        "EXPLORATION_CREW_MASTER",
+        "exploration-crew-rules.json"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:ensureCrewRegistry",
+        "app.js:renameCurrentCrewMember",
+        "app.js:recordCrewExperience"
+      ]
+    },
+    {
+      "id": "SP-CREW-002",
+      "domain": "EXPLORATION_CREW",
+      "title": "친밀도는 능력치가 아닌 관계표현",
+      "authority": [
+        "EXPLORATION_CREW_MASTER",
+        "exploration-crew-rules.json"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:affinityTier",
+        "data/exploration-crew-rules.json:roster.relationship.affinity"
+      ]
+    },
+    {
+      "id": "SP-CREW-003",
+      "domain": "EXPLORATION_CREW",
+      "title": "세계 상태/부재/복귀",
+      "authority": [
+        "GUIDE_RECOVERY",
+        "EXPLORATION_CREW_MASTER"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:synthesizeCrewWorldState",
+        "data/exploration-crew-rules.json:worldStateEngine"
+      ]
+    },
+    {
+      "id": "SP-CREW-004",
+      "domain": "EXPLORATION_CREW",
+      "title": "스페셜=강함이 아닌 만나는 방식",
+      "authority": [
+        "EXPLORATION_CREW_MASTER"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:specialCrewRoster",
+        "data/exploration-crew-rules.json:roster.special"
+      ],
+      "gap": "콘텐츠/조우 세부는 OPEN"
+    },
+    {
+      "id": "SP-CREW-005",
+      "domain": "EXPLORATION_CREW",
+      "title": "Core 6 잠정 기준 데이터",
+      "authority": [
+        "USER_DIRECT_2026-09-20",
+        "EXPLORATION_CREW_MASTER"
+      ],
+      "classification": "WORKING",
+      "coded": "PARTIAL",
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "notes": "전체 탐험대 규칙의 중심이 아니라 현재 시작 탐험대 기준점"
+    },
+    {
+      "id": "SP-VOICE-001",
+      "domain": "VOICE_ACCESSIBILITY",
+      "title": "듣기와 말하기 분리",
+      "authority": [
+        "REV10",
+        "GUIDE_RULES"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:speak",
+        "browser speech recognition fallback"
+      ],
+      "gap": "production-grade browser/device permission 미검증"
+    },
+    {
+      "id": "SP-VOICE-002",
+      "domain": "VOICE_ACCESSIBILITY",
+      "title": "무전기는 6번째 글쓰기 도구가 아님",
+      "authority": [
+        "REV10",
+        "REV11",
+        "exploration-crew-rules.json"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "index.html",
+        "app.js"
+      ]
+    },
+    {
+      "id": "SP-IMAGINE-001",
+      "domain": "IMAGINATION_CLOUD",
+      "title": "상상구름은 표현 확장, 정답 생성 금지",
+      "authority": [
+        "REV11",
+        "REV12",
+        "exploration-crew-rules.json"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:cloudFragments",
+        "index.html:cloudPanel"
+      ],
+      "gap": "맥락 적응/원래 과제로의 복귀 동작은 제한적"
+    },
+    {
+      "id": "SP-SPECIAL-001",
+      "domain": "SPECIAL_EXPLORATION",
+      "title": "주말 선택 초대/무패널티",
+      "authority": [
+        "REV10"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:renderSpecialInvite",
+        "app.js:openSpecial"
+      ]
+    },
+    {
+      "id": "SP-RECORD-001",
+      "domain": "RECORDS",
+      "title": "기본 기록/수정본/원문 보존",
+      "authority": [
+        "REV10"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:renderRecords",
+        "app.js:openRecordEdit"
+      ]
+    },
+    {
+      "id": "SP-GROWTH-001",
+      "domain": "GROWTH_REWARD",
+      "title": "한 그루 성장나무",
+      "authority": [
+        "REV10"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "data/growth-tree.json",
+        "app.js:renderGrowth"
+      ]
+    },
+    {
+      "id": "SP-GROWTH-002",
+      "domain": "GROWTH_REWARD",
+      "title": "보석/소원/축복",
+      "authority": [
+        "REV10",
+        "REV11"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:renderGems",
+        "app.js:renderWishHistory"
+      ]
+    },
+    {
+      "id": "SP-BRIDGE-001",
+      "domain": "CONNECTED_APP",
+      "title": "Ready & Set session/task/lap/return context 보존",
+      "authority": [
+        "REV11",
+        "REV12"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": "PARTIAL",
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "snap-bridge.js"
+      ],
+      "gap": "실제 앱 전환/복귀 idempotency device runtime 미검증"
+    },
+    {
+      "id": "SP-BRIDGE-002",
+      "domain": "CONNECTED_APP",
+      "title": "Hide & Seek 단어를 표현 재료로 사용",
+      "authority": [
+        "REV11",
+        "REV12"
+      ],
+      "classification": "CONFIRMED",
+      "coded": "PARTIAL",
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "snap-bridge.js",
+        "index.html:handoffWord"
+      ],
+      "gap": "장기 어휘 소유권 중복 방지 runtime contract 제한적"
+    },
+    {
+      "id": "SP-PWA-001",
+      "domain": "PWA_DATA",
+      "title": "IndexedDB 저장/복구",
+      "authority": [
+        "REV10"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": "HISTORICAL_PARTIAL",
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:openDB",
+        "app.js:get/set"
+      ]
+    },
+    {
+      "id": "SP-PWA-002",
+      "domain": "PWA_DATA",
+      "title": "manifest/service worker/offline shell",
+      "authority": [
+        "REV10"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "manifest.json",
+        "service-worker.js",
+        "sw.js"
+      ]
+    },
+    {
+      "id": "SP-UI-001",
+      "domain": "UI_ASSET",
+      "title": "Live DOM UI, 시안을 런타임 배경으로 사용 금지",
+      "authority": [
+        "REV10",
+        "IDEA_TRACE_RECOVERY"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "index.html",
+        "styles.css"
+      ],
+      "gap": "현재 visual Golden regression 미완료"
+    },
+    {
+      "id": "SP-EXP-001",
+      "domain": "FAMILY_EXPANSION",
+      "title": "ORIGINAL과 확장팩 분리/feature flag",
+      "authority": [
+        "REV10",
+        "REV11",
+        "REV12"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "gap": "현재 app/index에 FAMILY_EXPANSION runtime 없음"
+    },
+    {
+      "id": "SP-EXP-002",
+      "domain": "FAMILY_EXPANSION",
+      "title": "일기",
+      "authority": [
+        "REV10",
+        "REV12"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false
+    },
+    {
+      "id": "SP-EXP-003",
+      "domain": "FAMILY_EXPANSION",
+      "title": "편지/쪽지/가족 펜팔",
+      "authority": [
+        "REV10",
+        "REV12",
+        "RECOVERY_AUDIT"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false
+    },
+    {
+      "id": "SP-EXP-004",
+      "domain": "FAMILY_EXPANSION",
+      "title": "가족 공유/공동 특별탐험",
+      "authority": [
+        "REV10",
+        "REV12"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false
+    },
+    {
+      "id": "SP-EXP-005",
+      "domain": "FAMILY_EXPANSION",
+      "title": "가족 성장기록/타임라인",
+      "authority": [
+        "REV10",
+        "REV12"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false
+    },
+    {
+      "id": "SP-EXP-006",
+      "domain": "FAMILY_EXPANSION",
+      "title": "다자녀 프로필/childId 격리",
+      "authority": [
+        "REV10",
+        "RECOVERY_AUDIT"
+      ],
+      "classification": "CONFIRMED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false
+    },
+    {
+      "id": "SP-EXP-007",
+      "domain": "FAMILY_EXPANSION",
+      "title": "가족 그룹/초대/관계/권한",
+      "authority": [
+        "RECOVERY_AUDIT"
+      ],
+      "classification": "RECOVERY_REQUIRED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false
+    },
+    {
+      "id": "SP-EXP-008",
+      "domain": "FAMILY_EXPANSION",
+      "title": "숲길 우체통/편지 꾸미기/실링왁스",
+      "authority": [
+        "RECOVERY_AUDIT"
+      ],
+      "classification": "RECOVERY_REQUIRED",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false
+    },
+    {
+      "id": "SP-EXP-009",
+      "domain": "FAMILY_EXPANSION",
+      "title": "응원 카드",
+      "authority": [
+        "RECOVERY_AUDIT"
+      ],
+      "classification": "PRESERVE_LINEAGE",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false
+    },
+    {
+      "id": "SP-EXP-010",
+      "domain": "FAMILY_EXPANSION",
+      "title": "보석조각 선물",
+      "authority": [
+        "RECOVERY_AUDIT",
+        "REV12"
+      ],
+      "classification": "CONFLICT",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "notes": "DO_NOT_AUTO_RESOLVE"
+    },
+    {
+      "id": "SP-EXP-011",
+      "domain": "FAMILY_EXPANSION",
+      "title": "조합형 일기 일러스트",
+      "authority": [
+        "RECOVERY_AUDIT"
+      ],
+      "classification": "RECOVERY_CANDIDATE",
+      "coded": false,
+      "staticVerified": false,
+      "runtimeVerified": false,
+      "deviceVerified": false
+    }
+  ]
+}
