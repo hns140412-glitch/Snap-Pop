@@ -232,7 +232,6 @@
       ensureBaseCampChip();
     });
 
-    window.dispatchEvent(new CustomEvent('snap-pop:bridge-ready'));
     window.SnapPopBridge = Object.freeze({
       version: BRIDGE_VERSION,
       context: () => ({ ...context }),
@@ -240,6 +239,7 @@
       returnToBase,
       validate
     });
+    window.dispatchEvent(new CustomEvent('snap-pop:bridge-ready'));
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once:true });
