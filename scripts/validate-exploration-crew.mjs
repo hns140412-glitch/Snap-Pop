@@ -55,6 +55,21 @@ ok(rules.designBoard20.filter(x=>x.role==='SPECIAL').length===8,'special working
 ok(rules.designBoard20.filter(x=>x.role==='SPECIAL').every(x=>x.encounterGimmick),'all working special slots have encounter gimmick');
 ok(rules.personalityPackSchema?.fields?.join('>')==='PERSONALITY>HABIT>REACTION>RELATIONSHIP_EXCEPTION>WORLD_ROUTINE>MEMORY','personality pack schema');
 ok(rules.visualSystem?.rule==='IDENTITY_FIXED_THEME_VARIABLE','visual identity fixed/theme variable');
+ok(rules.interactionContract?.authorship?.neverWriteFinalAnswer===true,'crew never writes final answer');
+ok(rules.interactionContract?.stuckBehavior?.waitFirst===true,'stuck behavior waits before hint');
+ok(rules.interactionContract?.stuckBehavior?.oneHintAtATime===true,'one hint at a time');
+ok(rules.interactionContract?.silenceOrShortAnswer?.pressure===false,'no pressure on silence/short answer');
+ok(rules.interactionContract?.specificity?.genericPraiseForbidden===true,'generic praise forbidden');
+ok(rules.interactionContract?.copyPriority?.clarity===35&&rules.interactionContract?.copyPriority?.kindness===30,'copy priority clarity/kindness');
+ok(rules.interactionContract?.dialoguePresence?.persistentLargeBubble===false,'no persistent large speech bubble');
+ok(rules.interactionContract?.dialoguePresence?.inputBlockingForbidden===true,'crew dialogue cannot block input');
+ok(rules.voiceAccessibility?.radio?.isSixthWritingTool===false,'radio is not sixth tool');
+ok(rules.voiceAccessibility?.radio?.listeningAndSpeakingSeparated===true,'voice listening/speaking separated');
+ok(rules.questionEngine?.english?.grammarDrillForbidden===true,'English grammar drill forbidden');
+ok(rules.imaginationCloud?.finalAnswerGenerationForbidden===true,'imagination cloud final answer forbidden');
+ok(rules.imaginationCloud?.mustReturnToOriginalTask===true,'imagination cloud returns to original task');
+ok(rules.reactionPerformance?.reduceMotion?.supported===true,'reaction performance reduce motion');
+
 ok(rules.worldBehaviorGrammar?.absence?.affinityDecay===false,'absence does not decay affinity');
 ok(rules.worldBehaviorGrammar?.absence?.streakPenalty===false,'absence no streak penalty');
 ok(master.includes('시작 6명 성격 슬롯'),'master starter slots');
