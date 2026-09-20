@@ -32,6 +32,8 @@ ok(app.includes('crewMember')&&app.includes('explorationCrewRulesVersion'),'cano
 ok(!app.includes('data/guide-explorer-rules.json'),'old rules file reference');
 ok(app.includes('data/exploration-crew-rules.json'),'canonical rules fetch');
 ok(app.includes('selCrewMemberReaction')&&app.includes('resultCrewMemberLine')&&app.includes('crewMemberPersonalityPreview'),'major surface propagation');
+ok(app.includes('renderCrewRoster')&&app.includes('starterCrewRoster')&&app.includes('specialCrewRoster'),'canonical roster runtime');
+ok(!app.includes('renderCrewRosters'),'duplicate legacy roster renderer removed');
 ok(app.includes('renderCrewRosters')&&app.includes('starterCrewRoster')&&app.includes('specialCrewRoster'),'roster runtime surfaces');
 ok(sw.includes('data/exploration-crew-rules.json'),'offline rule cache');
 ok(sw.includes('SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md'),'offline master cache');
