@@ -1,10 +1,28 @@
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
 let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date();
-const STEPS=[
-  ["생각 꺼내기","무엇이 먼저 떠올랐어?","완벽한 문장이 아니어도 좋아. 작은 조각 하나만 잡아보자."],
-  ["생각 넓히기","그 생각 옆에는 뭐가 더 있을까?","이유, 느낌, 장면 중 하나를 더 붙여보자."],
-  ["표현 완성하기","이제 네 문장으로 마무리해볼까?","앞의 생각을 이어서 네 말로 정리해보자."]
-];
+const STEPS=["생각 꺼내기","생각 넓히기","표현 완성하기"];
+const QUESTION_BANK={
+ idea:{
+  ko:[["무엇이 먼저 떠올랐어?","작은 소재 하나만 잡아보자."],["그 아이디어에서 더 궁금한 건 뭐야?","이유나 다음 장면 하나를 붙여봐."],["이제 네 아이디어를 한 문장으로 묶어볼까?","네 말투 그대로 끝내면 돼."]],
+  en:[["What idea came to mind first?","A word or tiny idea is enough."],["What else could happen or connect to it?","Add one reason, detail, or next scene."],["Can you finish it in your own sentence?","Use your own words."]]
+ },
+ emotion:{
+  ko:[["지금 떠오르는 마음은 뭐야?","감정 이름이 아니어도 괜찮아."],["왜 그런 마음이 들었을까?","사건이나 이유 하나만 이어봐."],["그 마음을 네 문장으로 표현해볼까?","평가 말고 네 느낌을 그대로 적어봐."]],
+  en:[["What feeling comes to mind?","You do not need the perfect emotion word."],["What made you feel that way?","Add one event or reason."],["Can you express that feeling in your own sentence?","Keep it in your voice."]]
+ },
+ description:{
+  ko:[["무엇이 가장 먼저 보였어?","색·모양·소리 중 하나만 골라도 돼."],["가까이 가면 무엇이 더 느껴질까?","보이는 것 말고 소리·냄새·촉감도 떠올려봐."],["그 장면이 보이게 한 문장으로 써볼까?","네가 실제로 느낀 단서를 넣어봐."]],
+  en:[["What did you notice first?","Pick a color, shape, sound, or texture."],["What else would you notice up close?","Try a sound, smell, or feeling."],["Can you describe the scene in your own sentence?","Use details you noticed."]]
+ },
+ viewpoint:{
+  ko:[["나는 이 일을 어떻게 보고 있어?","먼저 내 생각 하나를 잡아보자."],["다른 사람은 어떻게 볼 수 있을까?","반대일 필요는 없어. 다른 시선이면 돼."],["두 시선을 보고 네 생각을 정리해볼까?","이유 하나와 함께 네 입장을 써봐."]],
+  en:[["How do you see this?","Start with your own view."],["How might someone else see it?","It can simply be a different view."],["Can you explain your view with one reason?","Write it in your own words."]]
+ },
+ final:{
+  ko:[["지금 글에서 가장 살리고 싶은 부분은 뭐야?","핵심 하나를 골라보자."],["더 분명하게 고칠 곳이 있을까?","제목·순서·끝맺음 중 하나만 봐도 돼."],["이제 마지막 문장으로 마무리해볼까?","네 글의 느낌이 남도록 끝내봐."]],
+  en:[["What part do you want to keep strongest?","Choose one key idea."],["What could be clearer?","Check the order, wording, or ending."],["Can you finish with your final sentence?","Make it sound like you."]]
+ }
+};
 const LEVEL_NEEDS=[0,80,100,120,150,180,220,260,300,340,380,430,480,540,600,670,740,820,900,990,1080,1180,1280,1390,1500];
 const LEVEL_THRESHOLDS=LEVEL_NEEDS.reduce((a,n,i)=>{a.push(i===0?0:a[i-1]+n);return a},[]);
 const uid=p=>`${p}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
@@ -31,12 +49,14 @@ function calcExp(answers,completedCount){
   return {total:34+initial+mastery,base:34,initial,mastery,strengths};
 }
 async function loadSettings(){const s=await get("settings")||{};$("#autoRead").checked=!!s.autoRead;$("#reduceMotion").checked=!!s.reduceMotion;document.documentElement.classList.toggle("reduceMotion",!!s.reduceMotion)}
+function promptFor(landmark,step,language="ko"){const bank=QUESTION_BANK[landmark]||QUESTION_BANK.idea;return (bank[language]||bank.ko)[Math.min(2,step)]}
+function setModeButtons(language){$("#modeKo")?.classList.toggle("on",language!=="en");$("#modeEn")?.classList.toggle("on",language==="en")}
 async function init(){await openDB();marks=await fetch("data/landmarks.json").then(r=>r.json());renderLandmarks();await loadSettings();await updateStatus();renderRecords();renderGems();renderGrowth();await renderIncomingHandoff();renderSpecialInvite();const active=await get("active");if(active)renderExplore(active)}
 
 function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;$$(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await get("active"),g=await get("gems")||{};$("#selTitle").textContent=m.title;$("#selDesc").textContent=m.desc;$("#selProgress").textContent="진행 "+(a?.landmark===m.id?(Math.min(3,(a.step||0)+1)):0)+" / 3";$("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";$("#selection").hidden=false};host.appendChild(b)})}
-$("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active");if(!s||s.landmark!==selected.id)s={id:uid("explore"),landmark:selected.id,step:0,answers:["","",""],startedAt:new Date().toISOString()};await set("active",s);renderExplore(s);show("explore");if($("#autoRead").checked)speak(STEPS[s.step][1]+" "+STEPS[s.step][2])}
+$("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active");if(!s||s.landmark!==selected.id)s={id:uid("explore"),landmark:selected.id,step:0,answers:["","",""],language:"ko",startedAt:new Date().toISOString()};if(!s.language)s.language="ko";await set("active",s);renderExplore(s);show("explore");if($("#autoRead").checked){const p=promptFor(s.landmark,s.step,s.language);speak(p[0]+" "+p[1],s.language)}}
 
-function renderExplore(s){const m=marks.find(x=>x.id===s.landmark)||marks[0],i=Math.min(2,s.step||0);$("#exploreTitle").textContent="탐험 진행 · "+m.title;$("#question").textContent=STEPS[i][1];$("#hint").textContent=STEPS[i][2];$("#answer").value=s.answers[i]||"";$("#guideLine").textContent=["처음엔 작은 조각 하나면 충분해.","오, 그 생각 옆에 뭐가 더 숨어 있을까?","이제 네 문장으로 딱 묶어보자."][i];$("#nextBtn").textContent=i===2?"탐험 완료":"다음 단계";$("#steps").innerHTML=STEPS.map((x,n)=>`<span class="${n===i?"on":n<i?"done":""}">${n+1}. ${x[0]}</span>`).join("")}
+function renderExplore(s){const m=marks.find(x=>x.id===s.landmark)||marks[0],i=Math.min(2,s.step||0),language=s.language||"ko",p=promptFor(s.landmark,i,language);$("#exploreTitle").textContent="탐험 진행 · "+m.title;$("#question").textContent=p[0];$("#hint").textContent=p[1];$("#answer").value=s.answers[i]||"";setModeButtons(language);$("#guideLine").textContent=language==="en"?["Start small. One idea is enough.","Nice. Add one more piece.","Now finish it in your own words."][i]:["처음엔 작은 조각 하나면 충분해.","오, 그 생각 옆에 뭐가 더 숨어 있을까?","이제 네 문장으로 딱 묶어보자."][i];$("#nextBtn").textContent=i===2?(language==="en"?"Finish exploration":"탐험 완료"):(language==="en"?"Next step":"다음 단계");$("#steps").innerHTML=STEPS.map((x,n)=>`<span class="${n===i?"on":n<i?"done":""}">${n+1}. ${x}</span>`).join("")}
 
 $("#nextBtn").onclick=async()=>{
   let s=await get("active");
@@ -65,15 +85,17 @@ $("#nextBtn").onclick=async()=>{
   toast(`탐험 완료! +${expAward.total} EXP · 보석 조각 +1`);show("result")
 }
 
-function speak(t){if(!("speechSynthesis"in window))return toast("이 브라우저에서는 읽어주기를 지원하지 않아요.");speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ko-KR";speechSynthesis.speak(u)}
+function speak(t,language="ko"){if(!("speechSynthesis"in window))return toast("이 브라우저에서는 읽어주기를 지원하지 않아요.");speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=language==="en"?"en-US":"ko-KR";speechSynthesis.speak(u)}
 $("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0);s.answers[i]=$("#answer").value;s.updatedAt=new Date().toISOString();await set("active",s)});
 function currentBridgeContext(){try{return window.SnapPopBridge?.context?.()||{}}catch{return {}}}
 async function renderIncomingHandoff(){const ctx=currentBridgeContext();const box=$("#handoffWord");if(!box)return;if(ctx.word){box.hidden=false;box.textContent=`Hide & Seek에서 찾은 단어 · ${ctx.word}${ctx.word_context?" · "+ctx.word_context:""}`}else box.hidden=true}
 function cloudFragments(text){const t=(text||"").trim();const out=[];if(t)out.push(`장면: ${t.slice(0,32)}`);out.push("어디에서 일어났을까?","그때 어떤 기분이었을까?","무엇이 보이거나 들렸을까?","왜 그렇게 생각했을까?");return [...new Set(out)].slice(0,5)}
 $("#cloudBtn").onclick=()=>{const panel=$("#cloudPanel"),chips=$("#cloudChips"),frags=cloudFragments($("#answer").value);chips.innerHTML=frags.map(x=>`<button type="button">${html(x)}</button>`).join("");panel.hidden=false;chips.onclick=e=>{const b=e.target.closest("button");if(!b)return;toast("좋아. 그 힌트를 참고해서 네 문장으로 이어가봐.")}};
 $("#cloudClose").onclick=()=>$("#cloudPanel").hidden=true;
-$("#listenBtn").onclick=async()=>{const s=await get("active");speak(STEPS[s?.step||0][1]+" "+STEPS[s?.step||0][2])}
-$("#voiceBtn").onclick=()=>{const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return toast("이 브라우저에서는 음성 인식을 지원하지 않아요.");const r=new R();r.lang="ko-KR";r.interimResults=false;$("#voiceBtn").textContent="듣고 있어요";r.onresult=e=>$("#answer").value+=(($("#answer").value?" ":"")+e.results[0][0].transcript);r.onend=()=>$("#voiceBtn").innerHTML='<img src="assets/icons/radio.svg" alt="">말해서 쓰기';r.start()}
+$("#modeKo").onclick=async()=>{const s=await get("active");if(!s)return;s.language="ko";await set("active",s);renderExplore(s)};
+$("#modeEn").onclick=async()=>{const s=await get("active");if(!s)return;s.language="en";await set("active",s);renderExplore(s)};
+$("#listenBtn").onclick=async()=>{const s=await get("active");if(!s)return;const p=promptFor(s.landmark,s.step||0,s.language||"ko");speak(p[0]+" "+p[1],s.language||"ko")}
+$("#voiceBtn").onclick=async()=>{const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return toast("이 브라우저에서는 음성 인식을 지원하지 않아요.");const s=await get("active"),r=new R();r.lang=(s?.language||"ko")==="en"?"en-US":"ko-KR";r.interimResults=false;$("#voiceBtn").textContent=(s?.language||"ko")==="en"?"Listening":"듣고 있어요";r.onresult=e=>{$("#answer").value+=(($("#answer").value?" ":"")+e.results[0][0].transcript);$("#answer").dispatchEvent(new Event("input"))};r.onend=()=>$("#voiceBtn").innerHTML='<img src="assets/icons/radio.svg" alt="">말해서 쓰기';r.start()}
 
 async function renderRecords(){
   if(!db)return;
