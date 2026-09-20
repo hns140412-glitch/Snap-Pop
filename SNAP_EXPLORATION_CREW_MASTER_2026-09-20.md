@@ -302,7 +302,7 @@ Primary recovered source: Google Drive sanitized transcript `P03_SANITIZED_6aa5d
 - 20명의 전체 개별 종/이름/성격은 아직 확정되지 않았다.
 
 
-## 14. Source Evidence / Correction Ledger
+## 15. Source Evidence / Correction Ledger
 
 이 섹션은 탐험대 기준이 다시 파편화되지 않도록 **사용자 원문과 파생 제안**을 구분한다.
 
