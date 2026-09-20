@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.8",
+  "version": "2026-09-21.9",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -945,7 +945,7 @@
     {
       "id": "SP-UNIV-007",
       "domain": "UNIVERSAL_CORE",
-      "title": "탐험 탭 = 범용 Think/Ask/Express 허브, 3단계 글쓰기는 서브플로우",
+      "title": "기본 상태 = 글쓰기 탐험, 상상구름은 숨은 on-demand 레이어",
       "authority": [
         "LATEST_DIRECT_USER_2026-09-21",
         "SNAP_POP_UNIVERSAL_CORE"
@@ -956,16 +956,17 @@
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "index.html:exploreHub",
-        "app.js:show",
-        "app.js:renderExploreHub"
+        "index.html:map/explore",
+        "index.html:imaginationLayer",
+        "app.js:openImagination",
+        "app.js:nav explore handling"
       ],
       "gap": "runtime/device UX validation pending"
     },
     {
       "id": "SP-UNIV-008",
       "domain": "UNIVERSAL_CORE",
-      "title": "홈 무전기에서 범용 상상구름/음성 질문 바로 진입",
+      "title": "홈 무전에서 숨은 상상구름/음성 질문 호출",
       "authority": [
         "LATEST_DIRECT_USER_2026-09-21",
         "SNAP_POP_UNIVERSAL_CORE",
@@ -977,8 +978,8 @@
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "app.js:homeRadio→exploreHub",
-        "app.js:hubVoiceBtn",
+        "app.js:homeRadio→openImagination",
+        "app.js:imaginationVoiceBtn",
         "voice-runtime.js"
       ],
       "gap": "external high-quality voice provider and device validation pending"
@@ -1006,10 +1007,11 @@
     {
       "id": "SP-UNIV-009",
       "domain": "UNIVERSAL_CORE",
-      "title": "홈에서 궁금증/생각/음성으로 바로 진입",
+      "title": "홈 무전으로 숨은 상상구름 호출",
       "authority": [
         "LATEST_DIRECT_USER_2026-09-21",
-        "SNAP_POP_UNIVERSAL_CORE"
+        "SNAP_POP_UNIVERSAL_CORE",
+        "VOICE_ACCESSIBILITY"
       ],
       "classification": "CONFIRMED",
       "coded": true,
@@ -1017,10 +1019,10 @@
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "index.html:homeQuickStart",
-        "app.js:homeAskQuick/homeThinkQuick/homeRadio"
+        "app.js:homeRadio→openImagination",
+        "index.html:imaginationLayer"
       ],
-      "gap": "device visual/runtime validation pending"
+      "gap": "external high-quality voice provider and device validation pending"
     },
     {
       "id": "SP-GROWTH-003",
@@ -1041,6 +1043,25 @@
         "app.js:renderGrowthTimeline"
       ],
       "gap": "Learning Engine 기반 질적 성장 모델은 추후 연결"
+    },
+    {
+      "id": "SP-IMAGINE-009",
+      "domain": "IMAGINATION_CLOUD",
+      "title": "상상구름 닫기 시 원래 글쓰기 문맥/포커스 복귀",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:imaginationReturnFocus",
+        "app.js:closeImagination"
+      ],
+      "gap": "device focus/keyboard behavior validation pending"
     }
   ]
 }
