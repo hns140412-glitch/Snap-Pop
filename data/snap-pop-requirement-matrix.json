@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.5",
+  "version": "2026-09-21.6",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -285,9 +285,11 @@
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:speak",
-        "browser speech recognition fallback"
+        "browser speech recognition fallback",
+        "voice-runtime.js",
+        "app.js:SnapPopVoice integration"
       ],
-      "gap": "production-grade browser/device permission 미검증"
+      "gap": "external high-quality voice provider not connected; browser STT/TTS remains fallback"
     },
     {
       "id": "SP-VOICE-002",
@@ -299,14 +301,17 @@
         "exploration-crew-rules.json"
       ],
       "classification": "CONFIRMED",
-      "coded": true,
+      "coded": "PARTIAL",
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
         "index.html",
-        "app.js"
-      ]
+        "app.js",
+        "voice-runtime.js",
+        "app.js:SnapPopVoice integration"
+      ],
+      "gap": "external high-quality voice provider not connected; browser STT/TTS remains fallback"
     },
     {
       "id": "SP-IMAGINE-001",
@@ -751,14 +756,15 @@
       ],
       "classification": "CONFIRMED",
       "coded": "PARTIAL",
-      "staticVerified": false,
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "app.js:cloudFragments",
-        "index.html:cloudPanel"
+        "index.html:cloudPanel",
+        "app.js:runCloud",
+        "intelligence-runtime.js"
       ],
-      "gap": "현재 local fragment UI만 존재; OpenAI-backed routing/tool gateway 미연결"
+      "gap": "OpenAI-backed verified knowledge provider not yet connected"
     },
     {
       "id": "SP-IMAGINE-003",
@@ -768,11 +774,14 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": "PARTIAL",
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "QUESTION/EXPLAIN/SEARCH/THINK/EXPAND/COMPARE/TRANSLATE/EXPRESS/REVISE routing 미구현"
+      "gap": "basic THINK_EXPRESS vs ASK_UNDERSTAND routing only; richer route taxonomy pending",
+      "codeEvidence": [
+        "intelligence-runtime.js:classifyIntent"
+      ]
     },
     {
       "id": "SP-IMAGINE-004",
@@ -784,10 +793,13 @@
       ],
       "classification": "CONFIRMED",
       "coded": false,
-      "staticVerified": false,
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "현재 branch에서 OpenAI API/tool connection evidence 없음"
+      "gap": "provider hook exists; actual OpenAI backend/provider not connected",
+      "codeEvidence": [
+        "intelligence-runtime.js external provider hook"
+      ]
     },
     {
       "id": "SP-IMAGINE-005",
@@ -798,11 +810,15 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": "POLICY_ONLY",
-      "staticVerified": false,
+      "coded": "PARTIAL",
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "모델/tool 출력 위 중앙 guard 미구현"
+      "gap": "central post-model validation/guard remains incomplete",
+      "codeEvidence": [
+        "intelligence-runtime.js contract",
+        "app.js:renderCloudResponse"
+      ]
     },
     {
       "id": "SP-IMAGINE-006",
@@ -814,11 +830,14 @@
         "EXPLORATION_CREW_RULES"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": "PARTIAL",
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "OpenAI/model/tool 중간 결과를 탐험대 Guard/voice로 변환하는 중앙 response pipeline 미구현"
+      "gap": "external model output still needs full crew guard/voice transformation",
+      "codeEvidence": [
+        "app.js:renderCloudResponse uses current crew identity"
+      ]
     },
     {
       "id": "SP-IMAGINE-007",
@@ -829,11 +848,14 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": "PARTIAL",
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "현재 cloudFragments는 범용 개념 scaffold/mind-map composer가 아님"
+      "gap": "current scaffold covers scene/feeling/detail/connection; etymology/concept models require verified provider",
+      "codeEvidence": [
+        "intelligence-runtime.js:localThinkScaffold"
+      ]
     },
     {
       "id": "SP-IMAGINE-008",
@@ -844,11 +866,15 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": "PARTIAL",
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "구조화된 학습 scaffold renderer 미구현"
+      "gap": "comparison/timeline/cause-effect render variants pending",
+      "codeEvidence": [
+        "app.js:mindMap renderer",
+        "styles.css:.mindMap"
+      ]
     },
     {
       "id": "SP-TRUTH-001",
@@ -860,11 +886,14 @@
         "TAKY"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": "PARTIAL",
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "fact/interpretation/hypothesis 분류, confidence, verification routing 미구현"
+      "gap": "factual questions fail closed locally; external verification pipeline not yet implemented",
+      "codeEvidence": [
+        "intelligence-runtime.js:unverifiedKnowledgeResponse"
+      ]
     },
     {
       "id": "SP-TRUTH-002",
@@ -891,11 +920,14 @@
         "EXPLORATION_CREW_RULES"
       ],
       "classification": "CONFIRMED",
-      "coded": "POLICY_ONLY",
-      "staticVerified": false,
+      "coded": "PARTIAL",
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "중앙 truth guard pipeline 미구현"
+      "gap": "uncertainty contract exists locally; provider-level verification still pending",
+      "codeEvidence": [
+        "intelligence-runtime.js no-guess fallback"
+      ]
     }
   ]
 }
