@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.12",
+  "version": "2026-09-21.13",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -1145,7 +1145,7 @@
     {
       "id": "SP-WRITE-005",
       "domain": "WRITING_CORE",
-      "title": "Learning Engine provider는 현재 초안을 분석해 한 가지 next move만 반환",
+      "title": "Semantic Writing Provider는 현재 초안 의미를 분석해 한 가지 next move만 반환",
       "authority": [
         "LATEST_DIRECT_USER_2026-09-21",
         "SNAP_POP_UNIVERSAL_CORE",
@@ -1157,10 +1157,11 @@
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "writing-runtime.js:SnapPopLearningProvider contract",
+        "semantic-writing-runtime.js",
+        "writing-runtime.js:SnapPopSemanticWritingProvider",
         "app.js:analyzeWritingMove"
       ],
-      "gap": "actual Learning Engine provider/backend connection pending"
+      "gap": "secure OpenAI backend/provider connection not yet implemented"
     },
     {
       "id": "SP-WRITE-006",
@@ -1243,6 +1244,45 @@
         "Ready-Set:ready-runtime-v07.js specialist_result"
       ],
       "gap": "cross-app runtime/device verification pending"
+    },
+    {
+      "id": "SP-WRITE-010",
+      "domain": "WRITING_CORE",
+      "title": "Semantic Writing Provider는 분석 전용이며 아이 글 재작성/완성문장 생성 금지",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "GUIDE_RULES",
+        "SNAP_POP_CURRENT_CANONICAL"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "semantic-writing-runtime.js:ANALYSIS_ONLY",
+        "semantic-writing-runtime.js:FORBIDDEN_KEYS"
+      ],
+      "gap": "live OpenAI-backed runtime validation pending"
+    },
+    {
+      "id": "SP-WRITE-011",
+      "domain": "WRITING_CORE",
+      "title": "OpenAI semantic analysis unavailable 시 local writing analysis로 fail-soft fallback",
+      "authority": [
+        "TAKY",
+        "SNAP_POP_CURRENT_CANONICAL"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "writing-runtime.js:local-writing-fallback",
+        "semantic-writing-runtime.js:SEMANTIC_PROVIDER_UNAVAILABLE"
+      ],
+      "gap": "live failure-path runtime validation pending"
     }
   ]
 }
