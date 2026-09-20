@@ -123,7 +123,7 @@ It does **not** mean runtime/device verification.
 
 ### Current weighted CODED estimate
 
-**65 / 100**
+**67 / 100**
 
 This is the provisional full-product coded implementation rate **when expansion packs are included in the denominator**.
 
@@ -281,11 +281,23 @@ P5 — runtime/device/release verification:
 
 Snap & Pop is **substantially coded as an ORIGINAL prototype/current core**, but the project as a whole is fragmented and the optional expansion layer is largely specification-only.
 
-Current provisional full-scope implementation estimate:
-**CODED ≈ 65%**
+Current evidence-backed full-scope implementation estimate:
+**CODED ≈ 67%**
 **STATIC_VERIFIED = partial/strong for existing prototype checks**
 **RUNTIME_VERIFIED = not closed**
 **DEVICE_VERIFIED = not established**
 
 The dominant risk is not Core 6 personality detail.
 The dominant risk is **rule fragmentation and false completion caused by treating partial masters/static checks as the whole Snap & Pop product.**
+
+
+## 12. Scorecard correction — 2026-09-21
+
+Direct code review found that some Guide-derived behaviors were already implemented (blank-answer wait, one-hint flow, input-specific reactions, wording preservation). The earlier 65% headline was therefore a preliminary audit estimate.
+
+Current evidence-backed scorecard:
+`data/snap-pop-implementation-scorecard.json`
+
+- Full scope CODED score: **67 / 100**
+- Current core excluding FAMILY Expansion: **66.5 / 90 = 73.9%**
+- Runtime/device verification remains separate and is not implied by these numbers.
