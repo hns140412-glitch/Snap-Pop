@@ -58,3 +58,8 @@ textarea{width:100%;min-height:190px;resize:vertical;border:1px solid #d9c9a8;bo
 .resultCard{padding:17px;margin-bottom:12px}.resultReward{display:flex;gap:8px;margin-bottom:13px}.resultReward strong,.resultReward span{border-radius:99px;padding:7px 10px;background:#e7ddbd;font-size:11px}.resultCard h2{font-family:"Noto Serif CJK KR","Batang",serif;font-size:18px;line-height:1.55;margin:0 0 12px}.strengths{display:flex;flex-wrap:wrap;gap:6px}.strengths span{background:#dce8d1;border:1px solid #a9b995;border-radius:99px;padding:7px 9px;font-size:10px;font-weight:800}.resultSecondary{margin-top:8px}
 .timeline{margin-top:12px;padding:10px}.timelineItem{padding:11px 9px;border-bottom:1px solid #d9c9a3}.timelineItem:last-child{border-bottom:0}.timelineItem b{font-family:"Noto Serif CJK KR","Batang",serif;display:block;margin-bottom:3px}.timelineItem span{font-size:10px;color:#65736b}
 html.reduceMotion *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+
+
+.handoffWord{margin-top:10px;padding:9px 11px;border:1px solid #a4b48e;border-radius:12px;background:#edf4e8;font-size:11px;font-weight:800}
+.cloudPanel{margin-top:10px;padding:12px;border:1px dashed #9eae93;border-radius:16px;background:#eef5e8}.cloudPanel b{font-family:"Noto Serif CJK KR","Batang",serif}.cloudPanel p{font-size:11px;line-height:1.5;color:#5b6d62}.cloudChips{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0 11px}.cloudChips button{border:1px solid #adbd9e;background:#fffdf4;border-radius:99px;padding:7px 9px;font-size:10px;color:#315244}
+.specialInvite{position:absolute;z-index:11;left:14px;bottom:22px;border:1px solid #c8ab61;background:#fff2c9e8;color:#23483a;border-radius:999px;padding:10px 12px;font-weight:900;box-shadow:0 10px 24px #17302535}
