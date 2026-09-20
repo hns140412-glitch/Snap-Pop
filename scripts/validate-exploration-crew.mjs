@@ -69,6 +69,14 @@ ok(rules.questionEngine?.english?.grammarDrillForbidden===true,'English grammar 
 ok(rules.imaginationCloud?.finalAnswerGenerationForbidden===true,'imagination cloud final answer forbidden');
 ok(rules.imaginationCloud?.mustReturnToOriginalTask===true,'imagination cloud returns to original task');
 ok(rules.reactionPerformance?.reduceMotion?.supported===true,'reaction performance reduce motion');
+ok(rules.affinityEngine?.scoring?.EXPLORATION_COMPLETE===2,'affinity exploration score');
+ok(rules.affinityEngine?.scoring?.SPECIAL_MEMORY===2,'affinity special memory score');
+ok(rules.affinityEngine?.scoring?.VOICE_EXPRESSION===0,'voice does not farm affinity');
+ok(rules.affinityEngine?.scoring?.REUNION===0,'reunion does not farm affinity');
+ok(rules.worldStateEngine?.lightweight===true,'lightweight world state');
+ok(rules.worldStateEngine?.fullDailySimulation===false,'no full daily simulation');
+ok(['maltipoo','cat','redpanda','buddy'].every(id=>Array.isArray(rules.definedCharacterLineages?.[id]?.reactionMotifs)&&rules.definedCharacterLineages[id].reactionMotifs.length>0),'runtime lineages have reaction motifs');
+
 
 ok(rules.worldBehaviorGrammar?.absence?.affinityDecay===false,'absence does not decay affinity');
 ok(rules.worldBehaviorGrammar?.absence?.streakPenalty===false,'absence no streak penalty');
@@ -85,6 +93,9 @@ ok(app.includes('designBoard20'),'runtime reads 20-slot design board');
 ok(app.includes('role===\"STARTER\"')&&app.includes('role===\"WORLD\"')&&app.includes('role===\"SPECIAL\"'),'runtime renders role design slots');
 ok(app.includes('hardMaximum')&&app.includes('specialCrewRoster'),'runtime reads special maximum');
 ok(app.includes('crewRegistry')&&app.includes('nameHistory'),'per-member name history runtime');
+ok(app.includes('recordCrewExperience')&&app.includes('affinityTier'),'affinity runtime');
+ok(app.includes('synthesizeCrewWorldState')&&app.includes('MAIN_COMPANION'),'world state runtime');
+ok(app.includes('crewPerformance')&&app.includes('reactionMotif'),'crew reaction motif runtime');
 ok(app.includes('data/exploration-crew-rules.json'),'canonical rules fetch');
 ok(!app.includes('data/guide-explorer-rules.json'),'old rules file reference');
 
