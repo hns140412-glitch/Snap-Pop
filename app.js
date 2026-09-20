@@ -36,42 +36,85 @@ function normalizeIdentity(x={}){
 function crewMemberRule(identity){const type=normalizeCrewType(identity?.crewMember?.type);return SNAP_RULES?.members?.[type]||SNAP_RULES?.members?.maltipoo||{label:"탐험대원",defaultName:"모카",home:"같이 가자.",reactions:{},behavior:{}}}
 function crewReaction(identity,landmark){return crewMemberRule(identity).reactions?.[landmark]||"한 조각씩 같이 찾아보자."}
 function crewMemberName(identity){return identity?.crewMember?.name||crewMemberRule(identity).defaultName||"모카"}
-function crewMemberCard(memberId,identity){
-  const rule=SNAP_RULES?.members?.[memberId],on=identity?.crewMember?.type===memberId;
-  return `<button class="crewRosterCard ${on?"on":""}" type="button" data-crew-member-type="${memberId}"><b>${html(rule?.label||memberId)}</b><span>${html(rule?.personality||"")}</span></button>`;
+async function migrateLegacyState(){
+  const marker=await get("migration_20260920_state_v1");
+  if(marker)return;
+  const entries=[],records=await get("records")||[],events=await get("completionEvents")||{},expLedger=await get("expLedger")||[],legacyExp=Number(await get("exp")||0),active=await get("active");
+  let changedRecords=false;
+  records.forEach((r,i)=>{
+    if(!r.id){r.id=uid("record");changedRecords=true}
+    if(!r.completionEventId){r.completionEventId=`legacy_completion_${r.id}`;changedRecords=true}
+    if(!r.language){r.language="ko";changedRecords=true}
+    if(r.completionEventId&&!events[r.completionEventId])events[r.completionEventId]={at:r.date||new Date(0).toISOString(),recordId:r.id,legacy:true};
+  });
+  if(changedRecords)entries.push(["records",records]);
+  entries.push(["completionEvents",events]);
+  const ledgerTotal=expLedger.reduce((s,e)=>s+(Number(e.amount)||0),0);
+  if(legacyExp>ledgerTotal){
+    expLedger.unshift({eventId:"legacy_exp_baseline_20260920",type:"LEGACY_EXP_BASELINE",amount:legacyExp-ledgerTotal,at:new Date().toISOString(),legacy:true});
+    entries.push(["expLedger",expLedger],["exp",legacyExp]);
+  }else if(ledgerTotal>legacyExp){
+    entries.push(["exp",ledgerTotal]);
+  }
+  if(active&&!active.id){active.id=uid("explore_legacy");active.language=active.language||"ko";entries.push(["active",active])}
+  entries.push(["migration_20260920_state_v1",{at:new Date().toISOString(),records:records.length,legacyExp,ledgerTotalBefore:ledgerTotal}]);
+  await setMany(entries);
 }
-function unassignedCrewCard(slot){
-  return `<button class="crewRosterCard unassigned" type="button" disabled><b>미확정 탐험대원</b><span>${html(slot)} · 원자료 확정 전 임의 생성 안 함</span></button>`;
+async function migrateIdentityFallback(){
+  const existing=await get("identityFallback");
+  if(existing){const normalized=normalizeIdentity(existing);if(existing.guide||!existing.crewMember||existing.explorationCrewRulesVersion!==SNAP_RULES?.version)await set("identityFallback",normalized);return normalized}
+  const s=await get("settings")||{},asset=await get("characterSourceAsset");
+  const migrated=normalizeIdentity({profile:{name:s.characterName||"",photo:asset?.originalProfilePhoto||"",style:"editorial",shareAvatar:false},crewMember:{type:s.guideType||"maltipoo",name:s.guideName||"모카",voice:s.guideVoice||"warm"}});
+  await set("identityFallback",migrated);
+  return migrated;
 }
+async function resolvedIdentity(){const local=normalizeIdentity(await get("identityFallback")||await migrateIdentityFallback());if(!sharedIdentity)return local;const shared=normalizeIdentity(sharedIdentity);return {profile:shared.profile,crewMember:local.crewMember,explorationCrewRulesVersion:SNAP_RULES?.version||local.explorationCrewRulesVersion}}
+async function applySharedIdentity(identity){sharedIdentity=normalizeIdentity({profile:identity?.profile||identity,crewMember:IDENTITY_DEFAULT.crewMember});await renderIdentityPresence();return sharedIdentity}
+window.SnapPopIdentity=Object.freeze({applyShared:applySharedIdentity,clearShared:async()=>{sharedIdentity=null;await renderIdentityPresence()},getResolved:resolvedIdentity});
+
+function openDB(){return new Promise((ok,no)=>{const r=indexedDB.open("snap_pop_rev10",1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains("state"))r.result.createObjectStore("state")};r.onsuccess=()=>{db=r.result;ok()};r.onerror=()=>no(r.error)})}
+function get(k){return new Promise(ok=>{const r=db.transaction("state").objectStore("state").get(k);r.onsuccess=()=>ok(r.result)})}
+function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>ok();r.onerror=()=>no(r.error)})}
+function setMany(entries){return new Promise((ok,no)=>{const tx=db.transaction("state","readwrite"),store=tx.objectStore("state");entries.forEach(([k,v])=>store.put(v,k));tx.oncomplete=()=>ok();tx.onerror=()=>no(tx.error);tx.onabort=()=>no(tx.error)})}
+function toast(t){$("#toast").textContent=t;$("#toast").classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>$("#toast").classList.remove("show"),1800)}
+function show(id){$$(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");const sub=["settings","shop","result","special","recordEdit"].includes(id);$("#nav").hidden=sub;if(!sub)lastMain=id;$$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.view===id));scrollTo(0,0);if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="result")renderLastResult()}
+function html(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function levelFromExp(exp){let level=1;for(let i=1;i<LEVEL_THRESHOLDS.length;i++){if(exp>=LEVEL_THRESHOLDS[i])level=i+1;else break}return Math.min(25,level)}
+function levelProgress(exp){const level=levelFromExp(exp);if(level>=25)return {level,within:1,remaining:0};const floor=LEVEL_THRESHOLDS[level-1],ceil=LEVEL_THRESHOLDS[level];return {level,within:Math.max(0,Math.min(1,(exp-floor)/(ceil-floor))),remaining:Math.max(0,ceil-exp)}}
+function calcExp(answers,completedCount,language="ko"){
+  const text=answers.join(" ").trim(),len=text.length;
+  const initial=completedCount<5?12:completedCount<15?7:3;
+  const strengths=[];let mastery=0;
+  if(len>=80){mastery+=3;strengths.push(language==="en"?"writing longer":"길게 이어 쓰기")}
+  if(len>=150){mastery+=3;strengths.push(language==="en"?"expanding an idea":"생각 충분히 펼치기")}
+  const reason=language==="en"?/because|think|feel|idea|reason|so/i:/왜|이유|때문|느낌|기분|생각|아이디어|마음/;
+  const sensory=language==="en"?/see|saw|hear|heard|sound|smell|taste|touch|warm|cold|bright|dark|scene/i:/보이|들리|냄새|향|맛|촉감|따뜻|차갑|밝|어둡|장면|풍경|소리/;
+  if(reason.test(text)){mastery+=3;strengths.push(language==="en"?"reason·feeling·idea":"이유·감정·아이디어")}
+  if(sensory.test(text)){mastery+=3;strengths.push(language==="en"?"sensory detail":"감각·장면")}
+  if(/[.!?。！？]/.test(text)){mastery+=2;strengths.push(language==="en"?"sentence control":"문장 나누기")}
+  mastery=Math.min(14,mastery);
+  return {total:34+initial+mastery,base:34,initial,mastery,strengths};
+}
+async function loadSettings(){const s=await get("settings")||{},asset=await get("characterSourceAsset"),identity=await resolvedIdentity();$("#autoRead").checked=!!s.autoRead;$("#reduceMotion").checked=!!s.reduceMotion;document.documentElement.classList.toggle("reduceMotion",!!s.reduceMotion);$("#characterSummary").textContent=identity.profile.name?`탐험가 · ${identity.profile.name}`:"Ready & Set 프로필 연동 대기";$("#crewMemberSummary").textContent=`${crewMemberRule(identity).label} · ${crewMemberName(identity)}`;$("#characterName").value=identity.profile.name||"";$("#crewMemberName").value=identity.crewMember.name||"모카";$$("[data-crew-member-type]").forEach(b=>b.classList.toggle("on",b.dataset.crewMemberType===identity.crewMember.type));if(asset?.originalProfilePhoto||identity.profile.photo){$("#profilePhotoPreview").hidden=false;$("#profilePhotoImage").src=asset?.originalProfilePhoto||identity.profile.photo;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":asset?.characterMasterId?"Character Master 연결됨":"로컬 인트로 프로필 · 통합 시 Ready & Set 우선"}else{$("#profilePhotoPreview").hidden=true;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":"로컬 인트로 프로필 없음"}}
 async function renderCrewRoster(){
   if(!SNAP_RULES?.roster)return;
-  const identity=await resolvedIdentity(), roster=SNAP_RULES.roster, encounters=await get("crewEncounters")||{};
-  const starter=$("#starterCrewRoster"), world=$("#worldCrewRoster"), special=$("#specialCrewRoster");
+  const identity=await resolvedIdentity(),roster=SNAP_RULES.roster,encounters=await get("crewEncounters")||{};
+  const starter=$("#starterCrewRoster"),world=$("#worldCrewRoster"),special=$("#specialCrewRoster");
   if(starter){
-    const ids=roster.starter?.definedMembers||[], min=roster.starter?.selectableCandidateCount?.min||5, max=roster.starter?.selectableCandidateCount?.max||6;
-    const cards=ids.map(id=>{const m=SNAP_RULES.members?.[id],on=identity.crewMember.type===id;return `<button type="button" class="crewRosterCard ${on?"on":""}" data-crew-member-id="${id}"><b>${html(m?.label||id)}</b><span>${html(m?.personality||"")}</span></button>`});
-    const requiredGap=Math.max(0,min-ids.length), optionalGap=Math.max(0,max-Math.max(min,ids.length));
-    for(let i=0;i<requiredGap;i++)cards.push(`<button type="button" class="crewRosterCard unassigned" disabled><b>추가 시작 대원 필요</b><span>원자료/사용자 확정 전 임의 생성 금지</span></button>`);
-    for(let i=0;i<optionalGap;i++)cards.push(`<button type="button" class="crewRosterCard unassigned" disabled><b>후보 확장 슬롯</b><span>5~6명 범위 내 OPEN</span></button>`);
+    const slots=roster.starter?.slots||[],min=roster.starter?.minCandidates||5,max=roster.starter?.maxCandidates||6;
+    const defined=slots.filter(x=>x.memberId&&SNAP_RULES.members?.[x.memberId]);
+    const cards=defined.map(x=>{const m=SNAP_RULES.members[x.memberId],on=identity.crewMember.type===x.memberId;return `<button type="button" class="crewRosterCard ${on?"on":""}" data-crew-member-id="${x.memberId}"><b>${html(m.label)}</b><span>${html(m.personality||"")}</span></button>`});
+    const requiredGap=Math.max(0,min-defined.length),optionalGap=Math.max(0,max-Math.max(min,defined.length));
+    for(let i=0;i<requiredGap;i++)cards.push('<button type="button" class="crewRosterCard unassigned" disabled><b>추가 시작 대원 필요</b><span>원자료/사용자 확정 전 임의 생성 금지</span></button>');
+    for(let i=0;i<optionalGap;i++)cards.push('<button type="button" class="crewRosterCard unassigned" disabled><b>후보 확장 슬롯</b><span>5~6명 범위 내 OPEN</span></button>');
     starter.innerHTML=cards.join("");
-    starter.onclick=async e=>{
-      const b=e.target.closest("[data-crew-member-id]");if(!b)return;
-      const next=await resolvedIdentity(),id=b.dataset.crewMemberId,rule=SNAP_RULES.members?.[id];if(!rule)return;
-      next.crewMember={...next.crewMember,type:id,name:rule.defaultName||next.crewMember.name||"모카"};
-      next.explorationCrewRulesVersion=SNAP_RULES.version;
-      await set("identityFallback",next);$("#crewMemberName").value=next.crewMember.name;
-      $("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""}`;
-      await renderIdentityPresence();await renderCrewRoster();
-    };
+    starter.onclick=async e=>{const b=e.target.closest("[data-crew-member-id]");if(!b)return;const next=await resolvedIdentity(),id=b.dataset.crewMemberId,rule=SNAP_RULES.members?.[id];if(!rule)return;next.crewMember={...next.crewMember,type:id,name:rule.defaultName||next.crewMember.name||"모카"};next.explorationCrewRulesVersion=SNAP_RULES.version;await set("identityFallback",next);$("#crewMemberName").value=next.crewMember.name;$("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""}`;await renderIdentityPresence();await renderCrewRoster()};
   }
-  if(world){
-    world.innerHTML=`<div class="crewRosterCard unassigned"><b>거점 탐험대원 · 인원 OPEN</b><span>Snap 고정 5거점의 실제 역할을 계산한 뒤 인원과 정체성을 확정합니다. 거점당 1명 고정 규칙은 없습니다.</span></div>`;
-  }
+  if(world)world.innerHTML='<div class="crewRosterCard unassigned"><b>거점 탐험대원 · 인원 OPEN</b><span>앱별 거점/지역 역할을 계산한 뒤 필요한 수를 확정합니다.</span></div>';
   if(special){
-    const max=roster.special?.maximumCount||12, ids=roster.special?.definedMembers||[];
-    const cards=[];
-    ids.forEach(id=>{const state=encounters[id]?.status||"UNDISCOVERED",m=SNAP_RULES.members?.[id],selectable=state==="SELECTABLE_MAIN";cards.push(`<button type="button" class="crewRosterCard ${selectable?"":"locked"}" ${selectable?`data-crew-member-id="${id}"`:"disabled"}><b>${html(m?.label||id)}</b><span>${selectable?"첫 만남 완료 · 메인 선택 가능":"아직 선택 불가 · 만남 필요"}</span></button>`)});
-    for(let i=ids.length;i<max;i++)cards.push(`<div class="crewRosterCard locked"><b>스페셜 슬롯 ${String(i+1).padStart(2,"0")}</b><span>정체성 OPEN · 흔적/만남 전 과도한 노출 금지</span></div>`);
+    const max=roster.special?.maximumCapacity||12,defined=roster.special?.definedMembers||[],cards=[];
+    for(const id of defined){const state=encounters[id]?.status||"UNDISCOVERED",m=SNAP_RULES.members?.[id],selectable=state==="SELECTABLE_MAIN";cards.push(`<button type="button" class="crewRosterCard ${selectable?"":"locked"}" ${selectable?`data-crew-member-id="${id}"`:"disabled"}><b>${html(m?.label||id)}</b><span>${selectable?"첫 만남 완료 · 메인 선택 가능":"아직 선택 불가 · 만남 필요"}</span></button>`)}
+    for(let i=defined.length;i<max;i++)cards.push(`<div class="crewRosterCard locked"><b>스페셜 슬롯 ${String(i+1).padStart(2,"0")}</b><span>정체성 OPEN · 흔적/만남 전 과도한 노출 금지</span></div>`);
     special.innerHTML=cards.join("");
   }
 }
