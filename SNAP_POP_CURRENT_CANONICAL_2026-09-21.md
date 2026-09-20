@@ -359,3 +359,25 @@ Semantic provider hard limits:
 - one next move at a time;
 - OpenAI may back the provider internally when securely connected;
 - if the provider is unavailable, local writing analysis remains the fallback.
+
+
+### Badge axis recovery — C2S recovery 2026-09-21
+
+Recovered scope:
+
+- Badge is a distinct growth/identity axis from Character Master, Exploration Crew relationship, EXP/Gem economy, and World State.
+- Historical user direction: circular badge, hand-drawn feeling, pastel color language, intended to work across the broader app ecosystem rather than as a Snap-only decorative sticker.
+- Ready & Set avatar/onboarding lineage contains a small mission-badge motif.
+- Ready & Set character level / growth economy was explicitly HOLD, so badge progression must NOT be silently equated with character levels.
+- Historical cross-app badge mechanics were discussed as an ADOPT candidate but were not fully canonicalized; therefore exact unlock rules, taxonomy, counts, and cross-app ownership remain RECOVERY_REQUIRED / OPEN.
+
+Current disposition:
+- BADGE_AXIS_EXISTS = RECOVERED_CONFIRMED_DIRECTION
+- VISUAL_LANGUAGE = RECOVERED_USER_DIRECTION
+- EXACT_BADGE_CATALOG = OPEN
+- EXACT_EARNING_RULES = OPEN
+- CHARACTER_LEVEL_DEPENDENCY = FORBIDDEN_TO_INFER
+- EXP/GEM_DEPENDENCY = FORBIDDEN_TO_INFER
+- CROSS_APP_USAGE = RECOVERED_DIRECTION, CONTRACT_PENDING
+
+No badge implementation should be invented from reward counts or character affinity until the historical source recovery is completed.
