@@ -239,19 +239,87 @@ $("#nextBtn").onclick=async()=>{
   toast(`탐험 완료! +${expAward.total} EXP · 보석 조각 +1`);show("result")
 }
 
-function speak(t,language="ko"){if(!("speechSynthesis"in window))return toast("이 브라우저에서는 읽어주기를 지원하지 않아요.");speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=language==="en"?"en-US":"ko-KR";speechSynthesis.speak(u)}
+async function speak(t,language="ko"){try{if(window.SnapPopVoice)return await window.SnapPopVoice.speak(t,{language,voiceRole:"crew"});if(!("speechSynthesis"in window))throw new Error("TTS_UNAVAILABLE");speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=language==="en"?"en-US":"ko-KR";speechSynthesis.speak(u)}catch{return toast("지금은 음성으로 읽어주기 어려워요. 글로 계속 볼 수 있어요.")}}
 $("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0),text=$("#answer").value;s.answers[i]=text;s.updatedAt=new Date().toISOString();await set("active",s);clearTimeout(window.crewInputTimer);if(text.trim().length>=8){window.crewInputTimer=setTimeout(async()=>{const cur=await get("active");if(!cur||Math.min(2,cur.step||0)!==i)return;const msg=stepSpecificReaction($("#answer").value,cur.language||"ko");if(msg&&msg!==cur.crewState?.lastReaction)await showCrewReaction(msg)},850)}});
 function currentBridgeContext(){try{return window.SnapPopBridge?.context?.()||{}}catch{return {}}}
 async function renderIncomingHandoff(){const ctx=currentBridgeContext();const box=$("#handoffWord");if(!box)return;if(ctx.word){box.hidden=false;box.textContent=`Hide & Seek에서 찾은 단어 · ${ctx.word}${ctx.word_context?" · "+ctx.word_context:""}`}else box.hidden=true}
 window.addEventListener("snap-pop:bridge-ready",renderIncomingHandoff);
-function cloudFragments(text){const t=(text||"").trim();const out=[];if(t)out.push(`장면: ${t.slice(0,32)}`);out.push("어디에서 일어났을까?","그때 어떤 기분이었을까?","무엇이 보이거나 들렸을까?","왜 그렇게 생각했을까?");return [...new Set(out)].slice(0,5)}
-$("#cloudBtn").onclick=async()=>{const s=await get("active");if(!s)return;const panel=$("#cloudPanel"),chips=$("#cloudChips"),frags=cloudFragments($("#answer").value);s.crewState=s.crewState||{};s.crewState.cloudReturn={explorationId:s.id,step:s.step||0,openedAt:new Date().toISOString()};await set("active",s);chips.innerHTML=frags.map(x=>`<button type="button">${html(x)}</button>`).join("");panel.hidden=false;chips.onclick=e=>{const b=e.target.closest("button");if(!b)return;resolvedIdentity().then(identity=>showCrewReaction(`${crewMemberName(identity)}: 힌트는 여기까지. 이제 네 문장으로 이어가봐.`))}};
+function cloudFragments(text){
+  const t=(text||"").trim(),out=[];
+  if(t)out.push(`출발 생각 · ${t.slice(0,32)}${t.length>32?"…":""}`);
+  out.push("장면부터 잡아보기","마음부터 잡아보기","오감 단서 찾기","이유·연결 찾기");
+  return [...new Set(out)].slice(0,5);
+}
+function renderCloudResponse(result,identity){
+  const host=$("#cloudAnswer"); if(!host)return;
+  const nodes=Array.isArray(result?.nodes)?result.nodes:[];
+  const badge=result?.verified===false?"확인 필요":result?.kind==="ASK_UNDERSTAND"?"궁금증 해결":"생각 펼치기";
+  host.innerHTML=`<div class="cloudAnswerHead"><b>${html(crewMemberName(identity))} · ${html(result?.title||"상상 구름")}</b><span>${html(badge)}</span></div>`+
+    `<p class="cloudCore">${html(result?.core||"")}</p>`+
+    (nodes.length?`<div class="mindMap">${nodes.map(n=>`<div class="mindNode"><b>${html(n.label||"")}</b><span>${html(n.value||"")}</span></div>`).join("")}</div>`:"")+
+    (result?.example?`<p class="cloudExample">${html(result.example)}</p>`:"");
+  host.hidden=false; host.dataset.speakable=result?.speakable||result?.core||"";
+  $("#cloudMode").textContent=result?.kind==="ASK_UNDERSTAND"?"궁금증 해결":"생각 펼치기";
+}
+async function runCloud(inputOverride){
+  const s=await get("active"); if(!s)return;
+  const input=(inputOverride??$("#cloudInput")?.value??$("#answer").value).trim();
+  const identity=await resolvedIdentity();
+  if(!window.SnapPopIntelligence){toast("상상 구름 엔진을 불러오지 못했어요.");return}
+  $("#cloudAskBtn").disabled=true; $("#cloudAskBtn").textContent="생각 중…";
+  try{
+    const result=await window.SnapPopIntelligence.ask({input,language:s.language||"ko",landmark:s.landmark,step:s.step||0,crewMember:{type:identity.crewMember?.type,name:crewMemberName(identity)}});
+    renderCloudResponse(result,identity);
+    s.crewState=s.crewState||{}; s.crewState.cloudLast={input,intent:result.intent||result.kind,verified:result.verified!==false,provider:result.provider||"unknown",at:new Date().toISOString()};
+    await set("active",s);
+    if(result.verified===false) await showCrewReaction(`${crewMemberName(identity)}: 확인이 필요한 건 지어내지 않고 확인부터 할게.`,{persist:false,kind:"observe"});
+  }catch{
+    await showCrewReaction(`${crewMemberName(identity)}: 지금은 연결이 매끄럽지 않네. 질문은 그대로 남겨둘게.`,{persist:false});
+  }finally{
+    $("#cloudAskBtn").disabled=false; $("#cloudAskBtn").textContent="탐험대에게 물어보기";
+  }
+}
+$("#cloudBtn").onclick=async()=>{
+  const s=await get("active");if(!s)return;
+  const panel=$("#cloudPanel"),chips=$("#cloudChips"),frags=cloudFragments($("#answer").value);
+  s.crewState=s.crewState||{};s.crewState.cloudReturn={explorationId:s.id,step:s.step||0,openedAt:new Date().toISOString()};await set("active",s);
+  $("#cloudInput").value=$("#answer").value.trim();
+  $("#cloudAnswer").hidden=true;
+  chips.innerHTML=frags.map(x=>`<button type="button">${html(x)}</button>`).join("");
+  panel.hidden=false;
+  chips.onclick=e=>{const b=e.target.closest("button");if(!b)return;const input=$("#cloudInput");if(input&&!input.value.trim())input.value=b.textContent||"";input?.focus()};
+};
+$("#cloudAskBtn").onclick=()=>runCloud();
+$("#cloudSpeakLast").onclick=async()=>{const t=$("#cloudAnswer")?.dataset.speakable||"";if(!t)return toast("먼저 탐험대에게 물어봐줘.");const s=await get("active");await speak(t,s?.language||"ko")};
+$("#cloudVoiceBtn").onclick=async()=>{
+  const s=await get("active"),identity=await resolvedIdentity();
+  if(!window.SnapPopVoice)return toast("지금은 음성 입력을 사용할 수 없어요.");
+  try{
+    await window.SnapPopVoice.listen({language:s?.language||"ko",
+      onStart:()=>{$("#cloudVoiceBtn").textContent=(s?.language||"ko")==="en"?"Listening…":"듣고 있어요…";showCrewReaction(`${crewMemberName(identity)}: 천천히 말해도 돼.`,{persist:false})},
+      onText:t=>{$("#cloudInput").value=t;runCloud(t)},
+      onError:()=>showCrewReaction(`${crewMemberName(identity)}: 잘 못 들었어. 다시 말하거나 직접 써도 돼.`,{persist:false}),
+      onEnd:()=>{$("#cloudVoiceBtn").textContent="말로 묻기"}
+    });
+  }catch{toast("이 기기에서는 지금 음성 입력을 사용할 수 없어요.")}
+};
 $("#cloudClose").onclick=async()=>{const s=await get("active");if(s?.crewState){s.crewState.cloudReturn=null;await set("active",s)}$("#cloudPanel").hidden=true;$("#answer").focus()};
 $("#modeKo").onclick=async()=>{const s=await get("active");if(!s)return;s.language="ko";await set("active",s);renderExplore(s)};
 $("#modeEn").onclick=async()=>{const s=await get("active");if(!s)return;s.language="en";await set("active",s);renderExplore(s)};
 $("#hintBtn").onclick=revealHint;
-$("#listenBtn").onclick=async()=>{const s=await get("active");if(!s)return;const p=promptFor(s.landmark,s.step||0,s.language||"ko");speak(p[0]+" "+(s.crewState?.hintLevel?p[1]:""),s.language||"ko")}
-$("#voiceBtn").onclick=async()=>{const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return toast("이 브라우저에서는 음성 인식을 지원하지 않아요.");const s=await get("active"),r=new R(),identity=await resolvedIdentity();r.lang=(s?.language||"ko")==="en"?"en-US":"ko-KR";r.interimResults=false;r.onstart=async()=>{$("#voiceBtn").textContent=(s?.language||"ko")==="en"?"Listening":"듣고 있어요";await showCrewReaction((s?.language||"ko")==="en"?`${crewMemberName(identity)}: I’m listening. Take your time.`:`${crewMemberName(identity)}: 듣고 있어. 천천히 말해도 돼.`,{persist:false})};r.onresult=async e=>{const t=e.results[0][0].transcript;$("#answer").value+=(($("#answer").value?" ":"")+t);$("#answer").dispatchEvent(new Event("input"));const cur=await get("active");if(cur){cur.crewState=cur.crewState||{};cur.crewState.lastVoiceLength=t.length;await set("active",cur)}await recordCrewExperience("VOICE_EXPRESSION",{eventId:uid("voice"),length:t.length,landmark:s?.landmark||null});if(t.length>=40)await showCrewReaction((s?.language||"ko")==="en"?`${crewMemberName(identity)}: I caught that whole thought. Let’s keep your wording.`:`${crewMemberName(identity)}: 길게 잘 들었어. 네 말투는 그대로 두자.`)};r.onerror=()=>showCrewReaction((s?.language||"ko")==="en"?"I couldn’t catch that. You can try again or type it.":"잘 못 들었어. 다시 말하거나 직접 써도 돼.");r.onend=()=>$("#voiceBtn").innerHTML='<img src="assets/icons/radio.svg" alt="">말해서 쓰기';r.start()}
+$("#listenBtn").onclick=async()=>{const s=await get("active");if(!s)return;const p=promptFor(s.landmark,s.step||0,s.language||"ko");await speak(p[0]+" "+(s.crewState?.hintLevel?p[1]:""),s.language||"ko")};
+$("#voiceBtn").onclick=async()=>{
+  const s=await get("active"),identity=await resolvedIdentity();
+  if(!window.SnapPopVoice)return toast("지금은 음성 입력을 사용할 수 없어요.");
+  try{
+    await window.SnapPopVoice.listen({language:s?.language||"ko",
+      onStart:()=>{$("#voiceBtn").textContent=(s?.language||"ko")==="en"?"Listening":"듣고 있어요";showCrewReaction(`${crewMemberName(identity)}: 듣고 있어. 천천히 말해도 돼.`,{persist:false})},
+      onText:async t=>{$("#answer").value+=(($("#answer").value?" ":"")+t);$("#answer").dispatchEvent(new Event("input"));const cur=await get("active");if(cur){cur.crewState=cur.crewState||{};cur.crewState.lastVoiceLength=t.length;await set("active",cur)}await recordCrewExperience("VOICE_EXPRESSION",{eventId:uid("voice"),length:t.length,landmark:s?.landmark||null});if(t.length>=40)await showCrewReaction(`${crewMemberName(identity)}: 길게 잘 들었어. 네 말투는 그대로 두자.`)},
+      onError:()=>showCrewReaction(`${crewMemberName(identity)}: 잘 못 들었어. 다시 말하거나 직접 써도 돼.`),
+      onEnd:()=>{$("#voiceBtn").innerHTML='<img src="assets/icons/radio.svg" alt="">말해서 쓰기'}
+    });
+  }catch{toast("이 기기에서는 지금 음성 입력을 사용할 수 없어요.")}
+};
 
 async function renderRecords(){
   if(!db)return;
