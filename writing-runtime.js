@@ -39,5 +39,60 @@
     const fn=(isEn?enMove:koMove)[landmark]||(isEn?enMove.idea:koMove.idea);
     return {...fn(),features:f,sentenceCount:n};
   }
-  window.SnapPopWriting=Object.freeze({version:VERSION,features,move});
+  const LENS=["idea","emotion","description","viewpoint","final"];
+  function suggestedLens({landmark="idea",draft="",language="ko",step=0}={}){
+    const f=features(draft,language),n=sentenceCount(draft);
+    if(!draft.trim()) return null;
+    if(landmark!=="emotion"&&!f.emotion&&n>=2) return "emotion";
+    if(landmark!=="description"&&!f.sensory&&n>=2) return "description";
+    if(landmark!=="viewpoint"&&!f.perspective&&n>=3) return "viewpoint";
+    if(step>=2&&landmark!=="final"&&!f.ending) return "final";
+    return null;
+  }
+  function normalizeAnalysis(raw,fallback){
+    if(!raw||typeof raw!=="object")return {...fallback,provider:"local-writing-fallback"};
+    const safeFocus=typeof raw.focus==="string"&&raw.focus.length<48?raw.focus:fallback.focus;
+    const safeQuestion=typeof raw.question==="string"&&raw.question.trim().length<=180?raw.question.trim():fallback.question;
+    const safeHint=typeof raw.hint==="string"&&raw.hint.trim().length<=180?raw.hint.trim():fallback.hint;
+    const safeLens=LENS.includes(raw.suggestedLens)?raw.suggestedLens:null;
+    return {
+      ...fallback,
+      focus:safeFocus,
+      question:safeQuestion,
+      hint:safeHint,
+      suggestedLens:safeLens,
+      rationale:typeof raw.rationale==="string"?raw.rationale.slice(0,180):"",
+      confidence:Number.isFinite(raw.confidence)?Math.max(0,Math.min(1,raw.confidence)):null,
+      provider:raw.provider||"learning-provider",
+      grounded:raw.grounded!==false
+    };
+  }
+  async function analyze(payload={}){
+    const local=move(payload);
+    const fallback={...local,suggestedLens:suggestedLens(payload),provider:"local-writing-fallback",grounded:true};
+    const provider=window.SnapPopLearningProvider;
+    if(!provider||typeof provider.analyzeWriting!=="function")return fallback;
+    try{
+      const raw=await provider.analyzeWriting({
+        draft:(payload.draft||"").slice(0,6000),
+        previousSnapshot:(payload.previousSnapshot||"").slice(0,6000),
+        landmark:payload.landmark||"idea",
+        step:Number(payload.step)||0,
+        language:payload.language==="en"?"en":"ko",
+        learnerContext:payload.learnerContext||null,
+        contract:{
+          childAuthorship:true,
+          oneNextMoveOnly:true,
+          noFinalAnswerAuthoring:true,
+          noGrading:true,
+          noQuestionFlooding:true,
+          preserveDraft:true
+        }
+      });
+      return normalizeAnalysis(raw,fallback);
+    }catch{
+      return {...fallback,provider:"local-writing-fallback",providerError:true};
+    }
+  }
+  window.SnapPopWriting=Object.freeze({version:VERSION,features,move,analyze,suggestedLens});
 })();
