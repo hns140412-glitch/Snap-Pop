@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.6",
+  "version": "2026-09-21.7",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -657,15 +657,15 @@
       ],
       "classification": "CONFIRMED",
       "coded": "PARTIAL",
-      "staticVerified": false,
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "app.js QUESTION_BANK",
-        "voice",
-        "Imagination Cloud"
+        "index.html:exploreHub",
+        "app.js:runHubCloud",
+        "intelligence-runtime.js"
       ],
-      "gap": "현재 고정 글쓰기 루프 중심"
+      "gap": "verified knowledge provider and richer learning scaffold still pending"
     },
     {
       "id": "SP-UNIV-002",
@@ -682,9 +682,11 @@
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "app.js language ko/en"
+        "index.html:hubModeKo/hubModeEn",
+        "app.js:hubLanguage",
+        "writing ko/en mode"
       ],
-      "gap": "교차언어 표현/의미 보존 엔진 미완료"
+      "gap": "cross-language meaning-preserving transform engine pending"
     },
     {
       "id": "SP-UNIV-003",
@@ -695,11 +697,16 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": "PARTIAL",
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "현재 범용 Q&A/설명 엔진 없음"
+      "gap": "provider hook exists but verified broad-domain Q&A backend not connected",
+      "codeEvidence": [
+        "index.html:exploreHub",
+        "app.js:runHubCloud",
+        "intelligence-runtime.js:ASK_UNDERSTAND"
+      ]
     },
     {
       "id": "SP-UNIV-004",
@@ -740,11 +747,17 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": "PARTIAL",
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "Question→Understand→optional Express routing 미구현"
+      "gap": "understanding→expression routing remains basic/manual",
+      "codeEvidence": [
+        "exploreHub",
+        "hubMapBtn",
+        "hubThinkBtn",
+        "hubResumeBtn"
+      ]
     },
     {
       "id": "SP-IMAGINE-002",
@@ -928,6 +941,67 @@
       "codeEvidence": [
         "intelligence-runtime.js no-guess fallback"
       ]
+    },
+    {
+      "id": "SP-UNIV-007",
+      "domain": "UNIVERSAL_CORE",
+      "title": "탐험 탭 = 범용 Think/Ask/Express 허브, 3단계 글쓰기는 서브플로우",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "index.html:exploreHub",
+        "app.js:show",
+        "app.js:renderExploreHub"
+      ],
+      "gap": "runtime/device UX validation pending"
+    },
+    {
+      "id": "SP-UNIV-008",
+      "domain": "UNIVERSAL_CORE",
+      "title": "홈 무전기에서 범용 상상구름/음성 질문 바로 진입",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "SNAP_POP_UNIVERSAL_CORE",
+        "VOICE_ACCESSIBILITY"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:homeRadio→exploreHub",
+        "app.js:hubVoiceBtn",
+        "voice-runtime.js"
+      ],
+      "gap": "external high-quality voice provider and device validation pending"
+    },
+    {
+      "id": "SP-RECORD-002",
+      "domain": "RECORDS",
+      "title": "글쓰기 기록과 상상구름 궁금증/생각 기록을 함께 보존",
+      "authority": [
+        "SNAP_POP_UNIVERSAL_CORE",
+        "C2S_NO_SILENT_LOSS"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "app.js:cloudHistory",
+        "app.js:renderCloudHistory",
+        "index.html:cloudHistoryList"
+      ],
+      "gap": "answer/result snapshot persistence depth pending"
     }
   ]
 }
