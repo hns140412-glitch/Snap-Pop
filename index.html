@@ -184,7 +184,7 @@
 </section>
 <section id="familyExpansion" class="view parchment subflow">
  <button class="back" id="familyExpansionBack">← 설정</button>
- <header class="pageTitle"><span>가족과 함께 남기는 기록</span><h1>가족 확장팩</h1><p>아이마다 기록을 따로 보관하고, 준비된 기능부터 차근차근 사용할 수 있어요.</p></header>
+ <header class="pageTitle familyPageTitle"><span>가족이 함께 쓰는 공간</span><h1>가족 확장팩</h1><p>아이별 기록은 서로 섞이지 않게 따로 보관하고, 가족 기능은 필요할 때만 사용해요.</p></header>
  <article class="paper">
   <div class="setting"><div><b>가족 기록 사용</b><span id="familyExpansionMode">사용 안 함</span></div><label class="toggle"><input id="familyExpansionToggle" type="checkbox"><i></i></label></div>
   <h2>아이 프로필</h2>
@@ -201,7 +201,9 @@
 </section>
 <section id="settings" class="view parchment subflow">
  <button class="back" id="settingsBack">← 돌아가기</button>
- <header class="pageTitle"><span>탐험 준비</span><h1>설정</h1></header>
+ <header class="pageTitle settingsPageTitle"><span>탐험 준비</span><h1>설정</h1><p>내 모습과 탐험 친구, 화면 도움을 필요한 만큼만 바꿀 수 있어.</p></header>
+ <section class="settingsGroup" aria-labelledby="identitySettingsTitle">
+  <div class="settingsGroupHead"><span class="kicker">내 탐험</span><h2 id="identitySettingsTitle">나와 탐험대원</h2></div>
  <div class="setting"><div><b>내 탐험가</b><span id="characterSummary">나만의 탐험가를 꾸며요.</span></div><button class="soft" id="characterBtn">관리</button></div>
  <article id="characterPanel" class="paper settingPanel" hidden>
   <span class="kicker">사진은 원본을 안전하게 보관해요.</span>
@@ -235,8 +237,16 @@
   <button class="soft wide" id="crewMemberSuggest">이름 추천해줘</button>
   <button class="primary wide resultSecondary" id="crewMemberSave">저장</button>
  </article>
- <div class="setting"><div><b>가족 확장팩</b><span>일기 · 편지 · 가족 기록 · 다자녀 분리</span></div><button class="soft" id="familyExpansionBtn">열기</button></div>\n <div class="setting"><div><b>질문 읽어주기</b><span>6세 음성 접근성</span></div><label class="toggle"><input id="autoRead" type="checkbox"><i></i></label></div>
- <div class="setting"><div><b>움직임 줄이기</b><span>화면 효과 최소화</span></div><label class="toggle"><input id="reduceMotion" type="checkbox"><i></i></label></div>
+ </section>
+ <section class="settingsGroup familySettingsGroup" aria-labelledby="familySettingsTitle">
+  <div class="settingsGroupHead"><span class="kicker">가족 기능</span><h2 id="familySettingsTitle">가족과 함께 쓰기</h2><p>가족 기록과 아이별 분리는 이 공간에서만 관리해요.</p></div>
+  <div class="setting"><div><b>가족 확장팩</b><span>일기 · 편지 · 가족 기록 · 아이별 분리</span></div><button class="soft" id="familyExpansionBtn">가족 공간 열기</button></div>
+ </section>
+ <section class="settingsGroup accessibilitySettingsGroup" aria-labelledby="accessibilitySettingsTitle">
+  <div class="settingsGroupHead"><span class="kicker">화면 도움</span><h2 id="accessibilitySettingsTitle">읽기와 움직임</h2></div>
+  <div class="setting"><div><b>질문 읽어주기</b><span>글자를 읽기 어려울 때 질문을 들려줘요.</span></div><label class="toggle"><input id="autoRead" type="checkbox"><i></i></label></div>
+  <div class="setting"><div><b>움직임 줄이기</b><span>화면 효과를 더 차분하게 보여줘요.</span></div><label class="toggle"><input id="reduceMotion" type="checkbox"><i></i></label></div>
+ </section>
 </section>
 </main>
 <div id="imaginationLayer" class="imaginationLayer" hidden aria-hidden="true">
