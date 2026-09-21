@@ -132,3 +132,20 @@ Any new owner extraction must update this closure + handoff and pass the exact b
 - final visual direction: OPEN
 - DEVICE_VERIFIED: false
 - deploy / Netlify / main merge: NOT_RUN
+
+
+## Latest superseding validation — integrated UI Phase 1 included
+
+- exact validated code SHA: `0cef75de449b17111610aa4dea449b19066b9efc`
+- evidence commit: `739a710ed47a7a1fedbb66781d0c5ff3a8379453`
+- branch closure: `63/63 PASS`
+- browser runtime: `BROWSER_RUNTIME_CDP_PASS`
+- viewport: `390×844`
+- thin orchestrator boundary: PASS
+- architecture rewrite: CLOSED
+- integrated child writing UI Phase 1: CODED + STATIC/RUNTIME VERIFIED
+- final visual direction: OPEN
+- DEVICE_VERIFIED: false
+- deploy / Netlify / main merge: NOT_RUN
+
+This supersedes the earlier 62/62 closure as the latest exact-head evidence.
