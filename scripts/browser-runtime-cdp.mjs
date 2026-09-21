@@ -49,10 +49,33 @@ let last=null;
 for(let i=0;i<240;i++){
   last=await evalValue(snapshotExpr);
   if(last?.smoke==="PASS"){
-    console.log("BROWSER_RUNTIME_CDP_PASS");
-    console.log(JSON.stringify(last));
+    const recoveryKey="__runtime_recovery_probe__";
+    const probe=await evalValue(`(async()=>{const value={status:"PERSISTED",token:"snap-pop-runtime-recovery-v1"};await window.SnapPopStorage.set("${recoveryKey}",value);return await window.SnapPopStorage.get("${recoveryKey}")})()`);
+    if(probe?.status!=="PERSISTED") throw new Error("PWA_RECOVERY_PROBE_WRITE_FAILED");
+    const recoveryUrl=new URL(target.url);
+    recoveryUrl.searchParams.delete("runtime-smoke");
+    recoveryUrl.searchParams.set("runtime-recovery","1");
+    await send("Page.navigate",{url:recoveryUrl.href});
+    let recovery=null;
+    for(let j=0;j<240;j++){
+      try{
+        recovery=await evalValue(`(async()=>({readyState:document.readyState,init:window.__SNAP_RUNTIME_STATUS?.init||null,db:window.__SNAP_RUNTIME_STATUS?.db||null,probe:await window.SnapPopStorage?.get?.("${recoveryKey}")}))()`);
+        if(recovery?.readyState==="complete"&&recovery?.init==="PASS"&&recovery?.db==="OPEN"&&recovery?.probe?.token==="snap-pop-runtime-recovery-v1"){
+          await evalValue(`window.SnapPopStorage.set("${recoveryKey}",null)`);
+          console.log("PWA_RELOAD_RECOVERY_PASS");
+          console.log(JSON.stringify(recovery));
+          console.log("BROWSER_RUNTIME_CDP_PASS");
+          console.log(JSON.stringify(last));
+          ws.close();
+          process.exit(0);
+        }
+      }catch{}
+      await sleep(100);
+    }
+    console.error("PWA_RELOAD_RECOVERY_FAIL");
+    console.error(JSON.stringify(recovery));
     ws.close();
-    process.exit(0);
+    process.exit(3);
   }
   if(last?.smoke==="FAIL"){
     console.error("BROWSER_RUNTIME_CDP_FAIL");
