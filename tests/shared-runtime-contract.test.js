@@ -16,6 +16,7 @@ assert.equal(d.app_version,'REV_12');
 const sw=fs.readFileSync(path.join(__dirname,'..','sw.js'),'utf8');
 const index=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
 const app=fs.readFileSync(path.join(__dirname,'..','app.js'),'utf8');
+const bridge=fs.readFileSync(path.join(__dirname,'..','snap-bridge.js'),'utf8');
 
 assert(sw.includes("const C='snap-pop:'+RELEASE.release_id"));
 assert(!sw.includes(".then(()=>self.skipWaiting())"));
