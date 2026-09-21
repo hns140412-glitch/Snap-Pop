@@ -1375,7 +1375,9 @@
         "data/badge-system.json",
         "data/badge-catalog-working.json",
         "badge-runtime.js",
-        "app.js:recordBadgeEvent"
+        "badge-behavior-runtime.js",
+        "badge-shared-contract-runtime.js",
+        "app.js:recordBadgeBehaviorObservation"
       ],
       "recoveryEvidence": [
         "SANITIZED_ACCOUNT_TRANSCRIPT_2026-09-08_[0165]: badge/title collection as fun element",
@@ -1383,7 +1385,7 @@
         "SANITIZED_ACCOUNT_TRANSCRIPT_2026-09-08_[0169]: approx 60 expandable from child activity",
         "C2S/SNAP_POP_BADGE_SOURCE_RECOVERY_2026-09-21.md"
       ],
-      "gap": "runtime data model/event detector/catalog not implemented"
+      "gap": "independent experience event/data model and shared envelope are implemented; full reviewed active badge catalog and broader source-specific detectors remain incomplete"
     },
     {
       "id": "SP-BADGE-002",
@@ -1414,14 +1416,20 @@
         "TAKY_BADGE_SOURCE_RECOVERY_2026-09-21"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "shared owner/store/event contract not implemented",
+      "gap": "semantic-light shared event envelope is implemented without shared user/family/org identity, role or permission; cross-app producer/consumer integration remains NOT_RUN",
       "recoveryEvidence": [
         "Ready & Set historical badge discussion and avatar onboarding lineage",
         "TAKY common character/badge derivative direction"
+      ],
+      "codeEvidence": [
+        "badge-shared-contract-runtime.js",
+        "app.js:badgeSharedExperienceEvents",
+        "app.js:TakyBadgeExperienceContract.fromSnapObservation",
+        "scripts/validate-shared-badge-event-contract.mjs"
       ]
     },
     {
@@ -1434,13 +1442,21 @@
         "C2S_NO_FALSE_CONVERGENCE"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "badge runtime not implemented; rule prevents false reconstruction",
+      "gap": "runtime contracts explicitly separate badge observations from EXP/economy/level authority; live cross-app integration remains NOT_RUN",
       "recoveryEvidence": [
         "Ready_Set_Ui_Master_Logic_REV_06.md: character level/growth economy, advanced reward economy, social competition are HOLD"
+      ],
+      "codeEvidence": [
+        "badge-shared-contract-runtime.js:badge_award_authorized=false",
+        "badge-shared-contract-runtime.js:economy_mutation_authorized=false",
+        "badge-behavior-runtime.js:OBSERVATION_ONLY",
+        "data/badge-catalog-working.json:WORKING_DRAFT_NOT_ACTIVE",
+        "scripts/validate-shared-badge-event-contract.mjs",
+        "scripts/validate-badge-behavior-observation.mjs"
       ]
     },
     {
