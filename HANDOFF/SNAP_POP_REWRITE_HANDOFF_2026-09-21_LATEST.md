@@ -208,3 +208,5 @@ Still OPEN:
 - deploy / Netlify / main merge
 
 - minimal intervention/authorship runtime validation trigger.
+
+- authorship/minimal-intervention runtime matrix closure validation trigger.
