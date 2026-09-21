@@ -390,6 +390,13 @@ async function closeImagination(){
         returnedAt:new Date().toISOString()
       };
       await set("active",current);
+      const identity=await resolvedIdentity();
+      await showCrewReaction(
+        (current.language||"ko")==="en"
+          ? `${crewMemberName(identity)}: Your draft is still here. Keep going when you’re ready.`
+          : `${crewMemberName(identity)}: 쓰던 글은 그대로 있어. 준비되면 이어서 쓰면 돼.`,
+        {persist:false,kind:"observe"}
+      );
     }
   }
 
