@@ -1,4 +1,4 @@
-const $=q=>document.querySelector(q), $=q=>[...document.querySelectorAll(q)];
+const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
 const RELEASE=globalThis.SnapPopReleaseDescriptor;
 if(!globalThis.TakyReleaseContract?.validateDescriptor?.(RELEASE)?.ok)throw new Error('INVALID_SNAP_RELEASE_DESCRIPTOR');
 let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false, SNAP_RULES=null, writingAnalysisSeq=0, snapActiveExploration=false;
