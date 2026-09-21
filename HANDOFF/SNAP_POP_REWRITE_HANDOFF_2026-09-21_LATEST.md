@@ -206,3 +206,5 @@ Still OPEN:
 - physical cross-app Ready & Set return/device idempotency
 - final visual/art direction
 - deploy / Netlify / main merge
+
+- minimal intervention/authorship runtime validation trigger.
