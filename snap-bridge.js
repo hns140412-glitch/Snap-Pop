@@ -6,8 +6,9 @@
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
   const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','target_time_ms','session_start_at','paused_at','issue_ms','learning_context'];
 
+  const EventEnvelope = globalThis.TakyEventEnvelope;
+  if(!EventEnvelope?.create) throw new Error('SNAP_SHARED_EVENT_ENVELOPE_UNAVAILABLE');
   const iso = () => new Date().toISOString();
-  const eventId = () => `snap_event_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   function decodeLearningContext(raw) {
@@ -19,12 +20,19 @@
       const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
       const value=JSON.parse(new TextDecoder().decode(bytes));
       if (!value || value.contract_version!=='READY_LEARNING_CONTEXT_V1') return null;
-      const list=v=>Array.isArray(v)?v.filter(x=>typeof x==='string').slice(0,12):[];
+      const forbiddenKeys=new Set([
+        'role','permission','permissions','planner_authority','allocation_authority',
+        'family_id','child_id','hanja_grade','hanja_level','grade_inference'
+      ]);
+      if(Object.keys(value).some(key=>forbiddenKeys.has(key))) return null;
+      const required=['learning_unit_id','analysis_id','assignment_id'];
+      if(required.some(key=>!String(value[key]||'').trim())) return null;
+      const list=v=>Array.isArray(v)?[...new Set(v.filter(x=>typeof x==='string').map(x=>x.trim()).filter(Boolean))].slice(0,12):[];
       return {
         contract_version:'READY_LEARNING_CONTEXT_V1',
-        learning_unit_id:String(value.learning_unit_id||'').slice(0,120)||null,
-        analysis_id:String(value.analysis_id||'').slice(0,120)||null,
-        assignment_id:String(value.assignment_id||'').slice(0,120)||null,
+        learning_unit_id:String(value.learning_unit_id).slice(0,120),
+        analysis_id:String(value.analysis_id).slice(0,120),
+        assignment_id:String(value.assignment_id).slice(0,120),
         subject:String(value.subject||'').slice(0,80)||null,
         concept_skill_target:String(value.concept_skill_target||'').slice(0,180)||null,
         activity_types:list(value.activity_types),
@@ -71,17 +79,23 @@
   }
 
   function emit(type, payload = {}) {
+    const envelope = EventEnvelope.create({
+      source:'snap-pop',
+      event_type:type,
+      occurred_at:iso(),
+      correlation_id:context.session_id || context.task_id || null,
+      payload
+    });
     const event = {
-      event_id: eventId(),
+      ...envelope,
       type,
-      app: 'snap-pop',
-      at: iso(),
+      app:'snap-pop',
+      at:envelope.occurred_at,
       session_id: context.session_id || null,
       goal_id: context.goal_id || null,
       task_id: context.task_id || null,
       lap_id: context.lap_id || null,
-      child_id: context.child_id || null,
-      payload
+      child_id: context.child_id || null
     };
     let outbox = [];
     try { outbox = JSON.parse(sessionStorage.getItem(OUTBOX_KEY) || '[]') || []; } catch {}
