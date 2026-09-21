@@ -156,3 +156,15 @@ Phase 4 entry: extract Records/Growth/History while preserving original-record p
 - run `35594097359` / job `106314852163`
 - 55/55 closure PASS + Browser CDP PASS
 - next: Imagination Controller → Settings/Profile → remaining orchestration.
+
+
+## Phase 5B closure evidence
+- imagination-controller.js → Imagination Cloud entry/run/close/return ownership
+- SHA `55c9e35f84f43c145506beda066104470bce15e8`
+- run `35596924196` / job `106323772673`
+- 56/56 closure PASS + Browser CDP PASS
+- Radio=Imagination entry contract preserved
+- return integrity preserved
+
+Phase 5 disposition: CLOSED.
+Phase 6 entry: Settings/Profile/Identity extraction.

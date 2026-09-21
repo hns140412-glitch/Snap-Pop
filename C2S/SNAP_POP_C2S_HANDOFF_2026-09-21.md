@@ -3650,3 +3650,40 @@ Next surgery:
 2. Settings/Profile/Crew configuration surface
 3. remaining map/calendar/navigation orchestration cleanup
 4. app.js thin orchestrator closure
+
+
+## 52. REWRITE SURGERY PHASE 4 + PHASE 5 CLOSED — 2026-09-21
+
+### Phase 4 — Records/Growth
+- `records-growth-controller.js` → records / gems / growth / result presentation
+- `records-flow-controller.js` → revision / bonus / wish transactions
+- exact code SHA: `f411829dc38d1bb90c9574c48353e15136afe9f9`
+- Actions run: `35593508272` / job `106312987169`
+- 54/54 closure PASS
+- Chrome CDP runtime PASS
+- app.js reduced by ~10.7 KB across Phase 4
+- original record provenance / revision history / no reward recomputation preserved
+
+### Phase 5A — Special Exploration
+- `special-controller.js` → Special Exploration presentation + flow owner
+- exact code SHA: `a30698ce07e48c2db417df6fd7e4e05a12d450f9`
+- Actions run: `35594097359` / job `106314852163`
+- 55/55 closure PASS
+- Chrome CDP runtime PASS
+
+### Phase 5B — Imagination
+- `imagination-controller.js` → Imagination Cloud entry/close/run/return owner
+- latest exact code SHA: `55c9e35f84f43c145506beda066104470bce15e8`
+- Actions run: `35596924196` / job `106323772673`
+- `IMAGINATION_CONTROLLER_BOUNDARY_PASS`
+- `IMAGINATION_PRESSURE_RETURN_CONTRACT_PASS`
+- `IMAGINATION_RETURN_INTEGRITY_PASS`
+- `BRANCH_CLOSURE_VALIDATOR_PASS 56/56`
+- `BROWSER_RUNTIME_CDP_PASS`
+- Radio remains Imagination entry, not a writing landmark.
+- Return integrity remains protected.
+
+### Current rewrite state
+- app.js at this point ≈ 43 KB, down from ≈ 92 KB at surgery start.
+- Remaining large owners: Settings/Profile/Identity presentation, badge event orchestration, migration/bootstrap, bridge/context, calendar/cloud-history support, thin init/orchestrator cleanup.
+- next owner migration: Settings/Profile/Identity.

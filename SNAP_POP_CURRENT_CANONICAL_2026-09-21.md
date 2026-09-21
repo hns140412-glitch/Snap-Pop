@@ -526,3 +526,12 @@ Phase 5A closed at `a30698ce07e48c2db417df6fd7e4e05a12d450f9`.
 - validation: 55/55 + 390×844 Chrome runtime PASS.
 
 Next: Imagination Controller, then Settings/Profile and remaining orchestration cleanup.
+
+
+## 15. Rewrite Phase 4/5 — Records, Special, Imagination ownership extracted
+
+Records/Growth is owned by `records-growth-controller.js` + `records-flow-controller.js`. Special Exploration is owned by `special-controller.js`. Imagination Cloud is owned by `imagination-controller.js`.
+
+Latest validated state: `55c9e35f84f43c145506beda066104470bce15e8`, 56/56 closure PASS + 390×844 Chrome CDP runtime PASS.
+
+Legacy `app.js` is now ~43 KB versus ~92 KB at surgery start. Next owner migration: Settings/Profile/Identity.

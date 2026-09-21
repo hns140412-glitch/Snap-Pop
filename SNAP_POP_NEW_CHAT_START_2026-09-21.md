@@ -484,3 +484,11 @@ REWRITE SURGERY PHASE 4 + 5A CLOSED — 2026-09-21
 - Phase 5A SHA: a30698ce07e48c2db417df6fd7e4e05a12d450f9 / 55/55 + Chrome runtime PASS
 - special-controller.js owns Special Exploration
 - next: Imagination Controller → Settings/Profile → remaining orchestration cleanup
+
+
+REWRITE SURGERY PHASE 5B CLOSED — 2026-09-21
+- current validated SHA: 55c9e35f84f43c145506beda066104470bce15e8
+- Records/Growth, Special, Imagination owners extracted
+- 56/56 + Chrome CDP runtime PASS
+- app.js ≈43 KB from ≈92 KB start
+- next: Settings/Profile/Identity extraction
