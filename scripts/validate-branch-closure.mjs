@@ -53,6 +53,7 @@ const validators=[
   "validate-mobile-user-surface.mjs",
   "validate-rewrite-foundation-boundaries.mjs",
   "validate-writing-controller-boundaries.mjs",
+  "validate-writing-flow-controller-boundaries.mjs",
   "validate-dom-binding-integrity.mjs"
 ];
 
