@@ -132,10 +132,37 @@
       assert("record-revision-added",Array.isArray(revisionsAfter?.[recordBefore?.id])&&revisionsAfter[recordBefore.id].length>=1);
       assert("record-revision-does-not-recompute-reward",preserved?.expAward===originalExp);
 
+      const expBeforeCloud=await window.SnapPopStorage.get("exp");
+      const gemsBeforeCloud=JSON.stringify(await window.SnapPopStorage.get("gems")||{});
+      const cloudBefore=await window.SnapPopStorage.get("cloudHistory")||[];
+      const runtimeCloudEntry={
+        id:"runtime_cloud_history",
+        input:"왜 잎 사이의 빛이 반짝여 보였을까?",
+        intent:"ASK_UNDERSTAND",
+        verificationStatus:"FACT_NEEDS_CHECK",
+        verified:false,
+        title:"런타임 궁금증",
+        core:"확인이 필요한 궁금증 기록",
+        nodes:[],
+        language:"ko",
+        source:"RUNTIME_SELFTEST",
+        at:new Date().toISOString()
+      };
+      await window.SnapPopStorage.set("cloudHistory",[runtimeCloudEntry,...cloudBefore.filter(x=>x.id!=="runtime_cloud_history")]);
+      click(document.querySelector('#nav button[data-view="records"]'),"records-nav");
+      await wait(180);
+      assert("records-and-cloud-history-render-together",
+        document.querySelector("#recordList")?.textContent?.includes(originalText.slice(0,12))===true&&
+        document.querySelector("#cloudHistoryList")?.textContent?.includes("왜 잎 사이의 빛이 반짝여 보였을까?")===true
+      );
+
       click(document.querySelector("#resultGrowth"),"result-growth");
       await wait(160);
       assert("growth-view-active",document.querySelector("#growth")?.classList.contains("active")===true);
       assert("single-growth-tree-present",document.querySelectorAll("#growth #treeImage").length===1);
+      assert("cloud-activity-appears-in-growth-summary",document.querySelector("#growthActivitySummary")?.textContent?.includes("궁금증")===true);
+      assert("cloud-activity-does-not-change-exp",(await window.SnapPopStorage.get("exp"))===expBeforeCloud);
+      assert("cloud-activity-does-not-change-gems",JSON.stringify(await window.SnapPopStorage.get("gems")||{})===gemsBeforeCloud);
 
       click(document.querySelector("#resultBack"),"result-back-map");
       await wait(120);
