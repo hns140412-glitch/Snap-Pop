@@ -370,6 +370,47 @@
       await wait(120);
       assert("home-radio-close-restores-map",document.querySelector("#imaginationLayer")?.hidden===true&&document.querySelector("#map")?.classList.contains("active")===true);
 
+      const identityBeforeRename=await window.SnapPopStorage.get("identityFallback");
+      const registryBeforeRename=await window.SnapPopStorage.get("crewRegistry")||{};
+      const mainMemberId=identityBeforeRename?.crewMember?.type||Object.keys(registryBeforeRename)[0];
+      const mainEntryBefore=JSON.parse(JSON.stringify(registryBeforeRename[mainMemberId]||{}));
+      click(document.querySelector("#settingsBtn"),"settings-open-for-crew-rename");
+      await wait(120);
+      click(document.querySelector("#crewMemberBtn"),"crew-member-panel-open");
+      await wait(100);
+      const crewNameInput=document.querySelector("#crewMemberName");
+      const runtimeRenamed=(mainEntryBefore.currentName||mainEntryBefore.firstName||"탐험대원")+"-런타임";
+      crewNameInput.value=runtimeRenamed;
+      click(document.querySelector("#crewMemberSave"),"crew-member-rename-save");
+      await wait(180);
+      const identityAfterRename=await window.SnapPopStorage.get("identityFallback");
+      const registryAfterRename=await window.SnapPopStorage.get("crewRegistry")||{};
+      const renamedEntry=registryAfterRename[mainMemberId];
+      assert("crew-explorer-id-stable-after-rename",identityAfterRename?.crewMember?.type===mainMemberId&&renamedEntry?.memberId===mainMemberId);
+      assert("crew-name-history-appended",renamedEntry?.currentName===runtimeRenamed&&Array.isArray(renamedEntry?.nameHistory)&&renamedEntry.nameHistory.some(x=>x.to===runtimeRenamed));
+      assert("crew-relationship-memory-preserved-after-rename",
+        JSON.stringify(renamedEntry?.memories||[])===JSON.stringify(mainEntryBefore.memories||[])&&
+        JSON.stringify(renamedEntry?.affinity||{})===JSON.stringify(mainEntryBefore.affinity||{})
+      );
+      await window.SnapPopStorage.setMany([
+        ["identityFallback",identityBeforeRename],
+        ["crewRegistry",registryBeforeRename]
+      ]);
+      click(document.querySelector("#settingsBack"),"settings-back-after-crew-rename");
+      await wait(120);
+
+      const guestMainBefore=(await window.SnapPopStorage.get("identityFallback"))?.crewMember?.type;
+      await window.SnapPopStorage.set("activeCrewGuestTrigger",{scene:"SPECIAL_EXPLORATION",authorized:true});
+      click(document.querySelector("#specialInvite"),"authorized-special-open");
+      await wait(180);
+      const guestPresence=document.querySelector("#specialCrewPresence");
+      const appearedGuestId=guestPresence?.dataset?.memberId||"";
+      assert("authorized-special-guest-appears",guestPresence?.hidden===false&&!!appearedGuestId&&appearedGuestId!==guestMainBefore);
+      assert("authorized-guest-keeps-main-identity",(await window.SnapPopStorage.get("identityFallback"))?.crewMember?.type===guestMainBefore);
+      assert("authorized-guest-trigger-consumed",(await window.SnapPopStorage.get("activeCrewGuestTrigger"))==null);
+      click(document.querySelector("#specialLater"),"authorized-special-skip");
+      await wait(120);
+
       const specialSnapshot={
         exp:await window.SnapPopStorage.get("exp"),
         gems:JSON.stringify(await window.SnapPopStorage.get("gems")||{}),
