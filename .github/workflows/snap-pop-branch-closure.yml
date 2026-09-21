@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - taky/snap-pop-implementation-2026-09-20
+      - taky/learning-app-family-snap-context-2026-09-21
   workflow_dispatch:
 
 permissions:
@@ -22,6 +23,9 @@ jobs:
         run: echo "SNAP_POP_VALIDATION_SHA=${GITHUB_SHA}"
       - name: Run 44 branch closure validators
         run: node scripts/validate-branch-closure.mjs
+
+      - name: Validate Ready learning-context contract
+        run: node scripts/validate-ready-learning-context.mjs
 
       - name: Browser runtime smoke
         shell: bash
