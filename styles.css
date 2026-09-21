@@ -147,3 +147,8 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 .badgeGemArc i.on{background:color-mix(in srgb,var(--badge-accent) 86%,#fff);box-shadow:0 0 9px color-mix(in srgb,var(--badge-accent) 45%,transparent)}
 .badgeGemArc i:nth-child(1){--a:-48deg}.badgeGemArc i:nth-child(2){--a:-24deg}.badgeGemArc i:nth-child(3){--a:0deg}.badgeGemArc i:nth-child(4){--a:24deg}.badgeGemArc i:nth-child(5){--a:48deg}
 .badgePreviewMeta{text-align:center;margin-top:8px}.badgePreviewMeta b{display:block;font-family:"Noto Serif CJK KR","Batang",serif}.badgePreviewMeta span{font-size:9px;color:#726c5d}
+
+.familyRow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.familyFeatureGrid{margin:12px 0}.familyFeature{display:flex;justify-content:space-between;gap:12px;align-items:center}.familyFeature.locked{opacity:.62}
+.familyTimelineTitle{margin-top:18px}
+#familyExpansion textarea{min-height:110px}

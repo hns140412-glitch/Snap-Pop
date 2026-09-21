@@ -145,6 +145,23 @@
  </article>
  <div id="recordRevisionList" class="timeline"></div>
 </section>
+<section id="familyExpansion" class="view parchment subflow">
+ <button class="back" id="familyExpansionBack">← 설정</button>
+ <header class="pageTitle"><span>ORIGINAL과 분리된 선택 확장</span><h1>가족 확장팩</h1><p>아이별 기록은 childId로 분리하고, 회수되지 않은 기능은 잠금 상태로 유지합니다.</p></header>
+ <article class="paper">
+  <div class="setting"><div><b>확장팩 사용</b><span id="familyExpansionMode">ORIGINAL</span></div><label class="toggle"><input id="familyExpansionToggle" type="checkbox"><i></i></label></div>
+  <h2>아이 프로필</h2>
+  <div class="familyRow"><input id="familyChildName" class="textInput" maxlength="30" placeholder="아이 이름"><button class="soft" id="familyChildAdd">추가</button></div>
+  <select id="familyChildSelect" class="textInput"></select>
+ </article>
+ <div id="familyFeatureGrid" class="cards familyFeatureGrid"></div>
+ <article class="paper"><span class="kicker">아이별 기록</span><h2>일기</h2><textarea id="familyDiaryText" placeholder="오늘 기억하고 싶은 일을 네 말로 남겨봐요."></textarea><button class="primary wide" id="familyDiarySave">일기 저장</button></article>
+ <article class="paper"><span class="kicker">가족 펜팔</span><h2>편지·쪽지</h2><textarea id="familyLetterText" placeholder="가족에게 전하고 싶은 말을 직접 적어요."></textarea><button class="primary wide" id="familyLetterSave">편지 기록</button></article>
+ <article class="paper"><span class="kicker">가족 응원</span><h2>응원 카드</h2><textarea id="familySupportText" placeholder="응원하고 싶은 말을 적어요."></textarea><button class="primary wide" id="familySupportSave">응원 카드 저장</button></article>
+ <article class="paper"><span class="kicker">공동 특별탐험</span><h2>가족이 함께 남긴 기억</h2><textarea id="familySharedSpecialText" placeholder="함께 한 특별탐험의 기억을 남겨요."></textarea><button class="primary wide" id="familySharedSpecialSave">공동 기록 저장</button></article>
+ <header class="pageTitle familyTimelineTitle"><span>아이별로 분리 보존</span><h2>가족 성장기록</h2></header>
+ <div id="familyTimeline" class="timeline"></div>
+</section>
 <section id="settings" class="view parchment subflow">
  <button class="back" id="settingsBack">← 돌아가기</button>
  <header class="pageTitle"><span>탐험 준비</span><h1>설정</h1></header>
@@ -181,7 +198,7 @@
   <button class="soft wide" id="crewMemberSuggest">이름 추천해줘</button>
   <button class="primary wide resultSecondary" id="crewMemberSave">저장</button>
  </article>
- <div class="setting"><div><b>질문 읽어주기</b><span>6세 음성 접근성</span></div><label class="toggle"><input id="autoRead" type="checkbox"><i></i></label></div>
+ <div class="setting"><div><b>가족 확장팩</b><span>일기 · 편지 · 가족 기록 · 다자녀 분리</span></div><button class="soft" id="familyExpansionBtn">열기</button></div>\n <div class="setting"><div><b>질문 읽어주기</b><span>6세 음성 접근성</span></div><label class="toggle"><input id="autoRead" type="checkbox"><i></i></label></div>
  <div class="setting"><div><b>움직임 줄이기</b><span>화면 효과 최소화</span></div><label class="toggle"><input id="reduceMotion" type="checkbox"><i></i></label></div>
 </section>
 </main>
@@ -243,5 +260,5 @@
 <script src="crew-core6-runtime.js"></script>
 <script src="imagination-return-runtime.js"></script>
 <script src="intelligence-runtime.js"></script>
-<script src="voice-runtime.js"></script>
-<script src="app.js"></script><script src="snap-bridge.js"></script></body></html>
+<script src="voice-runtime.js"></script>\n<script src="family-expansion-runtime.js"></script>
+<script src="app.js"></script>\n<script src="family-expansion-app.js"></script><script src="snap-bridge.js"></script></body></html>

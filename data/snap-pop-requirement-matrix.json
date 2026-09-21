@@ -543,11 +543,17 @@
         "REV12"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "현재 app/index에 FAMILY_EXPANSION runtime 없음"
+      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open.",
+      "codeEvidence": [
+        "family-expansion-runtime.js",
+        "family-expansion-app.js",
+        "index.html",
+        "scripts/validate-family-expansion-runtime.mjs"
+      ]
     },
     {
       "id": "SP-EXP-002",
@@ -558,10 +564,17 @@
         "REV12"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
-      "deviceVerified": false
+      "deviceVerified": false,
+      "codeEvidence": [
+        "family-expansion-runtime.js",
+        "family-expansion-app.js",
+        "index.html",
+        "scripts/validate-family-expansion-runtime.mjs"
+      ],
+      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open."
     },
     {
       "id": "SP-EXP-003",
@@ -573,10 +586,17 @@
         "RECOVERY_AUDIT"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
-      "deviceVerified": false
+      "deviceVerified": false,
+      "codeEvidence": [
+        "family-expansion-runtime.js",
+        "family-expansion-app.js",
+        "index.html",
+        "scripts/validate-family-expansion-runtime.mjs"
+      ],
+      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open."
     },
     {
       "id": "SP-EXP-004",
@@ -587,10 +607,17 @@
         "REV12"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
-      "deviceVerified": false
+      "deviceVerified": false,
+      "codeEvidence": [
+        "family-expansion-runtime.js",
+        "family-expansion-app.js",
+        "index.html",
+        "scripts/validate-family-expansion-runtime.mjs"
+      ],
+      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open."
     },
     {
       "id": "SP-EXP-005",
@@ -601,10 +628,17 @@
         "REV12"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
-      "deviceVerified": false
+      "deviceVerified": false,
+      "codeEvidence": [
+        "family-expansion-runtime.js",
+        "family-expansion-app.js",
+        "index.html",
+        "scripts/validate-family-expansion-runtime.mjs"
+      ],
+      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open."
     },
     {
       "id": "SP-EXP-006",
@@ -615,10 +649,17 @@
         "RECOVERY_AUDIT"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
-      "deviceVerified": false
+      "deviceVerified": false,
+      "codeEvidence": [
+        "family-expansion-runtime.js",
+        "family-expansion-app.js",
+        "index.html",
+        "scripts/validate-family-expansion-runtime.mjs"
+      ],
+      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open."
     },
     {
       "id": "SP-EXP-007",
@@ -628,10 +669,17 @@
         "RECOVERY_AUDIT"
       ],
       "classification": "RECOVERY_REQUIRED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
-      "deviceVerified": false
+      "deviceVerified": false,
+      "codeEvidence": [
+        "family-expansion-runtime.js",
+        "family-expansion-app.js",
+        "index.html",
+        "scripts/validate-family-expansion-runtime.mjs"
+      ],
+      "gap": "family group/ invite exact recovered semantics remain RECOVERY_LOCKED; local role/permission isolation contract implemented."
     },
     {
       "id": "SP-EXP-008",
@@ -641,10 +689,17 @@
         "RECOVERY_AUDIT"
       ],
       "classification": "RECOVERY_REQUIRED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
-      "deviceVerified": false
+      "deviceVerified": false,
+      "codeEvidence": [
+        "family-expansion-runtime.js",
+        "family-expansion-app.js",
+        "index.html",
+        "scripts/validate-family-expansion-runtime.mjs"
+      ],
+      "gap": "mailbox/decor/sealing-wax exact recovered semantics/assets remain RECOVERY_LOCKED; feature slot is fail-closed."
     },
     {
       "id": "SP-EXP-009",
@@ -654,10 +709,17 @@
         "RECOVERY_AUDIT"
       ],
       "classification": "PRESERVE_LINEAGE",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
-      "deviceVerified": false
+      "deviceVerified": false,
+      "codeEvidence": [
+        "family-expansion-runtime.js",
+        "family-expansion-app.js",
+        "index.html",
+        "scripts/validate-family-expansion-runtime.mjs"
+      ],
+      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open."
     },
     {
       "id": "SP-EXP-010",
@@ -668,11 +730,18 @@
         "REV12"
       ],
       "classification": "CONFLICT",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "notes": "DO_NOT_AUTO_RESOLVE"
+      "notes": "DO_NOT_AUTO_RESOLVE",
+      "codeEvidence": [
+        "family-expansion-runtime.js",
+        "family-expansion-app.js",
+        "index.html",
+        "scripts/validate-family-expansion-runtime.mjs"
+      ],
+      "gap": "gem-shard gift remains CONFLICT_LOCKED and cannot mutate economy until conflict is explicitly resolved."
     },
     {
       "id": "SP-EXP-011",
@@ -682,10 +751,17 @@
         "RECOVERY_AUDIT"
       ],
       "classification": "RECOVERY_CANDIDATE",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
-      "deviceVerified": false
+      "deviceVerified": false,
+      "codeEvidence": [
+        "family-expansion-runtime.js",
+        "family-expansion-app.js",
+        "index.html",
+        "scripts/validate-family-expansion-runtime.mjs"
+      ],
+      "gap": "composite diary illustration remains RECOVERY_LOCKED pending canonical recovery; diary artifact path is implemented."
     },
     {
       "id": "SP-UNIV-001",
