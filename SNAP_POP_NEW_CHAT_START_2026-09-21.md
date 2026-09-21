@@ -348,3 +348,15 @@ BADGE VISUAL / SPECIAL ROLE NOTE:
 - special role validator 8/8 PASS.
 - SP-CREW-004 now CODED=true / STATIC_VERIFIED=true.
 - closure runner now has 33 validators.
+
+
+IMAGINATION RETURN INTEGRITY NOTE:
+- added SNAP_POP_IMAGINATION_RETURN_V1 guard.
+- writing-flow cloud snapshot includes session/landmark/step/language/draft.
+- return fails closed if session, landmark, step or language changed.
+- newer current draft wins over opening snapshot.
+- snapshot is fallback only.
+- existing writing-flow pressure suppression remains.
+- return integrity validator 9/9 PASS.
+- SP-IMAGINE-001 now CODED=true / STATIC_VERIFIED=true.
+- closure runner now has 34 validators.
