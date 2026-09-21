@@ -1335,3 +1335,108 @@ Next should move to:
 - static/runtime-isolated cross-regression;
 - detect collisions between Truth Guard, curiosity scaffold, mental model, pressure control, crew ownership and voice policy;
 - still no deploy/device/Netlify until frozen candidate and external-resource gate.
+
+
+## 26. P6 INTEGRATED P1–P5 REGRESSION + TRI-STATE TRUTH HISTORY — 2026-09-21
+
+### Integrated regression scope
+
+Cross-layer order tested:
+1. Truth Guard
+2. question scaffold
+3. mental model
+4. follow-up pressure policy
+5. Exploration Crew presentation ownership
+6. public history state
+7. voice text guard
+
+Added:
+- `scripts/validate-p1-p5-integrated.mjs`
+
+### Regression found during P6
+
+A remaining False Convergence risk existed in history state:
+- `result.verified !== false`
+- a THINK_EXPRESS result without a factual verification flag could be stored as if it were verified.
+
+This was corrected.
+
+New public verification state:
+- factual ASK + verified true:
+  - `FACT_VERIFIED`
+- factual ASK not fully verified:
+  - `FACT_NEEDS_CHECK`
+- THINK_EXPRESS / non-factual flow:
+  - `NOT_APPLICABLE`
+
+For non-factual THINK history:
+- `verified = null`
+- UI label = `생각 기록`
+- it is no longer displayed as a verified factual flow.
+
+Updated:
+- `crew-presentation-guard.js`
+- `app.js`
+- `scripts/validate-p1-p5-integrated.mjs`
+
+### Integrated execution result
+
+Repository validator itself was read back and confirmed syntactically valid.
+
+No existing GitHub CI/status checks were attached to the branch HEAD:
+- combined statuses: none
+- workflow runs: none
+
+No new workflow was created.
+
+The current runtime files were copied from GitHub connector readback into a local temporary directory and executed without network access.
+
+Integrated PASS cases:
+1. truth-full-remains-verified
+2. full-answer-can-build-cause-flow
+3. full-answer-can-offer-one-optional-followup
+4. presentation-keeps-truth-state
+5. presentation-keeps-verified-claim-text
+6. presentation-owner-is-crew
+7. presentation-title-not-provider-owned
+8. verified-history-status-is-explicit
+9. voice-can-read-guarded-full-answer
+10. partial-cannot-become-verified
+11. partial-cannot-build-structural-flow
+12. partial-suppresses-followup
+13. presentation-cannot-upgrade-partial-truth
+14. partial-history-status-needs-check
+15. think-history-verification-not-applicable
+16. writing-flow-suppresses-followup-even-when-verified
+17. presentation-self-identity-leak-fails-closed
+18. voice-self-identity-leak-fails-closed
+19. mental-model-never-transforms-facts
+
+Final marker:
+- `P1_P5_INTEGRATED_REGRESSION_PASS`
+
+### Temporary harness note
+
+The first local temporary copy of the validator had a manually introduced fixture-bracket typo and failed at parse time.
+This was NOT a repository runtime failure.
+GitHub readback confirmed the repository validator syntax was correct.
+The local temporary fixture was corrected and the integrated run then passed 19/19.
+
+### Status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL
+  - integrated isolated P1–P5 regression PASS
+  - existing GitHub CI: NONE
+  - live browser/server/OpenAI: NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Next P6 increment
+
+Next:
+1. add app-level static regression for history labels / cloud return / explicit mic-only paths;
+2. re-run the key isolated validators together as a closure matrix;
+3. inspect for remaining stale `verified !== false` patterns and old provider-visible labels;
+4. if clean, produce a P6 branch-only frozen-candidate readiness report without deploying.
