@@ -7,10 +7,7 @@ const uid=p=>`${p}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
 const IDENTITY_DEFAULT={profile:{name:"",photo:"",style:"editorial",shareAvatar:false},crewMember:{type:"dooby",name:"두비",voice:"warm"}};
 let sharedIdentity=null;
 
-){
-  const p=x.profile||{},legacy=x.guide||{},member=x.crewMember||legacy,type=normalizeCrewType(member.type);
-  return {profile:{...IDENTITY_DEFAULT.profile,...p},crewMember:{...IDENTITY_DEFAULT.crewMember,...member,type},explorationCrewRulesVersion:SNAP_RULES?.version||x.explorationCrewRulesVersion||"PENDING"};
-}
+
 
 
 
@@ -348,7 +345,7 @@ function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.fo
 
 
 
-async ={}){const box=$("#crewReactionOverlay");if(!box||!message)return;const identity=await resolvedIdentity(),perf=crewPerformance(identity,kind),language=(await get("active"))?.language||"ko",safety=window.SnapPopCrewInteractionSafety,safeMessage=safety&&typeof safety.safeReaction==="function"?safety.safeReaction(message,{language}):message;box.innerHTML=`<span class="reactionMotif">${html(perf.motif)}</span><b>${html(perf.gesture)}</b><span>${html(safeMessage)}</span>`;box.hidden=false;box.classList.add("show");box.dataset.kind=kind;if(persist){const s=await get("active");if(s){s.crewState=s.crewState||{};s.crewState.lastReaction=safeMessage;s.crewState.reactionAt=new Date().toISOString();await set("active",s)}}if(!document.documentElement.classList.contains("reduceMotion")){clearTimeout(window.crewReactionTimer);window.crewReactionTimer=setTimeout(()=>{box.classList.remove("show")},2200)}}
+async 
 
 async function revealHint(){const s=await get("active");if(!s)return;const p=promptFor(s.landmark,s.step||0,s.language||"ko",ensureWritingState(s).draft);s.crewState=s.crewState||{};s.crewState.hintLevel=Math.max(1,s.crewState.hintLevel||0);s.crewState.lastHintAt=new Date().toISOString();await set("active",s);await recordBadgeBehaviorObservation("HELP_REQUEST",{explicitAction:true,landmark:s.landmark,step:Math.min(2,s.step||0),hintLevel:s.crewState.hintLevel},"SNAP_POP");$("#hint").textContent=p[1];$("#hint").hidden=false;$("#hintBtn").disabled=true;const identity=await resolvedIdentity();await showCrewReaction((s.language||"ko")==="en"?`${crewMemberName(identity)}: Just one hint. The rest is yours.`:`${crewMemberName(identity)}: 힌트는 하나만. 나머지는 네 생각으로 가보자.`)}
 async function resetStepCrewState(s){s.crewState={hintLevel:0,lastReaction:"",cloudReturn:null,lastVoiceLength:0};await set("active",s)}
