@@ -241,3 +241,5 @@ Conservative boundaries retained:
 - GUIDE authorship/minimal intervention runtime matrix closure validation trigger.
 
 - radio ownership/imagination return runtime matrix validation trigger.
+
+- cloud history preservation/no-farming runtime validation trigger.
