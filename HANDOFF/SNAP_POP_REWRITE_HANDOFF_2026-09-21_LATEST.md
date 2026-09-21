@@ -279,3 +279,5 @@ Conservative boundaries retained:
 - crew relationship/world-state/guest weighting runtime validation trigger.
 
 - stale-safe semantic contract exact-head validation trigger.
+
+- special skip / wish transaction runtime validation trigger.
