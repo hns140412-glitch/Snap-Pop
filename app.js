@@ -765,7 +765,7 @@ async function openSpecial(){
   $("#specialHint").textContent=`${crewMemberName(identity)} · ${p.h}`;
   const presence=$("#specialCrewPresence");
   if(presence){
-    presence.textContent=guest?`${guest.name}도 이번 장면에 잠깐 합류했어.`:"";
+    presence.textContent=guest?`${crewMemberName(identity)} · ${guest.name}도 이번 장면에 잠깐 합류했네. 같이 보되, 네 생각은 네가 골라.`:"";
     presence.hidden=!guest;
     presence.dataset.memberId=guest?.memberId||"";
   }
