@@ -2971,3 +2971,60 @@ Remaining voice gap:
 - previous frozen candidate remains superseded
 - external call count remains 0
 - Netlify/deploy/merge remain NOT_RUN
+
+
+## 42. INDEPENDENT BADGE EXPERIENCE AXIS RECONCILIATION — 2026-09-21
+
+### Implemented / verified
+
+Added:
+- `scripts/validate-badge-independent-experience-axis.mjs`
+
+The badge observation axis is now explicitly verified as independent from:
+- EXP ledger
+- gem ledger
+- crew affinity
+- badge award state
+- economy mutation
+
+`recordBadgeBehaviorObservation` writes only:
+- `badgeBehaviorObservations`
+- `badgeSharedExperienceEvents`
+
+and does not write:
+- exp / expLedger
+- gems / gemLedger
+- crewRegistry / affinity
+- active badge catalog state.
+
+Runtime contracts also enforce:
+- badgeAwardAuthorized=false
+- penaltyAllowed=false
+- economy_mutation_authorized=false
+
+Validation:
+- `BADGE_INDEPENDENT_EXPERIENCE_AXIS_PASS`
+- 8/8 PASS
+
+### Requirement matrix
+
+`SP-BADGE-001`
+- CODED=true
+- STATIC_VERIFIED=true
+- RUNTIME_VERIFIED=false
+- DEVICE_VERIFIED=false
+
+Clarification:
+- the independent experience axis itself is implemented.
+- historical catalog activation and remaining source-specific behavior detectors are separate concerns tracked under SP-BADGE-005/006/008.
+
+### Closure runner
+
+`scripts/validate-branch-closure.mjs` now contains 39 validators.
+
+### External state
+
+- current candidate not frozen
+- prior frozen candidate superseded
+- external call count remains 0
+- Netlify/deploy/merge remain NOT_RUN
