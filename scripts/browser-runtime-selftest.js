@@ -80,9 +80,12 @@
       assert("empty-second-attempt-does-not-write",answer.value==="");
 
       const originalSemanticProvider=window.SnapPopSemanticWritingProvider;
+      const staleProbeCalls=[];
       window.SnapPopSemanticWritingProvider={
         async analyzeWriting(payload){
-          const isOld=(payload.draft||"").includes("오래된 분석");
+          const draft=payload.draft||"";
+          staleProbeCalls.push(draft);
+          const isOld=draft.includes("오래된 분석");
           await wait(isOld?1500:10);
           return {
             focus:isOld?"OLD":"LATEST",
@@ -99,11 +102,14 @@
       };
       answer.value="오래된 분석 초안";
       answer.dispatchEvent(new Event("input",{bubbles:true}));
-      await wait(900);
+      assert("stale-probe-old-analysis-started",await waitFor(()=>staleProbeCalls.some(x=>x.includes("오래된 분석")),2500,25));
       answer.value="최신 분석 초안";
       answer.dispatchEvent(new Event("input",{bubbles:true}));
-      await wait(1900);
-      assert("stale-writing-analysis-cannot-overwrite-latest",document.querySelector("#question")?.textContent==="최신 분석 결과만 남아 있나?");
+      assert("stale-probe-latest-analysis-started",await waitFor(()=>staleProbeCalls.some(x=>x.includes("최신 분석")),2500,25));
+      await wait(1700);
+      const staleFinalQuestion=document.querySelector("#question")?.textContent||"";
+      if(staleFinalQuestion!=="최신 분석 결과만 남아 있나?")throw new Error("FAIL stale-writing-analysis-cannot-overwrite-latest actual="+staleFinalQuestion+" calls="+JSON.stringify(staleProbeCalls));
+      result.textContent+="\nPASS stale-writing-analysis-cannot-overwrite-latest";
       window.SnapPopSemanticWritingProvider=originalSemanticProvider;
 
       const draft1="오늘은 숲에서 작은 빛을 봤어.";
