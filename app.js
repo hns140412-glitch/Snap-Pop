@@ -6,14 +6,14 @@ const LEVEL_THRESHOLDS=LEVEL_NEEDS.reduce((a,n,i)=>{a.push(i===0?0:a[i-1]+n);ret
 const uid=p=>`${p}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
 const IDENTITY_DEFAULT={profile:{name:"",photo:"",style:"editorial",shareAvatar:false},crewMember:{type:"dooby",name:"두비",voice:"warm"}};
 let sharedIdentity=null;
-function normalizeCrewType(type){return ({lumi:"maltipoo",pico:"redpanda",mori:"buddy"}[type]||type||"dooby")}
-function normalizeIdentity(x={}){
+
+){
   const p=x.profile||{},legacy=x.guide||{},member=x.crewMember||legacy,type=normalizeCrewType(member.type);
   return {profile:{...IDENTITY_DEFAULT.profile,...p},crewMember:{...IDENTITY_DEFAULT.crewMember,...member,type},explorationCrewRulesVersion:SNAP_RULES?.version||x.explorationCrewRulesVersion||"PENDING"};
 }
-function crewMemberRule(identity){const type=normalizeCrewType(identity?.crewMember?.type),pool=SNAP_RULES?.definedCharacterLineages||{},legacy=SNAP_RULES?.legacyCharacterLineages||{};return pool[type]||legacy[type]||pool.dooby||{label:"탐험대원",defaultName:"두비",home:"같이 가자.",reactions:{},behavior:{}}}
-function crewReaction(identity,landmark){return crewMemberRule(identity).reactions?.[landmark]||"한 조각씩 같이 찾아보자."}
-function crewMemberName(identity){return identity?.crewMember?.name||crewMemberRule(identity).defaultName||"두비"}
+
+
+
 
 function stableHash(s=""){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function affinityTier(score=0){const tiers=SNAP_RULES?.affinityEngine?.tiers||[];let t=tiers[0]||{key:"KNOWN",label:"아는 친구",min:0};for(const x of tiers)if(score>=x.min)t=x;return t}
@@ -115,10 +115,7 @@ async function recordCrewExperience(type,meta={}){
   const identity=await resolvedIdentity(),id=identity.crewMember?.type;
   return recordCrewMemberExperience(id,type,meta);
 }
-function crewPerformance(identity,kind="observe"){
-  const r=crewMemberRule(identity),gesture=r.gestures?.[kind]||r.gestures?.observe||"",motifs=r.reactionMotifs||[];
-  return {gesture,motif:motifs.length?motifs[stableHash((identity.crewMember?.type||"")+"|"+kind)%motifs.length]:""};
-}
+
 async function chooseSceneGuest(sceneKey,{sceneMood=null,appearanceAuthorized=false}={}){
   if(!appearanceAuthorized)return null;
   if(!window.SnapPopCrewOrchestration||!SNAP_RULES?.crewInteractionOrchestration?.guestSelection?.enabled)return null;
@@ -310,6 +307,17 @@ function writingFlowController(){return window.SnapPopWritingFlowController.inst
   recordBadgeBehaviorObservation,recordBadgeEvent,setExpressionBridgeButton,refreshWritingMove,stepSpecificReaction,
   bumpWritingAnalysisSeq:()=>{writingAnalysisSeq++;return writingAnalysisSeq}
 })}
+function crewController(){return window.SnapPopCrewController.instance({query:$,IDENTITY_DEFAULT,getRules:()=>SNAP_RULES,stableHash,resolvedIdentity,isWeekend})}
+function normalizeCrewType(type){return crewController().normalizeCrewType(type)}
+function normalizeIdentity(x={}){return crewController().normalizeIdentity(x)}
+function crewMemberRule(identity){return crewController().crewMemberRule(identity)}
+function crewReaction(identity,landmark){return crewController().crewReaction(identity,landmark)}
+function crewMemberName(identity){return crewController().crewMemberName(identity)}
+function crewPerformance(identity,kind="observe"){return crewController().crewPerformance(identity,kind)}
+function crewSnippet(text){return crewController().crewSnippet(text)}
+async function showCrewReaction(message,options={}){return crewController().showCrewReaction(message,options)}
+function hideCrewReaction(){return crewController().hideCrewReaction()}
+async function renderSpecialInvite(){return crewController().renderSpecialInvite()}
 function runtimePhase(phase){if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.phase=phase}
 async function init(){
   runtimePhase("OPEN_DB");await openDB();
@@ -337,11 +345,11 @@ function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.fo
 
 
 
-function crewSnippet(text){const clean=(text||"").trim().replace(/\s+/g," ");return clean.length>18?clean.slice(0,18)+"…":clean}
 
 
-async function showCrewReaction(message,{persist=true,kind="observe"}={}){const box=$("#crewReactionOverlay");if(!box||!message)return;const identity=await resolvedIdentity(),perf=crewPerformance(identity,kind),language=(await get("active"))?.language||"ko",safety=window.SnapPopCrewInteractionSafety,safeMessage=safety&&typeof safety.safeReaction==="function"?safety.safeReaction(message,{language}):message;box.innerHTML=`<span class="reactionMotif">${html(perf.motif)}</span><b>${html(perf.gesture)}</b><span>${html(safeMessage)}</span>`;box.hidden=false;box.classList.add("show");box.dataset.kind=kind;if(persist){const s=await get("active");if(s){s.crewState=s.crewState||{};s.crewState.lastReaction=safeMessage;s.crewState.reactionAt=new Date().toISOString();await set("active",s)}}if(!document.documentElement.classList.contains("reduceMotion")){clearTimeout(window.crewReactionTimer);window.crewReactionTimer=setTimeout(()=>{box.classList.remove("show")},2200)}}
-function hideCrewReaction(){const box=$("#crewReactionOverlay");if(box){box.hidden=true;box.classList.remove("show")}}
+
+async ={}){const box=$("#crewReactionOverlay");if(!box||!message)return;const identity=await resolvedIdentity(),perf=crewPerformance(identity,kind),language=(await get("active"))?.language||"ko",safety=window.SnapPopCrewInteractionSafety,safeMessage=safety&&typeof safety.safeReaction==="function"?safety.safeReaction(message,{language}):message;box.innerHTML=`<span class="reactionMotif">${html(perf.motif)}</span><b>${html(perf.gesture)}</b><span>${html(safeMessage)}</span>`;box.hidden=false;box.classList.add("show");box.dataset.kind=kind;if(persist){const s=await get("active");if(s){s.crewState=s.crewState||{};s.crewState.lastReaction=safeMessage;s.crewState.reactionAt=new Date().toISOString();await set("active",s)}}if(!document.documentElement.classList.contains("reduceMotion")){clearTimeout(window.crewReactionTimer);window.crewReactionTimer=setTimeout(()=>{box.classList.remove("show")},2200)}}
+
 async function revealHint(){const s=await get("active");if(!s)return;const p=promptFor(s.landmark,s.step||0,s.language||"ko",ensureWritingState(s).draft);s.crewState=s.crewState||{};s.crewState.hintLevel=Math.max(1,s.crewState.hintLevel||0);s.crewState.lastHintAt=new Date().toISOString();await set("active",s);await recordBadgeBehaviorObservation("HELP_REQUEST",{explicitAction:true,landmark:s.landmark,step:Math.min(2,s.step||0),hintLevel:s.crewState.hintLevel},"SNAP_POP");$("#hint").textContent=p[1];$("#hint").hidden=false;$("#hintBtn").disabled=true;const identity=await resolvedIdentity();await showCrewReaction((s.language||"ko")==="en"?`${crewMemberName(identity)}: Just one hint. The rest is yours.`:`${crewMemberName(identity)}: 힌트는 하나만. 나머지는 네 생각으로 가보자.`)}
 async function resetStepCrewState(s){s.crewState={hintLevel:0,lastReaction:"",cloudReturn:null,lastVoiceLength:0};await set("active",s)}
 
@@ -772,7 +780,7 @@ function specialPromptFor(d=new Date()){const seed=(d.getFullYear()*10000+(d.get
  {q:"누군가의 입장에서 오늘 하루를 다시 보면 뭐가 달라질까?",h:"다른 시선 하나만 골라도 충분해요."},
  {q:"평범한 장소에 비밀 하나가 숨어 있다면 무엇일까?",h:"작은 이상함 하나를 네 이야기로 키워봐요."}
  ][seed]}
-async function renderSpecialInvite(){const invite=$("#specialInvite");if(!invite)return;invite.hidden=!isWeekend();if(!invite.hidden){const identity=await resolvedIdentity();invite.textContent=`${crewMemberName(identity)}의 특별 탐험 초대장`}}
+async 
 async function openSpecial(){
   const p=specialPromptFor(),identity=await resolvedIdentity();
   const guestTrigger=await get("activeCrewGuestTrigger");
