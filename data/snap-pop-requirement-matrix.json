@@ -1791,6 +1791,53 @@
         "data/badge-catalog-working.json:WORKING_DRAFT_NOT_ACTIVE",
         "scripts/validate-badge-catalog-activation-guard.mjs"
       ]
+    },
+    {
+      "id": "SP-UX-001",
+      "domain": "USER_EXPERIENCE_SURFACE",
+      "title": "사용자-facing 화면에 내부 개발 상태/코드 용어를 노출하지 않고 아이가 즉시 이해할 수 있는 표현 사용",
+      "authority": [
+        "LATEST_DIRECT_USER_2026-09-21",
+        "TAKY_UI_REFERENCE_PROTOCOL_TKY-UIREF-001",
+        "TAKY_OUTCOME_OPTIMIZATION"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": true,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "index.html:user-facing copy",
+        "family-expansion-app.js:state label translation",
+        "scripts/validate-user-facing-surface.mjs",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "GitHub Actions run 35587004735",
+        "USER_FACING_SURFACE_PASS",
+        "BROWSER_RUNTIME_CDP_PASS"
+      ],
+      "gap": "user-facing copy and hidden internal family lock states are browser-runtime verified; final approved visual direction and real-device review remain open."
+    },
+    {
+      "id": "SP-UX-002",
+      "domain": "USER_EXPERIENCE_SURFACE",
+      "title": "390px 모바일 핵심 글쓰기 화면은 수평 넘침 없이 reflow되고 주요 조작 컨트롤은 최소 터치 높이를 확보",
+      "authority": [
+        "TAKY_UI_REFERENCE_PROTOCOL_TKY-UIREF-001",
+        "LATEST_DIRECT_USER_2026-09-21"
+      ],
+      "classification": "CONFIRMED",
+      "coded": true,
+      "staticVerified": true,
+      "runtimeVerified": false,
+      "deviceVerified": false,
+      "codeEvidence": [
+        "styles.css:.tools responsive wrap",
+        "scripts/validate-user-facing-surface.mjs",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "gap": "browser viewport/reflow runtime verification pending at this commit; real-device safe-area and touch behavior remain open."
     }
   ]
 }

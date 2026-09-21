@@ -140,6 +140,15 @@
       await wait(120);
       assert("family-mode-reenabled",document.querySelector("#familyExpansionMode")?.textContent==="사용 중");
 
+      const appRoot=document.querySelector("#app");
+      assert("mobile-root-has-no-horizontal-overflow",appRoot.scrollWidth<=appRoot.clientWidth+1);
+      assert("mobile-document-has-no-horizontal-overflow",document.documentElement.scrollWidth<=window.innerWidth+1);
+      const toolButtons=[...document.querySelectorAll("#explore .tools button")];
+      assert("writing-tools-present",toolButtons.length>=6);
+      assert("writing-tools-touch-height",toolButtons.every(b=>b.getBoundingClientRect().height>=44));
+      assert("writing-tools-stay-inside-viewport",toolButtons.every(b=>{const r=b.getBoundingClientRect();return r.left>=0&&r.right<=window.innerWidth+1}));
+      assert("primary-next-touch-height",document.querySelector("#nextBtn")?.getBoundingClientRect().height>=44);
+
       document.body.dataset.runtimeSmoke="PASS";
       result.textContent+="\nBROWSER_RUNTIME_SELFTEST_PASS";
     }catch(error){

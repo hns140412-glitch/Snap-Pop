@@ -177,7 +177,7 @@ REV10 + REV12 recovery/conflict register + recovered audit evidence.
 Important:
 `SPECIFIED != IMPLEMENTED`.
 
-Current expansion runtime is largely absent.
+Current Family Expansion runtime is implemented for the active/locked scope and browser-runtime verified. Active features execute in child-scoped storage; RECOVERY_LOCKED and CONFLICT_LOCKED features remain fail-closed rather than being silently promoted.
 
 ## 4. Current requirement-to-code truth
 
@@ -428,3 +428,28 @@ Identity remains stable; theme changes rendering/expression only.
 - cross-app owner/storage surface;
 - whether historical badges preserve acquisition-time theme or re-render to current theme.
 
+
+
+## 11. TAKY user-outcome / UI realization checkpoint — 2026-09-21
+
+Latest direct correction:
+- internal CODED/validator progress is supporting evidence, not the user's product-completeness experience;
+- user-facing completion must be judged from the actual integrated screen/flow;
+- internal development terminology/state must not leak into child-facing UI;
+- final UI/visual PASS is not claimable before an approved visual direction and representative device evidence.
+
+Current implementation evidence:
+- child-facing internal jargon cleanup applied;
+- writing tools reflow to a mobile-friendly wrapped layout;
+- Family Expansion internal lock semantics remain internal while the surface shows plain-language availability;
+- browser runtime covers app init, IndexedDB, core writing, Family Expansion, child isolation and locked-feature fail-closed behavior.
+
+Current truthful boundary:
+- DESIGN REALIZATION = PARTIAL;
+- final approved visual direction = OPEN;
+- DEVICE_VERIFIED = false;
+- hosted/live-provider verification = separate;
+- therefore CODED/CI/runtime progress SHALL NOT be reported as equivalent to final product polish.
+
+This checkpoint follows:
+`USER OUTCOME → ACTUAL INTEGRATED RESULT → HIGHEST-VALUE DELTA → IMPROVE → TARGETED REGRESSION CHECK`.
