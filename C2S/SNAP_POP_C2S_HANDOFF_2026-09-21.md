@@ -2124,3 +2124,116 @@ Continue implementation rather than deployment.
 High-value remaining candidates:
 - reconcile stale requirement-matrix entries for already-coded Truth/Imagination capabilities;
 - then implement remaining genuinely uncoded badge/event runtime or broader crew scene orchestration without inventing OPEN probabilities.
+
+
+## 34. BADGE BEHAVIOR OBSERVATION TAXONOMY / ANTI-LABELING GUARD — 2026-09-21
+
+### Implemented
+
+Added:
+- `badge-behavior-runtime.js`
+- `scripts/validate-badge-behavior-observation.mjs`
+
+Purpose:
+- capture process/experience observations without turning them into scores, power, child labels or automatic badge awards;
+- preserve the historical ~60 badge catalog as WORKING_DRAFT_NOT_ACTIVE.
+
+Supported canonical event-family vocabulary:
+- SELF_START
+- TIME_CREATION
+- EXTRA_TASK
+- FOCUS
+- RETURN_RECOVERY
+- HELP_REQUEST
+- ERROR_DISCOVERY
+- RETRY
+- DEEP_THINKING
+- ISSUE_DURATION
+- SELF_EXPLANATION
+- PLAN_ADAPTATION
+- SPECIAL_BEHAVIOR
+- WRITING_EXPLORATION
+
+Observation contract:
+- `SNAP_POP_BADGE_BEHAVIOR_OBSERVATION_V1`
+- disposition = `OBSERVATION_ONLY`
+- badgeAwardAuthorized=false
+- catalogActivationAllowed=false
+- childAbilityInferenceAllowed=false
+- penaltyAllowed=false
+
+Anti-labeling guard rejects nested payload keys such as:
+- score / performanceScore
+- grade / rank
+- ability / abilityLabel
+- intelligence / trait / characterTrait
+- failureLabel
+- mastery / masteryLevel
+- penalty / rewardAmount
+
+### Current app wiring
+
+Only a directly evidenced signal is currently wired:
+- child explicitly presses the hint button
+- observation family = `HELP_REQUEST`
+- payload records explicitAction, landmark, step, hintLevel
+
+Not inferred:
+- DEEP_THINKING from elapsed silence
+- RETRY from generic editing
+- ERROR_DISCOVERY without explicit evidence
+- SPECIAL_BEHAVIOR merely from participation
+
+This avoids turning weak proxies into child labels.
+
+### Historical badge catalog lock
+
+`data/badge-catalog-working.json` remains:
+- status = `WORKING_DRAFT_NOT_ACTIVE`
+- every item active=false
+- exact names/triggers are NOT activated.
+
+### Validation
+
+`BADGE_BEHAVIOR_OBSERVATION_PASS`
+- 9/9 PASS
+
+Checks:
+1. HELP_REQUEST normalizes as observation only
+2. observation cannot authorize badge award
+3. child ability inference/penalty forbidden
+4. ability-label payload blocked
+5. performance-score payload blocked
+6. taxonomy covers recovery/retry/help/error/thinking/special
+7. working catalog remains inactive
+8. app records only explicit help signal
+9. app does not infer deep thinking from empty attempts
+
+### Requirement matrix
+
+`SP-BADGE-006`
+- CODED = PARTIAL
+- STATIC_VERIFIED = true
+- RUNTIME_VERIFIED = false
+- DEVICE_VERIFIED = false
+
+Why PARTIAL:
+- taxonomy and anti-labeling execution are implemented;
+- only HELP_REQUEST has a current source-specific detector;
+- other behavior families need evidence contracts before runtime detection.
+
+### Closure runner
+
+`scripts/validate-branch-closure.mjs` now contains 22 validators.
+
+### External state
+
+- current implementation still not frozen;
+- previous frozen candidate remains superseded;
+- external call count remains 0;
+- merge/deploy/Netlify NOT_RUN.
+
+### Next branch-only direction
+
+Continue source-specific behavior detectors only where evidence is explicit.
+Do not activate historical badge names/triggers merely because taxonomy exists.
