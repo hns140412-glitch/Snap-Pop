@@ -453,3 +453,14 @@ Current truthful boundary:
 
 This checkpoint follows:
 `USER OUTCOME → ACTUAL INTEGRATED RESULT → HIGHEST-VALUE DELTA → IMPROVE → TARGETED REGRESSION CHECK`.
+
+Evidence update:
+- GitHub Actions run `35587771286` / job `106294991604`;
+- branch closure `47/47 PASS`;
+- 390×844 Chrome CDP runtime PASS;
+- no root/document horizontal overflow;
+- visible writing controls satisfy the runtime touch-height gate;
+- controls remain inside the viewport;
+- next-step primary control satisfies the same touch-height gate.
+
+This is **mobile browser realization evidence**, not real-device DESIGN/DEVICE PASS.

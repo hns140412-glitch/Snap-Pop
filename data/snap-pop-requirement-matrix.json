@@ -1830,14 +1830,27 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "styles.css:.tools responsive wrap",
         "scripts/validate-user-facing-surface.mjs",
         "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "browser viewport/reflow runtime verification pending at this commit; real-device safe-area and touch behavior remain open."
+      "gap": "390x844 Chrome runtime verifies no horizontal overflow and >=44px visible writing controls; real-device safe-area, font rendering, touch feel and installed-PWA behavior remain open.",
+      "runtimeEvidence": [
+        "GitHub Actions run 35587771286",
+        "job 106294991604",
+        "BRANCH_CLOSURE_VALIDATOR_PASS 47/47",
+        "MOBILE_USER_SURFACE_STATIC_PASS",
+        "BROWSER_RUNTIME_CDP_PASS",
+        "390x844 viewport",
+        "mobile-root-has-no-horizontal-overflow",
+        "mobile-document-has-no-horizontal-overflow",
+        "writing-tools-touch-height",
+        "writing-tools-stay-inside-viewport",
+        "primary-next-touch-height"
+      ]
     }
   ]
 }

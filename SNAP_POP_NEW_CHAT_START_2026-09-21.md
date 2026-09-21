@@ -443,3 +443,10 @@ FAMILY EXPANSION + BROWSER RUNTIME CLOSURE — 2026-09-21
 - SP-BRIDGE-001 remains STATIC PARTIAL pending actual Ready & Set transition/return verification
 - Snap-Pop Netlify site identified as cheerful-pothos-d1c3ee, but available connector cannot guarantee exact branch/SHA preview; no unsafe deploy triggered
 - read Handoff Section 47 before further work
+
+
+TAKY USER-OUTCOME / MOBILE UI REALIZATION — 2026-09-21
+- latest mobile browser evidence: run 35587771286 / 47/47 PASS / Chrome CDP PASS at 390x844
+- SP-UX-001 and SP-UX-002 are CODED + STATIC + RUNTIME verified; DEVICE remains false
+- final visual/UI direction is still OPEN; do not report browser/mobile structural PASS as final design completion
+- read Handoff Section 48 before continuing UI work

@@ -3410,3 +3410,43 @@ Runtime verification found and fixed real DOM/runtime defects rather than maskin
 
 ### Netlify
 Existing Snap-Pop site was identified, but it is production-main linked and the available connector cannot guarantee exact branch/SHA preview deployment. No hosted deploy was triggered. This preserves the exact-candidate rule.
+
+
+## 48. TAKY USER-OUTCOME / MOBILE UI REALIZATION — 2026-09-21
+
+TAKY canonical loaded:
+- TAKY main: `7056dc65c21cb53a8e8d84393ac1ff81716731b1`
+- applied outcome rule: user-visible integrated result outranks internal progress/process reporting
+- project authority: `Snap_Pop_UI_MASTER_LOGIC_REV_12.md` + current canonical + requirement matrix
+
+Material corrections applied:
+- internal development jargon removed from child-facing surfaces;
+- Family Expansion internal lock state stays internal while user sees plain-language availability;
+- crew setup no longer exposes WORKING/OPEN/slot design terminology;
+- writing tools use mobile wrapped hierarchy;
+- visible writing controls raised to 48px minimum CSS height;
+- user-facing surface regression validator added;
+- mobile user-surface validator added;
+- stale hard-coded requirement count removed from matrix closure;
+- CURRENT_CANONICAL stale Family Expansion status updated.
+
+New requirements:
+- SP-UX-001: user-facing internal jargon isolation — CODED/STATIC/RUNTIME true, DEVICE false.
+- SP-UX-002: 390px mobile reflow/touch-target realization — CODED/STATIC/RUNTIME true, DEVICE false.
+
+Exact evidence:
+- validated SHA before this documentation/state sync: `133677aa318f456cb1186e9d3a467d7f375f7645`
+- GitHub Actions run: `35587771286`
+- job: `106294991604`
+- 47/47 branch closure PASS
+- 390×844 Chrome CDP browser runtime PASS
+- app init PASS / IndexedDB OPEN / runtime errors 0
+- no horizontal overflow
+- writing tools remain inside viewport
+- visible writing control touch-height gate PASS
+
+Truth boundary:
+- final UI visual direction is still OPEN;
+- DESIGN REALIZATION remains PARTIAL;
+- DEVICE_VERIFIED remains false;
+- hosted/live-provider and cross-app Ready return remain separate evidence boundaries.
