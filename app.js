@@ -5,7 +5,6 @@ const LEVEL_NEEDS=[0,80,100,120,150,180,220,260,300,340,380,430,480,540,600,670,
 const LEVEL_THRESHOLDS=LEVEL_NEEDS.reduce((a,n,i)=>{a.push(i===0?0:a[i-1]+n);return a},[]);
 const uid=p=>`${p}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
 const IDENTITY_DEFAULT={profile:{name:"",photo:"",style:"editorial",shareAvatar:false},crewMember:{type:"dooby",name:"두비",voice:"warm"}};
-let sharedIdentity=null;
 
 
 
@@ -127,45 +126,17 @@ async function migrateLegacyState(){
   entries.push(["migration_20260920_state_v1",{at:new Date().toISOString(),records:records.length,legacyExp,ledgerTotalBefore:ledgerTotal}]);
   await setMany(entries);
 }
-async function migrateIdentityFallback(){
-  const existing=await get("identityFallback");
-  if(existing){const normalized=normalizeIdentity(existing);if(existing.guide||!existing.crewMember||existing.explorationCrewRulesVersion!==SNAP_RULES?.version)await set("identityFallback",normalized);return normalized}
-  const s=await get("settings")||{},asset=await get("characterSourceAsset");
-  const migrated=normalizeIdentity({profile:{name:s.characterName||"",photo:asset?.originalProfilePhoto||"",style:"editorial",shareAvatar:false},crewMember:{type:s.guideType||"maltipoo",name:s.guideName||"두비",voice:s.guideVoice||"warm"}});
-  await set("identityFallback",migrated);
-  return migrated;
-}
-async function resolvedIdentity(){const local=normalizeIdentity(await get("identityFallback")||await migrateIdentityFallback());if(!sharedIdentity)return local;const shared=normalizeIdentity(sharedIdentity);return {profile:shared.profile,crewMember:local.crewMember,explorationCrewRulesVersion:SNAP_RULES?.version||local.explorationCrewRulesVersion}}
-async function applySharedIdentity(identity){sharedIdentity=normalizeIdentity({profile:identity?.profile||identity,crewMember:IDENTITY_DEFAULT.crewMember});await renderIdentityPresence();return sharedIdentity}
-window.SnapPopIdentity=Object.freeze({applyShared:applySharedIdentity,clearShared:async()=>{sharedIdentity=null;await renderIdentityPresence()},getResolved:resolvedIdentity});
+
+
+
 
 function openDB(){return window.SnapPopStorage.open()}
 function get(k){return window.SnapPopStorage.get(k)}
 function set(k,v){return window.SnapPopStorage.set(k,v)}
 function setMany(entries){return window.SnapPopStorage.setMany(entries)}
 
-async function selectCrewMember(memberId){
-  const pool={...SNAP_RULES?.legacyCharacterLineages,...SNAP_RULES?.definedCharacterLineages},rule=pool[memberId];if(!rule)return;
-  const registry=await ensureCrewRegistry(),entry=registry[memberId];
-  const identity=await resolvedIdentity();
-  identity.crewMember={...identity.crewMember,type:memberId,name:entry.currentName||entry.firstName||rule.defaultName||"두비"};
-  identity.explorationCrewRulesVersion=SNAP_RULES.version;
-  await setMany([["identityFallback",identity],["crewRegistry",registry]]);
-  return identity;
-}
-async function renameCurrentCrewMember(nextName){
-  const identity=await resolvedIdentity(),memberId=identity.crewMember.type,registry=await ensureCrewRegistry(),entry=registry[memberId];
-  if(!entry)return identity;
-  const next=(nextName||"").trim()||entry.currentName||entry.firstName||crewMemberRule(identity).defaultName||"두비";
-  if(next!==entry.currentName){
-    entry.nameHistory=entry.nameHistory||[];
-    entry.nameHistory.push({from:entry.currentName||entry.firstName||"",to:next,at:new Date().toISOString()});
-    entry.currentName=next;
-  }
-  identity.crewMember.name=next;identity.explorationCrewRulesVersion=SNAP_RULES.version;
-  await setMany([["crewRegistry",registry],["identityFallback",identity]]);
-  return identity;
-}
+
+
 
 function toast(t){return window.SnapPopUIShell.toast(t)}
 function show(id){const view=window.SnapPopUIShell.activateView(id);if(view.isMain)lastMain=id;if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="result")renderLastResult()}
@@ -186,36 +157,8 @@ function calcExp(answers,completedCount,language="ko"){
   mastery=Math.min(14,mastery);
   return {total:34+initial+mastery,base:34,initial,mastery,strengths};
 }
-async function loadSettings(){const s=await get("settings")||{},asset=await get("characterSourceAsset"),identity=await resolvedIdentity();$("#autoRead").checked=!!s.autoRead;$("#reduceMotion").checked=!!s.reduceMotion;document.documentElement.classList.toggle("reduceMotion",!!s.reduceMotion);$("#characterSummary").textContent=identity.profile.name?`탐험가 · ${identity.profile.name}`:"Ready & Set 프로필 연동 대기";$("#crewMemberSummary").textContent=`${crewMemberRule(identity).label} · ${crewMemberName(identity)}`;$("#characterName").value=identity.profile.name||"";$("#crewMemberName").value=identity.crewMember.name||"두비";$$("[data-crew-member-type]").forEach(b=>b.classList.toggle("on",b.dataset.crewMemberType===identity.crewMember.type));if(asset?.originalProfilePhoto||identity.profile.photo){$("#profilePhotoPreview").hidden=false;$("#profilePhotoImage").src=asset?.originalProfilePhoto||identity.profile.photo;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":asset?.characterMasterId?"Character Master 연결됨":"로컬 인트로 프로필 · 통합 시 Ready & Set 우선"}else{$("#profilePhotoPreview").hidden=true;$("#profilePhotoStatus").textContent=sharedIdentity?"Ready & Set 공유 프로필 사용 중":"로컬 인트로 프로필 없음"}}
-async function renderCrewRoster(){
-  if(!SNAP_RULES?.roster)return;
-  const identity=await resolvedIdentity(),roster=SNAP_RULES.roster,encounters=await get("crewEncounters")||{},board=SNAP_RULES.designBoard20||[],pool=SNAP_RULES.definedCharacterLineages||{};
-  const starter=$("#starterCrewRoster"),world=$("#worldCrewRoster"),special=$("#specialCrewRoster");
-  const card=x=>`<div class="crewRosterCard ${x.locked?"locked":x.unassigned?"unassigned":""}"><b>${html(x.title)}</b><span>${html(x.meta||"")}</span></div>`;
 
-  if(starter){
-    const baseline=window.SnapPopCrewCore6?.baseline?.(SNAP_RULES)||{memberIds:SNAP_RULES.recoveredStarterSix?.order||Object.keys(pool),scope:"STARTER_REFERENCE_ONLY",globalAuthority:false,futureExpansionAllowed:true};
-    const order=baseline.memberIds;
-    starter.innerHTML=`<div class="crewRosterNote"><b>시작 기준점 6명</b><span>Starter reference only · 전체 탐험대 고정 아님 · 미래 확장 허용</span></div>`+
-      order.map(id=>{const m=pool[id];if(!m)return "";const on=identity.crewMember.type===id;const meta=[m.species,m.personality,m.visualStatus==="REFERENCE_APPEARANCE_LOCKED"?"Reference 외형 계보":"Visual ID 검증 필요"].filter(Boolean).join(" · ");return `<button type="button" class="crewRosterCard ${on?"on":""}" data-crew-member-id="${id}"><b>${html(m.label)}</b><span>${html(meta)}</span></button>`}).join("");
-    starter.onclick=async e=>{const b=e.target.closest("[data-crew-member-id]");if(!b)return;const id=b.dataset.crewMemberId,rule=pool[id];if(!rule||!window.SnapPopCrewCore6?.isCore6?.(id))return;const next=await selectCrewMember(id);$("#crewMemberName").value=next.crewMember.name;$("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""}`;await renderIdentityPresence();await renderCrewRoster()};
-  }
 
-  if(world){
-    const slots=board.filter(x=>x.role==="WORLD");
-    world.innerHTML=slots.map(x=>card({title:`${String(x.slot).padStart(2,"0")} · ${x.core}`,meta:`${x.worldFlavor} · ${x.visualCue} · 앞으로 만날 탐험대원`,unassigned:true})).join("")+
-      card({title:"거점에서 만나는 친구들",meta:"탐험 지역에 따라 새로운 친구를 차근차근 만나게 돼요.",unassigned:true});
-  }
-
-  if(special){
-    const slots=board.filter(x=>x.role==="SPECIAL"),max=roster.special?.hardMaximum||12;
-    special.innerHTML=slots.map(x=>{
-      const state=encounters[`slot-${x.slot}`]?.status||"UNDISCOVERED";
-      const roleContract=window.SnapPopCrewRoleGuard?.assertRoleContract?.({role:"SPECIAL",functionalAdvantage:false,powerBoost:false,rewardMultiplier:1,expMultiplier:1})||{roleMeaning:"ENCOUNTER_STYLE_ONLY",functionalAbility:"EQUAL"};
-      return card({title:`${String(x.slot).padStart(2,"0")} · ${x.core}`,meta:`${x.encounterGimmick||x.worldFlavor} · ${state==="UNDISCOVERED"?"아직 만나지 못한 친구":"만난 친구"} · 만나는 방식만 특별해요`,locked:state==="UNDISCOVERED"});
-    }).join("")+card({title:`스페셜 탐험대 · 최대 ${max}명`,meta:"새로운 친구는 탐험 속 특별한 만남으로 이어져요. 능력의 우열은 없어요.",unassigned:true});
-  }
-}
 
 
 
@@ -274,6 +217,15 @@ async function openImagination(options={}){return imaginationController().openIm
 async function closeImagination(){return imaginationController().closeImagination()}
 function renderImaginationResponse(result,identity){return imaginationController().renderImaginationResponse(result,identity)}
 async function runImagination(inputOverride){return imaginationController().runImagination(inputOverride)}
+function settingsProfileController(){return window.SnapPopSettingsProfileController.instance({query:$,queryAll:$$,IDENTITY_DEFAULT,getRules:()=>SNAP_RULES,normalizeIdentity,ensureCrewRegistry,crewMemberRule,crewMemberName,affinityTier,show,toast,uid,getLastMain:()=>lastMain})}
+async function migrateIdentityFallback(){return settingsProfileController().migrateIdentityFallback()}
+async function resolvedIdentity(){return settingsProfileController().resolvedIdentity()}
+async function applySharedIdentity(identity){return settingsProfileController().applySharedIdentity(identity)}
+async function selectCrewMember(memberId){return settingsProfileController().selectCrewMember(memberId)}
+async function renameCurrentCrewMember(nextName){return settingsProfileController().renameCurrentCrewMember(nextName)}
+async function loadSettings(){return settingsProfileController().loadSettings()}
+async function renderCrewRoster(){return settingsProfileController().renderCrewRoster()}
+async function renderIdentityPresence(){return settingsProfileController().renderIdentityPresence()}
 function runtimePhase(phase){if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.phase=phase}
 async function init(){
   runtimePhase("OPEN_DB");await openDB();
@@ -506,7 +458,7 @@ function renderCalendar(records,special=[]){
   $("#calendarGrid").onclick=e=>{const b=e.target.closest("button[data-day]");if(!b)return;const d=Number(b.dataset.day);const hit=records.find(r=>{const x=new Date(r.date);return x.getFullYear()===y&&x.getMonth()===m&&x.getDate()===d}),specialHit=special.find(r=>{const x=new Date(r.at);return x.getFullYear()===y&&x.getMonth()===m&&x.getDate()===d}),target=hit?.date||specialHit?.at;if(target){const el=document.querySelector(`[data-record-date="${target}"]`);el?.scrollIntoView({behavior:document.documentElement.classList.contains("reduceMotion")?"auto":"smooth",block:"center"})}else toast("이날은 아직 탐험 기록이 없어요.")};
 }
 
-async function renderIdentityPresence(){if(!window.SnapPopStorage.isOpen())return;const identity=await resolvedIdentity(),visual=$("#homeCharacterVisual"),rule=crewMemberRule(identity),name=crewMemberName(identity);$("#homeCharacterName").textContent=identity.profile.name||"나의 탐험가";$("#homeCrewMemberName").textContent=name;const registry0=await ensureCrewRegistry(),entry0=registry0[identity.crewMember.type],ws=entry0?.worldState?.state;const worldLabel={AT_HUB:"거점에 있음",EXPEDITION:"탐험 파견 중",SUPPORTING_OTHER_HUB:"다른 거점 지원 중",VACATION:"휴가 중",RESTING:"쉬는 중",FREE_EXPLORING:"자유 탐험 중",SPECIAL_EVENT:"작은 사건 중",MAIN_COMPANION:"함께 탐험 중"}[ws]||"";$("#homeCrewMemberLine").textContent=[rule.home||"",worldLabel].filter(Boolean).join(" · ");const memberVisual=$("#homeCrewMember .crewMemberPlaceholder");if(memberVisual)memberVisual.textContent=rule.label;if(identity.profile.photo){visual.innerHTML=`<img src="${identity.profile.photo}" alt="">`}else visual.textContent=(identity.profile.name||"탐험가").slice(0,2);const registry=await ensureCrewRegistry(),entry=registry[identity.crewMember.type],tier=affinityTier(entry?.affinity?.scoreInternal||0);$("#growthCompanion").textContent=`${identity.profile.name||"탐험가"} · ${name} · ${tier.label}`;$("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""} · 관계 ${tier.label}`}
+
 async function renderBadgePreview(){
   const host=$("#badgePreviewVisual");if(!host||!window.SnapPopBadgeVisual||!window.SnapPopBadges)return;
   const identity=await resolvedIdentity(),observations=await get("badgeBehaviorObservations")||[];
@@ -552,15 +504,8 @@ function isWeekend(d=new Date()){const day=d.getDay();return day===0||day===6}
 
 
 $("#historyBtn").onclick=renderGrowthTimeline;$("#resultBack").onclick=()=>show("map");$("#resultRecords").onclick=()=>show("records");$("#resultGrowth").onclick=()=>show("growth");$("#calPrev").onclick=()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()-1,1);renderRecords()};$("#calNext").onclick=()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+1,1);renderRecords()};
-$("#settingsBtn").onclick=()=>show("settings");$("#settingsBack").onclick=()=>show(lastMain);$$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
-$("#characterBtn").onclick=()=>$("#characterPanel").hidden=!$("#characterPanel").hidden;
-$("#crewMemberBtn").onclick=async()=>{$("#crewMemberPanel").hidden=!$("#crewMemberPanel").hidden;if(!$("#crewMemberPanel").hidden)await renderCrewRoster()};
-$("#profilePhotoInput").onchange=async e=>{const file=e.target.files?.[0];if(!file)return;if(!file.type.startsWith("image/"))return toast("이미지 파일만 사용할 수 있어요.");const reader=new FileReader();reader.onload=async()=>{const data=String(reader.result||""),previous=await get("characterSourceAsset"),history=await get("characterSourceHistory")||[];if(previous?.originalProfilePhoto)history.push({...previous,archivedAt:new Date().toISOString()});const asset={assetId:uid("profile_source"),originalProfilePhoto:data,processedProfilePhoto:null,characterMasterId:previous?.characterMasterId||null,status:"SOURCE_READY",createdAt:new Date().toISOString(),sourceName:file.name||"camera"};const identity=await resolvedIdentity();identity.profile.photo=data;await setMany([["characterSourceAsset",asset],["characterSourceHistory",history],["identityFallback",identity]]);$("#profilePhotoPreview").hidden=false;$("#profilePhotoImage").src=data;$("#profilePhotoStatus").textContent="로컬 인트로 프로필 · 통합 시 Ready & Set 우선";await renderIdentityPresence();toast("인트로용 로컬 프로필 사진을 보존했어요. 통합 시 Ready & Set 프로필이 우선합니다.")};reader.onerror=()=>toast("사진을 읽지 못했어요.");reader.readAsDataURL(file)};
-$("#characterSave").onclick=async()=>{const name=$("#characterName").value.trim(),identity=await resolvedIdentity();identity.profile.name=name;await set("identityFallback",identity);$("#characterSummary").textContent=name?`탐험가 · ${name}`:"Ready & Set 프로필 연동 대기";$("#characterPanel").hidden=true;await renderIdentityPresence();toast(sharedIdentity?"공유 프로필은 Ready & Set 기준을 유지합니다. 로컬 fallback만 저장했어요.":"인트로용 로컬 프로필을 저장했어요. 통합 시 Ready & Set 기준이 우선합니다.")};
-$("#crewMemberSuggest").onclick=async()=>{const identity=await resolvedIdentity(),suggestions={maltipoo:["모카","토리","콩"],cat:["루루","모노","살짝"],redpanda:["포포","단추","뒤적"],buddy:["하루","담이","솔"]},arr=suggestions[identity.crewMember.type]||[crewMemberRule(identity).defaultName||"두비"];$("#crewMemberName").value=arr[Math.floor(Date.now()/1000)%arr.length]};
-$("#crewMemberSave").onclick=async()=>{const identity=await renameCurrentCrewMember($("#crewMemberName").value);const name=identity.crewMember.name;$("#crewMemberSummary").textContent=`${crewMemberRule(identity).label} · ${name}`;$$(".crewMemberLine b").forEach(el=>el.textContent=`탐험대원 ${name}`);$("#crewMemberPanel").hidden=true;await renderIdentityPresence();toast("탐험대원 이름과 이력을 저장했어요.")};
-
-$("#autoRead").onchange=$("#reduceMotion").onchange=async()=>{const s=await get("settings")||{};s.autoRead=$("#autoRead").checked;s.reduceMotion=$("#reduceMotion").checked;await set("settings",s);document.documentElement.classList.toggle("reduceMotion",s.reduceMotion)}
+$$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
+settingsProfileController().install();
 $("#nav").onclick=async e=>{const b=e.target.closest("button[data-view]");if(!b)return;const view=b.dataset.view;if(view==="explore"){const active=await get("active");if(active){renderExplore(active);show("explore")}else{show("map");toast("글쓰기 탐험지를 하나 골라 시작해봐.")}}else show(view)}
 if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
 init().then(()=>{if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.init="PASS"}).catch(e=>{if(window.__SNAP_RUNTIME_STATUS){window.__SNAP_RUNTIME_STATUS.init="FAIL";window.__SNAP_RUNTIME_STATUS.errors.push({type:"init",message:String(e?.message||e)})}console.error(e);toast("앱 데이터를 준비하지 못했어요.")});
