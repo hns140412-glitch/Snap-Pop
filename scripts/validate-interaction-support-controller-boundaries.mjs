@@ -7,6 +7,7 @@ assert("interaction-support-loads-before-app",index.indexOf('src="interaction-su
 assert("interaction-support-contract-present",ctl.includes("SNAP_POP_INTERACTION_SUPPORT_CONTROLLER_V1"));
 assert("selected-state-owned-by-support",ctl.includes("let selected=null")&&!app.includes("selected=null"));
 assert("analysis-sequence-owned-by-support",ctl.includes("analysisSeq=0")&&!app.includes("writingAnalysisSeq=0"));
+assert("analysis-result-checks-current-dom-draft",ctl.includes("if(q(\'#answer\').value!==draft)return null;"));
 assert("calendar-cursor-owned-by-support",ctl.includes("calendarCursor=new Date()")&&!app.includes("calendarCursor=new Date()"));
 assert("hint-and-voice-owned-by-support",ctl.includes('q("#hintBtn").onclick=revealHint')&&ctl.includes('q("#voiceBtn").onclick=async()=>'));
 assert("reflection-remains-explicit-child-evidence",ctl.includes("CHILD_EXPLICIT_REFLECTION")&&ctl.includes("SNAP_POP_CHILD_REFLECTION_ARTIFACT_V1"));
