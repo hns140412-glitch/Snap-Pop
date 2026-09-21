@@ -265,6 +265,9 @@ async function updateStatus(){return recordsGrowthController().updateStatus()}
 async function openRecordEdit(recordId){return recordsGrowthController().openRecordEdit(recordId)}
 async function renderWishHistory(){return recordsGrowthController().renderWishHistory()}
 function recordsFlowController(){return window.SnapPopRecordsFlowController.instance({query:$,getLandmarks:()=>marks,toast,recordBadgeBehaviorObservation,recordBadgeBehaviorEvidence,updateStatus,renderGems,renderWishHistory,openRecordEdit,uid,show})}
+function specialController(){return window.SnapPopSpecialController.instance({query:$,resolvedIdentity,chooseSceneGuest,crewMemberName,recordCrewExperience,recordCrewMemberExperience,recordBadgeBehaviorEvidence,crewSnippet,uid,toast,show})}
+function specialPromptFor(d=new Date()){return specialController().specialPromptFor(d)}
+async function openSpecial(){return specialController().openSpecial()}
 function runtimePhase(phase){if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.phase=phase}
 async function init(){
   runtimePhase("OPEN_DB");await openDB();
@@ -383,6 +386,7 @@ function refreshWritingMove(s){
 }
 writingFlowController().install();
 recordsFlowController().install();
+specialController().install();
 
 
 
@@ -697,33 +701,11 @@ async function renderBadgePreview(){
 
 
 function isWeekend(d=new Date()){const day=d.getDay();return day===0||day===6}
-function specialPromptFor(d=new Date()){const seed=(d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate())%4;return [
- {q:"오늘 본 것 중 하나를 완전히 다른 물건처럼 설명해볼까?",h:"정답은 없어요. 네가 본 장면을 바꿔 상상해봐요."},
- {q:"오늘 가장 기억나는 소리를 이야기 속 단서로 바꿔볼까?",h:"소리에서 시작해서 장면을 하나 만들어봐요."},
- {q:"누군가의 입장에서 오늘 하루를 다시 보면 뭐가 달라질까?",h:"다른 시선 하나만 골라도 충분해요."},
- {q:"평범한 장소에 비밀 하나가 숨어 있다면 무엇일까?",h:"작은 이상함 하나를 네 이야기로 키워봐요."}
- ][seed]}
-async function openSpecial(){
-  const p=specialPromptFor(),identity=await resolvedIdentity();
-  const guestTrigger=await get("activeCrewGuestTrigger");
-  const guest=await chooseSceneGuest("SPECIAL_EXPLORATION",{appearanceAuthorized:guestTrigger?.scene==="SPECIAL_EXPLORATION"&&guestTrigger?.authorized===true});
-  if(guestTrigger?.scene==="SPECIAL_EXPLORATION")await set("activeCrewGuestTrigger",null);
-  $("#specialDate").textContent=new Date().toLocaleDateString("ko-KR");
-  $("#specialPrompt").textContent=p.q;
-  $("#specialHint").textContent=`${crewMemberName(identity)} · ${p.h}`;
-  const presence=$("#specialCrewPresence");
-  if(presence){
-    presence.textContent=guest?`${crewMemberName(identity)} · ${guest.name}도 이번 장면에 잠깐 합류했네. 스페셜은 더 강한 대원이 아니라 만나는 방식만 달라. 같이 보되, 네 생각은 네가 골라.`:"";
-    presence.hidden=!guest;
-    presence.dataset.memberId=guest?.memberId||"";
-  }
-  const draft=await get("specialDraft")||"";
-  $("#specialAnswer").value=draft;
-  show("special")
-}
-$("#specialInvite").onclick=openSpecial;$("#specialBack").onclick=()=>show("map");$("#specialLater").onclick=()=>show("map");
-$("#specialAnswer").addEventListener("input",()=>set("specialDraft",$("#specialAnswer").value));
-$("#specialSave").onclick=async()=>{const text=$("#specialAnswer").value.trim();if(!text)return toast("한 줄이라도 네 생각을 남겨볼까?");const memories=await get("specialMemories")||[];const id=uid("special"),at=new Date().toISOString(),p=specialPromptFor(new Date(at)),guestMemberId=$("#specialCrewPresence")?.dataset.memberId||null;memories.unshift({id,at,prompt:p.q,text,guestMemberId});await setMany([["specialMemories",memories],["specialDraft",""]]);await recordCrewExperience("SPECIAL_MEMORY",{eventId:id,prompt:p.q,snippet:crewSnippet(text),guestMemberId});if(guestMemberId)await recordCrewMemberExperience(guestMemberId,"SHARED_MICRO_EPISODE",{eventId:`${id}_guest`,sourceEventId:id,scene:"SPECIAL_EXPLORATION"});await recordBadgeBehaviorEvidence("SPECIAL_BEHAVIOR",{explicitChildAction:true,evidenceRef:`special_event_${id}`,sourceContractId:"SNAP_POP_DECLARED_SPECIAL_ACTION_V1",declaredByFeature:true,featureContractId:"SNAP_POP_SPECIAL_EXPLORATION_V1",behaviorCode:"SPECIAL_EXPLORATION_COMPLETED"},{allowedFeatureContracts:["SNAP_POP_SPECIAL_EXPLORATION_V1"],allowedSpecialBehaviorCodes:["SPECIAL_EXPLORATION_COMPLETED"]});$("#specialAnswer").value="";toast("특별 탐험 기억을 남겼어요.");show("records")};
+
+
+
+
+
 
 
 
