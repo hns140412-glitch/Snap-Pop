@@ -1,8 +1,11 @@
 (() => {
   "use strict";
-  const VERSION="2026.09.21-c";
+  const VERSION="2026.09.21-d";
   let currentRecognition=null;
+  let currentExternalListenStop=null;
+  let listenSessionSeq=0;
   const SPEECH_SOURCES=new Set(["USER_TAP","AUTO_READ"]);
+  const LISTEN_SOURCES=new Set(["USER_MIC"]);
   function voicePolicy({language="ko",source="USER_TAP",interrupt}={}){
     const safeLanguage=language==="en"?"en":"ko";
     const safeSource=SPEECH_SOURCES.has(source)?source:"USER_TAP";
@@ -66,26 +69,64 @@
     try{ window.SnapPopVoiceProvider?.stop?.(); }catch{}
     try{ speechSynthesis?.cancel?.(); }catch{}
   }
-  function browserListen({language="ko",onStart,onText,onError,onEnd}={}){
+  function listenPolicy({language="ko",source="USER_MIC",continuous=false,realtime=false}={}){
+    const safeLanguage=language==="en"?"en":"ko";
+    const safeSource=LISTEN_SOURCES.has(source)?source:"USER_MIC";
+    if(continuous===true||realtime===true) throw new Error("VOICE_ALWAYS_LISTENING_NOT_ALLOWED");
+    return Object.freeze({
+      language:safeLanguage,
+      source:safeSource,
+      oneShot:true,
+      continuous:false,
+      realtime:false,
+      responseOwner:"EXPLORATION_CREW"
+    });
+  }
+  function browserListen({policy,onStart,onText,onError,onEnd,sessionId}={}){
     const R=window.SpeechRecognition||window.webkitSpeechRecognition;
     if(!R) throw new Error("STT_UNAVAILABLE");
     if(currentRecognition){try{currentRecognition.abort()}catch{}}
     const r=new R(); currentRecognition=r;
-    r.lang=language==="en"?"en-US":"ko-KR";
+    r.lang=policy.language==="en"?"en-US":"ko-KR";
     r.interimResults=false; r.continuous=false;
-    r.onstart=()=>onStart?.({provider:"browser-stt"});
-    r.onresult=e=>{const text=e.results?.[0]?.[0]?.transcript||""; if(text) onText?.(text,{provider:"browser-stt"});};
+    r.onstart=()=>onStart?.({provider:"browser-stt",sessionId,source:policy.source});
+    r.onresult=e=>{const text=e.results?.[0]?.[0]?.transcript||""; if(text) onText?.(text,{provider:"browser-stt",sessionId,source:policy.source});};
     r.onerror=e=>onError?.(e.error||"STT_ERROR");
-    r.onend=()=>{if(currentRecognition===r)currentRecognition=null;onEnd?.()};
+    r.onend=()=>{if(currentRecognition===r)currentRecognition=null;onEnd?.({sessionId});};
     r.start();
     return ()=>{try{r.abort()}catch{}};
   }
   async function listen(opts={}){
+    const policy=listenPolicy(opts);
+    stopListening();
+    const sessionId=++listenSessionSeq;
     const external=window.SnapPopVoiceProvider;
-    if(external && typeof external.listen==="function") return external.listen(opts);
-    return browserListen(opts);
+    if(external && typeof external.listen==="function"){
+      const result=await external.listen({
+        language:policy.language,
+        source:policy.source,
+        oneShot:true,
+        continuous:false,
+        realtime:false,
+        responseOwner:"EXPLORATION_CREW",
+        sessionId,
+        onStart:opts.onStart,
+        onText:opts.onText,
+        onError:opts.onError,
+        onEnd:opts.onEnd
+      });
+      currentExternalListenStop=typeof result==="function"
+        ? result
+        : typeof result?.stop==="function"
+          ? ()=>result.stop()
+          : null;
+      return result;
+    }
+    return browserListen({...opts,policy,sessionId});
   }
   function stopListening(){
+    try{ currentExternalListenStop?.(); }catch{}
+    currentExternalListenStop=null;
     try{ window.SnapPopVoiceProvider?.stopListening?.(); }catch{}
     if(currentRecognition){try{currentRecognition.abort()}catch{} currentRecognition=null;}
   }
@@ -100,5 +141,5 @@
       browserFallback:!external
     });
   }
-  window.SnapPopVoice=Object.freeze({version:VERSION,speak,listen,stopSpeaking,stopListening,guardedSpeechText,voicePolicy,capabilities,get mode(){return capabilities().mode;}});
+  window.SnapPopVoice=Object.freeze({version:VERSION,speak,listen,stopSpeaking,stopListening,guardedSpeechText,voicePolicy,listenPolicy,capabilities,get mode(){return capabilities().mode;}});
 })();
