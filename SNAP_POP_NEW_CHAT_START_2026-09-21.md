@@ -253,3 +253,16 @@ BILINGUAL EXPRESSION BRIDGE NOTE:
 - requirement SP-UNIV-002 updated.
 - branch closure runner now has 18 validators.
 - next: verified ASK→UNDERSTAND → optional EXPRESS transition.
+
+
+OPTIONAL EXPRESS TRANSITION NOTE:
+- verified GLOBAL ASK can optionally transition to expression.
+- gate requires ASK_UNDERSTAND + verified=true + FULL_FACTUAL_CONTENT.
+- explicit child action only.
+- only original question/topic is transferred.
+- verified answer body is never injected into a draft.
+- new writing session only; existing draft continuity wins.
+- validator 9/9 PASS.
+- requirement SP-UNIV-006 updated.
+- branch closure runner now has 19 validators.
+- old frozen candidate remains superseded; external call count remains 0.
