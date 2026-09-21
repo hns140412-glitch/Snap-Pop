@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-a";
+  const VERSION="2026.09.21-b";
   const LENSES=Object.freeze({
     MEANING:{ko:"뜻부터",en:"Meaning first"},
     ETYMOLOGY:{ko:"말의 뿌리",en:"Word roots"},
@@ -59,8 +59,13 @@
     const label=LENSES[lens]?.[language==="en"?"en":"ko"]||LENSES.CONCEPT[language==="en"?"en":"ko"];
     const verifiedCount=Number(result?.verification?.verifiedClaimCount)||0;
     const coverage=result?.verification?.coverage||"UNKNOWN";
+    const mental=window.SnapPopMentalModel;
+    const mentalModel=mental&&typeof mental.build==="function"
+      ? mental.build(result,lens,language)
+      : null;
     return {
       ...result,
+      mentalModel,
       understanding:{
         version:VERSION,
         lens,
