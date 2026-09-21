@@ -30,7 +30,8 @@ const validators=[
   "validate-special-guest-shared-memory.mjs",
   "validate-guest-appearance-gate.mjs",
   "validate-requirement-matrix-reconciliation.mjs",
-  "validate-etymology-source-diversity.mjs"
+  "validate-etymology-source-diversity.mjs",
+  "validate-central-authorship-guard.mjs"
 ];
 
 let passed=0;
