@@ -361,23 +361,70 @@ Semantic provider hard limits:
 - if the provider is unavailable, local writing analysis remains the fallback.
 
 
-### Badge axis recovery — C2S recovery 2026-09-21
+### Badge system recovery — source-backed 2026-09-21
 
-Recovered scope:
+Recovered direct-user requirements from the 2026-09-08 source conversation:
 
-- Badge is a distinct growth/identity axis from Character Master, Exploration Crew relationship, EXP/Gem economy, and World State.
-- Historical user direction: circular badge, hand-drawn feeling, pastel color language, intended to work across the broader app ecosystem rather than as a Snap-only decorative sticker.
-- Ready & Set avatar/onboarding lineage contains a small mission-badge motif.
-- Ready & Set character level / growth economy was explicitly HOLD, so badge progression must NOT be silently equated with character levels.
-- Historical cross-app badge mechanics were discussed as an ADOPT candidate but were not fully canonicalized; therefore exact unlock rules, taxonomy, counts, and cross-app ownership remain RECOVERY_REQUIRED / OPEN.
+#### Product role
+- Badge is not a score table or character power system.
+- It records the child's exploration/process moments, including unusual, imperfect, recovery, persistence, and self-directed behaviors.
+- Approximately **60 badges** was the requested launch-scale direction, with the catalog allowed to grow from observed child activity.
+- Badge must remain separate from Character level, affinity, EXP/Gem economy, and World State.
 
-Current disposition:
-- BADGE_AXIS_EXISTS = RECOVERED_CONFIRMED_DIRECTION
-- VISUAL_LANGUAGE = RECOVERED_USER_DIRECTION
-- EXACT_BADGE_CATALOG = OPEN
-- EXACT_EARNING_RULES = OPEN
-- CHARACTER_LEVEL_DEPENDENCY = FORBIDDEN_TO_INFER
-- EXP/GEM_DEPENDENCY = FORBIDDEN_TO_INFER
-- CROSS_APP_USAGE = RECOVERED_DIRECTION, CONTRACT_PENDING
+#### Event scope
+Badge candidates may come from:
+- starting early;
+- creating extra time independently;
+- choosing an extra task;
+- unusual/special behavior;
+- task execution/completion patterns;
+- long ISSUE/problem-solving periods;
+- returning after distraction/rest;
+- noticing/fixing mistakes;
+- asking for help appropriately;
+- other meaningful child-activity events.
 
-No badge implementation should be invented from reward counts or character affinity until the historical source recovery is completed.
+Exact badge names from the historical 60-item table are **WORKING DRAFT**, not all individually user-approved.
+
+#### Visual lock
+- circular badge;
+- hand-drawn feeling;
+- pastel illustration language;
+- child Profile Character is the badge protagonist;
+- the same child identity must remain recognizable across profile/world/badge derivatives;
+- theme may change clothing/props/light/rendering while identity stays stable.
+
+#### Tier / growth presentation
+Recovered and subsequently accepted interaction direction:
+- five color tiers: Green → Blue → Red → Gold → Platinum;
+- each tier uses 1–5 small gem-stars;
+- gem-stars sit in a semi-circle around the upper badge rim;
+- badge illustration stays hand-drawn/pastel; tier stars act as the clearer progress signal.
+
+This tier is a badge-history/progression presentation, NOT permission to create a character-level power economy.
+
+#### Asset composition
+Preferred stable composition:
+`COMMON_BADGE_ART + CHILD_IDENTITY_LAYER + BADGE_GROWTH_LAYER`
+
+Where:
+- Common Badge Art = background + body/pose + props + optional crew + effects;
+- Child Identity Layer = face + hair + glasses / identity-defining traits in the common character style;
+- Growth Layer = tier/gem-star state.
+
+Do not regenerate the entire child character independently for every badge.
+
+#### Theme expression
+`Character Identity Master → Theme Expression → Badge/World/Diary/Share derivatives`
+
+Identity remains stable; theme changes rendering/expression only.
+
+#### Open / not hard-locked
+- final exact 60 badge catalog;
+- exact trigger thresholds;
+- duplicate/repeat policy;
+- exact title unlock thresholds;
+- which badge events may influence Special Encounter;
+- cross-app owner/storage surface;
+- whether historical badges preserve acquisition-time theme or re-render to current theme.
+
