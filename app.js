@@ -1,18 +1,13 @@
 if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.appScript="STARTED";
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
 let marks=[], lastMain="map", SNAP_RULES=null;
-const LEVEL_NEEDS=[0,80,100,120,150,180,220,260,300,340,380,430,480,540,600,670,740,820,900,990,1080,1180,1280,1390,1500];
-const LEVEL_THRESHOLDS=LEVEL_NEEDS.reduce((a,n,i)=>{a.push(i===0?0:a[i-1]+n);return a},[]);
 const uid=p=>`${p}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
-const IDENTITY_DEFAULT={profile:{name:"",photo:"",style:"editorial",shareAvatar:false},crewMember:{type:"dooby",name:"두비",voice:"warm"}};
 
 
 
 
 
 
-function stableHash(s=""){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
-function affinityTier(score=0){const tiers=SNAP_RULES?.affinityEngine?.tiers||[];let t=tiers[0]||{key:"KNOWN",label:"아는 친구",min:0};for(const x of tiers)if(score>=x.min)t=x;return t}
 
 
 
@@ -43,22 +38,6 @@ function setMany(entries){return window.SnapPopStorage.setMany(entries)}
 function toast(t){return window.SnapPopUIShell.toast(t)}
 function show(id){const view=window.SnapPopUIShell.activateView(id);if(view.isMain)lastMain=id;if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="result")renderLastResult()}
 function html(s){return window.SnapPopUIShell.escapeHtml(s)}
-function levelFromExp(exp){let level=1;for(let i=1;i<LEVEL_THRESHOLDS.length;i++){if(exp>=LEVEL_THRESHOLDS[i])level=i+1;else break}return Math.min(25,level)}
-function levelProgress(exp){const level=levelFromExp(exp);if(level>=25)return {level,within:1,remaining:0};const floor=LEVEL_THRESHOLDS[level-1],ceil=LEVEL_THRESHOLDS[level];return {level,within:Math.max(0,Math.min(1,(exp-floor)/(ceil-floor))),remaining:Math.max(0,ceil-exp)}}
-function calcExp(answers,completedCount,language="ko"){
-  const text=answers.join(" ").trim(),len=text.length;
-  const initial=completedCount<5?12:completedCount<15?7:3;
-  const strengths=[];let mastery=0;
-  if(len>=80){mastery+=3;strengths.push(language==="en"?"writing longer":"길게 이어 쓰기")}
-  if(len>=150){mastery+=3;strengths.push(language==="en"?"expanding an idea":"생각 충분히 펼치기")}
-  const reason=language==="en"?/because|think|feel|idea|reason|so/i:/왜|이유|때문|느낌|기분|생각|아이디어|마음/;
-  const sensory=language==="en"?/see|saw|hear|heard|sound|smell|taste|touch|warm|cold|bright|dark|scene/i:/보이|들리|냄새|향|맛|촉감|따뜻|차갑|밝|어둡|장면|풍경|소리/;
-  if(reason.test(text)){mastery+=3;strengths.push(language==="en"?"reason·feeling·idea":"이유·감정·아이디어")}
-  if(sensory.test(text)){mastery+=3;strengths.push(language==="en"?"sensory detail":"감각·장면")}
-  if(/[.!?。！？]/.test(text)){mastery+=2;strengths.push(language==="en"?"sentence control":"문장 나누기")}
-  mastery=Math.min(14,mastery);
-  return {total:34+initial+mastery,base:34,initial,mastery,strengths};
-}
 
 
 
@@ -79,11 +58,11 @@ function writingFlowController(){return window.SnapPopWritingFlowController.inst
   query:$,
   getSelected:()=>interactionSupportController().getSelected(),
   uid,ensureWritingState,renderExplore,show,analyzeWritingMove,recordExpressionTrace,renderPendingExpressionIntent,promptFor,speak,toast,
-  resolvedIdentity,crewMemberName,showCrewReaction,calcExp,learnerContext,vocabularyMaterial,updateStatus,recordCrewExperience,crewSnippet,
+  resolvedIdentity,crewMemberName,showCrewReaction,learnerContext,vocabularyMaterial,updateStatus,recordCrewExperience,crewSnippet,
   recordBadgeBehaviorObservation,recordBadgeEvent,setExpressionBridgeButton,refreshWritingMove,stepSpecificReaction,
   bumpWritingAnalysisSeq:()=>interactionSupportController().bumpWritingAnalysisSeq()
 })}
-function crewController(){return window.SnapPopCrewController.instance({query:$,IDENTITY_DEFAULT,getRules:()=>SNAP_RULES,stableHash,resolvedIdentity,isWeekend})}
+function crewController(){return window.SnapPopCrewController.instance({query:$,getRules:()=>SNAP_RULES,resolvedIdentity,isWeekend})}
 function normalizeCrewType(type){return crewController().normalizeCrewType(type)}
 function normalizeIdentity(x={}){return crewController().normalizeIdentity(x)}
 function crewMemberRule(identity){return crewController().crewMemberRule(identity)}
@@ -94,13 +73,13 @@ function crewSnippet(text){return crewController().crewSnippet(text)}
 async function showCrewReaction(message,options={}){return crewController().showCrewReaction(message,options)}
 function hideCrewReaction(){return crewController().hideCrewReaction()}
 async function renderSpecialInvite(){return crewController().renderSpecialInvite()}
-function crewRuntimeController(){return window.SnapPopCrewRuntimeController.instance({getRules:()=>SNAP_RULES,resolvedIdentity,stableHash,affinityTier,uid})}
+function crewRuntimeController(){return window.SnapPopCrewRuntimeController.instance({getRules:()=>SNAP_RULES,resolvedIdentity,uid})}
 async function ensureCrewRegistry(){return crewRuntimeController().ensureCrewRegistry()}
 async function recordCrewMemberExperience(memberId,type,meta={}){return crewRuntimeController().recordCrewMemberExperience(memberId,type,meta)}
 async function recordCrewExperience(type,meta={}){return crewRuntimeController().recordCrewExperience(type,meta)}
 async function chooseSceneGuest(sceneKey,options={}){return crewRuntimeController().chooseSceneGuest(sceneKey,options)}
 async function synthesizeCrewWorldState(){return crewRuntimeController().synthesizeCrewWorldState()}
-function recordsGrowthController(){return window.SnapPopRecordsGrowthController.instance({query:$,queryAll:$$,getLandmarks:()=>marks,ensureCrewRegistry,getRules:()=>SNAP_RULES,renderCalendar,renderCloudHistory,renderBadgePreview,renderIdentityPresence,levelProgress,levelFromExp,resolvedIdentity,crewSnippet,crewMemberName,show,toast})}
+function recordsGrowthController(){return window.SnapPopRecordsGrowthController.instance({query:$,queryAll:$,getLandmarks:()=>marks,ensureCrewRegistry,getRules:()=>SNAP_RULES,renderCalendar,renderCloudHistory,renderBadgePreview,renderIdentityPresence,resolvedIdentity,crewSnippet,crewMemberName,show,toast})}
 async function renderRecords(){return recordsGrowthController().renderRecords()}
 async function renderGems(){return recordsGrowthController().renderGems()}
 async function renderGrowth(){return recordsGrowthController().renderGrowth()}
@@ -119,7 +98,7 @@ async function openImagination(options={}){return imaginationController().openIm
 async function closeImagination(){return imaginationController().closeImagination()}
 function renderImaginationResponse(result,identity){return imaginationController().renderImaginationResponse(result,identity)}
 async function runImagination(inputOverride){return imaginationController().runImagination(inputOverride)}
-function settingsProfileController(){return window.SnapPopSettingsProfileController.instance({query:$,queryAll:$$,IDENTITY_DEFAULT,getRules:()=>SNAP_RULES,normalizeIdentity,ensureCrewRegistry,crewMemberRule,crewMemberName,affinityTier,show,toast,uid,getLastMain:()=>lastMain})}
+function settingsProfileController(){return window.SnapPopSettingsProfileController.instance({query:$,queryAll:$,getRules:()=>SNAP_RULES,normalizeIdentity,ensureCrewRegistry,crewMemberRule,crewMemberName,show,toast,uid,getLastMain:()=>lastMain})}
 async function migrateIdentityFallback(){return settingsProfileController().migrateIdentityFallback()}
 async function resolvedIdentity(){return settingsProfileController().resolvedIdentity()}
 async function applySharedIdentity(identity){return settingsProfileController().applySharedIdentity(identity)}
