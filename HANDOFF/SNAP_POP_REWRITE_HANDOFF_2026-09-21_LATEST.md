@@ -243,3 +243,5 @@ Conservative boundaries retained:
 - radio ownership/imagination return runtime matrix validation trigger.
 
 - cloud history preservation/no-farming runtime validation trigger.
+
+- cloud history/no-farming runtime matrix closure validation trigger.
