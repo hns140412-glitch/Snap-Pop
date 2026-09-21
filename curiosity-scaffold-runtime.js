@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-b";
+  const VERSION="2026.09.21-c";
   const LENSES=Object.freeze({
     MEANING:{ko:"뜻부터",en:"Meaning first"},
     ETYMOLOGY:{ko:"말의 뿌리",en:"Word roots"},
@@ -54,7 +54,19 @@
     return (language==="en"?en:ko)[lens]||(language==="en"?en.CONCEPT:ko.CONCEPT);
   }
 
-  function scaffoldKnowledge(result={},input="",language="ko"){
+  function followUpPolicy(result={},source="GLOBAL"){
+    const coverage=result?.verification?.coverage||"UNKNOWN";
+    const fullyVerified=result?.verified===true&&coverage==="FULL_FACTUAL_CONTENT";
+    if(source==="WRITING_FLOW"){
+      return {available:false,reason:"WRITING_FLOW_RETURN_PRIORITY"};
+    }
+    if(!fullyVerified){
+      return {available:false,reason:"VERIFICATION_INCOMPLETE"};
+    }
+    return {available:true,reason:"OPTIONAL_AFTER_FULL_VERIFICATION"};
+  }
+
+  function scaffoldKnowledge(result={},input="",language="ko",source="GLOBAL"){
     const lens=classifyQuestion(input);
     const label=LENSES[lens]?.[language==="en"?"en":"ko"]||LENSES.CONCEPT[language==="en"?"en":"ko"];
     const verifiedCount=Number(result?.verification?.verifiedClaimCount)||0;
@@ -63,6 +75,7 @@
     const mentalModel=mental&&typeof mental.build==="function"
       ? mental.build(result,lens,language)
       : null;
+    const followUp=followUpPolicy(result,source);
     return {
       ...result,
       mentalModel,
@@ -72,7 +85,9 @@
         label,
         verifiedClaimCount:verifiedCount,
         coverage,
-        nextCuriosity:nextCuriosity(lens,language),
+        nextCuriosity:followUp.available?nextCuriosity(lens,language):null,
+        followUpAvailable:followUp.available,
+        followUpReason:followUp.reason,
         source:"QUESTION_STRUCTURE_ONLY"
       }
     };
@@ -81,6 +96,7 @@
   window.SnapPopCuriosityScaffold=Object.freeze({
     version:VERSION,
     classifyQuestion,
-    scaffoldKnowledge
+    scaffoldKnowledge,
+    followUpPolicy
   });
 })();
