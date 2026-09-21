@@ -29,6 +29,10 @@
       if(!initReady) throw new Error("FAIL app-init runtime="+JSON.stringify(window.__SNAP_RUNTIME_STATUS||null));
       assert("app-init-pass",true);
       assert("indexeddb-open",window.__SNAP_RUNTIME_STATUS?.db==="OPEN");
+      assert("shared-release-loaded",globalThis.SnapPopReleaseDescriptor?.app_id==="snap-pop");
+      assert("shared-pwa-loaded",globalThis.SnapPopPwaUpdate?.capability==="CAP-PWA-UPDATE-001");
+      assert("shared-event-envelope-loaded",typeof globalThis.TakyEventEnvelope?.create==="function");
+      assert("pwa-safe-point-contract-loaded",typeof globalThis.SnapPopPwaSafePoint?.()==="boolean");
 
       const landmarksReady=await waitFor(()=>document.querySelectorAll("#landmarks .landmark").length===5,4000,80);
       assert("map-has-five-landmarks",landmarksReady);
@@ -37,6 +41,7 @@
       click(document.querySelector("#startBtn"),"start-writing");
       await wait(180);
       assert("writing-view-active",document.querySelector("#explore")?.classList.contains("active")===true);
+      assert("active-writing-blocks-pwa-activation",globalThis.SnapPopPwaSafePoint?.()===false);
 
       const answer=document.querySelector("#answer"),next=document.querySelector("#nextBtn");
       assert("hint-control-restored",!!document.querySelector("#hintBtn"));
@@ -55,6 +60,9 @@
       click(next,"writing-complete");
       await wait(500);
       assert("writing-result-active",document.querySelector("#result")?.classList.contains("active")===true);
+      assert("completed-writing-reopens-pwa-safe-point",globalThis.SnapPopPwaSafePoint?.()===true);
+      const envelope=globalThis.SnapPopBridge.emit("TASK_PROGRESS",{sharedRuntimeSelftest:true});
+      assert("shared-event-envelope-valid",globalThis.TakyEventEnvelope.validate(envelope).ok===true);
 
       click(document.querySelector("#familyExpansionBtn"),"family-open");
       await wait(180);
