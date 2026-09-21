@@ -156,3 +156,14 @@ LATEST P3 RETURN NOTE:
 - no new question, analysis, step transition or follow-up chain is triggered.
 - pressure/return validator now 11/11 PASS.
 - next axis: P4 Exploration Crew response ownership / raw provider voice leakage guard.
+
+
+LATEST P4 OWNERSHIP NOTE:
+- P4 response ownership is coded.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md section 21.
+- all intelligence paths are presented as EXPLORATION_CREW.
+- factual text remains verbatim; metadata/title ownership is normalized.
+- system/provider self-identity leakage fails closed.
+- provider provenance remains internal but provider label is hidden from child-facing history UI.
+- isolated ownership validator 12/12 PASS.
+- next: voice/TTS ownership boundary, then P5 voice quality.
