@@ -1647,3 +1647,176 @@ An approval must identify the external action scope, e.g.:
 - `Snap & Pop frozen candidate a333e735…에 대해 Netlify/hosted runtime 검증 1회를 승인해.`
 
 Only that approved scope may consume the one-call budget.
+
+
+## 30. POST-FREEZE IMPLEMENTATION RESUMED — CREW ORCHESTRATION / SAFETY / HIDE-SEEK VOCABULARY BRIDGE — 2026-09-21
+
+### Candidate state correction
+
+The earlier frozen candidate:
+- `a333e735f69b57164edc8440f7108e49a6ee8c7a`
+
+is no longer the current candidate because runtime implementation continued after the user chose to defer deployment validation.
+
+External-resource gate state was updated:
+- previous candidate classification: `SUPERSEDED_BY_NEW_IMPLEMENTATION`
+- current candidate SHA: null
+- external call count remains 0
+- no Netlify / hosted runtime call was consumed.
+
+A new frozen candidate must be declared only after the next implementation closure.
+
+---
+
+### A. Exploration Crew Guest orchestration
+
+Added:
+- `crew-orchestration-runtime.js`
+- `scripts/validate-crew-guest-orchestration.mjs`
+
+Runtime rules:
+- current Main companion is never selected as Guest;
+- Main continuity is preserved;
+- Guest selection is deterministic, not child-visible probability;
+- recent appearance frequency is used to reduce repeat appearances;
+- optional mood-conflict avoidance is supported when a member declares relevant avoid states;
+- Guest never gains functional advantage;
+- exact general cadence/probability remains OPEN and was not invented.
+
+Current user-facing integration:
+- Guest selection is connected only to existing Special Exploration scenes;
+- a lightweight Guest presence line is shown;
+- Guest member id is preserved in special memory;
+- no new modal/hub and no always-on Guest layer.
+
+Validation:
+- 9/9 PASS
+- `CREW_GUEST_ORCHESTRATION_PASS`
+
+Requirement matrix:
+- `SP-GUIDE-005` → CODED=true / STATIC_VERIFIED=true
+- live browser/device remains NOT_RUN.
+
+---
+
+### B. Crew interaction safety executable guard
+
+Added:
+- `crew-interaction-safety-runtime.js`
+- `scripts/validate-crew-interaction-safety.mjs`
+
+Applied to:
+- semantic writing question/hint;
+- Imagination Cloud presentation;
+- crew reaction overlay.
+
+Policy is mode-specific, not a global word blacklist.
+
+WRITING_PROMPT / CHILD_REACTION blocks:
+- direct child mocking/deficit language;
+- grading language;
+- strong overpraise/identity praise.
+
+GENERAL knowledge presentation:
+- does not block ordinary word-meaning discussion merely because a word such as `stupid` appears;
+- direct child-targeted degrading language still fails closed.
+
+Unsafe non-factual crew reaction:
+- replaced with a neutral minimal reaction;
+- factual content is not silently rewritten.
+
+Validation:
+- 9/9 PASS
+- `CREW_INTERACTION_SAFETY_PASS`
+
+Requirement matrix:
+- `SP-GUIDE-003` → CODED=true / STATIC_VERIFIED=true
+- live browser/device remains NOT_RUN.
+
+---
+
+### C. Hide & Seek vocabulary → Snap & Pop expression material bridge
+
+Added:
+- `vocabulary-material-runtime.js`
+- `scripts/validate-vocabulary-material-ownership.mjs`
+
+Ownership contract:
+- contract: `SNAP_POP_VOCABULARY_MATERIAL_V1`
+- sourceOwner preserved;
+- Hide & Seek source recognized as `HIDE_SEEK`;
+- role: `EXPRESSION_MATERIAL_ONLY`;
+- optional=true;
+- autoInsertAllowed=false;
+- masteryMutationAllowed=false;
+- vocabularyOwnershipTransferred=false;
+- doNotInferMastery=true.
+
+Flow:
+`Hide & Seek handoff → SnapPopBridge.vocabularyMaterial → writing-runtime → semantic-writing-runtime → secure provider → semantic server`
+
+Server contract:
+- vocabulary material may be considered only when it genuinely fits the child's current meaning;
+- never auto-insert the word;
+- never infer mastery;
+- never transfer vocabulary ownership;
+- still return only one next move.
+
+UI:
+- handoff word is shown as an optional expression material;
+- child is not told that Snap & Pop owns or has learned the vocabulary.
+
+Completion provenance correction:
+- old behavior `used_handoff_word=context.word` falsely claimed use whenever a word was merely offered;
+- removed.
+- provenance now separates:
+  - offered word;
+  - actual `usedInDraft`;
+  - `masteryInferred=false`;
+  - `vocabularyOwnershipTransferred=false`.
+
+Usage detection:
+- English token-like terms use whole-word matching;
+- Korean/non-ASCII terms use literal presence;
+- offered does not imply used;
+- used does not imply mastered.
+
+Validation:
+- 11/11 PASS
+- `VOCABULARY_MATERIAL_OWNERSHIP_PASS`
+
+Requirement matrix:
+- `SP-BRIDGE-002` → CODED=true / STATIC_VERIFIED=true
+- live cross-app/device transition remains NOT_RUN.
+
+---
+
+### D. Closure runner updated
+
+`scripts/validate-branch-closure.mjs` now includes:
+- existing 14 closure validators;
+- crew guest orchestration;
+- crew interaction safety;
+- vocabulary material ownership.
+
+Current runner total:
+- 17 validators.
+
+No CI/deploy/Netlify execution was triggered.
+
+### Current status
+
+- implementation resumed: YES
+- previous frozen candidate current: NO
+- external call budget consumed: 0
+- merge/deploy/Netlify: NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+
+### Next implementation axis
+
+Continue branch-only implementation with:
+1. Korean↔English meaning-preserving expression bridge;
+2. child meaning anchor → phrase-level help → child assembles final expression;
+3. no full-sentence ghostwriting by default;
+4. no automatic translation overwrite;
+5. preserve `MEANING FIRST → EXPRESSION SECOND → POLISH THIRD`.
