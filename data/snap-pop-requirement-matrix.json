@@ -107,16 +107,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "authorship-guard-runtime.js",
         "semantic-writing-runtime.js:SnapPopAuthorshipGuard.assertWritingAssist",
         "expression-bridge-runtime.js:SnapPopAuthorshipGuard.assertExpressionBridge",
         "app.js:SnapPopAuthorshipGuard.transitionPayload",
-        "scripts/validate-central-authorship-guard.mjs"
+        "scripts/validate-central-authorship-guard.mjs",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "central executable authorship guard now covers semantic writing assist, bilingual expression fragments, and verified ASK→EXPRESS transition; live browser/provider/device runtime remains NOT_RUN"
+      "gap": "physical-device behavior remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: final completed record draft exactly equals child-entered draft",
+        "browser-runtime-selftest: empty attempts never auto-write child text"
+      ]
     },
     {
       "id": "SP-GUIDE-002",
@@ -130,15 +135,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "crew-intervention-runtime.js",
         "app.js:emptyAdvanceAttempts/interventionStage",
         "app.js:revealHint explicit action",
-        "scripts/validate-crew-intervention-ladder.mjs"
+        "scripts/validate-crew-intervention-ladder.mjs",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "explicit-action intervention ladder implemented/static verified; browser/device interaction timing remains NOT_RUN"
+      "gap": "physical-device behavior remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: first empty advance stays on step 0 and WAIT",
+        "browser-runtime-selftest: second empty advance stays on step 0 and HINT_OFFER",
+        "browser-runtime-selftest: hint is not auto revealed and no text is auto-written"
+      ]
     },
     {
       "id": "SP-GUIDE-003",
