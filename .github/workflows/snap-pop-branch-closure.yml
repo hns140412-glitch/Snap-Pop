@@ -29,20 +29,15 @@ jobs:
           set -euo pipefail
           python3 -m http.server 4173 >/tmp/snap-pop-http.log 2>&1 &
           SERVER_PID=$!
-          trap 'kill $SERVER_PID || true' EXIT
-          for i in {1..30}; do
-            if curl -fsS http://127.0.0.1:4173/index.html >/dev/null; then break; fi
-            sleep 0.2
-          done
           BROWSER="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
           if [ -z "$BROWSER" ]; then
             echo "BROWSER_RUNTIME_INFRA_BLOCKED no chromium browser"
             exit 2
           fi
-          "$BROWSER" --headless --disable-gpu --no-sandbox --disable-dev-shm-usage \
-            --virtual-time-budget=16000 --dump-dom \
+          "$BROWSER" --headless=new --disable-gpu --no-sandbox --disable-dev-shm-usage \
+            --remote-debugging-port=9222 \
             "http://127.0.0.1:4173/index.html?runtime-smoke=1" \
-            > /tmp/snap-pop-browser-smoke.html
-          cat /tmp/snap-pop-browser-smoke.html
-          grep -q 'data-runtime-smoke="PASS"' /tmp/snap-pop-browser-smoke.html
-          grep -q 'BROWSER_RUNTIME_SELFTEST_PASS' /tmp/snap-pop-browser-smoke.html
+            >/tmp/snap-pop-chrome.log 2>&1 &
+          BROWSER_PID=$!
+          trap 'kill $BROWSER_PID $SERVER_PID 2>/dev/null || true' EXIT
+          node scripts/browser-runtime-cdp.mjs
