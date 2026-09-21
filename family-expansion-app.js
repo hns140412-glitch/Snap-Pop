@@ -3,19 +3,20 @@
   const R=window.SnapPopFamilyExpansion;
   if(!R)return;
   const q=s=>document.querySelector(s);
+  const store=window.SnapPopStorage;
   const escape=s=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   async function state(){
     return {
-      enabled:!!(await get("familyExpansionEnabled")),
-      children:await get("familyChildren")||[],
-      activeChildId:await get("familyActiveChildId")||null,
-      artifacts:await get("familyArtifacts")||[]
+      enabled:!!(await store.get("familyExpansionEnabled")),
+      children:await store.get("familyChildren")||[],
+      activeChildId:await store.get("familyActiveChildId")||null,
+      artifacts:await store.get("familyArtifacts")||[]
     };
   }
   async function ensureActiveChild(s){
     if(s.activeChildId&&s.children.some(x=>x.childId===s.activeChildId))return s.activeChildId;
     const first=s.children.find(x=>x.active!==false);
-    if(first){await set("familyActiveChildId",first.childId);return first.childId}
+    if(first){await store.set("familyActiveChildId",first.childId);return first.childId}
     return null;
   }
   function featureLabel(id){return ({DIARY:"일기",LETTER:"편지·쪽지",SHARED_SPECIAL:"가족 공동 특별탐험",FAMILY_TIMELINE:"가족 성장기록",MULTI_CHILD:"다자녀 프로필",FAMILY_GROUP:"가족 그룹·초대·권한",MAILBOX_DECOR:"숲길 우체통·편지 꾸미기",SUPPORT_CARD:"응원 카드",GEM_GIFT:"보석조각 선물",COMPOSITE_DIARY_ILLUSTRATION:"조합형 일기 일러스트"})[id]||id}
@@ -43,7 +44,7 @@
     try{
       const artifact=R.createArtifact(type,{childId,text,source:"CHILD_OR_FAMILY_EXPLICIT_INPUT"});
       const next=[artifact,...s.artifacts].slice(0,1000);
-      await set("familyArtifacts",next);
+      await store.set("familyArtifacts",next);
       input.value="";
       await render();
       toast("가족 확장 기록에 저장했어요.");
@@ -51,15 +52,15 @@
   }
   q("#familyExpansionBtn")?.addEventListener("click",async()=>{show("familyExpansion");await render()});
   q("#familyExpansionBack")?.addEventListener("click",()=>show("settings"));
-  q("#familyExpansionToggle")?.addEventListener("change",async e=>{await set("familyExpansionEnabled",!!e.target.checked);await render()});
+  q("#familyExpansionToggle")?.addEventListener("change",async e=>{await store.set("familyExpansionEnabled",!!e.target.checked);await render()});
   q("#familyChildAdd")?.addEventListener("click",async()=>{
     const name=(q("#familyChildName")?.value||"").trim();if(!name)return toast("아이 이름을 입력해주세요.");
     const s=await state(),childId="child_"+Date.now().toString(36);
     const child=R.normalizeChild({childId,displayName:name});
-    await setMany([["familyChildren",[...s.children,child]],["familyActiveChildId",childId]]);
+    await store.setMany([["familyChildren",[...s.children,child]],["familyActiveChildId",childId]]);
     q("#familyChildName").value="";await render();
   });
-  q("#familyChildSelect")?.addEventListener("change",async e=>{if(e.target.value)await set("familyActiveChildId",e.target.value);await render()});
+  q("#familyChildSelect")?.addEventListener("change",async e=>{if(e.target.value)await store.set("familyActiveChildId",e.target.value);await render()});
   q("#familyDiarySave")?.addEventListener("click",()=>saveArtifact("DIARY","familyDiaryText"));
   q("#familyLetterSave")?.addEventListener("click",()=>saveArtifact("LETTER","familyLetterText"));
   q("#familySupportSave")?.addEventListener("click",()=>saveArtifact("SUPPORT_CARD","familySupportText"));
