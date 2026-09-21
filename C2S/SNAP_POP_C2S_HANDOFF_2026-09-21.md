@@ -228,3 +228,90 @@ Use:
 `SNAP_POP_NEW_CHAT_START_2026-09-21.md`
 
 This handoff is ready for a new conversation.
+
+
+## 12. CONTINUATION INCREMENT — 2026-09-21 / P1 HARDENING + P2 FOUNDATION
+
+### P1 semantic writing boundary hardening
+
+Added:
+- recursive rejection of forbidden authorship fields, including nested output;
+- exactly one next-move question required;
+- next-move question must end in a single question mark;
+- hint must not contain another question;
+- malformed provider output falls back locally with providerError provenance;
+- server semantic function guard aligned with browser/runtime guard.
+
+Regression validator:
+- `scripts/validate-semantic-writing-runtime.mjs`
+- fixture coverage: valid single move / nested forbidden output / multi-question / missing question / hint-question.
+
+Status for this increment:
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL — isolated contract verification only; live browser/OpenAI/server remains NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+
+### P2 Truth Guard foundation
+
+Added:
+- `truth-guard-runtime.js`
+- claim/evidence boundary;
+- raw provider `verified:true` cannot self-authorize;
+- a claim is VERIFIED only when evidence exists;
+- overall verified requires CLAIM_EVIDENCE mode, all claims evidence-backed, and zero unresolved items;
+- `intelligence-runtime.js` routes factual ASK_UNDERSTAND results through Truth Guard.
+
+Regression validator:
+- `scripts/validate-truth-guard-runtime.mjs`
+
+Added server-agnostic knowledge contract:
+- `knowledge-runtime.js`
+- factual questions route through `SnapPopKnowledge`;
+- backend absence falls back to the existing unverified/no-guess response;
+- any future backend output is forced through Truth Guard before user-facing verified state;
+- `scripts/validate-knowledge-runtime.mjs` records this regression contract.
+
+### Verified search provider — still OPEN
+
+Official OpenAI Responses API web-search/source contract was checked before implementation design.
+
+A bundled GitHub write that attempted to add:
+- a new server knowledge function,
+- server-side external search call,
+- client adapter,
+- same-origin route
+
+was BLOCKED by tool security-state classification.
+
+Cause class:
+- TOOL / WRITE SECURITY CLASSIFICATION
+- not a Snap & Pop runtime/code failure.
+
+TAKY response:
+- same blocked bundle was NOT retried;
+- readback confirmed no partial server knowledge endpoint write;
+- implementation was split into a safe server-agnostic knowledge contract instead.
+
+Current rule:
+- do not claim verified Q&A until a compatible server-side retrieval/search path is actually connected and source evidence is returned.
+- OPENAI_RUNTIME_CONNECTED remains false.
+
+### Current execution status after this increment
+
+- P0 badge recovered-scope classification: unchanged / do not repeat.
+- P1 writing semantic boundary: hardened; live external runtime still open.
+- P2 Truth Guard: foundational contract CODED + STATIC/isolated contract evidence; verified retrieval provider OPEN.
+- P3+ unchanged.
+- merge: NOT_RUN
+- deploy: NOT_RUN
+- Netlify call: NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+
+### Next execution order
+
+1. preserve the guarded `SnapPopKnowledge → TruthGuard` boundary;
+2. add a compatible server-side verified retrieval provider without exposing API keys or bypassing same-origin security;
+3. cross-check retrieved source evidence against claim evidence before allowing verified=true;
+4. expose source/evidence provenance in a bounded child-facing way;
+5. then continue P3 Imagination Cloud intelligence.
