@@ -1502,14 +1502,18 @@
         "USER_DIRECT_2026-09-08"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "60-item historical catalog preserved but intentionally inactive until catalog review",
+      "gap": "historical ~60 drafts are preserved/inactive and new activity-backed badge candidates can be proposed into REVIEW_REQUIRED ledger; auto-discovery thresholds, canonical naming, approval and activation remain OPEN",
       "codeEvidence": [
         "data/badge-catalog-working.json:60 inactive historical drafts",
-        "badge-runtime.js:activeItems"
+        "badge-catalog-guard-runtime.js",
+        "badge-candidate-runtime.js",
+        "app.js:proposeBadgeCandidateFromObservations",
+        "app.js:badgeCandidateReviews",
+        "scripts/validate-badge-candidate-review-only.mjs"
       ]
     },
     {
