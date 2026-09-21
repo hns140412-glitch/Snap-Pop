@@ -1582,13 +1582,20 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "writing-runtime.js:contextPolicy",
-        "writing-runtime.js:LOW_CONTEXT_CONFIDENCE"
+        "writing-runtime.js:LOW_CONTEXT_CONFIDENCE",
+        "scripts/browser-runtime-selftest.js",
+        "writing-runtime.js"
       ],
-      "gap": "runtime scenarios pending"
+      "gap": "live external-provider/device verification remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: low-trust Ready Learning Context detected",
+        "browser-runtime-selftest: low-trust context blocks cross-lens forcing",
+        "browser-runtime-selftest: low-trust analysis remains local and child-directed"
+      ]
     },
     {
       "id": "SP-WRITE-009",
@@ -1643,13 +1650,19 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "writing-runtime.js:local-writing-fallback",
-        "semantic-writing-runtime.js:SEMANTIC_PROVIDER_UNAVAILABLE"
+        "semantic-writing-runtime.js:SEMANTIC_PROVIDER_UNAVAILABLE",
+        "scripts/browser-runtime-selftest.js",
+        "writing-runtime.js"
       ],
-      "gap": "live failure-path runtime validation pending"
+      "gap": "live external-provider/device verification remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: semantic provider unavailable falls back to local-writing-fallback",
+        "browser-runtime-selftest: local fallback preserves child authorship"
+      ]
     },
     {
       "id": "SP-BADGE-001",
