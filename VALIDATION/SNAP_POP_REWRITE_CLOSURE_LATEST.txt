@@ -1,7 +1,7 @@
-validation_sha=a7646ea26c37cc6c059abe5799b6e6349b89f379
-checkout_sha=a7646ea26c37cc6c059abe5799b6e6349b89f379
-closure_status=1
-closure_marker=
+validation_sha=1748322bacd3d94688fef128fd5c0b6cd81a3063
+checkout_sha=1748322bacd3d94688fef128fd5c0b6cd81a3063
+closure_status=0
+closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 69/69
 browser_status=0
 browser_marker=BROWSER_RUNTIME_CDP_PASS
 viewport=390x844
@@ -324,23 +324,519 @@ GUEST_APPEARANCE_GATE_PASS
 PASS all-reconciled-items-exist
 PASS all-reconciled-items-coded
 PASS all-reconciled-items-static-verified
-file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-requirement-matrix-reconciliation.mjs:8
-  if(!condition) throw new Error("FAIL "+name);
-                       ^
+PASS runtime-not-overclaimed
+PASS truth-003-browser-no-guess-runtime-verified
+PASS device-not-overclaimed
+PASS truth-source-quality-gap-remains-open
+PASS openai-live-runtime-remains-open
+PASS broad-domain-code-evidence-present
+PASS mental-model-evidence-present
+REQUIREMENT_MATRIX_RECONCILIATION_PASS
 
-Error: FAIL runtime-not-overclaimed
-    at assert (file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-requirement-matrix-reconciliation.mjs:8:24)
-    at file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-requirement-matrix-reconciliation.mjs:21:1
-    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
-    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
-    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+=== validate-etymology-source-diversity.mjs ===
+PASS same-host-etymology-not-full-coverage
+PASS two-host-etymology-can-reach-full-coverage
+PASS general-concept-keeps-normal-coverage-rule
+ETYMOLOGY_SOURCE_DIVERSITY_PASS
 
-Node.js v22.23.2
-BRANCH_CLOSURE_VALIDATOR_FAIL validate-requirement-matrix-reconciliation.mjs status 1
+=== validate-central-authorship-guard.mjs ===
+PASS writing-assist-valid-one-next-move
+PASS writing-final-draft-blocked
+PASS writing-question-flooding-blocked
+PASS expression-valid-fragments
+PASS expression-full-sentence-blocked
+PASS verified-transition-does-not-transfer-answer-or-draft
+PASS semantic-runtime-uses-central-guard
+PASS expression-runtime-uses-central-guard
+PASS app-transition-uses-central-guard
+CENTRAL_AUTHORSHIP_GUARD_PASS
+
+=== validate-shared-badge-event-contract.mjs ===
+PASS contract-version
+PASS app-id-preserved
+PASS event-family-preserved
+PASS source-provenance-preserved
+PASS identity-not-shared
+PASS role-permission-not-shared
+PASS no-award-or-economy-authority
+PASS app-mirrors-observation-without-replacing-local-ledger
+SHARED_BADGE_EVENT_CONTRACT_PASS
+
+=== validate-non-blocking-crew-reaction-ui.mjs ===
+PASS reaction-slot-exists-and-hidden-by-default
+PASS reaction-slot-is-live-region-not-input
+PASS reaction-slot-non-blocking
+PASS reaction-slot-height-bounded
+PASS reaction-slot-sits-after-main-textarea
+PASS reaction-is-hidden-when-cleared
+PASS reaction-auto-collapses-after-short-display
+NON_BLOCKING_CREW_REACTION_UI_PASS
+
+=== validate-think-express-verification-separation.mjs ===
+PASS local-think-classifies
+PASS local-think-verification-not-applicable
+PASS local-think-owner-is-crew
+PASS external-think-cannot-claim-factual-verification
+PASS external-think-owner-remains-crew
+THINK_EXPRESS_VERIFICATION_SEPARATION_PASS
+
+=== validate-badge-visual-compositor.mjs ===
+PASS five-tier-model
+PASS stars-clamped-one-to-five
+PASS identity-stable-across-theme
+PASS composition-has-three-layers
+PASS preview-never-awards-badge
+PASS preview-surface-explicitly-not-owned
+PASS circle-pastel-visual-contract
+PASS upper-semicircle-five-gem-stars
+PASS profile-character-rendered-as-identity-layer
+PASS growth-view-renders-preview-not-catalog-award
+BADGE_VISUAL_LAYER_COMPOSITOR_PASS
+
+=== validate-badge-theme-expression.mjs ===
+PASS identity-stable-across-theme-expression
+PASS theme-expression-is-cosmetic-only
+PASS visual-composition-separates-theme-layer
+PASS unresolved-assets-are-explicit-not-invented
+PASS reviewed-assets-require-reference
+PASS reviewed-theme-without-asset-ref-blocked
+PASS identity-mutation-through-theme-blocked
+PASS power-or-growth-mutation-through-theme-blocked
+PASS theme-runtime-loaded-before-visual
+PASS preview-still-not-award-authority
+BADGE_THEME_EXPRESSION_CONTRACT_PASS
+
+=== validate-badge-catalog-activation-guard.mjs ===
+PASS current-working-catalog-valid
+PASS working-catalog-cannot-activate-items
+PASS active-working-draft-fails-closed
+PASS reviewed-active-item-can-pass
+PASS badge-runtime-calls-catalog-validation
+PASS badge-runtime-active-items-use-guard
+BADGE_CATALOG_ACTIVATION_GUARD_PASS
+
+=== validate-crew-special-role-not-power.mjs ===
+PASS special-role-means-encounter-style
+PASS special-functional-ability-equal
+PASS special-no-power-or-reward-multiplier
+PASS special-power-boost-blocked
+PASS special-reward-multiplier-blocked
+PASS guest-selection-runs-role-guard
+PASS special-roster-says-encounter-not-power
+PASS special-scene-repeats-child-authorship-not-power
+CREW_SPECIAL_ROLE_NOT_POWER_PASS
+
+=== validate-imagination-return-integrity.mjs ===
+PASS snapshot-captures-context
+PASS same-context-validates
+PASS session-change-blocked
+PASS landmark-change-blocked
+PASS step-change-blocked
+PASS language-change-blocked
+PASS newer-current-draft-wins
+PASS snapshot-used-only-as-fallback
+PASS app-uses-guard-for-writing-return
+IMAGINATION_RETURN_INTEGRITY_PASS
+
+=== validate-writing-semantic-contract.mjs ===
+PASS semantic-analysis-requires-current-draft
+PASS provider-receives-current-and-previous-draft-state
+PASS server-explicitly-analyzes-current-draft-semantically
+PASS five-landmarks-are-lenses-not-minigames
+PASS cross-lens-suggestion-is-optional-one-lens
+PASS one-next-move-is-enforced-client-side
+PASS one-next-move-is-enforced-server-side
+PASS live-result-applies-only-if-draft-step-and-dom-still-match
+PASS crew-reaction-is-derived-from-current-analysis
+PASS authorship-guard-prevents-draft-rewrite
+WRITING_SEMANTIC_CONTRACT_PASS
+
+=== validate-crew-core6-starter-baseline.mjs ===
+PASS exact-core6-count
+PASS core6-members-match-current-working-set
+PASS starter-reference-only
+PASS future-expansion-remains-open
+PASS global-authority-blocked
+PASS roster-lock-blocked
+PASS app-renders-baseline-boundary-copy
+PASS starter-selection-uses-core6-guard
+CREW_CORE6_STARTER_BASELINE_PASS
+
+=== validate-badge-candidate-review-only.mjs ===
+PASS candidate-requires-evidence
+PASS candidate-stays-review-only
+PASS candidate-has-no-award-or-auto-activation-authority
+PASS no-evidence-candidate-blocked
+PASS app-persists-candidate-in-review-ledger
+PASS app-does-not-auto-call-candidate-proposal
+BADGE_CANDIDATE_REVIEW_ONLY_PASS
+
+=== validate-voice-boundary-contract.mjs ===
+PASS tts-and-stt-are-separate-runtime-functions
+PASS listen-is-one-shot-not-always-listening
+PASS listening-button-only-reads-current-prompt
+PASS voice-input-is-explicit-separate-control
+PASS voice-input-appends-child-transcript-to-draft
+PASS radio-is-imagination-entry-not-writing-landmark
+PASS radio-is-not-sixth-writing-tool
+PASS voice-fallback-does-not-block-text-flow
+PASS external-provider-remains-optional
+VOICE_BOUNDARY_CONTRACT_PASS
+
+=== validate-badge-independent-experience-axis.mjs ===
+PASS badge-observation-has-independent-local-ledger
+PASS badge-observation-has-independent-shared-envelope-ledger
+PASS badge-observation-does-not-write-exp-ledger
+PASS badge-observation-does-not-write-gem-ledger
+PASS badge-observation-does-not-write-crew-affinity
+PASS behavior-contract-does-not-authorize-award-or-penalty
+PASS shared-contract-does-not-authorize-economy-mutation
+PASS catalog-activation-remains-separate-from-observation-axis
+BADGE_INDEPENDENT_EXPERIENCE_AXIS_PASS
+
+=== validate-snap-pop-body-matrix-closure.mjs ===
+PASS snap-pop-matrix-has-no-coded-residue
+PASS all-requirements-coded
+PASS badge-006-runtime-evidence-reconciled
+PASS badge-008-runtime-contract-verified-art-assets-open
+PASS theme-assets-remain-explicitly-open
+PASS family-conflict-remains-explicit
+PASS runtime-and-device-not-falsely-converged
+SNAP_POP_MATRIX_CLOSURE_PASS
+
+=== validate-family-expansion-runtime.mjs ===
+PASS feature-flag-separates-original-and-family
+PASS diary-active
+PASS letter-active
+PASS shared-special-active
+PASS family-timeline-active
+PASS multi-child-active
+PASS child-id-isolation-required
+PASS family-group-permission-contract-present
+PASS mailbox-decor-recovery-locked
+PASS support-card-active
+PASS gem-gift-conflict-locked-no-economy
+PASS composite-diary-illustration-recovery-locked
+PASS artifact-child-scoped
+PASS gem-gift-cannot-create-artifact
+PASS timeline-does-not-cross-child
+PASS family-ui-present
+PASS all-family-items-coded-static-runtime
+FAMILY_EXPANSION_RUNTIME_PASS
+
+=== validate-user-facing-surface.mjs ===
+PASS internal-copy-hidden-MASTER-GEM-ASSET
+PASS internal-copy-hidden-기존-승인-원본-연결-대기
+PASS internal-copy-hidden-ORIGINAL과-분리된-선택-확장
+PASS internal-copy-hidden-아이별-기록은-childId로-분리
+PASS internal-copy-hidden-Character-Master-기록-보존
+PASS internal-copy-hidden-Snap-&-Pop-탐험대원-MASTER
+PASS internal-copy-hidden-정확한-조우-주기는-아직-OPEN
+PASS internal-copy-hidden-WORKING-ROLE-SLOT
+PASS internal-copy-hidden-WORKING-설계판
+PASS internal-copy-hidden-미발견/설계-슬롯
+PASS internal-copy-hidden-실제-인원-OPEN
+PASS family-mode-copy-is-user-facing
+PASS family-feature-state-is-translated
+PASS gem-surface-is-user-facing
+PASS character-surface-is-user-facing
+PASS mobile-writing-tools-wrap
+USER_FACING_SURFACE_PASS
+
+=== validate-mobile-user-surface.mjs ===
+PASS viewport-mobile-configured
+PASS app-mobile-max-width
+PASS writing-tools-wrap
+PASS writing-soft-controls-two-column-capable
+PASS voice-control-full-row
+PASS writing-controls-min-height
+PASS safe-area-top-used
+PASS safe-area-bottom-used
+MOBILE_USER_SURFACE_STATIC_PASS
+
+=== validate-rewrite-foundation-boundaries.mjs ===
+PASS storage-runtime-loaded-before-app
+PASS ui-shell-loaded-before-app
+PASS app-no-longer-owns-indexeddb
+PASS app-has-no-legacy-db-variable
+PASS storage-runtime-owns-indexeddb
+PASS app-uses-storage-only-as-thin-orchestration
+PASS app-delegates-view-shell
+PASS ui-shell-owns-view-class-switching
+REWRITE_FOUNDATION_BOUNDARY_PASS
+
+=== validate-writing-controller-boundaries.mjs ===
+PASS writing-controller-loads-before-app
+PASS writing-controller-contract-present
+PASS question-bank-owned-by-controller
+PASS writing-steps-owned-by-controller
+PASS app-delegates-promptFor
+PASS app-delegates-ensureWritingState
+PASS app-delegates-setModeButtons
+PASS app-delegates-focusGuide
+PASS app-delegates-stepSpecificReaction
+PASS app-delegates-writingLensLabel
+PASS app-delegates-renderWritingBridge
+PASS app-delegates-setExpressionBridgeButton
+PASS app-delegates-renderExpressionBridge
+PASS app-delegates-renderExplore
+PASS render-explore-owned-by-controller
+PASS writing-controller-does-not-own-persistence
+WRITING_CONTROLLER_BOUNDARY_PASS
+
+=== validate-writing-flow-controller-boundaries.mjs ===
+PASS writing-flow-controller-loads-before-app
+PASS writing-flow-contract-present
+PASS legacy-start-binding-removed
+PASS legacy-next-binding-removed
+PASS legacy-answer-input-binding-removed
+PASS legacy-language-bindings-removed
+PASS flow-owns-completion-event
+PASS flow-owns-record-gem-exp-transaction
+PASS flow-preserves-empty-draft-wait
+PASS flow-invalidates-stale-analysis-on-input
+PASS flow-does-not-fallback-after-stale-null
+PASS flow-uses-storage-contract
+PASS app-installs-writing-flow-controller
+WRITING_FLOW_CONTROLLER_BOUNDARY_PASS
+
+=== validate-crew-controller-boundaries.mjs ===
+PASS crew-controller-loads-before-app
+PASS crew-controller-contract-present
+PASS app-delegates-normalizeCrewType
+PASS app-delegates-normalizeIdentity
+PASS app-delegates-crewMemberRule
+PASS app-delegates-crewReaction
+PASS app-delegates-crewMemberName
+PASS app-delegates-crewPerformance
+PASS app-delegates-crewSnippet
+PASS app-delegates-showCrewReaction
+PASS app-delegates-hideCrewReaction
+PASS app-delegates-renderSpecialInvite
+PASS crew-controller-owns-reaction-overlay
+PASS crew-controller-preserves-special-invite-copy
+PASS crew-controller-does-not-own-indexeddb
+PASS crew-role-rule-source-remains-canonical
+CREW_CONTROLLER_BOUNDARY_PASS
+
+=== validate-crew-runtime-controller-boundaries.mjs ===
+PASS crew-runtime-loads-before-app
+PASS crew-runtime-contract-present
+PASS app-delegates-ensureCrewRegistry
+PASS app-delegates-recordCrewMemberExperience
+PASS app-delegates-recordCrewExperience
+PASS app-delegates-chooseSceneGuest
+PASS app-delegates-synthesizeCrewWorldState
+PASS registry-owned-by-crew-runtime
+PASS guest-selection-remains-explicitly-authorized
+PASS special-role-remains-no-power
+PASS world-state-remains-synthetic
+PASS crew-runtime-does-not-own-dom
+CREW_RUNTIME_CONTROLLER_BOUNDARY_PASS
+
+=== validate-records-growth-controller-boundaries.mjs ===
+PASS records-controller-loads-before-app
+PASS records-controller-contract-present
+PASS app-delegates-renderRecords
+PASS app-delegates-renderGems
+PASS app-delegates-renderGrowth
+PASS app-delegates-renderGrowthTimeline
+PASS app-delegates-renderLastResult
+PASS app-delegates-updateStatus
+PASS app-delegates-openRecordEdit
+PASS app-delegates-renderWishHistory
+PASS records-preserve-original-and-revisions
+PASS record-edit-does-not-alter-reward-copy
+PASS growth-keeps-cloud-no-farming-copy
+PASS special-memory-remains-no-reward
+PASS records-controller-does-not-own-indexeddb
+PASS records-controller-has-no-legacy-html-helper-reference
+RECORDS_GROWTH_CONTROLLER_BOUNDARY_PASS
+
+=== validate-records-flow-controller-boundaries.mjs ===
+PASS records-flow-loads-before-app
+PASS records-flow-contract-present
+PASS legacy-record-edit-binding-removed
+PASS legacy-bonus-bindings-removed
+PASS legacy-wish-transaction-removed
+PASS revision-preserves-original
+PASS revision-reward-not-recomputed
+PASS bonus-is-idempotent
+PASS bonus-has-no-extra-exp
+PASS wish-spend-ledgered
+PASS records-flow-does-not-own-indexeddb
+RECORDS_FLOW_CONTROLLER_BOUNDARY_PASS
+
+=== validate-special-controller-boundaries.mjs ===
+PASS special-controller-loads-before-app
+PASS special-contract-present
+PASS legacy-special-bindings-removed
+PASS special-guest-remains-explicit-authorized
+PASS special-trigger-consumed-one-shot
+PASS special-memory-is-no-reward-flow
+PASS special-evidence-explicit
+PASS guest-shared-memory-linked
+SPECIAL_CONTROLLER_BOUNDARY_PASS
+
+=== validate-imagination-controller-boundaries.mjs ===
+PASS imagination-controller-loads-before-app
+PASS imagination-contract-present
+PASS imagination-state-no-longer-global-in-app
+PASS writing-return-guard-preserved
+PASS draft-preserved-on-return
+PASS cloud-history-remains-no-direct-reward
+PASS verified-ask-expression-does-not-transfer-answer
+PASS intelligence-output-still-sanitized
+PASS voice-stays-user-mic-only
+IMAGINATION_CONTROLLER_BOUNDARY_PASS
+
+=== validate-settings-profile-controller-boundaries.mjs ===
+PASS settings-profile-loads-before-app
+PASS settings-profile-contract-present
+PASS shared-identity-owned-by-settings-controller
+PASS ready-profile-remains-priority
+PASS local-profile-remains-fallback
+PASS crew-name-history-preserved
+PASS settings-events-owned-by-controller
+PASS legacy-settings-bindings-removed
+PASS settings-controller-does-not-own-indexeddb
+PASS app-installs-settings-controller
+SETTINGS_PROFILE_CONTROLLER_BOUNDARY_PASS
+
+=== validate-badge-controller-boundaries.mjs ===
+PASS badge-controller-loads-before-app
+PASS badge-controller-contract-present
+PASS badge-observation-owned-by-controller
+PASS badge-evidence-keeps-explicit-only-contract
+PASS badge-candidates-remain-review-only
+PASS badge-preview-is-not-award-copy
+PASS badge-controller-does-not-own-economy
+PASS app-delegates-badge-owner
+BADGE_CONTROLLER_BOUNDARY_PASS
+
+=== validate-bridge-context-controller-boundaries.mjs ===
+PASS bridge-controller-loads-before-app
+PASS bridge-controller-contract-present
+PASS hide-seek-material-remains-reference-only
+PASS ready-learning-context-is-read-only-provider
+PASS incoming-handoff-shows-source-owner
+PASS expression-trace-metadata-only
+PASS bridge-does-not-overwrite-draft
+PASS bridge-stale-draft-guard
+PASS optional-expression-banner-owned-here
+PASS legacy-bridge-binding-removed
+PASS app-delegates-bridge-context
+PASS bridge-controller-does-not-own-indexeddb
+BRIDGE_CONTEXT_CONTROLLER_BOUNDARY_PASS
+
+=== validate-ready-snap-bridge-context.mjs ===
+PASS incoming-context-preserves-session-task-lap-return
+PASS linked-context-requires-session-task-lap
+PASS return-url-restores-session-task-lap
+PASS completion-is-idempotent
+PASS context-persists-in-session-storage
+PASS return-target-is-http-safe
+READY_SNAP_BRIDGE_CONTEXT_STATIC_PASS
+
+=== validate-bootstrap-controller-boundaries.mjs ===
+PASS bootstrap-loads-before-app
+PASS bootstrap-contract-present
+PASS bootstrap-owns-legacy-migration
+PASS bootstrap-preserves-init-order
+PASS bootstrap-uses-owner-apis
+PASS bootstrap-does-not-own-feature-dom
+PASS app-delegates-bootstrap
+PASS legacy-init-body-removed-from-app
+BOOTSTRAP_CONTROLLER_BOUNDARY_PASS
+
+=== validate-interaction-support-controller-boundaries.mjs ===
+PASS interaction-support-loads-before-app
+PASS interaction-support-contract-present
+PASS selected-state-owned-by-support
+PASS analysis-sequence-owned-by-support
+PASS analysis-result-checks-current-dom-draft
+PASS calendar-cursor-owned-by-support
+PASS hint-and-voice-owned-by-support
+PASS reflection-remains-explicit-child-evidence
+PASS voice-remains-user-mic-one-shot-entry
+PASS calendar-reduce-motion-scroll-preserved
+PASS support-does-not-own-indexeddb
+PASS app-installs-support-controller
+INTERACTION_SUPPORT_CONTROLLER_BOUNDARY_PASS
+
+=== validate-thin-orchestrator-boundary.mjs ===
+THIN_ORCHESTRATOR_BOUNDARY_PASS { bytes: 12652, maxBytes: 13000 }
+
+=== validate-integrated-child-writing-flow.mjs ===
+PASS writing-focus-card-present
+PASS question-is-framed-as-single-current-focus
+PASS child-answer-label-present
+PASS primary-writing-controls-are-voice-and-hint
+PASS optional-assists-are-collapsed-by-default
+PASS next-action-has-dedicated-dock
+PASS writing-dock-stays-above-bottom-nav
+PASS answer-remains-large-writing-surface
+INTEGRATED_CHILD_WRITING_FLOW_PASS
+
+=== validate-integrated-home-map-flow.mjs ===
+PASS home-map-has-single-guidance-prompt
+PASS home-map-guidance-does-not-block-input
+PASS home-radio-remains-secondary-action
+PASS selection-remains-explicit-before-start
+PASS landmark-layer-remains-primary-map-target
+INTEGRATED_HOME_MAP_FLOW_PASS
+
+=== validate-integrated-result-records-growth.mjs ===
+PASS result-leads-with-child-work
+PASS result-separates-progress-from-work
+PASS result-next-actions-link-records-and-growth
+PASS bonus-is-optional-collapsed
+PASS records-copy-is-reflection-first
+PASS growth-has-three-step-narrative
+PASS growth-summary-is-readable-grid
+INTEGRATED_RESULT_RECORDS_GROWTH_PASS
+
+=== validate-integrated-imagination-special-flow.mjs ===
+PASS special-is-explicitly-optional
+PASS special-has-child-owned-input
+PASS special-actions-include-skip
+PASS imagination-is-framed-as-optional-support
+PASS imagination-has-single-question-input
+PASS imagination-primary-action-is-thinking
+PASS listen-last-is-secondary-collapsed
+PASS special-hierarchy-styled
+INTEGRATED_IMAGINATION_SPECIAL_FLOW_PASS
+
+=== validate-integrated-settings-family-flow.mjs ===
+PASS settings-separate-identity-group
+PASS settings-separate-family-group
+PASS settings-separate-accessibility-group
+PASS family-entry-remains-explicit
+PASS family-copy-preserves-child-isolation
+PASS accessibility-controls-preserved
+PASS settings-group-hierarchy-styled
+INTEGRATED_SETTINGS_FAMILY_FLOW_PASS
+
+=== validate-integrated-ui-closure.mjs ===
+PASS all-integrated-surface-validators-gated
+PASS primary-child-surfaces-present
+PASS optional-world-surfaces-present
+PASS settings-and-family-surfaces-present
+PASS navigation-does-not-replace-child-authorship
+INTEGRATED_UI_CLOSURE_PASS
+
+=== validate-dom-binding-integrity.mjs ===
+PASS all-direct-dom-bindings-have-index-targets
+PASS querySelector-collection-misuse-blocked
+PASS explicit-help-request-control-exists
+PASS hint-control-is-wired-to-explicit-help-path
+DOM_BINDING_INTEGRITY_PASS
+
+BRANCH_CLOSURE_VALIDATOR_PASS 69/69
 --- BROWSER ---
 PWA_RELOAD_RECOVERY_PASS
 {"readyState":"complete","init":"PASS","db":"OPEN","probe":{"status":"PERSISTED","token":"snap-pop-runtime-recovery-v1"}}
 PWA_OFFLINE_SHELL_PASS
 {"ok":true,"scriptURL":"http://127.0.0.1:4173/sw.js","cacheNames":["snap-pop-2026-09-20-r"],"shellCaches":["snap-pop-2026-09-20-r"],"controlled":true}
 BROWSER_RUNTIME_CDP_PASS
-{"readyState":"complete","smoke":"PASS","runtime":{"init":"PASS","appScript":"STARTED","db":"OPEN","errors":[],"phase":"DONE"},"result":"BROWSER_RUNTIME_SELFTEST_PENDING\nPASS app-init-pass\nPASS indexeddb-open\nPASS map-has-five-landmarks\nPASS live-dom-map-surface\nPASS live-dom-primary-navigation\nPASS live-dom-writing-surface-present\nPASS runtime-mockup-background-not-used\nPASS think-express-local-runtime-kind\nPASS think-express-local-runtime-has-scaffold\nPASS think-express-korean-supported\nPASS think-express-english-supported\nPASS think-express-response-owner-is-crew\nPASS ask-without-knowledge-provider-does-not-guess\nPASS ask-no-guess-response-owner-is-crew\nPASS affinity-runtime-is-internal-expression-only\nPASS special-role-runtime-is-encounter-only\nPASS special-role-power-boost-is-blocked\nPASS core6-runtime-working-baseline\nPASS guest-weighting-prefers-less-recent-non-main\nPASS crew-runtime-main-id-present\nPASS crew-world-return-restores-main-companion\nPASS crew-world-return-records-reunion-memory\nPASS affinity-memory-increments-relationship-score\nPASS affinity-memory-does-not-change-exp\nPASS affinity-memory-does-not-change-gems\nPASS first-landmark-exists\nPASS start-writing-exists\nPASS writing-view-active\nPASS mobile-root-has-no-horizontal-overflow\nPASS mobile-document-has-no-horizontal-overflow\nPASS writing-tools-present\nPASS writing-tools-touch-height\nPASS writing-tools-stay-inside-viewport\nPASS primary-next-touch-height\nPASS hint-control-restored\nPASS unsafe-child-mock-is-blocked\nPASS unsafe-child-mock-falls-back-neutral\nPASS crew-reaction-hidden-by-default\nPASS crew-reaction-does-not-capture-input\nPASS crew-reaction-is-height-bounded\nPASS writing-listen-question-exists\nPASS writing-listen-uses-speak-only\nPASS writing-voice-input-exists\nPASS writing-voice-input-uses-listen-only\nPASS empty-advance-1-exists\nPASS empty-first-attempt-stays-on-step-0\nPASS empty-first-attempt-waits\nPASS empty-first-attempt-does-not-write\nPASS empty-advance-2-exists\nPASS empty-second-attempt-stays-on-step-0\nPASS empty-second-attempt-offers-hint\nPASS hint-is-not-auto-revealed\nPASS empty-second-attempt-does-not-write\nPASS stale-probe-old-analysis-started\nPASS stale-probe-latest-analysis-started\nPASS stale-writing-analysis-cannot-overwrite-latest\nPASS semantic-provider-unavailable-falls-back-locally\nPASS local-fallback-keeps-child-authorship\nPASS low-trust-learning-context-is-detected\nPASS low-trust-learning-context-cannot-force-cross-lens\nPASS low-trust-analysis-keeps-local-child-direction\nPASS five-writing-lenses-return-five-moves\nPASS five-writing-lenses-are-distinct\nPASS writing-lens-next-move-remains-single\nPASS semantic-provider-blocks-final-draft-generation\nPASS semantic-provider-analysis-only-output\nPASS writing-draft-persists-step-0\nPASS writing-step-1-exists\nPASS writing-advances-to-step-1\nPASS writing-same-draft-carried-to-step-1\nPASS writing-draft-persists-step-1\nPASS writing-cloud-open-exists\nPASS writing-cloud-opens-on-demand\nPASS writing-cloud-close-exists\nPASS writing-cloud-return-preserves-draft\nPASS writing-cloud-return-restores-writing-view\nPASS writing-step-2-exists\nPASS writing-advances-to-step-2\nPASS writing-same-draft-carried-to-step-2\nPASS writing-complete-exists\nPASS writing-result-active\nPASS writing-completion-preserves-final-draft\nPASS writing-completion-has-three-snapshots\nPASS result-records-exists\nPASS records-view-active\nPASS record-edit-open-exists\nPASS record-edit-view-active\nPASS record-edit-save-exists\nPASS record-original-preserved-after-revision\nPASS record-revision-added\nPASS record-revision-does-not-recompute-reward\nPASS records-nav-exists\nPASS records-and-cloud-history-render-together\nPASS result-growth-exists\nPASS growth-view-active\nPASS single-growth-tree-present\nPASS cloud-activity-appears-in-growth-summary\nPASS cloud-activity-does-not-change-exp\nPASS cloud-activity-does-not-change-gems\nPASS badge-working-catalog-has-sixty-drafts\nPASS badge-working-catalog-has-no-active-items\nPASS badge-observation-is-observation-only\nPASS badge-shared-envelope-has-no-economy-authority\nPASS badge-shared-envelope-keeps-app-owned-identity\nPASS badge-candidate-is-review-only\nPASS badge-five-tier-progression-runtime\nPASS badge-stars-clamped-one-to-five-runtime\nPASS badge-theme-is-cosmetic-only\nPASS badge-theme-keeps-identity-stable\nPASS badge-visual-is-preview-only\nPASS badge-visual-composes-common-identity-theme-growth-layers\nPASS growth-badge-preview-is-not-award\nPASS badge-working-draft-activation-fails-closed\nPASS badge-strong-behavior-families-require-explicit-evidence\nPASS badge-weak-proxy-evidence-is-blocked\nPASS result-back-map-exists\nPASS map-restored-after-result\nPASS imagination-hidden-by-default\nPASS home-radio-exists\nPASS home-radio-opens-imagination\nPASS home-radio-voice-question-exists\nPASS home-radio-voice-question-uses-user-mic\nPASS home-radio-voice-question-does-not-use-speak\nPASS home-radio-close-exists\nPASS home-radio-close-restores-map\nPASS settings-open-for-crew-rename-exists\nPASS crew-member-panel-open-exists\nPASS crew-member-rename-save-exists\nPASS crew-explorer-id-stable-after-rename\nPASS crew-name-history-appended\nPASS crew-relationship-memory-preserved-after-rename\nPASS settings-back-after-crew-rename-exists\nPASS authorized-special-open-exists\nPASS authorized-special-guest-appears\nPASS authorized-guest-keeps-main-identity\nPASS authorized-guest-trigger-consumed\nPASS authorized-special-skip-exists\nPASS special-open-exists\nPASS special-view-opens-explicitly\nPASS special-skip-exists\nPASS special-skip-returns-map\nPASS special-skip-does-not-change-exp\nPASS special-skip-does-not-change-gems\nPASS special-skip-does-not-add-records\nPASS special-skip-does-not-add-memory\nPASS gems-nav-exists\nPASS wish-shop-open-exists\nPASS wish-open-confirm-exists\nPASS wish-confirmation-is-explicit\nPASS wish-confirm-exists\nPASS wish-spends-exactly-two-complete-gems\nPASS wish-transaction-recorded\nPASS wish-spend-ledger-recorded\nPASS wish-test-state-restored\nPASS family-open-exists\nPASS family-view-active\nPASS family-mode-enabled\nPASS family-child-add-exists\nPASS family-child-created\nPASS family-diary-save-exists\nPASS family-letter-save-exists\nPASS family-support-save-exists\nPASS family-shared-special-save-exists\nPASS family-diary-in-timeline\nPASS family-letter-in-timeline\nPASS family-support-card-in-timeline\nPASS family-shared-special-in-timeline\nPASS family-conflict-lock-hidden-from-user\nPASS family-recovery-lock-hidden-from-user\nPASS family-second-child-add-exists\nPASS family-second-child-created\nPASS family-second-child-diary-save-exists\nPASS second-child-timeline-isolated\nPASS first-child-timeline-restored\nPASS family-runtime-present\nPASS child-permission-isolation\nPASS parent-contract-present\nPASS locked-feature-blocked-family_group\nPASS locked-feature-blocked-mailbox_decor\nPASS locked-feature-blocked-composite_diary_illustration\nPASS locked-feature-blocked-gem_gift\nPASS gem-gift-economy-mutation-blocked\nPASS original-mode-restored\nPASS family-mode-reenabled\nBROWSER_RUNTIME_SELFTEST_PASS","landmarks":5}
+{"readyState":"complete","smoke":"PASS","runtime":{"init":"PASS","appScript":"STARTED","db":"OPEN","errors":[],"phase":"DONE"},"result":"BROWSER_RUNTIME_SELFTEST_PENDING\nPASS app-init-pass\nPASS indexeddb-open\nPASS map-has-five-landmarks\nPASS live-dom-map-surface\nPASS live-dom-primary-navigation\nPASS live-dom-writing-surface-present\nPASS runtime-mockup-background-not-used\nPASS think-express-local-runtime-kind\nPASS think-express-local-runtime-has-scaffold\nPASS think-express-korean-supported\nPASS think-express-english-supported\nPASS think-express-response-owner-is-crew\nPASS ask-without-knowledge-provider-does-not-guess\nPASS ask-no-guess-response-owner-is-crew\nPASS ask-verified-runtime-is-understand\nPASS ask-verified-runtime-has-full-coverage\nPASS ask-verified-response-owner-is-crew\nPASS ask-verified-followup-only-after-full-coverage\nPASS ask-partial-runtime-stays-unverified\nPASS ask-partial-runtime-blocks-followup\nPASS ask-partial-runtime-keeps-crew-owner\nPASS affinity-runtime-is-internal-expression-only\nPASS special-role-runtime-is-encounter-only\nPASS special-role-power-boost-is-blocked\nPASS core6-runtime-working-baseline\nPASS guest-weighting-prefers-less-recent-non-main\nPASS crew-runtime-main-id-present\nPASS crew-world-return-restores-main-companion\nPASS crew-world-return-records-reunion-memory\nPASS affinity-memory-increments-relationship-score\nPASS affinity-memory-does-not-change-exp\nPASS affinity-memory-does-not-change-gems\nPASS first-landmark-exists\nPASS start-writing-exists\nPASS writing-view-active\nPASS mobile-root-has-no-horizontal-overflow\nPASS mobile-document-has-no-horizontal-overflow\nPASS writing-tools-present\nPASS writing-tools-touch-height\nPASS writing-tools-stay-inside-viewport\nPASS primary-next-touch-height\nPASS hint-control-restored\nPASS unsafe-child-mock-is-blocked\nPASS unsafe-child-mock-falls-back-neutral\nPASS crew-reaction-hidden-by-default\nPASS crew-reaction-does-not-capture-input\nPASS crew-reaction-is-height-bounded\nPASS writing-listen-question-exists\nPASS writing-listen-uses-speak-only\nPASS writing-voice-input-exists\nPASS writing-voice-input-uses-listen-only\nPASS empty-advance-1-exists\nPASS empty-first-attempt-stays-on-step-0\nPASS empty-first-attempt-waits\nPASS empty-first-attempt-does-not-write\nPASS empty-advance-2-exists\nPASS empty-second-attempt-stays-on-step-0\nPASS empty-second-attempt-offers-hint\nPASS hint-is-not-auto-revealed\nPASS empty-second-attempt-does-not-write\nPASS stale-probe-old-analysis-started\nPASS stale-probe-latest-analysis-started\nPASS stale-writing-analysis-cannot-overwrite-latest\nPASS semantic-provider-unavailable-falls-back-locally\nPASS local-fallback-keeps-child-authorship\nPASS low-trust-learning-context-is-detected\nPASS low-trust-learning-context-cannot-force-cross-lens\nPASS low-trust-analysis-keeps-local-child-direction\nPASS five-writing-lenses-return-five-moves\nPASS five-writing-lenses-are-distinct\nPASS writing-lens-next-move-remains-single\nPASS semantic-provider-blocks-final-draft-generation\nPASS semantic-provider-analysis-only-output\nPASS writing-draft-persists-step-0\nPASS writing-step-1-exists\nPASS writing-advances-to-step-1\nPASS writing-same-draft-carried-to-step-1\nPASS writing-draft-persists-step-1\nPASS writing-cloud-open-exists\nPASS writing-cloud-opens-on-demand\nPASS writing-cloud-close-exists\nPASS writing-cloud-return-preserves-draft\nPASS writing-cloud-return-restores-writing-view\nPASS writing-step-2-exists\nPASS writing-advances-to-step-2\nPASS writing-same-draft-carried-to-step-2\nPASS writing-complete-exists\nPASS writing-result-active\nPASS writing-completion-preserves-final-draft\nPASS writing-completion-has-three-snapshots\nPASS result-records-exists\nPASS records-view-active\nPASS record-edit-open-exists\nPASS record-edit-view-active\nPASS record-edit-save-exists\nPASS record-original-preserved-after-revision\nPASS record-revision-added\nPASS record-revision-does-not-recompute-reward\nPASS records-nav-exists\nPASS records-and-cloud-history-render-together\nPASS result-growth-exists\nPASS growth-view-active\nPASS single-growth-tree-present\nPASS cloud-activity-appears-in-growth-summary\nPASS cloud-activity-does-not-change-exp\nPASS cloud-activity-does-not-change-gems\nPASS badge-working-catalog-has-sixty-drafts\nPASS badge-working-catalog-has-no-active-items\nPASS badge-observation-is-observation-only\nPASS badge-shared-envelope-has-no-economy-authority\nPASS badge-shared-envelope-keeps-app-owned-identity\nPASS badge-candidate-is-review-only\nPASS badge-five-tier-progression-runtime\nPASS badge-stars-clamped-one-to-five-runtime\nPASS badge-theme-is-cosmetic-only\nPASS badge-theme-keeps-identity-stable\nPASS badge-visual-is-preview-only\nPASS badge-visual-composes-common-identity-theme-growth-layers\nPASS growth-badge-preview-is-not-award\nPASS badge-working-draft-activation-fails-closed\nPASS badge-strong-behavior-families-require-explicit-evidence\nPASS badge-weak-proxy-evidence-is-blocked\nPASS result-back-map-exists\nPASS map-restored-after-result\nPASS imagination-hidden-by-default\nPASS home-radio-exists\nPASS home-radio-opens-imagination\nPASS home-radio-voice-question-exists\nPASS home-radio-voice-question-uses-user-mic\nPASS home-radio-voice-question-does-not-use-speak\nPASS home-radio-close-exists\nPASS home-radio-close-restores-map\nPASS settings-open-for-crew-rename-exists\nPASS crew-member-panel-open-exists\nPASS crew-member-rename-save-exists\nPASS crew-explorer-id-stable-after-rename\nPASS crew-name-history-appended\nPASS crew-relationship-memory-preserved-after-rename\nPASS settings-back-after-crew-rename-exists\nPASS authorized-special-open-exists\nPASS authorized-special-guest-appears\nPASS authorized-guest-keeps-main-identity\nPASS authorized-guest-trigger-consumed\nPASS authorized-special-skip-exists\nPASS special-open-exists\nPASS special-view-opens-explicitly\nPASS special-skip-exists\nPASS special-skip-returns-map\nPASS special-skip-does-not-change-exp\nPASS special-skip-does-not-change-gems\nPASS special-skip-does-not-add-records\nPASS special-skip-does-not-add-memory\nPASS gems-nav-exists\nPASS wish-shop-open-exists\nPASS wish-open-confirm-exists\nPASS wish-confirmation-is-explicit\nPASS wish-confirm-exists\nPASS wish-spends-exactly-two-complete-gems\nPASS wish-transaction-recorded\nPASS wish-spend-ledger-recorded\nPASS wish-test-state-restored\nPASS family-open-exists\nPASS family-view-active\nPASS family-mode-enabled\nPASS family-child-add-exists\nPASS family-child-created\nPASS family-diary-save-exists\nPASS family-letter-save-exists\nPASS family-support-save-exists\nPASS family-shared-special-save-exists\nPASS family-diary-in-timeline\nPASS family-letter-in-timeline\nPASS family-support-card-in-timeline\nPASS family-shared-special-in-timeline\nPASS family-conflict-lock-hidden-from-user\nPASS family-recovery-lock-hidden-from-user\nPASS family-second-child-add-exists\nPASS family-second-child-created\nPASS family-second-child-diary-save-exists\nPASS second-child-timeline-isolated\nPASS first-child-timeline-restored\nPASS family-runtime-present\nPASS child-permission-isolation\nPASS parent-contract-present\nPASS locked-feature-blocked-family_group\nPASS locked-feature-blocked-mailbox_decor\nPASS locked-feature-blocked-composite_diary_illustration\nPASS locked-feature-blocked-gem_gift\nPASS gem-gift-economy-mutation-blocked\nPASS original-mode-restored\nPASS family-mode-reenabled\nBROWSER_RUNTIME_SELFTEST_PASS","landmarks":5}
