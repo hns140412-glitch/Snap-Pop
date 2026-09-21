@@ -152,3 +152,30 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 .familyFeatureGrid{margin:12px 0}.familyFeature{display:flex;justify-content:space-between;gap:12px;align-items:center}.familyFeature.locked{opacity:.62}
 .familyTimelineTitle{margin-top:18px}
 #familyExpansion textarea{min-height:110px}
+
+
+/* INTEGRATED CHILD WRITING FLOW — STRUCTURE FIRST / VISUAL DIRECTION OPEN */
+#explore.parchment{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
+.writingFocusCard{display:grid;gap:12px}
+.writingPromptBlock{padding:14px 14px 12px;border-radius:16px;background:#fffdf7;border:1px solid #d7c49b}
+.writingPromptBlock .kicker{display:block;margin-bottom:4px}
+.writingPromptBlock h2{margin:0 0 5px;font-size:22px;line-height:1.35}
+.writingPromptBlock #hint:empty{display:none}
+.answerLabel{font-size:11px;font-weight:900;letter-spacing:.05em;color:#5b6b61}
+#answer{min-height:220px;font-size:15px;line-height:1.65}
+.quickTools{margin-top:0}
+.quickTools .voice{order:0;flex:1 1 100%}
+.quickTools #hintBtn{order:1;flex:1 1 100%;min-width:0}
+.assistDrawer{border-top:1px solid #d8c8a7;padding-top:10px}
+.assistDrawer summary{min-height:44px;display:flex;align-items:center;justify-content:center;border:1px solid #cdb98d;border-radius:13px;background:#f2e7cd;color:#355448;font-size:11px;font-weight:900;cursor:pointer;list-style:none}
+.assistDrawer summary::-webkit-details-marker{display:none}
+.assistDrawer summary:after{content:"＋";margin-left:7px;font-size:14px}
+.assistDrawer[open] summary:after{content:"−"}
+.assistTools{margin-top:8px}
+.writingNextDock{position:sticky;z-index:18;bottom:calc(var(--nav) + env(safe-area-inset-bottom) + 8px);margin:14px 0 0;padding:8px;border-radius:18px;background:#f4ecd8e8;backdrop-filter:blur(10px);box-shadow:0 10px 24px #17302520}
+.writingNextDock #nextBtn{min-height:52px;font-size:15px}
+@media(max-width:360px){
+ .writingPromptBlock{padding:12px}
+ .writingPromptBlock h2{font-size:20px}
+ #answer{min-height:200px}
+}
