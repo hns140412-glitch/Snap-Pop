@@ -1919,3 +1919,114 @@ Next branch-only work:
 2. never force a curiosity answer back into writing;
 3. only expose expression transition after the answer is fully verified and the child explicitly chooses it;
 4. reuse the meaning-preserving bridge instead of generating a finished sentence.
+
+
+## 32. VERIFIED ASK → OPTIONAL EXPRESS TRANSITION — 2026-09-21
+
+### Implemented
+
+The ASK→UNDERSTAND axis can now optionally transition into expression without forcing writing.
+
+Eligibility:
+- Imagination source must be `GLOBAL`;
+- result kind must be `ASK_UNDERSTAND`;
+- `verified === true`;
+- verification coverage must be `FULL_FACTUAL_CONTENT`.
+
+Only then is the child shown:
+- `이걸 내 말로 표현해보기`
+
+### Transition behavior
+
+Explicit action only:
+- no automatic transition;
+- no automatic landmark selection;
+- no automatic start button action;
+- no answer-to-draft injection.
+
+When selected:
+1. only the original child question/topic is saved as `pendingExpressionIntent`;
+2. the verified AI/crew answer body is NOT transferred;
+3. Imagination Cloud closes;
+4. app returns to map;
+5. child chooses a writing landmark;
+6. only when a NEW writing exploration is created is the topic attached;
+7. the topic note says to begin in the child's own words.
+
+If an existing writing exploration is already active:
+- the pending topic is not injected into that existing draft;
+- current draft continuity wins.
+
+Stored transition state:
+- source: `VERIFIED_ASK`
+- question
+- question language
+- `answerTransferred:false`
+- verified coverage marker
+- timestamp
+
+### UI
+
+Map:
+- lightweight optional topic banner:
+  `방금 이해한 주제 · ... · 표현하고 싶다면 탐험지를 골라봐.`
+
+Writing:
+- topic note only:
+  `표현해볼 주제 · ... · 먼저 네 말로 시작해봐.`
+
+No AI answer text is used as the child's writing seed.
+
+### Validation
+
+Added:
+- `scripts/validate-optional-expression-transition.mjs`
+
+Result:
+- 9/9 PASS
+- `OPTIONAL_VERIFIED_EXPRESSION_TRANSITION_PASS`
+
+Checks:
+1. full verified GLOBAL ASK required
+2. explicit button required
+3. AI answer body not transferred
+4. return goes to map, not auto-start
+5. pending intent attaches only to new session
+6. pending intent clears after attach
+7. question transferred, answer not transferred
+8. writing screen shows topic note only
+9. map shows optional topic banner
+
+### Requirement matrix
+
+`SP-UNIV-006`
+- CODED=true
+- STATIC_VERIFIED=true
+- RUNTIME_VERIFIED=false
+- DEVICE_VERIFIED=false
+
+### Closure runner
+
+`scripts/validate-branch-closure.mjs` now contains 19 validators.
+
+### Current implementation state
+
+New code after the old frozen candidate includes:
+- crew guest orchestration
+- crew interaction safety
+- Hide & Seek vocabulary expression-material ownership bridge
+- bilingual meaning-preserving expression bridge
+- verified ASK → optional EXPRESS transition
+
+Therefore:
+- old frozen candidate remains superseded;
+- current candidate SHA is not frozen;
+- external call count remains 0;
+- deploy/Netlify remains NOT_RUN.
+
+### Next branch-only axis
+
+Next implementation should move to remaining high-value runtime gaps rather than deployment:
+- runtime traceability / provenance closure across the new expression paths;
+- then crew orchestration breadth or remaining badge/event runtime gaps;
+- keep all live/device/deploy claims separate.
