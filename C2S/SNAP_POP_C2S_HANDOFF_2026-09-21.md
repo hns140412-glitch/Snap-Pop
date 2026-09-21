@@ -1611,3 +1611,39 @@ Only after explicit approval for the external action:
 - report hosted result separately from source state and device state.
 
 Until then, all non-external documentation/handoff work may continue.
+
+
+## 29. ONE-CALL HOSTED VALIDATION PLAN READY — 2026-09-21
+
+Prepared:
+- `C2S/SNAP_POP_ONE_CALL_HOSTED_VALIDATION_PLAN_2026-09-21.md`
+
+Locked target:
+- frozen candidate SHA `a333e735f69b57164edc8440f7108e49a6ee8c7a`
+
+External budget:
+- 1 execution for this hosted-validation goal
+- used: 0
+
+The plan defines:
+- pre-call candidate/config/approval checks;
+- bounded hosted runtime acceptance checks;
+- Truth Guard / scaffold / mental-model / pressure / crew ownership / voice checks;
+- allowed hosted result labels;
+- failure cause classification;
+- no automatic repeat;
+- new candidate requirement after runtime code/config repair;
+- no-poll rule;
+- separation of hosted PASS from device/realtime/release PASS.
+
+Current state:
+- `PLAN_READY`
+- `EXTERNAL_ACTION_NOT_AUTHORIZED`
+
+Explicit approval is still required.
+A generic `ㄱ` does not satisfy TAKY external-action approval.
+
+An approval must identify the external action scope, e.g.:
+- `Snap & Pop frozen candidate a333e735…에 대해 Netlify/hosted runtime 검증 1회를 승인해.`
+
+Only that approved scope may consume the one-call budget.
