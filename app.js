@@ -287,7 +287,7 @@ async function analyzeWritingMove(s){
   renderWritingBridge(result,language);
   cur.crewState=cur.crewState||{};
   cur.crewState.currentFocus=result.focus||null;
-  cur.crewState.writingAnalysis={focus:result.focus||null,suggestedLens:result.suggestedLens||null,provider:result.provider||'unknown',confidence:result.confidence??null,grounded:result.grounded!==false,learningContextUsed:!!result.learningContextUsed,learningGoal:result.learningGoal||null,semanticSignals:result.semanticSignals||null,at:new Date().toISOString()};
+  cur.crewState.writingAnalysis={focus:result.focus||null,suggestedLens:result.suggestedLens||null,provider:result.provider||'unknown',confidence:result.confidence??null,grounded:result.grounded!==false,factVerified:result.factVerified===true,learningContextUsed:!!result.learningContextUsed,learningGoal:result.learningGoal||null,semanticSignals:result.semanticSignals||null,at:new Date().toISOString()};
   await set('active',cur);
   return result;
 }
