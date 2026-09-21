@@ -311,3 +311,15 @@ MATRIX / ETYMOLOGY HARDENING NOTE:
 - general concept questions keep normal citation rule.
 - etymology core validation 3/3 PASS.
 - closure runner now has 26 validators.
+
+
+CENTRAL AUTHORSHIP GUARD NOTE:
+- added authorship-guard-runtime.js.
+- semantic writing assist, bilingual expression bridge, and verified ASK→EXPRESS transition all route through the same child-authorship guard.
+- full draft/rewrite/completed-text fields rejected.
+- writing assist stays one next move.
+- expression help stays fragment-only.
+- ASK transition carries question/topic only; answerTransferred=false and draftTransferred=false.
+- validator 9/9 PASS.
+- SP-GUIDE-001 now CODED=true / STATIC_VERIFIED=true.
+- closure runner now has 27 validators.
