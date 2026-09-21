@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.16",
+  "version": "2026-09-21.17",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -1296,17 +1296,22 @@
         "C2S_NO_SILENT_LOSS"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
+      "coded": "PARTIAL",
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "codeEvidence": [],
+      "codeEvidence": [
+        "data/badge-system.json",
+        "data/badge-catalog-working.json",
+        "badge-runtime.js",
+        "app.js:recordBadgeEvent"
+      ],
       "recoveryEvidence": [
         "USER 2026-09-08: 약 60개, 아이 활동에 따라 추가 가능",
         "USER examples: 아침 일찍 학습, 스스로 시간 생성, 추가과제, 특별행동, 수행여부, 긴 ISSUE 시간",
         "Source lineage: Character / Crew / Badge / Affinity / World State separate axes"
       ],
-      "gap": "runtime event→badge ledger/catalog not implemented"
+      "gap": "event ledger/tier foundation implemented; approved catalog, UI collection surface, cross-app events pending"
     },
     {
       "id": "SP-BADGE-002",
@@ -1369,11 +1374,15 @@
         "USER_DIRECT_2026-09-08"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
+      "coded": "PARTIAL",
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "exact initial catalog remains WORKING; event candidate pipeline not implemented"
+      "gap": "60-item historical catalog preserved but intentionally inactive until catalog review",
+      "codeEvidence": [
+        "data/badge-catalog-working.json:60 inactive historical drafts",
+        "badge-runtime.js:activeItems"
+      ]
     },
     {
       "id": "SP-BADGE-006",
@@ -1399,12 +1408,16 @@
         "USER_ACCEPTED_VISUAL_DIRECTION_2026-09-08"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
+      "coded": "PARTIAL",
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "notes": "Green→Blue→Red→Gold→Platinum; badge progression only, not character power level",
-      "gap": "tier ledger/rendering not implemented"
+      "gap": "tier calculation implemented; visual gem-star renderer/collection UI pending",
+      "codeEvidence": [
+        "data/badge-system.json:tiers",
+        "badge-runtime.js:progressFromCount"
+      ]
     },
     {
       "id": "SP-BADGE-008",
@@ -1418,7 +1431,7 @@
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "Profile Character Master / theme-expression asset pipeline not implemented"
+      "gap": "profile character/theme-expression asset pipeline not implemented"
     },
     {
       "id": "SP-BADGE-009",
@@ -1433,7 +1446,7 @@
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "compositor/template runtime not implemented"
+      "gap": "common badge art + identity + growth layer compositor not implemented"
     },
     {
       "id": "SP-BADGE-010",
