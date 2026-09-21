@@ -287,3 +287,5 @@ Conservative boundaries retained:
 - crew identity/name history + authorized guest runtime validation trigger.
 
 - crew identity/authorized guest + voice separation runtime validation trigger.
+
+- reordered voice/safety + crew identity/guest runtime validation trigger.
