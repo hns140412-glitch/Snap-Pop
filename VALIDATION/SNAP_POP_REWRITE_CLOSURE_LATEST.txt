@@ -1,5 +1,5 @@
-validation_sha=3e06b6ba13f0bc5807196ed51842d88031807cc7
-checkout_sha=3e06b6ba13f0bc5807196ed51842d88031807cc7
+validation_sha=fcd6063d1979b091b669718d4708e7b1cbce3211
+checkout_sha=fcd6063d1979b091b669718d4708e7b1cbce3211
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 62/62
 browser_status=1
@@ -751,7 +751,7 @@ PASS app-installs-support-controller
 INTERACTION_SUPPORT_CONTROLLER_BOUNDARY_PASS
 
 === validate-thin-orchestrator-boundary.mjs ===
-THIN_ORCHESTRATOR_BOUNDARY_PASS { bytes: 12650, maxBytes: 13000 }
+THIN_ORCHESTRATOR_BOUNDARY_PASS { bytes: 12652, maxBytes: 13000 }
 
 === validate-dom-binding-integrity.mjs ===
 PASS all-direct-dom-bindings-have-index-targets
@@ -763,4 +763,4 @@ DOM_BINDING_INTEGRITY_PASS
 BRANCH_CLOSURE_VALIDATOR_PASS 62/62
 --- BROWSER ---
 BROWSER_RUNTIME_CDP_FAIL
-{"readyState":"complete","smoke":"FAIL","runtime":{"init":"FAIL","appScript":"STARTED","db":"OPEN","errors":[{"type":"init","message":"Cannot read properties of null (reading 'forEach')"}],"phase":"LOAD_SETTINGS"},"result":"BROWSER_RUNTIME_SELFTEST_PENDING\nBROWSER_RUNTIME_SELFTEST_FAIL FAIL app-init runtime={\"init\":\"FAIL\",\"appScript\":\"STARTED\",\"db\":\"OPEN\",\"errors\":[{\"type\":\"init\",\"message\":\"Cannot read properties of null (reading 'forEach')\"}],\"phase\":\"LOAD_SETTINGS\"}","landmarks":5}
+{"readyState":"complete","smoke":"FAIL","runtime":{"init":"PASS","appScript":"STARTED","db":"OPEN","errors":[{"type":"unhandledrejection","message":"get is not defined"},{"type":"unhandledrejection","message":"set is not defined"}],"phase":"DONE"},"result":"BROWSER_RUNTIME_SELFTEST_PENDING\nPASS app-init-pass\nPASS indexeddb-open\nPASS map-has-five-landmarks\nPASS first-landmark-exists\nPASS start-writing-exists\nPASS writing-view-active\nPASS mobile-root-has-no-horizontal-overflow\nPASS mobile-document-has-no-horizontal-overflow\nPASS writing-tools-present\nPASS writing-tools-touch-height\nPASS writing-tools-stay-inside-viewport\nPASS primary-next-touch-height\nPASS hint-control-restored\nPASS writing-step-1-exists\nPASS writing-step-2-exists\nPASS writing-complete-exists\nPASS writing-result-active\nPASS family-open-exists\nPASS family-view-active\nBROWSER_RUNTIME_SELFTEST_FAIL FAIL family-mode-enabled","landmarks":5}
