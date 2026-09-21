@@ -137,7 +137,7 @@
 
   async function waitForDB() {
     for (let i = 0; i < 80; i++) {
-      if (db) return true;
+      if (window.SnapPopStorage?.isOpen?.()) return true;
       await sleep(50);
     }
     return false;
@@ -146,7 +146,7 @@
   async function activeExploration() {
     try {
       if (!await waitForDB()) return null;
-      return await get('active');
+      return await window.SnapPopStorage.get('active');
     } catch {
       return null;
     }
