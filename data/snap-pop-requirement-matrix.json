@@ -721,15 +721,17 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "provider hook exists but verified broad-domain Q&A backend not connected",
+      "gap": "verified broad-domain ASK→UNDERSTAND pipeline is coded and statically verified; live OpenAI/browser/device execution remains NOT_RUN",
       "codeEvidence": [
-        "index.html:exploreHub",
-        "app.js:runHubCloud",
-        "intelligence-runtime.js:ASK_UNDERSTAND"
+        "intelligence-runtime.js:ASK_UNDERSTAND",
+        "knowledge-runtime.js:askVerified",
+        "openai-knowledge-provider.js",
+        "netlify/functions/snap-pop-knowledge.mjs",
+        "truth-guard-runtime.js"
       ]
     },
     {
@@ -741,11 +743,17 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "도메인 일반 지식 resolver 미구현"
+      "gap": "generic source-backed web-search resolver supports broad factual domains; domain-specific source-quality hardening and live runtime remain open",
+      "codeEvidence": [
+        "intelligence-runtime.js:knowledge cues",
+        "openai-knowledge-provider.js",
+        "netlify/functions/snap-pop-knowledge.mjs:web_search",
+        "scripts/validate-knowledge-search-boundary.mjs"
+      ]
     },
     {
       "id": "SP-UNIV-005",
@@ -756,11 +764,17 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "신뢰도/출처/설명 깊이 조절 엔진 미구현"
+      "gap": "fact/uncertainty separation, citation evidence, child-friendly question lens and mental-model shaping are coded; live runtime quality remains NOT_RUN",
+      "codeEvidence": [
+        "truth-guard-runtime.js",
+        "curiosity-scaffold-runtime.js",
+        "mental-model-runtime.js",
+        "app.js:renderImaginationResponse"
+      ]
     },
     {
       "id": "SP-UNIV-006",
@@ -794,16 +808,17 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "index.html:cloudPanel",
-        "app.js:runCloud",
-        "intelligence-runtime.js"
+        "intelligence-runtime.js",
+        "knowledge-runtime.js",
+        "curiosity-scaffold-runtime.js",
+        "app.js:openImagination/runImagination"
       ],
-      "gap": "OpenAI-backed verified knowledge provider not yet connected"
+      "gap": "Think/Ask gateway plus verified knowledge path is coded; live provider/browser/device runtime remains NOT_RUN"
     },
     {
       "id": "SP-IMAGINE-003",
@@ -813,13 +828,15 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "basic THINK_EXPRESS vs ASK_UNDERSTAND routing only; richer route taxonomy pending",
+      "gap": "question lens routing now covers meaning/etymology/cause/mechanism/compare/time/person/place/concept; live runtime quality remains NOT_RUN",
       "codeEvidence": [
-        "intelligence-runtime.js:classifyIntent"
+        "curiosity-scaffold-runtime.js:classifyQuestion",
+        "netlify/functions/snap-pop-knowledge.mjs:allowedLenses",
+        "scripts/validate-question-lens-routing.mjs"
       ]
     },
     {
@@ -831,13 +848,15 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "provider hook exists; actual OpenAI backend/provider not connected",
+      "gap": "same-origin OpenAI knowledge execution layer is coded; OPENAI_RUNTIME_CONNECTED remains false until live execution is verified",
       "codeEvidence": [
-        "intelligence-runtime.js external provider hook"
+        "openai-knowledge-provider.js",
+        "netlify/functions/snap-pop-knowledge.mjs",
+        "netlify.toml:/api/snap-pop-knowledge"
       ]
     },
     {
@@ -887,13 +906,15 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "current scaffold covers scene/feeling/detail/connection; etymology/concept models require verified provider",
+      "gap": "concept/principle/etymology/relationship-oriented verified scaffolds are coded; source quality/live runtime remain open",
       "codeEvidence": [
-        "intelligence-runtime.js:localThinkScaffold"
+        "curiosity-scaffold-runtime.js",
+        "mental-model-runtime.js",
+        "netlify/functions/snap-pop-knowledge.mjs:ETYMOLOGY/MECHANISM/CONCEPT"
       ]
     },
     {
@@ -905,14 +926,15 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "comparison/timeline/cause-effect render variants pending",
+      "gap": "cause/process/result, compare and timeline/flow mental models are coded from verified claims only; live browser/device rendering remains NOT_RUN",
       "codeEvidence": [
-        "app.js:mindMap renderer",
-        "styles.css:.mindMap"
+        "mental-model-runtime.js",
+        "app.js:mentalModel renderer",
+        "scripts/validate-mental-model.mjs"
       ]
     },
     {
@@ -925,13 +947,17 @@
         "TAKY"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "factual questions fail closed locally; external verification pipeline not yet implemented",
+      "gap": "Truth Guard plus citation/source coverage gate is coded/static verified; live OpenAI verification remains NOT_RUN",
       "codeEvidence": [
-        "intelligence-runtime.js:unverifiedKnowledgeResponse"
+        "truth-guard-runtime.js",
+        "knowledge-runtime.js",
+        "netlify/functions/snap-pop-knowledge.mjs",
+        "scripts/validate-truth-guard-runtime.mjs",
+        "scripts/validate-knowledge-search-boundary.mjs"
       ]
     },
     {
@@ -943,11 +969,16 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "신뢰 소스 검색/검증 및 folk-etymology 차단 미구현"
+      "gap": "etymology/history/social/science questions route through required web_search + citation/source-set verification; domain-specific source-quality/folk-etymology hardening and live runtime remain open",
+      "codeEvidence": [
+        "curiosity-scaffold-runtime.js:ETYMOLOGY",
+        "netlify/functions/snap-pop-knowledge.mjs:web_search+ETYMOLOGY",
+        "truth-guard-runtime.js"
+      ]
     },
     {
       "id": "SP-TRUTH-003",
@@ -959,13 +990,15 @@
         "EXPLORATION_CREW_RULES"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "uncertainty contract exists locally; provider-level verification still pending",
+      "gap": "no-guess fallback and incomplete-verification states are coded; live provider/browser/device behavior remains NOT_RUN",
       "codeEvidence": [
-        "intelligence-runtime.js no-guess fallback"
+        "intelligence-runtime.js:unverifiedKnowledgeResponse",
+        "truth-guard-runtime.js",
+        "app.js:verification badges"
       ]
     },
     {
