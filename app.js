@@ -96,64 +96,12 @@ async function recordBadgeEvent(family,payload={},source="SNAP_POP"){
     return event;
   }catch{return null}
 }
-async function recordCrewMemberExperience(memberId,type,meta={}){
-  const registry=await ensureCrewRegistry();if(!memberId||!registry[memberId])return null;
-  const entry=registry[memberId],eventId=meta.eventId||uid("crewmem");
-  entry.memories=entry.memories||[];
-  if(entry.memories.some(x=>x.eventId===eventId))return entry;
-  const weight={EXPLORATION_COMPLETE:2,SPECIAL_MEMORY:2,SHARED_MICRO_EPISODE:1,REUNION:0,VOICE_EXPRESSION:0}[type]??0;
-  entry.memories.push({eventId,type,at:new Date().toISOString(),...meta});
-  entry.affinity=entry.affinity||{levelKey:"KNOWN",scoreInternal:0};
-  entry.affinity.scoreInternal=(entry.affinity.scoreInternal||0)+weight;
-  const tier=affinityTier(entry.affinity.scoreInternal);entry.affinity.levelKey=tier.key;entry.lastMetAt=new Date().toISOString();
-  await set("crewRegistry",registry);return entry;
-}
-async function recordCrewExperience(type,meta={}){
-  const identity=await resolvedIdentity(),id=identity.crewMember?.type;
-  return recordCrewMemberExperience(id,type,meta);
-}
 
-async function chooseSceneGuest(sceneKey,{sceneMood=null,appearanceAuthorized=false}={}){
-  if(!appearanceAuthorized)return null;
-  if(!window.SnapPopCrewOrchestration||!SNAP_RULES?.crewInteractionOrchestration?.guestSelection?.enabled)return null;
-  const identity=await resolvedIdentity(),registry=await ensureCrewRegistry(),recent=await get("crewGuestAppearances")||[];
-  const members={...SNAP_RULES?.legacyCharacterLineages,...SNAP_RULES?.definedCharacterLineages};
-  const picked=window.SnapPopCrewOrchestration.chooseGuest({
-    mainId:identity.crewMember?.type,
-    registry,
-    members,
-    recentAppearances:recent,
-    sceneMood,
-    sceneKey
-  });
-  if(!picked)return null;
-  const nextLedger=window.SnapPopCrewOrchestration.recordAppearance(recent,picked.memberId,sceneKey);
-  await set("crewGuestAppearances",nextLedger);
-  const entry=registry[picked.memberId]||{};
-  const rule=members[picked.memberId]||{};
-  const roleContract=window.SnapPopCrewRoleGuard?.assertRoleContract?.({role:rule.role||"SPECIAL",functionalAdvantage:false,powerBoost:false,rewardMultiplier:1,expMultiplier:1})||{role:"SPECIAL",roleMeaning:"ENCOUNTER_STYLE_ONLY",functionalAbility:"EQUAL"};
-  return {
-    ...picked,
-    roleContract,
-    name:entry.currentName||entry.firstName||rule.defaultName||rule.label||"탐험대원",
-    label:rule.label||entry.currentName||picked.memberId,
-    personality:rule.personality||""
-  };
-}
 
-async function synthesizeCrewWorldState(){
-  const identity=await resolvedIdentity(),registry=await ensureCrewRegistry(),mainId=identity.crewMember?.type,now=new Date();
-  const background=(SNAP_RULES?.worldStateEngine?.states||["AT_HUB"]).filter(x=>x!=="MAIN_COMPANION");
-  let mainState=null;
-  for(const [id,entry] of Object.entries(registry)){
-    const last=entry.lastMetAt?new Date(entry.lastMetAt):null,days=last?Math.max(0,Math.floor((now-last)/86400000)):0,previous=entry.worldState?.state;
-    const seed=stableHash([id,last?.toISOString()?.slice(0,10)||"first",now.toISOString().slice(0,10),entry.memories?.length||0].join("|"));
-    const state=id===mainId?"MAIN_COMPANION":background[seed%background.length];
-    entry.worldState={state,generatedAt:now.toISOString(),daysSinceSeen:days,synthetic:true};
-    if(id===mainId){mainState=entry.worldState;if(days>=2){const evId=`reunion_${id}_${now.toISOString().slice(0,10)}`;entry.memories=entry.memories||[];if(!entry.memories.some(x=>x.eventId===evId))entry.memories.push({eventId:evId,type:"REUNION",at:now.toISOString(),daysAway:days,fromState:previous,toState:state})}}
-  }
-  await set("crewRegistry",registry);return mainState;
-}
+
+
+
+
 
 async function migrateLegacyState(){
   const marker=await get("migration_20260920_state_v1");
@@ -195,21 +143,7 @@ function openDB(){return window.SnapPopStorage.open()}
 function get(k){return window.SnapPopStorage.get(k)}
 function set(k,v){return window.SnapPopStorage.set(k,v)}
 function setMany(entries){return window.SnapPopStorage.setMany(entries)}
-async function ensureCrewRegistry(){
-  const registry=await get("crewRegistry")||{},identity=await resolvedIdentity();
-  for(const [id,rule] of Object.entries({...SNAP_RULES?.legacyCharacterLineages,...SNAP_RULES?.definedCharacterLineages})){
-    registry[id]=registry[id]||{memberId:id,firstName:rule.defaultName||"",currentName:rule.defaultName||"",nameHistory:[],affinity:{levelKey:"OPEN",scoreInternal:0},memories:[],firstMetAt:null,lastMetAt:null,encounterStatus:"STARTER_AVAILABLE"};
-  }
-  const current=identity.crewMember?.type;
-  if(current&&registry[current]){
-    if(identity.crewMember.name&&identity.crewMember.name!==registry[current].currentName){
-      registry[current].currentName=identity.crewMember.name;
-      if(!registry[current].firstName)registry[current].firstName=identity.crewMember.name;
-    }
-  }
-  await set("crewRegistry",registry);
-  return registry;
-}
+
 async function selectCrewMember(memberId){
   const pool={...SNAP_RULES?.legacyCharacterLineages,...SNAP_RULES?.definedCharacterLineages},rule=pool[memberId];if(!rule)return;
   const registry=await ensureCrewRegistry(),entry=registry[memberId];
@@ -315,6 +249,12 @@ function crewSnippet(text){return crewController().crewSnippet(text)}
 async function showCrewReaction(message,options={}){return crewController().showCrewReaction(message,options)}
 function hideCrewReaction(){return crewController().hideCrewReaction()}
 async function renderSpecialInvite(){return crewController().renderSpecialInvite()}
+function crewRuntimeController(){return window.SnapPopCrewRuntimeController.instance({getRules:()=>SNAP_RULES,resolvedIdentity,stableHash,affinityTier,uid})}
+async function ensureCrewRegistry(){return crewRuntimeController().ensureCrewRegistry()}
+async function recordCrewMemberExperience(memberId,type,meta={}){return crewRuntimeController().recordCrewMemberExperience(memberId,type,meta)}
+async function recordCrewExperience(type,meta={}){return crewRuntimeController().recordCrewExperience(type,meta)}
+async function chooseSceneGuest(sceneKey,options={}){return crewRuntimeController().chooseSceneGuest(sceneKey,options)}
+async function synthesizeCrewWorldState(){return crewRuntimeController().synthesizeCrewWorldState()}
 function runtimePhase(phase){if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.phase=phase}
 async function init(){
   runtimePhase("OPEN_DB");await openDB();
