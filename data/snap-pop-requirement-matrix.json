@@ -1407,15 +1407,22 @@
         "TAKY_BADGE_SOURCE_RECOVERY_2026-09-21"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "badge asset template/render system not implemented",
+      "gap": "circular pastel layered badge preview renderer is implemented/static verified; final hand-drawn art assets and device visual tuning remain open",
       "recoveryEvidence": [
         "USER: 약간 키크니 스타일로 원형뱃지",
         "USER: 손 그림 느낌과 파스텔 색채감",
         "USER: 파스텔톤 별 보석 느낌으로 뱃지 상단 주변 원형으로"
+      ],
+      "codeEvidence": [
+        "badge-visual-runtime.js",
+        "styles.css:.badgeMedallion/.badgeGemArc/.badgeIdentity",
+        "index.html:#badgePreview",
+        "app.js:renderBadgePreview",
+        "scripts/validate-badge-visual-compositor.mjs"
       ]
     },
     {
@@ -1522,15 +1529,18 @@
         "USER_ACCEPTED_VISUAL_DIRECTION_2026-09-08"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "notes": "Green→Blue→Red→Gold→Platinum; badge progression only, not character power level",
-      "gap": "tier calculation implemented; visual gem-star renderer/collection UI pending",
+      "gap": "five-tier + one-to-five upper semicircle gem-star visual renderer is implemented/static verified; active owned-badge collection UI remains intentionally unimplemented until catalog review",
       "codeEvidence": [
-        "data/badge-system.json:tiers",
-        "badge-runtime.js:progressFromCount"
+        "badge-runtime.js:progressFromCount",
+        "badge-visual-runtime.js:tiers/starSlots",
+        "styles.css:.badgeGemArc",
+        "app.js:renderBadgePreview",
+        "scripts/validate-badge-visual-compositor.mjs"
       ]
     },
     {
@@ -1541,11 +1551,17 @@
         "USER_DIRECT_2026-09-08"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
+      "coded": "PARTIAL",
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "profile character/theme-expression asset pipeline not implemented"
+      "gap": "Profile Character identity layer is implemented and stable across visual model changes; exact Theme Expression system/assets remain OPEN",
+      "codeEvidence": [
+        "badge-visual-runtime.js:identity stable=true",
+        "app.js:resolvedIdentity/profile photo+name",
+        "app.js:renderBadgePreview badgeIdentity",
+        "scripts/validate-badge-visual-compositor.mjs"
+      ]
     },
     {
       "id": "SP-BADGE-009",
@@ -1556,11 +1572,17 @@
         "RECOVERED_BADGE_DIALOGUE"
       ],
       "classification": "CONFIRMED_DIRECTION",
-      "coded": false,
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "common badge art + identity + growth layer compositor not implemented"
+      "gap": "common badge art + child identity + growth layer compositor is implemented/static verified; canonical active badge assets remain blocked by catalog review",
+      "codeEvidence": [
+        "badge-visual-runtime.js:composition",
+        "styles.css:.badgeMedallion/.badgeIdentity/.badgeGemArc",
+        "app.js:renderBadgePreview",
+        "scripts/validate-badge-visual-compositor.mjs"
+      ]
     },
     {
       "id": "SP-BADGE-010",
@@ -1571,11 +1593,17 @@
         "RECOVERED_BADGE_DIALOGUE"
       ],
       "classification": "WORKING",
-      "coded": false,
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "requires later catalog review"
+      "gap": "working-draft activation is fail-closed at runtime; later canonical catalog review remains required before any item can become active",
+      "codeEvidence": [
+        "badge-catalog-guard-runtime.js",
+        "badge-runtime.js:validateCatalog/canActivate",
+        "data/badge-catalog-working.json:WORKING_DRAFT_NOT_ACTIVE",
+        "scripts/validate-badge-catalog-activation-guard.mjs"
+      ]
     }
   ]
 }
