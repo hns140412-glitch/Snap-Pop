@@ -34,7 +34,7 @@ jobs:
             echo "BROWSER_RUNTIME_INFRA_BLOCKED no chromium browser"
             exit 2
           fi
-          "$BROWSER" --headless=new --disable-gpu --no-sandbox --disable-dev-shm-usage \
+          "$BROWSER" --headless=new --disable-gpu --no-sandbox --disable-dev-shm-usage --window-size=390,844 \
             --remote-debugging-port=9222 \
             "http://127.0.0.1:4173/index.html?runtime-smoke=1" \
             >/tmp/snap-pop-chrome.log 2>&1 &
