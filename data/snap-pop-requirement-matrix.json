@@ -168,16 +168,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "crew-interaction-safety-runtime.js",
         "semantic-writing-runtime.js:WRITING_PROMPT safety",
         "crew-presentation-guard.js:GENERAL safety",
         "app.js:showCrewReaction safeReaction",
-        "scripts/validate-crew-interaction-safety.mjs"
+        "scripts/validate-crew-interaction-safety.mjs",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "executable safety guard implemented and isolated/static verified; live browser/device behavior NOT_RUN"
+      "gap": "physical-device behavior remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: unsafe child-directed mock is blocked",
+        "browser-runtime-selftest: unsafe child-directed reaction falls back to neutral wording"
+      ]
     },
     {
       "id": "SP-GUIDE-004",
@@ -190,15 +195,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "index.html:#crewReactionOverlay hidden aria-live",
         "styles.css:.crewReactionOverlay pointer-events:none/max-height/overflow",
         "app.js:showCrewReaction/hideCrewReaction",
-        "scripts/validate-non-blocking-crew-reaction-ui.mjs"
+        "scripts/validate-non-blocking-crew-reaction-ui.mjs",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "bounded hidden-by-default non-blocking crew reaction slot is implemented/static verified; device visual regression remains NOT_RUN"
+      "gap": "physical-device behavior remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: crew reaction hidden by default",
+        "browser-runtime-selftest: reaction overlay pointer-events none",
+        "browser-runtime-selftest: reaction overlay max-height bounded"
+      ]
     },
     {
       "id": "SP-GUIDE-005",
@@ -1522,13 +1533,20 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:writingAnalysisSeq",
-        "app.js:draft stale guard"
+        "app.js:draft stale guard",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "runtime concurrency validation pending"
+      "gap": "physical-device behavior remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: old and latest semantic analyses forced concurrently",
+        "browser-runtime-selftest: stale old analysis cannot overwrite latest prompt",
+        "writing-flow: input invalidates in-flight analysis immediately",
+        "interaction-support: store + step + DOM draft freshness guards"
+      ]
     },
     {
       "id": "SP-WRITE-007",
