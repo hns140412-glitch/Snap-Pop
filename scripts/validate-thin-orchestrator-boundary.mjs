@@ -26,6 +26,11 @@ for(const token of forbidden){
   }
 }
 
+if(app.includes("queryAll:$,")){
+  console.error("THIN_ORCHESTRATOR_BOUNDARY_FAIL queryAll must use collection selector");
+  process.exit(1);
+}
+
 const required=[
   "SnapPopWritingController.instance",
   "SnapPopWritingFlowController.instance",
