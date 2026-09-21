@@ -43,7 +43,12 @@
 
   function sanitize(raw={}){
     if(!raw||typeof raw!=="object") throw new Error("SEMANTIC_INVALID_OUTPUT");
-    if(hasForbiddenKeyDeep(raw)) throw new Error("SEMANTIC_FORBIDDEN_OUTPUT");
+    const authorship=window.SnapPopAuthorshipGuard;
+    if(authorship&&typeof authorship.assertWritingAssist==="function"){
+      authorship.assertWritingAssist(raw);
+    }else if(hasForbiddenKeyDeep(raw)){
+      throw new Error("SEMANTIC_FORBIDDEN_OUTPUT");
+    }
     const next=assertSingleNextMove(raw.question,raw.hint);
     const safety=window.SnapPopCrewInteractionSafety;
     if(safety&&typeof safety.assertSafe==="function"){
