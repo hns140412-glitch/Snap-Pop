@@ -112,3 +112,11 @@ LATEST P3 NOTE:
 - 12 Korean/English classification fixtures pass after precedence correction.
 - next P3 increment is bounded explanation-order templates without inventing facts.
 - no deploy/Netlify/merge/device testing.
+
+
+LATEST P3 ROUTING NOTE:
+- P3 explanation-order routing is coded.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md section 16.
+- question lens is classified before retrieval and server-whitelisted.
+- explanation order is lens-aware but cannot bypass citation coverage.
+- next axis: bounded mental-model / explanation-quality layer.
