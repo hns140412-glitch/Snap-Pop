@@ -2,6 +2,7 @@ import fs from "node:fs";
 
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const indexSource=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
+const recordsFlowSource=fs.readFileSync(new URL("../records-flow-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -10,12 +11,12 @@ function assert(name,condition){
 
 assert("error-discovery-ui-is-explicit",
   indexSource.includes('id="recordEditErrorFound"')&&
-  appSource.includes('explicitErrorFound=$("#recordEditErrorFound")?.checked===true')
+  recordsFlowSource.includes('explicitErrorFound=q("#recordEditErrorFound")?.checked===true')
 );
 assert("error-discovery-has-before-after-artifact-evidence",
-  appSource.includes('sourceContractId:"SNAP_POP_CHILD_SELF_CORRECTION_V1"')&&
-  appSource.includes("beforeArtifactRef:previousArtifactRef")&&
-  appSource.includes("afterArtifactRef:`record:${recordId}:revision:${revisionId}`")
+  recordsFlowSource.includes('sourceContractId:"SNAP_POP_CHILD_SELF_CORRECTION_V1"')&&
+  recordsFlowSource.includes("beforeArtifactRef:previousArtifactRef")&&
+  recordsFlowSource.includes("afterArtifactRef:`record:${recordId}:revision:${revisionId}`")
 );
 assert("deep-thinking-requires-explicit-child-reflection",
   indexSource.includes('id="deepThinkOpen"')&&
@@ -36,10 +37,10 @@ assert("special-behavior-is-declared-feature-action",
   appSource.includes('allowedSpecialBehaviorCodes:["SPECIAL_EXPLORATION_COMPLETED"]')
 );
 assert("three-strong-families-route-through-evidence-gate",
-  ["ERROR_DISCOVERY","DEEP_THINKING","SPECIAL_BEHAVIOR"].every(function(f){return appSource.includes('recordBadgeBehaviorEvidence("'+f+'"')})
+  recordsFlowSource.includes('deps.recordBadgeBehaviorEvidence("ERROR_DISCOVERY"')&&["DEEP_THINKING","SPECIAL_BEHAVIOR"].every(function(f){return appSource.includes('recordBadgeBehaviorEvidence("'+f+'"')})
 );
 assert("no-three-family-direct-observation-bypass",
-  ["ERROR_DISCOVERY","DEEP_THINKING","SPECIAL_BEHAVIOR"].every(function(f){return !appSource.includes('recordBadgeBehaviorObservation("'+f+'"')})
+  !recordsFlowSource.includes('recordBadgeBehaviorObservation("ERROR_DISCOVERY"')&&["ERROR_DISCOVERY","DEEP_THINKING","SPECIAL_BEHAVIOR"].every(function(f){return !appSource.includes('recordBadgeBehaviorObservation("'+f+'"')})
 );
 
 console.log("BADGE_EVIDENCE_PRODUCER_WIRING_PASS");
