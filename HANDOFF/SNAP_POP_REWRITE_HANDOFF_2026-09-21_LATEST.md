@@ -84,3 +84,19 @@ Generic `ㄱ` is not deploy approval.
 - deploy / Netlify / main merge: NOT_RUN
 
 - validation retrigger after validator/CDP harness fix.
+
+
+## Latest validated state — superseding prior closure
+
+- exact validated code SHA: `0cef75de449b17111610aa4dea449b19066b9efc`
+- evidence commit: `739a710ed47a7a1fedbb66781d0c5ff3a8379453`
+- closure: `63/63 PASS`
+- 390×844 Chrome CDP: PASS
+- architecture rewrite: CLOSED
+- integrated UI rewrite: STARTED
+- child writing flow Phase 1: VERIFIED
+- final visual direction: OPEN
+- DEVICE_VERIFIED: false
+- deploy / Netlify / main merge: NOT_RUN
+
+Resume target: continue integrated UI rewrite from actual child-facing surfaces. Do not restart architecture extraction phases.
