@@ -22,9 +22,12 @@
   async function render(){
     const s=await state(),active=await ensureActiveChild(s);
     q("#familyExpansionToggle").checked=s.enabled;
-    q("#familyExpansionMode").textContent=s.enabled?"FAMILY_EXPANSION":"ORIGINAL";
+    q("#familyExpansionMode").textContent=s.enabled?"사용 중":"사용 안 함";
     q("#familyChildSelect").innerHTML=s.children.length?s.children.map(c=>'<option value="'+escape(c.childId)+'" '+(c.childId===active?"selected":"")+'>'+escape(c.displayName||c.childId)+'</option>').join(""):'<option value="">먼저 아이 프로필을 추가해요</option>';
-    q("#familyFeatureGrid").innerHTML=Object.values(R.features).map(f=>'<article class="card familyFeature '+(f.state==="ACTIVE"?"":"locked")+'"><b>'+escape(featureLabel(f.id))+'</b><span>'+escape(f.state)+'</span></article>').join("");
+    q("#familyFeatureGrid").innerHTML=Object.values(R.features).map(f=>{
+      const stateLabel=f.state==="ACTIVE"?"사용 가능":"준비 중";
+      return '<article class="card familyFeature '+(f.state==="ACTIVE"?"":"locked")+'"><b>'+escape(featureLabel(f.id))+'</b><span>'+stateLabel+'</span></article>';
+    }).join("");
     const list=active?R.timeline(s.artifacts,active):[];
     q("#familyTimeline").innerHTML=list.length?list.map(x=>'<article class="card"><b>'+escape(featureLabel(x.type))+'</b><span>'+new Date(x.at).toLocaleDateString("ko-KR")+'</span><p>'+escape(x.text)+'</p></article>').join(""):'<article class="card"><b>아직 가족 확장 기록이 없어요.</b><p>일기·편지·응원 카드가 이 아이의 기록으로 분리 저장됩니다.</p></article>';
     const enabled=s.enabled&&!!active;

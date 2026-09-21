@@ -64,7 +64,7 @@
       toggle.checked=true;
       toggle.dispatchEvent(new Event("change",{bubbles:true}));
       await wait(120);
-      assert("family-mode-enabled",document.querySelector("#familyExpansionMode")?.textContent==="FAMILY_EXPANSION");
+      assert("family-mode-enabled",document.querySelector("#familyExpansionMode")?.textContent==="사용 중");
 
       const name=document.querySelector("#familyChildName");
       name.value="런타임아이";
@@ -98,8 +98,8 @@
       assert("family-letter-in-timeline",firstTimeline.includes("오늘 함께해서 즐거웠어."));
       assert("family-support-card-in-timeline",firstTimeline.includes("내일도 천천히 해보자."));
       assert("family-shared-special-in-timeline",firstTimeline.includes("가족과 별빛 지도를 만들었다."));
-      assert("family-conflict-lock-visible",document.querySelector("#familyFeatureGrid")?.textContent?.includes("CONFLICT_LOCKED")===true);
-      assert("family-recovery-lock-visible",document.querySelector("#familyFeatureGrid")?.textContent?.includes("RECOVERY_LOCKED")===true);
+      assert("family-conflict-lock-hidden-from-user",document.querySelector("#familyFeatureGrid")?.textContent?.includes("CONFLICT_LOCKED")===false);
+      assert("family-recovery-lock-hidden-from-user",document.querySelector("#familyFeatureGrid")?.textContent?.includes("RECOVERY_LOCKED")===false);
 
       name.value="런타임둘째";
       click(document.querySelector("#familyChildAdd"),"family-second-child-add");
@@ -134,11 +134,11 @@
       toggle.checked=false;
       toggle.dispatchEvent(new Event("change",{bubbles:true}));
       await wait(120);
-      assert("original-mode-restored",document.querySelector("#familyExpansionMode")?.textContent==="ORIGINAL"&&document.querySelector("#familyDiaryText")?.disabled===true);
+      assert("original-mode-restored",document.querySelector("#familyExpansionMode")?.textContent==="사용 안 함"&&document.querySelector("#familyDiaryText")?.disabled===true);
       toggle.checked=true;
       toggle.dispatchEvent(new Event("change",{bubbles:true}));
       await wait(120);
-      assert("family-mode-reenabled",document.querySelector("#familyExpansionMode")?.textContent==="FAMILY_EXPANSION");
+      assert("family-mode-reenabled",document.querySelector("#familyExpansionMode")?.textContent==="사용 중");
 
       document.body.dataset.runtimeSmoke="PASS";
       result.textContent+="\nBROWSER_RUNTIME_SELFTEST_PASS";

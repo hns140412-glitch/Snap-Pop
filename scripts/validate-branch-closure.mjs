@@ -49,6 +49,7 @@ const validators=[
   "validate-badge-independent-experience-axis.mjs",
   "validate-snap-pop-body-matrix-closure.mjs",
   "validate-family-expansion-runtime.mjs",
+  "validate-user-facing-surface.mjs",
   "validate-dom-binding-integrity.mjs"
 ];
 

@@ -94,8 +94,8 @@
  <button class="soft wide resultSecondary" id="resultGrowth">성장 확인하기</button>
 </section>
 <section id="gems" class="view parchment">
- <header class="pageTitle"><span>탐험의 흔적</span><h1>보석함</h1><p>승인된 MASTER GEM ASSET은 원본 연결 전까지 새 디자인으로 대체하지 않아요.</p></header>
- <div class="gemHold"><div class="gemVoid"></div><div><b>MASTER GEM ASSET</b><span>기존 승인 원본 연결 대기</span></div></div>
+ <header class="pageTitle"><span>탐험의 흔적</span><h1>보석함</h1><p>탐험하며 모은 보석과 기록을 한곳에서 확인해요.</p></header>
+ <div class="gemHold"><div class="gemVoid"></div><div><b>나의 보석 도감</b><span>모은 보석 기록은 그대로 쌓이고 있어요.</span></div></div>
  <div id="gemRows" class="cards"></div>
  <button class="primary wide" id="shopBtn">탐험가의 소원 상점</button>
 </section>
@@ -148,9 +148,9 @@
 </section>
 <section id="familyExpansion" class="view parchment subflow">
  <button class="back" id="familyExpansionBack">← 설정</button>
- <header class="pageTitle"><span>ORIGINAL과 분리된 선택 확장</span><h1>가족 확장팩</h1><p>아이별 기록은 childId로 분리하고, 회수되지 않은 기능은 잠금 상태로 유지합니다.</p></header>
+ <header class="pageTitle"><span>가족과 함께 남기는 기록</span><h1>가족 확장팩</h1><p>아이마다 기록을 따로 보관하고, 준비된 기능부터 차근차근 사용할 수 있어요.</p></header>
  <article class="paper">
-  <div class="setting"><div><b>확장팩 사용</b><span id="familyExpansionMode">ORIGINAL</span></div><label class="toggle"><input id="familyExpansionToggle" type="checkbox"><i></i></label></div>
+  <div class="setting"><div><b>가족 기록 사용</b><span id="familyExpansionMode">사용 안 함</span></div><label class="toggle"><input id="familyExpansionToggle" type="checkbox"><i></i></label></div>
   <h2>아이 프로필</h2>
   <div class="familyRow"><input id="familyChildName" class="textInput" maxlength="30" placeholder="아이 이름"><button class="soft" id="familyChildAdd">추가</button></div>
   <select id="familyChildSelect" class="textInput"></select>
@@ -166,9 +166,9 @@
 <section id="settings" class="view parchment subflow">
  <button class="back" id="settingsBack">← 돌아가기</button>
  <header class="pageTitle"><span>탐험 준비</span><h1>설정</h1></header>
- <div class="setting"><div><b>내 캐릭터</b><span id="characterSummary">Character Master 기록 보존</span></div><button class="soft" id="characterBtn">관리</button></div>
+ <div class="setting"><div><b>내 탐험가</b><span id="characterSummary">나만의 탐험가를 꾸며요.</span></div><button class="soft" id="characterBtn">관리</button></div>
  <article id="characterPanel" class="paper settingPanel" hidden>
-  <span class="kicker">원본 사진과 Character Master 자산은 분리 보존</span>
+  <span class="kicker">사진은 원본을 안전하게 보관해요.</span>
   <h2>캐릭터 표시 이름</h2>
   <input id="characterName" class="textInput" maxlength="20" placeholder="탐험가 이름">
   <div id="profilePhotoPreview" class="photoSourcePreview" hidden><img id="profilePhotoImage" alt="캐릭터 원본 사진 미리보기"></div>
@@ -178,7 +178,7 @@
  </article>
  <div class="setting"><div><b>나의 탐험대원</b><span id="crewMemberSummary">말티푸 · 모카</span></div><button class="soft" id="crewMemberBtn">이름 바꾸기</button></div>
  <article id="crewMemberPanel" class="paper settingPanel" hidden>
-  <span class="kicker">Snap & Pop 탐험대원 MASTER · 기능 유불리 없이 표현만 변경</span>
+  <span class="kicker">능력 차이 없이 성격과 말투가 다른 친구들이에요.</span>
   <h2>시작 탐험대 · 5~6명 중 선택</h2>
   <p class="crewRosterNote">두비 · 로리 · 잉크 · 노바 · 테이크 · 제로. 기능 능력 차이는 없고 성격·말투·관계 표현이 달라요.</p>
   <div class="crewMemberTypes crewRosterGrid" id="starterCrewRoster"></div>
