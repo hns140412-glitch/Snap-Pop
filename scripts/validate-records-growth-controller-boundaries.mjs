@@ -11,4 +11,5 @@ assert("record-edit-does-not-alter-reward-copy",ctl.includes("EXP/보상은 수�
 assert("growth-keeps-cloud-no-farming-copy",ctl.includes("EXP·보석 파밍에는 사용하지 않아요"));
 assert("special-memory-remains-no-reward",ctl.includes("선택 기록 · 보상/실패 없음"));
 assert("records-controller-does-not-own-indexeddb",!ctl.includes("indexedDB"));
+assert("records-controller-has-no-legacy-html-helper-reference",!ctl.includes(".map(html)"));
 console.log("RECORDS_GROWTH_CONTROLLER_BOUNDARY_PASS");
