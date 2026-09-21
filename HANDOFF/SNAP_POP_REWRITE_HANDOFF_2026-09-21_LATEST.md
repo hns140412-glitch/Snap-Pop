@@ -265,3 +265,5 @@ Conservative boundaries retained:
 - stale fallback overwrite regression validation trigger.
 
 - semantic validator alignment after stale-race fix validation trigger.
+
+- safety/overlay/stale-result runtime matrix closure validation trigger.
