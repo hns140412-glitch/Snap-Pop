@@ -233,16 +233,17 @@
 </nav>
 <div id="toast" role="status" aria-live="polite"></div>
 </div><script>
-window.__SNAP_RUNTIME_STATUS={init:"PENDING",errors:[]};
+window.__SNAP_RUNTIME_STATUS={init:"PENDING",appScript:"NOT_STARTED",db:"NOT_STARTED",errors:[]};
 window.addEventListener("error",event=>{
+  const target=event.target;
   window.__SNAP_RUNTIME_STATUS.errors.push({
-    type:"error",
+    type:target&&target!==window?"resource-error":"error",
     message:String(event.message||""),
-    source:String(event.filename||""),
+    source:String(event.filename||target?.src||target?.href||""),
     line:Number(event.lineno||0),
     column:Number(event.colno||0)
   });
-});
+},true);
 window.addEventListener("unhandledrejection",event=>{
   const reason=event.reason;
   window.__SNAP_RUNTIME_STATUS.errors.push({

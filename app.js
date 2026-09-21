@@ -1,3 +1,4 @@
+if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.appScript="STARTED";
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
 let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false, SNAP_RULES=null, writingAnalysisSeq=0;
 const STEPS=["초안 잡기","이어 쓰기","다듬어 완성"];
@@ -219,7 +220,7 @@ async function resolvedIdentity(){const local=normalizeIdentity(await get("ident
 async function applySharedIdentity(identity){sharedIdentity=normalizeIdentity({profile:identity?.profile||identity,crewMember:IDENTITY_DEFAULT.crewMember});await renderIdentityPresence();return sharedIdentity}
 window.SnapPopIdentity=Object.freeze({applyShared:applySharedIdentity,clearShared:async()=>{sharedIdentity=null;await renderIdentityPresence()},getResolved:resolvedIdentity});
 
-function openDB(){return new Promise((ok,no)=>{const r=indexedDB.open("snap_pop_rev10",1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains("state"))r.result.createObjectStore("state")};r.onsuccess=()=>{db=r.result;ok()};r.onerror=()=>no(r.error)})}
+function openDB(){if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.db="OPENING";return new Promise((ok,no)=>{const r=indexedDB.open("snap_pop_rev10",1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains("state"))r.result.createObjectStore("state")};r.onsuccess=()=>{db=r.result;if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.db="OPEN";ok()};r.onerror=()=>{if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.db="ERROR";no(r.error)};r.onblocked=()=>{if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.db="BLOCKED"}})}
 function get(k){return new Promise(ok=>{const r=db.transaction("state").objectStore("state").get(k);r.onsuccess=()=>ok(r.result)})}
 function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>ok();r.onerror=()=>no(r.error)})}
 function setMany(entries){return new Promise((ok,no)=>{const tx=db.transaction("state","readwrite"),store=tx.objectStore("state");entries.forEach(([k,v])=>store.put(v,k));tx.oncomplete=()=>ok();tx.onerror=()=>no(tx.error);tx.onabort=()=>no(tx.error)})}
