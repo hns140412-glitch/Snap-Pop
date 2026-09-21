@@ -37,6 +37,80 @@
       assert("live-dom-writing-surface-present",!!document.querySelector("#answer")&&document.querySelector("#answer") instanceof HTMLTextAreaElement);
       assert("runtime-mockup-background-not-used",![...document.images].some(img=>/mockup|wireframe|screenshot|prototype/i.test(img.getAttribute("src")||"")));
 
+      const crewRules=await fetch("data/exploration-crew-rules.json").then(r=>r.json());
+      assert("affinity-runtime-is-internal-expression-only",
+        crewRules?.affinityEngine?.scoreIsInternal===true&&
+        crewRules?.affinityEngine?.noPowerBoost===true&&
+        crewRules?.affinityEngine?.expressionOnlyUnlocks===true
+      );
+
+      const specialRole=window.SnapPopCrewRoleGuard.assertRoleContract({role:"SPECIAL"});
+      assert("special-role-runtime-is-encounter-only",
+        specialRole.role==="SPECIAL"&&
+        specialRole.roleMeaning==="ENCOUNTER_STYLE_ONLY"&&
+        specialRole.functionalAbility==="EQUAL"&&
+        specialRole.rewardMultiplier===1&&
+        specialRole.expMultiplier===1
+      );
+      let specialPowerBlocked=false;
+      try{window.SnapPopCrewRoleGuard.assertRoleContract({role:"SPECIAL",powerBoost:true})}catch{specialPowerBlocked=true}
+      assert("special-role-power-boost-is-blocked",specialPowerBlocked===true);
+
+      const core6=window.SnapPopCrewCore6.baseline(crewRules);
+      assert("core6-runtime-working-baseline",
+        core6.status==="WORKING_STARTER_BASELINE"&&
+        core6.memberCount===6&&
+        core6.globalAuthority===false&&
+        core6.rosterLock===false&&
+        core6.futureExpansionAllowed===true
+      );
+
+      const guestMembers={
+        dooby:crewRules.definedCharacterLineages.dooby,
+        lori:crewRules.definedCharacterLineages.lori,
+        ink:crewRules.definedCharacterLineages.ink
+      };
+      const guestRegistry={
+        dooby:{encounterStatus:"STARTER_AVAILABLE",worldState:{state:"MAIN_COMPANION"}},
+        lori:{encounterStatus:"STARTER_AVAILABLE",worldState:{state:"AT_HUB"}},
+        ink:{encounterStatus:"STARTER_AVAILABLE",worldState:{state:"AT_HUB"}}
+      };
+      const guestPick=window.SnapPopCrewOrchestration.chooseGuest({
+        mainId:"dooby",
+        registry:guestRegistry,
+        members:guestMembers,
+        recentAppearances:[
+          {memberId:"lori",sceneKey:"A"},
+          {memberId:"lori",sceneKey:"B"},
+          {memberId:"lori",sceneKey:"C"}
+        ],
+        sceneKey:"RUNTIME_GUEST_WEIGHT"
+      });
+      assert("guest-weighting-prefers-less-recent-non-main",
+        guestPick?.memberId==="ink"&&guestPick?.mainContinuityPreserved===true&&guestPick?.functionalAdvantage===false
+      );
+
+      const crewRuntime=window.SnapPopCrewRuntimeController.instance({});
+      let runtimeRegistry=await window.SnapPopStorage.get("crewRegistry")||{};
+      let runtimeMainId=Object.keys(runtimeRegistry).find(id=>runtimeRegistry[id]?.worldState?.state==="MAIN_COMPANION")||Object.keys(runtimeRegistry)[0];
+      assert("crew-runtime-main-id-present",!!runtimeMainId&&runtimeRegistry[runtimeMainId]?.memberId===runtimeMainId);
+
+      runtimeRegistry[runtimeMainId].lastMetAt=new Date(Date.now()-3*86400000).toISOString();
+      runtimeRegistry[runtimeMainId].worldState={state:"AT_HUB",generatedAt:new Date().toISOString(),synthetic:true};
+      await window.SnapPopStorage.set("crewRegistry",runtimeRegistry);
+      const returnedMainState=await crewRuntime.synthesizeCrewWorldState();
+      runtimeRegistry=await window.SnapPopStorage.get("crewRegistry")||{};
+      assert("crew-world-return-restores-main-companion",returnedMainState?.state==="MAIN_COMPANION"&&runtimeRegistry[runtimeMainId]?.worldState?.state==="MAIN_COMPANION");
+      assert("crew-world-return-records-reunion-memory",(runtimeRegistry[runtimeMainId]?.memories||[]).some(m=>m.type==="REUNION"));
+
+      const affinityBefore=runtimeRegistry[runtimeMainId]?.affinity?.scoreInternal||0;
+      const expBeforeAffinity=await window.SnapPopStorage.get("exp");
+      const gemsBeforeAffinity=JSON.stringify(await window.SnapPopStorage.get("gems")||{});
+      const affinityEntry=await crewRuntime.recordCrewMemberExperience(runtimeMainId,"SHARED_MICRO_EPISODE",{eventId:"runtime_affinity_probe"});
+      assert("affinity-memory-increments-relationship-score",(affinityEntry?.affinity?.scoreInternal||0)===affinityBefore+1);
+      assert("affinity-memory-does-not-change-exp",(await window.SnapPopStorage.get("exp"))===expBeforeAffinity);
+      assert("affinity-memory-does-not-change-gems",JSON.stringify(await window.SnapPopStorage.get("gems")||{})===gemsBeforeAffinity);
+
       click(document.querySelector("#landmarks .landmark"),"first-landmark");
       click(document.querySelector("#startBtn"),"start-writing");
       await wait(180);
