@@ -2333,3 +2333,80 @@ Requirement matrix:
 - old frozen candidate remains superseded;
 - external call count remains 0;
 - Netlify/deploy/merge remain NOT_RUN.
+
+
+## 36. REQUIREMENT MATRIX RECONCILIATION + ETYMOLOGY SOURCE-DIVERSITY HARDENING — 2026-09-21
+
+### A. Requirement matrix stale-state correction
+
+The following requirements were still marked as unimplemented/partial even though the corresponding code had already been added in earlier P2–P6 work:
+
+- SP-UNIV-003 Ask→Understand
+- SP-UNIV-004 broad-domain factual questions
+- SP-UNIV-005 fact/uncertainty/easy explanation
+- SP-IMAGINE-002 Think/Ask gateway
+- SP-IMAGINE-003 richer question-lens routing
+- SP-IMAGINE-004 OpenAI execution layer
+- SP-IMAGINE-007 concept/principle/etymology scaffolds
+- SP-IMAGINE-008 cause/compare/timeline mental models
+- SP-TRUTH-001 factual truth gate
+- SP-TRUTH-002 high-risk factual verification
+- SP-TRUTH-003 no-guess uncertainty handling
+
+Corrected matrix state:
+- CODED=true
+- STATIC_VERIFIED=true
+- RUNTIME_VERIFIED=false
+- DEVICE_VERIFIED=false
+
+This preserves the distinction between code/static evidence and live provider/browser/device execution.
+
+Validation:
+- REQUIREMENT_MATRIX_RECONCILIATION_PASS
+- 9/9 PASS
+
+### B. Etymology-specific source diversity gate
+
+Problem:
+- sentence-level citation + retrieved-source matching prevented fake citations,
+  but an ETYMOLOGY answer could still reach FULL_FACTUAL_CONTENT using only one host.
+- This left additional folk-etymology risk.
+
+Implemented in:
+- netlify/functions/snap-pop-knowledge.mjs
+- scripts/validate-etymology-source-diversity.mjs
+
+Rule:
+- ETYMOLOGY still requires every answer sentence to have a valid citation matching the actual retrieved source set.
+- additionally, FULL_FACTUAL_CONTENT requires at least 2 distinct source hosts across the verified evidence.
+- if fewer than 2 distinct hosts exist:
+  - unresolved includes ETYMOLOGY_SOURCE_DIVERSITY_INSUFFICIENT
+  - coverage remains CLAIM_SET_ONLY
+- general CONCEPT questions keep the normal citation coverage rule and do not inherit this extra source-host requirement.
+
+Server instructions now explicitly require:
+- avoid folk-etymology guesses;
+- prefer independent sources;
+- state disputed/uncertain origins clearly.
+
+Isolated core execution:
+- same-host etymology blocked from full coverage
+- two-host etymology can reach full coverage
+- concept question keeps normal rule
+- 3/3 PASS
+
+Requirement matrix:
+- SP-TRUTH-002 updated.
+- Remaining gap is now domain-specific authority ranking and live runtime quality, not basic folk-etymology/source-diversity protection.
+
+### Closure runner
+
+scripts/validate-branch-closure.mjs now contains 26 validators.
+
+### External state
+
+- implementation continues;
+- current candidate is not frozen;
+- previous frozen candidate remains superseded;
+- external call count remains 0;
+- Netlify/deploy/merge remain NOT_RUN.
