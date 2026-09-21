@@ -167,3 +167,5 @@ This closure means interaction hierarchy and structural child-facing flow are va
 - runtime evidence reconciliation matrix exact-head validation trigger.
 
 - record revision provenance runtime validation trigger.
+
+- records-growth html helper regression fix exact-head validation trigger.
