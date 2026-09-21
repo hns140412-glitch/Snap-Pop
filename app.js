@@ -39,6 +39,24 @@ function crewMemberName(identity){return identity?.crewMember?.name||crewMemberR
 
 function stableHash(s=""){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function affinityTier(score=0){const tiers=SNAP_RULES?.affinityEngine?.tiers||[];let t=tiers[0]||{key:"KNOWN",label:"아는 친구",min:0};for(const x of tiers)if(score>=x.min)t=x;return t}
+async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP"){
+  if(!window.SnapPopBadgeBehavior)return null;
+  try{
+    const event=window.SnapPopBadgeBehavior.normalize({
+      eventId:uid("badgeobs"),
+      family,
+      source,
+      at:new Date().toISOString(),
+      payload
+    });
+    const ledger=await get("badgeBehaviorObservations")||[];
+    if(ledger.some(x=>x.eventId===event.eventId))return event;
+    ledger.unshift(event);
+    await set("badgeBehaviorObservations",ledger.slice(0,1000));
+    return event;
+  }catch{return null}
+}
+
 async function recordBadgeEvent(family,payload={},source="SNAP_POP"){
   if(!window.SnapPopBadges)return null;
   try{
@@ -279,7 +297,7 @@ function stepSpecificReaction(text,language='ko',move=null){
 }
 async function showCrewReaction(message,{persist=true,kind="observe"}={}){const box=$("#crewReactionOverlay");if(!box||!message)return;const identity=await resolvedIdentity(),perf=crewPerformance(identity,kind),language=(await get("active"))?.language||"ko",safety=window.SnapPopCrewInteractionSafety,safeMessage=safety&&typeof safety.safeReaction==="function"?safety.safeReaction(message,{language}):message;box.innerHTML=`<span class="reactionMotif">${html(perf.motif)}</span><b>${html(perf.gesture)}</b><span>${html(safeMessage)}</span>`;box.hidden=false;box.classList.add("show");box.dataset.kind=kind;if(persist){const s=await get("active");if(s){s.crewState=s.crewState||{};s.crewState.lastReaction=safeMessage;s.crewState.reactionAt=new Date().toISOString();await set("active",s)}}if(!document.documentElement.classList.contains("reduceMotion")){clearTimeout(window.crewReactionTimer);window.crewReactionTimer=setTimeout(()=>{box.classList.remove("show")},2200)}}
 function hideCrewReaction(){const box=$("#crewReactionOverlay");if(box){box.hidden=true;box.classList.remove("show")}}
-async function revealHint(){const s=await get("active");if(!s)return;const p=promptFor(s.landmark,s.step||0,s.language||"ko",ensureWritingState(s).draft);s.crewState=s.crewState||{};s.crewState.hintLevel=Math.max(1,s.crewState.hintLevel||0);s.crewState.lastHintAt=new Date().toISOString();await set("active",s);$("#hint").textContent=p[1];$("#hint").hidden=false;$("#hintBtn").disabled=true;const identity=await resolvedIdentity();await showCrewReaction((s.language||"ko")==="en"?`${crewMemberName(identity)}: Just one hint. The rest is yours.`:`${crewMemberName(identity)}: 힌트는 하나만. 나머지는 네 생각으로 가보자.`)}
+async function revealHint(){const s=await get("active");if(!s)return;const p=promptFor(s.landmark,s.step||0,s.language||"ko",ensureWritingState(s).draft);s.crewState=s.crewState||{};s.crewState.hintLevel=Math.max(1,s.crewState.hintLevel||0);s.crewState.lastHintAt=new Date().toISOString();await set("active",s);await recordBadgeBehaviorObservation("HELP_REQUEST",{explicitAction:true,landmark:s.landmark,step:Math.min(2,s.step||0),hintLevel:s.crewState.hintLevel},"SNAP_POP");$("#hint").textContent=p[1];$("#hint").hidden=false;$("#hintBtn").disabled=true;const identity=await resolvedIdentity();await showCrewReaction((s.language||"ko")==="en"?`${crewMemberName(identity)}: Just one hint. The rest is yours.`:`${crewMemberName(identity)}: 힌트는 하나만. 나머지는 네 생각으로 가보자.`)}
 async function resetStepCrewState(s){s.crewState={hintLevel:0,lastReaction:"",cloudReturn:null,lastVoiceLength:0};await set("active",s)}
 function writingLensLabel(id,language='ko'){
   const ko={idea:'아이디어 동굴',emotion:'감정 호수',description:'묘사 숲',viewpoint:'관점 전망대',final:'마무리 캠프'};
