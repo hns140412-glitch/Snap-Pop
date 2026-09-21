@@ -13,3 +13,10 @@
   to = "/.netlify/functions/snap-pop-semantic-writing"
   status = 200
   force = true
+
+
+[[redirects]]
+  from = "/api/snap-pop-knowledge"
+  to = "/.netlify/functions/snap-pop-knowledge"
+  status = 200
+  force = true
