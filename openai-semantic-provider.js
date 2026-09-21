@@ -1,13 +1,31 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-b";
+  const VERSION="2026.09.21-c";
   const ENDPOINT="/api/snap-pop-semantic-writing";
   const TIMEOUT_MS=18000;
   const LENSES=new Set(["idea","emotion","description","viewpoint","final"]);
 
   function cleanText(value,max){
     return typeof value==="string" ? value.trim().slice(0,max) : "";
+  }
+
+  function cleanVocabularyMaterial(material){
+    if(!material||typeof material!=="object") return null;
+    const word=cleanText(material.word,120);
+    if(!word) return null;
+    return {
+      contract_version:"SNAP_POP_VOCABULARY_MATERIAL_V1",
+      sourceOwner:cleanText(material.sourceOwner,40)||"EXTERNAL_HANDOFF",
+      role:"EXPRESSION_MATERIAL_ONLY",
+      word,
+      context:cleanText(material.context,360)||null,
+      optional:true,
+      autoInsertAllowed:false,
+      masteryMutationAllowed:false,
+      vocabularyOwnershipTransferred:false,
+      doNotInferMastery:true
+    };
   }
 
   function cleanContext(ctx){
@@ -43,7 +61,8 @@
           landmark:LENSES.has(payload.landmark)?payload.landmark:"idea",
           step:Math.max(0,Math.min(2,Number(payload.step)||0)),
           language:payload.language==="en"?"en":"ko",
-          learnerContext:cleanContext(payload.learnerContext)
+          learnerContext:cleanContext(payload.learnerContext),
+          vocabularyMaterial:cleanVocabularyMaterial(payload.vocabularyMaterial)
         })
       });
       const data=await response.json().catch(()=>null);
