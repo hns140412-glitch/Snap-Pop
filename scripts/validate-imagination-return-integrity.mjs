@@ -3,6 +3,7 @@ import vm from "node:vm";
 
 const source=fs.readFileSync(new URL("../imagination-return-runtime.js",import.meta.url),"utf8");
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const imagination=fs.readFileSync(new URL("../imagination-controller.js",import.meta.url),"utf8");
 
 const window={};
 vm.runInNewContext(source,{window,Object,Array,String,Number,Math,Date});
@@ -45,8 +46,8 @@ assert("snapshot-used-only-as-fallback",
 );
 
 assert("app-uses-guard-for-writing-return",
-  app.includes("SnapPopImaginationReturnGuard")&&
-  app.includes("guard.returnDraft(current||{},writingReturn)")
+  imagination.includes("SnapPopImaginationReturnGuard")&&
+  imagination.includes("guard.returnDraft(current||{},writingReturn)")
 );
 
 console.log("IMAGINATION_RETURN_INTEGRITY_PASS");
