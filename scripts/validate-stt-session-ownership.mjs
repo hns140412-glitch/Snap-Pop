@@ -74,4 +74,16 @@ assert("current-session-callbacks-pass",
   received.join("|")==="second:current|second:end"
 );
 
+const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const listenCalls=(appSource.match(/SnapPopVoice\.listen\(/g)||[]).length;
+assert("explicit-mic-entry-only",
+  listenCalls===2&&
+  !appSource.includes("autoVoice")&&
+  appSource.includes('$("#imaginationVoiceBtn").onclick')&&
+  appSource.includes('$("#voiceBtn").onclick')&&
+  (appSource.match(/source:"USER_MIC"/g)||[]).length===2
+);
+assert("home-radio-does-not-auto-start-mic",
+  appSource.includes('$("#homeRadio").onclick=()=>openImagination({language:"ko",source:"HOME_RADIO"})')
+);
 console.log("STT_SESSION_OWNERSHIP_PASS");
