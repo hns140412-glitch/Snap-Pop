@@ -86,13 +86,14 @@
       confidence:Number.isFinite(raw.confidence)?Math.max(0,Math.min(1,raw.confidence)):null,
       provider:raw.provider||"semantic-writing-provider",
       semanticSignals:raw.semanticSignals&&typeof raw.semanticSignals==="object"?raw.semanticSignals:null,
-      grounded:raw.grounded!==false
+      grounded:raw.grounded!==false,
+      factVerified:false
     };
   }
   async function analyze(payload={}){
     const local=move(payload);
     const policy=contextPolicy(payload);
-    const fallback={...local,suggestedLens:policy.allowCrossLens?suggestedLens(payload):null,provider:"local-writing-fallback",grounded:true,learningContextUsed:policy.used,learningGoal:policy.goal,learningContextPolicy:policy};
+    const fallback={...local,suggestedLens:policy.allowCrossLens?suggestedLens(payload):null,provider:"local-writing-fallback",grounded:true,factVerified:false,learningContextUsed:policy.used,learningGoal:policy.goal,learningContextPolicy:policy};
     const provider=window.SnapPopSemanticWritingProvider;
     if(!provider||typeof provider.analyzeWriting!=="function")return fallback;
     try{
