@@ -1,6 +1,7 @@
 import fs from "node:fs";
 
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const badgeController=fs.readFileSync(new URL("../badge-controller.js",import.meta.url),"utf8");
 const behavior=fs.readFileSync(new URL("../badge-behavior-runtime.js",import.meta.url),"utf8");
 const shared=fs.readFileSync(new URL("../badge-shared-contract-runtime.js",import.meta.url),"utf8");
 
@@ -9,9 +10,9 @@ function assert(name,condition){
   console.log("PASS",name);
 }
 
-const start=app.indexOf("async function recordBadgeBehaviorObservation");
-const end=app.indexOf("async function recordBadgeEvent",start);
-const block=app.slice(start,end);
+const start=badgeController.indexOf("async function recordBadgeBehaviorObservation");
+const end=badgeController.indexOf("async function recordBadgeBehaviorEvidence",start);
+const block=badgeController.slice(start,end);
 
 assert("badge-observation-has-independent-local-ledger",
   block.includes('badgeBehaviorObservations')
