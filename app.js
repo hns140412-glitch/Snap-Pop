@@ -356,7 +356,7 @@ function setImaginationLanguage(language="ko"){
   $("#imaginationModeKo")?.classList.toggle("on",imaginationLanguage==="ko");
   $("#imaginationModeEn")?.classList.toggle("on",imaginationLanguage==="en");
 }
-async function openImagination({input="",language="ko",source="GLOBAL",autoVoice=false,writingReturn=null}={}){
+async function openImagination({input="",language="ko",source="GLOBAL",writingReturn=null}={}){
   const layer=$("#imaginationLayer"),identity=await resolvedIdentity(); if(!layer)return;
   imaginationReturnFocus=document.activeElement instanceof HTMLElement?document.activeElement:null;
   imaginationSource=source;
@@ -367,7 +367,7 @@ async function openImagination({input="",language="ko",source="GLOBAL",autoVoice
   $("#imaginationInput").value=(input||"").trim();
   $("#imaginationAnswer").hidden=true; $("#imaginationAnswer").innerHTML="";
   layer.hidden=false; layer.setAttribute("aria-hidden","false"); document.documentElement.classList.add("imaginationOpen");
-  setTimeout(()=>{if(autoVoice)$("#imaginationVoiceBtn")?.click();else $("#imaginationInput")?.focus()},0);
+  setTimeout(()=>$("#imaginationInput")?.focus(),0);
 }
 async function closeImagination(){
   const layer=$("#imaginationLayer"); if(!layer)return;
@@ -470,7 +470,7 @@ $("#imaginationAskBtn").onclick=()=>runImagination();
 $("#imaginationSpeakLast").onclick=async()=>{const t=$("#imaginationAnswer")?.dataset.speakable||"";if(!t)return toast("먼저 도움을 받아봐.");await speak(t,imaginationLanguage)};
 $("#imaginationVoiceBtn").onclick=async()=>{
   const identity=await resolvedIdentity(); if(!window.SnapPopVoice)return toast("지금은 음성 입력을 사용할 수 없어요.");
-  try{await window.SnapPopVoice.listen({language:imaginationLanguage,
+  try{await window.SnapPopVoice.listen({language:imaginationLanguage,source:"USER_MIC",
     onStart:()=>{$("#imaginationVoiceBtn").textContent=imaginationLanguage==="en"?"Listening…":"듣고 있어요…";showCrewReaction(`${crewMemberName(identity)}: 천천히 말해도 돼.`,{persist:false})},
     onText:t=>{$("#imaginationInput").value=t;runImagination(t)},
     onError:()=>showCrewReaction(`${crewMemberName(identity)}: 잘 못 들었어. 다시 말하거나 직접 적어도 돼.`,{persist:false}),
@@ -503,7 +503,7 @@ $("#listenBtn").onclick=async()=>{const s=await get("active");if(!s)return;const
 $("#voiceBtn").onclick=async()=>{
   const s=await get("active"),identity=await resolvedIdentity();
   if(!window.SnapPopVoice)return toast("지금은 음성 입력을 사용할 수 없어요.");
-  try{await window.SnapPopVoice.listen({language:s?.language||"ko",
+  try{await window.SnapPopVoice.listen({language:s?.language||"ko",source:"USER_MIC",
     onStart:()=>{$("#voiceBtn").textContent=(s?.language||"ko")==="en"?"Listening":"듣고 있어요";showCrewReaction(`${crewMemberName(identity)}: 듣고 있어. 천천히 말해도 돼.`,{persist:false})},
     onText:async t=>{$("#answer").value+=(($("#answer").value?" ":"")+t);$("#answer").dispatchEvent(new Event("input"));const cur=await get("active");if(cur){cur.crewState=cur.crewState||{};cur.crewState.lastVoiceLength=t.length;await set("active",cur)}await recordCrewExperience("VOICE_EXPRESSION",{eventId:uid("voice"),length:t.length,landmark:s?.landmark||null});if(t.length>=40)await showCrewReaction(`${crewMemberName(identity)}: 길게 잘 들었어. 네 말투는 그대로 두자.`)},
     onError:()=>showCrewReaction(`${crewMemberName(identity)}: 잘 못 들었어. 다시 말하거나 직접 써도 돼.`),
@@ -584,7 +584,7 @@ $("#profilePhotoInput").onchange=async e=>{const file=e.target.files?.[0];if(!fi
 $("#characterSave").onclick=async()=>{const name=$("#characterName").value.trim(),identity=await resolvedIdentity();identity.profile.name=name;await set("identityFallback",identity);$("#characterSummary").textContent=name?`탐험가 · ${name}`:"Ready & Set 프로필 연동 대기";$("#characterPanel").hidden=true;await renderIdentityPresence();toast(sharedIdentity?"공유 프로필은 Ready & Set 기준을 유지합니다. 로컬 fallback만 저장했어요.":"인트로용 로컬 프로필을 저장했어요. 통합 시 Ready & Set 기준이 우선합니다.")};
 $("#crewMemberSuggest").onclick=async()=>{const identity=await resolvedIdentity(),suggestions={maltipoo:["모카","토리","콩"],cat:["루루","모노","살짝"],redpanda:["포포","단추","뒤적"],buddy:["하루","담이","솔"]},arr=suggestions[identity.crewMember.type]||[crewMemberRule(identity).defaultName||"두비"];$("#crewMemberName").value=arr[Math.floor(Date.now()/1000)%arr.length]};
 $("#crewMemberSave").onclick=async()=>{const identity=await renameCurrentCrewMember($("#crewMemberName").value);const name=identity.crewMember.name;$("#crewMemberSummary").textContent=`${crewMemberRule(identity).label} · ${name}`;$(".crewMemberLine b").forEach(el=>el.textContent=`탐험대원 ${name}`);$("#crewMemberPanel").hidden=true;await renderIdentityPresence();toast("탐험대원 이름과 이력을 저장했어요.")};
-$("#homeRadio").onclick=()=>openImagination({language:"ko",source:"HOME_RADIO",autoVoice:true});
+$("#homeRadio").onclick=()=>openImagination({language:"ko",source:"HOME_RADIO"});
 $("#autoRead").onchange=$("#reduceMotion").onchange=async()=>{const s=await get("settings")||{};s.autoRead=$("#autoRead").checked;s.reduceMotion=$("#reduceMotion").checked;await set("settings",s);document.documentElement.classList.toggle("reduceMotion",s.reduceMotion)}
 $("#nav").onclick=async e=>{const b=e.target.closest("button[data-view]");if(!b)return;const view=b.dataset.view;if(view==="explore"){const active=await get("active");if(active){renderExplore(active);show("explore")}else{show("map");toast("글쓰기 탐험지를 하나 골라 시작해봐.")}}else show(view)}
 if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
