@@ -7,7 +7,7 @@
 - REFLECTION_COMPLETE: false
 - DOWNSTREAM_EXECUTION_COMPLETE: false
 - NO_SILENT_LOSS: enforced within recovered conversation scope
-- Historical badge provenance recovery: RECOVERY_IN_PROGRESS
+- Historical badge provenance recovery: CLASSIFIED_CLOSED_FOR_RETRIEVED_SCOPE / SOURCE_COVERAGE_OPEN
 - Merge / deploy / Netlify: NOT_RUN / DO_NOT_RUN until explicitly approved
 
 ## 1. BRANCH LOCK
@@ -136,13 +136,15 @@ Role:
 
 OpenAI:
 - intended internal backing engine;
-- actual secure server/backend call is NOT connected yet;
+- secure same-origin server/backend boundary is CODED but not deployed/runtime-verified yet;
 - browser API-key embedding is forbidden;
 - local writing analysis is fallback.
 
 Status:
 - provider boundary CODED / STATIC VERIFIED
 - OPENAI_RUNTIME_CONNECTED = false
+- SECURE_OPENAI_BOUNDARY_CODED = true
+- STATIC_BOUNDARY_VERIFIED = pending final readback in this branch
 
 ## 6. IMAGINATION CLOUD
 
@@ -247,10 +249,11 @@ Do not use stale evidence as current implementation truth.
 
 ## 11. NEXT EXECUTION ORDER
 
-P0 — badge source recovery completion
-- recover original badge intent/evidence from Ready intro/profile/HOLD and older conversations/Drive;
-- classify each recovered item as CONFIRMED / HOLD / WORKING / OPEN;
-- do not activate 60-draft catalog yet.
+P0 — badge source recovery classification
+- current retrieved scope classified in `C2S/SNAP_POP_BADGE_SOURCE_RECOVERY_2026-09-21.md`;
+- CONFIRMED / HOLD / WORKING / OPEN split recorded;
+- source coverage remains OPEN; no false claim of exhaustive history;
+- 60-draft catalog remains inactive.
 
 P1 — writing quality
 - connect semantic analysis to actual secure OpenAI-backed provider;
@@ -305,3 +308,35 @@ Use the new-chat prompt file:
 
 Primary first task:
 **Complete badge source recovery, then continue P1 Writing Core semantic implementation.**
+
+
+## 14. 2026-09-21 CONTINUATION UPDATE
+
+### Badge P0
+- `C2S/SNAP_POP_BADGE_SOURCE_RECOVERY_2026-09-21.md` added.
+- `data/badge-system.json` now records recovery classification closure for current retrieved scope.
+- Historical ~60 catalog remains `WORKING_DRAFT_NOT_ACTIVE`.
+- No badge was activated and no EXP/gem/affinity/character-level equivalence was introduced.
+
+### P1 secure semantic-writing boundary
+Added:
+- `openai-semantic-provider.js` browser adapter with same-origin API only; no browser API key.
+- `netlify/functions/snap-pop-semantic-writing.mjs` server-only OpenAI Responses API boundary.
+- `/api/snap-pop-semantic-writing` rewrite in `netlify.toml`.
+- provider is loaded before `semantic-writing-runtime.js`.
+
+Contract:
+- current draft meaning/context/coherence/development is primary evidence;
+- exactly one next move;
+- at most one small hint;
+- no final answer, full rewrite, suggested completed sentence, grading, or question flooding;
+- Ready learner context remains weak contextual input only;
+- `grounded` means draft/context grounded, not externally fact verified.
+
+Validation state:
+- CODED: yes
+- STATIC_VERIFIED: pending final readback
+- RUNTIME_VERIFIED: no
+- DEVICE_VERIFIED: no
+- OPENAI_RUNTIME_CONNECTED: false until server environment + runtime execution are verified
+- merge/deploy/Netlify: NOT_RUN
