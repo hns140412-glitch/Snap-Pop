@@ -2,6 +2,7 @@ import fs from "node:fs";
 
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const flow=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
+const imagination=fs.readFileSync(new URL("../imagination-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -47,8 +48,9 @@ assert("banner-has-explicit-dismiss",
 );
 
 assert("selection-trace-keeps-answer-out",
-  app.includes('recordExpressionTrace("VERIFIED_ASK_EXPRESSION_SELECTED"')&&
-  !app.includes('recordExpressionTrace("VERIFIED_ASK_EXPRESSION_SELECTED",{answer:')
+  imagination.includes('deps.recordExpressionTrace("VERIFIED_ASK_EXPRESSION_SELECTED"')&&
+  !imagination.includes('recordExpressionTrace("VERIFIED_ASK_EXPRESSION_SELECTED",{answer:')&&
+  !imagination.includes('deps.recordExpressionTrace("VERIFIED_ASK_EXPRESSION_SELECTED",{answer:')
 );
 
 assert("attach-trace-is-new-session-only",
