@@ -68,13 +68,26 @@ assert("working-catalog-stays-inactive",
   catalog.items.every(x=>x.active===false&&x.status==="WORKING_DRAFT")
 );
 
-assert("app-records-only-explicit-help-signal",
+assert("app-records-explicit-help-signal",
   appSource.includes('recordBadgeBehaviorObservation("HELP_REQUEST"')&&
   appSource.includes("explicitAction:true")
 );
-
+assert("app-records-writing-completion-as-fact-event",
+  appSource.includes('recordBadgeBehaviorObservation("WRITING_EXPLORATION"')&&
+  appSource.includes("explicitCompletion:true")
+);
+assert("app-records-optional-extra-task-completion",
+  appSource.includes('recordBadgeBehaviorObservation("EXTRA_TASK"')&&
+  appSource.includes("explicitChoice:true")&&
+  appSource.includes("completed:true")
+);
 assert("app-does-not-infer-deep-thinking-from-empty-attempts",
   !appSource.includes('recordBadgeBehaviorObservation("DEEP_THINKING"')
+);
+assert("app-does-not-infer-retry-error-special-without-source-contract",
+  !appSource.includes('recordBadgeBehaviorObservation("RETRY"')&&
+  !appSource.includes('recordBadgeBehaviorObservation("ERROR_DISCOVERY"')&&
+  !appSource.includes('recordBadgeBehaviorObservation("SPECIAL_BEHAVIOR"')
 );
 
 console.log("BADGE_BEHAVIOR_OBSERVATION_PASS");
