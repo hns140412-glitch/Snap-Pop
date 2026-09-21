@@ -247,3 +247,5 @@ Conservative boundaries retained:
 - cloud history/no-farming runtime matrix closure validation trigger.
 
 - IndexedDB reload recovery CDP gate validation trigger.
+
+- IndexedDB reload recovery runtime matrix closure validation trigger.
