@@ -29,5 +29,5 @@ const tl=r.timeline([a,r.createArtifact("DIARY",{childId:"child_b",text:"다른 
 assert("timeline-does-not-cross-child",tl.length===1&&tl[0].childId==="child_a");
 assert("family-ui-present",index.includes('id="familyExpansion"')&&index.includes('id="familyExpansionToggle"')&&index.includes('id="familyChildSelect"'));
 const family=matrix.requirements.filter(x=>x.domain==="FAMILY_EXPANSION");
-assert("all-family-items-coded-static",family.length===11&&family.every(x=>x.coded===true&&x.staticVerified===true&&x.runtimeVerified===false&&x.deviceVerified===false));
+assert("all-family-items-coded-static-runtime",family.length===11&&family.every(x=>x.coded===true&&x.staticVerified===true&&x.runtimeVerified===true&&x.deviceVerified===false));
 console.log("FAMILY_EXPANSION_RUNTIME_PASS");
