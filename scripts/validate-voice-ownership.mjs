@@ -4,6 +4,7 @@ import vm from "node:vm";
 const guardSource=fs.readFileSync(new URL("../crew-presentation-guard.js",import.meta.url),"utf8");
 const voiceSource=fs.readFileSync(new URL("../voice-runtime.js",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const supportSource=fs.readFileSync(new URL("../interaction-support-controller.js",import.meta.url),"utf8");
 
 const calls=[];
 const window={
@@ -45,11 +46,13 @@ assert("external-voice-forced-to-crew",
 
 assert("app-has-no-direct-speech-synthesis-bypass",
   !appSource.includes("new SpeechSynthesisUtterance(t)")&&
-  !appSource.includes('if(!("speechSynthesis"in window))')
+  !appSource.includes('if(!("speechSynthesis"in window))')&&
+  !supportSource.includes("SpeechSynthesisUtterance")&&
+  !supportSource.includes("speechSynthesis")
 );
 
 assert("app-requires-voice-runtime",
-  appSource.includes('if(!window.SnapPopVoice)throw new Error("VOICE_RUNTIME_UNAVAILABLE")')
+  supportSource.includes('if(!window.SnapPopVoice)throw new Error("VOICE_RUNTIME_UNAVAILABLE")')
 );
 
 console.log("VOICE_OWNERSHIP_BOUNDARY_PASS");
