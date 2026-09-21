@@ -28,15 +28,23 @@ jobs:
           node scripts/validate-branch-closure.mjs > /tmp/closure.log 2>&1
           CLOSURE_STATUS=$?
 
+          python3 -m http.server 4173 >/tmp/snap-pop-http.log 2>&1 &
+          SERVER_PID=$!
           BROWSER="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
           if [ -z "$BROWSER" ]; then
             echo "BROWSER_RUNTIME_INFRA_BLOCKED no chromium browser" > /tmp/browser.log
             BROWSER_STATUS=2
           else
-            export BROWSER
+            "$BROWSER" --headless=new --disable-gpu --no-sandbox --disable-dev-shm-usage --window-size=390,844 \
+              --remote-debugging-port=9222 \
+              "http://127.0.0.1:4173/index.html?runtime-smoke=1" \
+              >/tmp/snap-pop-chrome.log 2>&1 &
+            BROWSER_PID=$!
             node scripts/browser-runtime-cdp.mjs > /tmp/browser.log 2>&1
             BROWSER_STATUS=$?
+            kill "$BROWSER_PID" 2>/dev/null || true
           fi
+          kill "$SERVER_PID" 2>/dev/null || true
 
           mkdir -p VALIDATION
           CLOSURE_MARKER="$(grep -E 'BRANCH_CLOSURE_VALIDATOR_PASS [0-9]+/[0-9]+' /tmp/closure.log | tail -1 || true)"
