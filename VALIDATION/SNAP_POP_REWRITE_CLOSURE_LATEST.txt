@@ -1,5 +1,5 @@
-validation_sha=df35237c023e0fdfd055257ca3ecd6807d27dac2
-checkout_sha=df35237c023e0fdfd055257ca3ecd6807d27dac2
+validation_sha=95cc57fd7412d3e3ae6ca68703326ccf7cdd6966
+checkout_sha=95cc57fd7412d3e3ae6ca68703326ccf7cdd6966
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 69/69
 browser_status=1
@@ -593,6 +593,7 @@ PASS legacy-language-bindings-removed
 PASS flow-owns-completion-event
 PASS flow-owns-record-gem-exp-transaction
 PASS flow-preserves-empty-draft-wait
+PASS flow-invalidates-stale-analysis-on-input
 PASS flow-uses-storage-contract
 PASS app-installs-writing-flow-controller
 WRITING_FLOW_CONTROLLER_BOUNDARY_PASS
