@@ -116,3 +116,14 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 
 /* WRITING BRIDGE 2026-09-21 */
 .writingBridge{margin:7px 0 0;padding:7px 9px;border-left:2px solid #9d8757;font-size:11px;line-height:1.45;opacity:.76;background:#f7f1e3;border-radius:0 8px 8px 0}
+
+.mentalModel{display:grid;gap:7px;margin-top:10px}
+.mentalModelFLOW{grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch}
+.mentalModelCOMPARE{grid-template-columns:repeat(2,minmax(0,1fr))}
+.mentalModelSTACK{grid-template-columns:1fr}
+.mentalStep{min-width:0;padding:9px;border-radius:12px;background:#fffdf7;border:1px solid #b7a47744;display:flex;flex-direction:column;gap:4px}
+.mentalStep b{font-size:10px;letter-spacing:.03em;color:#687057}
+.mentalStep span{font-size:12px;line-height:1.4}
+.mentalArrow{align-self:center;font-style:normal;font-weight:800;opacity:.5}
+@media(max-width:520px){.mentalModelFLOW{grid-template-columns:1fr}.mentalModelFLOW .mentalArrow{transform:rotate(90deg);justify-self:center}.mentalModelCOMPARE{grid-template-columns:1fr 1fr}}
+@media(max-width:360px){.mentalModelCOMPARE{grid-template-columns:1fr}}
