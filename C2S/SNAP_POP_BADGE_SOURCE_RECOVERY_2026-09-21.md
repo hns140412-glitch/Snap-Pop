@@ -50,3 +50,42 @@ Historical source coverage is not claimed complete. Unrecovered account material
 - Runtime award activation: NOT RUN.
 - Source coverage: OPEN.
 - Merge/deploy/Netlify: NOT RUN.
+
+
+## Provenance refinement — 2026-09-21 continuation
+
+### Direct-user evidence recovered
+The following source items are treated as direct historical user evidence, not as assistant-generated canon:
+
+- Sanitized account transcript, 2026-09-08 [0165]: collecting titles/badges was explicitly proposed as a fun element.
+- Same transcript [0167]: the user explicitly required the system to include not only things done well, but also mistakes and things needing improvement.
+- Same transcript [0169]: the user explicitly requested roughly 60 badge concepts, expandable from child activity, and named examples including early self-start, creating time for extra work, special behavior, task execution, and unusually long issue time.
+- Same lineage later confirms a circular, witty situation-based badge direction; the current canonical abstraction remains original hand-drawn/pastel visual language rather than copying any named artist's style.
+
+### Ready & Set HOLD boundary recovered
+`Ready_Set_Ui_Master_Logic_REV_06.md` explicitly places the following in HOLD/expansion territory:
+- character level / growth economy;
+- advanced reward economy;
+- social competition / leaderboard;
+- character gacha / complex growth scoring.
+
+Therefore these items are not badge mechanics and must not be promoted through badge reconstruction.
+
+### Working-only material
+The assistant-proposed historical list of approximately 60 names, exact trigger wording, any badge→title promotion rule, shared-badge variants, and exact collection-surface copy remain recovery material only unless separately supported by direct/accepted evidence.
+
+### Open provenance
+The following remain OPEN rather than inferred:
+- whether an old intro/profile visual badge motif was ever accepted as a functional badge rule;
+- exact profile/intro/growth surfaces and ownership;
+- badge↔title relationship;
+- canonical cross-app award event thresholds/dedupe;
+- any automatic relationship to character level, EXP, gems, affinity, or world state.
+
+### Closure update
+- Retrieved direct-user provenance for the badge origin: RECOVERED.
+- Ready HOLD boundary: RECOVERED.
+- CONFIRMED / HOLD / WORKING / OPEN classification: UPDATED.
+- Historical 60-item catalog: still `WORKING_DRAFT_NOT_ACTIVE`.
+- Source coverage: still OPEN; no exhaustive-history claim.
+- Runtime badge activation: NOT RUN.
