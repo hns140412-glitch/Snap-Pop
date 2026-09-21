@@ -388,7 +388,7 @@ function refreshWritingMove(s){
   return move;
 }
 
-function renderExplore(s){ensureWritingState(s);const m=marks.find(x=>x.id===s.landmark)||marks[0],i=Math.min(2,s.step||0),language=s.language||"ko",p=promptFor(s.landmark,i,language,s.draft);renderExpressionBridge(null,language,language==="en"?"ko":"en");setExpressionBridgeButton(language,s.draft);$("#exploreTitle").textContent="탐험 진행 · "+m.title;$("#question").textContent=p[0];$("#hint").textContent=p[1];$("#hint").hidden=!(s.crewState?.hintLevel>0);$("#hintBtn").disabled=!!(s.crewState?.hintLevel>0);$("#answer").value=s.draft||"";setModeButtons(language);renderWritingBridge(null,language);hideCrewReaction();resolvedIdentity().then(identity=>{const name=crewMemberName(identity),base=crewReaction(identity,s.landmark),stepLine=language==="en"?["Start small. One idea is enough.","Add one more piece.","Finish it in your own words."][i]:["작은 조각 하나부터 잡아보자.","좋아, 하나만 더 붙여보자.","이제 네 말로 마무리해보자."][i];$(".crewMemberLine b").textContent=`탐험대원 ${name}`;$("#crewMemberLine").textContent=`${base} ${stepLine}`});$("#nextBtn").textContent=i===2?(language==="en"?"Finish exploration":"탐험 완료"):(language==="en"?"Next step":"다음 단계");$("#steps").innerHTML=STEPS.map((x,n)=>`<span class="${n===i?"on":n<i?"done":""}">${n+1}. ${x}</span>`).join("")}
+function renderExplore(s){ensureWritingState(s);const m=marks.find(x=>x.id===s.landmark)||marks[0],i=Math.min(2,s.step||0),language=s.language||"ko",p=promptFor(s.landmark,i,language,s.draft);renderExpressionBridge(null,language,language==="en"?"ko":"en");renderExpressionIntentNote(s);setExpressionBridgeButton(language,s.draft);$("#exploreTitle").textContent="탐험 진행 · "+m.title;$("#question").textContent=p[0];$("#hint").textContent=p[1];$("#hint").hidden=!(s.crewState?.hintLevel>0);$("#hintBtn").disabled=!!(s.crewState?.hintLevel>0);$("#answer").value=s.draft||"";setModeButtons(language);renderWritingBridge(null,language);hideCrewReaction();resolvedIdentity().then(identity=>{const name=crewMemberName(identity),base=crewReaction(identity,s.landmark),stepLine=language==="en"?["Start small. One idea is enough.","Add one more piece.","Finish it in your own words."][i]:["작은 조각 하나부터 잡아보자.","좋아, 하나만 더 붙여보자.","이제 네 말로 마무리해보자."][i];$(".crewMemberLine b").textContent=`탐험대원 ${name}`;$("#crewMemberLine").textContent=`${base} ${stepLine}`});$("#nextBtn").textContent=i===2?(language==="en"?"Finish exploration":"탐험 완료"):(language==="en"?"Next step":"다음 단계");$("#steps").innerHTML=STEPS.map((x,n)=>`<span class="${n===i?"on":n<i?"done":""}">${n+1}. ${x}</span>`).join("")}
 
 $("#nextBtn").onclick=async()=>{
   let s=await get("active");
@@ -525,6 +525,7 @@ function renderImaginationResponse(result,identity){
     :"생각 도움";
   const understanding=result?.understanding&&typeof result.understanding==="object"?result.understanding:null;
   const mentalModel=result?.mentalModel&&Array.isArray(result.mentalModel.items)?result.mentalModel:null;
+  const canExpress=imaginationSource==="GLOBAL"&&result?.kind==="ASK_UNDERSTAND"&&result?.verified===true&&result?.verification?.coverage==="FULL_FACTUAL_CONTENT";
   host.innerHTML=`<div class="cloudAnswerHead"><b>${html(crewMemberName(identity))} · ${html(result?.title||"상상 구름")}</b><span>${html(badge)}</span></div>`+
     `<p class="cloudCore">${html(result?.core||"")}</p>`+
     (nodes.length?`<div class="mindMap">${nodes.map(n=>`<div class="mindNode"><b>${html(n.label||"")}</b><span>${html(n.value||"")}</span></div>`).join("")}</div>`:"")+
@@ -532,9 +533,20 @@ function renderImaginationResponse(result,identity){
     (mentalModel?.items?.length?`<div class="mentalModel mentalModel${html(mentalModel.type||"STACK")}">${mentalModel.items.map((item,i)=>`<div class="mentalStep"><b>${html(item.label||String(i+1))}</b><span>${html(item.text||"")}</span></div>`).join(mentalModel.type==="FLOW"?'<i class="mentalArrow">→</i>':"")}</div>`:"")+
     (verifiedClaims.length?`<p class="kicker">확인된 주장 ${verifiedClaims.length}개${evidenceLinks.length?` · 근거 ${evidenceLinks.map(x=>`<a href="${html(x.url)}" target="_blank" rel="noopener noreferrer">${html(x.label)}</a>`).join(" · ")}`:""}</p>`:"")+
     (understanding?.nextCuriosity?`<button class="soft cloudFollowUpReveal" type="button">더 궁금하면 한 가지 더</button><p class="cloudExample cloudFollowUpText" hidden>다음 궁금증 · ${html(understanding.nextCuriosity)}</p>`:"")+
+    (canExpress?`<button class="soft cloudExpressBtn" type="button">이걸 내 말로 표현해보기</button>`:"")+
     (result?.example?`<p class="cloudExample">${html(result.example)}</p>`:"");
   const reveal=host.querySelector(".cloudFollowUpReveal"),follow=host.querySelector(".cloudFollowUpText");
   if(reveal&&follow)reveal.onclick=()=>{follow.hidden=false;reveal.remove()};
+  const express=host.querySelector(".cloudExpressBtn");
+  if(express)express.onclick=async()=>{
+    const question=($("#imaginationInput")?.value||"").trim();
+    if(!question)return;
+    await set("pendingExpressionIntent",{source:"VERIFIED_ASK",question,language:imaginationLanguage,answerTransferred:false,verifiedCoverage:"FULL_FACTUAL_CONTENT",createdAt:new Date().toISOString()});
+    await closeImagination();
+    show("map");
+    await renderPendingExpressionIntent();
+    toast("답을 옮기지 않았어. 이제 네 말로 표현해볼 수 있어.");
+  };
   host.hidden=false; host.dataset.speakable=result?.speakable||result?.core||"";
 }
 async function runImagination(inputOverride){
