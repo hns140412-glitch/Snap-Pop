@@ -3687,3 +3687,21 @@ Next surgery:
 - app.js at this point ≈ 43 KB, down from ≈ 92 KB at surgery start.
 - Remaining large owners: Settings/Profile/Identity presentation, badge event orchestration, migration/bootstrap, bridge/context, calendar/cloud-history support, thin init/orchestrator cleanup.
 - next owner migration: Settings/Profile/Identity.
+
+
+## 54. REWRITE CHECKPOINT — PHASE 6/7 + INTERACTION SUPPORT — 2026-09-21
+
+- Settings/Profile/Identity extracted to `settings-profile-controller.js`.
+- Badge orchestration extracted to `badge-controller.js`.
+- Bridge/context extracted to `bridge-context-controller.js`.
+- Legacy migration/bootstrap extracted to `bootstrap-controller.js`.
+- Interaction/transient UI support extracted to `interaction-support-controller.js`.
+- exact validated code SHA: `1b5165d7d1d910dcace9b073e3f304f97920b8f4`
+- run `35609997862` / job `106366428142`
+- 61/61 closure PASS
+- BROWSER_RUNTIME_CDP_PASS
+- app.js = 15,116 bytes, reduced from ~92 KB surgery start.
+- rewrite architecture is advanced but thin-orchestrator closure remains OPEN.
+- final UI direction / device verification remain OPEN / NOT_RUN.
+- new canonical closure: `C2S/SNAP_POP_REWRITE_C2S_CLOSURE_2026-09-21.md`.
+- latest handoff: `HANDOFF/SNAP_POP_REWRITE_HANDOFF_2026-09-21_LATEST.md`.

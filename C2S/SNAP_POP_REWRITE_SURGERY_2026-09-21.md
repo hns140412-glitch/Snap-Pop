@@ -168,3 +168,22 @@ Phase 4 entry: extract Records/Growth/History while preserving original-record p
 
 Phase 5 disposition: CLOSED.
 Phase 6 entry: Settings/Profile/Identity extraction.
+
+
+## Latest rewrite checkpoint — 61/61
+
+- validated SHA: `1b5165d7d1d910dcace9b073e3f304f97920b8f4`
+- run: `35609997862`
+- job: `106366428142`
+- 61/61 branch closure PASS
+- Browser CDP PASS at 390×844
+- app.js: 15,116 bytes (~92 KB at surgery start)
+
+Additional owners now extracted:
+- settings-profile-controller.js
+- badge-controller.js
+- bridge-context-controller.js
+- bootstrap-controller.js
+- interaction-support-controller.js
+
+Next and final architecture target: thin app.js orchestrator closure. UI rewrite follows only after that closure.

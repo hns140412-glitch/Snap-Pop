@@ -535,3 +535,12 @@ Records/Growth is owned by `records-growth-controller.js` + `records-flow-contro
 Latest validated state: `55c9e35f84f43c145506beda066104470bce15e8`, 56/56 closure PASS + 390×844 Chrome CDP runtime PASS.
 
 Legacy `app.js` is now ~43 KB versus ~92 KB at surgery start. Next owner migration: Settings/Profile/Identity.
+
+
+## 17. Rewrite checkpoint — thin orchestrator remaining
+
+Latest validated architecture checkpoint: `1b5165d7d1d910dcace9b073e3f304f97920b8f4`.
+
+At this point Settings/Profile/Identity, Badge orchestration, Bridge/context, Bootstrap migration, and Interaction Support are separated into dedicated owners. Branch closure is 61/61 PASS and 390×844 Chrome CDP runtime PASS. Legacy `app.js` is 15,116 bytes versus ~92 KB at surgery start.
+
+Rewrite is NOT yet fully complete: residual wrapper/orchestration glue in `app.js` must be reduced to a thin orchestrator and validated before architecture closure. Final UI/visual direction and device verification remain OPEN.
