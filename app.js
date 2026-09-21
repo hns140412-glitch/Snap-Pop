@@ -1,5 +1,8 @@
-const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
-let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false, SNAP_RULES=null, writingAnalysisSeq=0;
+const $=q=>document.querySelector(q), $=q=>[...document.querySelectorAll(q)];
+const RELEASE=globalThis.SnapPopReleaseDescriptor;
+if(!globalThis.TakyReleaseContract?.validateDescriptor?.(RELEASE)?.ok)throw new Error('INVALID_SNAP_RELEASE_DESCRIPTOR');
+let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false, SNAP_RULES=null, writingAnalysisSeq=0, snapActiveExploration=false;
+globalThis.SnapPopPwaSafePoint=()=>!snapActiveExploration;
 const STEPS=["초안 잡기","이어 쓰기","다듬어 완성"];
 const QUESTION_BANK={
  idea:{
@@ -221,8 +224,8 @@ window.SnapPopIdentity=Object.freeze({applyShared:applySharedIdentity,clearShare
 
 function openDB(){return new Promise((ok,no)=>{const r=indexedDB.open("snap_pop_rev10",1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains("state"))r.result.createObjectStore("state")};r.onsuccess=()=>{db=r.result;ok()};r.onerror=()=>no(r.error)})}
 function get(k){return new Promise(ok=>{const r=db.transaction("state").objectStore("state").get(k);r.onsuccess=()=>ok(r.result)})}
-function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>ok();r.onerror=()=>no(r.error)})}
-function setMany(entries){return new Promise((ok,no)=>{const tx=db.transaction("state","readwrite"),store=tx.objectStore("state");entries.forEach(([k,v])=>store.put(v,k));tx.oncomplete=()=>ok();tx.onerror=()=>no(tx.error);tx.onabort=()=>no(tx.error)})}
+function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>{if(k==="active"){snapActiveExploration=!!v;if(!snapActiveExploration)window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}ok()};r.onerror=()=>no(r.error)})}
+function setMany(entries){return new Promise((ok,no)=>{const tx=db.transaction("state","readwrite"),store=tx.objectStore("state");entries.forEach(([k,v])=>store.put(v,k));tx.oncomplete=()=>{const activeEntry=[...entries].reverse().find(([k])=>k==="active");if(activeEntry){snapActiveExploration=!!activeEntry[1];if(!snapActiveExploration)window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}ok()};tx.onerror=()=>no(tx.error);tx.onabort=()=>no(tx.error)})}
 async function ensureCrewRegistry(){
   const registry=await get("crewRegistry")||{},identity=await resolvedIdentity();
   for(const [id,rule] of Object.entries({...SNAP_RULES?.legacyCharacterLineages,...SNAP_RULES?.definedCharacterLineages})){
@@ -329,7 +332,7 @@ function ensureWritingState(s){
   return s;
 }
 function setModeButtons(language){$("#modeKo")?.classList.toggle("on",language!=="en");$("#modeEn")?.classList.toggle("on",language==="en")}
-async function init(){await openDB();await migrateLegacyState();SNAP_RULES=await fetch("data/exploration-crew-rules.json").then(r=>r.json());marks=await fetch("data/landmarks.json").then(r=>r.json());await migrateIdentityFallback();await ensureCrewRegistry();await synthesizeCrewWorldState();renderLandmarks();await renderPendingExpressionIntent();await loadSettings();await renderIdentityPresence();await updateStatus();renderRecords();renderGems();renderGrowth();await renderIncomingHandoff();renderSpecialInvite();const active=await get("active");if(active)renderExplore(active)}
+async function init(){await openDB();await migrateLegacyState();SNAP_RULES=await fetch("data/exploration-crew-rules.json").then(r=>r.json());marks=await fetch("data/landmarks.json").then(r=>r.json());await migrateIdentityFallback();await ensureCrewRegistry();await synthesizeCrewWorldState();renderLandmarks();await renderPendingExpressionIntent();await loadSettings();await renderIdentityPresence();await updateStatus();renderRecords();renderGems();renderGrowth();await renderIncomingHandoff();renderSpecialInvite();const active=await get("active");snapActiveExploration=!!active;if(active)renderExplore(active);else window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}
 
 function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;$$(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await get("active"),g=await get("gems")||{};$("#selTitle").textContent=m.title;$("#selDesc").textContent=m.desc;const identity=await resolvedIdentity();$("#selCrewMemberReaction").textContent=`${crewMemberName(identity)} · ${crewReaction(identity,m.id)}`;$("#selProgress").textContent="진행 "+(a?.landmark===m.id?(Math.min(3,(a.step||0)+1)):0)+" / 3";$("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";$("#selection").hidden=false};host.appendChild(b)})}
 $("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active"),created=false;if(!s||s.landmark!==selected.id){s={id:uid("explore"),landmark:selected.id,step:0,answers:["","",""],snapshots:["","",""],draft:"",language:"ko",startedAt:new Date().toISOString()};created=true}if(!s.language)s.language="ko";if(created){const pending=await get("pendingExpressionIntent");if(pending?.question){s.expressionIntent={source:"VERIFIED_ASK",question:pending.question,questionLanguage:pending.language||"ko",answerTransferred:false,createdAt:pending.createdAt||new Date().toISOString()};await recordExpressionTrace("VERIFIED_ASK_EXPRESSION_ATTACHED",{source:"VERIFIED_ASK",questionLanguage:pending.language||"ko",verifiedCoverage:pending.verifiedCoverage||null,questionChars:pending.question.length,landmark:selected.id});await set("pendingExpressionIntent",null);await renderPendingExpressionIntent()}}ensureWritingState(s);await set("active",s);renderExplore(s);show("explore");setTimeout(()=>analyzeWritingMove(s),0);if($("#autoRead").checked){const p=promptFor(s.landmark,s.step,s.language,s.draft);speak(p[0],s.language,"AUTO_READ")}}
@@ -886,5 +889,4 @@ $("#crewMemberSave").onclick=async()=>{const identity=await renameCurrentCrewMem
 $("#homeRadio").onclick=()=>openImagination({language:"ko",source:"HOME_RADIO"});
 $("#autoRead").onchange=$("#reduceMotion").onchange=async()=>{const s=await get("settings")||{};s.autoRead=$("#autoRead").checked;s.reduceMotion=$("#reduceMotion").checked;await set("settings",s);document.documentElement.classList.toggle("reduceMotion",s.reduceMotion)}
 $("#nav").onclick=async e=>{const b=e.target.closest("button[data-view]");if(!b)return;const view=b.dataset.view;if(view==="explore"){const active=await get("active");if(active){renderExplore(active);show("explore")}else{show("map");toast("글쓰기 탐험지를 하나 골라 시작해봐.")}}else show(view)}
-if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
 init().then(()=>{if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.init="PASS"}).catch(e=>{if(window.__SNAP_RUNTIME_STATUS){window.__SNAP_RUNTIME_STATUS.init="FAIL";window.__SNAP_RUNTIME_STATUS.errors.push({type:"init",message:String(e?.message||e)})}console.error(e);toast("앱 데이터를 준비하지 못했어요.")});
