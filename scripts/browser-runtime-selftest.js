@@ -374,6 +374,57 @@
       assert("cloud-activity-does-not-change-exp",(await window.SnapPopStorage.get("exp"))===expBeforeCloud);
       assert("cloud-activity-does-not-change-gems",JSON.stringify(await window.SnapPopStorage.get("gems")||{})===gemsBeforeCloud);
 
+      const badgeLoaded=await window.SnapPopBadges.load();
+      assert("badge-working-catalog-has-sixty-drafts",badgeLoaded?.catalog?.status==="WORKING_DRAFT_NOT_ACTIVE"&&badgeLoaded.catalog.items?.length===60);
+      assert("badge-working-catalog-has-no-active-items",window.SnapPopBadges.activeItems().length===0);
+      const badgeObservation=window.SnapPopBadgeBehavior.normalize({
+        eventId:"runtime_badge_help",
+        family:"HELP_REQUEST",
+        source:"RUNTIME_SELFTEST",
+        payload:{explicitChildAction:true}
+      });
+      assert("badge-observation-is-observation-only",badgeObservation.disposition==="OBSERVATION_ONLY"&&badgeObservation.badgeAwardAuthorized===false&&badgeObservation.penaltyAllowed===false);
+      const sharedBadgeEvent=window.TakyBadgeExperienceContract.fromSnapObservation(badgeObservation);
+      assert("badge-shared-envelope-has-no-economy-authority",sharedBadgeEvent.badge_award_authorized===false&&sharedBadgeEvent.economy_mutation_authorized===false);
+      assert("badge-shared-envelope-keeps-app-owned-identity",sharedBadgeEvent.identity_scope==="APP_OWNED_NOT_SHARED"&&sharedBadgeEvent.role_scope==="APP_OWNED_NOT_SHARED"&&sharedBadgeEvent.permission_scope==="APP_OWNED_NOT_SHARED");
+
+      const badgeCandidate=window.SnapPopBadgeCandidate.propose({
+        id:"runtime_candidate",
+        title:"런타임 후보",
+        families:["HELP_REQUEST"],
+        evidenceEventIds:["runtime_badge_help"],
+        reason:"runtime review-only check"
+      });
+      assert("badge-candidate-is-review-only",badgeCandidate.status==="REVIEW_REQUIRED"&&badgeCandidate.active===false&&badgeCandidate.awardAuthorized===false&&badgeCandidate.autoCatalogInsertAllowed===false&&badgeCandidate.autoTriggerActivationAllowed===false);
+
+      const p1=window.SnapPopBadges.progressFromCount(1),p5=window.SnapPopBadges.progressFromCount(5),p6=window.SnapPopBadges.progressFromCount(6),p25=window.SnapPopBadges.progressFromCount(25);
+      assert("badge-five-tier-progression-runtime",p1.tier==="GREEN"&&p5.tier==="GREEN"&&p6.tier==="BLUE"&&p25.tier==="PLATINUM");
+      assert("badge-stars-clamped-one-to-five-runtime",p1.stars===1&&p5.stars===5&&window.SnapPopBadgeVisual.starSlots(3).filter(x=>x.active).length===3);
+
+      const runtimeIdentity={profile:{name:"런타임 탐험가",photo:""}};
+      const theme=window.SnapPopBadgeThemeExpression.normalize({themeId:"EXPLORATION",assetState:"UNRESOLVED"});
+      const composed=window.SnapPopBadgeThemeExpression.compose(runtimeIdentity,{themeId:"EXPLORATION",assetState:"UNRESOLVED"});
+      assert("badge-theme-is-cosmetic-only",theme.cosmeticOnly===true&&theme.identityMutationAllowed===false&&theme.growthMutationAllowed===false&&theme.economyMutationAllowed===false&&theme.awardMutationAllowed===false&&theme.powerMutationAllowed===false);
+      assert("badge-theme-keeps-identity-stable",composed.identity===runtimeIdentity&&composed.identityStable===true&&composed.powerEffect===null&&composed.rewardEffect===null&&composed.economyEffect===null);
+
+      const visual=window.SnapPopBadgeVisual.model({title:"런타임 미리보기",identity:runtimeIdentity,tier:"GOLD",stars:4,themeExpression:{themeId:"EXPLORATION",assetState:"UNRESOLVED"}});
+      assert("badge-visual-is-preview-only",visual.shape==="CIRCLE"&&visual.illustration==="HAND_DRAWN_PASTEL"&&visual.growthAdornment==="FIVE_GEM_STARS_UPPER_SEMICIRCLE"&&visual.awardState==="PREVIEW_ONLY"&&visual.badgeAwarded===false);
+      assert("badge-visual-composes-common-identity-theme-growth-layers",visual.composition.commonBadgeArt===true&&visual.composition.childIdentityLayer===true&&visual.composition.themeExpressionLayer===true&&visual.composition.badgeGrowthLayer===true&&visual.identity.name==="런타임 탐험가");
+      assert("growth-badge-preview-is-not-award",!!document.querySelector("#badgePreviewVisual .badgeMedallion")&&document.querySelector("#badgePreviewVisual")?.textContent?.includes("획득/수여 아님")===true);
+
+      let workingActivationBlocked=false;
+      try{window.SnapPopBadgeCatalogGuard.validateCatalog({status:"WORKING_DRAFT_NOT_ACTIVE",items:[{id:"x",status:"WORKING_DRAFT",active:true}]})}catch{workingActivationBlocked=true}
+      assert("badge-working-draft-activation-fails-closed",workingActivationBlocked===true&&window.SnapPopBadgeCatalogGuard.canActivate(badgeLoaded.catalog.items[0],badgeLoaded.catalog)===false);
+
+      const evidenceContract=window.SnapPopBadgeEvidenceContract;
+      const errorEvidence=evidenceContract.verify("ERROR_DISCOVERY",{explicitChildAction:true,evidenceRef:"runtime_error",sourceContractId:"SNAP_POP_CHILD_SELF_CORRECTION_V1",errorMarkedByChild:true,beforeArtifactRef:"before",afterArtifactRef:"after"});
+      const thinkEvidence=evidenceContract.verify("DEEP_THINKING",{explicitChildAction:true,evidenceRef:"runtime_think",sourceContractId:"SNAP_POP_CHILD_REFLECTION_ARTIFACT_V1",childChoseToReflect:true,reflectionArtifactRef:"reflection"});
+      const specialEvidence=evidenceContract.verify("SPECIAL_BEHAVIOR",{explicitChildAction:true,evidenceRef:"runtime_special",sourceContractId:"SNAP_POP_DECLARED_SPECIAL_ACTION_V1",declaredByFeature:true,featureContractId:"SNAP_POP_SPECIAL_EXPLORATION_V1",behaviorCode:"SPECIAL_EXPLORATION_COMPLETED"},{allowedFeatureContracts:["SNAP_POP_SPECIAL_EXPLORATION_V1"],allowedSpecialBehaviorCodes:["SPECIAL_EXPLORATION_COMPLETED"]});
+      assert("badge-strong-behavior-families-require-explicit-evidence",errorEvidence.explicitChildAction===true&&thinkEvidence.explicitChildAction===true&&specialEvidence.explicitChildAction===true);
+      let weakProxyBlocked=false;
+      try{evidenceContract.verify("DEEP_THINKING",{explicitChildAction:true,evidenceRef:"weak",sourceContractId:"SNAP_POP_CHILD_REFLECTION_ARTIFACT_V1",childChoseToReflect:true,reflectionArtifactRef:"r",elapsedMs:9999})}catch{weakProxyBlocked=true}
+      assert("badge-weak-proxy-evidence-is-blocked",weakProxyBlocked===true);
+
       click(document.querySelector("#resultBack"),"result-back-map");
       await wait(120);
       assert("map-restored-after-result",document.querySelector("#map")?.classList.contains("active")===true);
