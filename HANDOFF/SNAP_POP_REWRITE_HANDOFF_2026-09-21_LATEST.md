@@ -257,3 +257,5 @@ Conservative boundaries retained:
 - safety/overlay/stale-result runtime validation trigger.
 
 - stale-analysis race fix + safety/overlay runtime validation trigger.
+
+- DOM freshness stale-analysis regression validation trigger.
