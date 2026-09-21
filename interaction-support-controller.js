@@ -17,6 +17,7 @@ async function analyzeWritingMove(s){
   if(seq!==analysisSeq||!cur||cur.id!==s.id)return null;
   deps.ensureWritingState(cur);
   if(cur.draft!==draft||Math.min(2,cur.step||0)!==step)return null;
+  if(q('#answer').value!==draft)return null;
   q('#question').textContent=result.question;
   if(cur.crewState?.hintLevel>0)q('#hint').textContent=result.hint;
   deps.renderWritingBridge(result,language);
