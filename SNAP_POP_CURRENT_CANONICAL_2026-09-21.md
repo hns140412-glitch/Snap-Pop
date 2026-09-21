@@ -475,3 +475,17 @@ Canonical rewrite plan: `C2S/SNAP_POP_REWRITE_SURGERY_2026-09-21.md`.
 Phase 1 closed at `66d08c1ea3e5398eb1a33420cf76ad20c29098ba`: persistence ownership and UI shell ownership were extracted from `app.js`; full 48/48 closure and 390×844 Chrome runtime passed.
 
 Next owner migration: Writing Controller. Continued feature patch stacking into `app.js` is not the preferred route when extraction is feasible.
+
+
+## 13. Rewrite Phase 2 — Writing ownership extracted
+
+Phase 2 closed at `639199a0e4e9d35e78e924824272d4693c11907b`.
+
+Current ownership:
+- `writing-controller.js` owns writing-state normalization, question/hint presentation, writing lens labels, language-mode presentation and writing-screen render.
+- `writing-flow-controller.js` owns writing start/advance/input/language changes and completion transaction orchestration.
+- `app.js` remains temporary compatibility/orchestration and SHALL NOT reclaim those semantics.
+
+Validation: 50/50 closure PASS + 390×844 Chrome CDP runtime PASS.
+
+Next surgery owner: Crew Controller.

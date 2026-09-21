@@ -459,3 +459,11 @@ REWRITE SURGERY PHASE 1 CLOSED — 2026-09-21
 - UI shell owner extracted to app-shell-runtime.js
 - 48/48 + Chrome CDP runtime PASS
 - next work MUST continue with Writing Controller extraction, not app.js patch stacking
+
+
+REWRITE SURGERY PHASE 2 CLOSED — 2026-09-21
+- phase-2 SHA: 639199a0e4e9d35e78e924824272d4693c11907b
+- writing presentation/state owner: writing-controller.js
+- writing start/advance/input/language/completion owner: writing-flow-controller.js
+- 50/50 + Chrome CDP runtime PASS
+- next work: Crew Controller extraction; do not move writing ownership back into app.js

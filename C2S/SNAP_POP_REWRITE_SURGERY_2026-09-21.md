@@ -97,3 +97,26 @@ Completion requires app.js to become thin orchestration only, with material stat
 
 Phase 1 disposition: CLOSED.
 Phase 2 entry: extract Writing Controller without changing protected writing semantics.
+
+
+## Phase 2 closure evidence
+
+### Extracted ownership
+- writing-controller.js → writing presentation/state helper owner
+- writing-flow-controller.js → writing start/advance/input/language/completion flow owner
+
+### Legacy reduction
+- app.js reduced by approximately 12 KB across Phase 2A + 2B.
+- direct writing event ownership removed from app.js for start, next, draft input and language switching.
+
+### Exact evidence
+- SHA: `639199a0e4e9d35e78e924824272d4693c11907b`
+- Actions run: `35589987925`
+- job: `106301962904`
+- WRITING_CONTROLLER_BOUNDARY_PASS
+- WRITING_FLOW_CONTROLLER_BOUNDARY_PASS
+- BRANCH_CLOSURE_VALIDATOR_PASS 50/50
+- BROWSER_RUNTIME_CDP_PASS
+
+Phase 2 disposition: CLOSED.
+Phase 3 entry: extract Crew Controller while preserving Guide-derived interaction rules and Special=no-power semantics.

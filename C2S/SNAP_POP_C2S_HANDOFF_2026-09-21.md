@@ -3487,3 +3487,41 @@ Important:
 - Next surgery phase: Writing Controller / writing-flow ownership extraction.
 - After that: Crew Controller → Records/Growth → Settings/Special/Imagination orchestration cleanup.
 - Final target: app.js thin orchestration only.
+
+
+## 50. REWRITE SURGERY PHASE 2 CLOSED — 2026-09-21
+
+Phase 2 ownership migration:
+- writing presentation/state helpers → `writing-controller.js`
+- writing start/advance/input/language/completion transaction → `writing-flow-controller.js`
+- `app.js` now delegates writing presentation and core flow ownership.
+
+Material movement:
+- Phase 2A removed approximately 6.1 KB from legacy `app.js`.
+- Phase 2B removed approximately 5.9 KB more.
+- start / next / draft input / language-mode handlers no longer belong to legacy `app.js`.
+- completion record + EXP + Gem + completionEventId + badge fact event + Ready task-completed dispatch now execute through Writing Flow Controller using owner APIs.
+
+Validator migration:
+- semantic writing UI validation now follows `writing-controller.js`;
+- voice auto-read policy follows `writing-flow-controller.js`;
+- vocabulary provenance follows the new flow owner;
+- optional expression attach/trace follows the new flow owner;
+- crew intervention ladder follows the new flow owner;
+- badge WRITING_EXPLORATION fact-event validation follows the new flow owner.
+
+Exact Phase 2 evidence:
+- SHA: `639199a0e4e9d35e78e924824272d4693c11907b`
+- GitHub Actions run: `35589987925`
+- job: `106301962904`
+- `WRITING_CONTROLLER_BOUNDARY_PASS`
+- `WRITING_FLOW_CONTROLLER_BOUNDARY_PASS`
+- `BRANCH_CLOSURE_VALIDATOR_PASS 50/50`
+- `BROWSER_RUNTIME_CDP_PASS`
+- 390×844 browser runtime preserved.
+- IndexedDB OPEN / runtime phase DONE / runtime errors 0.
+
+Important:
+- validator changes were ownership-path corrections only; product constraints were not weakened.
+- REWRITE PHASE 2 CLOSED ≠ FULL REWRITE COMPLETE.
+- next owner migration: Crew Controller.
