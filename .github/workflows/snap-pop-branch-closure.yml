@@ -23,8 +23,25 @@ jobs:
         run: echo "SNAP_POP_VALIDATION_SHA=${GITHUB_SHA}"
       - name: Run branch closure validators
         run: node scripts/validate-branch-closure.mjs
+
+  shared-foundation-reconciliation:
+    if: github.ref_name == 'taky/learning-app-family-snap-reconcile-2026-09-21'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
       - name: Validate shared runtime contract
         run: node tests/shared-runtime-contract.test.js
+      - name: Validate vocabulary ownership boundary
+        run: node scripts/validate-vocabulary-material-ownership.mjs
+      - name: Validate Learning App Family context alignment
+        run: node scripts/validate-learning-app-family-context.mjs
       - name: Check reconciled JavaScript syntax
         run: |
           node --check app.js
