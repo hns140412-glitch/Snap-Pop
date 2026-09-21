@@ -610,3 +610,25 @@ Child-facing hierarchy now separates:
 3. the longer-term growth view.
 
 Bonus practice remains optional and collapsed by default. Reward/economy semantics were not changed. Final visual direction remains OPEN and DEVICE_VERIFIED=false.
+
+
+## Integrated UI structural closure — 2026-09-22
+
+- exact validated code SHA: `02977e81d0c03c1bdb941b9c5a6685c88dbaa373`
+- evidence commit: `8f1ca65830b05e018deff698ff405ffc76f62b4a`
+- branch closure: `68/68 PASS`
+- browser runtime: `BROWSER_RUNTIME_CDP_PASS`
+- viewport: `390×844`
+- architecture rewrite: CLOSED
+- integrated UI structural rewrite: CLOSED
+- verified child-facing surfaces:
+  1. Home / Map
+  2. Writing
+  3. Result / Records / Growth
+  4. Imagination Cloud / Special Exploration
+  5. Settings / Family
+- final visual / art direction: OPEN
+- DEVICE_VERIFIED: false
+- deploy / Netlify / main merge: NOT_RUN
+
+This closure means interaction hierarchy and structural child-facing flow are validated. It does not mean final visual styling, production hosting, or physical-device verification is complete.
