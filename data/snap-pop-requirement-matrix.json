@@ -1766,7 +1766,7 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "badge-behavior-runtime.js:OBSERVATION_ONLY",
@@ -1774,7 +1774,8 @@
         "app.js:recordBadgeBehaviorObservation",
         "app.js:badgeBehaviorObservations",
         "app.js:badgeSharedExperienceEvents",
-        "scripts/validate-badge-independent-experience-axis.mjs"
+        "scripts/validate-badge-independent-experience-axis.mjs",
+        "scripts/browser-runtime-selftest.js"
       ],
       "recoveryEvidence": [
         "SANITIZED_ACCOUNT_TRANSCRIPT_2026-09-08_[0165]: badge/title collection as fun element",
@@ -1782,7 +1783,12 @@
         "SANITIZED_ACCOUNT_TRANSCRIPT_2026-09-08_[0169]: approx 60 expandable from child activity",
         "C2S/SNAP_POP_BADGE_SOURCE_RECOVERY_2026-09-21.md"
       ],
-      "gap": "independent badge experience axis is coded/static verified and cannot mutate EXP, gems, affinity, award state or economy; active catalog breadth and remaining behavior detectors are tracked separately by SP-BADGE-005/006/008"
+      "gap": "physical-device verification remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: badge observation is OBSERVATION_ONLY",
+        "browser-runtime-selftest: badge award/penalty authority false",
+        "browser-runtime-selftest: shared badge envelope has no economy authority"
+      ]
     },
     {
       "id": "SP-BADGE-002",
@@ -1795,9 +1801,9 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "circular pastel layered badge preview renderer is implemented/static verified; final hand-drawn art assets and device visual tuning remain open",
+      "gap": "physical-device verification remains unverified",
       "recoveryEvidence": [
         "USER: 약간 키크니 스타일로 원형뱃지",
         "USER: 손 그림 느낌과 파스텔 색채감",
@@ -1808,7 +1814,12 @@
         "styles.css:.badgeMedallion/.badgeGemArc/.badgeIdentity",
         "index.html:#badgePreview",
         "app.js:renderBadgePreview",
-        "scripts/validate-badge-visual-compositor.mjs"
+        "scripts/validate-badge-visual-compositor.mjs",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: badge visual is circular hand-drawn pastel preview",
+        "browser-runtime-selftest: growth preview renders badge medallion as non-award"
       ]
     },
     {
@@ -1848,9 +1859,9 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "runtime contracts explicitly separate badge observations from EXP/economy/level authority; live cross-app integration remains NOT_RUN",
+      "gap": "physical-device verification remains unverified",
       "recoveryEvidence": [
         "Ready_Set_Ui_Master_Logic_REV_06.md: character level/growth economy, advanced reward economy, social competition are HOLD"
       ],
@@ -1860,7 +1871,13 @@
         "badge-behavior-runtime.js:OBSERVATION_ONLY",
         "data/badge-catalog-working.json:WORKING_DRAFT_NOT_ACTIVE",
         "scripts/validate-shared-badge-event-contract.mjs",
-        "scripts/validate-badge-behavior-observation.mjs"
+        "scripts/validate-badge-behavior-observation.mjs",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: shared badge envelope economy_mutation_authorized=false",
+        "browser-runtime-selftest: badge observation badgeAwardAuthorized=false",
+        "browser-runtime-selftest: theme/effects have no reward/economy power effect"
       ]
     },
     {
@@ -1873,16 +1890,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "historical ~60 drafts are preserved/inactive and new activity-backed badge candidates can be proposed into REVIEW_REQUIRED ledger; auto-discovery thresholds, canonical naming, approval and activation remain OPEN",
+      "gap": "60-draft review-only runtime verified; canonical naming/approval/activation remain OPEN",
       "codeEvidence": [
         "data/badge-catalog-working.json:60 inactive historical drafts",
         "badge-catalog-guard-runtime.js",
         "badge-candidate-runtime.js",
         "app.js:proposeBadgeCandidateFromObservations",
         "app.js:badgeCandidateReviews",
-        "scripts/validate-badge-candidate-review-only.mjs"
+        "scripts/validate-badge-candidate-review-only.mjs",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: WORKING catalog contains 60 drafts and zero active items",
+        "browser-runtime-selftest: new candidate is REVIEW_REQUIRED, inactive, non-awarding, non-auto-insert"
       ]
     },
     {
@@ -1896,9 +1918,9 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "ERROR_DISCOVERY / DEEP_THINKING / SPECIAL_BEHAVIOR now have explicit source-specific producers routed through the fail-closed evidence contract. ERROR_DISCOVERY requires child-marked correction plus before/after artifact refs; DEEP_THINKING requires a child-authored reflection artifact; SPECIAL_BEHAVIOR requires explicit Special Exploration completion plus feature/code allowlists. No elapsed-time, empty-attempt, retry-count, score or AI-inference proxy is accepted. Live browser/device behavior remains NOT_RUN.",
+      "gap": "physical-device verification remains unverified",
       "codeEvidence": [
         "badge-behavior-runtime.js",
         "badge-evidence-contract-runtime.js",
@@ -1915,7 +1937,12 @@
         "index.html:#deepThinkOpen/#deepThinkText/#deepThinkSave",
         "app.js:deepThinkSave→DEEP_THINKING explicit reflection artifact",
         "app.js:specialSave→SPECIAL_BEHAVIOR declared special exploration",
-        "scripts/validate-badge-evidence-producers.mjs"
+        "scripts/validate-badge-evidence-producers.mjs",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: ERROR_DISCOVERY/DEEP_THINKING/SPECIAL_BEHAVIOR require explicit evidence",
+        "browser-runtime-selftest: weak elapsed-time proxy evidence is blocked"
       ]
     },
     {
@@ -1929,16 +1956,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "notes": "Green→Blue→Red→Gold→Platinum; badge progression only, not character power level",
-      "gap": "five-tier + one-to-five upper semicircle gem-star visual renderer is implemented/static verified; active owned-badge collection UI remains intentionally unimplemented until catalog review",
+      "gap": "physical-device verification remains unverified",
       "codeEvidence": [
         "badge-runtime.js:progressFromCount",
         "badge-visual-runtime.js:tiers/starSlots",
         "styles.css:.badgeGemArc",
         "app.js:renderBadgePreview",
-        "scripts/validate-badge-visual-compositor.mjs"
+        "scripts/validate-badge-visual-compositor.mjs",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: GREEN→BLUE→RED→GOLD→PLATINUM progression",
+        "browser-runtime-selftest: one-to-five active gem-star slots"
       ]
     },
     {
@@ -1951,9 +1983,9 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "Theme Expression runtime is implemented as a cosmetic-only layer between stable Profile Character Identity and badge derivatives. Theme expressions cannot mutate identity, tier/stars, EXP/gems/economy, award state or power. Exact reviewed theme asset sets remain OPEN by design and are represented explicitly as UNRESOLVED until canonical assets are approved; live browser/device visual validation remains NOT_RUN.",
+      "gap": "runtime compositor/theme contracts verified; canonical reviewed art assets and physical-device visual tuning remain OPEN",
       "codeEvidence": [
         "badge-visual-runtime.js:identity stable=true",
         "app.js:resolvedIdentity/profile photo+name",
@@ -1962,7 +1994,12 @@
         "badge-theme-expression-runtime.js",
         "badge-visual-runtime.js:themeExpressionLayer",
         "app.js:badge preview uses UNRESOLVED theme asset state",
-        "scripts/validate-badge-theme-expression.mjs"
+        "scripts/validate-badge-theme-expression.mjs",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: theme expression is cosmetic-only",
+        "browser-runtime-selftest: identity remains stable and no power/reward/economy effect"
       ]
     },
     {
@@ -1976,14 +2013,19 @@
       "classification": "CONFIRMED_DIRECTION",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "common badge art + child identity + growth layer compositor is implemented/static verified; canonical active badge assets remain blocked by catalog review",
+      "gap": "runtime compositor/theme contracts verified; canonical reviewed art assets and physical-device visual tuning remain OPEN",
       "codeEvidence": [
         "badge-visual-runtime.js:composition",
         "styles.css:.badgeMedallion/.badgeIdentity/.badgeGemArc",
         "app.js:renderBadgePreview",
-        "scripts/validate-badge-visual-compositor.mjs"
+        "scripts/validate-badge-visual-compositor.mjs",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: visual composition includes common art + identity + theme + growth layers",
+        "browser-runtime-selftest: child profile identity is preserved in visual model"
       ]
     },
     {
@@ -1997,14 +2039,19 @@
       "classification": "WORKING",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "working-draft activation is fail-closed at runtime; later canonical catalog review remains required before any item can become active",
+      "gap": "working-draft fail-closed runtime verified; later canonical catalog review still required",
       "codeEvidence": [
         "badge-catalog-guard-runtime.js",
         "badge-runtime.js:validateCatalog/canActivate",
         "data/badge-catalog-working.json:WORKING_DRAFT_NOT_ACTIVE",
-        "scripts/validate-badge-catalog-activation-guard.mjs"
+        "scripts/validate-badge-catalog-activation-guard.mjs",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: WORKING_DRAFT_NOT_ACTIVE catalog has zero active items",
+        "browser-runtime-selftest: attempting active WORKING_DRAFT fails closed"
       ]
     },
     {
