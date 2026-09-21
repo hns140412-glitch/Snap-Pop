@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-c";
+  const VERSION="2026.09.21-d";
   const LENSES=new Set(["idea","emotion","description","viewpoint","final"]);
   const FORBIDDEN_KEYS=new Set([
     "finalDraft","final_draft","rewrite","rewrittenText","rewritten_text",
@@ -85,6 +85,7 @@
       step:Math.max(0,Math.min(2,Number(payload.step)||0)),
       language:payload.language==="en"?"en":"ko",
       learnerContext:payload.learnerContext||null,
+      vocabularyMaterial:payload.vocabularyMaterial||null,
       contract:{
         mode:"ANALYSIS_ONLY",
         childAuthorship:true,
@@ -95,6 +96,12 @@
         noSuggestedSentence:true,
         noGrading:true,
         noQuestionFlooding:true,
+        vocabularyMaterialPolicy:{
+          optional:true,
+          noAutoInsert:true,
+          noMasteryMutation:true,
+          sourceOwnerPreserved:true
+        },
         returnShape:{
           focus:"short label",
           question:"one next-move prompt",
