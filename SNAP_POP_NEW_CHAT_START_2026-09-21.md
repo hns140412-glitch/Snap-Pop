@@ -266,3 +266,16 @@ OPTIONAL EXPRESS TRANSITION NOTE:
 - requirement SP-UNIV-006 updated.
 - branch closure runner now has 19 validators.
 - old frozen candidate remains superseded; external call count remains 0.
+
+
+EXPRESSION TRACE / INTERVENTION NOTE:
+- pending verified-expression topic now has explicit dismiss; no arbitrary TTL.
+- expressionTrace stores metadata only, not child draft/AI answer/phrase contents.
+- expression trace validator 8/8 PASS.
+- staged crew intervention implemented from explicit empty Next attempts:
+  WAIT → HINT_OFFER → MINIMAL_REASK; after explicit hint → WAIT_AFTER_HINT.
+- no auto hint reveal and no draft writing.
+- intervention validator 9/9 PASS.
+- SP-GUIDE-002 updated.
+- closure runner now has 21 validators.
+- old frozen candidate remains superseded; external calls still 0.
