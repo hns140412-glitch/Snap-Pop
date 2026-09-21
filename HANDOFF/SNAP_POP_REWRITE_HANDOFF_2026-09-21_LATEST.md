@@ -313,3 +313,5 @@ Conservative boundaries retained:
 - verified/partial Ask→Understand intelligence runtime validation trigger.
 
 - no-guess reconciliation validator alignment exact-head trigger.
+
+- conservative truth runtime reconciliation exact-head validation trigger.
