@@ -52,6 +52,22 @@
 
       const answer=document.querySelector("#answer"),next=document.querySelector("#nextBtn");
       assert("hint-control-restored",!!document.querySelector("#hintBtn"));
+
+      click(next,"empty-advance-1");
+      await wait(120);
+      let interventionState=await window.SnapPopStorage.get("active");
+      assert("empty-first-attempt-stays-on-step-0",interventionState?.step===0);
+      assert("empty-first-attempt-waits",interventionState?.crewState?.interventionStage==="WAIT");
+      assert("empty-first-attempt-does-not-write",answer.value==="");
+
+      click(next,"empty-advance-2");
+      await wait(120);
+      interventionState=await window.SnapPopStorage.get("active");
+      assert("empty-second-attempt-stays-on-step-0",interventionState?.step===0);
+      assert("empty-second-attempt-offers-hint",interventionState?.crewState?.interventionStage==="HINT_OFFER");
+      assert("hint-is-not-auto-revealed",document.querySelector("#hint")?.hidden===true);
+      assert("empty-second-attempt-does-not-write",answer.value==="");
+
       const draft1="오늘은 숲에서 작은 빛을 봤어.";
       answer.value=draft1;
       answer.dispatchEvent(new Event("input",{bubbles:true}));
