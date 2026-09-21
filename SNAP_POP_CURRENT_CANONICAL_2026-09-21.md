@@ -563,3 +563,18 @@ Rewrite is NOT yet fully complete: residual wrapper/orchestration glue in `app.j
 - final visual direction: OPEN
 - DEVICE_VERIFIED: false
 - deploy / Netlify / main merge: NOT_RUN
+
+
+## 18. Architecture closed / Integrated UI rewrite active
+
+Latest exact validated code SHA: `0cef75de449b17111610aa4dea449b19066b9efc`.
+
+Evidence:
+- `BRANCH_CLOSURE_VALIDATOR_PASS 63/63`
+- `BROWSER_RUNTIME_CDP_PASS`
+- 390×844 viewport
+- thin orchestrator boundary PASS
+- architecture rewrite CLOSED
+- DEVICE_VERIFIED=false
+
+Integrated UI rewrite has started with the child writing flow. The current writing surface hierarchy is runtime verified, but this does not lock the final visual/art direction. Continue with home/map, result/records/growth, imagination/special, and settings/family surfaces while preserving the closed architecture boundaries.
