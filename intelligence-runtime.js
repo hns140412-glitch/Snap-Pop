@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  const VERSION = "2026.09.21-c";
+  const VERSION = "2026.09.21-d";
   function classifyIntent(input="") {
     const text = input.trim();
     if (!text) return "EMPTY";
@@ -39,7 +39,11 @@
       if(knowledge&&typeof knowledge.askVerified==="function"){
         try{
           const result=await knowledge.askVerified({...payload,input,language,intent});
-          return {...result,intent,external:true};
+          const scaffold=window.SnapPopCuriosityScaffold;
+          const shaped=scaffold&&typeof scaffold.scaffoldKnowledge==="function"
+            ? scaffold.scaffoldKnowledge(result,input,language)
+            : result;
+          return {...shaped,intent,external:true};
         }catch{}
       }
       return {...unverifiedKnowledgeResponse(input,language),intent};
