@@ -300,3 +300,14 @@ GUEST APPEARANCE CORRECTION NOTE:
 - special guest shared-memory validator 8/8 PASS.
 - guest appearance gate validator 7/7 PASS.
 - closure runner now has 24 validators.
+
+
+MATRIX / ETYMOLOGY HARDENING NOTE:
+- reconciled stale requirement statuses for Universal/Imagination/Truth code already present.
+- all reconciled items remain runtimeVerified=false / deviceVerified=false.
+- matrix reconciliation validator 9/9 PASS.
+- ETYMOLOGY FULL_FACTUAL_CONTENT now additionally requires 2 distinct evidence hosts.
+- same-host etymology remains CLAIM_SET_ONLY with ETYMOLOGY_SOURCE_DIVERSITY_INSUFFICIENT.
+- general concept questions keep normal citation rule.
+- etymology core validation 3/3 PASS.
+- closure runner now has 26 validators.
