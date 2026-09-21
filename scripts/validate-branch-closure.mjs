@@ -27,6 +27,7 @@ const validators=[
   "validate-expression-trace-and-dismiss.mjs",
   "validate-crew-intervention-ladder.mjs",
   "validate-badge-behavior-observation.mjs",
+  "validate-badge-explicit-evidence-contract.mjs",
   "validate-special-guest-shared-memory.mjs",
   "validate-guest-appearance-gate.mjs",
   "validate-requirement-matrix-reconciliation.mjs",

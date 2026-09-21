@@ -78,6 +78,27 @@ async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP
   }catch{return null}
 }
 
+async function recordBadgeBehaviorEvidence(family,evidence={},options={}){
+  if(!window.SnapPopBadgeEvidenceContract)return null;
+  try{
+    const verifiedEvidence=window.SnapPopBadgeEvidenceContract.verify(family,evidence,options);
+    return await recordBadgeBehaviorObservation(family,{
+      evidenceContract:verifiedEvidence.contract_version,
+      evidenceRef:verifiedEvidence.evidenceRef,
+      sourceContractId:verifiedEvidence.sourceContractId,
+      explicitChildAction:true,
+      inferenceAllowed:false,
+      elapsedTimeEvidenceAllowed:false,
+      scoreEvidenceAllowed:false,
+      beforeArtifactRef:verifiedEvidence.beforeArtifactRef||"",
+      afterArtifactRef:verifiedEvidence.afterArtifactRef||"",
+      reflectionArtifactRef:verifiedEvidence.reflectionArtifactRef||"",
+      featureContractId:verifiedEvidence.featureContractId||"",
+      behaviorCode:verifiedEvidence.behaviorCode||""
+    },"SNAP_POP_EXPLICIT_EVIDENCE");
+  }catch{return null}
+}
+
 async function recordBadgeEvent(family,payload={},source="SNAP_POP"){
   if(!window.SnapPopBadges)return null;
   try{
