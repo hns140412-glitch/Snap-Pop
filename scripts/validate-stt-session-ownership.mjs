@@ -76,13 +76,14 @@ assert("current-session-callbacks-pass",
 
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const imaginationSource=fs.readFileSync(new URL("../imagination-controller.js",import.meta.url),"utf8");
-const listenCalls=(appSource.match(/SnapPopVoice\.listen\(/g)||[]).length+(imaginationSource.match(/SnapPopVoice\.listen\(/g)||[]).length;
+const supportSource=fs.readFileSync(new URL("../interaction-support-controller.js",import.meta.url),"utf8");
+const listenCalls=(supportSource.match(/SnapPopVoice\.listen\(/g)||[]).length+(imaginationSource.match(/SnapPopVoice\.listen\(/g)||[]).length;
 assert("explicit-mic-entry-only",
   listenCalls===2&&
-  !appSource.includes("autoVoice")&&
+  !appSource.includes("autoVoice")&&!supportSource.includes("autoVoice")&&
   imaginationSource.includes('q("#imaginationVoiceBtn").onclick=listenVoice')&&
-  appSource.includes('$("#voiceBtn").onclick')&&
-  ((appSource.match(/source:"USER_MIC"/g)||[]).length+(imaginationSource.match(/source:"USER_MIC"/g)||[]).length)===2
+  supportSource.includes('q("#voiceBtn").onclick')&&
+  ((supportSource.match(/source:"USER_MIC"/g)||[]).length+(imaginationSource.match(/source:"USER_MIC"/g)||[]).length)===2
 );
 assert("home-radio-does-not-auto-start-mic",
   imaginationSource.includes('q("#homeRadio").onclick=()=>openImagination({language:"ko",source:"HOME_RADIO"})')
