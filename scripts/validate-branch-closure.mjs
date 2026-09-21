@@ -26,7 +26,8 @@ const validators=[
   "validate-optional-expression-transition.mjs",
   "validate-expression-trace-and-dismiss.mjs",
   "validate-crew-intervention-ladder.mjs",
-  "validate-badge-behavior-observation.mjs"
+  "validate-badge-behavior-observation.mjs",
+  "validate-special-guest-shared-memory.mjs"
 ];
 
 let passed=0;
