@@ -149,15 +149,18 @@
 </section>
 <section id="special" class="view parchment subflow">
  <button class="back" id="specialBack">← 지도</button>
- <header class="pageTitle"><span>선택 이벤트</span><h1>특별 탐험 초대장</h1><p>하고 싶을 때만 열어봐요. 참여하지 않아도 실패나 손해는 없어요.</p></header>
- <article class="paper">
+ <header class="pageTitle specialPageTitle"><span>원할 때만 여는 초대</span><h1>특별 탐험</h1><p>지금 하고 싶을 때만 해도 돼. 지나가도 아무 손해가 없어.</p></header>
+ <article class="paper specialPromptCard">
   <span class="kicker" id="specialDate"></span>
   <h2 id="specialPrompt">오늘의 특별 탐험</h2>
   <p id="specialHint"></p>
   <p class="kicker" id="specialCrewPresence" hidden></p>
-  <textarea id="specialAnswer" placeholder="떠오른 생각을 네 말로 남겨봐요."></textarea>
-  <button class="primary wide" id="specialSave">특별 탐험 기록하기</button>
-  <button class="soft wide resultSecondary" id="specialLater">다음에 할래요</button>
+  <label class="answerLabel" for="specialAnswer">내가 떠올린 것</label>
+  <textarea id="specialAnswer" placeholder="한 줄만 떠올라도 충분해."></textarea>
+  <div class="specialActions">
+   <button class="primary wide" id="specialSave">이 기억 남기기</button>
+   <button class="soft wide resultSecondary" id="specialLater">오늘은 지나가기</button>
+  </div>
  </article>
 </section>
 <section id="shop" class="view parchment subflow">
@@ -240,7 +243,7 @@
  <div class="imaginationBackdrop" id="imaginationBackdrop"></div>
  <section class="imaginationSheet" role="dialog" aria-modal="true" aria-labelledby="imaginationTitle">
   <header class="imaginationHead">
-   <div><span>필요할 때만 꺼내는 생각 도구</span><h2 id="imaginationTitle">상상 구름</h2></div>
+   <div><span>필요할 때만 여는 보조 세계</span><h2 id="imaginationTitle">상상 구름</h2><p>막힌 생각이나 궁금한 것 하나만 꺼내도 돼.</p></div>
    <button class="round imaginationClose" id="imaginationClose" type="button" aria-label="상상 구름 닫기">×</button>
   </header>
   <div class="modeSwitch imaginationMode" role="group" aria-label="상상구름 언어">
@@ -248,13 +251,17 @@
    <button class="soft" id="imaginationModeEn" type="button">English</button>
   </div>
   <div class="imaginationCrew"><b id="imaginationCrewName">탐험대원</b><span id="imaginationCrewLine">필요한 만큼만 같이 생각해보자.</span></div>
-  <textarea id="imaginationInput" rows="3" placeholder="막힌 생각이나 궁금한 걸 말하거나 적어봐요."></textarea>
+  <label class="answerLabel" for="imaginationInput">지금 궁금한 것</label>
+  <textarea id="imaginationInput" rows="3" placeholder="궁금한 것 또는 막힌 생각 한 가지"></textarea>
   <div class="imaginationActions">
    <button class="voice" id="imaginationVoiceBtn" type="button">말로 묻기</button>
-   <button class="primary" id="imaginationAskBtn" type="button">도움 받기</button>
+   <button class="primary" id="imaginationAskBtn" type="button">같이 생각해보기</button>
   </div>
   <div id="imaginationAnswer" class="cloudAnswer" hidden aria-live="polite"></div>
-  <button class="soft wide" id="imaginationSpeakLast" type="button">답변 듣기</button>
+  <details class="imaginationListenMore">
+   <summary>답을 다시 듣고 싶어?</summary>
+   <button class="soft wide" id="imaginationSpeakLast" type="button">답변 듣기</button>
+  </details>
  </section>
 </div>
 <nav id="nav" class="nav">
