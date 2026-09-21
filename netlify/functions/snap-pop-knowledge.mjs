@@ -76,6 +76,7 @@ function normalize(raw,sources){
     provider:"openai-web-search-knowledge",
     verification:{
       mode:"CLAIM_EVIDENCE",
+      coverage:"CLAIM_SET_ONLY",
       claims,
       unresolved:[...new Set(unresolved)]
     }
