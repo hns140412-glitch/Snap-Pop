@@ -19,6 +19,28 @@ async function call(body){
   return {status:response.status,body:await response.json()};
 }
 
+function responseFixture({text,citations=[],sources=[]}){
+  return {
+    output:[
+      {
+        type:"web_search_call",
+        action:{sources}
+      },
+      {
+        type:"message",
+        content:[{
+          type:"output_text",
+          text,
+          annotations:citations.map(x=>({
+            type:"url_citation",
+            url_citation:x
+          }))
+        }]
+      }
+    ]
+  };
+}
+
 try{
   process.env.OPENAI_API_KEY="";
   process.env.SNAP_POP_KNOWLEDGE_MODEL="test-model";
@@ -28,95 +50,65 @@ try{
   process.env.OPENAI_API_KEY="test-key";
   process.env.SNAP_POP_KNOWLEDGE_MODEL="test-model";
 
-  globalThis.fetch=async()=>new Response(JSON.stringify({
-    output:[
-      {
-        type:"web_search_call",
-        action:{sources:[{type:"url",url:"https://example.com/real",title:"Real source"}]}
-      },
-      {
-        type:"message",
-        content:[{
-          type:"output_text",
-          text:JSON.stringify({
-            title:"확인한 답",
-            core:"검증된 설명",
-            nodes:[],
-            example:null,
-            speakable:"검증된 설명",
-            claims:[{claim:"검증 주장",source_urls:["https://example.com/real"]}],
-            unresolved:[]
-          })
-        }]
-      }
+  const text="세종대왕은 1397년에 태어났어. 훈민정음은 1443년에 창제됐어.";
+  const firstEnd=text.indexOf("。")>=0?text.indexOf("。")+1:text.indexOf(".")+1;
+  globalThis.fetch=async()=>new Response(JSON.stringify(responseFixture({
+    text,
+    citations:[
+      {start_index:0,end_index:firstEnd,title:"Source A",url:"https://example.com/a"},
+      {start_index:firstEnd+1,end_index:text.length,title:"Source B",url:"https://example.com/b"}
+    ],
+    sources:[
+      {type:"url",url:"https://example.com/a",title:"Source A"},
+      {type:"url",url:"https://example.com/b",title:"Source B"}
     ]
-  }),{status:200,headers:{"content-type":"application/json"}});
+  })),{status:200,headers:{"content-type":"application/json"}});
 
   result=await call({contract_version:"SNAP_POP_KNOWLEDGE_V1",input:"질문",language:"ko"});
-  assert("retrieved-source-promotes-evidence",
+  assert("all-cited-sentences-get-full-coverage",
+    result.status===200&&
+    result.body.answer.verification.coverage==="FULL_FACTUAL_CONTENT"&&
+    result.body.answer.verification.claims.every(x=>x.status==="VERIFIED")
+  );
+
+  globalThis.fetch=async()=>new Response(JSON.stringify(responseFixture({
+    text,
+    citations:[
+      {start_index:0,end_index:firstEnd,title:"Source A",url:"https://invented.example/fake"},
+      {start_index:firstEnd+1,end_index:text.length,title:"Source B",url:"https://example.com/b"}
+    ],
+    sources:[
+      {type:"url",url:"https://example.com/a",title:"Source A"},
+      {type:"url",url:"https://example.com/b",title:"Source B"}
+    ]
+  })),{status:200,headers:{"content-type":"application/json"}});
+
+  result=await call({contract_version:"SNAP_POP_KNOWLEDGE_V1",input:"질문",language:"ko"});
+  assert("citation-url-must-exist-in-retrieved-source-set",
     result.status===200&&
     result.body.answer.verification.coverage==="CLAIM_SET_ONLY"&&
-    result.body.answer.verification.claims[0].status==="VERIFIED"&&
-    result.body.answer.verification.claims[0].evidence[0].source_url==="https://example.com/real"
-  );
-
-  globalThis.fetch=async()=>new Response(JSON.stringify({
-    output:[
-      {
-        type:"web_search_call",
-        action:{sources:[{type:"url",url:"https://example.com/real",title:"Real source"}]}
-      },
-      {
-        type:"message",
-        content:[{
-          type:"output_text",
-          text:JSON.stringify({
-            title:"답",
-            core:"설명",
-            nodes:[],
-            example:null,
-            speakable:"설명",
-            claims:[{claim:"주장",source_urls:["https://invented.example/fake"]}],
-            unresolved:[]
-          })
-        }]
-      }
-    ]
-  }),{status:200,headers:{"content-type":"application/json"}});
-
-  result=await call({contract_version:"SNAP_POP_KNOWLEDGE_V1",input:"질문",language:"ko"});
-  assert("invented-url-cannot-promote",
-    result.status===200&&
-    result.body.answer.verification.claims[0].status==="UNVERIFIED"&&
-    result.body.answer.verification.claims[0].evidence.length===0&&
-    result.body.answer.verification.unresolved.includes("CLAIM_SOURCE_NOT_IN_RETRIEVED_SET")
-  );
-
-  globalThis.fetch=async()=>new Response(JSON.stringify({
-    output:[{
-      type:"message",
-      content:[{
-        type:"output_text",
-        text:JSON.stringify({
-          title:"답",
-          core:"설명",
-          nodes:[],
-          example:null,
-          speakable:"설명",
-          claims:[{claim:"주장",source_urls:["https://example.com/real"]}],
-          unresolved:[]
-        })
-      }]
-    }]
-  }),{status:200,headers:{"content-type":"application/json"}});
-
-  result=await call({contract_version:"SNAP_POP_KNOWLEDGE_V1",input:"질문",language:"ko"});
-  assert("no-search-source-remains-unverified",
-    result.status===200&&
     result.body.answer.verification.claims[0].status==="UNVERIFIED"
   );
 
-  console.log("KNOWLEDGE_SEARCH_BOUNDARY_STATIC_CONTRACT_PASS");
+  globalThis.fetch=async()=>new Response(JSON.stringify(responseFixture({
+    text,
+    citations:[
+      {start_index:0,end_index:firstEnd,title:"Source A",url:"https://example.com/a"}
+    ],
+    sources:[
+      {type:"url",url:"https://example.com/a",title:"Source A"},
+      {type:"url",url:"https://example.com/b",title:"Source B"}
+    ]
+  })),{status:200,headers:{"content-type":"application/json"}});
+
+  result=await call({contract_version:"SNAP_POP_KNOWLEDGE_V1",input:"질문",language:"ko"});
+  assert("uncited-sentence-blocks-full-coverage",
+    result.status===200&&
+    result.body.answer.verification.coverage==="CLAIM_SET_ONLY"&&
+    result.body.answer.verification.unresolved.includes("UNCITED_SENTENCE_2")
+  );
+
+  console.log("KNOWLEDGE_SEARCH_CITATION_BOUNDARY_PASS");
 } finally {
   globalThis.fetch=originalFetch;
   if(originalKey===undefined) delete process.env.OPENAI_API_KEY; else process.env.OPENAI_API_KEY=originalKey;
