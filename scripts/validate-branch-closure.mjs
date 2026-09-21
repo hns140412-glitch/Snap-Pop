@@ -18,7 +18,8 @@ const validators=[
   "validate-voice-quality-policy.mjs",
   "validate-stt-session-ownership.mjs",
   "validate-p1-p5-integrated.mjs",
-  "validate-p6-app-boundaries.mjs"
+  "validate-p6-app-boundaries.mjs",
+  "validate-crew-guest-orchestration.mjs"
 ];
 
 let passed=0;
