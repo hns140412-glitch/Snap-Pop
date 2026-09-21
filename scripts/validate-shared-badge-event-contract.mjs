@@ -3,6 +3,7 @@ import vm from "node:vm";
 
 const source=fs.readFileSync(new URL("../badge-shared-contract-runtime.js",import.meta.url),"utf8");
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const badgeController=fs.readFileSync(new URL("../badge-controller.js",import.meta.url),"utf8");
 
 const window={};
 vm.runInNewContext(source,{window,Object,Array,String,Number,Math,Error,RegExp,Set,Date});
@@ -40,9 +41,9 @@ assert("no-award-or-economy-authority",
   shared.badge_award_authorized===false&&shared.economy_mutation_authorized===false
 );
 assert("app-mirrors-observation-without-replacing-local-ledger",
-  app.includes('badgeBehaviorObservations')&&
-  app.includes('badgeSharedExperienceEvents')&&
-  app.includes('fromSnapObservation')
+  badgeController.includes('badgeBehaviorObservations')&&
+  badgeController.includes('badgeSharedExperienceEvents')&&
+  badgeController.includes('fromSnapObservation')
 );
 
 console.log("SHARED_BADGE_EVENT_CONTRACT_PASS");
