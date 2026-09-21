@@ -1440,3 +1440,101 @@ Next:
 2. re-run the key isolated validators together as a closure matrix;
 3. inspect for remaining stale `verified !== false` patterns and old provider-visible labels;
 4. if clean, produce a P6 branch-only frozen-candidate readiness report without deploying.
+
+
+## 27. P6 APP BOUNDARY SWEEP + BRANCH-ONLY READINESS — 2026-09-21
+
+### Branch sweep method
+
+GitHub default-branch code search was rejected for this task because it did not reliably represent the active feature branch.
+
+Instead:
+- current branch HEAD tree was fetched directly;
+- all JS / MJS / HTML execution files in that tree were enumerated;
+- files were read from the active branch in connector batches;
+- stale patterns were scanned against branch content.
+
+Patterns:
+- `verified !== false`
+- `autoVoice`
+- direct browser TTS outside voice runtime
+- provider-visible child UI
+- raw system/model metadata
+- old `확인된 흐름` label
+
+### Sweep result
+
+Runtime residue:
+- `verified !== false`: none
+- `autoVoice`: none
+- provider label in Cloud History UI: none
+- old `확인된 흐름` child label: none
+- direct app `SpeechSynthesisUtterance`: none
+- raw system/model metadata pass-through: none
+
+Expected/allowed matches:
+- metadata field names inside `crew-presentation-guard.js` delete statements;
+- fixture strings inside validators;
+- `SpeechSynthesisUtterance` inside `voice-runtime.js` guarded browser fallback only.
+
+### App boundary validator
+
+Added:
+- `scripts/validate-p6-app-boundaries.mjs`
+
+Active-branch connector execution:
+- no-verified-not-false-in-app PASS
+- no-autoVoice-in-app PASS
+- no-direct-browser-tts-in-app PASS
+- browser-tts-only-inside-voice-runtime PASS
+- history-uses-tri-state-labels PASS
+- provider-not-shown-in-cloud-history PASS
+- provider-provenance-still-internal PASS
+- presentation-guard-removes-system-meta PASS
+- exact-two-user-mic-listen-calls PASS
+- home-radio-does-not-auto-listen PASS
+
+Final:
+- 10/10 PASS
+- `P6_APP_BOUNDARY_STATIC_PASS`
+
+### Readiness report
+
+Added:
+- `C2S/SNAP_POP_P6_BRANCH_ONLY_READINESS_2026-09-21.md`
+
+Classification:
+- BRANCH_ONLY_CLOSURE_PASS
+- FROZEN_CANDIDATE_NOT_YET_DECLARED
+- DEPLOY_CANDIDATE: NO
+- MERGE_CANDIDATE: NO
+
+Why not frozen:
+- existing GitHub CI/status checks: NONE
+- live browser→server: NOT_RUN
+- live OpenAI runtime: NOT_RUN
+- device: NOT_RUN
+- external realtime voice: OPEN / NOT_RUN
+
+No external-resource gate was crossed.
+
+### Status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- INTEGRATED_ISOLATED_RUNTIME: PASS
+- CI_VERIFIED: NOT_AVAILABLE / NONE
+- LIVE_RUNTIME_VERIFIED: NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- frozen candidate: NOT_DECLARED
+- merge/deploy/Netlify: NOT_RUN
+
+### Next
+
+Do not deploy.
+
+Next execution gate:
+1. establish a repeatable candidate-SHA validator path;
+2. run closure validators against the exact candidate SHA;
+3. only then assess whether frozen-candidate declaration is justified;
+4. live browser/server/OpenAI and device verification remain separately gated.
