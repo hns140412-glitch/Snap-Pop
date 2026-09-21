@@ -38,6 +38,7 @@ const validators=[
   "validate-non-blocking-crew-reaction-ui.mjs",
   "validate-think-express-verification-separation.mjs",
   "validate-badge-visual-compositor.mjs",
+  "validate-badge-theme-expression.mjs",
   "validate-badge-catalog-activation-guard.mjs",
   "validate-crew-special-role-not-power.mjs",
   "validate-imagination-return-integrity.mjs",

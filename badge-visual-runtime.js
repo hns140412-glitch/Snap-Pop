@@ -23,13 +23,18 @@
     theme="EXPLORATION",
     tier="GREEN",
     stars=1,
-    identity={}
+    identity={},
+    themeExpression=null
   }={}){
     const profile=identity?.profile||{};
+    const themeLayer=themeExpression&&window.SnapPopBadgeThemeExpression
+      ?window.SnapPopBadgeThemeExpression.normalize(themeExpression)
+      :null;
     return Object.freeze({
       contract_version:"SNAP_POP_BADGE_VISUAL_V1",
       title:clean(title,80)||"경험 배지 미리보기",
-      theme:clean(theme,60)||"EXPLORATION",
+      theme:themeLayer?.themeId||clean(theme,60)||"EXPLORATION",
+      themeExpression:themeLayer,
       tier:normalizeTier(tier),
       stars:normalizeStars(stars),
       shape:"CIRCLE",
@@ -43,6 +48,7 @@
       composition:{
         commonBadgeArt:true,
         childIdentityLayer:true,
+        themeExpressionLayer:true,
         badgeGrowthLayer:true
       },
       awardState:"PREVIEW_ONLY",

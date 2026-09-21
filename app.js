@@ -799,9 +799,14 @@ async function renderBadgePreview(){
   const host=$("#badgePreviewVisual");if(!host||!window.SnapPopBadgeVisual||!window.SnapPopBadges)return;
   const identity=await resolvedIdentity(),observations=await get("badgeBehaviorObservations")||[];
   const progress=window.SnapPopBadges.progressFromCount(Math.max(1,observations.length));
+  const themeExpression=window.SnapPopBadgeThemeExpression?.normalize({
+    themeId:"EXPLORATION",
+    assetState:"UNRESOLVED"
+  })||null;
   const model=window.SnapPopBadgeVisual.model({
     title:"경험 배지 미리보기",
     theme:"EXPLORATION",
+    themeExpression,
     tier:progress.tier||"GREEN",
     stars:progress.stars||1,
     identity
@@ -811,7 +816,7 @@ async function renderBadgePreview(){
     <div class="badgeGemArc">${slots.map(x=>`<i class="${x.active?"on":""}" aria-hidden="true"></i>`).join("")}</div>
     <div class="badgeIdentity">${model.identity.photo?`<img src="${html(model.identity.photo)}" alt="">`:`<span>${html(model.identity.name.slice(0,4))}</span>`}</div>
   </div>
-  <div class="badgePreviewMeta"><b>${html(model.title)}</b><span>${html(model.tier)} · 별 ${model.stars}/5 · 획득/수여 아님</span></div>`;
+  <div class="badgePreviewMeta"><b>${html(model.title)}</b><span>${html(model.tier)} · 별 ${model.stars}/5 · 획득/수여 아님</span><span>${model.themeExpression?.assetState==="UNRESOLVED"?"테마 표현 자산 검토 전":"검토된 테마 표현 자산"}</span></div>`;
 }
 
 async function renderGrowth(){if(!db)return;const cfg=await fetch("data/growth.json").then(r=>r.json()),exp=await get("exp")||0,p=levelProgress(exp),records=await get("records")||[],cloud=await get("cloudHistory")||[],special=await get("specialMemories")||[];let stage=cfg[0];cfg.forEach(x=>{if(p.level>=x.min)stage=x});$("#growthLv").textContent="Lv."+p.level;$("#growthName").textContent=stage.name;$("#treeImage").src="assets/growth/"+stage.image;$("#expBar").style.width=(p.within*100)+"%";$("#expText").textContent=p.level>=25?`EXP ${exp} · 최고 성장 단계`:`EXP ${exp} · 다음 성장까지 ${p.remaining} EXP`;const ask=cloud.filter(x=>x.intent==="ASK_UNDERSTAND").length,think=cloud.filter(x=>x.intent!=="ASK_UNDERSTAND").length,summary=$("#growthActivitySummary");if(summary)summary.innerHTML=`<div><b>표현 탐험</b><strong>${records.length}</strong></div><div><b>궁금증</b><strong>${ask}</strong></div><div><b>생각 펼치기</b><strong>${think}</strong></div><div><b>특별 탐험</b><strong>${special.length}</strong></div><p>궁금증·상상구름 활동은 성장 흔적으로만 남고 EXP·보석 파밍에는 사용하지 않아요.</p>`;await renderBadgePreview();await renderIdentityPresence()}

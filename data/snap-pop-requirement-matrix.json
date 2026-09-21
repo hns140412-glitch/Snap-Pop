@@ -1581,16 +1581,20 @@
         "USER_DIRECT_2026-09-08"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "Profile Character identity layer is implemented and stable across visual model changes; exact Theme Expression system/assets remain OPEN",
+      "gap": "Theme Expression runtime is implemented as a cosmetic-only layer between stable Profile Character Identity and badge derivatives. Theme expressions cannot mutate identity, tier/stars, EXP/gems/economy, award state or power. Exact reviewed theme asset sets remain OPEN by design and are represented explicitly as UNRESOLVED until canonical assets are approved; live browser/device visual validation remains NOT_RUN.",
       "codeEvidence": [
         "badge-visual-runtime.js:identity stable=true",
         "app.js:resolvedIdentity/profile photo+name",
         "app.js:renderBadgePreview badgeIdentity",
-        "scripts/validate-badge-visual-compositor.mjs"
+        "scripts/validate-badge-visual-compositor.mjs",
+        "badge-theme-expression-runtime.js",
+        "badge-visual-runtime.js:themeExpressionLayer",
+        "app.js:badge preview uses UNRESOLVED theme asset state",
+        "scripts/validate-badge-theme-expression.mjs"
       ]
     },
     {

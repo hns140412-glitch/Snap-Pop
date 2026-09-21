@@ -45,7 +45,19 @@
       "CHILD_IDENTITY_LAYER",
       "BADGE_GROWTH_LAYER"
     ],
-    "identityRule": "IDENTITY_STABLE_THEME_EXPRESSION_VARIABLE"
+    "identityRule": "IDENTITY_STABLE_THEME_EXPRESSION_VARIABLE",
+    "themeExpression": {
+      "contract": "SNAP_POP_BADGE_THEME_EXPRESSION_V1",
+      "authority": "COSMETIC_ONLY",
+      "exactAssetSet": "OPEN_UNRESOLVED_UNTIL_REVIEWED",
+      "forbiddenMutation": [
+        "PROFILE_IDENTITY",
+        "BADGE_GROWTH_TIER_STARS",
+        "EXP_GEM_ECONOMY",
+        "AWARD_STATE",
+        "POWER"
+      ]
+    }
   },
   "antiPatterns": [
     "CHARACTER_POWER_LEVEL",
