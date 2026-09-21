@@ -5,6 +5,7 @@ const semantic=fs.readFileSync(new URL("../semantic-writing-runtime.js",import.m
 const server=fs.readFileSync(new URL("../netlify/functions/snap-pop-semantic-writing.mjs",import.meta.url),"utf8");
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const controller=fs.readFileSync(new URL("../writing-controller.js",import.meta.url),"utf8");
+const flow=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -53,8 +54,8 @@ assert("live-result-applies-only-if-draft-and-step-still-match",
 );
 
 assert("crew-reaction-is-derived-from-current-analysis",
-  app.includes("const move=await analyzeWritingMove(cur)||refreshWritingMove(cur)")&&
-  app.includes("stepSpecificReaction(cur.draft")
+  flow.includes("const move=await deps.analyzeWritingMove(cur)||deps.refreshWritingMove(cur)")&&
+  flow.includes("deps.stepSpecificReaction(cur.draft")
 );
 
 assert("authorship-guard-prevents-draft-rewrite",
