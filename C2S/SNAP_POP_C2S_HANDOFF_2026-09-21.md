@@ -1820,3 +1820,102 @@ Continue branch-only implementation with:
 3. no full-sentence ghostwriting by default;
 4. no automatic translation overwrite;
 5. preserve `MEANING FIRST → EXPRESSION SECOND → POLISH THIRD`.
+
+
+## 31. KOREAN↔ENGLISH MEANING-PRESERVING EXPRESSION BRIDGE — 2026-09-21
+
+### Implemented
+
+Added:
+- `expression-bridge-runtime.js`
+- `openai-expression-bridge-provider.js`
+- `netlify/functions/snap-pop-expression-bridge.mjs`
+- `scripts/validate-expression-bridge.mjs`
+
+Route:
+- `/api/snap-pop-expression-bridge`
+- same-origin function boundary;
+- browser key remains forbidden.
+
+### Product contract
+
+This is NOT automatic translation and NOT draft replacement.
+
+Flow:
+`child draft → meaning anchor → 1–4 phrase fragments → one assembly question → child writes final expression`
+
+Hard locks:
+- child remains final author;
+- no full draft translation;
+- no full-sentence answer by default;
+- no automatic textarea overwrite;
+- no automatic language-mode switch;
+- explicit user button only;
+- maximum 4 phrase fragments;
+- each fragment must remain short and fragment-like;
+- fragments ending with sentence punctuation are rejected;
+- long fragment (>8 whitespace tokens) is rejected;
+- exactly one assembly question;
+- stale-draft guard prevents late result from applying after draft changes.
+
+UI:
+- explicit `English 표현 도움 / 한국어 표현 도움` button;
+- compact panel shows:
+  - meaning anchor;
+  - phrase fragments;
+  - one assembly prompt;
+  - reminder that the child assembles the sentence and the draft stays unchanged.
+
+### Vocabulary bridge interaction
+
+If Hide & Seek vocabulary material exists:
+- it may be included as optional expression material;
+- source ownership remains preserved;
+- server is instructed:
+  - never auto-insert;
+  - never infer mastery;
+  - never transfer vocabulary ownership.
+
+### Validation
+
+`EXPRESSION_BRIDGE_CONTRACT_PASS`
+- 11/11 PASS
+
+Checks:
+1. valid fragment contract passes
+2. complete-sentence fragment blocked
+3. long fragment blocked
+4. question flooding blocked
+5. provider same-origin
+6. server forbids final sentence
+7. server preserves vocabulary ownership
+8. route configured
+9. explicit button required
+10. bridge does not overwrite draft
+11. stale-draft guard present
+
+### Requirement matrix
+
+`SP-UNIV-002`
+- CODED=true
+- STATIC_VERIFIED=true
+- RUNTIME_VERIFIED=false
+- DEVICE_VERIFIED=false
+
+Current live status:
+- browser/provider/server live execution: NOT_RUN
+- OpenAI expression bridge runtime: NOT_RUN
+- device: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Closure runner
+
+`scripts/validate-branch-closure.mjs` now includes 18 validators.
+
+### Next implementation axis
+
+Next branch-only work:
+1. ASK→UNDERSTAND → optional EXPRESS transition;
+2. never force a curiosity answer back into writing;
+3. only expose expression transition after the answer is fully verified and the child explicitly chooses it;
+4. reuse the meaning-preserving bridge instead of generating a finished sentence.
