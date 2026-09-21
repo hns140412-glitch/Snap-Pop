@@ -27,6 +27,8 @@
 
   function sanitize(raw={}){
     if(!raw||typeof raw!=="object") throw new Error("EXPRESSION_BRIDGE_INVALID_OUTPUT");
+    const authorship=window.SnapPopAuthorshipGuard;
+    if(authorship&&typeof authorship.assertExpressionBridge==="function") authorship.assertExpressionBridge(raw);
     const fragments=Array.isArray(raw.phraseFragments)
       ? raw.phraseFragments.slice(0,4).map(assertFragment)
       : [];
