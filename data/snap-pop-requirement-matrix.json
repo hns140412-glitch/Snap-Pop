@@ -1396,17 +1396,17 @@
         "LATEST_DIRECT_USER_2026-09-21"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "data/badge-system.json",
-        "data/badge-catalog-working.json",
-        "badge-runtime.js",
-        "badge-behavior-runtime.js",
-        "badge-shared-contract-runtime.js",
-        "app.js:recordBadgeBehaviorObservation"
+        "badge-behavior-runtime.js:OBSERVATION_ONLY",
+        "badge-shared-contract-runtime.js:TAKY_BADGE_EXPERIENCE_EVENT_V1",
+        "app.js:recordBadgeBehaviorObservation",
+        "app.js:badgeBehaviorObservations",
+        "app.js:badgeSharedExperienceEvents",
+        "scripts/validate-badge-independent-experience-axis.mjs"
       ],
       "recoveryEvidence": [
         "SANITIZED_ACCOUNT_TRANSCRIPT_2026-09-08_[0165]: badge/title collection as fun element",
@@ -1414,7 +1414,7 @@
         "SANITIZED_ACCOUNT_TRANSCRIPT_2026-09-08_[0169]: approx 60 expandable from child activity",
         "C2S/SNAP_POP_BADGE_SOURCE_RECOVERY_2026-09-21.md"
       ],
-      "gap": "independent experience event/data model and shared envelope are implemented; full reviewed active badge catalog and broader source-specific detectors remain incomplete"
+      "gap": "independent badge experience axis is coded/static verified and cannot mutate EXP, gems, affinity, award state or economy; active catalog breadth and remaining behavior detectors are tracked separately by SP-BADGE-005/006/008"
     },
     {
       "id": "SP-BADGE-002",
