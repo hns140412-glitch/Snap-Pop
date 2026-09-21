@@ -4,6 +4,7 @@ import vm from "node:vm";
 const runtime=fs.readFileSync(new URL("../crew-core6-runtime.js",import.meta.url),"utf8");
 const rules=JSON.parse(fs.readFileSync(new URL("../data/exploration-crew-rules.json",import.meta.url),"utf8"));
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const settings=fs.readFileSync(new URL("../settings-profile-controller.js",import.meta.url),"utf8");
 
 const window={};
 vm.runInNewContext(runtime,{window,Object,Array,String,Number,Math,Error});
@@ -43,12 +44,12 @@ catch(error){lockBlocked=error?.message==="CREW_CORE6_ROSTER_LOCK_FORBIDDEN"}
 assert("roster-lock-blocked",lockBlocked);
 
 assert("app-renders-baseline-boundary-copy",
-  app.includes("시작 기준점 6명")&&
-  app.includes("전체 탐험대 고정 아님")&&
-  app.includes("미래 확장 허용")
+  settings.includes("시작 기준점 6명")&&
+  settings.includes("전체 탐험대 고정 아님")&&
+  settings.includes("미래 확장 허용")
 );
 assert("starter-selection-uses-core6-guard",
-  app.includes("SnapPopCrewCore6?.isCore6?.(id)")
+  settings.includes("SnapPopCrewCore6?.isCore6?.(id)")
 );
 
 console.log("CREW_CORE6_STARTER_BASELINE_PASS");
