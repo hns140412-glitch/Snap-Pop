@@ -82,3 +82,5 @@ Generic `ㄱ` is not deploy approval.
 - final visual direction: OPEN
 - DEVICE_VERIFIED: false
 - deploy / Netlify / main merge: NOT_RUN
+
+- validation retrigger after validator/CDP harness fix.
