@@ -13,6 +13,7 @@ const ids=new Set([...index.matchAll(/id="([^"]+)"/g)].map(m=>m[1]));
 const missing=[...new Set(direct)].filter(id=>!ids.has(id));
 
 assert("all-direct-dom-bindings-have-index-targets",missing.length===0);
+assert("querySelector-collection-misuse-blocked",!/\$\([^\n;]+\)\.forEach\s*\(/.test(app));
 assert("explicit-help-request-control-exists",ids.has("hintBtn"));
 assert("hint-control-is-wired-to-explicit-help-path",
   app.includes('$("#hintBtn").onclick=revealHint')&&
