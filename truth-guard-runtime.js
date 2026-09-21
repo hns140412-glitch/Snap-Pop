@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-a";
+  const VERSION="2026.09.21-b";
   const MAX_CLAIMS=12;
   const MAX_EVIDENCE=6;
 
@@ -38,15 +38,25 @@
     const claims=list(verification.claims,MAX_CLAIMS).map(normalizeClaim).filter(Boolean);
     const unresolved=list(verification.unresolved,MAX_CLAIMS).map(x=>text(x,300)).filter(Boolean);
     const mode=text(verification.mode,60);
-    const allVerified=claims.length>0&&claims.every(x=>x.status==="VERIFIED");
-    const verified=mode==="CLAIM_EVIDENCE"&&allVerified&&unresolved.length===0;
+    const coverage=text(verification.coverage,60);
+    const claimEvidenceVerified=claims.length>0&&claims.every(x=>x.status==="VERIFIED");
+    const verified=mode==="CLAIM_EVIDENCE"&&coverage==="FULL_FACTUAL_CONTENT"&&claimEvidenceVerified&&unresolved.length===0;
     return Object.freeze({
       version:VERSION,
       verified,
       mode:verified?"CLAIM_EVIDENCE":"UNVERIFIED",
+      coverage:coverage||"UNKNOWN",
+      claimEvidenceVerified,
+      verifiedClaimCount:claims.filter(x=>x.status==="VERIFIED").length,
       claims,
       unresolved,
-      reason:verified?"ALL_CLAIMS_EVIDENCE_BACKED":claims.length===0?"NO_CLAIM_EVIDENCE":"CLAIM_VERIFICATION_INCOMPLETE"
+      reason:verified
+        ?"ALL_FACTUAL_CONTENT_EVIDENCE_BACKED"
+        :claims.length===0
+          ?"NO_CLAIM_EVIDENCE"
+          :claimEvidenceVerified&&coverage!=="FULL_FACTUAL_CONTENT"
+            ?"CLAIM_SET_VERIFIED_COVERAGE_OPEN"
+            :"CLAIM_VERIFICATION_INCOMPLETE"
     });
   }
 
