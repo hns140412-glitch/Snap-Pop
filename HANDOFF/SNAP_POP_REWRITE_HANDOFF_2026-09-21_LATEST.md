@@ -303,3 +303,5 @@ Conservative boundaries retained:
 - badge-008 runtime-contract/art-asset-open closure validation trigger.
 
 - universal Think/Express + bilingual + no-guess runtime validation trigger.
+
+- universal Think/Express provider probe collision fix validation trigger.
