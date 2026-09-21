@@ -9,7 +9,8 @@ async function getTarget(){
     }catch{}
     await sleep(100);
   }
-  let version=null; try{version=await fetch("http://127.0.0.1:9222/json/version").then(r=>r.text())}catch{}\n  throw new Error("CDP_TARGET_NOT_FOUND version="+String(version||"UNAVAILABLE"));
+  let version=null; try{version=await fetch("http://127.0.0.1:9222/json/version").then(r=>r.text())}catch{}
+  throw new Error("CDP_TARGET_NOT_FOUND version="+String(version||"UNAVAILABLE"));
 }
 
 const target=await getTarget();
