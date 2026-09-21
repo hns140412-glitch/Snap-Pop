@@ -908,3 +908,101 @@ Next axis:
   - no raw provider/system voice leakage;
   - crew-specific reaction guard without changing factual content;
 - keep P2 Truth Guard and P3 pressure locks unchanged.
+
+
+## 21. P4 EXPLORATION CREW RESPONSE OWNERSHIP — 2026-09-21
+
+### Problems addressed
+
+User-facing Imagination Cloud content could expose provider identity through:
+- provider-authored title;
+- raw system/model metadata;
+- provider label in history UI;
+- possible provider self-identification inside returned text.
+
+A naive word-stripping guard was rejected during implementation because it could corrupt legitimate factual content such as `경제 모델`.
+
+### Current ownership boundary
+
+Added:
+- `crew-presentation-guard.js`
+
+Rules:
+- user-facing response owner is always `EXPLORATION_CREW`;
+- provider-authored title is replaced with a generic crew-owned title;
+- title is localized for Korean / English;
+- factual `core`, nodes, example and speakable content are preserved, not paraphrased;
+- provider/system metadata fields are removed from the user-facing object;
+- internal `provider` provenance may remain in storage/runtime for diagnostics;
+- provider name is removed from Cloud History UI;
+- known AI/system self-identification patterns in factual text cause fail-closed `CREW_PRESENTATION_IDENTITY_LEAK`;
+- leak content is not silently rewritten or word-stripped.
+
+All intelligence paths now pass through a shared `present(result, language)` helper:
+- verified ASK_UNDERSTAND;
+- unverified fallback;
+- external THINK_EXPRESS;
+- local THINK_EXPRESS;
+- EMPTY/local scaffold.
+
+This makes response ownership consistent even when no external provider is used.
+
+### UI/storage separation
+
+Cloud render path:
+- intelligence result → presentation guard → render.
+
+Cloud history:
+- stores a public-safe history payload;
+- retains provider provenance internally;
+- does not display provider label to the child.
+
+### Validation
+
+Added/updated:
+- `scripts/validate-crew-presentation-ownership.mjs`
+
+Isolated execution PASS:
+- generic-crew-title
+- english-title-localized
+- factual-core-preserved
+- factual-node-preserved
+- response-owner-is-crew
+- system-metadata-removed
+- internal-provider-can-remain-for-provenance
+- self-identity-leak-fails-closed
+- history-ui-hides-provider-label
+- history-still-keeps-provider-provenance
+- app-applies-presentation-guard-before-render
+- all-intelligence-paths-have-present-helper
+
+Final marker:
+- `CREW_PRESENTATION_OWNERSHIP_CONTRACT_PASS`
+
+### Implementation correction log
+
+An initial guard removed generic words like `model` / `provider` from user-facing text.
+That approach was identified as unsafe because it could mutate legitimate facts.
+It was replaced before closure with:
+- verbatim factual content preservation;
+- metadata/title ownership normalization;
+- explicit self-identity leak detection + fail-closed behavior.
+
+### Status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL
+  - isolated presentation ownership contract PASS
+  - live browser interaction NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Next P4/P5 boundary
+
+P4 response ownership is materially closed for branch-only work.
+
+Next:
+- inspect voice path ownership so TTS never speaks hidden provider/system metadata;
+- keep `speakable` guarded;
+- then move into P5 voice quality/realtime boundary without weakening authorship or Truth Guard.
