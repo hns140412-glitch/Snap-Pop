@@ -96,3 +96,11 @@ LATEST CONTINUATION NOTE:
 - P2 now includes `truth-guard-runtime.js` + `knowledge-runtime.js`.
 - Read `C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md` section 12 before continuing.
 - Verified external search provider is still OPEN; do not claim OPENAI runtime connection.
+
+
+LATEST P2 NOTE:
+- P2 citation-level coverage architecture is now coded.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md sections 13-14.
+- Factual verification uses actual url_citation annotations + retrieved source-set matching.
+- P3 Imagination Cloud intelligence quality is the next branch-only implementation axis.
+- live OpenAI/browser/server runtime is still NOT_RUN; no deploy/Netlify/merge.
