@@ -38,6 +38,18 @@
       await wait(180);
       assert("writing-view-active",document.querySelector("#explore")?.classList.contains("active")===true);
 
+      const appRoot=document.querySelector("#app");
+      assert("mobile-root-has-no-horizontal-overflow",appRoot.scrollWidth<=appRoot.clientWidth+1);
+      assert("mobile-document-has-no-horizontal-overflow",document.documentElement.scrollWidth<=window.innerWidth+1);
+      const toolButtons=[...document.querySelectorAll("#explore .tools button")].filter(b=>!b.hidden&&getComputedStyle(b).display!=="none");
+      assert("writing-tools-present",toolButtons.length>=6);
+      const toolHeights=toolButtons.map(b=>({id:b.id,height:Math.round(b.getBoundingClientRect().height*10)/10}));
+      if(!toolButtons.every(b=>b.getBoundingClientRect().height>=44))throw new Error("FAIL writing-tools-touch-height "+JSON.stringify(toolHeights));
+      result.textContent+="\nPASS writing-tools-touch-height";
+      assert("writing-tools-stay-inside-viewport",toolButtons.every(b=>{const r=b.getBoundingClientRect();return r.left>=0&&r.right<=window.innerWidth+1}));
+      assert("primary-next-touch-height",document.querySelector("#nextBtn")?.getBoundingClientRect().height>=44);
+
+
       const answer=document.querySelector("#answer"),next=document.querySelector("#nextBtn");
       assert("hint-control-restored",!!document.querySelector("#hintBtn"));
       answer.value="오늘은 숲에서 작은 빛을 봤어.";
@@ -139,17 +151,6 @@
       toggle.dispatchEvent(new Event("change",{bubbles:true}));
       await wait(120);
       assert("family-mode-reenabled",document.querySelector("#familyExpansionMode")?.textContent==="사용 중");
-
-      const appRoot=document.querySelector("#app");
-      assert("mobile-root-has-no-horizontal-overflow",appRoot.scrollWidth<=appRoot.clientWidth+1);
-      assert("mobile-document-has-no-horizontal-overflow",document.documentElement.scrollWidth<=window.innerWidth+1);
-      const toolButtons=[...document.querySelectorAll("#explore .tools button")].filter(b=>!b.hidden&&getComputedStyle(b).display!=="none");
-      assert("writing-tools-present",toolButtons.length>=6);
-      const toolHeights=toolButtons.map(b=>({id:b.id,height:Math.round(b.getBoundingClientRect().height*10)/10}));
-      if(!toolButtons.every(b=>b.getBoundingClientRect().height>=44))throw new Error("FAIL writing-tools-touch-height "+JSON.stringify(toolHeights));
-      result.textContent+="\nPASS writing-tools-touch-height";
-      assert("writing-tools-stay-inside-viewport",toolButtons.every(b=>{const r=b.getBoundingClientRect();return r.left>=0&&r.right<=window.innerWidth+1}));
-      assert("primary-next-touch-height",document.querySelector("#nextBtn")?.getBoundingClientRect().height>=44);
 
       document.body.dataset.runtimeSmoke="PASS";
       result.textContent+="\nBROWSER_RUNTIME_SELFTEST_PASS";
