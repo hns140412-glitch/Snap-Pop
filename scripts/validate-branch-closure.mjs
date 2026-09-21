@@ -68,6 +68,7 @@ const validators=[
   "validate-thin-orchestrator-boundary.mjs",
   "validate-integrated-child-writing-flow.mjs",
   "validate-integrated-home-map-flow.mjs",
+  "validate-integrated-result-records-growth.mjs",
   "validate-dom-binding-integrity.mjs"
 ];
 
