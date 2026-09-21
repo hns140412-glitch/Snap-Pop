@@ -130,6 +130,21 @@
 
       const answer=document.querySelector("#answer"),next=document.querySelector("#nextBtn");
       assert("hint-control-restored",!!document.querySelector("#hintBtn"));
+      const originalVoiceRuntime=window.SnapPopVoice;
+      const voiceCalls=[];
+      window.SnapPopVoice={
+        async speak(text,options={}){voiceCalls.push({kind:"speak",text,source:options.source||null});return {ok:true}},
+        async listen(options={}){voiceCalls.push({kind:"listen",source:options.source||null});options.onStart?.();options.onEnd?.();return {ok:true}}
+      };
+      click(document.querySelector("#listenBtn"),"writing-listen-question");
+      await wait(80);
+      assert("writing-listen-uses-speak-only",voiceCalls.some(x=>x.kind==="speak")&&!voiceCalls.some(x=>x.kind==="listen"));
+      voiceCalls.length=0;
+      click(document.querySelector("#voiceBtn"),"writing-voice-input");
+      await wait(80);
+      assert("writing-voice-input-uses-listen-only",voiceCalls.some(x=>x.kind==="listen"&&x.source==="USER_MIC")&&!voiceCalls.some(x=>x.kind==="speak"));
+      window.SnapPopVoice=originalVoiceRuntime;
+
       const safety=window.SnapPopCrewInteractionSafety;
       assert("unsafe-child-mock-is-blocked",safety?.inspect("넌 또 틀렸어",{mode:"CHILD_REACTION"})?.safe===false);
       assert("unsafe-child-mock-falls-back-neutral",safety?.safeReaction("넌 또 틀렸어",{language:"ko"})==="작은 한 조각만 같이 보자.");
@@ -366,6 +381,17 @@
       click(document.querySelector("#homeRadio"),"home-radio");
       await wait(120);
       assert("home-radio-opens-imagination",document.querySelector("#imaginationLayer")?.hidden===false);
+      const originalCloudVoice=window.SnapPopVoice;
+      const cloudVoiceCalls=[];
+      window.SnapPopVoice={
+        async speak(text,options={}){cloudVoiceCalls.push({kind:"speak",source:options.source||null});return {ok:true}},
+        async listen(options={}){cloudVoiceCalls.push({kind:"listen",source:options.source||null});options.onStart?.();options.onEnd?.();return {ok:true}}
+      };
+      click(document.querySelector("#imaginationVoiceBtn"),"home-radio-voice-question");
+      await wait(80);
+      assert("home-radio-voice-question-uses-user-mic",cloudVoiceCalls.some(x=>x.kind==="listen"&&x.source==="USER_MIC"));
+      assert("home-radio-voice-question-does-not-use-speak",!cloudVoiceCalls.some(x=>x.kind==="speak"));
+      window.SnapPopVoice=originalCloudVoice;
       click(document.querySelector("#imaginationClose"),"home-radio-close");
       await wait(120);
       assert("home-radio-close-restores-map",document.querySelector("#imaginationLayer")?.hidden===true&&document.querySelector("#map")?.classList.contains("active")===true);
