@@ -27,6 +27,9 @@ jobs:
       - name: Validate Ready learning-context contract
         run: node scripts/validate-ready-learning-context.mjs
 
+      - name: Validate shared runtime reconciliation
+        run: node tests/shared-runtime-contract.test.js
+
       - name: Browser runtime smoke
         shell: bash
         run: |
