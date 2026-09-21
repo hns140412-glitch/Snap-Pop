@@ -401,3 +401,69 @@ Next P2 work:
 2. only that mechanism may promote `coverage` from `CLAIM_SET_ONLY` to `FULL_FACTUAL_CONTENT`;
 3. preserve claim-level evidence provenance;
 4. then move to P3 Imagination Cloud intelligence quality.
+
+
+## 14. P2 CITATION-LEVEL COVERAGE CLOSURE — 2026-09-21
+
+### Correction from section 13
+
+The first retrieval implementation matched model-returned source URLs against the retrieved source set.
+This was improved further.
+
+Current server evidence boundary:
+- Responses API web_search is REQUIRED, not optional.
+- user-facing factual answer is plain cited output, not model-authored source JSON.
+- server reads actual `url_citation` annotations from output text.
+- each citation annotation must also match an actual `web_search_call.action.sources` URL.
+- sentence ranges are calculated deterministically.
+- a sentence is VERIFIED only when at least one valid citation annotation overlaps that sentence and the cited URL exists in the retrieved source set.
+- any uncited sentence remains UNVERIFIED.
+- any citation URL absent from the retrieved source set is ignored.
+- overall `FULL_FACTUAL_CONTENT` is granted only when every answer sentence is VERIFIED and no unresolved sentence remains.
+
+This closes the earlier specific gap where a model could omit factual content from its explicit claims list while still receiving overall verified status.
+
+### UI evidence presentation
+
+- verified evidence title is preserved through Truth Guard;
+- up to four evidence sources are rendered as bounded clickable links;
+- partial evidence still displays as partial, not full verification.
+
+### Citation coverage regression
+
+Updated:
+- `scripts/validate-knowledge-search-boundary.mjs`
+
+Isolated runtime execution:
+- all answer sentences cited + sources retrieved => FULL_FACTUAL_CONTENT PASS
+- citation URL not in retrieved source set => blocked / CLAIM_SET_ONLY PASS
+- one uncited sentence => FULL coverage blocked PASS
+
+Result:
+- `CITATION_COVERAGE_RUNTIME_PASS`
+
+### P2 current status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL
+  - isolated citation/source coverage harness PASS
+  - isolated semantic/Truth Guard/knowledge contracts PASS
+  - live OpenAI web search NOT_RUN
+  - live browser→server NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- OPENAI_RUNTIME_CONNECTED: false
+- merge/deploy/Netlify call: NOT_RUN
+
+### Next
+
+P2 guard architecture is sufficiently closed for branch-only implementation work.
+Do not claim live runtime connection until external runtime evidence exists.
+
+Proceed to P3 Imagination Cloud intelligence quality while preserving:
+- writing-first default surface;
+- hidden/on-demand Imagination Cloud;
+- Exploration Crew as response owner;
+- Truth Guard before verified factual display;
+- no user testing;
+- no deploy/Netlify/merge.
