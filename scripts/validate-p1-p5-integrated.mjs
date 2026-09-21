@@ -70,6 +70,10 @@ assert("presentation-keeps-verified-claim-text",
 );
 assert("presentation-owner-is-crew",presentedFull.responseOwner==="EXPLORATION_CREW");
 assert("presentation-title-not-provider-owned",presentedFull.title==="확인해서 정리했어");
+const fullHistory=present.publicHistoryEntry({...presentedFull,intent:"ASK_UNDERSTAND"},{language:"ko"});
+assert("verified-history-status-is-explicit",
+  fullHistory.verificationStatus==="FACT_VERIFIED"&&fullHistory.verified===true
+);
 assert("voice-can-read-guarded-full-answer",
   voice.guardedSpeechText(presentedFull.speakable)===presentedFull.speakable
 );
@@ -100,6 +104,19 @@ assert("partial-suppresses-followup",
 const presentedPartial=present.sanitizeUserFacing(shapedPartial,{language:"ko"});
 assert("presentation-cannot-upgrade-partial-truth",
   presentedPartial.verified===false&&presentedPartial.title==="확인된 부분부터 볼게"
+);
+const partialHistory=present.publicHistoryEntry({...presentedPartial,intent:"ASK_UNDERSTAND"},{language:"ko"});
+assert("partial-history-status-needs-check",
+  partialHistory.verificationStatus==="FACT_NEEDS_CHECK"&&partialHistory.verified===false
+);
+const thinkHistory=present.publicHistoryEntry({
+  kind:"THINK_EXPRESS",
+  intent:"THINK_EXPRESS",
+  core:"내 생각을 펼쳐보는 기록",
+  speakable:"내 생각을 펼쳐보는 기록"
+},{language:"ko"});
+assert("think-history-verification-not-applicable",
+  thinkHistory.verificationStatus==="NOT_APPLICABLE"&&thinkHistory.verified===null
 );
 
 const writingFull=scaffold.scaffoldKnowledge(guardedFull,"비는 왜 내려?","ko","WRITING_FLOW");
