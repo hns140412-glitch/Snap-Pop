@@ -1,6 +1,7 @@
 import fs from "node:fs";
 
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const crewRuntime=fs.readFileSync(new URL("../crew-runtime-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -8,10 +9,10 @@ function assert(name,condition){
 }
 
 assert("member-specific-experience-helper-exists",
-  app.includes("async function recordCrewMemberExperience(memberId,type,meta={})")
+  crewRuntime.includes("async function recordCrewMemberExperience(memberId,type,meta={})")
 );
 assert("main-experience-wrapper-kept",
-  app.includes("return recordCrewMemberExperience(id,type,meta);")
+  crewRuntime.includes("return recordCrewMemberExperience(id,type,meta);")
 );
 assert("guest-memory-only-for-selected-guest",
   app.includes('if(guestMemberId)await recordCrewMemberExperience(guestMemberId,"SHARED_MICRO_EPISODE"')
