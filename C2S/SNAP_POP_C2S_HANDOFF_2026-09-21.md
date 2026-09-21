@@ -2494,3 +2494,114 @@ Remaining gap:
 - previous frozen candidate remains superseded
 - external call count remains 0
 - Netlify/deploy/merge remain NOT_RUN
+
+
+## 38. SHARED BADGE EVENT CONTRACT + NON-BLOCKING CREW UI + THINK VERIFICATION SEPARATION — 2026-09-21
+
+### A. Semantic-light shared badge experience contract
+
+Added:
+- `badge-shared-contract-runtime.js`
+- `scripts/validate-shared-badge-event-contract.mjs`
+
+Shared contract:
+- `TAKY_BADGE_EXPERIENCE_EVENT_V1`
+
+Purpose:
+- allow TAKY apps to exchange badge/experience observations through one technical envelope
+- without implicitly sharing user/family/organization identity, role or permission.
+
+Envelope includes:
+- event_id
+- app_id
+- event_family
+- occurred_at
+- provenance
+- payload
+
+Hard locks:
+- identity_scope = `APP_OWNED_NOT_SHARED`
+- role_scope = `APP_OWNED_NOT_SHARED`
+- permission_scope = `APP_OWNED_NOT_SHARED`
+- badge_award_authorized=false
+- economy_mutation_authorized=false
+
+Snap & Pop behavior observations are mirrored into:
+- local source ledger: `badgeBehaviorObservations`
+- shared technical envelope ledger: `badgeSharedExperienceEvents`
+
+The local event is not replaced by the shared envelope.
+
+Validation:
+- `SHARED_BADGE_EVENT_CONTRACT_PASS`
+- 8/8 PASS
+
+Requirement matrix:
+- SP-BADGE-003 → CODED=true / STATIC_VERIFIED=true
+- SP-BADGE-004 → CODED=true / STATIC_VERIFIED=true
+- SP-BADGE-001 remains PARTIAL because active reviewed catalog + broader detectors are not complete.
+
+---
+
+### B. Non-blocking crew reaction UI
+
+Problem:
+- crew reaction CSS existed but there was no explicit fixed DOM slot and no pointer-interaction lock.
+
+Implemented:
+- explicit `#crewReactionOverlay`
+- hidden by default
+- `aria-live="polite"`
+- placed after the main writing textarea
+- `pointer-events:none`
+- `max-height:86px`
+- `overflow:hidden`
+- transient display still collapses after the existing short reaction window.
+
+This keeps reactions visible without becoming a permanent large speech bubble or intercepting writing input.
+
+Validation:
+- `NON_BLOCKING_CREW_REACTION_UI_PASS`
+- 7/7 PASS
+
+Requirement matrix:
+- SP-GUIDE-004 → CODED=true / STATIC_VERIFIED=true
+- device visual regression remains NOT_RUN.
+
+---
+
+### C. THINK_EXPRESS verification separation
+
+Residual issue found:
+- local THINK_EXPRESS scaffold still carried `verified:true`
+- although history rendering had already moved to `NOT_APPLICABLE`.
+
+Corrected:
+- THINK_EXPRESS now always normalizes to:
+  - `verified=null`
+  - `verification.mode="NOT_APPLICABLE"`
+- applies to both local and external THINK_EXPRESS result paths.
+- external provider cannot upgrade a non-factual thinking response into factual verification.
+- Exploration Crew response ownership remains intact.
+
+Validation:
+- `THINK_EXPRESS_VERIFICATION_SEPARATION_PASS`
+- 4/4 PASS
+
+Requirement matrix reconciled:
+- SP-UNIV-001 → CODED=true / STATIC_VERIFIED=true
+- SP-IMAGINE-005 → CODED=true / STATIC_VERIFIED=true
+- SP-IMAGINE-006 → CODED=true / STATIC_VERIFIED=true
+- live provider/browser/device remain NOT_RUN.
+
+### Closure runner
+
+`scripts/validate-branch-closure.mjs` now contains 30 validators.
+
+### External state
+
+- implementation continues
+- current candidate is not frozen
+- prior frozen candidate remains superseded
+- external call count remains 0
+- Netlify/deploy/merge remain NOT_RUN
