@@ -15,10 +15,8 @@
         concept_skill_target:ready.concept_skill_target,
         activity_types:[...(ready.activity_types||[])],
         cognitive_load_profile:[...(ready.cognitive_load_profile||[])],
-        divisible_boundary:ready.divisible_boundary,
         confidence:ready.confidence,
         unresolved_flags:[...(ready.unresolved_flags||[])],
-        provenance:{...(ready.provenance||{})}
       });
     }catch{return null}
   }
