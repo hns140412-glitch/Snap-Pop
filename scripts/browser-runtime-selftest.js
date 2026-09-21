@@ -52,21 +52,65 @@
 
       const answer=document.querySelector("#answer"),next=document.querySelector("#nextBtn");
       assert("hint-control-restored",!!document.querySelector("#hintBtn"));
-      answer.value="오늘은 숲에서 작은 빛을 봤어.";
+      const draft1="오늘은 숲에서 작은 빛을 봤어.";
+      answer.value=draft1;
       answer.dispatchEvent(new Event("input",{bubbles:true}));
+      await wait(120);
+      let activeState=await window.SnapPopStorage.get("active");
+      assert("writing-draft-persists-step-0",activeState?.draft===draft1);
       click(next,"writing-step-1");
       await wait(180);
+      activeState=await window.SnapPopStorage.get("active");
+      assert("writing-advances-to-step-1",activeState?.step===1);
+      assert("writing-same-draft-carried-to-step-1",activeState?.draft===draft1&&answer.value===draft1);
 
-      answer.value="오늘은 숲에서 작은 빛을 봤어. 가까이 가니 잎 사이에서 반짝였어.";
+      const draft2="오늘은 숲에서 작은 빛을 봤어. 가까이 가니 잎 사이에서 반짝였어.";
+      answer.value=draft2;
       answer.dispatchEvent(new Event("input",{bubbles:true}));
+      await wait(120);
+      activeState=await window.SnapPopStorage.get("active");
+      assert("writing-draft-persists-step-1",activeState?.draft===draft2);
+
+      click(document.querySelector("#cloudBtn"),"writing-cloud-open");
+      await wait(120);
+      assert("writing-cloud-opens-on-demand",document.querySelector("#imaginationLayer")?.hidden===false);
+      click(document.querySelector("#imaginationClose"),"writing-cloud-close");
+      await wait(180);
+      activeState=await window.SnapPopStorage.get("active");
+      assert("writing-cloud-return-preserves-draft",activeState?.draft===draft2&&answer.value===draft2);
+      assert("writing-cloud-return-restores-writing-view",document.querySelector("#explore")?.classList.contains("active")===true);
+
       click(next,"writing-step-2");
       await wait(180);
+      activeState=await window.SnapPopStorage.get("active");
+      assert("writing-advances-to-step-2",activeState?.step===2);
+      assert("writing-same-draft-carried-to-step-2",activeState?.draft===draft2);
 
-      answer.value="오늘은 숲에서 작은 빛을 봤어. 가까이 가니 잎 사이에서 반짝였어. 다음에도 천천히 살펴보고 싶어.";
+      const draft3="오늘은 숲에서 작은 빛을 봤어. 가까이 가니 잎 사이에서 반짝였어. 다음에도 천천히 살펴보고 싶어.";
+      answer.value=draft3;
       answer.dispatchEvent(new Event("input",{bubbles:true}));
       click(next,"writing-complete");
       await wait(500);
       assert("writing-result-active",document.querySelector("#result")?.classList.contains("active")===true);
+      const completedRecord=(await window.SnapPopStorage.get("lastResult"))||null;
+      assert("writing-completion-preserves-final-draft",completedRecord?.finalDraft===draft3);
+      assert("writing-completion-has-three-snapshots",Array.isArray(completedRecord?.snapshots)&&completedRecord.snapshots.length===3);
+
+      click(document.querySelector("#resultGrowth"),"result-growth");
+      await wait(160);
+      assert("growth-view-active",document.querySelector("#growth")?.classList.contains("active")===true);
+      assert("single-growth-tree-present",document.querySelectorAll("#growth #treeImage").length===1);
+
+      click(document.querySelector("#resultBack"),"result-back-map");
+      await wait(120);
+      assert("map-restored-after-result",document.querySelector("#map")?.classList.contains("active")===true);
+      assert("imagination-hidden-by-default",document.querySelector("#imaginationLayer")?.hidden===true);
+      click(document.querySelector("#homeRadio"),"home-radio");
+      await wait(120);
+      assert("home-radio-opens-imagination",document.querySelector("#imaginationLayer")?.hidden===false);
+      click(document.querySelector("#imaginationClose"),"home-radio-close");
+      await wait(120);
+      assert("home-radio-close-restores-map",document.querySelector("#imaginationLayer")?.hidden===true&&document.querySelector("#map")?.classList.contains("active")===true);
 
       click(document.querySelector("#familyExpansionBtn"),"family-open");
       await wait(180);
