@@ -2,6 +2,7 @@ import fs from "node:fs";
 
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const crewRuntime=fs.readFileSync(new URL("../crew-runtime-controller.js",import.meta.url),"utf8");
+const recordsCtl=fs.readFileSync(new URL("../records-growth-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -29,10 +30,10 @@ assert("child-authorship-line-remains",
   app.includes("같이 보되, 네 생각은 네가 골라.")
 );
 assert("special-record-resolves-guest-name",
-  app.includes("x.guestMemberId?(registry[x.guestMemberId]?.currentName")
+  recordsCtl.includes("x.guestMemberId?(registry[x.guestMemberId]?.currentName")
 );
 assert("special-record-shows-shared-companion",
-  app.includes("함께한 탐험대원 ·")
+  recordsCtl.includes("함께한 탐험대원 ·")
 );
 
 console.log("SPECIAL_GUEST_SHARED_MEMORY_AND_RECORD_PASS");
