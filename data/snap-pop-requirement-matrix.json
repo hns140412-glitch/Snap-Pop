@@ -97,14 +97,18 @@
         "exploration-crew-rules.json"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "data/exploration-crew-rules.json:interactionContract.authorship"
+        "authorship-guard-runtime.js",
+        "semantic-writing-runtime.js:SnapPopAuthorshipGuard.assertWritingAssist",
+        "expression-bridge-runtime.js:SnapPopAuthorshipGuard.assertExpressionBridge",
+        "app.js:SnapPopAuthorshipGuard.transitionPayload",
+        "scripts/validate-central-authorship-guard.mjs"
       ],
-      "gap": "정책 JSON은 있으나 모든 생성/반응 경로의 executable guard는 미완료"
+      "gap": "central executable authorship guard now covers semantic writing assist, bilingual expression fragments, and verified ASK→EXPRESS transition; live browser/provider/device runtime remains NOT_RUN"
     },
     {
       "id": "SP-GUIDE-002",
