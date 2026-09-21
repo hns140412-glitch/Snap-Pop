@@ -63,3 +63,22 @@ Generic `ㄱ` is not deploy approval.
 - exact-head Actions + 390×844 CDP evidence: PENDING; connector has no workflow-dispatch action and PR #5 produced no retrievable run. Do not inherit prior 61/61 evidence.
 
 - validation workflow trigger: branch-only exact-head closure requested after workflow installation.
+
+
+## Thin orchestrator architecture closure — 2026-09-21
+
+- exact validated code SHA: `7a16d5d01d22067baba40fd2b2933be5b9984ca3`
+- evidence commit: `5e9ef59f0b3138d233aaaba5a0e9bda27b4ac09c`
+- branch closure: `62/62 PASS`
+- browser runtime: `BROWSER_RUNTIME_CDP_PASS`
+- viewport: `390×844`
+- runtime init: PASS
+- IndexedDB: OPEN
+- runtime errors: 0
+- Family Expansion browser regression: PASS
+- app.js thin orchestrator size: approximately 12.6 KB characters at closure
+- architecture rewrite: CLOSED
+- integrated child-facing UI rewrite: NEXT / OPEN
+- final visual direction: OPEN
+- DEVICE_VERIFIED: false
+- deploy / Netlify / main merge: NOT_RUN
