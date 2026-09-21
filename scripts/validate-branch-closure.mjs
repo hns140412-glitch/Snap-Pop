@@ -31,7 +31,9 @@ const validators=[
   "validate-guest-appearance-gate.mjs",
   "validate-requirement-matrix-reconciliation.mjs",
   "validate-etymology-source-diversity.mjs",
-  "validate-central-authorship-guard.mjs"
+  "validate-central-authorship-guard.mjs",
+  "validate-shared-badge-event-contract.mjs",
+  "validate-non-blocking-crew-reaction-ui.mjs"
 ];
 
 let passed=0;
