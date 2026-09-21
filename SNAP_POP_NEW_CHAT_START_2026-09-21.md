@@ -167,3 +167,14 @@ LATEST P4 OWNERSHIP NOTE:
 - provider provenance remains internal but provider label is hidden from child-facing history UI.
 - isolated ownership validator 12/12 PASS.
 - next: voice/TTS ownership boundary, then P5 voice quality.
+
+
+LATEST VOICE NOTE:
+- P4→P5 voice ownership boundary is coded.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md section 22.
+- all TTS now routes through SnapPopVoice.
+- app direct speechSynthesis bypass removed.
+- voice text self-identity leak fails closed.
+- external provider is forced to EXPLORATION_CREW / crew role.
+- isolated voice ownership validator 5/5 PASS.
+- next: P5 voice quality/pacing/interrupt policy; live realtime remains OPEN.
