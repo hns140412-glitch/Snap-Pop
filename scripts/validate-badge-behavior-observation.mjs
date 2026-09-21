@@ -84,8 +84,13 @@ assert("app-records-optional-extra-task-completion",
 assert("app-does-not-infer-deep-thinking-from-empty-attempts",
   !appSource.includes('recordBadgeBehaviorObservation("DEEP_THINKING"')
 );
-assert("app-does-not-infer-retry-error-special-without-source-contract",
-  !appSource.includes('recordBadgeBehaviorObservation("RETRY"')&&
+assert("app-records-retry-only-from-explicit-revision",
+  appSource.includes('recordBadgeBehaviorObservation("RETRY"')&&
+  appSource.includes("explicitRevision:true")&&
+  appSource.includes("originalPreserved:true")&&
+  appSource.includes("rewardChanged:false")
+);
+assert("app-still-does-not-infer-error-or-special-without-source-contract",
   !appSource.includes('recordBadgeBehaviorObservation("ERROR_DISCOVERY"')&&
   !appSource.includes('recordBadgeBehaviorObservation("SPECIAL_BEHAVIOR"')
 );
