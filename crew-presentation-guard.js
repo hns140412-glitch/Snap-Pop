@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-c";
+  const VERSION="2026.09.21-d";
   const SELF_IDENTITY_PATTERNS=[
     /\b(as an? ai|i am an? ai|i'm an? ai|as chatgpt|i am chatgpt|i'm chatgpt|openai assistant|system message|developer message)\b/i,
     /(저는|나는)\s*(AI|인공지능|ChatGPT|OpenAI)/i,
@@ -77,11 +77,22 @@
     return next;
   }
 
+  function verificationStatus(result={}){
+    const intent=result.intent||result.kind||null;
+    if(intent==="ASK_UNDERSTAND"){
+      return result.verified===true?"FACT_VERIFIED":"FACT_NEEDS_CHECK";
+    }
+    return "NOT_APPLICABLE";
+  }
+
   function publicHistoryEntry(result={},options={}){
     const safe=sanitizeUserFacing(result,options);
     return {
       intent:safe.intent||safe.kind||null,
-      verified:safe.verified!==false,
+      verificationStatus:verificationStatus(safe),
+      verified:safe.intent==="ASK_UNDERSTAND"||safe.kind==="ASK_UNDERSTAND"
+        ? safe.verified===true
+        : null,
       title:safe.title,
       core:safe.core,
       nodes:safe.nodes,
@@ -93,6 +104,7 @@
     version:VERSION,
     sanitizeUserFacing,
     publicHistoryEntry,
+    verificationStatus,
     hasSelfIdentityLeak
   });
 })();
