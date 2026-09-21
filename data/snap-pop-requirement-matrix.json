@@ -186,11 +186,14 @@
       "codeEvidence": [
         "crew-orchestration-runtime.js",
         "app.js:chooseSceneGuest",
-        "app.js:openSpecial",
+        "app.js:openSpecial main acknowledgement",
+        "app.js:recordCrewMemberExperience",
         "app.js:specialMemories.guestMemberId",
-        "scripts/validate-crew-guest-orchestration.mjs"
+        "app.js:renderRecords shared guest display",
+        "scripts/validate-crew-guest-orchestration.mjs",
+        "scripts/validate-special-guest-shared-memory.mjs"
       ],
-      "gap": "deterministic weighted guest selection implemented for special scene; exact general appearance cadence/probability remains OPEN by canonical rule"
+      "gap": "deterministic weighted guest selection implemented for special scene with main continuity, shared guest memory, and record visibility; exact general appearance cadence/probability remains OPEN by canonical rule"
     },
     {
       "id": "SP-CREW-001",
@@ -1431,11 +1434,13 @@
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "behavior taxonomy + anti-labeling guard implemented; only explicit HELP_REQUEST signal is currently wired. Other families require source-specific evidence contracts before runtime detection; historical badge catalog remains inactive.",
+      "gap": "behavior taxonomy + anti-labeling guard implemented; explicit detectors currently wired for HELP_REQUEST, WRITING_EXPLORATION, and EXTRA_TASK. RETRY/ERROR_DISCOVERY/DEEP_THINKING/SPECIAL_BEHAVIOR remain intentionally unwired until source-specific evidence contracts exist; historical badge catalog remains inactive.",
       "codeEvidence": [
         "badge-behavior-runtime.js",
         "app.js:recordBadgeBehaviorObservation",
         "app.js:revealHint→HELP_REQUEST explicit observation",
+        "app.js:exploration completion→WRITING_EXPLORATION explicit observation",
+        "app.js:bonusSave→EXTRA_TASK explicit observation",
         "data/badge-system.json:eventFamilies",
         "data/badge-catalog-working.json:WORKING_DRAFT_NOT_ACTIVE",
         "scripts/validate-badge-behavior-observation.mjs"
