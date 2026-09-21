@@ -206,3 +206,22 @@ Next and final architecture target: thin app.js orchestrator closure. UI rewrite
 - final visual direction: OPEN
 - DEVICE_VERIFIED: false
 - deploy / Netlify / main merge: NOT_RUN
+
+
+## Integrated UI rewrite entry — Phase 1
+
+Latest exact-head evidence:
+- SHA `0cef75de449b17111610aa4dea449b19066b9efc`
+- 63/63 closure PASS
+- 390×844 Browser CDP PASS
+
+Phase 1 child-writing hierarchy now includes:
+- a single current writing focus;
+- explicit child-owned writing surface;
+- Voice + Hint as primary quick assists;
+- secondary assists collapsed behind an optional drawer;
+- dedicated next-action dock above bottom navigation;
+- large writing surface preserved.
+
+This is an interaction hierarchy rewrite, not final visual styling approval.
+Next UI work must continue surface-by-surface without moving domain ownership back into `app.js`.
