@@ -39,6 +39,28 @@ function crewMemberName(identity){return identity?.crewMember?.name||crewMemberR
 
 function stableHash(s=""){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function affinityTier(score=0){const tiers=SNAP_RULES?.affinityEngine?.tiers||[];let t=tiers[0]||{key:"KNOWN",label:"아는 친구",min:0};for(const x of tiers)if(score>=x.min)t=x;return t}
+async function recordBadgeEvent(family,payload={},source="SNAP_POP"){
+  if(!window.SnapPopBadges)return null;
+  try{
+    await window.SnapPopBadges.load();
+    const event=window.SnapPopBadges.normalizeEvent({eventId:uid("badgeevt"),family,source,payload,at:new Date().toISOString()});
+    const ledger=await get("badgeEvents")||[];
+    if(ledger.some(x=>x.eventId===event.eventId))return event;
+    ledger.unshift(event);
+    await set("badgeEvents",ledger.slice(0,1000));
+    const matches=window.SnapPopBadges.matchEvent(event);
+    if(matches.length){
+      const owned=await get("badgeProgress")||{};
+      for(const item of matches){
+        const key=item.id||item.draftId;
+        const prev=owned[key]||{count:0};
+        owned[key]={count:(prev.count||0)+1,...window.SnapPopBadges.nextProgress(prev.count||0),lastAt:event.at};
+      }
+      await set("badgeProgress",owned);
+    }
+    return event;
+  }catch{return null}
+}
 async function recordCrewExperience(type,meta={}){
   const identity=await resolvedIdentity(),id=identity.crewMember?.type,registry=await ensureCrewRegistry();if(!id||!registry[id])return null;
   const entry=registry[id],eventId=meta.eventId||uid("crewmem");
@@ -306,6 +328,7 @@ $("#nextBtn").onclick=async()=>{
   await setMany([["records",records],["gems",gems],["expLedger",expLedger],["gemLedger",gemLedger],["completionEvents",events],["exp",totalExp],["lastResult",record],["active",null]]);
   await updateStatus();
   await recordCrewExperience("EXPLORATION_COMPLETE",{eventId:completionEventId,landmark:s.landmark,recordId:record.id,snippet:crewSnippet(s.answers.join(" "))});
+  await recordBadgeEvent("WRITING_EXPLORATION",{landmark:s.landmark,finalDraftChars:(s.draft||"").length,learningUnitId:learningCtx?.learning_unit_id||null,completionEventId},"SNAP_POP");
   window.dispatchEvent(new CustomEvent("snap-pop:task-completed",{detail:{
     completionEventId,
     landmark:s.landmark,
