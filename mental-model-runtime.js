@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-a";
+  const VERSION="2026.09.21-b";
   const MAX_ITEMS=4;
 
   const LABELS={
@@ -43,9 +43,18 @@
     return "STACK";
   }
 
+  function eligible(result={},lens="CONCEPT",claims=[]){
+    if(!claims.length) return false;
+    const type=typeFor(lens);
+    if(type==="STACK") return true;
+    const coverage=result?.verification?.coverage||"UNKNOWN";
+    if(coverage!=="FULL_FACTUAL_CONTENT") return false;
+    return claims.length>=2;
+  }
+
   function build(result={},lens="CONCEPT",language="ko"){
     const claims=verifiedClaims(result);
-    if(!claims.length) return null;
+    if(!eligible(result,lens,claims)) return null;
 
     const lang=language==="en"?"en":"ko";
     const labels=LABELS[lang][lens]||LABELS[lang].CONCEPT;
@@ -67,6 +76,7 @@
 
   window.SnapPopMentalModel=Object.freeze({
     version:VERSION,
-    build
+    build,
+    eligible
   });
 })();
