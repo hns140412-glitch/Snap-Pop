@@ -346,7 +346,7 @@ $("#nextBtn").onclick=async()=>{
   const records=await get("records")||[];
   const expAward=calcExp([s.draft],records.length,s.language||"ko");
   const now=new Date().toISOString();
-  const learningCtx=learnerContext();const record={id:uid("record"),completionEventId,landmark:s.landmark,language:s.language||"ko",answers:[...s.answers],snapshots:[...(s.snapshots||s.answers)],finalDraft:s.draft,date:now,expAward:expAward.total,strengths:expAward.strengths,learningRef:learningCtx?{learning_unit_id:learningCtx.learning_unit_id||null,analysis_id:learningCtx.analysis_id||null,assignment_id:learningCtx.assignment_id||null,subject:learningCtx.subject||null,context_source:learningCtx.source||null}:null};
+  const learningCtx=learnerContext(),vocabMaterial=vocabularyMaterial(),vocabEvidence=window.SnapPopVocabularyMaterial?.usageEvidence?.(vocabMaterial,s.draft)||null;const record={id:uid("record"),completionEventId,landmark:s.landmark,language:s.language||"ko",answers:[...s.answers],snapshots:[...(s.snapshots||s.answers)],finalDraft:s.draft,date:now,expAward:expAward.total,strengths:expAward.strengths,learningRef:learningCtx?{learning_unit_id:learningCtx.learning_unit_id||null,analysis_id:learningCtx.analysis_id||null,assignment_id:learningCtx.assignment_id||null,subject:learningCtx.subject||null,context_source:learningCtx.source||null}:null,vocabularyRef:vocabEvidence};
   records.unshift(record);
   const gems=await get("gems")||{},beforeShard=gems[s.landmark]||0;gems[s.landmark]=beforeShard+1;
   const expLedger=await get("expLedger")||[];
@@ -371,6 +371,7 @@ $("#nextBtn").onclick=async()=>{
     writing_focus:s.crewState?.writingAnalysis?.focus||null,
     writing_provider:s.crewState?.writingAnalysis?.provider||null,
     learning_context_used:!!s.crewState?.writingAnalysis?.learningContextUsed||!!learningCtx,
+    vocabulary_material:vocabEvidence,
     final_draft_chars:(s.draft||"").length
   }}));
   toast(`탐험 완료! +${expAward.total} EXP · 보석 조각 +1`);show("result")
