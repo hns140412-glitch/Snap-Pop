@@ -303,6 +303,62 @@ function renderWritingBridge(result,language='ko'){
   el.textContent=language==='en'?`Optional lens · ${name}`:`필요하면 ${name} 관점으로도 한 번 볼 수 있어.`;
   el.hidden=false;
 }
+
+function setExpressionBridgeButton(language='ko',draft=''){
+  const btn=$("#expressionBridgeBtn");if(!btn)return;
+  btn.textContent=language==="en"?"한국어 표현 도움":"English 표현 도움";
+  btn.disabled=!(draft||"").trim();
+}
+function renderExpressionBridge(result,sourceLanguage,targetLanguage){
+  const panel=$("#expressionBridgePanel");if(!panel)return;
+  if(!result){panel.hidden=true;panel.innerHTML="";return}
+  const targetLabel=targetLanguage==="en"?"English":"한국어";
+  const fragments=Array.isArray(result.phraseFragments)?result.phraseFragments.slice(0,4):[];
+  panel.innerHTML=
+    `<span class="kicker">뜻 유지 · ${html(targetLabel)} 표현 조각</span>`+
+    (result.meaningAnchor?`<p>${html(result.meaningAnchor)}</p>`:"")+
+    (fragments.length?`<div class="expressionFragments">${fragments.map(x=>`<span>${html(x)}</span>`).join("")}</div>`:"")+
+    `<p class="expressionAssembly">${html(result.assemblyPrompt||"")}</p>`+
+    `<span class="kicker">문장은 직접 조립해. 초안은 바뀌지 않아.</span>`;
+  panel.dataset.sourceLanguage=sourceLanguage;
+  panel.dataset.targetLanguage=targetLanguage;
+  panel.hidden=false;
+}
+async function runExpressionBridge(){
+  const s=await get("active");if(!s)return;
+  ensureWritingState(s);
+  const draft=$("#answer").value.trim();
+  if(!draft)return toast("먼저 네 생각을 한 조각 적어줘.");
+  if(!window.SnapPopExpressionBridge)return toast("지금은 표현 도움을 사용할 수 없어요.");
+  const sourceLanguage=s.language==="en"?"en":"ko",targetLanguage=sourceLanguage==="en"?"ko":"en";
+  const btn=$("#expressionBridgeBtn");if(btn){btn.disabled=true;btn.textContent=targetLanguage==="en"?"표현 조각 찾는 중…":"표현 조각 찾는 중…"}
+  try{
+    const result=await window.SnapPopExpressionBridge.bridge({
+      draft,
+      sourceLanguage,
+      targetLanguage,
+      vocabularyMaterial:vocabularyMaterial()
+    });
+    const cur=await get("active");
+    if(!cur||cur.id!==s.id||$("#answer").value.trim()!==draft)return;
+    renderExpressionBridge(result,sourceLanguage,targetLanguage);
+    cur.crewState=cur.crewState||{};
+    cur.crewState.expressionBridge={
+      sourceLanguage,
+      targetLanguage,
+      provider:result.provider||"unknown",
+      fragmentCount:Array.isArray(result.phraseFragments)?result.phraseFragments.length:0,
+      at:new Date().toISOString()
+    };
+    await set("active",cur);
+  }catch{
+    renderExpressionBridge(null,sourceLanguage,targetLanguage);
+    toast("지금은 표현 조각을 불러오기 어려워요. 초안은 그대로 있어요.");
+  }finally{
+    const cur=await get("active");
+    setExpressionBridgeButton(cur?.language||sourceLanguage,$("#answer").value);
+  }
+}
 async function analyzeWritingMove(s){
   if(!s||!window.SnapPopWriting?.analyze)return refreshWritingMove(s);
   ensureWritingState(s);
@@ -332,7 +388,7 @@ function refreshWritingMove(s){
   return move;
 }
 
-function renderExplore(s){ensureWritingState(s);const m=marks.find(x=>x.id===s.landmark)||marks[0],i=Math.min(2,s.step||0),language=s.language||"ko",p=promptFor(s.landmark,i,language,s.draft);$("#exploreTitle").textContent="탐험 진행 · "+m.title;$("#question").textContent=p[0];$("#hint").textContent=p[1];$("#hint").hidden=!(s.crewState?.hintLevel>0);$("#hintBtn").disabled=!!(s.crewState?.hintLevel>0);$("#answer").value=s.draft||"";setModeButtons(language);renderWritingBridge(null,language);hideCrewReaction();resolvedIdentity().then(identity=>{const name=crewMemberName(identity),base=crewReaction(identity,s.landmark),stepLine=language==="en"?["Start small. One idea is enough.","Add one more piece.","Finish it in your own words."][i]:["작은 조각 하나부터 잡아보자.","좋아, 하나만 더 붙여보자.","이제 네 말로 마무리해보자."][i];$(".crewMemberLine b").textContent=`탐험대원 ${name}`;$("#crewMemberLine").textContent=`${base} ${stepLine}`});$("#nextBtn").textContent=i===2?(language==="en"?"Finish exploration":"탐험 완료"):(language==="en"?"Next step":"다음 단계");$("#steps").innerHTML=STEPS.map((x,n)=>`<span class="${n===i?"on":n<i?"done":""}">${n+1}. ${x}</span>`).join("")}
+function renderExplore(s){ensureWritingState(s);const m=marks.find(x=>x.id===s.landmark)||marks[0],i=Math.min(2,s.step||0),language=s.language||"ko",p=promptFor(s.landmark,i,language,s.draft);renderExpressionBridge(null,language,language==="en"?"ko":"en");setExpressionBridgeButton(language,s.draft);$("#exploreTitle").textContent="탐험 진행 · "+m.title;$("#question").textContent=p[0];$("#hint").textContent=p[1];$("#hint").hidden=!(s.crewState?.hintLevel>0);$("#hintBtn").disabled=!!(s.crewState?.hintLevel>0);$("#answer").value=s.draft||"";setModeButtons(language);renderWritingBridge(null,language);hideCrewReaction();resolvedIdentity().then(identity=>{const name=crewMemberName(identity),base=crewReaction(identity,s.landmark),stepLine=language==="en"?["Start small. One idea is enough.","Add one more piece.","Finish it in your own words."][i]:["작은 조각 하나부터 잡아보자.","좋아, 하나만 더 붙여보자.","이제 네 말로 마무리해보자."][i];$(".crewMemberLine b").textContent=`탐험대원 ${name}`;$("#crewMemberLine").textContent=`${base} ${stepLine}`});$("#nextBtn").textContent=i===2?(language==="en"?"Finish exploration":"탐험 완료"):(language==="en"?"Next step":"다음 단계");$("#steps").innerHTML=STEPS.map((x,n)=>`<span class="${n===i?"on":n<i?"done":""}">${n+1}. ${x}</span>`).join("")}
 
 $("#nextBtn").onclick=async()=>{
   let s=await get("active");
@@ -378,7 +434,7 @@ $("#nextBtn").onclick=async()=>{
 }
 
 async function speak(t,language="ko",source="USER_TAP"){try{if(!window.SnapPopVoice)throw new Error("VOICE_RUNTIME_UNAVAILABLE");return await window.SnapPopVoice.speak(t,{language,voiceRole:"crew",source})}catch{return toast("지금은 음성으로 읽어주기 어려워요. 글로 계속 볼 수 있어요.")}}
-$("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0),text=$("#answer").value;ensureWritingState(s);s.draft=text;s.updatedAt=new Date().toISOString();await set("active",s);clearTimeout(window.crewInputTimer);if(text.trim().length>=8){window.crewInputTimer=setTimeout(async()=>{const cur=await get("active");if(!cur||Math.min(2,cur.step||0)!==i)return;ensureWritingState(cur);cur.draft=$("#answer").value;await set("active",cur);const move=await analyzeWritingMove(cur)||refreshWritingMove(cur);const msg=stepSpecificReaction(cur.draft,cur.language||"ko",move);if(msg&&msg!==cur.crewState?.lastReaction)await showCrewReaction(msg)},850)}});
+$("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0),text=$("#answer").value;setExpressionBridgeButton(s.language||"ko",text);ensureWritingState(s);s.draft=text;s.updatedAt=new Date().toISOString();await set("active",s);clearTimeout(window.crewInputTimer);if(text.trim().length>=8){window.crewInputTimer=setTimeout(async()=>{const cur=await get("active");if(!cur||Math.min(2,cur.step||0)!==i)return;ensureWritingState(cur);cur.draft=$("#answer").value;await set("active",cur);const move=await analyzeWritingMove(cur)||refreshWritingMove(cur);const msg=stepSpecificReaction(cur.draft,cur.language||"ko",move);if(msg&&msg!==cur.crewState?.lastReaction)await showCrewReaction(msg)},850)}});
 function currentBridgeContext(){try{return window.SnapPopBridge?.context?.()||{}}catch{return {}}}
 async function renderIncomingHandoff(){const box=$("#handoffWord");if(!box)return;const material=vocabularyMaterial();if(material?.word){box.hidden=false;const owner=material.sourceOwner==="HIDE_SEEK"?"Hide & Seek":"연결 앱";box.textContent=`${owner} 표현 재료 · ${material.word}${material.context?" · "+material.context:""} · 원하면 참고`;box.dataset.sourceOwner=material.sourceOwner;box.dataset.role=material.role}else{box.hidden=true;box.textContent="";delete box.dataset.sourceOwner;delete box.dataset.role}}
 window.addEventListener("snap-pop:bridge-ready",renderIncomingHandoff);
@@ -511,6 +567,7 @@ $("#imaginationVoiceBtn").onclick=async()=>{
 $("#imaginationClose").onclick=()=>{closeImagination()};
 $("#imaginationBackdrop").onclick=()=>{closeImagination()};
 addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#imaginationLayer")?.hidden)closeImagination()});
+$("#expressionBridgeBtn").onclick=runExpressionBridge;
 $("#cloudBtn").onclick=async()=>{
   const s=await get("active");if(!s)return;
   ensureWritingState(s);
