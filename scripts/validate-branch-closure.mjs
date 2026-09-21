@@ -38,7 +38,8 @@ const validators=[
   "validate-badge-visual-compositor.mjs",
   "validate-badge-catalog-activation-guard.mjs",
   "validate-crew-special-role-not-power.mjs",
-  "validate-imagination-return-integrity.mjs"
+  "validate-imagination-return-integrity.mjs",
+  "validate-writing-semantic-contract.mjs"
 ];
 
 let passed=0;
