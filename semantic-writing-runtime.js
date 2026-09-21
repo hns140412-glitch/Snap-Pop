@@ -33,6 +33,7 @@
       confidence:Number.isFinite(raw.confidence)?Math.max(0,Math.min(1,raw.confidence)):null,
       semanticSignals:sanitizeSignals(raw.semanticSignals||raw.semantic_signals),
       grounded:raw.grounded!==false,
+      factVerified:false,
       provider:cleanText(raw.provider,80)||"openai-semantic-writing"
     };
     return out;
