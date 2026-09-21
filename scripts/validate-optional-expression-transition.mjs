@@ -3,6 +3,7 @@ import fs from "node:fs";
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const index=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const flow=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
+const imagination=fs.readFileSync(new URL("../imagination-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -10,17 +11,17 @@ function assert(name,condition){
 }
 
 assert("express-action-requires-full-verified-global-ask",
-  app.includes('const canExpress=imaginationSource==="GLOBAL"&&result?.kind==="ASK_UNDERSTAND"&&result?.verified===true&&result?.verification?.coverage==="FULL_FACTUAL_CONTENT"')
+  imagination.includes('const canExpress=imaginationSource==="GLOBAL"&&result?.kind==="ASK_UNDERSTAND"&&result?.verified===true&&result?.verification?.coverage==="FULL_FACTUAL_CONTENT"')
 );
 
 assert("express-action-is-explicit-button",
-  app.includes('class="soft cloudExpressBtn"')&&
-  app.includes('이걸 내 말로 표현해보기')
+  imagination.includes('class="soft cloudExpressBtn"')&&
+  imagination.includes('이걸 내 말로 표현해보기')
 );
 
-const renderStart=app.indexOf("function renderImaginationResponse");
-const renderEnd=app.indexOf("async function runImagination",renderStart);
-const renderBlock=app.slice(renderStart,renderEnd);
+const renderStart=imagination.indexOf("function renderImaginationResponse");
+const renderEnd=imagination.indexOf("async function runImagination",renderStart);
+const renderBlock=imagination.slice(renderStart,renderEnd);
 assert("transition-does-not-transfer-ai-answer",
   renderBlock.includes('answerTransferred:false')&&
   !renderBlock.includes('pendingExpressionIntent",{source:"VERIFIED_ASK",question,result')&&
@@ -28,7 +29,7 @@ assert("transition-does-not-transfer-ai-answer",
 );
 
 assert("transition-returns-to-map-not-writing-auto-start",
-  renderBlock.includes('show("map")')&&
+  renderBlock.includes('deps.show("map")')&&
   !renderBlock.includes('$("#startBtn").click')&&
   !renderBlock.includes('selected=')
 );
