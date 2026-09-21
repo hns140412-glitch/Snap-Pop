@@ -545,14 +545,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open.",
+      "gap": "browser runtime verified via Chrome CDP; device verification and exact hosted-candidate validation remain open.",
       "codeEvidence": [
         "family-expansion-runtime.js",
         "family-expansion-app.js",
         "index.html",
         "scripts/validate-family-expansion-runtime.mjs"
+      ],
+      "runtimeEvidence": [
+        "GitHub Actions run 35585046414",
+        "job 106286307423",
+        "BRANCH_CLOSURE_VALIDATOR_PASS 45/45",
+        "BROWSER_RUNTIME_CDP_PASS",
+        "scripts/browser-runtime-selftest.js"
       ]
     },
     {
@@ -566,7 +573,7 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "family-expansion-runtime.js",
@@ -574,7 +581,14 @@
         "index.html",
         "scripts/validate-family-expansion-runtime.mjs"
       ],
-      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open."
+      "gap": "browser runtime verified via Chrome CDP; device verification and exact hosted-candidate validation remain open.",
+      "runtimeEvidence": [
+        "GitHub Actions run 35585046414",
+        "job 106286307423",
+        "BRANCH_CLOSURE_VALIDATOR_PASS 45/45",
+        "BROWSER_RUNTIME_CDP_PASS",
+        "scripts/browser-runtime-selftest.js"
+      ]
     },
     {
       "id": "SP-EXP-003",
@@ -588,7 +602,7 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "family-expansion-runtime.js",
@@ -596,7 +610,14 @@
         "index.html",
         "scripts/validate-family-expansion-runtime.mjs"
       ],
-      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open."
+      "gap": "browser runtime verified via Chrome CDP; device verification and exact hosted-candidate validation remain open.",
+      "runtimeEvidence": [
+        "GitHub Actions run 35585046414",
+        "job 106286307423",
+        "BRANCH_CLOSURE_VALIDATOR_PASS 45/45",
+        "BROWSER_RUNTIME_CDP_PASS",
+        "scripts/browser-runtime-selftest.js"
+      ]
     },
     {
       "id": "SP-EXP-004",
@@ -609,7 +630,7 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "family-expansion-runtime.js",
@@ -617,7 +638,14 @@
         "index.html",
         "scripts/validate-family-expansion-runtime.mjs"
       ],
-      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open."
+      "gap": "browser runtime verified via Chrome CDP; device verification and exact hosted-candidate validation remain open.",
+      "runtimeEvidence": [
+        "GitHub Actions run 35585046414",
+        "job 106286307423",
+        "BRANCH_CLOSURE_VALIDATOR_PASS 45/45",
+        "BROWSER_RUNTIME_CDP_PASS",
+        "scripts/browser-runtime-selftest.js"
+      ]
     },
     {
       "id": "SP-EXP-005",
@@ -630,7 +658,7 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "family-expansion-runtime.js",
@@ -638,7 +666,14 @@
         "index.html",
         "scripts/validate-family-expansion-runtime.mjs"
       ],
-      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open."
+      "gap": "browser runtime verified via Chrome CDP; device verification and exact hosted-candidate validation remain open.",
+      "runtimeEvidence": [
+        "GitHub Actions run 35585046414",
+        "job 106286307423",
+        "BRANCH_CLOSURE_VALIDATOR_PASS 45/45",
+        "BROWSER_RUNTIME_CDP_PASS",
+        "scripts/browser-runtime-selftest.js"
+      ]
     },
     {
       "id": "SP-EXP-006",
@@ -651,7 +686,7 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "family-expansion-runtime.js",
@@ -659,7 +694,14 @@
         "index.html",
         "scripts/validate-family-expansion-runtime.mjs"
       ],
-      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open."
+      "gap": "browser runtime verified via Chrome CDP; device verification and exact hosted-candidate validation remain open.",
+      "runtimeEvidence": [
+        "GitHub Actions run 35585046414",
+        "job 106286307423",
+        "BRANCH_CLOSURE_VALIDATOR_PASS 45/45",
+        "BROWSER_RUNTIME_CDP_PASS",
+        "scripts/browser-runtime-selftest.js"
+      ]
     },
     {
       "id": "SP-EXP-007",
@@ -671,7 +713,7 @@
       "classification": "RECOVERY_REQUIRED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "family-expansion-runtime.js",
@@ -679,7 +721,14 @@
         "index.html",
         "scripts/validate-family-expansion-runtime.mjs"
       ],
-      "gap": "family group/ invite exact recovered semantics remain RECOVERY_LOCKED; local role/permission isolation contract implemented."
+      "gap": "local role/permission isolation and RECOVERY_LOCKED family-group behavior browser-runtime verified; exact recovered invite/group semantics remain RECOVERY_LOCKED; device verification open.",
+      "runtimeEvidence": [
+        "GitHub Actions run 35585046414",
+        "job 106286307423",
+        "BRANCH_CLOSURE_VALIDATOR_PASS 45/45",
+        "BROWSER_RUNTIME_CDP_PASS",
+        "scripts/browser-runtime-selftest.js"
+      ]
     },
     {
       "id": "SP-EXP-008",
@@ -691,7 +740,7 @@
       "classification": "RECOVERY_REQUIRED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "family-expansion-runtime.js",
@@ -699,7 +748,14 @@
         "index.html",
         "scripts/validate-family-expansion-runtime.mjs"
       ],
-      "gap": "mailbox/decor/sealing-wax exact recovered semantics/assets remain RECOVERY_LOCKED; feature slot is fail-closed."
+      "gap": "RECOVERY_LOCKED mailbox/decor behavior browser-runtime verified fail-closed; exact recovered mailbox/decor/sealing-wax semantics/assets remain open; device verification open.",
+      "runtimeEvidence": [
+        "GitHub Actions run 35585046414",
+        "job 106286307423",
+        "BRANCH_CLOSURE_VALIDATOR_PASS 45/45",
+        "BROWSER_RUNTIME_CDP_PASS",
+        "scripts/browser-runtime-selftest.js"
+      ]
     },
     {
       "id": "SP-EXP-009",
@@ -711,7 +767,7 @@
       "classification": "PRESERVE_LINEAGE",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "family-expansion-runtime.js",
@@ -719,7 +775,14 @@
         "index.html",
         "scripts/validate-family-expansion-runtime.mjs"
       ],
-      "gap": "family expansion runtime coded/static; hosted runtime and device verification remain open."
+      "gap": "browser runtime verified via Chrome CDP; device verification and exact hosted-candidate validation remain open.",
+      "runtimeEvidence": [
+        "GitHub Actions run 35585046414",
+        "job 106286307423",
+        "BRANCH_CLOSURE_VALIDATOR_PASS 45/45",
+        "BROWSER_RUNTIME_CDP_PASS",
+        "scripts/browser-runtime-selftest.js"
+      ]
     },
     {
       "id": "SP-EXP-010",
@@ -732,7 +795,7 @@
       "classification": "CONFLICT",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "notes": "DO_NOT_AUTO_RESOLVE",
       "codeEvidence": [
@@ -741,7 +804,14 @@
         "index.html",
         "scripts/validate-family-expansion-runtime.mjs"
       ],
-      "gap": "gem-shard gift remains CONFLICT_LOCKED and cannot mutate economy until conflict is explicitly resolved."
+      "gap": "CONFLICT_LOCKED gem-shard gift behavior browser-runtime verified; economy mutation remains blocked until conflict resolution; device verification open.",
+      "runtimeEvidence": [
+        "GitHub Actions run 35585046414",
+        "job 106286307423",
+        "BRANCH_CLOSURE_VALIDATOR_PASS 45/45",
+        "BROWSER_RUNTIME_CDP_PASS",
+        "scripts/browser-runtime-selftest.js"
+      ]
     },
     {
       "id": "SP-EXP-011",
@@ -753,7 +823,7 @@
       "classification": "RECOVERY_CANDIDATE",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "family-expansion-runtime.js",
@@ -761,7 +831,14 @@
         "index.html",
         "scripts/validate-family-expansion-runtime.mjs"
       ],
-      "gap": "composite diary illustration remains RECOVERY_LOCKED pending canonical recovery; diary artifact path is implemented."
+      "gap": "RECOVERY_LOCKED composite diary illustration behavior browser-runtime verified fail-closed; exact canonical illustration semantics remain open; device verification open.",
+      "runtimeEvidence": [
+        "GitHub Actions run 35585046414",
+        "job 106286307423",
+        "BRANCH_CLOSURE_VALIDATOR_PASS 45/45",
+        "BROWSER_RUNTIME_CDP_PASS",
+        "scripts/browser-runtime-selftest.js"
+      ]
     },
     {
       "id": "SP-UNIV-001",
