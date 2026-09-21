@@ -1,0 +1,13 @@
+{
+  "source_repository": "hns140412-glitch/TAKY",
+  "source_main_sha": "d6dd9b19490918efe5063bf719e2b2b8cc1db2b9",
+  "capabilities": [
+    "CAP-RELEASE-COMPAT-001",
+    "CAP-PWA-UPDATE-001"
+  ],
+  "vendored_files": {
+    "vendor/taky/release-contract.js": "SHARED/runtime/release-contract.js",
+    "vendor/taky/pwa-update-state.js": "SHARED/runtime/pwa-update-state.js"
+  },
+  "semantic_boundary": "Snap & Pop retains exploration/expression safe-point semantics; shared runtime owns mechanism only."
+}
