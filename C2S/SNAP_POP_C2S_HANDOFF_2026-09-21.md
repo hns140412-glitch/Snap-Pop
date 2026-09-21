@@ -467,3 +467,83 @@ Proceed to P3 Imagination Cloud intelligence quality while preserving:
 - Truth Guard before verified factual display;
 - no user testing;
 - no deploy/Netlify/merge.
+
+
+## 15. P3 IMAGINATION CLOUD INTELLIGENCE — QUESTION STRUCTURE SCAFFOLD — 2026-09-21
+
+### Implemented
+
+Added:
+- `curiosity-scaffold-runtime.js`
+
+Role:
+- runs AFTER verified knowledge / Truth Guard;
+- does not rewrite factual answer content;
+- does not mutate verification evidence;
+- classifies the child's question structure;
+- attaches one understanding lens and one next curiosity only.
+
+Current lenses:
+- MEANING / 뜻부터
+- ETYMOLOGY / 말의 뿌리
+- CAUSE_EFFECT / 왜 → 그래서
+- MECHANISM / 어떻게 작동해?
+- COMPARE / 같은 점 · 다른 점
+- TIME_FLOW / 시간 순서
+- PERSON_EVENT / 사람 · 사건
+- PLACE_CONTEXT / 어디 · 왜 중요해?
+- CONCEPT / 핵심 개념
+
+UI:
+- displays `이렇게 보면 쉬워 · <lens>`;
+- keeps factual response text unchanged;
+- shows only one next-curiosity prompt;
+- evidence/truth state remains owned by P2 Truth Guard.
+
+### Regression correction found during validation
+
+Initial classifier produced two collisions:
+1. `고려와 조선의 차이는 뭐야?` was incorrectly classified as MEANING because generic `뭐야` matched too early.
+2. `훈민정음은 언제 만들어졌어?` was incorrectly classified as MECHANISM because generic `만들어` matched too broadly.
+
+Correction:
+- strong/specific question axes now take precedence over generic meaning cues;
+- order: ETYMOLOGY → COMPARE → TIME_FLOW → CAUSE_EFFECT → MECHANISM → MEANING → PERSON_EVENT → PLACE_CONTEXT → CONCEPT;
+- broad `만들어` mechanism cue removed and replaced with narrower process/mechanism patterns.
+
+Validation:
+- Korean + English fixture set: 12/12 PASS after correction.
+- scaffold preserves factual core.
+- scaffold does not mutate verification object.
+- next curiosity remains exactly one prompt.
+
+Artifacts:
+- `scripts/validate-curiosity-scaffold.mjs`
+- `curiosity-scaffold-runtime.js`
+- `intelligence-runtime.js` applies the scaffold only after guarded knowledge result.
+- `app.js` renders the lens and one next curiosity.
+
+### Status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS for current question-structure scaffold
+- RUNTIME_VERIFIED: PARTIAL
+  - isolated classifier fixture evidence PASS
+  - live browser flow NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Next P3 increment
+
+Move from classification label to a bounded explanation-order template while preserving facts:
+- MEANING: definition → example/connection
+- ETYMOLOGY: root/origin → present meaning → related word
+- CAUSE_EFFECT: cause → process → result
+- MECHANISM: parts/steps → how they connect
+- COMPARE: common point → key difference → why it matters
+- TIME_FLOW: before → event → after
+- PERSON_EVENT: who → action → impact
+- PLACE_CONTEXT: where → feature → why important
+
+Do not invent missing facts to fill a template.
+A template slot must remain absent unless the verified answer actually supports it.
