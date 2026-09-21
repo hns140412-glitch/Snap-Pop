@@ -765,16 +765,18 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "understanding→expression routing remains basic/manual",
+      "gap": "verified ASK→optional EXPRESS routing implemented/static verified; live browser interaction remains NOT_RUN",
       "codeEvidence": [
-        "exploreHub",
-        "hubMapBtn",
-        "hubThinkBtn",
-        "hubResumeBtn"
+        "app.js:renderImaginationResponse canExpress gate",
+        "app.js:pendingExpressionIntent",
+        "app.js:renderPendingExpressionIntent",
+        "app.js:renderExpressionIntentNote",
+        "index.html:expressionIntentBanner/expressionIntentNote",
+        "scripts/validate-optional-expression-transition.mjs"
       ]
     },
     {
