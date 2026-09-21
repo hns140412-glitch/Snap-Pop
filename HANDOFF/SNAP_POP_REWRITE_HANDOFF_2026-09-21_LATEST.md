@@ -115,3 +115,19 @@ Resume target: continue integrated UI rewrite from actual child-facing surfaces.
 - DEVICE_VERIFIED: false
 
 - integrated result/records/growth Phase 3 exact-head validation trigger.
+
+
+## Integrated UI Phase 3 — Result / Records / Growth verified
+
+- exact validated SHA: `38bca4990a1cff1769d31b09c46fe8299f971315`
+- evidence commit: `388fb1ac9831d29a2e7e3a1aef46d188e2fbaea3`
+- closure: `65/65 PASS`
+- browser runtime: `BROWSER_RUNTIME_CDP_PASS`
+- viewport: `390×844`
+- result leads with child-authored work before reward/progress
+- result routes explicitly to records and growth
+- bonus practice is optional/collapsed
+- records surface is reflection-first
+- growth surface shows exploration → record → growth narrative
+- final visual direction: OPEN
+- DEVICE_VERIFIED: false
