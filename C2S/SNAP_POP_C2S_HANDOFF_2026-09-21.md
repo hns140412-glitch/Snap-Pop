@@ -1254,3 +1254,84 @@ Next:
 2. remove or rename any misleading `autoVoice` semantics that could imply hands-free listening;
 3. keep HOME_RADIO explicit-action only;
 4. after that, P5 branch-only voice architecture can be considered closed until live runtime/device stage.
+
+
+## 25. P5 EXPLICIT MIC ENTRY / BRANCH-ONLY VOICE CLOSURE — 2026-09-21
+
+### Mic entry audit
+
+Previous path:
+- HOME_RADIO click
+- `openImagination(autoVoice:true)`
+- programmatic click of the voice button
+
+Even though it originated from a user action, this path was removed because:
+- `autoVoice` semantics were ambiguous;
+- browser microphone permission/user-activation could be lost after async open;
+- it weakened the explicit-mic-only boundary.
+
+### Current rule
+
+Every STT session now starts only from an explicit mic button handler.
+
+Current app listen entry points:
+1. Imagination Cloud mic button
+2. Writing voice input button
+
+Both pass:
+- `source:"USER_MIC"`
+
+HOME_RADIO:
+- opens Imagination Cloud only;
+- does NOT start microphone;
+- child must explicitly press the mic button.
+
+Removed:
+- `autoVoice` parameter;
+- programmatic voice-button click on cloud open.
+
+### Validation
+
+Updated:
+- `scripts/validate-stt-session-ownership.mjs`
+
+Repository readback:
+- exactly two `SnapPopVoice.listen` call sites;
+- both are inside explicit button handlers;
+- both declare `source:"USER_MIC"`;
+- no `autoVoice` remains;
+- HOME_RADIO opens cloud without starting STT.
+
+Previous isolated STT session execution remains PASS:
+- continuous/realtime blocked;
+- previous session stopped;
+- one-shot forced;
+- stale callbacks ignored;
+- active callbacks pass.
+
+### P5 branch-only status
+
+P5 voice architecture is now closed for branch-only static/isolated work:
+
+- voice ownership: PASS
+- TTS ownership boundary: PASS
+- pacing/interrupt policy: PASS
+- autoRead hidden-hint regression: FIXED
+- STT one-shot session ownership: PASS
+- stale callback guard: PASS
+- explicit mic entry only: PASS
+- always-listening: NOT IMPLEMENTED / BLOCKED BY POLICY
+- realtime external voice: OPEN / NOT_RUN
+- browser/device TTS/STT: NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Next execution axis
+
+Do not spend more branch-only time inventing realtime voice behavior.
+
+Next should move to:
+- P6 integrated regression across P1–P5 contracts;
+- static/runtime-isolated cross-regression;
+- detect collisions between Truth Guard, curiosity scaffold, mental model, pressure control, crew ownership and voice policy;
+- still no deploy/device/Netlify until frozen candidate and external-resource gate.
