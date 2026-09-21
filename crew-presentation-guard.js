@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-d";
+  const VERSION="2026.09.21-e";
   const SELF_IDENTITY_PATTERNS=[
     /\b(as an? ai|i am an? ai|i'm an? ai|as chatgpt|i am chatgpt|i'm chatgpt|openai assistant|system message|developer message)\b/i,
     /(저는|나는)\s*(AI|인공지능|ChatGPT|OpenAI)/i,
@@ -46,10 +46,22 @@
     if(hasSelfIdentityLeak(core)||hasSelfIdentityLeak(example)||hasSelfIdentityLeak(speakable)){
       throw new Error("CREW_PRESENTATION_IDENTITY_LEAK");
     }
+    const safety=window.SnapPopCrewInteractionSafety;
+    if(safety&&typeof safety.assertSafe==="function"){
+      safety.assertSafe(core,{mode:"GENERAL"});
+      if(example)safety.assertSafe(example,{mode:"GENERAL"});
+      if(speakable)safety.assertSafe(speakable,{mode:"GENERAL"});
+    }
 
     const nodes=Array.isArray(result.nodes)
       ? result.nodes.slice(0,8).map(cleanNode).filter(Boolean)
       : [];
+    if(safety&&typeof safety.assertSafe==="function"){
+      for(const node of nodes){
+        if(node.label)safety.assertSafe(node.label,{mode:"GENERAL"});
+        if(node.value)safety.assertSafe(node.value,{mode:"GENERAL"});
+      }
+    }
 
     const next={
       ...result,
