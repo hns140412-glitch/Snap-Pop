@@ -113,3 +113,5 @@ Resume target: continue integrated UI rewrite from actual child-facing surfaces.
 - home/map hierarchy: VERIFIED
 - final visual direction: OPEN
 - DEVICE_VERIFIED: false
+
+- integrated result/records/growth Phase 3 exact-head validation trigger.
