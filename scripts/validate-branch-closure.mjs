@@ -40,7 +40,8 @@ const validators=[
   "validate-crew-special-role-not-power.mjs",
   "validate-imagination-return-integrity.mjs",
   "validate-writing-semantic-contract.mjs",
-  "validate-crew-core6-starter-baseline.mjs"
+  "validate-crew-core6-starter-baseline.mjs",
+  "validate-badge-candidate-review-only.mjs"
 ];
 
 let passed=0;
