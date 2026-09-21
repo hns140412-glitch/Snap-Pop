@@ -4,6 +4,7 @@ import vm from "node:vm";
 const runtimeSource=fs.readFileSync(new URL("../badge-behavior-runtime.js",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const flowSource=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
+const recordsFlowSource=fs.readFileSync(new URL("../records-flow-controller.js",import.meta.url),"utf8");
 const catalog=JSON.parse(fs.readFileSync(new URL("../data/badge-catalog-working.json",import.meta.url),"utf8"));
 
 const window={};
@@ -78,18 +79,18 @@ assert("app-records-writing-completion-as-fact-event",
   flowSource.includes("explicitCompletion:true")
 );
 assert("app-records-optional-extra-task-completion",
-  appSource.includes('recordBadgeBehaviorObservation("EXTRA_TASK"')&&
-  appSource.includes("explicitChoice:true")&&
-  appSource.includes("completed:true")
+  recordsFlowSource.includes('deps.recordBadgeBehaviorObservation("EXTRA_TASK"')&&
+  recordsFlowSource.includes("explicitChoice:true")&&
+  recordsFlowSource.includes("completed:true")
 );
 assert("app-does-not-infer-deep-thinking-from-empty-attempts",
   !appSource.includes('recordBadgeBehaviorObservation("DEEP_THINKING"')
 );
 assert("app-records-retry-only-from-explicit-revision",
-  appSource.includes('recordBadgeBehaviorObservation("RETRY"')&&
-  appSource.includes("explicitRevision:true")&&
-  appSource.includes("originalPreserved:true")&&
-  appSource.includes("rewardChanged:false")
+  recordsFlowSource.includes('deps.recordBadgeBehaviorObservation("RETRY"')&&
+  recordsFlowSource.includes("explicitRevision:true")&&
+  recordsFlowSource.includes("originalPreserved:true")&&
+  recordsFlowSource.includes("rewardChanged:false")
 );
 assert("app-still-does-not-infer-error-or-special-without-source-contract",
   !appSource.includes('recordBadgeBehaviorObservation("ERROR_DISCOVERY"')&&
