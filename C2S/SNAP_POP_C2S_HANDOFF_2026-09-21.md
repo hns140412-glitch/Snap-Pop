@@ -3028,3 +3028,136 @@ Clarification:
 - prior frozen candidate superseded
 - external call count remains 0
 - Netlify/deploy/merge remain NOT_RUN
+
+
+## 43. NEW-CHAT C2S CLOSURE — 2026-09-21
+
+### Closure purpose
+
+This section is the handoff boundary for continuing Snap & Pop in a NEW ChatGPT conversation.
+
+Do NOT reinterpret earlier historical status as current. Use:
+1. this Section 43,
+2. the latest `SNAP_POP_NEW_CHAT_START_2026-09-21.md`,
+3. current branch HEAD,
+4. current requirement matrix,
+as the current resumption basis.
+
+### Repository / branch
+
+- repository: `hns140412-glitch/Snap-Pop`
+- branch: `taky/snap-pop-implementation-2026-09-20`
+- branch-only implementation continues.
+- main merge / deploy / Netlify remain prohibited until a NEW frozen candidate is declared and TAKY external-resource gate is reopened.
+
+### Current implementation closure
+
+The previous frozen candidate is superseded by post-freeze implementation.
+
+Current implementation now includes:
+- semantic writing guards and one-next-move authorship protection;
+- verified knowledge + Truth Guard + actual citation/source matching;
+- etymology two-host source-diversity gate;
+- question-lens routing and verified mental models;
+- WRITING_FLOW pressure suppression and Imagination return integrity;
+- Exploration Crew response ownership and identity-leak guards;
+- voice ownership/boundary policy;
+- Guest selection engine with explicit appearance authorization gate;
+- Guest shared memory + record visibility;
+- SPECIAL role = encounter style only, not power/reward;
+- Core 6 = starter reference only, not global crew authority;
+- Hide & Seek vocabulary expression-material ownership bridge;
+- Korean↔English meaning-preserving phrase-level expression bridge;
+- verified ASK→optional EXPRESS transition without AI-answer injection;
+- metadata-only expression provenance trace;
+- staged crew intervention ladder;
+- badge behavior observation taxonomy + anti-labeling guard;
+- semantic-light shared badge event envelope without shared identity/role/permission;
+- review-only badge candidate proposal runtime;
+- independent badge experience axis separated from EXP/gems/affinity/economy;
+- layered badge visual preview + fail-closed working catalog activation guard;
+- non-blocking crew reaction UI.
+
+### Verification state
+
+Current closure runner:
+- 39 validators.
+
+Important reporting rule:
+- CODED and STATIC_VERIFIED are NOT runtime/device verification.
+- live provider/browser/device paths remain separate.
+
+No claim is made here that the full branch has been live-browser/device verified.
+
+### Remaining Snap & Pop body PARTIAL items
+
+Outside FAMILY_EXPANSION, only these two requirement-matrix items remain PARTIAL:
+
+1. `SP-BADGE-006`
+   - behavior taxonomy + anti-labeling guard: implemented
+   - explicit detectors implemented:
+     - HELP_REQUEST
+     - WRITING_EXPLORATION
+     - EXTRA_TASK
+     - RETRY from explicit child revision
+   - intentionally NOT inferred yet:
+     - ERROR_DISCOVERY
+     - DEEP_THINKING
+     - SPECIAL_BEHAVIOR
+   - do not infer these from weak proxies or elapsed time.
+   - next work must define stronger source-specific evidence contracts before wiring them.
+
+2. `SP-BADGE-008`
+   - stable Profile Character identity layer: implemented
+   - identity remains stable across badge visual changes
+   - exact Theme Expression system/assets remain OPEN.
+   - do not invent final theme semantics/assets without canonical evidence/design decision.
+
+### External / deployment state
+
+- current candidate: NOT FROZEN
+- old frozen candidate: SUPERSEDED
+- external resource call count for current implementation goal: 0
+- Netlify: NOT_RUN
+- deploy: NOT_RUN
+- merge: NOT_RUN
+- DEVICE_VERIFIED overall: NOT_RUN
+- OPENAI_RUNTIME_CONNECTED: false / live connection not claimed
+
+### Hard locks for next chat
+
+- latest user correction > canonical docs > historical dialogue
+- user is not tester/debugger
+- BLOCKED → diagnose cause → choose a different route; do not repeat same failed path
+- no fake success / no unsupported implementation percentage
+- no deployment or Netlify before new frozen candidate + TAKY external-resource gate
+- no shared user/family/org identity, role or permission across apps
+- Hide & Seek vocabulary stays source-owned; Snap & Pop uses it only as optional expression material
+- child remains final author
+- no full draft ghostwriting
+- no auto answer-to-draft injection
+- Imagination Cloud remains hidden/on-demand
+- THINK_EXPRESS verification = NOT_APPLICABLE, not verified factual content
+- SPECIAL Crew role does not imply strength, power, reward or EXP advantage
+- historical ~60 badge names/triggers stay WORKING_DRAFT_NOT_ACTIVE
+- badge candidates remain REVIEW_REQUIRED only unless separately approved
+
+### Recommended next branch-only work
+
+Priority order:
+1. SP-BADGE-006:
+   - define explicit evidence contracts for ERROR_DISCOVERY / DEEP_THINKING / SPECIAL_BEHAVIOR;
+   - implement only when evidence is strong enough;
+   - preserve anti-labeling and no-score rules.
+2. SP-BADGE-008:
+   - define Theme Expression system using the stable Profile Character Identity Layer;
+   - keep theme changes cosmetic/expressive and non-power-bearing.
+3. run a matrix residue pass after those changes.
+4. only after implementation closure, declare a NEW frozen candidate.
+5. only then consider external runtime validation under TAKY external-resource gate.
+
+### New-chat resume instruction
+
+Start the next conversation with:
+
+`최신 TAKY 기준으로 Snap & Pop을 재개해. GitHub의 SNAP_POP_NEW_CHAT_START_2026-09-21.md와 C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md Section 43을 먼저 읽고, branch taky/snap-pop-implementation-2026-09-20 최신 HEAD 및 data/snap-pop-requirement-matrix.json을 확인해. 현재 본체 PARTIAL은 SP-BADGE-006과 SP-BADGE-008 두 개만 남아 있고, FAMILY_EXPANSION은 별도 범위다. 사용자를 테스터/디버거로 쓰지 말고, Netlify/배포/merge는 새 frozen candidate + TAKY external-resource gate 전에는 호출하지 마. 먼저 SP-BADGE-006의 명시적 evidence contract부터 branch-only로 이어서 구현해.`
