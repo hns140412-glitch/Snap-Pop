@@ -1,8 +1,8 @@
-validation_sha=fa5dcc83d62a507b9e4008afd661c35c6563a426
-checkout_sha=fa5dcc83d62a507b9e4008afd661c35c6563a426
+validation_sha=1f9a9aaec8e0ed06033f1c820203e7752f70e08b
+checkout_sha=1f9a9aaec8e0ed06033f1c820203e7752f70e08b
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 69/69
-browser_status=2
+browser_status=1
 browser_marker=
 viewport=390x844
 generated_by=github-actions-branch-only
@@ -833,5 +833,5 @@ DOM_BINDING_INTEGRITY_PASS
 
 BRANCH_CLOSURE_VALIDATOR_PASS 69/69
 --- BROWSER ---
-BROWSER_RUNTIME_CDP_TIMEOUT
-{"readyState":"complete","smoke":null,"runtime":{"init":"PASS","appScript":"STARTED","db":"OPEN","errors":[{"type":"error","message":"Uncaught SyntaxError: Identifier 'originalOpenAIProvider' has already been declared","source":"http://127.0.0.1:4173/scripts/browser-runtime-selftest.js","line":257,"column":13}],"phase":"DONE"},"result":null,"landmarks":5}
+BROWSER_RUNTIME_CDP_FAIL
+{"readyState":"complete","smoke":"FAIL","runtime":{"init":"PASS","appScript":"STARTED","db":"OPEN","errors":[],"phase":"DONE"},"result":"BROWSER_RUNTIME_SELFTEST_PENDING\nPASS app-init-pass\nPASS indexeddb-open\nPASS map-has-five-landmarks\nPASS live-dom-map-surface\nPASS live-dom-primary-navigation\nPASS live-dom-writing-surface-present\nPASS runtime-mockup-background-not-used\nPASS think-express-local-runtime-kind\nPASS think-express-local-runtime-has-scaffold\nPASS think-express-korean-supported\nPASS think-express-english-supported\nPASS think-express-response-owner-is-crew\nPASS ask-without-knowledge-provider-does-not-guess\nPASS ask-no-guess-response-owner-is-crew\nPASS affinity-runtime-is-internal-expression-only\nPASS special-role-runtime-is-encounter-only\nPASS special-role-power-boost-is-blocked\nPASS core6-runtime-working-baseline\nPASS guest-weighting-prefers-less-recent-non-main\nPASS crew-runtime-main-id-present\nPASS crew-world-return-restores-main-companion\nBROWSER_RUNTIME_SELFTEST_FAIL FAIL crew-world-return-records-reunion-memory","landmarks":5}
