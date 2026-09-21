@@ -379,7 +379,7 @@ function renderImaginationResponse(result,identity){
   const nodes=Array.isArray(result?.nodes)?result.nodes:[];
   const claims=Array.isArray(result?.verification?.claims)?result.verification.claims:[];
   const verifiedClaims=claims.filter(x=>x?.status==="VERIFIED");
-  const domains=[...new Set(verifiedClaims.flatMap(x=>Array.isArray(x?.evidence)?x.evidence:[]).map(e=>{try{return new URL(e?.source_url||"").hostname.replace(/^www\./,"")}catch{return ""}}).filter(Boolean))].slice(0,4);
+  const evidenceLinks=[...new Map(verifiedClaims.flatMap(x=>Array.isArray(x?.evidence)?x.evidence:[]).map(e=>{try{const u=new URL(e?.source_url||"");if(!["http:","https:"].includes(u.protocol))return null;return [u.href,{url:u.href,label:(e?.title||u.hostname.replace(/^www\./,"")).slice(0,80)}]}catch{return null}}).filter(Boolean)).values()].slice(0,4);
   const badge=result?.kind==="ASK_UNDERSTAND"
     ? result?.verified===true
       ?"확인 완료"
@@ -390,7 +390,7 @@ function renderImaginationResponse(result,identity){
   host.innerHTML=`<div class="cloudAnswerHead"><b>${html(crewMemberName(identity))} · ${html(result?.title||"상상 구름")}</b><span>${html(badge)}</span></div>`+
     `<p class="cloudCore">${html(result?.core||"")}</p>`+
     (nodes.length?`<div class="mindMap">${nodes.map(n=>`<div class="mindNode"><b>${html(n.label||"")}</b><span>${html(n.value||"")}</span></div>`).join("")}</div>`:"")+
-    (verifiedClaims.length?`<p class="kicker">확인된 주장 ${verifiedClaims.length}개${domains.length?` · 근거 ${domains.map(html).join(" · ")}`:""}</p>`:"")+
+    (verifiedClaims.length?`<p class="kicker">확인된 주장 ${verifiedClaims.length}개${evidenceLinks.length?` · 근거 ${evidenceLinks.map(x=>`<a href="${html(x.url)}" target="_blank" rel="noopener noreferrer">${html(x.label)}</a>`).join(" · ")}`:""}</p>`:"")+
     (result?.example?`<p class="cloudExample">${html(result.example)}</p>`:"");
   host.hidden=false; host.dataset.speakable=result?.speakable||result?.core||"";
 }
