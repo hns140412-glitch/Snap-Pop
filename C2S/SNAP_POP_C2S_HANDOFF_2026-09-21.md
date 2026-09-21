@@ -2826,3 +2826,148 @@ Remaining gap:
 - previous frozen candidate remains superseded
 - external call count remains 0
 - Netlify/deploy/merge remain NOT_RUN
+
+
+## 41. WRITING SEMANTIC CORE + CORE6 BASELINE + BADGE CANDIDATE + VOICE BOUNDARY — 2026-09-21
+
+### A. Writing semantic contract reconciliation
+
+Added:
+- `scripts/validate-writing-semantic-contract.mjs`
+
+Verified:
+- semantic analysis requires the current draft;
+- previousSnapshot is passed separately;
+- server instruction explicitly analyzes the CURRENT draft semantically;
+- five landmarks are writing lenses, not mini-games;
+- cross-lens suggestion is optional and limited to one lens;
+- one next move is enforced on client and server;
+- hint cannot become a second question;
+- stale async analysis is rejected if current draft/step changed;
+- crew reaction is derived from current semantic analysis;
+- central authorship guard and server contract forbid draft rewrite/completed sentence.
+
+Validation:
+- `WRITING_SEMANTIC_CONTRACT_PASS`
+- 10/10 PASS
+
+Requirement matrix:
+- SP-WRITE-002 → CODED=true / STATIC_VERIFIED=true
+- SP-WRITE-003 → CODED=true / STATIC_VERIFIED=true
+- SP-WRITE-004 → CODED=true / STATIC_VERIFIED=true
+- live OpenAI/browser/device remain NOT_RUN.
+
+---
+
+### B. Core 6 is a starter baseline only
+
+Added:
+- `crew-core6-runtime.js`
+- `scripts/validate-crew-core6-starter-baseline.mjs`
+
+Core 6:
+- dooby
+- lori
+- ink
+- nova
+- take
+- zero
+
+Contract:
+- status = WORKING_STARTER_BASELINE
+- scope = STARTER_REFERENCE_ONLY
+- globalAuthority=false
+- rosterLock=false
+- futureExpansionAllowed=true
+- Special/World rosters remain independent.
+
+Fail-closed:
+- Core 6 cannot be promoted to global authority;
+- Core 6 cannot lock future roster expansion.
+
+Starter UI now says:
+- 시작 기준점 6명
+- 전체 탐험대 고정 아님
+- 미래 확장 허용
+
+Validation:
+- `CREW_CORE6_STARTER_BASELINE_PASS`
+- 8/8 PASS
+
+Requirement matrix:
+- SP-CREW-005 → CODED=true / STATIC_VERIFIED=true
+
+---
+
+### C. Badge candidate expansion is review-only
+
+Added:
+- `badge-candidate-runtime.js`
+- `scripts/validate-badge-candidate-review-only.mjs`
+
+Purpose:
+- preserve historical ~60 inactive drafts;
+- allow new activity-backed badge CANDIDATES without auto-activation.
+
+Candidate contract:
+- SNAP_POP_BADGE_CANDIDATE_V1
+- status = REVIEW_REQUIRED
+- active=false
+- awardAuthorized=false
+- autoCatalogInsertAllowed=false
+- autoTriggerActivationAllowed=false
+- requires explicit evidence event ids.
+
+App helper:
+- `proposeBadgeCandidateFromObservations`
+- writes only to `badgeCandidateReviews`
+- helper is not auto-called anywhere.
+
+Validation:
+- `BADGE_CANDIDATE_REVIEW_ONLY_PASS`
+- 6/6 PASS
+
+Requirement matrix:
+- SP-BADGE-005 → CODED=true / STATIC_VERIFIED=true
+- auto-discovery thresholds/canonical naming/approval/activation remain OPEN.
+
+---
+
+### D. Voice boundary contract
+
+Added:
+- `scripts/validate-voice-boundary-contract.mjs`
+
+Verified:
+- TTS and STT are separate runtime functions;
+- listening is explicit one-shot, not always-listening;
+- 다시 듣기 only reads current prompt (+ explicit hint if already opened);
+- 말해서 쓰기 is a separate explicit control;
+- child speech transcript appends into the draft and triggers normal input flow;
+- radio is HOME_RADIO → Imagination entry;
+- no radio landmark / no sixth writing tool;
+- voice fallback failure preserves text flow;
+- external provider remains optional, browser fallback supported.
+
+Validation:
+- `VOICE_BOUNDARY_CONTRACT_PASS`
+- 9/9 PASS
+
+Requirement matrix:
+- SP-VOICE-001 → CODED=true / STATIC_VERIFIED=true
+- SP-VOICE-002 → CODED=true / STATIC_VERIFIED=true
+
+Remaining voice gap:
+- external high-quality voice provider live connection
+- live browser/device runtime verification.
+
+### Closure runner
+
+`scripts/validate-branch-closure.mjs` now contains 38 validators.
+
+### External state
+
+- current candidate is not frozen
+- previous frozen candidate remains superseded
+- external call count remains 0
+- Netlify/deploy/merge remain NOT_RUN
