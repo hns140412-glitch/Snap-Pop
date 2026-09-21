@@ -330,7 +330,28 @@ function ensureWritingState(s){
   return s;
 }
 function setModeButtons(language){$("#modeKo")?.classList.toggle("on",language!=="en");$("#modeEn")?.classList.toggle("on",language==="en")}
-async function init(){await openDB();await migrateLegacyState();SNAP_RULES=await fetch("data/exploration-crew-rules.json").then(r=>r.json());marks=await fetch("data/landmarks.json").then(r=>r.json());await migrateIdentityFallback();await ensureCrewRegistry();await synthesizeCrewWorldState();renderLandmarks();await renderPendingExpressionIntent();await loadSettings();await renderIdentityPresence();await updateStatus();renderRecords();renderGems();renderGrowth();await renderIncomingHandoff();renderSpecialInvite();const active=await get("active");if(active)renderExplore(active)}
+function runtimePhase(phase){if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.phase=phase}
+async function init(){
+  runtimePhase("OPEN_DB");await openDB();
+  runtimePhase("MIGRATE_LEGACY");await migrateLegacyState();
+  runtimePhase("LOAD_CREW_RULES");SNAP_RULES=await fetch("data/exploration-crew-rules.json").then(r=>{if(!r.ok)throw new Error("CREW_RULES_HTTP_"+r.status);return r.json()});
+  runtimePhase("LOAD_LANDMARKS");marks=await fetch("data/landmarks.json").then(r=>{if(!r.ok)throw new Error("LANDMARKS_HTTP_"+r.status);return r.json()});
+  runtimePhase("MIGRATE_IDENTITY");await migrateIdentityFallback();
+  runtimePhase("ENSURE_CREW_REGISTRY");await ensureCrewRegistry();
+  runtimePhase("SYNTHESIZE_CREW_WORLD");await synthesizeCrewWorldState();
+  runtimePhase("RENDER_LANDMARKS");renderLandmarks();
+  runtimePhase("PENDING_EXPRESSION");await renderPendingExpressionIntent();
+  runtimePhase("LOAD_SETTINGS");await loadSettings();
+  runtimePhase("RENDER_IDENTITY");await renderIdentityPresence();
+  runtimePhase("UPDATE_STATUS");await updateStatus();
+  runtimePhase("RENDER_RECORDS");await renderRecords();
+  runtimePhase("RENDER_GEMS");renderGems();
+  runtimePhase("RENDER_GROWTH");renderGrowth();
+  runtimePhase("INCOMING_HANDOFF");await renderIncomingHandoff();
+  runtimePhase("SPECIAL_INVITE");renderSpecialInvite();
+  runtimePhase("ACTIVE");const active=await get("active");if(active)renderExplore(active);
+  runtimePhase("DONE");
+}
 
 function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;$$(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await get("active"),g=await get("gems")||{};$("#selTitle").textContent=m.title;$("#selDesc").textContent=m.desc;const identity=await resolvedIdentity();$("#selCrewMemberReaction").textContent=`${crewMemberName(identity)} · ${crewReaction(identity,m.id)}`;$("#selProgress").textContent="진행 "+(a?.landmark===m.id?(Math.min(3,(a.step||0)+1)):0)+" / 3";$("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";$("#selection").hidden=false};host.appendChild(b)})}
 $("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active"),created=false;if(!s||s.landmark!==selected.id){s={id:uid("explore"),landmark:selected.id,step:0,answers:["","",""],snapshots:["","",""],draft:"",language:"ko",startedAt:new Date().toISOString()};created=true}if(!s.language)s.language="ko";if(created){const pending=await get("pendingExpressionIntent");if(pending?.question){s.expressionIntent={source:"VERIFIED_ASK",question:pending.question,questionLanguage:pending.language||"ko",answerTransferred:false,createdAt:pending.createdAt||new Date().toISOString()};await recordExpressionTrace("VERIFIED_ASK_EXPRESSION_ATTACHED",{source:"VERIFIED_ASK",questionLanguage:pending.language||"ko",verifiedCoverage:pending.verifiedCoverage||null,questionChars:pending.question.length,landmark:selected.id});await set("pendingExpressionIntent",null);await renderPendingExpressionIntent()}}ensureWritingState(s);await set("active",s);renderExplore(s);show("explore");setTimeout(()=>analyzeWritingMove(s),0);if($("#autoRead").checked){const p=promptFor(s.landmark,s.step,s.language,s.draft);speak(p[0],s.language,"AUTO_READ")}}
