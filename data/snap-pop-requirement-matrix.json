@@ -357,16 +357,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "index.html:#homeRadio",
         "app.js:HOME_RADIO→openImagination",
         "app.js:no radio landmark path",
         "voice-runtime.js",
-        "scripts/validate-voice-boundary-contract.mjs"
+        "scripts/validate-voice-boundary-contract.mjs",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "radio is implemented as optional Imagination entry, not a sixth writing landmark/tool; external high-quality voice provider and live browser/device execution remain NOT_RUN"
+      "gap": "physical-device behavior remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: home radio opens imagination layer",
+        "browser-runtime-selftest: writing controls remain separate from home radio"
+      ]
     },
     {
       "id": "SP-IMAGINE-001",
@@ -1345,13 +1350,18 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:imaginationReturnFocus",
-        "app.js:closeImagination"
+        "app.js:closeImagination",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "device focus/keyboard behavior validation pending"
+      "gap": "physical-device behavior remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: writing cloud return preserves draft",
+        "browser-runtime-selftest: writing cloud return restores writing view"
+      ]
     },
     {
       "id": "SP-WRITE-001",
