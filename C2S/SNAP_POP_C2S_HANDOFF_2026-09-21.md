@@ -2605,3 +2605,124 @@ Requirement matrix reconciled:
 - prior frozen candidate remains superseded
 - external call count remains 0
 - Netlify/deploy/merge remain NOT_RUN
+
+
+## 39. BADGE VISUAL COMPOSITOR + WORKING CATALOG FAIL-CLOSED + SPECIAL ROLE NOT POWER — 2026-09-21
+
+### A. Badge visual layer compositor
+
+Added:
+- `badge-visual-runtime.js`
+- `scripts/validate-badge-visual-compositor.mjs`
+
+Implemented visual contract:
+- circular badge form;
+- pastel layered rendering direction;
+- five tiers:
+  - GREEN
+  - BLUE
+  - RED
+  - GOLD
+  - PLATINUM
+- one-to-five gem stars on upper semicircle;
+- Profile Character identity layer;
+- common badge art layer;
+- badge growth layer.
+
+Growth screen integration:
+- explicit `배지 스타일 미리보기`
+- explicit `획득 배지 아님`
+- renderer uses resolved profile name/photo;
+- no catalog item id;
+- no badge award state.
+
+Important boundary:
+- preview uses observation count only to demonstrate tier/star rendering.
+- this is NOT owned badge progress.
+- active catalog remains blocked.
+
+Validation:
+- `BADGE_VISUAL_LAYER_COMPOSITOR_PASS`
+- 10/10 PASS
+
+Requirement matrix:
+- SP-BADGE-002 → CODED=true / STATIC_VERIFIED=true
+- SP-BADGE-007 → CODED=true / STATIC_VERIFIED=true
+- SP-BADGE-009 → CODED=true / STATIC_VERIFIED=true
+- SP-BADGE-008 remains PARTIAL:
+  - stable Profile Character identity layer implemented
+  - exact Theme Expression system/assets remain OPEN.
+
+---
+
+### B. Historical working badge catalog activation guard
+
+Added:
+- `badge-catalog-guard-runtime.js`
+- `scripts/validate-badge-catalog-activation-guard.mjs`
+
+Runtime behavior:
+- WORKING_DRAFT item with active=true fails closed;
+- catalog status WORKING_DRAFT_NOT_ACTIVE blocks activation;
+- reviewed future item can activate only when catalog/item statuses are no longer working draft;
+- `badge-runtime.js` now validates catalog on load and delegates activeItems through the guard.
+
+Validation:
+- `BADGE_CATALOG_ACTIVATION_GUARD_PASS`
+- 6/6 PASS
+
+Requirement matrix:
+- SP-BADGE-010 → CODED=true / STATIC_VERIFIED=true
+
+This keeps the historical ~60 names/triggers preserved but inactive until later canonical review.
+
+---
+
+### C. Special Exploration Crew role is encounter style, not power
+
+Added:
+- `crew-role-guard-runtime.js`
+- `scripts/validate-crew-special-role-not-power.mjs`
+
+Executable role contract:
+- SPECIAL roleMeaning = `ENCOUNTER_STYLE_ONLY`
+- functionalAbility = `EQUAL`
+- powerBoost=false
+- rewardMultiplier=1
+- expMultiplier=1
+
+Blocked:
+- powerBoost=true
+- rewardMultiplier > 1
+- expMultiplier > 1
+- functional advantage / privileged ability claims
+
+Applied to:
+- selected Guest role contract;
+- Special roster cards;
+- Special scene presence copy.
+
+UI now explicitly states:
+- `조우 방식 · 기능 동일`
+- `스페셜은 강함 등급이 아님`
+- `스페셜은 더 강한 대원이 아니라 만나는 방식만 달라`
+
+Validation:
+- `CREW_SPECIAL_ROLE_NOT_POWER_PASS`
+- 8/8 PASS
+
+Requirement matrix:
+- SP-CREW-004 → CODED=true / STATIC_VERIFIED=true
+- exact Special encounter content/cadence remains OPEN.
+
+### Closure runner
+
+`scripts/validate-branch-closure.mjs` now contains 33 validators.
+
+### External state
+
+- implementation continues
+- current candidate is not frozen
+- previous frozen candidate remains superseded
+- external call count remains 0
+- Netlify/deploy/merge remain NOT_RUN
