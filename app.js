@@ -74,7 +74,7 @@ async function recordCrewMemberExperience(memberId,type,meta={}){return crewRunt
 async function recordCrewExperience(type,meta={}){return crewRuntimeController().recordCrewExperience(type,meta)}
 async function chooseSceneGuest(sceneKey,options={}){return crewRuntimeController().chooseSceneGuest(sceneKey,options)}
 async function synthesizeCrewWorldState(){return crewRuntimeController().synthesizeCrewWorldState()}
-function recordsGrowthController(){return window.SnapPopRecordsGrowthController.instance({query:$,queryAll:$,getLandmarks:()=>marks,ensureCrewRegistry,getRules:()=>SNAP_RULES,renderCalendar,renderCloudHistory,renderBadgePreview,renderIdentityPresence,resolvedIdentity,crewSnippet,crewMemberName,show,toast})}
+function recordsGrowthController(){return window.SnapPopRecordsGrowthController.instance({query:$,queryAll:$$,getLandmarks:()=>marks,ensureCrewRegistry,getRules:()=>SNAP_RULES,renderCalendar,renderCloudHistory,renderBadgePreview,renderIdentityPresence,resolvedIdentity,crewSnippet,crewMemberName,show,toast})}
 async function renderRecords(){return recordsGrowthController().renderRecords()}
 async function renderGems(){return recordsGrowthController().renderGems()}
 async function renderGrowth(){return recordsGrowthController().renderGrowth()}
@@ -93,7 +93,7 @@ async function openImagination(options={}){return imaginationController().openIm
 async function closeImagination(){return imaginationController().closeImagination()}
 function renderImaginationResponse(result,identity){return imaginationController().renderImaginationResponse(result,identity)}
 async function runImagination(inputOverride){return imaginationController().runImagination(inputOverride)}
-function settingsProfileController(){return window.SnapPopSettingsProfileController.instance({query:$,queryAll:$,getRules:()=>SNAP_RULES,normalizeIdentity,ensureCrewRegistry,crewMemberRule,crewMemberName,show,toast,uid,getLastMain:()=>lastMain})}
+function settingsProfileController(){return window.SnapPopSettingsProfileController.instance({query:$,queryAll:$$,getRules:()=>SNAP_RULES,normalizeIdentity,ensureCrewRegistry,crewMemberRule,crewMemberName,show,toast,uid,getLastMain:()=>lastMain})}
 async function migrateIdentityFallback(){return settingsProfileController().migrateIdentityFallback()}
 async function resolvedIdentity(){return settingsProfileController().resolvedIdentity()}
 async function applySharedIdentity(identity){return settingsProfileController().applySharedIdentity(identity)}
