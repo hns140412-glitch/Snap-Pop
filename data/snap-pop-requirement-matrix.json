@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.17",
+  "version": "2026-09-21.16",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -1287,13 +1287,11 @@
     {
       "id": "SP-BADGE-001",
       "domain": "BADGE_SYSTEM",
-      "title": "배지 = 점수/파워가 아닌 아이 탐험 과정과 행동을 남기는 독립 기록·성장축",
+      "title": "배지 = 잘함/실수/보완/특별행동을 기록하는 독립 경험 성장축",
       "authority": [
-        "USER_DIRECT_RECOVERY_2026-09-08",
-        "SNAP_EXPLORATION_CREW_SOURCE_LEDGER",
-        "SNAP_EXPLORATION_CREW_MASTER",
-        "LATEST_DIRECT_USER_2026-09-21",
-        "C2S_NO_SILENT_LOSS"
+        "DIRECT_USER_2026-09-08",
+        "TAKY_BADGE_SOURCE_RECOVERY_2026-09-21",
+        "LATEST_DIRECT_USER_2026-09-21"
       ],
       "classification": "CONFIRMED",
       "coded": "PARTIAL",
@@ -1307,25 +1305,27 @@
         "app.js:recordBadgeEvent"
       ],
       "recoveryEvidence": [
-        "USER 2026-09-08: 약 60개, 아이 활동에 따라 추가 가능",
-        "USER examples: 아침 일찍 학습, 스스로 시간 생성, 추가과제, 특별행동, 수행여부, 긴 ISSUE 시간",
-        "Source lineage: Character / Crew / Badge / Affinity / World State separate axes"
+        "[0165] 칭호/뱃지 모으기",
+        "[0167] 잘한 것/실수/보완해야 할 것",
+        "[0169] 약 60개 + 아이 활동 따라 추가",
+        "TAKY HISTORY/2026-09-21_BADGE_SYSTEM_SOURCE_RECOVERY.md"
       ],
-      "gap": "event ledger/tier foundation implemented; approved catalog, UI collection surface, cross-app events pending"
+      "gap": "runtime data model/event detector/catalog not implemented"
     },
     {
       "id": "SP-BADGE-002",
       "domain": "BADGE_SYSTEM",
-      "title": "배지 비주얼 = 원형 + 손그림 느낌 + 파스텔, 상단 반원형 보석별",
+      "title": "배지 비주얼 = 원형·손그림·파스텔, 중앙 진함→외곽 투명 페이드",
       "authority": [
-        "USER_DIRECT_RECOVERY_2026-09-08"
+        "DIRECT_USER_2026-09-08",
+        "TAKY_BADGE_SOURCE_RECOVERY_2026-09-21"
       ],
       "classification": "CONFIRMED",
       "coded": false,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "badge asset/template system not implemented",
+      "gap": "badge asset template/render system not implemented",
       "recoveryEvidence": [
         "USER: 약간 키크니 스타일로 원형뱃지",
         "USER: 손 그림 느낌과 파스텔 색채감",
@@ -1335,17 +1335,17 @@
     {
       "id": "SP-BADGE-003",
       "domain": "BADGE_SYSTEM",
-      "title": "배지 cross-app 축 — Ready & Set 포함 공통 경험 기록으로 연결",
+      "title": "배지는 Ready & Set뿐 아니라 TAKY 앱 전체를 관통하는 공통 경험 수집축",
       "authority": [
-        "USER_DIRECT_RECOVERY_2026-09-08",
-        "LATEST_DIRECT_USER_2026-09-21"
+        "DIRECT_USER_2026-09-08_[0174]",
+        "TAKY_BADGE_SOURCE_RECOVERY_2026-09-21"
       ],
-      "classification": "RECOVERY_REQUIRED",
+      "classification": "CONFIRMED",
       "coded": false,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "shared ownership/storage/event contract still not canonicalized",
+      "gap": "shared owner/store/event contract not implemented",
       "recoveryEvidence": [
         "Ready & Set historical badge discussion and avatar onboarding lineage",
         "TAKY common character/badge derivative direction"
@@ -1354,9 +1354,10 @@
     {
       "id": "SP-BADGE-004",
       "domain": "BADGE_SYSTEM",
-      "title": "배지를 캐릭터 레벨/성장 경제/EXP·보석과 자동 동일시 금지",
+      "title": "배지를 캐릭터 레벨/가챠/일반 EXP 경제와 동일시 금지",
       "authority": [
         "READY_REV06_HOLD",
+        "DIRECT_USER_BADGE_GROWTH",
         "C2S_NO_FALSE_CONVERGENCE"
       ],
       "classification": "CONFIRMED",
