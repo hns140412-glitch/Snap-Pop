@@ -3282,3 +3282,62 @@ Alternate path required:
 - Netlify: NOT_RUN
 - merge: NOT_RUN
 - device verification: NOT_RUN
+
+
+## 45. FROZEN CANDIDATE V2 + EXTERNAL GATE HOLD — 2026-09-21
+
+### Exact frozen candidate
+
+- SHA: `aadf62a087a9c922b8b15f3436eb8a23fc5d8f67`
+- classification: `FROZEN_CANDIDATE_BRANCH_ONLY_V2`
+- exact-SHA GitHub Actions: PASS
+- closure validators: 43/43 PASS
+- workflow run id: `35577164180`
+- job id: `106261495363`
+
+Added:
+- `C2S/SNAP_POP_FROZEN_CANDIDATE_2026-09-21_V2.md`
+- `C2S/SNAP_POP_EXTERNAL_RESOURCE_GATE_2026-09-21_V2.json`
+
+### Verification boundary
+
+Confirmed:
+- CODED body closure
+- STATIC / isolated branch closure
+- exact-SHA 43-validator execution
+
+Still not claimed:
+- live browser/server/OpenAI runtime
+- device verification
+- Netlify/hosted runtime
+- production readiness
+- merge readiness
+
+### External-resource gate
+
+Satisfied:
+- new candidate frozen: YES
+- exact-SHA branch validation: PASS 43/43
+- lower-cost branch validation exhausted before hosting: YES
+- external hosted call count: 0
+- repeated hosted call: NO
+
+Not satisfied:
+- explicit Human Approval for hosted external action: NO
+
+Current decision:
+- `HOLD_BEFORE_EXTERNAL_ACTION`
+- `EXTERNAL_ACTION_AUTHORIZED_NOW=false`
+- `HUMAN_APPROVAL_STATUS=PENDING`
+
+A generic `ㄱ` does not authorize Netlify / hosted runtime / merge.
+
+Therefore:
+- Netlify: NOT_RUN
+- hosted preview/runtime validation: NOT_RUN
+- merge: NOT_RUN
+
+### Next allowed action
+
+Branch-only documentation and handoff synchronization may continue.
+A hosted runtime execution requires a separate explicit approval identifying that external action.

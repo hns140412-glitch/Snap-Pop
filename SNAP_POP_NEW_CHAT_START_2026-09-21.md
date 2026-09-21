@@ -410,3 +410,17 @@ BODY IMPLEMENTATION CLOSURE NOTE — 2026-09-21
 - local clone path is BLOCKED by container DNS/network; do not repeat same path.
 - Netlify/deploy/merge/device verification remain NOT_RUN.
 - next: exact-SHA non-deployment closure execution, then new frozen-candidate decision.
+
+
+FROZEN CANDIDATE V2 NOTE — 2026-09-21
+- frozen candidate SHA: aadf62a087a9c922b8b15f3436eb8a23fc5d8f67
+- exact-SHA GitHub Actions run 35577164180: SUCCESS
+- branch closure: 43/43 PASS
+- body PARTIAL: 0
+- remaining CODED=false: 11 FAMILY_EXPANSION only
+- current candidate classification: FROZEN_CANDIDATE_BRANCH_ONLY_V2
+- Netlify/hosted runtime/merge/device verification: NOT_RUN
+- external hosted call count: 0
+- HUMAN APPROVAL for external action: PENDING
+- generic ㄱ is NOT external-action approval.
+- read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md Section 45 before any hosted/deploy action.

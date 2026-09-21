@@ -1,0 +1,45 @@
+{
+  "gate_id": "SNAP_POP_EXTERNAL_RESOURCE_GATE_2026-09-21_V2",
+  "candidate_sha": "aadf62a087a9c922b8b15f3436eb8a23fc5d8f67",
+  "candidate_sha_frozen": true,
+  "candidate_classification": "FROZEN_CANDIDATE_BRANCH_ONLY_V2",
+  "exact_sha_validation": {
+    "workflow": ".github/workflows/snap-pop-branch-closure.yml",
+    "run_id": 35577164180,
+    "run_number": 13,
+    "job_id": 106261495363,
+    "conclusion": "success",
+    "validator_marker": "BRANCH_CLOSURE_VALIDATOR_PASS 43/43"
+  },
+  "body_closure": {
+    "coded_true": 67,
+    "partial": 0,
+    "coded_false_family_expansion_only": 11
+  },
+  "external_resource_action": true,
+  "external_resource_name": "Netlify_or_equivalent_hosted_runtime_validation",
+  "external_call_budget": 1,
+  "external_call_count_for_same_goal": 0,
+  "same_external_call_repeated_without_new_evidence": false,
+  "lower_cost_branch_validation_complete": true,
+  "netlify": "NOT_RUN",
+  "hosted_runtime_validation": "NOT_RUN",
+  "merge": "NOT_RUN",
+  "device_verified": "NOT_RUN",
+  "live_browser_server": "NOT_RUN",
+  "live_openai_runtime": "NOT_RUN",
+  "human_approval_required": true,
+  "human_approval_present": false,
+  "human_approval_status": "PENDING",
+  "generic_go_token_is_external_approval": false,
+  "external_action_authorized_now": false,
+  "decision": "HOLD_BEFORE_EXTERNAL_ACTION",
+  "prohibited_until_explicit_approval": [
+    "Netlify deploy or preview call",
+    "hosted runtime validation",
+    "production deployment",
+    "merge based on unperformed hosted verification"
+  ],
+  "prior_gate_file": "C2S/SNAP_POP_EXTERNAL_RESOURCE_GATE_2026-09-21.json",
+  "prior_candidate_sha": "a333e735f69b57164edc8440f7108e49a6ee8c7a"
+}
