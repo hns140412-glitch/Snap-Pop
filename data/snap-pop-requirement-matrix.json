@@ -445,7 +445,7 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "imagination-return-runtime.js",
@@ -453,9 +453,18 @@
         "app.js:SnapPopImaginationReturnGuard",
         "curiosity-scaffold-runtime.js:WRITING_FLOW_RETURN_PRIORITY",
         "scripts/validate-imagination-pressure-return.mjs",
-        "scripts/validate-imagination-return-integrity.mjs"
+        "scripts/validate-imagination-return-integrity.mjs",
+        "scripts/browser-runtime-selftest.js",
+        "intelligence-runtime.js",
+        "imagination-controller.js"
       ],
-      "gap": "on-demand Imagination Cloud + writing-flow return integrity are coded/static verified; live browser/device interaction quality remains NOT_RUN"
+      "gap": "browser interaction/return/authorship verified; live external-provider quality and physical-device behavior remain open",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: imagination opens on explicit child action only",
+        "browser-runtime-selftest: writing draft preserved across imagination open/close",
+        "browser-runtime-selftest: writing view restored after imagination close",
+        "browser-runtime-selftest: Think→Express scaffold contains no finalDraft/answer"
+      ]
     },
     {
       "id": "SP-SPECIAL-001",
