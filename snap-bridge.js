@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const BRIDGE_VERSION = '2026.09.21-b';
+  const BRIDGE_VERSION = '2026.09.21-c';
   const CONTEXT_KEY = 'snap_pop_shared_context_v1';
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
   const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','target_time_ms','session_start_at','paused_at','issue_ms','learning_context'];
@@ -208,9 +208,15 @@
       if (completedNow && context.session_id && context.task_id && !context.task_completed) {
         context.task_completed = true;
         context.completed_at = iso();
+        const material=window.SnapPopVocabularyMaterial?.normalize?.({
+          word:context.word||"",
+          word_context:context.word_context||"",
+          from_app:context.from_app||""
+        })||null;
+        const vocabularyMaterial=window.SnapPopVocabularyMaterial?.usageEvidence?.(material,before.draft||"")||null;
         const resultEvent = emit('TASK_COMPLETED', {
           landmark: before.landmark || null,
-          used_handoff_word: context.word || null,
+          vocabulary_material: vocabularyMaterial,
           child_authored: true
         });
         context.completion_event_id = resultEvent.event_id;
@@ -253,7 +259,6 @@
       if (!(context.session_id && context.task_id) || context.task_completed) return;
       const resultEvent = emit('TASK_COMPLETED', {
         ...(event.detail || {}),
-        used_handoff_word: context.word || null,
         child_authored: true
       });
       context.task_completed = true;
