@@ -112,6 +112,33 @@
       result.textContent+="\nPASS stale-writing-analysis-cannot-overwrite-latest";
       window.SnapPopSemanticWritingProvider=originalSemanticProvider;
 
+      const providerForFallback=window.SnapPopSemanticWritingProvider;
+      window.SnapPopSemanticWritingProvider=null;
+      const fallbackAnalysis=await window.SnapPopWriting.analyze({
+        landmark:"idea",step:0,language:"ko",
+        draft:"나는 숲에서 본 작은 빛이 왜 기억나는지 궁금해."
+      });
+      assert("semantic-provider-unavailable-falls-back-locally",fallbackAnalysis?.provider==="local-writing-fallback"&&typeof fallbackAnalysis?.question==="string"&&fallbackAnalysis.question.length>0);
+      assert("local-fallback-keeps-child-authorship",!("finalDraft" in fallbackAnalysis)&&!("rewrite" in fallbackAnalysis)&&!("answer" in fallbackAnalysis));
+
+      const lowTrustContext={
+        source:"READY_SET_LEARNING_MASTER",
+        confidence:0.2,
+        unresolved_flags:["UNCONFIRMED_A","UNCONFIRMED_B","UNCONFIRMED_C"],
+        cognitive_load_profile:["LANGUAGE_PRODUCTION"],
+        concept_skill_target:"확인 전 목표"
+      };
+      const lowTrustPolicy=window.SnapPopWriting.contextPolicy({learnerContext:lowTrustContext,step:0});
+      assert("low-trust-learning-context-is-detected",lowTrustPolicy?.used===true&&lowTrustPolicy?.reason==="LOW_CONTEXT_CONFIDENCE");
+      assert("low-trust-learning-context-cannot-force-cross-lens",lowTrustPolicy?.allowCrossLens===false);
+      const lowTrustAnalysis=await window.SnapPopWriting.analyze({
+        landmark:"idea",step:0,language:"ko",
+        draft:"내가 직접 쓰고 싶은 생각이 있어.",
+        learnerContext:lowTrustContext
+      });
+      assert("low-trust-analysis-keeps-local-child-direction",lowTrustAnalysis?.provider==="local-writing-fallback"&&lowTrustAnalysis?.suggestedLens===null&&lowTrustAnalysis?.learningContextUsed===true);
+      window.SnapPopSemanticWritingProvider=providerForFallback;
+
       const draft1="오늘은 숲에서 작은 빛을 봤어.";
       answer.value=draft1;
       answer.dispatchEvent(new Event("input",{bubbles:true}));
