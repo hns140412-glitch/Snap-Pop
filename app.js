@@ -1,6 +1,9 @@
 if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.appScript="STARTED";
-const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
-let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false, SNAP_RULES=null, writingAnalysisSeq=0;
+const $=q=>document.querySelector(q), $=q=>[...document.querySelectorAll(q)];
+const RELEASE=globalThis.SnapPopReleaseDescriptor;
+if(!globalThis.TakyReleaseContract?.validateDescriptor?.(RELEASE)?.ok)throw new Error('INVALID_SNAP_RELEASE_DESCRIPTOR');
+let db, marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false, SNAP_RULES=null, writingAnalysisSeq=0, snapActiveExploration=false;
+globalThis.SnapPopPwaSafePoint=()=>!snapActiveExploration;
 const STEPS=["초안 잡기","이어 쓰기","다듬어 완성"];
 const QUESTION_BANK={
  idea:{
@@ -222,8 +225,8 @@ window.SnapPopIdentity=Object.freeze({applyShared:applySharedIdentity,clearShare
 
 function openDB(){if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.db="OPENING";return new Promise((ok,no)=>{const r=indexedDB.open("snap_pop_rev10",1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains("state"))r.result.createObjectStore("state")};r.onsuccess=()=>{db=r.result;if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.db="OPEN";ok()};r.onerror=()=>{if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.db="ERROR";no(r.error)};r.onblocked=()=>{if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.db="BLOCKED"}})}
 function get(k){return new Promise(ok=>{const r=db.transaction("state").objectStore("state").get(k);r.onsuccess=()=>ok(r.result)})}
-function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>ok();r.onerror=()=>no(r.error)})}
-function setMany(entries){return new Promise((ok,no)=>{const tx=db.transaction("state","readwrite"),store=tx.objectStore("state");entries.forEach(([k,v])=>store.put(v,k));tx.oncomplete=()=>ok();tx.onerror=()=>no(tx.error);tx.onabort=()=>no(tx.error)})}
+function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>{if(k==="active"){snapActiveExploration=!!v;if(!snapActiveExploration)window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}ok()};r.onerror=()=>no(r.error)})}
+function setMany(entries){return new Promise((ok,no)=>{const tx=db.transaction("state","readwrite"),store=tx.objectStore("state");entries.forEach(([k,v])=>store.put(v,k));tx.oncomplete=()=>{const activeEntry=[...entries].reverse().find(([k])=>k==="active");if(activeEntry){snapActiveExploration=!!activeEntry[1];if(!snapActiveExploration)window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}ok()};tx.onerror=()=>no(tx.error);tx.onabort=()=>no(tx.error)})}
 async function ensureCrewRegistry(){
   const registry=await get("crewRegistry")||{},identity=await resolvedIdentity();
   for(const [id,rule] of Object.entries({...SNAP_RULES?.legacyCharacterLineages,...SNAP_RULES?.definedCharacterLineages})){
@@ -349,7 +352,7 @@ async function init(){
   runtimePhase("RENDER_GROWTH");renderGrowth();
   runtimePhase("INCOMING_HANDOFF");await renderIncomingHandoff();
   runtimePhase("SPECIAL_INVITE");renderSpecialInvite();
-  runtimePhase("ACTIVE");const active=await get("active");if(active)renderExplore(active);
+  runtimePhase("ACTIVE");const active=await get("active");snapActiveExploration=!!active;if(active)renderExplore(active);else window.dispatchEvent(new CustomEvent("snap-pop-safe-point"));
   runtimePhase("DONE");
 }
 
@@ -908,5 +911,4 @@ $("#crewMemberSave").onclick=async()=>{const identity=await renameCurrentCrewMem
 $("#homeRadio").onclick=()=>openImagination({language:"ko",source:"HOME_RADIO"});
 $("#autoRead").onchange=$("#reduceMotion").onchange=async()=>{const s=await get("settings")||{};s.autoRead=$("#autoRead").checked;s.reduceMotion=$("#reduceMotion").checked;await set("settings",s);document.documentElement.classList.toggle("reduceMotion",s.reduceMotion)}
 $("#nav").onclick=async e=>{const b=e.target.closest("button[data-view]");if(!b)return;const view=b.dataset.view;if(view==="explore"){const active=await get("active");if(active){renderExplore(active);show("explore")}else{show("map");toast("글쓰기 탐험지를 하나 골라 시작해봐.")}}else show(view)}
-if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
 init().then(()=>{if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.init="PASS"}).catch(e=>{if(window.__SNAP_RUNTIME_STATUS){window.__SNAP_RUNTIME_STATUS.init="FAIL";window.__SNAP_RUNTIME_STATUS.errors.push({type:"init",message:String(e?.message||e)})}console.error(e);toast("앱 데이터를 준비하지 못했어요.")});
