@@ -22,16 +22,17 @@ assert("app-has-no-legacy-db-variable",!/\\bdb\\b/.test(app));
 assert("storage-runtime-owns-indexeddb",
   storage.includes('indexedDB.open(DB_NAME,DB_VERSION)')&&storage.includes("SNAP_POP_STORAGE_V1")&&storage.includes("isOpen:()=>!!db")
 );
-assert("app-delegates-storage",
-  app.includes("SnapPopStorage.open()")&&
-  app.includes("SnapPopStorage.get(k)")&&
-  app.includes("SnapPopStorage.set(k,v)")&&
-  app.includes("SnapPopStorage.setMany(entries)")
+assert("app-uses-storage-only-as-thin-orchestration",
+  app.includes('window.SnapPopStorage.get("active")')&&
+  !app.includes("function openDB")&&
+  !app.includes("function get(k)")&&
+  !app.includes("function set(k,v)")&&
+  !app.includes("function setMany")
 );
 assert("app-delegates-view-shell",
   app.includes("SnapPopUIShell.activateView(id)")&&
   app.includes("SnapPopUIShell.toast(t)")&&
-  app.includes("SnapPopUIShell.escapeHtml(s)")
+  !app.includes("function html(s)")
 );
 assert("ui-shell-owns-view-class-switching",
   shell.includes('all(".view").forEach')&&shell.includes("SNAP_POP_UI_SHELL_V1")
