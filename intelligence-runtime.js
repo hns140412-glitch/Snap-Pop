@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  const VERSION = "2026.09.21-h";
+  const VERSION = "2026.09.21-i";
   function classifyIntent(input="") {
     const text = input.trim();
     if (!text) return "EMPTY";
@@ -12,14 +12,14 @@
   function localThinkScaffold(input="", language="ko") {
     const t=input.trim();
     if (language==="en") {
-      return {kind:"THINK_EXPRESS",verified:true,provider:"local-scaffold",title:"Let’s shape the thought",core:t ? "Your starting thought: “"+t.slice(0,80)+(t.length>80?"…":"")+"”" : "Start with one small thought.",nodes:[
+      return {kind:"THINK_EXPRESS",verified:null,verification:{mode:"NOT_APPLICABLE"},provider:"local-scaffold",title:"Let’s shape the thought",core:t ? "Your starting thought: “"+t.slice(0,80)+(t.length>80?"…":"")+"”" : "Start with one small thought.",nodes:[
         {label:"Scene",value:"Where or when is it happening?"},
         {label:"Feeling",value:"What feeling is closest?"},
         {label:"Detail",value:"What can you see, hear, smell, touch, or notice?"},
         {label:"Connection",value:"Why does this matter to you?"}
       ],example:"Pick just one branch. You do not need to use all of them.",speakable:"Let’s catch one branch first. A scene, a feeling, a detail, or a reason—just one is enough."};
     }
-    return {kind:"THINK_EXPRESS",verified:true,provider:"local-scaffold",title:"생각을 펼쳐보자",core:t ? "출발 생각 · “"+t.slice(0,80)+(t.length>80?"…":"")+"”" : "작은 생각 하나부터 잡아보자.",nodes:[
+    return {kind:"THINK_EXPRESS",verified:null,verification:{mode:"NOT_APPLICABLE"},provider:"local-scaffold",title:"생각을 펼쳐보자",core:t ? "출발 생각 · “"+t.slice(0,80)+(t.length>80?"…":"")+"”" : "작은 생각 하나부터 잡아보자.",nodes:[
       {label:"장면",value:"언제·어디에서 일어난 걸까?"},
       {label:"마음",value:"가장 가까운 느낌은 뭐야?"},
       {label:"단서",value:"보이거나 들리거나 느껴지는 건 뭐야?"},
@@ -31,11 +31,15 @@
     return {kind:"ASK_UNDERSTAND",verified:false,requiresKnowledgeProvider:true,provider:"none",title:"확인하고 답해야 하는 질문이야",core:"사실이 필요한 질문으로 보여. 지금은 추측해서 답하지 않을게.",nodes:[{label:"궁금한 것",value:input.trim()},{label:"다음 단계",value:"검증 가능한 지식·검색 provider를 연결한 뒤 개념과 근거를 설명"}],example:"질문은 그대로 보존하고, 확인되지 않은 답은 만들지 않아.",speakable:"이건 사실 확인이 먼저 필요해. 모르는 걸 지어내서 답하지 않을게."};
   }
   function present(result,language="ko"){
+    const kind=result?.intent||result?.kind;
+    const normalized=kind==="THINK_EXPRESS"
+      ? {...result,verified:null,verification:{mode:"NOT_APPLICABLE"}}
+      : result;
     const presentation=window.SnapPopCrewPresentationGuard;
     if(presentation&&typeof presentation.sanitizeUserFacing==="function"){
-      return presentation.sanitizeUserFacing({...result,presentationLanguage:language},{language});
+      return presentation.sanitizeUserFacing({...normalized,presentationLanguage:language},{language});
     }
-    return {...result,responseOwner:"EXPLORATION_CREW",presentationLanguage:language};
+    return {...normalized,responseOwner:"EXPLORATION_CREW",presentationLanguage:language};
   }
 
   async function ask(payload={}) {
