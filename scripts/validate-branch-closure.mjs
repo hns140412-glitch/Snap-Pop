@@ -5,6 +5,7 @@ import path from "node:path";
 const here=path.dirname(fileURLToPath(import.meta.url));
 
 const validators=[
+  "validate-ready-learning-context-contract.mjs",
   "validate-semantic-writing-runtime.mjs",
   "validate-truth-guard-runtime.mjs",
   "validate-knowledge-runtime.mjs",
