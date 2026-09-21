@@ -350,16 +350,18 @@ $("#answer").addEventListener("input",async()=>{const s=await get("active");if(!
 function currentBridgeContext(){try{return window.SnapPopBridge?.context?.()||{}}catch{return {}}}
 async function renderIncomingHandoff(){const ctx=currentBridgeContext();const box=$("#handoffWord");if(!box)return;if(ctx.word){box.hidden=false;box.textContent=`Hide & Seek에서 찾은 단어 · ${ctx.word}${ctx.word_context?" · "+ctx.word_context:""}`}else box.hidden=true}
 window.addEventListener("snap-pop:bridge-ready",renderIncomingHandoff);
-let imaginationLanguage="ko", imaginationReturnFocus=null, imaginationSource="GLOBAL";
+let imaginationLanguage="ko", imaginationReturnFocus=null, imaginationSource="GLOBAL", imaginationWritingReturn=null;
 function setImaginationLanguage(language="ko"){
   imaginationLanguage=language==="en"?"en":"ko";
   $("#imaginationModeKo")?.classList.toggle("on",imaginationLanguage==="ko");
   $("#imaginationModeEn")?.classList.toggle("on",imaginationLanguage==="en");
 }
-async function openImagination({input="",language="ko",source="GLOBAL",autoVoice=false}={}){
+async function openImagination({input="",language="ko",source="GLOBAL",autoVoice=false,writingReturn=null}={}){
   const layer=$("#imaginationLayer"),identity=await resolvedIdentity(); if(!layer)return;
   imaginationReturnFocus=document.activeElement instanceof HTMLElement?document.activeElement:null;
-  imaginationSource=source; setImaginationLanguage(language);
+  imaginationSource=source;
+  imaginationWritingReturn=source==="WRITING_FLOW"&&writingReturn?writingReturn:null;
+  setImaginationLanguage(language);
   $("#imaginationCrewName").textContent=`탐험대원 ${crewMemberName(identity)}`;
   $("#imaginationCrewLine").textContent=source==="WRITING_FLOW"?"쓰던 글은 그대로 있어. 필요한 만큼만 같이 생각해보자.":"필요한 만큼만 같이 생각해보자.";
   $("#imaginationInput").value=(input||"").trim();
@@ -367,10 +369,31 @@ async function openImagination({input="",language="ko",source="GLOBAL",autoVoice
   layer.hidden=false; layer.setAttribute("aria-hidden","false"); document.documentElement.classList.add("imaginationOpen");
   setTimeout(()=>{if(autoVoice)$("#imaginationVoiceBtn")?.click();else $("#imaginationInput")?.focus()},0);
 }
-function closeImagination(){
+async function closeImagination(){
   const layer=$("#imaginationLayer"); if(!layer)return;
   window.SnapPopVoice?.stopListening?.();
   layer.hidden=true; layer.setAttribute("aria-hidden","true"); document.documentElement.classList.remove("imaginationOpen");
+
+  const writingReturn=imaginationWritingReturn;
+  imaginationWritingReturn=null;
+  if(imaginationSource==="WRITING_FLOW"&&writingReturn){
+    const current=await get("active");
+    if(current&&current.id===writingReturn.activeId&&Math.min(2,current.step||0)===writingReturn.step){
+      ensureWritingState(current);
+      const preserved=typeof current.draft==="string"?current.draft:writingReturn.draft;
+      $("#answer").value=preserved;
+      current.crewState=current.crewState||{};
+      current.crewState.cloudReturn={
+        activeId:current.id,
+        step:writingReturn.step,
+        draftPreserved:true,
+        returnedAt:new Date().toISOString()
+      };
+      await set("active",current);
+    }
+  }
+
+  imaginationSource="GLOBAL";
   const target=imaginationReturnFocus; imaginationReturnFocus=null;
   if(target?.isConnected)setTimeout(()=>target.focus(),0);
 }
@@ -395,8 +418,10 @@ function renderImaginationResponse(result,identity){
     (understanding?`<p class="kicker">이렇게 보면 쉬워 · ${html(understanding.label||"")}</p>`:"")+
     (mentalModel?.items?.length?`<div class="mentalModel mentalModel${html(mentalModel.type||"STACK")}">${mentalModel.items.map((item,i)=>`<div class="mentalStep"><b>${html(item.label||String(i+1))}</b><span>${html(item.text||"")}</span></div>`).join(mentalModel.type==="FLOW"?'<i class="mentalArrow">→</i>':"")}</div>`:"")+
     (verifiedClaims.length?`<p class="kicker">확인된 주장 ${verifiedClaims.length}개${evidenceLinks.length?` · 근거 ${evidenceLinks.map(x=>`<a href="${html(x.url)}" target="_blank" rel="noopener noreferrer">${html(x.label)}</a>`).join(" · ")}`:""}</p>`:"")+
-    (understanding?.nextCuriosity?`<p class="cloudExample">다음 궁금증 · ${html(understanding.nextCuriosity)}</p>`:"")+
+    (understanding?.nextCuriosity?`<button class="soft cloudFollowUpReveal" type="button">더 궁금하면 한 가지 더</button><p class="cloudExample cloudFollowUpText" hidden>다음 궁금증 · ${html(understanding.nextCuriosity)}</p>`:"")+
     (result?.example?`<p class="cloudExample">${html(result.example)}</p>`:"");
+  const reveal=host.querySelector(".cloudFollowUpReveal"),follow=host.querySelector(".cloudFollowUpText");
+  if(reveal&&follow)reveal.onclick=()=>{follow.hidden=false;reveal.remove()};
   host.hidden=false; host.dataset.speakable=result?.speakable||result?.core||"";
 }
 async function runImagination(inputOverride){
@@ -437,10 +462,26 @@ $("#imaginationVoiceBtn").onclick=async()=>{
     onError:()=>showCrewReaction(`${crewMemberName(identity)}: 잘 못 들었어. 다시 말하거나 직접 적어도 돼.`,{persist:false}),
     onEnd:()=>{$("#imaginationVoiceBtn").textContent="말로 묻기"}})}catch{toast("이 기기에서는 지금 음성 입력을 사용할 수 없어요.")}
 };
-$("#imaginationClose").onclick=closeImagination;
-$("#imaginationBackdrop").onclick=closeImagination;
+$("#imaginationClose").onclick=()=>{closeImagination()};
+$("#imaginationBackdrop").onclick=()=>{closeImagination()};
 addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#imaginationLayer")?.hidden)closeImagination()});
-$("#cloudBtn").onclick=async()=>{const s=await get("active");if(!s)return;openImagination({input:$("#answer").value,language:s.language||"ko",source:"WRITING_FLOW"})};
+$("#cloudBtn").onclick=async()=>{
+  const s=await get("active");if(!s)return;
+  ensureWritingState(s);
+  const step=Math.min(2,s.step||0),draft=$("#answer").value;
+  s.draft=draft;
+  s.answers[step]=draft;
+  s.updatedAt=new Date().toISOString();
+  s.crewState=s.crewState||{};
+  s.crewState.cloudReturn={activeId:s.id,step,draftPreserved:true,openedAt:new Date().toISOString()};
+  await set("active",s);
+  openImagination({
+    input:draft,
+    language:s.language||"ko",
+    source:"WRITING_FLOW",
+    writingReturn:{activeId:s.id,step,draft}
+  });
+};
 $("#modeKo").onclick=async()=>{const s=await get("active");if(!s)return;s.language="ko";await set("active",s);renderExplore(s)};
 $("#modeEn").onclick=async()=>{const s=await get("active");if(!s)return;s.language="en";await set("active",s);renderExplore(s)};
 $("#hintBtn").onclick=revealHint;
