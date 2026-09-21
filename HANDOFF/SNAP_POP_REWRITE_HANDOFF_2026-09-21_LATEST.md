@@ -293,3 +293,5 @@ Conservative boundaries retained:
 - crew identity/guest/voice runtime matrix closure validation trigger.
 
 - badge fail-closed/visual runtime validation trigger.
+
+- badge runtime matrix closure validation trigger.
