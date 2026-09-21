@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-b";
+  const VERSION="2026.09.21-c";
   const SELF_IDENTITY_PATTERNS=[
     /\b(as an? ai|i am an? ai|i'm an? ai|as chatgpt|i am chatgpt|i'm chatgpt|openai assistant|system message|developer message)\b/i,
     /(저는|나는)\s*(AI|인공지능|ChatGPT|OpenAI)/i,
@@ -26,17 +26,19 @@
     return {label,value};
   }
 
-  function genericTitle(result={}){
+  function genericTitle(result={},language="ko"){
+    const en=language==="en";
     if(result.kind==="ASK_UNDERSTAND"){
-      if(result.verified===true) return "확인해서 정리했어";
-      return "확인된 부분부터 볼게";
+      if(result.verified===true) return en?"I checked this for you":"확인해서 정리했어";
+      return en?"Let’s start with what is confirmed":"확인된 부분부터 볼게";
     }
-    return "같이 생각해보자";
+    return en?"Let’s think about it together":"같이 생각해보자";
   }
 
-  function sanitizeUserFacing(result={}){
+  function sanitizeUserFacing(result={},options={}){
     if(!result||typeof result!=="object") throw new Error("CREW_PRESENTATION_INVALID_RESULT");
 
+    const language=options.language==="en"||result.presentationLanguage==="en"?"en":"ko";
     const core=cleanText(result.core,1800);
     const example=cleanText(result.example,700);
     const speakable=cleanText(result.speakable||result.core,1400);
@@ -51,7 +53,8 @@
 
     const next={
       ...result,
-      title:genericTitle(result),
+      title:genericTitle(result,language),
+      presentationLanguage:language,
       core,
       example:example||null,
       speakable,
@@ -74,8 +77,8 @@
     return next;
   }
 
-  function publicHistoryEntry(result={}){
-    const safe=sanitizeUserFacing(result);
+  function publicHistoryEntry(result={},options={}){
+    const safe=sanitizeUserFacing(result,options);
     return {
       intent:safe.intent||safe.kind||null,
       verified:safe.verified!==false,
