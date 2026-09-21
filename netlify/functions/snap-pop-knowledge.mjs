@@ -145,11 +145,27 @@ export default async (request)=>{
   if(!input) return json(400,{error:"EMPTY_INPUT"});
 
   const language=body.language==="en"?"English":"Korean";
+  const allowedLenses=new Set(["MEANING","ETYMOLOGY","CAUSE_EFFECT","MECHANISM","COMPARE","TIME_FLOW","PERSON_EVENT","PLACE_CONTEXT","CONCEPT"]);
+  const questionLens=allowedLenses.has(body.question_lens)?body.question_lens:"CONCEPT";
+  const orderByLens={
+    MEANING:"definition → concrete example or connection",
+    ETYMOLOGY:"root/origin → how the meaning developed → one related word if supported",
+    CAUSE_EFFECT:"cause → what happens in between → result",
+    MECHANISM:"main parts or steps → how they connect",
+    COMPARE:"one shared point → one key difference → why the difference matters",
+    TIME_FLOW:"before → event/change → after",
+    PERSON_EVENT:"who → key action → impact",
+    PLACE_CONTEXT:"where → defining feature → why it matters",
+    CONCEPT:"core idea → simple connection or example"
+  };
+  const explanationOrder=orderByLens[questionLens]||orderByLens.CONCEPT;
   const instructions=[
     "You are the verified knowledge analyst inside Snap & Pop.",
     "You must use web search before answering.",
     `Answer in ${language} for a child.`,
     "Use 2 to 5 short factual sentences.",
+    `Prefer this explanation order when the sources support it: ${explanationOrder}.`,
+    "Never invent or force a missing step just to fill that order.",
     "Every sentence must be supported by at least one web citation annotation.",
     "Do not add an uncited preface, conclusion, opinion, guess, or invented detail.",
     "If reliable sources conflict or are insufficient, say that clearly in a cited sentence.",
