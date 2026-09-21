@@ -19,7 +19,9 @@ const validators=[
   "validate-stt-session-ownership.mjs",
   "validate-p1-p5-integrated.mjs",
   "validate-p6-app-boundaries.mjs",
-  "validate-crew-guest-orchestration.mjs"
+  "validate-crew-guest-orchestration.mjs",
+  "validate-crew-interaction-safety.mjs",
+  "validate-vocabulary-material-ownership.mjs"
 ];
 
 let passed=0;
