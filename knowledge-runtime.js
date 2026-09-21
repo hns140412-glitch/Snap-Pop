@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-a";
+  const VERSION="2026.09.21-b";
   const TIMEOUT_MS=18000;
 
   function cleanText(value,max=1200){
@@ -25,6 +25,7 @@
       const raw=await backend.ask({
         input,
         language:payload.language==="en"?"en":"ko",
+        questionLens:typeof payload.questionLens==="string"?payload.questionLens:"CONCEPT",
         context:payload.context||null,
         signal:controller.signal,
         contract:{
