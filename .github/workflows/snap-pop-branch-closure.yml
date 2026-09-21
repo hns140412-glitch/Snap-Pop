@@ -20,7 +20,7 @@ jobs:
           ref: ${{ github.sha }}
       - name: Show candidate SHA
         run: echo "SNAP_POP_VALIDATION_SHA=${GITHUB_SHA}"
-      - name: Run 44 branch closure validators
+      - name: Run 45 branch closure validators
         run: node scripts/validate-branch-closure.mjs
 
       - name: Browser runtime smoke
@@ -39,6 +39,10 @@ jobs:
             echo "BROWSER_RUNTIME_INFRA_BLOCKED no chromium browser"
             exit 2
           fi
-          "$BROWSER" --headless --disable-gpu --no-sandbox --disable-dev-shm-usage             --virtual-time-budget=12000 --dump-dom             http://127.0.0.1:4173/scripts/browser-runtime-smoke.html             > /tmp/snap-pop-browser-smoke.html
+          "$BROWSER" --headless --disable-gpu --no-sandbox --disable-dev-shm-usage \
+            --virtual-time-budget=16000 --dump-dom \
+            "http://127.0.0.1:4173/index.html?runtime-smoke=1" \
+            > /tmp/snap-pop-browser-smoke.html
           cat /tmp/snap-pop-browser-smoke.html
-          grep -q '<body data-status="PASS">' /tmp/snap-pop-browser-smoke.html
+          grep -q 'data-runtime-smoke="PASS"' /tmp/snap-pop-browser-smoke.html
+          grep -q 'BROWSER_RUNTIME_SELFTEST_PASS' /tmp/snap-pop-browser-smoke.html
