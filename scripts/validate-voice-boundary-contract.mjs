@@ -3,6 +3,7 @@ import fs from "node:fs";
 const voice=fs.readFileSync(new URL("../voice-runtime.js",import.meta.url),"utf8");
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const index=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
+const imagination=fs.readFileSync(new URL("../imagination-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -42,7 +43,7 @@ assert("voice-input-appends-child-transcript-to-draft",
 
 assert("radio-is-imagination-entry-not-writing-landmark",
   index.includes('id="homeRadio"')&&
-  app.includes('$("#homeRadio").onclick=()=>openImagination({language:"ko",source:"HOME_RADIO"})')&&
+  imagination.includes('q("#homeRadio").onclick=()=>openImagination({language:"ko",source:"HOME_RADIO"})')&&
   !app.includes('landmark:"radio"')
 );
 
