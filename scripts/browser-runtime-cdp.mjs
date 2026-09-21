@@ -1,7 +1,7 @@
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 
 async function getTarget(){
-  for(let i=0;i<80;i++){
+  for(let i=0;i<200;i++){
     try{
       const targets=await fetch("http://127.0.0.1:9222/json").then(r=>r.json());
       const page=targets.find(x=>x.type==="page"&&/index\\.html/.test(x.url))||targets.find(x=>x.type==="page");
@@ -9,7 +9,7 @@ async function getTarget(){
     }catch{}
     await sleep(100);
   }
-  throw new Error("CDP_TARGET_NOT_FOUND");
+  let version=null; try{version=await fetch("http://127.0.0.1:9222/json/version").then(r=>r.text())}catch{}\n  throw new Error("CDP_TARGET_NOT_FOUND version="+String(version||"UNAVAILABLE"));
 }
 
 const target=await getTarget();
