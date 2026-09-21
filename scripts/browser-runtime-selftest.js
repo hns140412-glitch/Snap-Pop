@@ -96,6 +96,26 @@
       assert("writing-completion-preserves-final-draft",completedRecord?.finalDraft===draft3);
       assert("writing-completion-has-three-snapshots",Array.isArray(completedRecord?.snapshots)&&completedRecord.snapshots.length===3);
 
+      click(document.querySelector("#resultRecords"),"result-records");
+      await wait(180);
+      assert("records-view-active",document.querySelector("#records")?.classList.contains("active")===true);
+      const recordBefore=(await window.SnapPopStorage.get("records"))?.[0]||null;
+      const originalText=recordBefore?.answers?.join(" ")||"";
+      const originalExp=recordBefore?.expAward;
+      click(document.querySelector(".recordEditBtn"),"record-edit-open");
+      await wait(120);
+      assert("record-edit-view-active",document.querySelector("#recordEdit")?.classList.contains("active")===true);
+      const edit=document.querySelector("#recordEditText");
+      edit.value=(edit.value||"")+" 수정한 한 문장.";
+      click(document.querySelector("#recordEditSave"),"record-edit-save");
+      await wait(180);
+      const recordsAfter=await window.SnapPopStorage.get("records");
+      const revisionsAfter=await window.SnapPopStorage.get("recordRevisions");
+      const preserved=recordsAfter?.find(x=>x.id===recordBefore?.id);
+      assert("record-original-preserved-after-revision",preserved?.answers?.join(" ")===originalText);
+      assert("record-revision-added",Array.isArray(revisionsAfter?.[recordBefore?.id])&&revisionsAfter[recordBefore.id].length>=1);
+      assert("record-revision-does-not-recompute-reward",preserved?.expAward===originalExp);
+
       click(document.querySelector("#resultGrowth"),"result-growth");
       await wait(160);
       assert("growth-view-active",document.querySelector("#growth")?.classList.contains("active")===true);
