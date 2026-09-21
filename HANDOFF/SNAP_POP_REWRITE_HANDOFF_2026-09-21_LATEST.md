@@ -131,3 +131,5 @@ Resume target: continue integrated UI rewrite from actual child-facing surfaces.
 - growth surface shows exploration → record → growth narrative
 - final visual direction: OPEN
 - DEVICE_VERIFIED: false
+
+- integrated imagination/special Phase 4 exact-head validation trigger.
