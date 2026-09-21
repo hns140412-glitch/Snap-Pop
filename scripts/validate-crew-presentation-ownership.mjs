@@ -3,6 +3,7 @@ import vm from "node:vm";
 
 const source=fs.readFileSync(new URL("../crew-presentation-guard.js",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const imaginationSource=fs.readFileSync(new URL("../imagination-controller.js",import.meta.url),"utf8");
 
 const window={};
 vm.runInNewContext(source,{window,Object,Array,String,Number,Math,Error,RegExp});
@@ -48,16 +49,16 @@ try{
 assert("self-identity-leak-fails-closed",leaked);
 
 assert("history-ui-hides-provider-label",
-  !appSource.includes('html(x.provider||"")')
+  !imaginationSource.includes('esc(x.provider||"")')
 );
 
 assert("history-still-keeps-provider-provenance",
-  appSource.includes('provider:rawResult.provider||"unknown"')
+  imaginationSource.includes('provider:rawResult.provider||"unknown"')
 );
 
-const runStart=appSource.indexOf("async function runImagination");
-const guardCall=appSource.indexOf("presentation.sanitizeUserFacing(rawResult)",runStart);
-const guardedRender=appSource.indexOf("renderImaginationResponse(result,identity)",guardCall);
+const runStart=imaginationSource.indexOf("async function runImagination");
+const guardCall=imaginationSource.indexOf("presentation.sanitizeUserFacing(rawResult)",runStart);
+const guardedRender=imaginationSource.indexOf("renderImaginationResponse(result,identity)",guardCall);
 assert("app-applies-presentation-guard-before-render",
   runStart>=0&&guardCall>runStart&&guardedRender>guardCall
 );
