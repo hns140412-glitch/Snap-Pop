@@ -10,6 +10,9 @@ button,textarea{font:inherit}button{cursor:pointer}
 .round{width:38px;height:38px;border:1px solid #d6bd7555;border-radius:14px;background:#ffffff0b;color:#f3dfa3;display:grid;place-items:center}.round img{width:22px;height:22px}
 main{padding-top:calc(var(--top) + env(safe-area-inset-top));padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom))}
 .view{display:none;min-height:calc(100svh - var(--top) - var(--nav) - env(safe-area-inset-top) - env(safe-area-inset-bottom))}.view.active{display:block}
+
+.mapPrompt{position:absolute;z-index:8;top:14px;left:14px;right:78px;pointer-events:none;text-shadow:0 1px 10px #fff9}.mapPrompt h1{font-family:"Noto Serif CJK KR","Batang",serif;font-size:24px;line-height:1.15;margin:3px 0 2px;color:#163d32}.mapPrompt p{margin:0;font-size:12px;font-weight:800;color:#31594a}.mapPrompt .kicker{display:inline-block;background:#fff4d9d9;border:1px solid #c7a85d;border-radius:999px;padding:5px 8px;backdrop-filter:blur(8px)}
+
 .mapWorld{height:calc(100svh - var(--top) - var(--nav) - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:610px;position:relative;overflow:hidden;background:linear-gradient(#81b6ce 0 25%,#6d996e 25% 67%,#294e3a 67%)}
 .scene{position:absolute;left:0;right:0;top:0;width:100%;height:61%;object-fit:cover;object-position:45% 50%;filter:saturate(.98) contrast(1.03)}
 .mapWorld:before{content:"";position:absolute;z-index:1;left:-15%;right:-15%;bottom:0;height:58%;background:
