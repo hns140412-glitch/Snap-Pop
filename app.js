@@ -289,6 +289,12 @@ function writingLensLabel(id,language='ko'){
 function learnerContext(){
   try{return window.SnapPopLearningContextProvider?.context?.()||null}catch{return null}
 }
+function vocabularyMaterial(){
+  try{
+    const material=window.SnapPopBridge?.vocabularyMaterial?.()||null;
+    return window.SnapPopVocabularyMaterial?.writingContext?.(material)||material;
+  }catch{return null}
+}
 function renderWritingBridge(result,language='ko'){
   const el=$('#writingBridge');if(!el)return;
   const lens=result?.suggestedLens;
@@ -302,7 +308,7 @@ async function analyzeWritingMove(s){
   ensureWritingState(s);
   const seq=++writingAnalysisSeq,draft=s.draft,step=Math.min(2,s.step||0),language=s.language||'ko';
   const previousSnapshot=(s.snapshots||[])[Math.max(0,step-1)]||'';
-  const result=await window.SnapPopWriting.analyze({landmark:s.landmark,step,draft,previousSnapshot,language,learnerContext:learnerContext()});
+  const result=await window.SnapPopWriting.analyze({landmark:s.landmark,step,draft,previousSnapshot,language,learnerContext:learnerContext(),vocabularyMaterial:vocabularyMaterial()});
   const cur=await get('active');
   if(seq!==writingAnalysisSeq||!cur||cur.id!==s.id)return null;
   ensureWritingState(cur);
@@ -373,7 +379,7 @@ $("#nextBtn").onclick=async()=>{
 async function speak(t,language="ko",source="USER_TAP"){try{if(!window.SnapPopVoice)throw new Error("VOICE_RUNTIME_UNAVAILABLE");return await window.SnapPopVoice.speak(t,{language,voiceRole:"crew",source})}catch{return toast("지금은 음성으로 읽어주기 어려워요. 글로 계속 볼 수 있어요.")}}
 $("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0),text=$("#answer").value;ensureWritingState(s);s.draft=text;s.updatedAt=new Date().toISOString();await set("active",s);clearTimeout(window.crewInputTimer);if(text.trim().length>=8){window.crewInputTimer=setTimeout(async()=>{const cur=await get("active");if(!cur||Math.min(2,cur.step||0)!==i)return;ensureWritingState(cur);cur.draft=$("#answer").value;await set("active",cur);const move=await analyzeWritingMove(cur)||refreshWritingMove(cur);const msg=stepSpecificReaction(cur.draft,cur.language||"ko",move);if(msg&&msg!==cur.crewState?.lastReaction)await showCrewReaction(msg)},850)}});
 function currentBridgeContext(){try{return window.SnapPopBridge?.context?.()||{}}catch{return {}}}
-async function renderIncomingHandoff(){const ctx=currentBridgeContext();const box=$("#handoffWord");if(!box)return;if(ctx.word){box.hidden=false;box.textContent=`Hide & Seek에서 찾은 단어 · ${ctx.word}${ctx.word_context?" · "+ctx.word_context:""}`}else box.hidden=true}
+async function renderIncomingHandoff(){const box=$("#handoffWord");if(!box)return;const material=vocabularyMaterial();if(material?.word){box.hidden=false;const owner=material.sourceOwner==="HIDE_SEEK"?"Hide & Seek":"연결 앱";box.textContent=`${owner} 표현 재료 · ${material.word}${material.context?" · "+material.context:""} · 원하면 참고`;box.dataset.sourceOwner=material.sourceOwner;box.dataset.role=material.role}else{box.hidden=true;box.textContent="";delete box.dataset.sourceOwner;delete box.dataset.role}}
 window.addEventListener("snap-pop:bridge-ready",renderIncomingHandoff);
 let imaginationLanguage="ko", imaginationReturnFocus=null, imaginationSource="GLOBAL", imaginationWritingReturn=null;
 function setImaginationLanguage(language="ko"){
