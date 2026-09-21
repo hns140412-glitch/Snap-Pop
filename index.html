@@ -50,19 +50,28 @@
   <button class="soft" id="modeEn" type="button">English</button>
  </div>
  <div id="steps" class="steps"></div>
- <article class="paper">
+ <article class="paper writingFocusCard">
   <div class="crewMemberLine"><b>탐험대원 모카</b><span id="crewMemberLine">한 조각씩 찾아보자.</span></div>
-  <h2 id="question"></h2><p id="hint"></p><p id="writingBridge" class="writingBridge" hidden></p>
-  <textarea id="answer" placeholder="여기에 직접 써도 좋아요."></textarea>
-  <div id="crewReactionOverlay" class="crewReactionOverlay" hidden aria-live="polite"></div>
-  <div class="tools">
-   <button class="soft" id="listenBtn"><img src="assets/icons/speaker.svg" alt="">다시 듣기</button>
-   <button class="soft" id="hintBtn" type="button">힌트 하나 보기</button>
-   <button class="soft" id="cloudBtn">상상 구름</button>
-   <button class="soft" id="expressionBridgeBtn" type="button">English 표현 도움</button>
-   <button class="voice" id="voiceBtn"><img src="assets/icons/radio.svg" alt="">말해서 쓰기</button>
-   <button class="soft" id="deepThinkOpen" type="button">생각 한 번 더 정리하기</button>
+  <div class="writingPromptBlock">
+   <span class="kicker">지금은 이것만 생각해봐</span>
+   <h2 id="question"></h2><p id="hint"></p><p id="writingBridge" class="writingBridge" hidden></p>
   </div>
+  <label class="answerLabel" for="answer">내 생각</label>
+  <textarea id="answer" placeholder="떠오르는 말부터 네 말로 적어봐."></textarea>
+  <div id="crewReactionOverlay" class="crewReactionOverlay" hidden aria-live="polite"></div>
+  <div class="tools quickTools" aria-label="바로 쓰는 도움">
+   <button class="voice" id="voiceBtn"><img src="assets/icons/radio.svg" alt="">말해서 쓰기</button>
+   <button class="soft" id="hintBtn" type="button">힌트 하나 보기</button>
+  </div>
+  <details class="assistDrawer">
+   <summary>다른 도움이 필요해?</summary>
+   <div class="tools assistTools">
+    <button class="soft" id="listenBtn"><img src="assets/icons/speaker.svg" alt="">질문 다시 듣기</button>
+    <button class="soft" id="cloudBtn">상상 구름 열기</button>
+    <button class="soft" id="expressionBridgeBtn" type="button">English 표현 도움</button>
+    <button class="soft" id="deepThinkOpen" type="button">생각 한 번 더 정리하기</button>
+   </div>
+  </details>
   <div id="deepThinkPanel" class="paper" hidden>
    <span class="kicker">선택 기록 · 자동 판정 없음</span>
    <textarea id="deepThinkText" placeholder="왜 그렇게 생각했는지, 새로 떠오른 점을 네 말로 한 줄 남겨봐요."></textarea>
@@ -72,7 +81,7 @@
   <div id="expressionIntentNote" class="handoffWord" hidden></div>
   <div id="expressionBridgePanel" class="expressionBridgePanel" hidden></div>
  </article>
- <button class="primary wide" id="nextBtn">다음 단계</button>
+ <div class="writingNextDock"><button class="primary wide" id="nextBtn">이 생각으로 다음</button></div>
 </section>
 <section id="result" class="view parchment subflow">
  <button class="back" id="resultBack">← 지도</button>
