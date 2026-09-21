@@ -3,6 +3,7 @@ import vm from "node:vm";
 
 const runtimeSource=fs.readFileSync(new URL("../badge-behavior-runtime.js",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const flowSource=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
 const catalog=JSON.parse(fs.readFileSync(new URL("../data/badge-catalog-working.json",import.meta.url),"utf8"));
 
 const window={};
@@ -73,8 +74,8 @@ assert("app-records-explicit-help-signal",
   appSource.includes("explicitAction:true")
 );
 assert("app-records-writing-completion-as-fact-event",
-  appSource.includes('recordBadgeBehaviorObservation("WRITING_EXPLORATION"')&&
-  appSource.includes("explicitCompletion:true")
+  flowSource.includes('deps.recordBadgeBehaviorObservation("WRITING_EXPLORATION"')&&
+  flowSource.includes("explicitCompletion:true")
 );
 assert("app-records-optional-extra-task-completion",
   appSource.includes('recordBadgeBehaviorObservation("EXTRA_TASK"')&&
