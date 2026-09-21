@@ -69,6 +69,7 @@ const validators=[
   "validate-integrated-child-writing-flow.mjs",
   "validate-integrated-home-map-flow.mjs",
   "validate-integrated-result-records-growth.mjs",
+  "validate-integrated-imagination-special-flow.mjs",
   "validate-dom-binding-integrity.mjs"
 ];
 
