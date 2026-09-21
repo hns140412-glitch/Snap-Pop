@@ -4,6 +4,7 @@ const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const indexSource=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const recordsFlowSource=fs.readFileSync(new URL("../records-flow-controller.js",import.meta.url),"utf8");
 const specialSource=fs.readFileSync(new URL("../special-controller.js",import.meta.url),"utf8");
+const supportSource=fs.readFileSync(new URL("../interaction-support-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -23,12 +24,12 @@ assert("deep-thinking-requires-explicit-child-reflection",
   indexSource.includes('id="deepThinkOpen"')&&
   indexSource.includes('id="deepThinkText"')&&
   indexSource.includes('id="deepThinkSave"')&&
-  appSource.includes('source:"CHILD_EXPLICIT_REFLECTION"')&&
-  appSource.includes('sourceContractId:"SNAP_POP_CHILD_REFLECTION_ARTIFACT_V1"')
+  supportSource.includes('source:"CHILD_EXPLICIT_REFLECTION"')&&
+  supportSource.includes('sourceContractId:"SNAP_POP_CHILD_REFLECTION_ARTIFACT_V1"')
 );
 assert("deep-thinking-not-based-on-empty-advance-or-time",
-  !appSource.includes('recordBadgeBehaviorEvidence("DEEP_THINKING",{elapsed')&&
-  !appSource.includes('recordBadgeBehaviorEvidence("DEEP_THINKING",{emptyAdvanceAttempts')
+  !supportSource.includes('recordBadgeBehaviorEvidence("DEEP_THINKING",{elapsed')&&
+  !supportSource.includes('recordBadgeBehaviorEvidence("DEEP_THINKING",{emptyAdvanceAttempts')
 );
 assert("special-behavior-is-declared-feature-action",
   specialSource.includes('sourceContractId:"SNAP_POP_DECLARED_SPECIAL_ACTION_V1"')&&
@@ -38,10 +39,10 @@ assert("special-behavior-is-declared-feature-action",
   specialSource.includes('allowedSpecialBehaviorCodes:["SPECIAL_EXPLORATION_COMPLETED"]')
 );
 assert("three-strong-families-route-through-evidence-gate",
-  recordsFlowSource.includes('deps.recordBadgeBehaviorEvidence("ERROR_DISCOVERY"')&&appSource.includes('recordBadgeBehaviorEvidence("DEEP_THINKING"')&&specialSource.includes('deps.recordBadgeBehaviorEvidence("SPECIAL_BEHAVIOR"')
+  recordsFlowSource.includes('deps.recordBadgeBehaviorEvidence("ERROR_DISCOVERY"')&&supportSource.includes('deps.recordBadgeBehaviorEvidence("DEEP_THINKING"')&&specialSource.includes('deps.recordBadgeBehaviorEvidence("SPECIAL_BEHAVIOR"')
 );
 assert("no-three-family-direct-observation-bypass",
-  !recordsFlowSource.includes('recordBadgeBehaviorObservation("ERROR_DISCOVERY"')&&!appSource.includes('recordBadgeBehaviorObservation("DEEP_THINKING"')&&!specialSource.includes('recordBadgeBehaviorObservation("SPECIAL_BEHAVIOR"')
+  !recordsFlowSource.includes('recordBadgeBehaviorObservation("ERROR_DISCOVERY"')&&!supportSource.includes('recordBadgeBehaviorObservation("DEEP_THINKING"')&&!specialSource.includes('recordBadgeBehaviorObservation("SPECIAL_BEHAVIOR"')
 );
 
 console.log("BADGE_EVIDENCE_PRODUCER_WIRING_PASS");
