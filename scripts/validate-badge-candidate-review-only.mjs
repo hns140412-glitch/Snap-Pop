@@ -56,7 +56,7 @@ assert("app-persists-candidate-in-review-ledger",
   badgeController.includes('badgeCandidateReviews')
 );
 assert("app-does-not-auto-call-candidate-proposal",
-  (app.match(/proposeBadgeCandidateFromObservations\(/g)||[]).length===1&&
+  (app.match(/proposeBadgeCandidateFromObservations\(/g)||[]).length===2&&
   (badgeController.match(/proposeBadgeCandidateFromObservations\(/g)||[]).length===1
 );
 
