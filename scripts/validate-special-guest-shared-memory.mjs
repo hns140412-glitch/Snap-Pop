@@ -3,6 +3,7 @@ import fs from "node:fs";
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const crewRuntime=fs.readFileSync(new URL("../crew-runtime-controller.js",import.meta.url),"utf8");
 const recordsCtl=fs.readFileSync(new URL("../records-growth-controller.js",import.meta.url),"utf8");
+const specialCtl=fs.readFileSync(new URL("../special-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -16,18 +17,18 @@ assert("main-experience-wrapper-kept",
   crewRuntime.includes("return recordCrewMemberExperience(id,type,meta);")
 );
 assert("guest-memory-only-for-selected-guest",
-  app.includes('if(guestMemberId)await recordCrewMemberExperience(guestMemberId,"SHARED_MICRO_EPISODE"')
+  specialCtl.includes('if(guestMemberId)await deps.recordCrewMemberExperience(guestMemberId,"SHARED_MICRO_EPISODE"')
 );
 assert("guest-memory-is-dedupable-and-linked",
-  app.includes('eventId:`${id}_guest`')&&
-  app.includes("sourceEventId:id")&&
-  app.includes('scene:"SPECIAL_EXPLORATION"')
+  specialCtl.includes('eventId:`${id}_guest`')&&
+  specialCtl.includes("sourceEventId:id")&&
+  specialCtl.includes('scene:"SPECIAL_EXPLORATION"')
 );
 assert("main-companion-acknowledges-guest",
-  app.includes('${crewMemberName(identity)} · ${guest.name}도 이번 장면에 잠깐 합류했네.')
+  specialCtl.includes('${deps.crewMemberName(identity)} · ${guest.name}도 이번 장면에 잠깐 합류했네.')
 );
 assert("child-authorship-line-remains",
-  app.includes("같이 보되, 네 생각은 네가 골라.")
+  specialCtl.includes("같이 보되, 네 생각은 네가 골라.")
 );
 assert("special-record-resolves-guest-name",
   recordsCtl.includes("x.guestMemberId?(registry[x.guestMemberId]?.currentName")
