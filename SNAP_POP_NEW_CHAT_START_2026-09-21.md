@@ -178,3 +178,13 @@ LATEST VOICE NOTE:
 - external provider is forced to EXPLORATION_CREW / crew role.
 - isolated voice ownership validator 5/5 PASS.
 - next: P5 voice quality/pacing/interrupt policy; live realtime remains OPEN.
+
+
+LATEST P5 VOICE QUALITY NOTE:
+- P5 voice quality policy is coded.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md section 23.
+- autoRead no longer exposes hidden hint.
+- USER_TAP vs AUTO_READ pacing/interrupt policy is separated.
+- external provider does not imply realtime.
+- isolated voice policy runtime 8/8 PASS.
+- next: STT session ownership / overlapping-listen prevention / no always-listening without separate approval.
