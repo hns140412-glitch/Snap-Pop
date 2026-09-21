@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  const VERSION = "2026.09.21-b";
+  const VERSION = "2026.09.21-c";
   function classifyIntent(input="") {
     const text = input.trim();
     if (!text) return "EMPTY";
@@ -34,17 +34,21 @@
     const input=(payload.input||"").trim();
     const language=payload.language==="en"?"en":"ko";
     const intent=payload.intent||classifyIntent(input);
+    if(intent==="ASK_UNDERSTAND"){
+      const knowledge=window.SnapPopKnowledge;
+      if(knowledge&&typeof knowledge.askVerified==="function"){
+        try{
+          const result=await knowledge.askVerified({...payload,input,language,intent});
+          return {...result,intent,external:true};
+        }catch{}
+      }
+      return {...unverifiedKnowledgeResponse(input,language),intent};
+    }
     const external=window.SnapPopOpenAIProvider;
     if (external && typeof external.ask==="function") {
       const raw=await external.ask({...payload,input,language,intent,contract:{responseOwner:"EXPLORATION_CREW",truthFirst:true,noGuessing:true,conceptFirst:true,scaffoldPreferred:true}});
-      const normalized={...raw,provider:raw?.provider||"external",intent,external:true};
-      if(intent==="ASK_UNDERSTAND"){
-        const guard=window.SnapPopTruthGuard;
-        return guard&&typeof guard.guardKnowledge==="function" ? guard.guardKnowledge(normalized) : {...normalized,verified:false,verification:{mode:"UNVERIFIED",reason:"TRUTH_GUARD_UNAVAILABLE"}};
-      }
-      return normalized;
+      return {...raw,provider:raw?.provider||"external",intent,external:true};
     }
-    if (intent==="ASK_UNDERSTAND") return {...unverifiedKnowledgeResponse(input,language),intent};
     if (intent==="EMPTY") return localThinkScaffold("",language);
     return {...localThinkScaffold(input,language),intent};
   }
