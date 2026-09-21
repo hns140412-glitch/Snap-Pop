@@ -1179,3 +1179,78 @@ Next:
 3. distinguish explicit microphone action from any future hands-free/realtime mode;
 4. no always-listening mode without separate explicit approval;
 5. preserve text-first fallback.
+
+
+## 24. P5 STT SESSION OWNERSHIP / ONE-SHOT LOCK — 2026-09-21
+
+### Implemented
+
+`voice-runtime.js` now owns STT session lifecycle.
+
+Listen policy:
+- only explicit `USER_MIC` source is accepted;
+- `continuous:true` is rejected;
+- `realtime:true` is rejected;
+- current mode is always one-shot;
+- no always-listening mode is available.
+
+Single-session lock:
+- starting a new listen first stops any previous external/browser session;
+- each session receives a monotonically increasing `sessionId`;
+- current session id is tracked;
+- callbacks from an older/stale session are ignored;
+- only the active session can deliver:
+  - onStart
+  - onText
+  - onError
+  - onEnd
+
+External voice provider receives:
+- oneShot=true
+- continuous=false
+- realtime=false
+- responseOwner=EXPLORATION_CREW
+- explicit sessionId
+
+Stop behavior:
+- provider-returned stop callback is invoked when available;
+- provider `stopListening` is also called;
+- browser recognition is aborted;
+- active session id is cleared.
+
+### Validation
+
+Added:
+- `scripts/validate-stt-session-ownership.mjs`
+
+Isolated execution PASS:
+- continuous-listening-blocked
+- realtime-listening-blocked
+- new-session-stops-previous
+- external-listen-forced-one-shot
+- stale-callbacks-ignored
+- current-session-callbacks-pass
+
+Final marker:
+- `STT_SESSION_OWNERSHIP_PASS`
+
+### Status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL
+  - isolated STT session ownership PASS
+  - browser/device microphone runtime NOT_RUN
+  - external realtime voice NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Next P5 increment
+
+Current voice boundary is safe for branch-only work.
+
+Next:
+1. review app mic entry points so every listen is explicit user action;
+2. remove or rename any misleading `autoVoice` semantics that could imply hands-free listening;
+3. keep HOME_RADIO explicit-action only;
+4. after that, P5 branch-only voice architecture can be considered closed until live runtime/device stage.
