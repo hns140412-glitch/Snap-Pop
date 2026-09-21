@@ -2030,3 +2030,97 @@ Next implementation should move to remaining high-value runtime gaps rather than
 - runtime traceability / provenance closure across the new expression paths;
 - then crew orchestration breadth or remaining badge/event runtime gaps;
 - keep all live/device/deploy claims separate.
+
+
+## 33. EXPRESSION TRACE / DISMISS + STAGED CREW INTERVENTION — 2026-09-21
+
+### A. Pending expression intent stale-state control
+
+Problem:
+- a verified ASK→optional EXPRESS topic could remain pending indefinitely if the child ignored it;
+- an arbitrary TTL would invent a timing rule not present in canonical requirements.
+
+Implemented:
+- map banner now includes explicit `그만두기`;
+- dismiss clears `pendingExpressionIntent`;
+- no arbitrary expiration was introduced.
+
+### B. Minimal expression provenance trace
+
+Added `expressionTrace` ledger.
+
+Stored metadata only:
+- event id/type/time;
+- source;
+- source/target/question language;
+- verification coverage;
+- question character count;
+- fragment count;
+- provider id;
+- target landmark.
+
+Not stored in trace:
+- child draft;
+- AI/crew answer body;
+- phrase fragment contents.
+
+Trace events currently include:
+- `VERIFIED_ASK_EXPRESSION_SELECTED`
+- `VERIFIED_ASK_EXPRESSION_DISMISSED`
+- `VERIFIED_ASK_EXPRESSION_ATTACHED`
+- `BILINGUAL_EXPRESSION_BRIDGE_SHOWN`
+
+Ledger is bounded to 200 items.
+
+Validation:
+- `scripts/validate-expression-trace-and-dismiss.mjs`
+- 8/8 PASS
+- `EXPRESSION_TRACE_AND_DISMISS_PASS`
+
+### C. Staged crew intervention ladder
+
+Added:
+- `crew-intervention-runtime.js`
+- `scripts/validate-crew-intervention-ladder.mjs`
+
+Signal:
+- no inferred silence timer;
+- only explicit repeated empty `Next` attempts.
+
+Stages:
+1. first empty advance → `WAIT`
+2. second empty advance → `HINT_OFFER`
+3. third+ empty advance → `MINIMAL_REASK`
+4. after a hint is explicitly opened → `WAIT_AFTER_HINT`
+
+Hard locks:
+- hint is never auto-revealed;
+- crew never writes into the draft;
+- no automatic answer generation;
+- hint remains one explicit child action.
+
+Validation:
+- 9/9 PASS
+- `CREW_INTERVENTION_LADDER_PASS`
+
+Requirement matrix:
+- `SP-GUIDE-002` → CODED=true / STATIC_VERIFIED=true
+- runtime/device remain NOT_RUN.
+
+### Closure runner
+
+`scripts/validate-branch-closure.mjs` now contains 21 validators.
+
+### Current external state
+
+- old frozen candidate remains superseded;
+- current candidate is not frozen;
+- external call count remains 0;
+- Netlify/deploy/merge remain NOT_RUN.
+
+### Next branch-only axis
+
+Continue implementation rather than deployment.
+High-value remaining candidates:
+- reconcile stale requirement-matrix entries for already-coded Truth/Imagination capabilities;
+- then implement remaining genuinely uncoded badge/event runtime or broader crew scene orchestration without inventing OPEN probabilities.
