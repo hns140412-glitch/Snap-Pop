@@ -275,12 +275,19 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:affinityTier",
-        "data/exploration-crew-rules.json:roster.relationship.affinity"
-      ]
+        "data/exploration-crew-rules.json:roster.relationship.affinity",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: affinity memory increments relationship score",
+        "browser-runtime-selftest: affinity does not change EXP",
+        "browser-runtime-selftest: affinity does not change gems"
+      ],
+      "gap": "physical-device verification remains unverified"
     },
     {
       "id": "SP-CREW-003",
@@ -293,12 +300,18 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:synthesizeCrewWorldState",
-        "data/exploration-crew-rules.json:worldStateEngine"
-      ]
+        "data/exploration-crew-rules.json:worldStateEngine",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: crew world return restores main companion",
+        "browser-runtime-selftest: return records reunion memory"
+      ],
+      "gap": "physical-device verification remains unverified"
     },
     {
       "id": "SP-CREW-004",
@@ -310,16 +323,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "crew-role-guard-runtime.js",
         "app.js:chooseSceneGuest roleContract",
         "app.js:renderCrewRoster special encounter-only copy",
         "app.js:openSpecial special-not-stronger copy",
-        "scripts/validate-crew-special-role-not-power.mjs"
+        "scripts/validate-crew-special-role-not-power.mjs",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "SPECIAL role is executable as encounter-style-only with functional/reward equality; exact special encounter content/cadence remains OPEN"
+      "gap": "encounter-only/no-power runtime verified; exact special encounter content/cadence remains OPEN",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: special role runtime is encounter-only",
+        "browser-runtime-selftest: special role power boost is blocked"
+      ]
     },
     {
       "id": "SP-CREW-005",
@@ -332,16 +350,20 @@
       "classification": "WORKING",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "notes": "전체 탐험대 규칙의 중심이 아니라 현재 시작 탐험대 기준점",
       "codeEvidence": [
         "crew-core6-runtime.js",
         "data/exploration-crew-rules.json:definedCharacterLineages",
         "app.js:renderCrewRoster starter baseline boundary",
-        "scripts/validate-crew-core6-starter-baseline.mjs"
+        "scripts/validate-crew-core6-starter-baseline.mjs",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "Core 6 is now executable as WORKING_STARTER_BASELINE only; live browser/device roster interaction remains NOT_RUN and future roster expansion remains intentionally open"
+      "gap": "Core 6 WORKING baseline runtime verified; future roster expansion and canonical lock remain intentionally open",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: Core 6 runtime WORKING baseline"
+      ]
     },
     {
       "id": "SP-VOICE-001",
@@ -426,12 +448,19 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:renderSpecialInvite",
-        "app.js:openSpecial"
-      ]
+        "app.js:openSpecial",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: explicit special view opens",
+        "browser-runtime-selftest: skip returns map",
+        "browser-runtime-selftest: skip changes neither EXP nor gems nor records nor special memory"
+      ],
+      "gap": "physical-device verification remains unverified"
     },
     {
       "id": "SP-RECORD-001",
@@ -490,12 +519,20 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:renderGems",
-        "app.js:renderWishHistory"
-      ]
+        "app.js:renderWishHistory",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: wish confirmation explicit",
+        "browser-runtime-selftest: exactly two complete gems spent",
+        "browser-runtime-selftest: completed wish transaction recorded",
+        "browser-runtime-selftest: GEM_SPENT ledger recorded and test state restored"
+      ],
+      "gap": "physical-device verification remains unverified"
     },
     {
       "id": "SP-BRIDGE-001",
