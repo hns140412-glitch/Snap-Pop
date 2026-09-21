@@ -130,6 +130,14 @@
 
       const answer=document.querySelector("#answer"),next=document.querySelector("#nextBtn");
       assert("hint-control-restored",!!document.querySelector("#hintBtn"));
+      const safety=window.SnapPopCrewInteractionSafety;
+      assert("unsafe-child-mock-is-blocked",safety?.inspect("넌 또 틀렸어",{mode:"CHILD_REACTION"})?.safe===false);
+      assert("unsafe-child-mock-falls-back-neutral",safety?.safeReaction("넌 또 틀렸어",{language:"ko"})==="작은 한 조각만 같이 보자.");
+      const reactionOverlay=document.querySelector("#crewReactionOverlay");
+      assert("crew-reaction-hidden-by-default",reactionOverlay?.hidden===true);
+      assert("crew-reaction-does-not-capture-input",getComputedStyle(reactionOverlay).pointerEvents==="none");
+      assert("crew-reaction-is-height-bounded",parseFloat(getComputedStyle(reactionOverlay).maxHeight)<=86);
+
       const originalVoiceRuntime=window.SnapPopVoice;
       const voiceCalls=[];
       window.SnapPopVoice={
@@ -144,14 +152,6 @@
       await wait(80);
       assert("writing-voice-input-uses-listen-only",voiceCalls.some(x=>x.kind==="listen"&&x.source==="USER_MIC")&&!voiceCalls.some(x=>x.kind==="speak"));
       window.SnapPopVoice=originalVoiceRuntime;
-
-      const safety=window.SnapPopCrewInteractionSafety;
-      assert("unsafe-child-mock-is-blocked",safety?.inspect("넌 또 틀렸어",{mode:"CHILD_REACTION"})?.safe===false);
-      assert("unsafe-child-mock-falls-back-neutral",safety?.safeReaction("넌 또 틀렸어",{language:"ko"})==="작은 한 조각만 같이 보자.");
-      const reactionOverlay=document.querySelector("#crewReactionOverlay");
-      assert("crew-reaction-hidden-by-default",reactionOverlay?.hidden===true);
-      assert("crew-reaction-does-not-capture-input",getComputedStyle(reactionOverlay).pointerEvents==="none");
-      assert("crew-reaction-is-height-bounded",parseFloat(getComputedStyle(reactionOverlay).maxHeight)<=86);
 
       click(next,"empty-advance-1");
       await wait(120);
