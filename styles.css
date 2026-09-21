@@ -133,3 +133,5 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 .expressionFragments{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
 .expressionFragments span{display:inline-flex;padding:6px 9px;border-radius:999px;background:#f4eedf;border:1px solid #b7a47733;font-size:12px;font-weight:700}
 .expressionAssembly{font-weight:700}
+
+.expressionIntentBanner{position:absolute;left:16px;right:16px;top:74px;z-index:8;padding:10px 12px;border-radius:14px;background:#fffdf1e8;border:1px solid #b7a47755;box-shadow:0 8px 20px rgba(0,0,0,.08);font-size:12px;font-weight:700;line-height:1.4}
