@@ -992,15 +992,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "intelligence-runtime.js:THINK_EXPRESS/localThinkScaffold",
         "crew-presentation-guard.js",
         "app.js:openImagination/runImagination",
-        "scripts/validate-think-express-verification-separation.mjs"
+        "scripts/validate-think-express-verification-separation.mjs",
+        "scripts/browser-runtime-selftest.js",
+        "intelligence-runtime.js"
       ],
-      "gap": "Think→Express path is coded and statically verified with non-factual verification separation; live browser/device quality remains NOT_RUN"
+      "gap": "browser local runtime verified; live external-provider/device quality remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: local THINK_EXPRESS returns non-factual scaffold",
+        "browser-runtime-selftest: scaffold contains multiple child-owned thought branches and no final answer"
+      ]
     },
     {
       "id": "SP-UNIV-002",
@@ -1210,15 +1216,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "Exploration Crew response ownership is centrally enforced/static verified; live provider/browser/device execution remains NOT_RUN",
+      "gap": "browser local runtime verified; live external-provider/device quality remains unverified",
       "codeEvidence": [
         "crew-presentation-guard.js:responseOwner=EXPLORATION_CREW",
         "intelligence-runtime.js:present",
         "app.js:renderImaginationResponse",
         "scripts/validate-crew-presentation-ownership.mjs",
-        "scripts/validate-think-express-verification-separation.mjs"
+        "scripts/validate-think-express-verification-separation.mjs",
+        "scripts/browser-runtime-selftest.js",
+        "intelligence-runtime.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: local Think result responseOwner=EXPLORATION_CREW",
+        "browser-runtime-selftest: no-guess Ask fallback responseOwner=EXPLORATION_CREW"
       ]
     },
     {
@@ -1318,13 +1330,19 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "no-guess fallback and incomplete-verification states are coded; live provider/browser/device behavior remains NOT_RUN",
+      "gap": "browser no-guess behavior verified; live external-provider/device uncertainty handling remains unverified",
       "codeEvidence": [
         "intelligence-runtime.js:unverifiedKnowledgeResponse",
         "truth-guard-runtime.js",
-        "app.js:verification badges"
+        "app.js:verification badges",
+        "scripts/browser-runtime-selftest.js",
+        "intelligence-runtime.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: factual Ask with knowledge provider unavailable returns verified=false",
+        "browser-runtime-selftest: no-guess fallback explicitly says verification/fact check is needed"
       ]
     },
     {
