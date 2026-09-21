@@ -20,3 +20,10 @@
   to = "/.netlify/functions/snap-pop-knowledge"
   status = 200
   force = true
+
+
+[[redirects]]
+  from = "/api/snap-pop-expression-bridge"
+  to = "/.netlify/functions/snap-pop-expression-bridge"
+  status = 200
+  force = true
