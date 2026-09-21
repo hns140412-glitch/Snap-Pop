@@ -1,0 +1,89 @@
+import fs from "node:fs";
+import vm from "node:vm";
+
+const mentalSource=fs.readFileSync(new URL("../mental-model-runtime.js",import.meta.url),"utf8");
+const scaffoldSource=fs.readFileSync(new URL("../curiosity-scaffold-runtime.js",import.meta.url),"utf8");
+const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+
+const window={};
+vm.runInNewContext(mentalSource,{window,Object,Array,String,Number,Math});
+vm.runInNewContext(scaffoldSource,{window,Object,Array,String,Number,Math,Set});
+const s=window.SnapPopCuriosityScaffold;
+
+function assert(name,condition){
+  if(!condition) throw new Error("FAIL "+name);
+  console.log("PASS",name);
+}
+
+const full={
+  verified:true,
+  verification:{
+    coverage:"FULL_FACTUAL_CONTENT",
+    verifiedClaimCount:2,
+    claims:[
+      {claim:"A",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://a"}]},
+      {claim:"B",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://b"}]}
+    ]
+  }
+};
+
+const partial={
+  verified:false,
+  verification:{
+    coverage:"CLAIM_SET_ONLY",
+    verifiedClaimCount:1,
+    claims:[{claim:"A",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://a"}]}]
+  }
+};
+
+assert("global-full-can-offer-optional-followup",
+  s.followUpPolicy(full,"GLOBAL").available===true
+);
+assert("partial-answer-suppresses-followup",
+  s.followUpPolicy(partial,"GLOBAL").available===false
+);
+assert("writing-flow-suppresses-followup",
+  s.followUpPolicy(full,"WRITING_FLOW").available===false
+);
+
+const fullScaffold=s.scaffoldKnowledge(full,"왜 비가 내려?","ko","GLOBAL");
+assert("global-full-has-one-next-curiosity",
+  typeof fullScaffold.understanding.nextCuriosity==="string"&&
+  fullScaffold.understanding.nextCuriosity.length>0
+);
+
+const writingScaffold=s.scaffoldKnowledge(full,"왜 비가 내려?","ko","WRITING_FLOW");
+assert("writing-flow-has-no-next-curiosity",
+  writingScaffold.understanding.nextCuriosity===null&&
+  writingScaffold.understanding.followUpReason==="WRITING_FLOW_RETURN_PRIORITY"
+);
+
+const partialScaffold=s.scaffoldKnowledge(partial,"왜 비가 내려?","ko","GLOBAL");
+assert("partial-has-no-next-curiosity",
+  partialScaffold.understanding.nextCuriosity===null&&
+  partialScaffold.understanding.followUpReason==="VERIFICATION_INCOMPLETE"
+);
+
+const saveIndex=appSource.indexOf('s.draft=draft;');
+const persistIndex=appSource.indexOf('await set("active",s);',saveIndex);
+const openIndex=appSource.indexOf('openImagination({',persistIndex);
+assert("draft-persists-before-cloud-open",
+  saveIndex>=0&&persistIndex>saveIndex&&openIndex>persistIndex
+);
+
+assert("return-requires-same-active-and-step",
+  appSource.includes('current.id===writingReturn.activeId&&Math.min(2,current.step||0)===writingReturn.step')
+);
+
+assert("return-restores-preserved-draft",
+  appSource.includes('$("#answer").value=preserved;')&&
+  appSource.includes('draftPreserved:true')
+);
+
+assert("followup-is-hidden-until-child-reveals",
+  appSource.includes('class="soft cloudFollowUpReveal"')&&
+  appSource.includes('cloudFollowUpText" hidden')&&
+  appSource.includes('follow.hidden=false;reveal.remove()')
+);
+
+console.log("IMAGINATION_PRESSURE_RETURN_CONTRACT_PASS");
