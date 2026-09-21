@@ -62,7 +62,9 @@ assert("guest-appearance-ledger-recorded",
 );
 
 assert("app-connects-guest-only-to-special-scene",
-  appSource.includes('chooseSceneGuest("SPECIAL_EXPLORATION")')&&
+  appSource.includes('chooseSceneGuest("SPECIAL_EXPLORATION",{appearanceAuthorized:')&&
+  appSource.includes('guestTrigger?.scene==="SPECIAL_EXPLORATION"')&&
+  appSource.includes('guestTrigger?.authorized===true')&&
   appSource.includes('$("#specialCrewPresence")')
 );
 
