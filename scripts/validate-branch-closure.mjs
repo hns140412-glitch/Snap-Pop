@@ -59,6 +59,7 @@ const validators=[
   "validate-records-growth-controller-boundaries.mjs",
   "validate-records-flow-controller-boundaries.mjs",
   "validate-special-controller-boundaries.mjs",
+  "validate-imagination-controller-boundaries.mjs",
   "validate-dom-binding-integrity.mjs"
 ];
 
