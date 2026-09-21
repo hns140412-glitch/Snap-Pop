@@ -31,7 +31,7 @@ assert("reaction-is-hidden-when-cleared",
   app.includes('box.hidden=true')
 );
 assert("reaction-auto-collapses-after-short-display",
-  app.includes("setTimeout(()=>{box.classList.remove("show")},2200)")
+  app.includes('setTimeout(()=>{box.classList.remove("show")},2200)')
 );
 
 console.log("NON_BLOCKING_CREW_REACTION_UI_PASS");
