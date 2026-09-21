@@ -1529,15 +1529,14 @@
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "behavior taxonomy + anti-labeling guard implemented; explicit detectors currently wired for HELP_REQUEST, WRITING_EXPLORATION, and EXTRA_TASK. RETRY/ERROR_DISCOVERY/DEEP_THINKING/SPECIAL_BEHAVIOR remain intentionally unwired until source-specific evidence contracts exist; historical badge catalog remains inactive.",
+      "gap": "behavior taxonomy + anti-labeling guard implemented; explicit detectors now wired for HELP_REQUEST, WRITING_EXPLORATION, EXTRA_TASK, and RETRY-from-explicit-revision. ERROR_DISCOVERY/DEEP_THINKING/SPECIAL_BEHAVIOR remain intentionally unwired until stronger source evidence exists; historical badge catalog remains inactive.",
       "codeEvidence": [
         "badge-behavior-runtime.js",
         "app.js:recordBadgeBehaviorObservation",
-        "app.js:revealHint→HELP_REQUEST explicit observation",
-        "app.js:exploration completion→WRITING_EXPLORATION explicit observation",
-        "app.js:bonusSave→EXTRA_TASK explicit observation",
-        "data/badge-system.json:eventFamilies",
-        "data/badge-catalog-working.json:WORKING_DRAFT_NOT_ACTIVE",
+        "app.js:revealHint→HELP_REQUEST",
+        "app.js:exploration completion→WRITING_EXPLORATION",
+        "app.js:bonusSave→EXTRA_TASK",
+        "app.js:recordEditSave→RETRY explicit revision",
         "scripts/validate-badge-behavior-observation.mjs"
       ]
     },
