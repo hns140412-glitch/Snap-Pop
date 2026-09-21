@@ -1,0 +1,24 @@
+name: Snap Pop Branch Closure
+
+on:
+  push:
+    branches:
+      - taky/snap-pop-implementation-2026-09-20
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  branch-closure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Show candidate SHA
+        run: echo "SNAP_POP_VALIDATION_SHA=${GITHUB_SHA}"
+      - name: Run 43 branch closure validators
+        run: node scripts/validate-branch-closure.mjs
