@@ -137,3 +137,13 @@ LATEST P3 ELIGIBILITY NOTE:
 - partial coverage or single-claim structural diagrams are suppressed.
 - updated isolated validator PASS.
 - next: one-next-curiosity pressure control and resumable writing return.
+
+
+LATEST P3 PRESSURE NOTE:
+- P3 follow-up pressure + writing return lock is coded.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md section 19.
+- writing-flow and partial verification suppress follow-up.
+- global fully verified answer exposes only an optional hidden follow-up reveal.
+- writing draft is persisted before cloud open and restored only on same activeId + step.
+- isolated validator PASS.
+- next: minimal return acknowledgement without starting a new question chain.
