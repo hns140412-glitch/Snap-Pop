@@ -79,9 +79,9 @@ async function recordBadgeEvent(family,payload={},source="SNAP_POP"){
     return event;
   }catch{return null}
 }
-async function recordCrewExperience(type,meta={}){
-  const identity=await resolvedIdentity(),id=identity.crewMember?.type,registry=await ensureCrewRegistry();if(!id||!registry[id])return null;
-  const entry=registry[id],eventId=meta.eventId||uid("crewmem");
+async function recordCrewMemberExperience(memberId,type,meta={}){
+  const registry=await ensureCrewRegistry();if(!memberId||!registry[memberId])return null;
+  const entry=registry[memberId],eventId=meta.eventId||uid("crewmem");
   entry.memories=entry.memories||[];
   if(entry.memories.some(x=>x.eventId===eventId))return entry;
   const weight={EXPLORATION_COMPLETE:2,SPECIAL_MEMORY:2,SHARED_MICRO_EPISODE:1,REUNION:0,VOICE_EXPRESSION:0}[type]??0;
@@ -90,6 +90,10 @@ async function recordCrewExperience(type,meta={}){
   entry.affinity.scoreInternal=(entry.affinity.scoreInternal||0)+weight;
   const tier=affinityTier(entry.affinity.scoreInternal);entry.affinity.levelKey=tier.key;entry.lastMetAt=new Date().toISOString();
   await set("crewRegistry",registry);return entry;
+}
+async function recordCrewExperience(type,meta={}){
+  const identity=await resolvedIdentity(),id=identity.crewMember?.type;
+  return recordCrewMemberExperience(id,type,meta);
 }
 function crewPerformance(identity,kind="observe"){
   const r=crewMemberRule(identity),gesture=r.gestures?.[kind]||r.gestures?.observe||"",motifs=r.reactionMotifs||[];
@@ -771,7 +775,7 @@ async function openSpecial(){
 }
 $("#specialInvite").onclick=openSpecial;$("#specialBack").onclick=()=>show("map");$("#specialLater").onclick=()=>show("map");
 $("#specialAnswer").addEventListener("input",()=>set("specialDraft",$("#specialAnswer").value));
-$("#specialSave").onclick=async()=>{const text=$("#specialAnswer").value.trim();if(!text)return toast("한 줄이라도 네 생각을 남겨볼까?");const memories=await get("specialMemories")||[];const id=uid("special"),at=new Date().toISOString(),p=specialPromptFor(new Date(at)),guestMemberId=$("#specialCrewPresence")?.dataset.memberId||null;memories.unshift({id,at,prompt:p.q,text,guestMemberId});await setMany([["specialMemories",memories],["specialDraft",""]]);await recordCrewExperience("SPECIAL_MEMORY",{eventId:id,prompt:p.q,snippet:crewSnippet(text),guestMemberId});$("#specialAnswer").value="";toast("특별 탐험 기억을 남겼어요.");show("records")};
+$("#specialSave").onclick=async()=>{const text=$("#specialAnswer").value.trim();if(!text)return toast("한 줄이라도 네 생각을 남겨볼까?");const memories=await get("specialMemories")||[];const id=uid("special"),at=new Date().toISOString(),p=specialPromptFor(new Date(at)),guestMemberId=$("#specialCrewPresence")?.dataset.memberId||null;memories.unshift({id,at,prompt:p.q,text,guestMemberId});await setMany([["specialMemories",memories],["specialDraft",""]]);await recordCrewExperience("SPECIAL_MEMORY",{eventId:id,prompt:p.q,snippet:crewSnippet(text),guestMemberId});if(guestMemberId)await recordCrewMemberExperience(guestMemberId,"SHARED_MICRO_EPISODE",{eventId:`${id}_guest`,sourceEventId:id,scene:"SPECIAL_EXPLORATION"});$("#specialAnswer").value="";toast("특별 탐험 기억을 남겼어요.");show("records")};
 $("#bonusStart").onclick=async()=>{const r=await get("lastResult");if(!r)return;const bonusEvents=await get("bonusEvents")||{},bonusEventId=`bonus_${r.completionEventId}`;if(bonusEvents[bonusEventId])return toast("이미 완료한 추가 연습이에요.");const prompts={idea:"같은 아이디어로 다른 시작 문장 하나를 만들어볼까?",emotion:"같은 마음을 다른 말로 한 문장 표현해볼까?",description:"오감 하나를 더 넣어 장면을 한 문장 늘려볼까?",viewpoint:"다른 시선에서 한 문장만 더 써볼까?",final:"제목이나 마지막 문장 중 하나를 새로 다듬어볼까?"};$("#bonusQuestion").textContent=prompts[r.landmark]||"한 문장 더 만들어볼까?";$("#bonusAnswer").value="";$("#bonusPanel").hidden=false};
 $("#bonusSave").onclick=async()=>{const r=await get("lastResult");if(!r)return;const text=$("#bonusAnswer").value.trim();if(!text)return toast("한 문장만 더 남겨볼까?");const bonusEvents=await get("bonusEvents")||{},bonusEventId=`bonus_${r.completionEventId}`;if(bonusEvents[bonusEventId])return toast("이미 완료한 추가 연습이에요.");const gems=await get("gems")||{},gemLedger=await get("gemLedger")||[],beforeShard=gems[r.landmark]||0,at=new Date().toISOString();gems[r.landmark]=beforeShard+1;gemLedger.push({eventId:bonusEventId,type:"BONUS_SHARD_EARNED",landmark:r.landmark,amount:1,at});if(Math.floor((beforeShard+1)/6)>Math.floor(beforeShard/6))gemLedger.push({eventId:bonusEventId,type:"COMPLETE_GEM_CONVERTED",landmark:r.landmark,completedGemDelta:1,sourceShards:6,at});bonusEvents[bonusEventId]={at,landmark:r.landmark,text};await setMany([["gems",gems],["gemLedger",gemLedger],["bonusEvents",bonusEvents]]);await recordBadgeBehaviorObservation("EXTRA_TASK",{explicitChoice:true,completed:true,landmark:r.landmark,bonusEventId},"SNAP_POP");await updateStatus();$("#bonusPanel").hidden=true;$("#bonusStart").disabled=true;$("#bonusStart").textContent="추가 연습 완료됨";toast("추가 연습 완료! 보석 조각 +1 · EXP 추가 없음")};
 $("#recordEditBack").onclick=()=>show("records");
