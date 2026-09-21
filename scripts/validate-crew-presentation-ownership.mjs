@@ -55,9 +55,11 @@ assert("history-still-keeps-provider-provenance",
   appSource.includes('provider:rawResult.provider||"unknown"')
 );
 
+const runStart=appSource.indexOf("async function runImagination");
+const guardCall=appSource.indexOf("presentation.sanitizeUserFacing(rawResult)",runStart);
+const guardedRender=appSource.indexOf("renderImaginationResponse(result,identity)",guardCall);
 assert("app-applies-presentation-guard-before-render",
-  appSource.indexOf("presentation.sanitizeUserFacing(rawResult)")>=0&&
-  appSource.indexOf("presentation.sanitizeUserFacing(rawResult)")<appSource.indexOf("renderImaginationResponse(result,identity)")
+  runStart>=0&&guardCall>runStart&&guardedRender>guardCall
 );
 
 const intelligenceSource=fs.readFileSync(new URL("../intelligence-runtime.js",import.meta.url),"utf8");
