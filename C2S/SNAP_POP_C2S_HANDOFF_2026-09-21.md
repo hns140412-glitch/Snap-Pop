@@ -1069,3 +1069,113 @@ Next P5 work:
 4. no provider/system identity exposure;
 5. no auto-speaking that increases interaction pressure;
 6. external realtime voice remains OPEN until separately implemented and verified.
+
+
+## 23. P5 VOICE QUALITY / PACING / AUTO-READ POLICY — 2026-09-21
+
+### Regression found and corrected
+
+Existing `autoRead` behavior spoke:
+- current question;
+- hidden hint;
+
+even when the hint had not been revealed in the UI.
+
+This violated the existing child-pressure rule:
+- hint remains optional;
+- one hint only;
+- hidden help must not be exposed automatically.
+
+Correction:
+- `AUTO_READ` now speaks the current question only.
+- manual `listenBtn` reads the hint only when `hintLevel > 0`.
+
+### Voice policy
+
+`voice-runtime.js` now exposes `voicePolicy`.
+
+Supported speech initiation:
+- `USER_TAP`
+- `AUTO_READ`
+
+USER_TAP:
+- user initiated;
+- default interrupt = true;
+- max text = 1600 chars.
+
+AUTO_READ:
+- only for an already-enabled explicit user setting;
+- default interrupt = false;
+- bounded to 700 chars;
+- hidden hint is excluded from the automatic speech call.
+
+Language pacing:
+- Korean browser fallback rate: 0.94
+- English browser fallback rate: 0.98
+- pitch: 1
+
+These are policy defaults, not device-verified voice-quality claims.
+
+External provider receives the same policy:
+- source
+- interrupt
+- pacing
+- `voiceRole: crew`
+- `responseOwner: EXPLORATION_CREW`
+
+### Capability separation
+
+`SnapPopVoice.capabilities()` now separates:
+- mode;
+- TTS;
+- STT;
+- realtime;
+- browser fallback.
+
+Important:
+- existence of an external provider does NOT imply realtime.
+- realtime is true only when provider capabilities explicitly declare `realtime: true`.
+- current external realtime implementation remains OPEN / NOT_RUN.
+
+### Validation
+
+Added:
+- `scripts/validate-voice-quality-policy.mjs`
+
+Repository readback checks:
+- AUTO_READ uses `speak(p[0], ..., "AUTO_READ")`;
+- hidden hint is not included;
+- manual listen only includes hint when already revealed.
+
+Isolated Node policy execution PASS:
+- user-tap-default-interrupts
+- auto-read-default-does-not-interrupt
+- language-pacing-separated
+- auto-read-is-more-bounded
+- external-receives-initiation-policy
+- realtime-not-inferred-from-external-provider
+- legitimate-fact-survives-guard
+- identity-leak-blocked
+
+Final marker:
+- `VOICE_QUALITY_POLICY_RUNTIME_PASS`
+
+### Status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL
+  - isolated voice policy runtime PASS
+  - browser/device TTS/STT NOT_RUN
+  - external realtime voice NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Next P5 increment
+
+Next:
+1. listening/STT session ownership and interruption rules;
+2. prevent overlapping recognition sessions;
+3. distinguish explicit microphone action from any future hands-free/realtime mode;
+4. no always-listening mode without separate explicit approval;
+5. preserve text-first fallback.
