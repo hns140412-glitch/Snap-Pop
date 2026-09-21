@@ -401,7 +401,7 @@ $("#nextBtn").onclick=async()=>{
   let s=await get("active");
   if(!s){toast("지도에서 탐험지를 먼저 골라줘.");show("map");return}
   ensureWritingState(s);const i=s.step||0;s.draft=$("#answer").value.trim();s.answers[i]=s.draft;s.snapshots[i]=s.draft;
-  if(!s.draft){s.crewState=s.crewState||{};s.crewState.emptyAdvanceAttempts=(s.crewState.emptyAdvanceAttempts||0)+1;await set("active",s);const identity=await resolvedIdentity();await showCrewReaction((s.language||"ko")==="en"?`${crewMemberName(identity)}: No rush. We can wait. If you want, take one hint.`:`${crewMemberName(identity)}: 급할 건 없어. 잠깐 생각해도 돼. 필요하면 힌트 하나만 보자.`);return}
+  if(!s.draft){s.crewState=s.crewState||{};s.crewState.emptyAdvanceAttempts=(s.crewState.emptyAdvanceAttempts||0)+1;const intervention=window.SnapPopCrewIntervention?.state?.({emptyAdvanceAttempts:s.crewState.emptyAdvanceAttempts,hintLevel:s.crewState.hintLevel||0,language:s.language||"ko"})||{stage:"WAIT",message:(s.language||"ko")==="en"?"No rush. I’ll wait here.":"급할 건 없어. 여기서 기다릴게.",autoRevealHint:false,autoWrite:false};s.crewState.interventionStage=intervention.stage;await set("active",s);const identity=await resolvedIdentity();await showCrewReaction(`${crewMemberName(identity)}: ${intervention.message}`,{kind:"observe"});return}
   if(i<2){writingAnalysisSeq++;s.step=i+1;s.crewState={hintLevel:0,lastReaction:"",cloudReturn:null,lastVoiceLength:0};await set("active",s);renderExplore(s);setTimeout(()=>analyzeWritingMove(s),0);return}
   const events=await get("completionEvents")||{};
   const completionEventId=s.completionEventId||`completion_${s.id}`;
