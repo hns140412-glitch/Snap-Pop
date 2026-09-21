@@ -24,9 +24,10 @@ const weak=guard.guardKnowledge({
 });
 assert("verified-claim-needs-evidence",weak.verified===false);
 
-const strong=guard.guardKnowledge({
+const claimSetOnly=guard.guardKnowledge({
   verification:{
     mode:"CLAIM_EVIDENCE",
+    coverage:"CLAIM_SET_ONLY",
     claims:[{
       claim:"사실 주장",
       status:"VERIFIED",
@@ -35,7 +36,22 @@ const strong=guard.guardKnowledge({
     unresolved:[]
   }
 });
-assert("evidence-backed-contract-can-pass",strong.verified===true);
+assert("claim-set-evidence-does-not-imply-full-answer",claimSetOnly.verified===false);
+assert("claim-set-evidence-is-preserved",claimSetOnly.verification.claimEvidenceVerified===true&&claimSetOnly.verification.verifiedClaimCount===1);
+
+const strong=guard.guardKnowledge({
+  verification:{
+    mode:"CLAIM_EVIDENCE",
+    coverage:"FULL_FACTUAL_CONTENT",
+    claims:[{
+      claim:"사실 주장",
+      status:"VERIFIED",
+      evidence:[{source_type:"WEB",source_url:"https://example.com/source",checked_at:"2026-09-21T12:00:00+09:00"}]
+    }],
+    unresolved:[]
+  }
+});
+assert("full-covered-evidence-contract-can-pass",strong.verified===true);
 
 const unresolved=guard.guardKnowledge({
   verification:{
