@@ -315,3 +315,89 @@ Current rule:
 3. cross-check retrieved source evidence against claim evidence before allowing verified=true;
 4. expose source/evidence provenance in a bounded child-facing way;
 5. then continue P3 Imagination Cloud intelligence.
+
+
+## 13. P2 VERIFIED RETRIEVAL BACKEND INCREMENT — 2026-09-21
+
+### Implemented
+
+Server:
+- `netlify/functions/snap-pop-knowledge.mjs`
+- server-only `OPENAI_API_KEY`
+- explicit `SNAP_POP_KNOWLEDGE_MODEL`
+- Responses API `web_search`
+- `include: ["web_search_call.action.sources"]`
+- model-returned source URLs are NOT trusted by themselves
+- claim evidence is promoted only when the URL exactly matches the actual retrieved source set
+- invented / non-retrieved URLs remain UNVERIFIED
+- no retrieved search source => claim remains UNVERIFIED
+
+Browser:
+- `openai-knowledge-provider.js`
+- same-origin `/api/snap-pop-knowledge` only
+- no browser API key path
+- loaded before `knowledge-runtime.js`
+
+Routing:
+- repository `netlify.toml` now defines the same-origin knowledge route.
+- this is configuration only; Netlify deploy/call was NOT_RUN.
+
+Guard:
+- Truth Guard version advanced.
+- claim-level evidence no longer implies that the whole answer is verified.
+- server returns `coverage: CLAIM_SET_ONLY`.
+- full answer `verified=true` requires `coverage: FULL_FACTUAL_CONTENT`, all claims evidence-backed, and no unresolved items.
+- current search backend therefore yields evidence-backed claims but does NOT falsely mark the entire generated explanation as fully verified.
+
+UI:
+- ASK_UNDERSTAND answer badge now distinguishes:
+  - 확인 완료
+  - 일부 근거 확인
+  - 확인 필요
+- verified claim count and up to four evidence domains are shown in a bounded way.
+- partial evidence does not display as full verification.
+
+### Validation evidence
+
+Added/updated:
+- `scripts/validate-knowledge-search-boundary.mjs`
+- `scripts/validate-truth-guard-runtime.mjs`
+- `scripts/validate-knowledge-runtime.mjs`
+
+Isolated mocked runtime harness executed without Netlify/OpenAI external calls:
+- missing server key => fail closed PASS
+- retrieved source exact match => claim evidence PASS
+- invented URL => cannot promote PASS
+- no search source => remains unverified PASS
+
+Official OpenAI API contract rechecked before implementation:
+- Responses API supports `web_search`
+- `web_search_call.action.sources` is an includable response field.
+
+### Status
+
+- CODED: PASS for verified retrieval backend boundary
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL
+  - isolated/mocked server boundary PASS
+  - Truth Guard/knowledge contract isolated evidence PASS
+  - live OpenAI call NOT_RUN
+  - browser→server live runtime NOT_RUN
+  - cross-app runtime NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- OPENAI_RUNTIME_CONNECTED: false
+- merge: NOT_RUN
+- deploy: NOT_RUN
+- Netlify call: NOT_RUN
+
+### Remaining P2 gap
+
+The retrieval/source boundary is now coded, but full factual-content coverage is intentionally still OPEN.
+
+Do not promote overall answer to verified solely because every listed claim has evidence.
+
+Next P2 work:
+1. add a post-answer factual-coverage verifier or equivalent deterministic coverage mechanism;
+2. only that mechanism may promote `coverage` from `CLAIM_SET_ONLY` to `FULL_FACTUAL_CONTENT`;
+3. preserve claim-level evidence provenance;
+4. then move to P3 Imagination Cloud intelligence quality.
