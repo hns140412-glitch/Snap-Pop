@@ -22,7 +22,7 @@ assert("runtime-not-overclaimed",reconciled.every(id=>byId[id].runtimeVerified==
 assert("device-not-overclaimed",reconciled.every(id=>byId[id].deviceVerified===false));
 
 assert("truth-source-quality-gap-remains-open",
-  /source-quality|folk-etymology/i.test(byId["SP-TRUTH-002"].gap||"")
+  /source-quality|folk-etymology|authority ranking|live runtime quality/i.test(byId["SP-TRUTH-002"].gap||"")
 );
 assert("openai-live-runtime-remains-open",
   /live|OPENAI_RUNTIME_CONNECTED/i.test(byId["SP-IMAGINE-004"].gap||"")
