@@ -1175,18 +1175,18 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "writing-runtime.js:analyze",
-        "app.js:analyzeWritingMove",
-        "app.js:writingAnalysisSeq",
-        "openai-semantic-provider.js",
-        "netlify/functions/snap-pop-semantic-writing.mjs"
+        "writing-runtime.js:analyze current draft + previousSnapshot",
+        "semantic-writing-runtime.js:current draft required",
+        "netlify/functions/snap-pop-semantic-writing.mjs:CURRENT draft semantic analysis",
+        "app.js:stale result draft/step guard",
+        "scripts/validate-writing-semantic-contract.mjs"
       ],
-      "gap": "secure semantic meaning/flow path is coded and statically verified; live OpenAI runtime and quality regression remain NOT_RUN; local fallback remains heuristic when backend is unavailable"
+      "gap": "current-draft semantic next-move path is coded/static verified; live OpenAI/browser/device quality remains NOT_RUN and local fallback remains heuristic when backend unavailable"
     },
     {
       "id": "SP-WRITE-003",
@@ -1197,15 +1197,18 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "writing-runtime.js:suggestedLens",
-        "app.js:renderWritingBridge"
+        "writing-runtime.js:LENS/suggestedLens",
+        "semantic-writing-runtime.js:optional one lens",
+        "netlify/functions/snap-pop-semantic-writing.mjs:five landmarks are writing lenses not mini-games",
+        "app.js:renderWritingBridge optional lens wording",
+        "scripts/validate-writing-semantic-contract.mjs"
       ],
-      "gap": "one optional cross-lens suggestion implemented; semantic provider depth pending"
+      "gap": "five landmarks are executable as writing lenses with at most one optional cross-lens suggestion; live provider quality remains NOT_RUN"
     },
     {
       "id": "SP-WRITE-004",
@@ -1216,18 +1219,18 @@
         "LATEST_DIRECT_USER_2026-09-21"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "app.js:focusGuide",
-        "app.js:stepSpecificReaction",
-        "app.js:analyzeWritingMove",
-        "openai-semantic-provider.js",
-        "netlify/functions/snap-pop-semantic-writing.mjs"
+        "semantic-writing-runtime.js:assertSingleNextMove",
+        "authorship-guard-runtime.js",
+        "netlify/functions/snap-pop-semantic-writing.mjs:single next move + tiny hint",
+        "app.js:analyzeWritingMove/stepSpecificReaction current draft",
+        "scripts/validate-writing-semantic-contract.mjs"
       ],
-      "gap": "current-draft semantic path is coded; live provider/runtime quality verification remains NOT_RUN"
+      "gap": "crew next-direction reaction is grounded in current child draft and constrained to one next move; live provider/browser/device quality remains NOT_RUN"
     },
     {
       "id": "SP-WRITE-005",
