@@ -13,7 +13,19 @@ test('Snap loads shared release/PWA contracts and keeps safe point product-owned
 });
 
 test('Snap active exploration blocks safe update and completion reopens it',async({page})=>{
+  const pageErrors=[];
+  page.on('pageerror',error=>pageErrors.push(String(error?.message||error)));
   await page.goto('http://127.0.0.1:4173/');
+  await page.waitForTimeout(800);
+  const diagnostic=await page.evaluate(()=>({
+    landmarks:document.querySelectorAll('.landmark').length,
+    toast:document.querySelector('#toast')?.textContent||'',
+    release:globalThis.SnapPopReleaseDescriptor?.release_id||null,
+    safe:globalThis.SnapPopPwaSafePoint?.()??null
+  }));
+  console.log('SNAP_INIT_DIAGNOSTIC',JSON.stringify({pageErrors,diagnostic}));
+  expect(pageErrors).toEqual([]);
+  expect(diagnostic.landmarks).toBeGreaterThan(0);
   await page.locator('.landmark').first().click();
   await page.locator('#startBtn').click();
   await expect.poll(()=>page.evaluate(()=>globalThis.SnapPopPwaSafePoint())).toBe(false);
