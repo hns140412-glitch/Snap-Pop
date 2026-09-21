@@ -2,179 +2,168 @@
 
 ## 0. STATE
 
-- Conversation scope: current Snap & Pop rebuild / writing core / Imagination Cloud / Ready Learning bridge / badge recovery
+- Conversation scope: Snap & Pop rebuild / writing core / Imagination Cloud / Ready Learning bridge / badge recovery / secure semantic provider boundary
 - C2S_COMPILE_CLOSED: true
 - REFLECTION_COMPLETE: false
 - DOWNSTREAM_EXECUTION_COMPLETE: false
 - NO_SILENT_LOSS: enforced within recovered conversation scope
 - Historical badge provenance recovery: CLASSIFIED_CLOSED_FOR_RETRIEVED_SCOPE / SOURCE_COVERAGE_OPEN
-- Merge / deploy / Netlify: NOT_RUN / DO_NOT_RUN until explicitly approved
+- NEW_CHAT_READY: true
+- Merge / deploy / Netlify: NOT_RUN / DO_NOT_RUN until exact frozen candidate + TAKY external-resource gate
 
 ## 1. BRANCH LOCK
 
 Snap & Pop
 - repo: hns140412-glitch/Snap-Pop
 - branch: `taky/snap-pop-implementation-2026-09-20`
-- handoff head observed: `0961d7cab979cba877185caff9e3b1d6c928aaec`
 
 Ready & Set
 - repo: hns140412-glitch/Ready-Set
 - branch: `taky/ready-integration-v01`
-- handoff head observed: `833c607e76cd2490a05da11da85b9dbfb585eb0b`
 
 Do not merge main/staging.
 Do not deploy or call Netlify.
 
-## 2. LATEST PRODUCT CORRECTIONS
+## 2. HARD PRODUCT LOCKS
 
-### Writing is the default state
-Snap & Pop default is writing exploration, not a generic Q&A hub.
+1. Snap & Pop visible default = writing exploration.
+2. Imagination Cloud = hidden/on-demand thought/question layer.
+3. Writing flow = `ONE DRAFT → ONE NEXT MOVE → SAME DRAFT GROWS → REVISE/FINISH`.
+4. Five places are writing lenses, not isolated mini-games.
+5. Child is final author.
+   - no ghostwriting
+   - no full rewrite
+   - no grading
+   - no question flooding
+6. Ready Learning Master provides learning context only.
+7. Snap `SnapPopSemanticWritingProvider` analyzes current draft meaning/context/flow.
+8. Browser OpenAI API key is forbidden.
+9. Truth Guard remains partial; unverified facts must never be treated as verified.
+10. Badge is a separate growth/experience collection axis.
+11. Historical ~60 badge names/triggers remain `WORKING_DRAFT_NOT_ACTIVE`.
+12. Badge must not be auto-equated with character level / EXP / gem / affinity.
+13. User is not tester/debugger.
+14. BLOCKED => classify cause first, then choose a different path; do not repeat same failing path.
 
-Default:
-`world / 5 writing lenses → continuous draft → revise/finish → record/growth`
+## 3. P0 BADGE RECOVERY — CURRENT STATE
 
-Imagination Cloud:
-- core intelligence layer, but normally hidden;
-- appears on demand from writing stuck state, child request, curiosity, or radio/voice;
-- returns to the original writing context;
-- must not become the default navigation hub.
+Source recovery document:
+- `C2S/SNAP_POP_BADGE_SOURCE_RECOVERY_2026-09-21.md`
 
-### Writing core must not be list-style
-Forbidden:
-`Q1→A1→Q2→A2→Q3→A3`
+Classification closed for retrieved scope:
+- CONFIRMED
+  - independent process/experience collection axis
+  - not score/power/leaderboard
+  - circular / hand-drawn / pastel visual direction
+  - Profile Character is protagonist
+  - GREEN / BLUE / RED / GOLD / PLATINUM growth presentation
+  - meaningful behavior families include self-start, recovery, help request, error discovery, retry, deep thinking, self-explanation, plan adaptation, special behavior, writing exploration
+  - no punitive removal / streak pressure
+- HOLD
+  - character level/growth economy as badge mechanic
+  - advanced reward economy
+  - social competition/leaderboard
+  - badge→EXP/gem/affinity/power auto conversion
+- WORKING
+  - `data/badge-catalog-working.json`
+  - BDG-DRAFT-001..060
+  - historical names/triggers/copy/thresholds/art
+- OPEN
+  - final active catalog
+  - exact cross-app event contract
+  - award threshold/repeat/dedup rules
+  - display surfaces
+  - tier applicability
+  - old-observation migration
+  - remaining historical source coverage
 
-Required:
-`ONE DRAFT → ONE NEXT MOVE → SAME DRAFT GROWS → ONE NEXT MOVE → REVISE/FINISH`
+Important:
+- source coverage is still OPEN.
+- no badge activation has occurred.
 
-The 5 places are lenses, not isolated checklist mini-games:
-- idea
-- emotion
-- description
-- viewpoint
-- final/revision
+## 4. P1 WRITING CORE — CURRENT STATE
 
-### Child authorship
-- system analyzes and suggests one next move;
-- no final answer writing;
-- no full rewrite;
-- no grading;
-- no question flooding.
-
-## 3. CURRENT WRITING IMPLEMENTATION
-
-Implemented structure:
-- `draft`
-- per-step `snapshots`
-- `finalDraft`
-- legacy state migration
-- current-draft based prompt adaptation
+Implemented/hardened:
+- current continuous draft / snapshots / finalDraft
 - stale-result guard
 - optional one cross-lens suggestion
-- final record stores final draft, snapshots for history
+- Ready Learning context bridge
+- `SnapPopSemanticWritingProvider`
+- `openai-semantic-provider.js` browser same-origin adapter
+- server-only function `netlify/functions/snap-pop-semantic-writing.mjs`
+- `/api/snap-pop-semantic-writing` rewrite
+- browser API key path forbidden
+- explicit server-side OpenAI model configuration
+- current draft meaning/context/coherence/development prioritized over keyword matching
+- child draft treated as untrusted content, not instruction
+- single-next-move contract
+- forbidden rewrite/final-answer fields stripped/rejected
+- `factVerified:false` forced until Truth Guard actually verifies facts
+- local fallback remains available and also marks factual verification false
 
-Files:
-- `writing-runtime.js`
-- `semantic-writing-runtime.js`
-- `app.js`
-- `index.html`
+Validation for this increment:
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL
+  - isolated semantic provider → writing runtime contract PASS
+  - forbidden rewrite removal PASS
+  - forced factVerified false PASS
+  - local fallback PASS
+  - server missing-key fail-closed PASS
+  - server missing-model fail-closed PASS
+  - server multi-question rejection PASS
+  - server valid single-next-move response PASS
+  - live browser/OpenAI/server runtime NOT_RUN
+  - cross-app runtime NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- OPENAI_RUNTIME_CONNECTED: false
+- merge/deploy/Netlify: NOT_RUN
 
-Status:
-- CODED: substantial skeleton
-- STATIC_VERIFIED: yes
-- RUNTIME_VERIFIED: no
-- DEVICE_VERIFIED: no
+Runtime note:
+- first isolated function harness was BLOCKED by missing Web `Response` in connector JS isolate.
+- cause classification: JS runtime API/environment mismatch.
+- same failed route was not repeated; minimal Response/Request shim was used for isolated contract verification.
 
-## 4. READY & SET LEARNING BRIDGE
+## 5. READY ↔ SNAP BRIDGE
 
-Ready Learning Master is not the writing analyzer.
-
-Ready provides:
-- subject
+Ready provides minimal FACT_CONFIRMED context only:
 - learning_unit_id
 - analysis_id
 - assignment_id
+- subject
 - activity_types
 - cognitive_load_profile
 - concept_skill_target
 - confidence
 - unresolved_flags
 
-Only FACT_CONFIRMED context should be transferred.
-
-Snap & Pop:
-- receives minimal context through bridge;
-- must not read Ready localStorage directly;
-- uses context conservatively;
-- low confidence/unresolved context must not strongly steer writing;
-- final child-authored draft is not copied back to Ready;
-- only minimal specialist provenance is returned.
-
-Files:
-- Snap: `snap-bridge.js`, `learning-context-runtime.js`, `writing-runtime.js`, `app.js`
-- Ready: `ready-runtime-v07.js`
-
-Status:
-- CODED / STATIC VERIFIED
-- cross-app RUNTIME/DEVICE NOT_RUN
-
-## 5. SEMANTIC WRITING PROVIDER
-
-Canonical name:
-`SnapPopSemanticWritingProvider`
-
-Do not use the old ambiguous name `SnapPopLearningProvider`.
-
-Role:
-- semantic analysis of current child draft only;
-- identify present/missing signals;
-- return one next move;
-- optional one lens;
-- no final draft authoring;
-- no rewrite;
-- no suggested full sentence by default;
-- no grading.
-
-OpenAI:
-- intended internal backing engine;
-- secure same-origin server/backend boundary is CODED but not deployed/runtime-verified yet;
-- browser API-key embedding is forbidden;
-- local writing analysis is fallback.
-
-Status:
-- provider boundary CODED / STATIC VERIFIED
-- OPENAI_RUNTIME_CONNECTED = false
-- SECURE_OPENAI_BOUNDARY_CODED = true
-- STATIC_BOUNDARY_VERIFIED = true
+Snap returns minimal specialist provenance only.
+Do not copy full child draft back to Ready.
 
 ## 6. IMAGINATION CLOUD
 
-Canonical:
-- hidden/on-demand core layer;
-- writing remains the visible default;
-- current global overlay implementation replaces the earlier `exploreHub` concept.
+Must remain hidden/on-demand.
+Do not promote it to the default screen.
 
-Implemented:
+Current:
 - global hidden overlay
 - writing-context invocation
 - home radio/voice invocation
-- return focus/context
-- THINK/ASK basic route
-- local fail-closed behavior for factual questions without provider
+- return to original context/focus
+- basic THINK/ASK route
 
-Not complete:
-- actual verified OpenAI Q&A backend
-- concept/principle/etymology factual verification
-- comparison/timeline/cause-effect variants
-- full post-model truth guard
+Still open:
+- verified OpenAI Q&A backend
+- concept/principle/etymology verification
+- comparison/timeline/cause-effect scaffold variants
+- full post-model Truth Guard
 - high-quality voice/realtime
 
 ## 7. TRUTH GUARD
 
-Current:
-- local factual question can fail closed;
-- no-guess contract exists.
+Current: PARTIAL.
 
-Missing:
+Still missing:
 - verified source/search pipeline
 - history/date/person verification
 - science mechanism verification
@@ -182,237 +171,60 @@ Missing:
 - claim-level evidence validation
 - external model result validation
 
-High-priority known risk:
+Rule:
 Anything not explicitly verified must not be stored/rendered as verified by default.
 
-## 8. BADGE SYSTEM RECOVERY
+## 8. IMPLEMENTATION REALITY
 
-This was omitted from the implementation path and has now been recovered as a distinct axis.
+Do not report the product as near-finished.
 
-Canonical separation:
-`Character Master != Exploration Crew != Badge != Affinity != EXP/Gem != World State`
+Required reporting:
+- CODED
+- STATIC_VERIFIED
+- RUNTIME_VERIFIED
+- DEVICE_VERIFIED
 
-Recovered structure currently in branch:
-- `data/badge-system.json`
-- `data/badge-catalog-working.json`
-- `badge-runtime.js`
+Keep these separate.
 
-Recovered confirmed direction:
-- process/experience collection, not score/power;
-- cross-app direction across TAKY ecosystem;
-- circular / hand-drawn / pastel visual language;
-- child Profile Character is protagonist;
-- 5 tiers: GREEN / BLUE / RED / GOLD / PLATINUM;
-- each tier has 1–5 upper-semicircle gem/star growth marks;
-- approximately 60 starting badge concepts;
-- can expand from meaningful observed activity;
-- can recognize self-start, return/recovery, help request, error discovery, retry, deep thinking, self-explanation, adaptation, special behavior, writing exploration;
-- not character power, leaderboard, punitive removal, streak pressure, or EXP/gem equivalence.
+## 9. NEXT EXECUTION ORDER
 
-Critical status:
-- `data/badge-catalog-working.json` = `WORKING_DRAFT_NOT_ACTIVE`
-- all 60 historical names/triggers are preserved for recovery but are NOT active canon
-- exact active catalog, event triggers, ownership, display surfaces, and cross-app event contract still require source recovery/review
-- do not auto-canonicalize the 60 draft entries
+P0 continuation — only unresolved badge recovery
+- recover additional Ready intro/profile/HOLD and historical evidence if available
+- classify only newly recovered evidence into CONFIRMED / HOLD / WORKING / OPEN
+- do NOT redo already closed retrieved scope
+- do NOT activate the 60-draft catalog
 
-Current matrix badge requirements:
-- SP-BADGE-001 … SP-BADGE-010
-- recovered but not fully implemented
+P1 continuation — implementation gap first
+- inspect live semantic boundary wiring and remaining code gaps
+- preserve one-next-move / child-authorship / hidden Imagination Cloud locks
+- do not deploy merely to test
+- do not use user as tester
 
-## 9. CURRENT IMPLEMENTATION REALITY
+Then:
+P2 Truth Guard
+P3 Imagination Cloud intelligence
+P4 Crew response guard
+P5 Voice
+P6 runtime regression
+P7 device verification
+P8 family expansion
 
-Do not report overall completion as near-finished.
-
-Latest matrix observed:
-- version: 2026-09-21.16
-- total requirements: 78
-- many items are CODED/PARTIAL with static checks only
-- runtime verification remains largely not run
-- device verification remains not run
-
-Family expansion remains largely unimplemented.
-
-## 10. STALE/RESIDUE WARNING
-
-Older requirement evidence may still mention superseded UI names:
-- exploreHub
-- cloudPanel
-- runHubCloud / runCloud
-- renderCloudResponse
-- homeQuickStart
-
-Current canonical UI:
-- writing-first
-- hidden global Imagination Cloud overlay
-
-Do not use stale evidence as current implementation truth.
-
-## 11. NEXT EXECUTION ORDER
-
-P0 — badge source recovery classification
-- current retrieved scope classified in `C2S/SNAP_POP_BADGE_SOURCE_RECOVERY_2026-09-21.md`;
-- CONFIRMED / HOLD / WORKING / OPEN split recorded;
-- source coverage remains OPEN; no false claim of exhaustive history;
-- 60-draft catalog remains inactive.
-
-P1 — writing quality
-- connect semantic analysis to actual secure OpenAI-backed provider;
-- keep one-next-move and child-authorship guards;
-- improve meaning/flow analysis beyond keyword heuristics.
-
-P2 — Truth Guard
-- provider output validation;
-- fact verification/search path;
-- high-risk history/science/etymology guard.
-
-P3 — Imagination Cloud intelligence
-- verified ASK→UNDERSTAND;
-- concept/principle/mind-map/cause-effect/comparison/timeline scaffolds;
-- preserve hidden/on-demand behavior.
-
-P4 — crew response guard
-- final response owner = current Exploration Crew member;
-- character style cannot override truth/clarity.
-
-P5 — voice
-- secure high-quality STT/TTS/Realtime adapter;
-- browser speech remains fallback.
-
-P6 — runtime regression
-- only after core implementation;
-- user must not be used as tester/debugger.
-
-P7 — device verification
-- later, after frozen candidate.
-
-P8 — Family expansion
-- after core stabilizes.
-
-## 12. GOVERNANCE
+## 10. GOVERNANCE
 
 Apply latest TAKY:
-- explicit user corrections first;
-- no guessing;
-- no silent loss;
-- no false convergence;
-- lock confirmed decisions;
-- separate CODED / STATIC / RUNTIME / DEVICE;
-- BLOCKED => diagnose category then choose a different route;
-- do not repeat the same failed path;
-- no Netlify until exact frozen candidate passes external-resource gate.
+- latest explicit user correction first
+- no guessing
+- no silent loss
+- no false convergence
+- lock confirmed decisions
+- change impact/regression awareness
+- BLOCKED cause classification before alternate path
+- user is not tester/debugger
+- no merge/deploy/Netlify before exact frozen candidate + external-resource gate
 
-## 13. RESUME COMMAND
+## 11. NEW CHAT ENTRY
 
-Use the new-chat prompt file:
+Use:
 `SNAP_POP_NEW_CHAT_START_2026-09-21.md`
 
-Primary first task:
-**Complete badge source recovery, then continue P1 Writing Core semantic implementation.**
-
-
-## 14. 2026-09-21 CONTINUATION UPDATE
-
-### Badge P0
-- `C2S/SNAP_POP_BADGE_SOURCE_RECOVERY_2026-09-21.md` added.
-- `data/badge-system.json` now records recovery classification closure for current retrieved scope.
-- Historical ~60 catalog remains `WORKING_DRAFT_NOT_ACTIVE`.
-- No badge was activated and no EXP/gem/affinity/character-level equivalence was introduced.
-
-### P1 secure semantic-writing boundary
-Added:
-- `openai-semantic-provider.js` browser adapter with same-origin API only; no browser API key.
-- `netlify/functions/snap-pop-semantic-writing.mjs` server-only OpenAI Responses API boundary.
-- `/api/snap-pop-semantic-writing` rewrite in `netlify.toml`.
-- provider is loaded before `semantic-writing-runtime.js`.
-
-Contract:
-- current draft meaning/context/coherence/development is primary evidence;
-- exactly one next move;
-- at most one small hint;
-- no final answer, full rewrite, suggested completed sentence, grading, or question flooding;
-- Ready learner context remains weak contextual input only;
-- `grounded` means draft/context grounded, not externally fact verified.
-
-Validation state:
-- CODED: yes
-- STATIC_VERIFIED: yes
-- RUNTIME_VERIFIED: no
-- DEVICE_VERIFIED: no
-- OPENAI_RUNTIME_CONNECTED: false until server environment + runtime execution are verified
-- merge/deploy/Netlify: NOT_RUN
-
-
-## 15. 2026-09-21 P0/P1 EXECUTION CONTINUATION
-
-### P0 badge provenance refinement
-Recovered direct historical user evidence now explicitly distinguishes:
-- badge/title collection as a fun experience axis;
-- done-well + mistake + improvement experience;
-- approximately 60 expandable concepts with activity-derived examples;
-- circular witty situation-based visual direction.
-
-Ready REV_06 HOLD boundary is explicitly preserved:
-- character level/growth economy;
-- advanced reward economy;
-- social competition/leaderboard;
-- character gacha/complex growth score.
-
-Assistant-proposed historical badge names/triggers and badge→title mechanics remain WORKING only.
-`data/badge-catalog-working.json` remains `WORKING_DRAFT_NOT_ACTIVE`.
-No badge was activated.
-
-Updated:
-- `C2S/SNAP_POP_BADGE_SOURCE_RECOVERY_2026-09-21.md`
-- `data/badge-system.json` → 2026-09-21.3
-
-### P1 secure semantic-writing boundary hardening
-Implemented:
-- server-only `OPENAI_API_KEY`;
-- explicit server-side `SNAP_POP_OPENAI_MODEL` requirement instead of guessing a model default;
-- same-origin browser adapter only; browser key remains forbidden;
-- semantic prompt now explicitly prioritizes meaning center, coherence/flow, development, and previous-snapshot relation over keyword matching;
-- child draft treated as untrusted content, not system instruction;
-- multi-prompt model output rejected;
-- `factVerified:false` forced through server → semantic provider → writing runtime → app analysis state until a future Truth Guard actually verifies facts;
-- local fallback remains available and also marks `factVerified:false`.
-
-Updated:
-- `netlify/functions/snap-pop-semantic-writing.mjs`
-- `semantic-writing-runtime.js`
-- `writing-runtime.js`
-- `app.js`
-- `data/snap-pop-requirement-matrix.json` → 2026-09-21.17
-
-### Verification
-Static read-back:
-- JSON parse: PASS
-- semantic/client/server syntax compile: PASS
-- no browser API-key path: PASS
-- explicit server model config: PASS
-- single-next-move rejection guard: PASS
-- factual verification forced false: PASS
-- Imagination Cloud still hidden/on-demand: PASS
-
-Isolated component runtime (no deploy/network):
-- semantic provider → writing runtime contract: PASS
-- forbidden rewrite field removed: PASS
-- factVerified remains false even if mocked backend tries to set true: PASS
-- local writing fallback: PASS
-- server missing-key fail-closed: PASS
-- server missing-model fail-closed: PASS
-- server multi-question rejection: PASS
-- server valid single-next-move response: PASS
-
-Runtime caveat:
-- first server-function harness attempt was BLOCKED by missing Web `Response` in the connector JS isolate.
-- Cause classification: JS runtime API/environment mismatch.
-- Same failed path was not repeated; a minimal Response/Request shim was used for isolated contract execution.
-
-### Status
-- CODED: PASS for this P0/P1 increment
-- STATIC_VERIFIED: PASS for this P0/P1 increment
-- RUNTIME_VERIFIED: PARTIAL — isolated component runtime PASS; live browser/OpenAI/server environment and cross-app runtime NOT_RUN
-- DEVICE_VERIFIED: NOT_RUN
-- OPENAI_RUNTIME_CONNECTED: false
-- Truth Guard factual verification: PARTIAL / NOT CONNECTED
-- merge/deploy/Netlify: NOT_RUN
+This handoff is ready for a new conversation.
