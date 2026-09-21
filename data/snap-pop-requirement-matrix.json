@@ -1465,16 +1465,23 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "writing-runtime.js:LENS/suggestedLens",
         "semantic-writing-runtime.js:optional one lens",
         "netlify/functions/snap-pop-semantic-writing.mjs:five landmarks are writing lenses not mini-games",
         "app.js:renderWritingBridge optional lens wording",
-        "scripts/validate-writing-semantic-contract.mjs"
+        "scripts/validate-writing-semantic-contract.mjs",
+        "scripts/browser-runtime-selftest.js",
+        "writing-runtime.js",
+        "semantic-writing-runtime.js"
       ],
-      "gap": "five landmarks are executable as writing lenses with at most one optional cross-lens suggestion; live provider quality remains NOT_RUN"
+      "gap": "live external-provider/device verification remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: five landmarks return five distinct writing moves",
+        "browser-runtime-selftest: each writing lens keeps a single next-move question"
+      ]
     },
     {
       "id": "SP-WRITE-004",
@@ -1630,14 +1637,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "semantic-writing-runtime.js:ANALYSIS_ONLY",
         "semantic-writing-runtime.js:FORBIDDEN_KEYS",
-        "netlify/functions/snap-pop-semantic-writing.mjs:single prompt rejection"
+        "netlify/functions/snap-pop-semantic-writing.mjs:single prompt rejection",
+        "scripts/browser-runtime-selftest.js",
+        "writing-runtime.js",
+        "semantic-writing-runtime.js"
       ],
-      "gap": "server and client authorship guards are coded/static; live OpenAI-backed runtime validation remains NOT_RUN"
+      "gap": "live external-provider/device verification remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: semantic provider blocks finalDraft generation",
+        "browser-runtime-selftest: analysis-only output returns next-move metadata without rewrite/final answer"
+      ]
     },
     {
       "id": "SP-WRITE-011",
