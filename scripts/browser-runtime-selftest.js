@@ -32,6 +32,10 @@
 
       const landmarksReady=await waitFor(()=>document.querySelectorAll("#landmarks .landmark").length===5,4000,80);
       assert("map-has-five-landmarks",landmarksReady);
+      assert("live-dom-map-surface",!!document.querySelector("#map .mapWorld")&&document.querySelectorAll("#landmarks button.landmark").length===5);
+      assert("live-dom-primary-navigation",document.querySelectorAll("#nav button[data-view]").length>=5);
+      assert("live-dom-writing-surface-present",!!document.querySelector("#answer")&&document.querySelector("#answer") instanceof HTMLTextAreaElement);
+      assert("runtime-mockup-background-not-used",![...document.images].some(img=>/mockup|wireframe|screenshot|prototype/i.test(img.getAttribute("src")||"")));
 
       click(document.querySelector("#landmarks .landmark"),"first-landmark");
       click(document.querySelector("#startBtn"),"start-writing");
