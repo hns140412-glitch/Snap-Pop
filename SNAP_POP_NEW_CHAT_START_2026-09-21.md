@@ -147,3 +147,12 @@ LATEST P3 PRESSURE NOTE:
 - writing draft is persisted before cloud open and restored only on same activeId + step.
 - isolated validator PASS.
 - next: minimal return acknowledgement without starting a new question chain.
+
+
+LATEST P3 RETURN NOTE:
+- P3 minimal return acknowledgement is coded.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md section 20.
+- cloud return shows one short non-driving crew acknowledgement only.
+- no new question, analysis, step transition or follow-up chain is triggered.
+- pressure/return validator now 11/11 PASS.
+- next axis: P4 Exploration Crew response ownership / raw provider voice leakage guard.
