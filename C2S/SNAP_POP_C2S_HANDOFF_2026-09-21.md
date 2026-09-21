@@ -2237,3 +2237,99 @@ Why PARTIAL:
 
 Continue source-specific behavior detectors only where evidence is explicit.
 Do not activate historical badge names/triggers merely because taxonomy exists.
+
+
+## 35. EXPLICIT BADGE DETECTORS + SPECIAL GUEST APPEARANCE GATE — 2026-09-21
+
+### A. Badge observation detectors expanded only where evidence is explicit
+
+The badge behavior observation layer remains observation-only and does not award badges.
+
+New explicit detectors:
+- `HELP_REQUEST` — child explicitly presses the hint button.
+- `WRITING_EXPLORATION` — a writing exploration is actually completed.
+- `EXTRA_TASK` — the child explicitly chooses and completes optional bonus practice.
+
+Still intentionally NOT inferred:
+- `DEEP_THINKING` from elapsed silence/time;
+- `RETRY` from generic editing;
+- `ERROR_DISCOVERY` without explicit error evidence;
+- `SPECIAL_BEHAVIOR` merely from participating in a special scene.
+
+Static check:
+- `EXPLICIT_BADGE_DETECTORS_PASS 6/6`
+
+Historical ~60 badge catalog remains:
+- `WORKING_DRAFT_NOT_ACTIVE`
+- all exact names/triggers inactive.
+
+`SP-BADGE-006` remains `CODED=PARTIAL` because the remaining event families still need source-specific evidence contracts.
+
+---
+
+### B. Special Guest shared memory and record continuity
+
+Added member-targeted experience storage:
+- `recordCrewMemberExperience(memberId,type,meta)`
+- existing main companion path wraps this helper.
+
+When an already-selected Guest participates in a completed Special Exploration:
+- main companion keeps its `SPECIAL_MEMORY`;
+- Guest receives `SHARED_MICRO_EPISODE`;
+- Guest memory gets a distinct dedupe event id;
+- source Special event id and scene provenance are preserved.
+
+Main companion now acknowledges Guest presence in the Special scene without yielding response ownership.
+
+Special Exploration record cards now display:
+- `함께한 탐험대원 · <name>`
+
+Validation:
+- `SPECIAL_GUEST_SHARED_MEMORY_AND_RECORD_PASS`
+- 8/8 PASS
+
+---
+
+### C. Correction: Guest appearance cadence must remain OPEN
+
+Detected regression:
+- `openSpecial()` previously called Guest selection unconditionally;
+- this implicitly made Guest appearance 100% for every Special Exploration even though canonical rules leave appearance cadence/probability OPEN.
+
+Corrected behavior:
+- `chooseSceneGuest(...)` is now default-deny unless `appearanceAuthorized=true`;
+- Special Exploration reads a one-shot `activeCrewGuestTrigger`;
+- Guest selection runs only when:
+  - scene = `SPECIAL_EXPLORATION`
+  - `authorized === true`
+- scene trigger is consumed once;
+- no default automatic Guest is created.
+
+The weighted selection engine is preserved for the future explicit encounter source:
+- recent appearance balancing;
+- optional mood conflict avoidance;
+- no functional advantage;
+- main continuity.
+
+Validation:
+- `GUEST_APPEARANCE_GATE_PASS`
+- 7/7 PASS
+
+This is a correction to the earlier post-freeze implementation:
+- selection logic remains implemented;
+- appearance timing itself is NOT implemented until a canonical encounter trigger exists.
+
+Requirement matrix:
+- `SP-GUIDE-005` updated to reflect default-deny appearance gate and OPEN encounter cadence.
+
+### Closure runner
+
+`scripts/validate-branch-closure.mjs` now contains 24 validators.
+
+### External state
+
+- implementation continues;
+- current candidate is not frozen;
+- old frozen candidate remains superseded;
+- external call count remains 0;
+- Netlify/deploy/merge remain NOT_RUN.
