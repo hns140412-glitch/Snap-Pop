@@ -504,3 +504,25 @@ Current ownership:
 Validation: 52/52 closure PASS + 390×844 Chrome CDP runtime PASS.
 
 Next surgery owner: Records/Growth/History.
+
+
+## 15. Rewrite Phase 4 — Records/Growth ownership extracted
+
+Phase 4 closed at `f411829dc38d1bb90c9574c48353e15136afe9f9`.
+
+- `records-growth-controller.js` owns records/gems/growth/result presentation.
+- `records-flow-controller.js` owns revision, bonus and wish-spend transactions.
+- original record provenance and no-reward-on-revision rule remain locked.
+- validation: 54/54 + 390×844 Chrome runtime PASS.
+
+
+## 16. Rewrite Phase 5A — Special Exploration ownership extracted
+
+Phase 5A closed at `a30698ce07e48c2db417df6fd7e4e05a12d450f9`.
+
+- `special-controller.js` owns the Special Exploration interaction and persistence path.
+- guest appearance remains explicit-authorized/default-deny.
+- SPECIAL remains no-power/no-reward-advantage.
+- validation: 55/55 + 390×844 Chrome runtime PASS.
+
+Next: Imagination Controller, then Settings/Profile and remaining orchestration cleanup.

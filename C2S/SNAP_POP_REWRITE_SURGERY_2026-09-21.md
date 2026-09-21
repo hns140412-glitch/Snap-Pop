@@ -139,3 +139,20 @@ Phase 3 entry: extract Crew Controller while preserving Guide-derived interactio
 
 Phase 3 disposition: CLOSED.
 Phase 4 entry: extract Records/Growth/History while preserving original-record provenance, revision history, EXP/Gem ledgers and child-facing timeline behavior.
+
+
+## Phase 4 closure evidence
+- records-growth-controller.js → records/gems/growth/result presentation
+- records-flow-controller.js → revision/bonus/wish transactions
+- SHA `f411829dc38d1bb90c9574c48353e15136afe9f9`
+- run `35593508272` / job `106312987169`
+- 54/54 closure PASS + Browser CDP PASS
+- app.js reduced by ~10.7 KB across Phase 4.
+
+
+## Phase 5A closure evidence
+- special-controller.js → Special Exploration owner
+- SHA `a30698ce07e48c2db417df6fd7e4e05a12d450f9`
+- run `35594097359` / job `106314852163`
+- 55/55 closure PASS + Browser CDP PASS
+- next: Imagination Controller → Settings/Profile → remaining orchestration.

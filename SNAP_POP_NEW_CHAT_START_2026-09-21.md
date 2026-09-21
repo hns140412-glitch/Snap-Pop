@@ -475,3 +475,12 @@ REWRITE SURGERY PHASE 3 CLOSED — 2026-09-21
 - crew registry/affinity/guest/world-state owner: crew-runtime-controller.js
 - 52/52 + Chrome CDP runtime PASS
 - next work: Records/Growth/History extraction; do not return crew ownership to app.js
+
+
+REWRITE SURGERY PHASE 4 + 5A CLOSED — 2026-09-21
+- Phase 4 SHA: f411829dc38d1bb90c9574c48353e15136afe9f9 / 54/54 + Chrome runtime PASS
+- records-growth-controller.js owns records/gems/growth/result presentation
+- records-flow-controller.js owns revision/bonus/wish transactions
+- Phase 5A SHA: a30698ce07e48c2db417df6fd7e4e05a12d450f9 / 55/55 + Chrome runtime PASS
+- special-controller.js owns Special Exploration
+- next: Imagination Controller → Settings/Profile → remaining orchestration cleanup

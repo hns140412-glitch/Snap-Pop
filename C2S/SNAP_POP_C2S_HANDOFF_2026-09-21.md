@@ -3574,3 +3574,79 @@ Important:
 - extraction defects encountered in early 3A were parser-generation defects, not product-contract defects.
 - bad async/default-param extraction was corrected from the clean Phase 2 base before Phase 3 closure.
 - next owner migration: Records / Growth / History.
+
+
+## 52. REWRITE SURGERY PHASE 4 CLOSED — 2026-09-21
+
+Phase 4A:
+- records list / special-memory list
+- gems
+- growth
+- growth timeline
+- last-result view
+- status chips
+- record-edit opening
+- wish-history rendering
+→ moved to `records-growth-controller.js`
+
+Phase 4B:
+- record revision save
+- explicit ERROR_DISCOVERY producer
+- optional bonus practice transaction
+- wish blessing gem-spend transaction
+→ moved to `records-flow-controller.js`
+
+Protected semantics:
+- original record remains immutable;
+- revisions append as new versions;
+- revision does not recompute EXP/reward;
+- optional bonus awards shard only and no extra EXP;
+- wish spend is ledgered as GEM_SPENT / WISH_BLESSING;
+- special memories remain no-reward records.
+
+Exact Phase 4 evidence:
+- SHA: `f411829dc38d1bb90c9574c48353e15136afe9f9`
+- GitHub Actions run: `35593508272`
+- job: `106312987169`
+- `RECORDS_GROWTH_CONTROLLER_BOUNDARY_PASS`
+- `RECORDS_FLOW_CONTROLLER_BOUNDARY_PASS`
+- `BRANCH_CLOSURE_VALIDATOR_PASS 54/54`
+- `BROWSER_RUNTIME_CDP_PASS`
+- 390×844 runtime preserved / IndexedDB OPEN / runtime errors 0.
+
+
+## 53. REWRITE SURGERY PHASE 5A CLOSED — 2026-09-21
+
+Special Exploration owner migrated to `special-controller.js`.
+
+Owned behavior:
+- special prompt selection;
+- explicit guest trigger read;
+- default-deny guest appearance via Crew Runtime;
+- one-shot guest trigger consume;
+- special draft persistence;
+- special memory save;
+- main + guest shared-memory links;
+- SPECIAL_BEHAVIOR explicit evidence contract;
+- navigation back to records after save.
+
+Protected semantics:
+- SPECIAL is encounter-style, never stronger/power/reward advantage;
+- guest appears only under explicit authorized trigger;
+- special completion does not award EXP/Gems;
+- child authorship line remains explicit.
+
+Exact Phase 5A evidence:
+- SHA: `a30698ce07e48c2db417df6fd7e4e05a12d450f9`
+- GitHub Actions run: `35594097359`
+- job: `106314852163`
+- `SPECIAL_CONTROLLER_BOUNDARY_PASS`
+- `BRANCH_CLOSURE_VALIDATOR_PASS 55/55`
+- `BROWSER_RUNTIME_CDP_PASS`
+- 390×844 runtime preserved.
+
+Next surgery:
+1. Imagination Controller
+2. Settings/Profile/Crew configuration surface
+3. remaining map/calendar/navigation orchestration cleanup
+4. app.js thin orchestrator closure
