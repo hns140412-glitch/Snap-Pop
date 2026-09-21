@@ -33,6 +33,7 @@ for(const [name,input,expected] of cases){
 const original={
   kind:"ASK_UNDERSTAND",
   core:"검증된 사실 문장.",
+  verified:true,
   verification:{coverage:"FULL_FACTUAL_CONTENT",verifiedClaimCount:1}
 };
 const shaped=s.scaffoldKnowledge(original,"왜 비가 내려?","ko");
