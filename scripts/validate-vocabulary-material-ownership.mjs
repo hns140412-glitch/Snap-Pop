@@ -8,6 +8,7 @@ const semanticSource=fs.readFileSync(new URL("../semantic-writing-runtime.js",im
 const providerSource=fs.readFileSync(new URL("../openai-semantic-provider.js",import.meta.url),"utf8");
 const serverSource=fs.readFileSync(new URL("../netlify/functions/snap-pop-semantic-writing.mjs",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const flowSource=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
 
 const window={};
 vm.runInNewContext(runtimeSource,{window,Object,Array,String,Number,Math,RegExp});
@@ -67,8 +68,8 @@ assert("provider-and-server-preserve-ownership-contract",
   serverSource.includes("never infer mastery")
 );
 assert("app-records-provenance-only",
-  appSource.includes("vocabularyRef:vocabEvidence")&&
-  appSource.includes("vocabulary_material:vocabEvidence")
+  flowSource.includes("vocabularyRef:vocabEvidence")&&
+  flowSource.includes("vocabulary_material:vocabEvidence")
 );
 
 console.log("VOCABULARY_MATERIAL_OWNERSHIP_PASS");
