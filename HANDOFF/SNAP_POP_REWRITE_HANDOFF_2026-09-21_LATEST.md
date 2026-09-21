@@ -309,3 +309,5 @@ Conservative boundaries retained:
 - deterministic reunion probe + universal Think/Express exact-head validation trigger.
 
 - Think/Express ownership/no-guess runtime matrix closure validation trigger.
+
+- verified/partial Ask→Understand intelligence runtime validation trigger.
