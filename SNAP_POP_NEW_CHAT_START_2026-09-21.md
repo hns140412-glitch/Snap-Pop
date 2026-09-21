@@ -120,3 +120,11 @@ LATEST P3 ROUTING NOTE:
 - question lens is classified before retrieval and server-whitelisted.
 - explanation order is lens-aware but cannot bypass citation coverage.
 - next axis: bounded mental-model / explanation-quality layer.
+
+
+LATEST P3 MENTAL MODEL NOTE:
+- P3 verified-claim mental model is coded.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md section 17.
+- only VERIFIED claim text is rendered; no paraphrase/new facts.
+- isolated mental-model runtime validator PASS.
+- next: lens/claim-count eligibility so structure labels cannot over-imply unsupported semantics.
