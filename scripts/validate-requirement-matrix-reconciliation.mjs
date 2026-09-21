@@ -14,11 +14,13 @@ const reconciled=[
   "SP-IMAGINE-002","SP-IMAGINE-003","SP-IMAGINE-004","SP-IMAGINE-007","SP-IMAGINE-008",
   "SP-TRUTH-001","SP-TRUTH-002","SP-TRUTH-003"
 ];
+const liveRuntimeStillOpen=reconciled.filter(id=>id!=="SP-TRUTH-003");
 
 assert("all-reconciled-items-exist",reconciled.every(id=>!!byId[id]));
 assert("all-reconciled-items-coded",reconciled.every(id=>byId[id].coded===true));
 assert("all-reconciled-items-static-verified",reconciled.every(id=>byId[id].staticVerified===true));
-assert("runtime-not-overclaimed",reconciled.every(id=>byId[id].runtimeVerified===false));
+assert("runtime-not-overclaimed",liveRuntimeStillOpen.every(id=>byId[id].runtimeVerified===false));
+assert("truth-003-browser-no-guess-runtime-verified",byId["SP-TRUTH-003"].runtimeVerified===true&&byId["SP-TRUTH-003"].deviceVerified===false);
 assert("device-not-overclaimed",reconciled.every(id=>byId[id].deviceVerified===false));
 
 assert("truth-source-quality-gap-remains-open",
