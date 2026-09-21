@@ -135,14 +135,18 @@
         "EXPLORATION_CREW_MASTER"
       ],
       "classification": "CONFIRMED",
-      "coded": "POLICY_ONLY",
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "data/exploration-crew-rules.json"
+        "crew-interaction-safety-runtime.js",
+        "semantic-writing-runtime.js:WRITING_PROMPT safety",
+        "crew-presentation-guard.js:GENERAL safety",
+        "app.js:showCrewReaction safeReaction",
+        "scripts/validate-crew-interaction-safety.mjs"
       ],
-      "gap": "런타임 생성/문구 필터 없음"
+      "gap": "executable safety guard implemented and isolated/static verified; live browser/device behavior NOT_RUN"
     },
     {
       "id": "SP-GUIDE-004",
@@ -173,14 +177,18 @@
         "EXPLORATION_CREW_MASTER"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "data/exploration-crew-rules.json:crewInteractionOrchestration"
+        "crew-orchestration-runtime.js",
+        "app.js:chooseSceneGuest",
+        "app.js:openSpecial",
+        "app.js:specialMemories.guestMemberId",
+        "scripts/validate-crew-guest-orchestration.mjs"
       ],
-      "gap": "규칙 JSON만 있고 Guest weighted-selection runtime 없음"
+      "gap": "deterministic weighted guest selection implemented for special scene; exact general appearance cadence/probability remains OPEN by canonical rule"
     },
     {
       "id": "SP-CREW-001",
