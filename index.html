@@ -56,9 +56,11 @@
   <div class="tools">
    <button class="soft" id="listenBtn"><img src="assets/icons/speaker.svg" alt="">다시 듣기</button>
    <button class="soft" id="cloudBtn">상상 구름</button>
+   <button class="soft" id="expressionBridgeBtn" type="button">English 표현 도움</button>
    <button class="voice" id="voiceBtn"><img src="assets/icons/radio.svg" alt="">말해서 쓰기</button>
   </div>
   <div id="handoffWord" class="handoffWord" hidden></div>
+  <div id="expressionBridgePanel" class="expressionBridgePanel" hidden></div>
  </article>
  <button class="primary wide" id="nextBtn">다음 단계</button>
 </section>
@@ -202,6 +204,8 @@
 <script src="learning-context-runtime.js"></script>
 <script src="vocabulary-material-runtime.js"></script>
 <script src="openai-semantic-provider.js"></script>
+<script src="openai-expression-bridge-provider.js"></script>
+<script src="expression-bridge-runtime.js"></script>
 <script src="semantic-writing-runtime.js"></script>
 <script src="writing-runtime.js"></script>
 <script src="truth-guard-runtime.js"></script>
