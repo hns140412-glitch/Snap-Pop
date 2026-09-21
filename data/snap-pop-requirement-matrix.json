@@ -446,13 +446,14 @@
       ],
       "classification": "CONFIRMED",
       "coded": true,
-      "staticVerified": "PARTIAL",
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "snap-bridge.js"
+        "snap-bridge.js",
+        "scripts/validate-ready-snap-bridge-context.mjs"
       ],
-      "gap": "실제 앱 전환/복귀 idempotency device runtime 미검증"
+      "gap": "actual cross-app transition/return runtime and physical-device idempotency verification remain open"
     },
     {
       "id": "SP-BRIDGE-002",
