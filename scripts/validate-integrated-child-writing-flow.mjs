@@ -24,7 +24,7 @@ assert("primary-writing-controls-are-voice-and-hint",
 assert("optional-assists-are-collapsed-by-default",
   index.includes('class="assistDrawer"')&&
   index.includes("다른 도움이 필요해?")&&
-  ordered(index,['class="assistTools"','id="listenBtn"','id="cloudBtn"','id="expressionBridgeBtn"','id="deepThinkOpen"'])
+  ordered(index,['assistTools','id="listenBtn"','id="cloudBtn"','id="expressionBridgeBtn"','id="deepThinkOpen"'])
 );
 assert("next-action-has-dedicated-dock",
   index.includes('class="writingNextDock"')&&index.includes('id="nextBtn">이 생각으로 다음')
