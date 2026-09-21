@@ -262,7 +262,7 @@ function setModeButtons(language){$("#modeKo")?.classList.toggle("on",language!=
 async function init(){await openDB();await migrateLegacyState();SNAP_RULES=await fetch("data/exploration-crew-rules.json").then(r=>r.json());marks=await fetch("data/landmarks.json").then(r=>r.json());await migrateIdentityFallback();await ensureCrewRegistry();await synthesizeCrewWorldState();renderLandmarks();await renderPendingExpressionIntent();await loadSettings();await renderIdentityPresence();await updateStatus();renderRecords();renderGems();renderGrowth();await renderIncomingHandoff();renderSpecialInvite();const active=await get("active");if(active)renderExplore(active)}
 
 function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;$$(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await get("active"),g=await get("gems")||{};$("#selTitle").textContent=m.title;$("#selDesc").textContent=m.desc;const identity=await resolvedIdentity();$("#selCrewMemberReaction").textContent=`${crewMemberName(identity)} · ${crewReaction(identity,m.id)}`;$("#selProgress").textContent="진행 "+(a?.landmark===m.id?(Math.min(3,(a.step||0)+1)):0)+" / 3";$("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";$("#selection").hidden=false};host.appendChild(b)})}
-$("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active"),created=false;if(!s||s.landmark!==selected.id){s={id:uid("explore"),landmark:selected.id,step:0,answers:["","",""],snapshots:["","",""],draft:"",language:"ko",startedAt:new Date().toISOString()};created=true}if(!s.language)s.language="ko";if(created){const pending=await get("pendingExpressionIntent");if(pending?.question){s.expressionIntent={source:"VERIFIED_ASK",question:pending.question,questionLanguage:pending.language||"ko",answerTransferred:false,createdAt:pending.createdAt||new Date().toISOString()};await set("pendingExpressionIntent",null);await renderPendingExpressionIntent()}}ensureWritingState(s);await set("active",s);renderExplore(s);show("explore");setTimeout(()=>analyzeWritingMove(s),0);if($("#autoRead").checked){const p=promptFor(s.landmark,s.step,s.language,s.draft);speak(p[0],s.language,"AUTO_READ")}}
+$("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active"),created=false;if(!s||s.landmark!==selected.id){s={id:uid("explore"),landmark:selected.id,step:0,answers:["","",""],snapshots:["","",""],draft:"",language:"ko",startedAt:new Date().toISOString()};created=true}if(!s.language)s.language="ko";if(created){const pending=await get("pendingExpressionIntent");if(pending?.question){s.expressionIntent={source:"VERIFIED_ASK",question:pending.question,questionLanguage:pending.language||"ko",answerTransferred:false,createdAt:pending.createdAt||new Date().toISOString()};await recordExpressionTrace("VERIFIED_ASK_EXPRESSION_ATTACHED",{source:"VERIFIED_ASK",questionLanguage:pending.language||"ko",verifiedCoverage:pending.verifiedCoverage||null,questionChars:pending.question.length,landmark:selected.id});await set("pendingExpressionIntent",null);await renderPendingExpressionIntent()}}ensureWritingState(s);await set("active",s);renderExplore(s);show("explore");setTimeout(()=>analyzeWritingMove(s),0);if($("#autoRead").checked){const p=promptFor(s.landmark,s.step,s.language,s.draft);speak(p[0],s.language,"AUTO_READ")}}
 
 
 function crewSnippet(text){const clean=(text||"").trim().replace(/\s+/g," ");return clean.length>18?clean.slice(0,18)+"…":clean}
@@ -351,6 +351,13 @@ async function runExpressionBridge(){
       at:new Date().toISOString()
     };
     await set("active",cur);
+    await recordExpressionTrace("BILINGUAL_EXPRESSION_BRIDGE_SHOWN",{
+      source:"WRITING_FLOW",
+      sourceLanguage,
+      targetLanguage,
+      fragmentCount:Array.isArray(result.phraseFragments)?result.phraseFragments.length:0,
+      provider:result.provider||"unknown"
+    });
   }catch{
     renderExpressionBridge(null,sourceLanguage,targetLanguage);
     toast("지금은 표현 조각을 불러오기 어려워요. 초안은 그대로 있어요.");
@@ -437,11 +444,46 @@ async function speak(t,language="ko",source="USER_TAP"){try{if(!window.SnapPopVo
 $("#answer").addEventListener("input",async()=>{const s=await get("active");if(!s)return;const i=Math.min(2,s.step||0),text=$("#answer").value;setExpressionBridgeButton(s.language||"ko",text);ensureWritingState(s);s.draft=text;s.updatedAt=new Date().toISOString();await set("active",s);clearTimeout(window.crewInputTimer);if(text.trim().length>=8){window.crewInputTimer=setTimeout(async()=>{const cur=await get("active");if(!cur||Math.min(2,cur.step||0)!==i)return;ensureWritingState(cur);cur.draft=$("#answer").value;await set("active",cur);const move=await analyzeWritingMove(cur)||refreshWritingMove(cur);const msg=stepSpecificReaction(cur.draft,cur.language||"ko",move);if(msg&&msg!==cur.crewState?.lastReaction)await showCrewReaction(msg)},850)}});
 function currentBridgeContext(){try{return window.SnapPopBridge?.context?.()||{}}catch{return {}}}
 async function renderIncomingHandoff(){const box=$("#handoffWord");if(!box)return;const material=vocabularyMaterial();if(material?.word){box.hidden=false;const owner=material.sourceOwner==="HIDE_SEEK"?"Hide & Seek":"연결 앱";box.textContent=`${owner} 표현 재료 · ${material.word}${material.context?" · "+material.context:""} · 원하면 참고`;box.dataset.sourceOwner=material.sourceOwner;box.dataset.role=material.role}else{box.hidden=true;box.textContent="";delete box.dataset.sourceOwner;delete box.dataset.role}}
+async function recordExpressionTrace(type,meta={}){
+  const allowed={
+    eventId:meta.eventId||uid("exprtrace"),
+    type,
+    at:new Date().toISOString(),
+    source:meta.source||null,
+    sourceLanguage:meta.sourceLanguage||null,
+    targetLanguage:meta.targetLanguage||null,
+    questionLanguage:meta.questionLanguage||null,
+    verifiedCoverage:meta.verifiedCoverage||null,
+    questionChars:Number.isFinite(meta.questionChars)?meta.questionChars:null,
+    fragmentCount:Number.isFinite(meta.fragmentCount)?meta.fragmentCount:null,
+    provider:typeof meta.provider==="string"?meta.provider.slice(0,80):null,
+    landmark:meta.landmark||null
+  };
+  const ledger=await get("expressionTrace")||[];
+  ledger.unshift(allowed);
+  await set("expressionTrace",ledger.slice(0,200));
+  return allowed;
+}
+async function dismissPendingExpressionIntent(){
+  const pending=await get("pendingExpressionIntent");
+  if(pending?.question){
+    await recordExpressionTrace("VERIFIED_ASK_EXPRESSION_DISMISSED",{
+      source:pending.source||"VERIFIED_ASK",
+      questionLanguage:pending.language||"ko",
+      verifiedCoverage:pending.verifiedCoverage||null,
+      questionChars:pending.question.length
+    });
+  }
+  await set("pendingExpressionIntent",null);
+  await renderPendingExpressionIntent();
+}
 async function renderPendingExpressionIntent(){
   const banner=$("#expressionIntentBanner");if(!banner)return;
   const pending=await get("pendingExpressionIntent");
-  if(!pending?.question){banner.hidden=true;banner.textContent="";return}
-  banner.textContent=`방금 이해한 주제 · ${pending.question} · 표현하고 싶다면 탐험지를 골라봐.`;
+  if(!pending?.question){banner.hidden=true;banner.innerHTML="";return}
+  banner.innerHTML=`<span>방금 이해한 주제 · ${html(pending.question)} · 표현하고 싶다면 탐험지를 골라봐.</span><button type="button" class="soft mini expressionIntentDismiss">그만두기</button>`;
+  const dismiss=banner.querySelector(".expressionIntentDismiss");
+  if(dismiss)dismiss.onclick=dismissPendingExpressionIntent;
   banner.hidden=false;
 }
 function renderExpressionIntentNote(s){
@@ -542,6 +584,12 @@ function renderImaginationResponse(result,identity){
     const question=($("#imaginationInput")?.value||"").trim();
     if(!question)return;
     await set("pendingExpressionIntent",{source:"VERIFIED_ASK",question,language:imaginationLanguage,answerTransferred:false,verifiedCoverage:"FULL_FACTUAL_CONTENT",createdAt:new Date().toISOString()});
+    await recordExpressionTrace("VERIFIED_ASK_EXPRESSION_SELECTED",{
+      source:"VERIFIED_ASK",
+      questionLanguage:imaginationLanguage,
+      verifiedCoverage:"FULL_FACTUAL_CONTENT",
+      questionChars:question.length
+    });
     await closeImagination();
     show("map");
     await renderPendingExpressionIntent();
