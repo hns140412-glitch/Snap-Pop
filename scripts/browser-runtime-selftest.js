@@ -370,6 +370,53 @@
       await wait(120);
       assert("home-radio-close-restores-map",document.querySelector("#imaginationLayer")?.hidden===true&&document.querySelector("#map")?.classList.contains("active")===true);
 
+      const specialSnapshot={
+        exp:await window.SnapPopStorage.get("exp"),
+        gems:JSON.stringify(await window.SnapPopStorage.get("gems")||{}),
+        records:JSON.stringify(await window.SnapPopStorage.get("records")||[]),
+        memories:JSON.stringify(await window.SnapPopStorage.get("specialMemories")||[])
+      };
+      click(document.querySelector("#specialInvite"),"special-open");
+      await wait(160);
+      assert("special-view-opens-explicitly",document.querySelector("#special")?.classList.contains("active")===true);
+      click(document.querySelector("#specialLater"),"special-skip");
+      await wait(140);
+      assert("special-skip-returns-map",document.querySelector("#map")?.classList.contains("active")===true);
+      assert("special-skip-does-not-change-exp",(await window.SnapPopStorage.get("exp"))===specialSnapshot.exp);
+      assert("special-skip-does-not-change-gems",JSON.stringify(await window.SnapPopStorage.get("gems")||{})===specialSnapshot.gems);
+      assert("special-skip-does-not-add-records",JSON.stringify(await window.SnapPopStorage.get("records")||[])===specialSnapshot.records);
+      assert("special-skip-does-not-add-memory",JSON.stringify(await window.SnapPopStorage.get("specialMemories")||[])===specialSnapshot.memories);
+
+      const wishSnapshot={
+        gems:await window.SnapPopStorage.get("gems")||{},
+        gemLedger:await window.SnapPopStorage.get("gemLedger")||[],
+        wishTransactions:await window.SnapPopStorage.get("wishTransactions")||[]
+      };
+      const seededGems={...wishSnapshot.gems,idea:12};
+      await window.SnapPopStorage.set("gems",seededGems);
+      click(document.querySelector('#nav button[data-view="gems"]'),"gems-nav");
+      await wait(160);
+      click(document.querySelector("#shopBtn"),"wish-shop-open");
+      await wait(120);
+      click(document.querySelector("#useWish"),"wish-open-confirm");
+      await wait(80);
+      assert("wish-confirmation-is-explicit",document.querySelector("#blessing")?.hidden===false);
+      click(document.querySelector("#confirmBlessing"),"wish-confirm");
+      await wait(220);
+      const wishGems=await window.SnapPopStorage.get("gems")||{};
+      const wishTxns=await window.SnapPopStorage.get("wishTransactions")||[];
+      const wishLedger=await window.SnapPopStorage.get("gemLedger")||[];
+      const newWish=wishTxns.slice(wishSnapshot.wishTransactions.length).find(x=>x.status==="COMPLETED");
+      assert("wish-spends-exactly-two-complete-gems",(wishGems.idea||0)===0);
+      assert("wish-transaction-recorded",!!newWish&&newWish.completedGemCount===2);
+      assert("wish-spend-ledger-recorded",wishLedger.slice(wishSnapshot.gemLedger.length).some(x=>x.type==="GEM_SPENT"&&x.sourceShards===-12));
+      await window.SnapPopStorage.setMany([
+        ["gems",wishSnapshot.gems],
+        ["gemLedger",wishSnapshot.gemLedger],
+        ["wishTransactions",wishSnapshot.wishTransactions]
+      ]);
+      assert("wish-test-state-restored",JSON.stringify(await window.SnapPopStorage.get("gems")||{})===JSON.stringify(wishSnapshot.gems));
+
       click(document.querySelector("#familyExpansionBtn"),"family-open");
       await wait(180);
       assert("family-view-active",document.querySelector("#familyExpansion")?.classList.contains("active")===true);
