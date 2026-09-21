@@ -128,3 +128,12 @@ LATEST P3 MENTAL MODEL NOTE:
 - only VERIFIED claim text is rendered; no paraphrase/new facts.
 - isolated mental-model runtime validator PASS.
 - next: lens/claim-count eligibility so structure labels cannot over-imply unsupported semantics.
+
+
+LATEST P3 ELIGIBILITY NOTE:
+- P3 mental-model eligibility is locked.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md section 18.
+- structural FLOW/COMPARE requires FULL_FACTUAL_CONTENT + at least 2 verified claims.
+- partial coverage or single-claim structural diagrams are suppressed.
+- updated isolated validator PASS.
+- next: one-next-curiosity pressure control and resumable writing return.
