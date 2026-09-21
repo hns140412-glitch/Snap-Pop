@@ -21,7 +21,8 @@ const validators=[
   "validate-p6-app-boundaries.mjs",
   "validate-crew-guest-orchestration.mjs",
   "validate-crew-interaction-safety.mjs",
-  "validate-vocabulary-material-ownership.mjs"
+  "validate-vocabulary-material-ownership.mjs",
+  "validate-expression-bridge.mjs"
 ];
 
 let passed=0;
