@@ -4,6 +4,7 @@ const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const index=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const flow=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
 const imagination=fs.readFileSync(new URL("../imagination-controller.js",import.meta.url),"utf8");
+const bridgeController=fs.readFileSync(new URL("../bridge-context-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -52,11 +53,11 @@ assert("expression-intent-carries-question-not-answer",
 );
 
 assert("writing-screen-shows-topic-as-note-only",
-  app.includes("표현해볼 주제")&&
+  bridgeController.includes("표현해볼 주제")&&
   index.includes('id="expressionIntentNote"')
 );
 assert("map-shows-optional-topic-banner",
-  app.includes("표현하고 싶다면 탐험지를 골라봐")&&
+  bridgeController.includes("표현하고 싶다면 탐험지를 골라봐")&&
   index.includes('id="expressionIntentBanner"')
 );
 

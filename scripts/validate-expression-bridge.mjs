@@ -5,6 +5,7 @@ const runtimeSource=fs.readFileSync(new URL("../expression-bridge-runtime.js",im
 const providerSource=fs.readFileSync(new URL("../openai-expression-bridge-provider.js",import.meta.url),"utf8");
 const serverSource=fs.readFileSync(new URL("../netlify/functions/snap-pop-expression-bridge.mjs",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const bridgeController=fs.readFileSync(new URL("../bridge-context-controller.js",import.meta.url),"utf8");
 const indexSource=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const netlifySource=fs.readFileSync(new URL("../netlify.toml",import.meta.url),"utf8");
 
@@ -87,17 +88,17 @@ assert("route-is-configured",
 );
 assert("ui-requires-explicit-button",
   indexSource.includes('id="expressionBridgeBtn"')&&
-  appSource.includes('$("#expressionBridgeBtn").onclick=runExpressionBridge')
+  bridgeController.includes('btn.onclick=runExpressionBridge')
 );
 
-const start=appSource.indexOf("async function runExpressionBridge()");
-const end=appSource.indexOf("async function analyzeWritingMove",start);
-const block=appSource.slice(start,end);
+const start=bridgeController.indexOf("async function runExpressionBridge()");
+const end=bridgeController.indexOf("function currentBridgeContext",start);
+const block=bridgeController.slice(start,end);
 assert("bridge-does-not-overwrite-draft",
-  start>=0&&end>start&&!block.includes('$("#answer").value=')
+  start>=0&&end>start&&!block.includes('q("#answer").value=')
 );
 assert("bridge-stale-draft-guard",
-  block.includes('$("#answer").value.trim()!==draft')
+  block.includes('q("#answer").value.trim()!==draft')
 );
 
 console.log("EXPRESSION_BRIDGE_CONTRACT_PASS");

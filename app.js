@@ -157,6 +157,16 @@ async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP
 async function recordBadgeBehaviorEvidence(family,evidence={},options={}){return badgeController().recordBadgeBehaviorEvidence(family,evidence,options)}
 async function recordBadgeEvent(family,payload={},source="SNAP_POP"){return badgeController().recordBadgeEvent(family,payload,source)}
 async function renderBadgePreview(){return badgeController().renderBadgePreview()}
+function bridgeContextController(){return window.SnapPopBridgeContextController.instance({query:$,ensureWritingState,toast,renderExpressionBridge,setExpressionBridgeButton,uid})}
+function learnerContext(){return bridgeContextController().learnerContext()}
+function vocabularyMaterial(){return bridgeContextController().vocabularyMaterial()}
+async function runExpressionBridge(){return bridgeContextController().runExpressionBridge()}
+function currentBridgeContext(){return bridgeContextController().currentBridgeContext()}
+async function renderIncomingHandoff(){return bridgeContextController().renderIncomingHandoff()}
+async function recordExpressionTrace(type,meta={}){return bridgeContextController().recordExpressionTrace(type,meta)}
+async function dismissPendingExpressionIntent(){return bridgeContextController().dismissPendingExpressionIntent()}
+async function renderPendingExpressionIntent(){return bridgeContextController().renderPendingExpressionIntent()}
+function renderExpressionIntentNote(s){return bridgeContextController().renderExpressionIntentNote(s)}
 function runtimePhase(phase){if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.phase=phase}
 async function init(){
   runtimePhase("OPEN_DB");await openDB();
@@ -190,61 +200,13 @@ function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.fo
 async function revealHint(){const s=await get("active");if(!s)return;const p=promptFor(s.landmark,s.step||0,s.language||"ko",ensureWritingState(s).draft);s.crewState=s.crewState||{};s.crewState.hintLevel=Math.max(1,s.crewState.hintLevel||0);s.crewState.lastHintAt=new Date().toISOString();await set("active",s);await recordBadgeBehaviorObservation("HELP_REQUEST",{explicitAction:true,landmark:s.landmark,step:Math.min(2,s.step||0),hintLevel:s.crewState.hintLevel},"SNAP_POP");$("#hint").textContent=p[1];$("#hint").hidden=false;$("#hintBtn").disabled=true;const identity=await resolvedIdentity();await showCrewReaction((s.language||"ko")==="en"?`${crewMemberName(identity)}: Just one hint. The rest is yours.`:`${crewMemberName(identity)}: 힌트는 하나만. 나머지는 네 생각으로 가보자.`)}
 async function resetStepCrewState(s){s.crewState={hintLevel:0,lastReaction:"",cloudReturn:null,lastVoiceLength:0};await set("active",s)}
 
-function learnerContext(){
-  try{return window.SnapPopLearningContextProvider?.context?.()||null}catch{return null}
-}
-function vocabularyMaterial(){
-  try{
-    const material=window.SnapPopBridge?.vocabularyMaterial?.()||null;
-    return window.SnapPopVocabularyMaterial?.writingContext?.(material)||material;
-  }catch{return null}
-}
 
 
 
 
-async function runExpressionBridge(){
-  const s=await get("active");if(!s)return;
-  ensureWritingState(s);
-  const draft=$("#answer").value.trim();
-  if(!draft)return toast("먼저 네 생각을 한 조각 적어줘.");
-  if(!window.SnapPopExpressionBridge)return toast("지금은 표현 도움을 사용할 수 없어요.");
-  const sourceLanguage=s.language==="en"?"en":"ko",targetLanguage=sourceLanguage==="en"?"ko":"en";
-  const btn=$("#expressionBridgeBtn");if(btn){btn.disabled=true;btn.textContent=targetLanguage==="en"?"표현 조각 찾는 중…":"표현 조각 찾는 중…"}
-  try{
-    const result=await window.SnapPopExpressionBridge.bridge({
-      draft,
-      sourceLanguage,
-      targetLanguage,
-      vocabularyMaterial:vocabularyMaterial()
-    });
-    const cur=await get("active");
-    if(!cur||cur.id!==s.id||$("#answer").value.trim()!==draft)return;
-    renderExpressionBridge(result,sourceLanguage,targetLanguage);
-    cur.crewState=cur.crewState||{};
-    cur.crewState.expressionBridge={
-      sourceLanguage,
-      targetLanguage,
-      provider:result.provider||"unknown",
-      fragmentCount:Array.isArray(result.phraseFragments)?result.phraseFragments.length:0,
-      at:new Date().toISOString()
-    };
-    await set("active",cur);
-    await recordExpressionTrace("BILINGUAL_EXPRESSION_BRIDGE_SHOWN",{
-      source:"WRITING_FLOW",
-      sourceLanguage,
-      targetLanguage,
-      fragmentCount:Array.isArray(result.phraseFragments)?result.phraseFragments.length:0,
-      provider:result.provider||"unknown"
-    });
-  }catch{
-    renderExpressionBridge(null,sourceLanguage,targetLanguage);
-    toast("지금은 표현 조각을 불러오기 어려워요. 초안은 그대로 있어요.");
-  }finally{
-    const cur=await get("active");
-    setExpressionBridgeButton(cur?.language||sourceLanguage,$("#answer").value);
-  }
-}
+
+
+
 async function analyzeWritingMove(s){
   if(!s||!window.SnapPopWriting?.analyze)return refreshWritingMove(s);
   ensureWritingState(s);
@@ -285,62 +247,6 @@ imaginationController().install();
 
 async function speak(t,language="ko",source="USER_TAP"){try{if(!window.SnapPopVoice)throw new Error("VOICE_RUNTIME_UNAVAILABLE");return await window.SnapPopVoice.speak(t,{language,voiceRole:"crew",source})}catch{return toast("지금은 음성으로 읽어주기 어려워요. 글로 계속 볼 수 있어요.")}}
 
-function currentBridgeContext(){try{return window.SnapPopBridge?.context?.()||{}}catch{return {}}}
-async function renderIncomingHandoff(){const box=$("#handoffWord");if(!box)return;const material=vocabularyMaterial();if(material?.word){box.hidden=false;const owner=material.sourceOwner==="HIDE_SEEK"?"Hide & Seek":"연결 앱";box.textContent=`${owner} 표현 재료 · ${material.word}${material.context?" · "+material.context:""} · 원하면 참고`;box.dataset.sourceOwner=material.sourceOwner;box.dataset.role=material.role}else{box.hidden=true;box.textContent="";delete box.dataset.sourceOwner;delete box.dataset.role}}
-async function recordExpressionTrace(type,meta={}){
-  const allowed={
-    eventId:meta.eventId||uid("exprtrace"),
-    type,
-    at:new Date().toISOString(),
-    source:meta.source||null,
-    sourceLanguage:meta.sourceLanguage||null,
-    targetLanguage:meta.targetLanguage||null,
-    questionLanguage:meta.questionLanguage||null,
-    verifiedCoverage:meta.verifiedCoverage||null,
-    questionChars:Number.isFinite(meta.questionChars)?meta.questionChars:null,
-    fragmentCount:Number.isFinite(meta.fragmentCount)?meta.fragmentCount:null,
-    provider:typeof meta.provider==="string"?meta.provider.slice(0,80):null,
-    landmark:meta.landmark||null
-  };
-  const ledger=await get("expressionTrace")||[];
-  ledger.unshift(allowed);
-  await set("expressionTrace",ledger.slice(0,200));
-  return allowed;
-}
-async function dismissPendingExpressionIntent(){
-  const pending=await get("pendingExpressionIntent");
-  if(pending?.question){
-    await recordExpressionTrace("VERIFIED_ASK_EXPRESSION_DISMISSED",{
-      source:pending.source||"VERIFIED_ASK",
-      questionLanguage:pending.language||"ko",
-      verifiedCoverage:pending.verifiedCoverage||null,
-      questionChars:pending.question.length
-    });
-  }
-  await set("pendingExpressionIntent",null);
-  await renderPendingExpressionIntent();
-}
-async function renderPendingExpressionIntent(){
-  const banner=$("#expressionIntentBanner");if(!banner)return;
-  const pending=await get("pendingExpressionIntent");
-  if(!pending?.question){banner.hidden=true;banner.innerHTML="";return}
-  banner.innerHTML=`<span>방금 이해한 주제 · ${html(pending.question)} · 표현하고 싶다면 탐험지를 골라봐.</span><button type="button" class="soft mini expressionIntentDismiss">그만두기</button>`;
-  const dismiss=banner.querySelector(".expressionIntentDismiss");
-  if(dismiss)dismiss.onclick=dismissPendingExpressionIntent;
-  banner.hidden=false;
-}
-function renderExpressionIntentNote(s){
-  const note=$("#expressionIntentNote");if(!note)return;
-  const intent=s?.expressionIntent;
-  if(intent?.question){
-    note.textContent=`표현해볼 주제 · ${intent.question} · 먼저 네 말로 시작해봐.`;
-    note.hidden=false;
-  }else{
-    note.hidden=true;
-    note.textContent="";
-  }
-}
-window.addEventListener("snap-pop:bridge-ready",renderIncomingHandoff);
 
 
 
@@ -355,10 +261,16 @@ window.addEventListener("snap-pop:bridge-ready",renderIncomingHandoff);
 
 
 
-$("#expressionBridgeBtn").onclick=runExpressionBridge;
 
 
 
+
+
+
+
+
+
+bridgeContextController().install();
 $("#deepThinkOpen").onclick=()=>{const panel=$("#deepThinkPanel");if(panel){panel.hidden=!panel.hidden;if(!panel.hidden)$("#deepThinkText")?.focus()}};
 $("#deepThinkSave").onclick=async()=>{const s=await get("active");if(!s)return;const text=$("#deepThinkText").value.trim();if(!text)return toast("생각을 한 줄만 남겨줘.");const reflectionId=uid("reflection"),at=new Date().toISOString(),ledger=await get("writingReflections")||[];ledger.unshift({id:reflectionId,at,activeId:s.id,landmark:s.landmark,step:Math.min(2,s.step||0),language:s.language||"ko",text,source:"CHILD_EXPLICIT_REFLECTION"});await set("writingReflections",ledger.slice(0,500));await recordBadgeBehaviorEvidence("DEEP_THINKING",{explicitChildAction:true,evidenceRef:`reflection_event_${reflectionId}`,sourceContractId:"SNAP_POP_CHILD_REFLECTION_ARTIFACT_V1",childChoseToReflect:true,reflectionArtifactRef:`writingReflection:${reflectionId}`});$("#deepThinkText").value="";$("#deepThinkPanel").hidden=true;toast("생각 기록을 남겼어요.")};
 $("#hintBtn").onclick=revealHint;

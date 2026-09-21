@@ -3,15 +3,16 @@ import fs from "node:fs";
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const flow=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
 const imagination=fs.readFileSync(new URL("../imagination-controller.js",import.meta.url),"utf8");
+const bridgeController=fs.readFileSync(new URL("../bridge-context-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
   console.log("PASS",name);
 }
 
-const traceStart=app.indexOf("async function recordExpressionTrace");
-const traceEnd=app.indexOf("async function dismissPendingExpressionIntent",traceStart);
-const traceBlock=app.slice(traceStart,traceEnd);
+const traceStart=bridgeController.indexOf("async function recordExpressionTrace");
+const traceEnd=bridgeController.indexOf("async function dismissPendingExpressionIntent",traceStart);
+const traceBlock=bridgeController.slice(traceStart,traceEnd);
 
 assert("trace-stores-metadata-only",
   traceBlock.includes("questionChars")&&
@@ -26,20 +27,20 @@ assert("trace-ledger-is-bounded",
   traceBlock.includes('ledger.slice(0,200)')
 );
 
-const dismissStart=app.indexOf("async function dismissPendingExpressionIntent");
-const dismissEnd=app.indexOf("async function renderPendingExpressionIntent",dismissStart);
-const dismissBlock=app.slice(dismissStart,dismissEnd);
+const dismissStart=bridgeController.indexOf("async function dismissPendingExpressionIntent");
+const dismissEnd=bridgeController.indexOf("async function renderPendingExpressionIntent",dismissStart);
+const dismissBlock=bridgeController.slice(dismissStart,dismissEnd);
 
 assert("dismiss-clears-pending-intent",
-  dismissBlock.includes('await set("pendingExpressionIntent",null)')
+  dismissBlock.includes('await store.set("pendingExpressionIntent",null)')
 );
 assert("dismiss-records-metadata-event",
   dismissBlock.includes('VERIFIED_ASK_EXPRESSION_DISMISSED')
 );
 
-const renderStart=app.indexOf("async function renderPendingExpressionIntent");
-const renderEnd=app.indexOf("function renderExpressionIntentNote",renderStart);
-const renderBlock=app.slice(renderStart,renderEnd);
+const renderStart=bridgeController.indexOf("async function renderPendingExpressionIntent");
+const renderEnd=bridgeController.indexOf("function renderExpressionIntentNote",renderStart);
+const renderBlock=bridgeController.slice(renderStart,renderEnd);
 
 assert("banner-has-explicit-dismiss",
   renderBlock.includes("expressionIntentDismiss")&&
@@ -59,9 +60,9 @@ assert("attach-trace-is-new-session-only",
 );
 
 assert("bilingual-trace-has-no-fragment-content",
-  app.includes('recordExpressionTrace("BILINGUAL_EXPRESSION_BRIDGE_SHOWN"')&&
-  app.includes("fragmentCount:Array.isArray(result.phraseFragments)?result.phraseFragments.length:0")&&
-  !app.includes('recordExpressionTrace("BILINGUAL_EXPRESSION_BRIDGE_SHOWN",{phraseFragments')
+  bridgeController.includes('recordExpressionTrace("BILINGUAL_EXPRESSION_BRIDGE_SHOWN"')&&
+  bridgeController.includes("fragmentCount:Array.isArray(result.phraseFragments)?result.phraseFragments.length:0")&&
+  !bridgeController.includes('recordExpressionTrace("BILINGUAL_EXPRESSION_BRIDGE_SHOWN",{phraseFragments')
 );
 
 console.log("EXPRESSION_TRACE_AND_DISMISS_PASS");
