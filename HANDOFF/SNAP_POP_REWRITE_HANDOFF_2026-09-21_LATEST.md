@@ -253,3 +253,5 @@ Conservative boundaries retained:
 - PWA offline shell + live DOM runtime validation trigger.
 
 - PWA offline shell/live DOM runtime matrix closure validation trigger.
+
+- safety/overlay/stale-result runtime validation trigger.
