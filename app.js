@@ -607,7 +607,8 @@ function renderImaginationResponse(result,identity){
   if(express)express.onclick=async()=>{
     const question=($("#imaginationInput")?.value||"").trim();
     if(!question)return;
-    await set("pendingExpressionIntent",{source:"VERIFIED_ASK",question,language:imaginationLanguage,answerTransferred:false,verifiedCoverage:"FULL_FACTUAL_CONTENT",createdAt:new Date().toISOString()});
+    const authorshipPayload=window.SnapPopAuthorshipGuard?.transitionPayload?.({question,language:imaginationLanguage,coverage:"FULL_FACTUAL_CONTENT"})||{source:"VERIFIED_ASK",question,language:imaginationLanguage,answerTransferred:false,draftTransferred:false,verifiedCoverage:"FULL_FACTUAL_CONTENT"};
+    await set("pendingExpressionIntent",{...authorshipPayload,createdAt:new Date().toISOString()});
     await recordExpressionTrace("VERIFIED_ASK_EXPRESSION_SELECTED",{
       source:"VERIFIED_ASK",
       questionLanguage:imaginationLanguage,
