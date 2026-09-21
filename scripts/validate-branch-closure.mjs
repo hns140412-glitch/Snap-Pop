@@ -66,6 +66,7 @@ const validators=[
   "validate-bootstrap-controller-boundaries.mjs",
   "validate-interaction-support-controller-boundaries.mjs",
   "validate-thin-orchestrator-boundary.mjs",
+  "validate-integrated-child-writing-flow.mjs",
   "validate-dom-binding-integrity.mjs"
 ];
 
