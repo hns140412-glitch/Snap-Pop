@@ -305,3 +305,5 @@ Conservative boundaries retained:
 - universal Think/Express + bilingual + no-guess runtime validation trigger.
 
 - universal Think/Express provider probe collision fix validation trigger.
+
+- deterministic reunion probe + universal Think/Express exact-head validation trigger.
