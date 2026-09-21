@@ -706,11 +706,11 @@ async function renderCloudHistory(){
 }
 async function renderRecords(){
   if(!db)return;
-  const r=await get("records")||[], special=await get("specialMemories")||[], revisions=await get("recordRevisions")||{};
+  const r=await get("records")||[], special=await get("specialMemories")||[], revisions=await get("recordRevisions")||{},registry=await ensureCrewRegistry(),memberRules={...SNAP_RULES?.legacyCharacterLineages,...SNAP_RULES?.definedCharacterLineages};
   renderCalendar(r,special);
   await renderCloudHistory();
   const normalCards=r.map(x=>{const m=marks.find(z=>z.id===x.landmark),rev=(revisions[x.id]||[]),latest=rev.length?rev[rev.length-1].text:x.answers.join(" "),strengths=(x.strengths||[]).slice(0,3).map(html).join(" · ");return `<article class="card" data-record-date="${x.date}" data-record-id="${x.id}"><b>${m?.title||"탐험"}${x.language==="en"?" · English":""}</b><p>${html(latest)}</p>${rev.length?`<span class="kicker">수정본 ${rev.length}개 · 원문 보존</span><br>`:""}${strengths?`<span class="kicker">오늘 발견한 글쓰기 힘 · ${strengths}</span><br>`:""}<span class="kicker">${new Date(x.date).toLocaleDateString("ko-KR")} · +${x.expAward||0} EXP</span><div class="recordActions"><button class="soft recordEditBtn" data-record-id="${x.id}">기록 다듬기</button></div></article>`});
-  const specialCards=special.map(x=>`<article class="card specialMemory" data-record-date="${x.at}"><b>특별 탐험</b><p><strong>${html(x.prompt)}</strong><br>${html(x.text)}</p><span class="kicker">${new Date(x.at).toLocaleDateString("ko-KR")} · 선택 기록 · 보상/실패 없음</span></article>`);
+  const specialCards=special.map(x=>{const guest=x.guestMemberId?(registry[x.guestMemberId]?.currentName||registry[x.guestMemberId]?.firstName||memberRules[x.guestMemberId]?.defaultName||memberRules[x.guestMemberId]?.label||""):null;return `<article class="card specialMemory" data-record-date="${x.at}"><b>특별 탐험</b><p><strong>${html(x.prompt)}</strong><br>${html(x.text)}</p>${guest?`<span class="kicker">함께한 탐험대원 · ${html(guest)}</span><br>`:""}<span class="kicker">${new Date(x.at).toLocaleDateString("ko-KR")} · 선택 기록 · 보상/실패 없음</span></article>`});
   const all=[...normalCards,...specialCards];
   $("#recordList").innerHTML=all.length?all.join(""):'<article class="card"><b>첫 기록을 기다리고 있어요.</b><p>지도에서 탐험지를 골라 시작해봐요.</p></article>';
   $(".recordEditBtn").forEach(b=>b.onclick=()=>openRecordEdit(b.dataset.recordId));
