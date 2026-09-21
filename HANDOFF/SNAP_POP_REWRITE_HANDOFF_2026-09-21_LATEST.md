@@ -135,3 +135,5 @@ Resume target: continue integrated UI rewrite from actual child-facing surfaces.
 - integrated imagination/special Phase 4 exact-head validation trigger.
 
 - integrated settings/family Phase 5 exact-head validation trigger.
+
+- integrated UI structural closure exact-head validation trigger.
