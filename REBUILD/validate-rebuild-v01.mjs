@@ -40,4 +40,17 @@ assert('contract-allow',gate.validateContract({contract_version:'READY_LEARNING_
 assert('contract-fail-closed',gate.validateContract({contract_version:'UNKNOWN'}).ok===false);
 assert('contract-no-object',gate.validateContract(null).ok===false);
 
+
+const legacyApp=loadSource('app.js');
+const exploreMod=await importSource('src/exploration/exploration-session.js');
+const session=exploreMod.createExplorationSession({id:'e1',landmark:'forest',startedAt:'2026-09-21T00:00:00.000Z'});
+assert('exploration-session-shape',session.step===0&&session.landmark==='forest'&&session.answers.length===3&&session.draft==='');
+const restored=exploreMod.ensureWritingState({step:1,answers:['a','b',''],snapshots:null});
+assert('exploration-draft-recovery',restored.draft==='b'&&restored.snapshots.length===3);
+assert('exploration-step-clamp',exploreMod.clampExplorationStep(9)===2&&exploreMod.clampExplorationStep(-2)===0);
+assert('exploration-parity-writing-state',legacyApp.includes('function ensureWritingState(s)'));
+assert('exploration-parity-session-shape',legacyApp.includes('answers:["","",""],snapshots:["","",""],draft:"",language:"ko"'));
+
+console.log('REBUILD_DOMAIN_PARITY_PASS');
+
 console.log('REBUILD_V01_FOUNDATION_PASS snap-pop');
