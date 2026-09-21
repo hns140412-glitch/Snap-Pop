@@ -345,15 +345,19 @@
         "exploration-crew-rules.json"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "app.js:cloudFragments",
-        "index.html:cloudPanel"
+        "imagination-return-runtime.js",
+        "app.js:openImagination/closeImagination",
+        "app.js:SnapPopImaginationReturnGuard",
+        "curiosity-scaffold-runtime.js:WRITING_FLOW_RETURN_PRIORITY",
+        "scripts/validate-imagination-pressure-return.mjs",
+        "scripts/validate-imagination-return-integrity.mjs"
       ],
-      "gap": "맥락 적응/원래 과제로의 복귀 동작은 제한적"
+      "gap": "on-demand Imagination Cloud + writing-flow return integrity are coded/static verified; live browser/device interaction quality remains NOT_RUN"
     },
     {
       "id": "SP-SPECIAL-001",
