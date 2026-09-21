@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - taky/snap-pop-implementation-2026-09-20
+      - taky/learning-app-family-snap-integration-2026-09-21
   workflow_dispatch:
 
 permissions:
