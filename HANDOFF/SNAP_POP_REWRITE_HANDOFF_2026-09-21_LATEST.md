@@ -100,3 +100,5 @@ Generic `ㄱ` is not deploy approval.
 - deploy / Netlify / main merge: NOT_RUN
 
 Resume target: continue integrated UI rewrite from actual child-facing surfaces. Do not restart architecture extraction phases.
+
+- integrated home/map Phase 2 exact-head validation trigger.
