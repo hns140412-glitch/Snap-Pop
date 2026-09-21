@@ -5,6 +5,7 @@ const safetySource=fs.readFileSync(new URL("../crew-interaction-safety-runtime.j
 const semanticSource=fs.readFileSync(new URL("../semantic-writing-runtime.js",import.meta.url),"utf8");
 const presentationSource=fs.readFileSync(new URL("../crew-presentation-guard.js",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const crewSource=fs.readFileSync(new URL("../crew-controller.js",import.meta.url),"utf8");
 
 const window={};
 vm.runInNewContext(safetySource,{window,Object,Array,String,Number,Math,Error,RegExp});
@@ -43,8 +44,8 @@ assert("presentation-applies-general-safety",
   presentationSource.includes('safety.assertSafe(node.value,{mode:"GENERAL"})')
 );
 assert("reaction-overlay-applies-safe-reaction",
-  appSource.includes('safety.safeReaction(message,{language})')&&
-  appSource.includes('s.crewState.lastReaction=safeMessage')
+  crewSource.includes('safety.safeReaction(message,{language})')&&
+  crewSource.includes('s.crewState.lastReaction=safeMessage')
 );
 
 console.log("CREW_INTERACTION_SAFETY_PASS");
