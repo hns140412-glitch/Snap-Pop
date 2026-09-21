@@ -1,0 +1,37 @@
+name: Snap Pop Rewrite Closure
+
+on:
+  push:
+    branches:
+      - taky/snap-pop-implementation-2026-09-20
+
+permissions:
+  contents: read
+
+jobs:
+  rewrite-closure:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact branch HEAD
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Show exact candidate SHA
+        run: |
+          echo "SNAP_POP_VALIDATION_SHA=${GITHUB_SHA}"
+          test "$(git rev-parse HEAD)" = "${GITHUB_SHA}"
+
+      - name: Run branch closure validators
+        run: node scripts/validate-branch-closure.mjs
+
+      - name: Browser runtime smoke at 390x844
+        run: |
+          BROWSER="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$BROWSER" ]; then
+            echo "BROWSER_RUNTIME_INFRA_BLOCKED no chromium browser"
+            exit 1
+          fi
+          export BROWSER
+          node scripts/browser-runtime-cdp.mjs
