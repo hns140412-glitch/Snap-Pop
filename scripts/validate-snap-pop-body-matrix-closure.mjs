@@ -7,7 +7,7 @@ function assert(name,condition){if(!condition)throw new Error("FAIL "+name);cons
 const unresolved=rows.filter(x=>x.coded!==true);
 assert("snap-pop-matrix-has-no-coded-residue",unresolved.length===0);
 assert("all-requirements-coded",rows.length>0&&rows.every(x=>x.coded===true));
-assert("badge-006-coded-static-only",byId["SP-BADGE-006"].coded===true&&byId["SP-BADGE-006"].staticVerified===true&&byId["SP-BADGE-006"].runtimeVerified===false&&byId["SP-BADGE-006"].deviceVerified===false);
+assert("badge-006-runtime-evidence-reconciled",byId["SP-BADGE-006"].coded===true&&byId["SP-BADGE-006"].staticVerified===true&&byId["SP-BADGE-006"].runtimeVerified===true&&byId["SP-BADGE-006"].deviceVerified===false);
 assert("badge-008-coded-static-only",byId["SP-BADGE-008"].coded===true&&byId["SP-BADGE-008"].staticVerified===true&&byId["SP-BADGE-008"].runtimeVerified===false&&byId["SP-BADGE-008"].deviceVerified===false);
 assert("theme-assets-remain-explicitly-open",/UNRESOLVED|OPEN/i.test(byId["SP-BADGE-008"].gap||""));
 assert("family-conflict-remains-explicit",/CONFLICT_LOCKED/i.test(byId["SP-EXP-010"].gap||""));
