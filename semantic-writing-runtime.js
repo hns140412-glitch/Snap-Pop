@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-b";
+  const VERSION="2026.09.21-c";
   const LENSES=new Set(["idea","emotion","description","viewpoint","final"]);
   const FORBIDDEN_KEYS=new Set([
     "finalDraft","final_draft","rewrite","rewrittenText","rewritten_text",
@@ -45,6 +45,11 @@
     if(!raw||typeof raw!=="object") throw new Error("SEMANTIC_INVALID_OUTPUT");
     if(hasForbiddenKeyDeep(raw)) throw new Error("SEMANTIC_FORBIDDEN_OUTPUT");
     const next=assertSingleNextMove(raw.question,raw.hint);
+    const safety=window.SnapPopCrewInteractionSafety;
+    if(safety&&typeof safety.assertSafe==="function"){
+      safety.assertSafe(next.question,{mode:"WRITING_PROMPT"});
+      if(next.hint)safety.assertSafe(next.hint,{mode:"WRITING_PROMPT"});
+    }
     const out={
       focus:cleanText(raw.focus,48)||null,
       question:next.question,
