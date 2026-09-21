@@ -286,11 +286,18 @@
         "EXPLORATION_CREW_MASTER"
       ],
       "classification": "WORKING",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "notes": "전체 탐험대 규칙의 중심이 아니라 현재 시작 탐험대 기준점"
+      "notes": "전체 탐험대 규칙의 중심이 아니라 현재 시작 탐험대 기준점",
+      "codeEvidence": [
+        "crew-core6-runtime.js",
+        "data/exploration-crew-rules.json:definedCharacterLineages",
+        "app.js:renderCrewRoster starter baseline boundary",
+        "scripts/validate-crew-core6-starter-baseline.mjs"
+      ],
+      "gap": "Core 6 is now executable as WORKING_STARTER_BASELINE only; live browser/device roster interaction remains NOT_RUN and future roster expansion remains intentionally open"
     },
     {
       "id": "SP-VOICE-001",
