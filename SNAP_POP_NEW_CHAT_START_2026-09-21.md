@@ -198,3 +198,13 @@ LATEST P5 STT NOTE:
 - stale callbacks from superseded sessions are ignored.
 - isolated STT validator 6/6 PASS.
 - next: explicit mic-entry audit and misleading autoVoice semantics cleanup.
+
+
+LATEST P5 CLOSURE NOTE:
+- P5 branch-only voice closure is complete.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md section 25.
+- exactly two explicit USER_MIC listen entry points remain.
+- HOME_RADIO no longer auto-starts microphone.
+- autoVoice semantics removed.
+- realtime/device voice remains OPEN / NOT_RUN.
+- next axis: P6 integrated regression across P1-P5 contracts.
