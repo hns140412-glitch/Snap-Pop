@@ -282,3 +282,30 @@ Still OPEN:
 - physical cross-app Ready & Set return/device idempotency
 - final visual/art direction
 - deploy / Netlify / main merge
+
+
+## Authorship / minimal-intervention runtime closure — 2026-09-22
+
+- exact validated SHA: `4ea673414daf84f76670237254c24bf600fc3e6e`
+- evidence commit: `257f6cdff9a32dc2410994f4a15d922c10668e25`
+- branch closure: `69/69 PASS`
+- browser runtime: `BROWSER_RUNTIME_CDP_PASS`
+- viewport: `390×844`
+- matrix: CODED 80/80 · STATIC 80/80 · RUNTIME 22/80 · DEVICE 0/80
+
+New runtime evidence:
+- child final draft remains exactly child-authored input;
+- first empty advance stays at writing step 0 and enters WAIT;
+- second empty advance stays at writing step 0 and enters HINT_OFFER;
+- hint is not auto-revealed;
+- no text is auto-written on empty attempts;
+- record original remains preserved after revision;
+- revision append does not recompute reward.
+
+Conservative boundaries retained:
+- weekend Special invitation visibility is not marked runtime-verified from a weekday run;
+- voice/device behavior remains device-unverified;
+- OpenAI live intelligence remains runtime-open unless live evidence exists;
+- Ready & Set physical cross-app return remains device/runtime-open;
+- final visual/art direction remains OPEN;
+- deploy / Netlify / main merge remain NOT_RUN.
