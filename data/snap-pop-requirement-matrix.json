@@ -532,12 +532,19 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": "HISTORICAL_PARTIAL",
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:openDB",
-        "app.js:get/set"
-      ]
+        "app.js:get/set",
+        "scripts/browser-runtime-cdp.mjs",
+        "app-storage-runtime.js"
+      ],
+      "runtimeEvidence": [
+        "CDP: PWA_RELOAD_RECOVERY_PASS after IndexedDB sentinel write and page reload",
+        "CDP: app re-init PASS + DB OPEN + persisted sentinel recovered"
+      ],
+      "gap": "physical-device/browser-process recovery remains unverified"
     },
     {
       "id": "SP-PWA-002",
