@@ -28,7 +28,9 @@ const validators=[
   "validate-crew-intervention-ladder.mjs",
   "validate-badge-behavior-observation.mjs",
   "validate-special-guest-shared-memory.mjs",
-  "validate-guest-appearance-gate.mjs"
+  "validate-guest-appearance-gate.mjs",
+  "validate-requirement-matrix-reconciliation.mjs",
+  "validate-etymology-source-diversity.mjs"
 ];
 
 let passed=0;
