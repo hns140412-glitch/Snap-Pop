@@ -115,12 +115,15 @@
         "expression-bridge-runtime.js:SnapPopAuthorshipGuard.assertExpressionBridge",
         "app.js:SnapPopAuthorshipGuard.transitionPayload",
         "scripts/validate-central-authorship-guard.mjs",
-        "scripts/browser-runtime-selftest.js"
+        "scripts/browser-runtime-selftest.js",
+        "crew-intervention-runtime.js"
       ],
       "gap": "physical-device behavior remains unverified",
       "runtimeEvidence": [
         "browser-runtime-selftest: final completed record draft exactly equals child-entered draft",
-        "browser-runtime-selftest: empty attempts never auto-write child text"
+        "browser-runtime-selftest: empty attempts never auto-write child text",
+        "browser-runtime-selftest: empty advance never writes child answer",
+        "browser-runtime-selftest: final draft equals child-entered draft"
       ]
     },
     {
@@ -148,7 +151,10 @@
       "runtimeEvidence": [
         "browser-runtime-selftest: first empty advance stays on step 0 and WAIT",
         "browser-runtime-selftest: second empty advance stays on step 0 and HINT_OFFER",
-        "browser-runtime-selftest: hint is not auto revealed and no text is auto-written"
+        "browser-runtime-selftest: hint is not auto revealed and no text is auto-written",
+        "browser-runtime-selftest: first empty attempt WAIT",
+        "browser-runtime-selftest: second empty attempt HINT_OFFER without auto-reveal",
+        "browser-runtime-selftest: empty attempts do not advance step"
       ]
     },
     {
