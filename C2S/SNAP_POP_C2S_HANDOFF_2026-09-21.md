@@ -144,7 +144,7 @@ Status:
 - provider boundary CODED / STATIC VERIFIED
 - OPENAI_RUNTIME_CONNECTED = false
 - SECURE_OPENAI_BOUNDARY_CODED = true
-- STATIC_BOUNDARY_VERIFIED = pending final readback in this branch
+- STATIC_BOUNDARY_VERIFIED = true
 
 ## 6. IMAGINATION CLOUD
 
@@ -335,7 +335,7 @@ Contract:
 
 Validation state:
 - CODED: yes
-- STATIC_VERIFIED: pending final readback
+- STATIC_VERIFIED: yes
 - RUNTIME_VERIFIED: no
 - DEVICE_VERIFIED: no
 - OPENAI_RUNTIME_CONNECTED: false until server environment + runtime execution are verified
