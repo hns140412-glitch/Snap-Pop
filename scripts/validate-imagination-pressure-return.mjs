@@ -71,13 +71,24 @@ assert("draft-persists-before-cloud-open",
   saveIndex>=0&&persistIndex>saveIndex&&openIndex>persistIndex
 );
 
-assert("return-requires-same-active-and-step",
-  appSource.includes('current.id===writingReturn.activeId&&Math.min(2,current.step||0)===writingReturn.step')
+assert("return-uses-central-integrity-guard",
+  appSource.includes("SnapPopImaginationReturnGuard")&&
+  appSource.includes('guard.returnDraft(current||{},writingReturn)')
 );
 
-assert("return-restores-preserved-draft",
-  appSource.includes('$("#answer").value=preserved;')&&
+assert("return-context-captures-session-landmark-step-language",
+  appSource.includes('writingReturn:{id:s.id,landmark:s.landmark,step,language:s.language||"ko",draft}')
+);
+
+assert("return-restores-current-or-snapshot-draft-with-integrity-marker",
+  appSource.includes('$("#answer").value=returned.draft||"";')&&
+  appSource.includes('returnIntegrity:"MATCH"')&&
   appSource.includes('draftPreserved:true')
+);
+
+assert("context-change-blocks-writing-return",
+  appSource.includes('returnIntegrity:"BLOCKED"')&&
+  appSource.includes('reason:returned.reason||"CONTEXT_CHANGED"')
 );
 
 assert("followup-is-hidden-until-child-reveals",
