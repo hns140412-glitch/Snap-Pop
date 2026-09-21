@@ -269,3 +269,5 @@ Conservative boundaries retained:
 - safety/overlay/stale-result runtime matrix closure validation trigger.
 
 - semantic fail-soft + low-trust context runtime validation trigger.
+
+- fail-soft/low-trust runtime matrix closure validation trigger.
