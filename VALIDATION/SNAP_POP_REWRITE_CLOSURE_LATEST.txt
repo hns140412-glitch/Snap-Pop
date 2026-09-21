@@ -1,5 +1,5 @@
-validation_sha=9b45081320146fb860e485cc7436273dc676d5a0
-checkout_sha=9b45081320146fb860e485cc7436273dc676d5a0
+validation_sha=052fbf02654a6abbb847fb0f69110d33a474725f
+checkout_sha=052fbf02654a6abbb847fb0f69110d33a474725f
 closure_status=1
 closure_marker=
 browser_status=0
@@ -496,13 +496,14 @@ BADGE_INDEPENDENT_EXPERIENCE_AXIS_PASS
 === validate-snap-pop-body-matrix-closure.mjs ===
 PASS snap-pop-matrix-has-no-coded-residue
 PASS all-requirements-coded
+PASS badge-006-runtime-evidence-reconciled
 file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-snap-pop-body-matrix-closure.mjs:6
 function assert(name,condition){if(!condition)throw new Error("FAIL "+name);console.log("PASS",name)}
                                                     ^
 
-Error: FAIL badge-006-coded-static-only
+Error: FAIL badge-008-coded-static-only
     at assert (file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-snap-pop-body-matrix-closure.mjs:6:53)
-    at file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-snap-pop-body-matrix-closure.mjs:10:1
+    at file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-snap-pop-body-matrix-closure.mjs:11:1
     at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
