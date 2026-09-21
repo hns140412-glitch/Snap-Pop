@@ -86,4 +86,15 @@ assert("followup-is-hidden-until-child-reveals",
   appSource.includes('follow.hidden=false;reveal.remove()')
 );
 
+const closeStart=appSource.indexOf("async function closeImagination()");
+const closeEnd=appSource.indexOf("function renderImaginationResponse",closeStart);
+const closeBlock=appSource.slice(closeStart,closeEnd);
+assert("return-acknowledgement-is-non-driving",
+  closeBlock.includes("쓰던 글은 그대로 있어. 준비되면 이어서 쓰면 돼.")&&
+  !closeBlock.includes("analyzeWritingMove(")&&
+  !closeBlock.includes("runImagination(")&&
+  !closeBlock.includes("nextBtn")&&
+  !closeBlock.includes("step=")
+);
+
 console.log("IMAGINATION_PRESSURE_RETURN_CONTRACT_PASS");
