@@ -769,3 +769,87 @@ It is interaction pressure control:
 - avoid automatic follow-up chains;
 - suppress next curiosity when the answer is still partially verified or the child did not ask to continue;
 - keep writing flow resumable without losing the draft.
+
+
+## 19. P3 FOLLOW-UP PRESSURE + WRITING RETURN LOCK — 2026-09-21
+
+### Problems addressed
+
+1. `nextCuriosity` was rendered immediately after an answer, which could create implicit pressure to keep asking.
+2. WRITING_FLOW opened Imagination Cloud from the textarea, but the latest textarea value could race with async persistence before the overlay opened.
+3. return from Imagination Cloud needed an explicit same-exploration / same-step guard so a stale overlay could not write into another writing state.
+
+### Follow-up pressure policy
+
+`curiosity-scaffold-runtime.js` now applies `followUpPolicy`:
+
+- WRITING_FLOW:
+  - follow-up unavailable;
+  - reason `WRITING_FLOW_RETURN_PRIORITY`.
+- incomplete factual verification:
+  - follow-up unavailable;
+  - reason `VERIFICATION_INCOMPLETE`.
+- GLOBAL + `verified === true` + `FULL_FACTUAL_CONTENT`:
+  - one optional curiosity may be available;
+  - reason `OPTIONAL_AFTER_FULL_VERIFICATION`.
+
+UI:
+- even when available, the next curiosity text is hidden by default;
+- child sees only `더 궁금하면 한 가지 더`;
+- curiosity text appears only after explicit reveal;
+- reveal does not auto-submit or create another answer chain.
+
+### Writing-flow draft preservation
+
+Before opening Imagination Cloud from writing:
+- current textarea value is read synchronously;
+- `active.draft` is updated;
+- current step answer is updated;
+- active state is persisted;
+- only then is the cloud opened.
+
+Return lock:
+- cloud stores `activeId + step + draft`;
+- on close, restore is allowed only if current active id and current step still match;
+- preserved draft is restored to the writing textarea;
+- `crewState.cloudReturn.draftPreserved=true` is recorded;
+- stale overlay cannot write into a different exploration or step.
+
+### Validation
+
+Added:
+- `scripts/validate-imagination-pressure-return.mjs`
+
+Isolated execution PASS:
+- global-full-can-offer-optional-followup
+- partial-answer-suppresses-followup
+- writing-flow-suppresses-followup
+- global-full-has-one-next-curiosity
+- writing-flow-has-no-next-curiosity
+- partial-has-no-next-curiosity
+- draft-persists-before-cloud-open
+- return-requires-same-active-and-step
+- return-restores-preserved-draft
+- followup-is-hidden-until-child-reveals
+
+Final marker:
+- `IMAGINATION_PRESSURE_RETURN_CONTRACT_PASS`
+
+### Status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL
+  - isolated pressure/return contract PASS
+  - live browser interaction NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Next P3 increment
+
+Next:
+- make writing return visible but minimal;
+- do not add another modal or hub;
+- after cloud close, restore focus/draft and show at most one short crew acknowledgement;
+- do not trigger a new question automatically;
+- preserve ONE DRAFT → ONE NEXT MOVE.
