@@ -37,7 +37,8 @@ const validators=[
   "validate-think-express-verification-separation.mjs",
   "validate-badge-visual-compositor.mjs",
   "validate-badge-catalog-activation-guard.mjs",
-  "validate-crew-special-role-not-power.mjs"
+  "validate-crew-special-role-not-power.mjs",
+  "validate-imagination-return-integrity.mjs"
 ];
 
 let passed=0;
