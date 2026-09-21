@@ -188,3 +188,6 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 
 .specialPromptCard{display:grid;gap:9px}.specialPromptCard .answerLabel{margin-top:4px}.specialActions{display:grid;gap:8px;margin-top:2px}
 .imaginationHead p{margin:5px 0 0;font-size:11px;line-height:1.45;color:#66756d}.imaginationListenMore{margin-top:10px;border-top:1px solid #d8c8a5;padding-top:8px}.imaginationListenMore summary{cursor:pointer;font-size:11px;font-weight:800;color:#4d6358}.imaginationListenMore button{margin-top:8px}
+
+.settingsGroup{display:grid;gap:8px;margin:0 0 14px}.settingsGroupHead{padding:3px 2px}.settingsGroupHead h2{font-family:"Noto Serif CJK KR","Batang",serif;font-size:18px;margin:3px 0}.settingsGroupHead p{font-size:11px;line-height:1.45;color:#66756d;margin:3px 0 0}.settingsGroup>.setting{margin:0}.familySettingsGroup{padding-top:10px;border-top:1px solid #d8c8a5}.accessibilitySettingsGroup{padding-top:10px;border-top:1px solid #d8c8a5}
+.familyPageTitle p,.settingsPageTitle p{max-width:34em}
