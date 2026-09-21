@@ -39,6 +39,18 @@ function crewMemberName(identity){return identity?.crewMember?.name||crewMemberR
 
 function stableHash(s=""){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function affinityTier(score=0){const tiers=SNAP_RULES?.affinityEngine?.tiers||[];let t=tiers[0]||{key:"KNOWN",label:"아는 친구",min:0};for(const x of tiers)if(score>=x.min)t=x;return t}
+async function proposeBadgeCandidateFromObservations({id,title,families=[],reason=""}={}){
+  if(!window.SnapPopBadgeCandidate) throw new Error("BADGE_CANDIDATE_RUNTIME_UNAVAILABLE");
+  const observations=await get("badgeBehaviorObservations")||[];
+  const candidate=window.SnapPopBadgeCandidate.fromObservationCluster(observations,{id,title,families,reason});
+  const ledger=await get("badgeCandidateReviews")||[];
+  const existing=ledger.find(x=>x.id===candidate.id);
+  if(existing) return existing;
+  ledger.unshift(candidate);
+  await set("badgeCandidateReviews",ledger.slice(0,200));
+  return candidate;
+}
+
 async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP"){
   if(!window.SnapPopBadgeBehavior)return null;
   try{
