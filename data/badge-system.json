@@ -1,0 +1,74 @@
+{
+  "version": "2026-09-21.1",
+  "status": "RECOVERED_CONFIRMED_STRUCTURE",
+  "productRole": "PROCESS_AND_EXPERIENCE_COLLECTION_NOT_SCORE_OR_POWER",
+  "catalog": {
+    "targetScaleApprox": 60,
+    "expandableFromObservedActivity": true,
+    "finalCatalogStatus": "OPEN",
+    "historicalDraftStatus": "WORKING_DRAFT"
+  },
+  "tiers": [
+    {
+      "id": "GREEN",
+      "order": 1,
+      "stars": 5
+    },
+    {
+      "id": "BLUE",
+      "order": 2,
+      "stars": 5
+    },
+    {
+      "id": "RED",
+      "order": 3,
+      "stars": 5
+    },
+    {
+      "id": "GOLD",
+      "order": 4,
+      "stars": 5
+    },
+    {
+      "id": "PLATINUM",
+      "order": 5,
+      "stars": 5
+    }
+  ],
+  "visual": {
+    "shape": "CIRCLE",
+    "illustration": "HAND_DRAWN_PASTEL",
+    "growthAdornment": "FIVE_GEM_STARS_UPPER_SEMICIRCLE",
+    "protagonist": "PROFILE_CHARACTER",
+    "composition": [
+      "COMMON_BADGE_ART",
+      "CHILD_IDENTITY_LAYER",
+      "BADGE_GROWTH_LAYER"
+    ],
+    "identityRule": "IDENTITY_STABLE_THEME_EXPRESSION_VARIABLE"
+  },
+  "antiPatterns": [
+    "CHARACTER_POWER_LEVEL",
+    "LEADERBOARD",
+    "PUNITIVE_BADGE_REMOVAL",
+    "STREAK_PRESSURE",
+    "EXP_GEM_EQUIVALENCE",
+    "AUTO_CANONICALIZE_HISTORICAL_DRAFT"
+  ],
+  "eventFamilies": [
+    "SELF_START",
+    "TIME_CREATION",
+    "EXTRA_TASK",
+    "FOCUS",
+    "RETURN_RECOVERY",
+    "HELP_REQUEST",
+    "ERROR_DISCOVERY",
+    "RETRY",
+    "DEEP_THINKING",
+    "ISSUE_DURATION",
+    "SELF_EXPLANATION",
+    "PLAN_ADAPTATION",
+    "SPECIAL_BEHAVIOR",
+    "WRITING_EXPLORATION"
+  ]
+}
