@@ -547,3 +547,67 @@ Move from classification label to a bounded explanation-order template while pre
 
 Do not invent missing facts to fill a template.
 A template slot must remain absent unless the verified answer actually supports it.
+
+
+## 16. P3 EXPLANATION-ORDER ROUTING — 2026-09-21
+
+### Implemented
+
+Question lens is now classified BEFORE knowledge retrieval and carried through:
+`intelligence-runtime.js → knowledge-runtime.js → openai-knowledge-provider.js → snap-pop-knowledge.mjs`
+
+Server uses a strict whitelist:
+- MEANING
+- ETYMOLOGY
+- CAUSE_EFFECT
+- MECHANISM
+- COMPARE
+- TIME_FLOW
+- PERSON_EVENT
+- PLACE_CONTEXT
+- CONCEPT
+
+Unknown lens input falls back to CONCEPT and is never interpolated directly.
+
+Explanation-order guidance:
+- MEANING: definition → concrete example or connection
+- ETYMOLOGY: root/origin → how the meaning developed → one related word if supported
+- CAUSE_EFFECT: cause → what happens in between → result
+- MECHANISM: main parts or steps → how they connect
+- COMPARE: one shared point → one key difference → why the difference matters
+- TIME_FLOW: before → event/change → after
+- PERSON_EVENT: who → key action → impact
+- PLACE_CONTEXT: where → defining feature → why it matters
+- CONCEPT: core idea → simple connection or example
+
+Hard rule:
+- order is preferred only when sources support it;
+- missing steps must not be invented or forced;
+- every factual sentence still requires citation/source coverage from P2.
+
+Validation artifact:
+- `scripts/validate-question-lens-routing.mjs`
+
+Checks:
+- web_search remains required;
+- COMPARE order reaches server instructions;
+- TIME_FLOW order reaches server instructions;
+- unknown/injected lens falls back to CONCEPT and is not passed through.
+
+### Status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS for bounded lens routing structure
+- RUNTIME_VERIFIED: PARTIAL
+- live OpenAI/browser/server: NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Next P3 increment
+
+Improve explanation quality without increasing pressure:
+- choose one visual/mental model when useful;
+- preserve one-next-curiosity rule;
+- keep child-facing answer compact;
+- keep writing-first surface unchanged;
+- no separate explore hub.
