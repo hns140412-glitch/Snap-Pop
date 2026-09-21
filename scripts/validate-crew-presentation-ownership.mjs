@@ -56,8 +56,8 @@ assert("history-still-keeps-provider-provenance",
 );
 
 assert("app-applies-presentation-guard-before-render",
-  appSource.indexOf("sanitizeUserFacing(rawResult)")>=0&&
-  appSource.indexOf("sanitizeUserFacing(rawResult)")<appSource.indexOf("renderImaginationResponse(result,identity)")
+  appSource.indexOf("presentation.sanitizeUserFacing(rawResult)")>=0&&
+  appSource.indexOf("presentation.sanitizeUserFacing(rawResult)")<appSource.indexOf("renderImaginationResponse(result,identity)")
 );
 
 const intelligenceSource=fs.readFileSync(new URL("../intelligence-runtime.js",import.meta.url),"utf8");
