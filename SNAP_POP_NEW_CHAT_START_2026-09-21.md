@@ -208,3 +208,13 @@ LATEST P5 CLOSURE NOTE:
 - autoVoice semantics removed.
 - realtime/device voice remains OPEN / NOT_RUN.
 - next axis: P6 integrated regression across P1-P5 contracts.
+
+
+LATEST P6 READINESS NOTE:
+- P6 branch-only readiness report is complete.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md section 27 and C2S/SNAP_POP_P6_BRANCH_ONLY_READINESS_2026-09-21.md.
+- active-branch stale-pattern sweep is clean except expected guard/validator/browser-fallback matches.
+- P6 app boundary static: 10/10 PASS.
+- P1-P5 integrated isolated regression: 19/19 PASS.
+- classification: BRANCH_ONLY_CLOSURE_PASS / FROZEN_CANDIDATE_NOT_YET_DECLARED.
+- no merge/deploy/Netlify/device claims.
