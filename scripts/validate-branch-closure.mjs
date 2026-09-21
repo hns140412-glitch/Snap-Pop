@@ -24,7 +24,8 @@ const validators=[
   "validate-vocabulary-material-ownership.mjs",
   "validate-expression-bridge.mjs",
   "validate-optional-expression-transition.mjs",
-  "validate-expression-trace-and-dismiss.mjs"
+  "validate-expression-trace-and-dismiss.mjs",
+  "validate-crew-intervention-ladder.mjs"
 ];
 
 let passed=0;
