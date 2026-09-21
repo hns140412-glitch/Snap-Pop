@@ -218,3 +218,15 @@ LATEST P6 READINESS NOTE:
 - P1-P5 integrated isolated regression: 19/19 PASS.
 - classification: BRANCH_ONLY_CLOSURE_PASS / FROZEN_CANDIDATE_NOT_YET_DECLARED.
 - no merge/deploy/Netlify/device claims.
+
+
+FROZEN CANDIDATE / EXTERNAL GATE NOTE:
+- frozen candidate SHA: a333e735f69b57164edc8440f7108e49a6ee8c7a
+- classification: FROZEN_CANDIDATE_BRANCH_ONLY
+- exact-SHA cross-layer: 15/15 PASS
+- TAKY external-resource gate checked against latest TAKY main.
+- local/frozen/budget preconditions pass.
+- explicit Human Approval for external action is PENDING.
+- current decision: HOLD_BEFORE_EXTERNAL_ACTION.
+- do not call Netlify/hosting until explicit approval is given.
+- read C2S section 28 and C2S/SNAP_POP_EXTERNAL_RESOURCE_GATE_2026-09-21.json.
