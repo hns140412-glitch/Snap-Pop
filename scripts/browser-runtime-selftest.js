@@ -139,6 +139,56 @@
       assert("low-trust-analysis-keeps-local-child-direction",lowTrustAnalysis?.provider==="local-writing-fallback"&&lowTrustAnalysis?.suggestedLens===null&&lowTrustAnalysis?.learningContextUsed===true);
       window.SnapPopSemanticWritingProvider=providerForFallback;
 
+      const lensProbeDraft="나는 오늘 학교에서 친구와 이야기했어. 왜냐하면 궁금했어.";
+      const lensIds=["idea","emotion","description","viewpoint","final"];
+      const lensMoves=lensIds.map(landmark=>window.SnapPopWriting.move({landmark,step:0,draft:lensProbeDraft,language:"ko"}));
+      assert("five-writing-lenses-return-five-moves",lensMoves.length===5&&lensMoves.every(m=>typeof m?.question==="string"&&m.question.length>0));
+      assert("five-writing-lenses-are-distinct",new Set(lensMoves.map(m=>m.focus+"|"+m.question)).size===5);
+      assert("writing-lens-next-move-remains-single",lensMoves.every(m=>(m.question.match(/[?？]/g)||[]).length===1));
+
+      const originalOpenAIProvider=window.SnapPopOpenAIProvider;
+      window.SnapPopOpenAIProvider={
+        async analyzeWriting(){
+          return {
+            focus:"BAD_REWRITE",
+            question:"다음 한 가지를 생각해볼까?",
+            hint:"",
+            finalDraft:"AI가 대신 완성한 글",
+            provider:"runtime-forbidden-provider"
+          };
+        }
+      };
+      let rewriteBlocked=false;
+      try{
+        await window.SnapPopSemanticWritingProvider.analyzeWriting({
+          draft:"내가 직접 쓴 문장",
+          landmark:"idea",step:0,language:"ko"
+        });
+      }catch{rewriteBlocked=true}
+      assert("semantic-provider-blocks-final-draft-generation",rewriteBlocked===true);
+
+      window.SnapPopOpenAIProvider={
+        async analyzeWriting(){
+          return {
+            focus:"ONE_NEXT_MOVE",
+            question:"이 생각이 떠오른 이유 하나만 붙여볼까?",
+            hint:"이유 하나면 충분해.",
+            suggestedLens:null,
+            rationale:"runtime analysis-only probe",
+            confidence:0.9,
+            semanticSignals:{present:["idea"],missing:["reason"]},
+            grounded:true,
+            provider:"runtime-analysis-only-provider"
+          };
+        }
+      };
+      const analysisOnly=await window.SnapPopSemanticWritingProvider.analyzeWriting({
+        draft:"내가 직접 쓴 문장",
+        landmark:"idea",step:0,language:"ko"
+      });
+      assert("semantic-provider-analysis-only-output",analysisOnly?.question==="이 생각이 떠오른 이유 하나만 붙여볼까?"&&!("finalDraft" in analysisOnly)&&!("rewrite" in analysisOnly)&&!("answer" in analysisOnly));
+      window.SnapPopOpenAIProvider=originalOpenAIProvider;
+
       const draft1="오늘은 숲에서 작은 빛을 봤어.";
       answer.value=draft1;
       answer.dispatchEvent(new Event("input",{bubbles:true}));
