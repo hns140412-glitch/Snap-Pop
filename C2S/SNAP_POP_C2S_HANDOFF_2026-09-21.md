@@ -340,3 +340,79 @@ Validation state:
 - DEVICE_VERIFIED: no
 - OPENAI_RUNTIME_CONNECTED: false until server environment + runtime execution are verified
 - merge/deploy/Netlify: NOT_RUN
+
+
+## 15. 2026-09-21 P0/P1 EXECUTION CONTINUATION
+
+### P0 badge provenance refinement
+Recovered direct historical user evidence now explicitly distinguishes:
+- badge/title collection as a fun experience axis;
+- done-well + mistake + improvement experience;
+- approximately 60 expandable concepts with activity-derived examples;
+- circular witty situation-based visual direction.
+
+Ready REV_06 HOLD boundary is explicitly preserved:
+- character level/growth economy;
+- advanced reward economy;
+- social competition/leaderboard;
+- character gacha/complex growth score.
+
+Assistant-proposed historical badge names/triggers and badge→title mechanics remain WORKING only.
+`data/badge-catalog-working.json` remains `WORKING_DRAFT_NOT_ACTIVE`.
+No badge was activated.
+
+Updated:
+- `C2S/SNAP_POP_BADGE_SOURCE_RECOVERY_2026-09-21.md`
+- `data/badge-system.json` → 2026-09-21.3
+
+### P1 secure semantic-writing boundary hardening
+Implemented:
+- server-only `OPENAI_API_KEY`;
+- explicit server-side `SNAP_POP_OPENAI_MODEL` requirement instead of guessing a model default;
+- same-origin browser adapter only; browser key remains forbidden;
+- semantic prompt now explicitly prioritizes meaning center, coherence/flow, development, and previous-snapshot relation over keyword matching;
+- child draft treated as untrusted content, not system instruction;
+- multi-prompt model output rejected;
+- `factVerified:false` forced through server → semantic provider → writing runtime → app analysis state until a future Truth Guard actually verifies facts;
+- local fallback remains available and also marks `factVerified:false`.
+
+Updated:
+- `netlify/functions/snap-pop-semantic-writing.mjs`
+- `semantic-writing-runtime.js`
+- `writing-runtime.js`
+- `app.js`
+- `data/snap-pop-requirement-matrix.json` → 2026-09-21.17
+
+### Verification
+Static read-back:
+- JSON parse: PASS
+- semantic/client/server syntax compile: PASS
+- no browser API-key path: PASS
+- explicit server model config: PASS
+- single-next-move rejection guard: PASS
+- factual verification forced false: PASS
+- Imagination Cloud still hidden/on-demand: PASS
+
+Isolated component runtime (no deploy/network):
+- semantic provider → writing runtime contract: PASS
+- forbidden rewrite field removed: PASS
+- factVerified remains false even if mocked backend tries to set true: PASS
+- local writing fallback: PASS
+- server missing-key fail-closed: PASS
+- server missing-model fail-closed: PASS
+- server multi-question rejection: PASS
+- server valid single-next-move response: PASS
+
+Runtime caveat:
+- first server-function harness attempt was BLOCKED by missing Web `Response` in the connector JS isolate.
+- Cause classification: JS runtime API/environment mismatch.
+- Same failed path was not repeated; a minimal Response/Request shim was used for isolated contract execution.
+
+### Status
+- CODED: PASS for this P0/P1 increment
+- STATIC_VERIFIED: PASS for this P0/P1 increment
+- RUNTIME_VERIFIED: PARTIAL — isolated component runtime PASS; live browser/OpenAI/server environment and cross-app runtime NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- OPENAI_RUNTIME_CONNECTED: false
+- Truth Guard factual verification: PARTIAL / NOT CONNECTED
+- merge/deploy/Netlify: NOT_RUN
