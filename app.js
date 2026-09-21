@@ -126,8 +126,10 @@ async function chooseSceneGuest(sceneKey,{sceneMood=null,appearanceAuthorized=fa
   await set("crewGuestAppearances",nextLedger);
   const entry=registry[picked.memberId]||{};
   const rule=members[picked.memberId]||{};
+  const roleContract=window.SnapPopCrewRoleGuard?.assertRoleContract?.({role:rule.role||"SPECIAL",functionalAdvantage:false,powerBoost:false,rewardMultiplier:1,expMultiplier:1})||{role:"SPECIAL",roleMeaning:"ENCOUNTER_STYLE_ONLY",functionalAbility:"EQUAL"};
   return {
     ...picked,
+    roleContract,
     name:entry.currentName||entry.firstName||rule.defaultName||rule.label||"탐험대원",
     label:rule.label||entry.currentName||picked.memberId,
     personality:rule.personality||""
@@ -268,8 +270,9 @@ async function renderCrewRoster(){
     const slots=board.filter(x=>x.role==="SPECIAL"),max=roster.special?.hardMaximum||12;
     special.innerHTML=slots.map(x=>{
       const state=encounters[`slot-${x.slot}`]?.status||"UNDISCOVERED";
-      return card({title:`${String(x.slot).padStart(2,"0")} · ${x.core}`,meta:`${x.encounterGimmick||x.worldFlavor} · ${state==="UNDISCOVERED"?"미발견/설계 슬롯":state}`,locked:state==="UNDISCOVERED"});
-    }).join("")+card({title:`확장 여유 · 최대 ${max}명 이하`,meta:"현재 8개 WORKING 스페셜 슬롯 + 추가 최대 4개 여유 · 실제 인원 OPEN",unassigned:true});
+      const roleContract=window.SnapPopCrewRoleGuard?.assertRoleContract?.({role:"SPECIAL",functionalAdvantage:false,powerBoost:false,rewardMultiplier:1,expMultiplier:1})||{roleMeaning:"ENCOUNTER_STYLE_ONLY",functionalAbility:"EQUAL"};
+      return card({title:`${String(x.slot).padStart(2,"0")} · ${x.core}`,meta:`${x.encounterGimmick||x.worldFlavor} · ${state==="UNDISCOVERED"?"미발견/설계 슬롯":state} · 조우 방식 · 기능 동일`,locked:state==="UNDISCOVERED"});
+    }).join("")+card({title:`확장 여유 · 최대 ${max}명 이하`,meta:"현재 8개 WORKING 스페셜 슬롯 + 추가 최대 4개 여유 · 실제 인원 OPEN · 스페셜은 강함 등급이 아님",unassigned:true});
   }
 }
 function promptFor(landmark,step,language="ko",draft=""){
@@ -797,7 +800,7 @@ async function openSpecial(){
   $("#specialHint").textContent=`${crewMemberName(identity)} · ${p.h}`;
   const presence=$("#specialCrewPresence");
   if(presence){
-    presence.textContent=guest?`${crewMemberName(identity)} · ${guest.name}도 이번 장면에 잠깐 합류했네. 같이 보되, 네 생각은 네가 골라.`:"";
+    presence.textContent=guest?`${crewMemberName(identity)} · ${guest.name}도 이번 장면에 잠깐 합류했네. 스페셜은 더 강한 대원이 아니라 만나는 방식만 달라. 같이 보되, 네 생각은 네가 골라.`:"";
     presence.hidden=!guest;
     presence.dataset.memberId=guest?.memberId||"";
   }
