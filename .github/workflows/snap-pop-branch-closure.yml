@@ -20,7 +20,7 @@ jobs:
           ref: ${{ github.sha }}
       - name: Show candidate SHA
         run: echo "SNAP_POP_VALIDATION_SHA=${GITHUB_SHA}"
-      - name: Run 47 branch closure validators
+      - name: Run 48 branch closure validators
         run: node scripts/validate-branch-closure.mjs
 
       - name: Browser runtime smoke
