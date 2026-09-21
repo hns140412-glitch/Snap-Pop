@@ -544,7 +544,9 @@ async function openImagination({input="",language="ko",source="GLOBAL",writingRe
   const layer=$("#imaginationLayer"),identity=await resolvedIdentity(); if(!layer)return;
   imaginationReturnFocus=document.activeElement instanceof HTMLElement?document.activeElement:null;
   imaginationSource=source;
-  imaginationWritingReturn=source==="WRITING_FLOW"&&writingReturn?writingReturn:null;
+  imaginationWritingReturn=source==="WRITING_FLOW"&&writingReturn
+    ? (window.SnapPopImaginationReturnGuard?.capture?.(writingReturn)||writingReturn)
+    : null;
   setImaginationLanguage(language);
   $("#imaginationCrewName").textContent=`탐험대원 ${crewMemberName(identity)}`;
   $("#imaginationCrewLine").textContent=source==="WRITING_FLOW"?"쓰던 글은 그대로 있어. 필요한 만큼만 같이 생각해보자.":"필요한 만큼만 같이 생각해보자.";
@@ -562,15 +564,21 @@ async function closeImagination(){
   imaginationWritingReturn=null;
   if(imaginationSource==="WRITING_FLOW"&&writingReturn){
     const current=await get("active");
-    if(current&&current.id===writingReturn.activeId&&Math.min(2,current.step||0)===writingReturn.step){
+    const guard=window.SnapPopImaginationReturnGuard;
+    const returned=guard&&typeof guard.returnDraft==="function"
+      ? guard.returnDraft(current||{},writingReturn)
+      : {ok:!!current&&current.id===writingReturn.activeId&&Math.min(2,current.step||0)===writingReturn.step,draft:current?.draft??writingReturn.draft,reason:"LEGACY_FALLBACK"};
+    if(returned.ok&&current){
       ensureWritingState(current);
-      const preserved=typeof current.draft==="string"?current.draft:writingReturn.draft;
-      $("#answer").value=preserved;
+      $("#answer").value=returned.draft||"";
       current.crewState=current.crewState||{};
       current.crewState.cloudReturn={
         activeId:current.id,
-        step:writingReturn.step,
+        landmark:current.landmark,
+        step:Math.min(2,current.step||0),
+        language:current.language==="en"?"en":"ko",
         draftPreserved:true,
+        returnIntegrity:"MATCH",
         returnedAt:new Date().toISOString()
       };
       await set("active",current);
@@ -581,6 +589,15 @@ async function closeImagination(){
           : `${crewMemberName(identity)}: 쓰던 글은 그대로 있어. 준비되면 이어서 쓰면 돼.`,
         {persist:false,kind:"observe"}
       );
+    }else if(current){
+      current.crewState=current.crewState||{};
+      current.crewState.cloudReturn={
+        activeId:current.id,
+        returnIntegrity:"BLOCKED",
+        reason:returned.reason||"CONTEXT_CHANGED",
+        returnedAt:new Date().toISOString()
+      };
+      await set("active",current);
     }
   }
 
@@ -697,7 +714,7 @@ $("#cloudBtn").onclick=async()=>{
     input:draft,
     language:s.language||"ko",
     source:"WRITING_FLOW",
-    writingReturn:{activeId:s.id,step,draft}
+    writingReturn:{id:s.id,landmark:s.landmark,step,language:s.language||"ko",draft}
   });
 };
 $("#modeKo").onclick=async()=>{const s=await get("active");if(!s)return;s.language="ko";await set("active",s);renderExplore(s)};
