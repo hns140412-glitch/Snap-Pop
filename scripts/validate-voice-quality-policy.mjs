@@ -4,6 +4,7 @@ import vm from "node:vm";
 const guardSource=fs.readFileSync(new URL("../crew-presentation-guard.js",import.meta.url),"utf8");
 const voiceSource=fs.readFileSync(new URL("../voice-runtime.js",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const flowSource=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
 
 const externalCalls=[];
 const window={
@@ -51,8 +52,8 @@ assert("realtime-not-inferred-from-external-provider",
 );
 
 assert("auto-read-does-not-speak-hidden-hint",
-  appSource.includes('speak(p[0],s.language,"AUTO_READ")')&&
-  !appSource.includes('speak(p[0]+" "+p[1],s.language)')
+  flowSource.includes('deps.speak(p[0],s.language,"AUTO_READ")')&&
+  !flowSource.includes('deps.speak(p[0]+" "+p[1],s.language)')
 );
 
 assert("manual-listen-respects-revealed-hint-only",
