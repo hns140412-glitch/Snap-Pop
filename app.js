@@ -377,10 +377,20 @@ function closeImagination(){
 function renderImaginationResponse(result,identity){
   const host=$("#imaginationAnswer"); if(!host)return;
   const nodes=Array.isArray(result?.nodes)?result.nodes:[];
-  const badge=result?.verified===false?"확인 필요":result?.kind==="ASK_UNDERSTAND"?"궁금증":"생각 도움";
+  const claims=Array.isArray(result?.verification?.claims)?result.verification.claims:[];
+  const verifiedClaims=claims.filter(x=>x?.status==="VERIFIED");
+  const domains=[...new Set(verifiedClaims.flatMap(x=>Array.isArray(x?.evidence)?x.evidence:[]).map(e=>{try{return new URL(e?.source_url||"").hostname.replace(/^www\./,"")}catch{return ""}}).filter(Boolean))].slice(0,4);
+  const badge=result?.kind==="ASK_UNDERSTAND"
+    ? result?.verified===true
+      ?"확인 완료"
+      : verifiedClaims.length
+        ?"일부 근거 확인"
+        :"확인 필요"
+    :"생각 도움";
   host.innerHTML=`<div class="cloudAnswerHead"><b>${html(crewMemberName(identity))} · ${html(result?.title||"상상 구름")}</b><span>${html(badge)}</span></div>`+
     `<p class="cloudCore">${html(result?.core||"")}</p>`+
     (nodes.length?`<div class="mindMap">${nodes.map(n=>`<div class="mindNode"><b>${html(n.label||"")}</b><span>${html(n.value||"")}</span></div>`).join("")}</div>`:"")+
+    (verifiedClaims.length?`<p class="kicker">확인된 주장 ${verifiedClaims.length}개${domains.length?` · 근거 ${domains.map(html).join(" · ")}`:""}</p>`:"")+
     (result?.example?`<p class="cloudExample">${html(result.example)}</p>`:"");
   host.hidden=false; host.dataset.speakable=result?.speakable||result?.core||"";
 }
@@ -397,7 +407,15 @@ async function runImagination(inputOverride){
     history.unshift({id:uid("cloud"),input,intent:result.intent||result.kind,verified:result.verified!==false,provider:result.provider||"unknown",title:result.title||"",core:result.core||"",nodes:Array.isArray(result.nodes)?result.nodes.slice(0,8):[],example:result.example||"",language:imaginationLanguage,source:imaginationSource,at:new Date().toISOString()});
     await set("cloudHistory",history.slice(0,100));
     if(active&&imaginationSource==="WRITING_FLOW"){active.crewState=active.crewState||{};active.crewState.cloudLast={input,intent:result.intent||result.kind,verified:result.verified!==false,provider:result.provider||"unknown",at:new Date().toISOString()};await set("active",active)}
-    if(result.verified===false)await showCrewReaction(`${crewMemberName(identity)}: 확인이 필요한 건 지어내지 않고 확인부터 할게.`,{persist:false,kind:"observe"});
+    if(result.verified===false){
+      const verifiedClaimCount=Number(result?.verification?.verifiedClaimCount)||0;
+      await showCrewReaction(
+        verifiedClaimCount>0
+          ?`${crewMemberName(identity)}: 근거가 확인된 부분과 아직 확인이 필요한 부분을 나눠서 볼게.`
+          :`${crewMemberName(identity)}: 확인이 필요한 건 지어내지 않고 확인부터 할게.`,
+        {persist:false,kind:"observe"}
+      );
+    }
   }catch{
     await showCrewReaction(`${crewMemberName(identity)}: 지금 연결이 매끄럽지 않네. 질문은 그대로 남겨둘게.`,{persist:false});
   }finally{btn.disabled=false;btn.textContent="도움 받기"}
