@@ -1006,3 +1006,66 @@ Next:
 - inspect voice path ownership so TTS never speaks hidden provider/system metadata;
 - keep `speakable` guarded;
 - then move into P5 voice quality/realtime boundary without weakening authorship or Truth Guard.
+
+
+## 22. P4→P5 VOICE OWNERSHIP BOUNDARY — 2026-09-21
+
+### Implemented
+
+`voice-runtime.js` now owns every TTS path.
+
+Rules:
+- speech text is bounded and non-empty;
+- known AI/system self-identification is rejected with `VOICE_IDENTITY_LEAK`;
+- legitimate factual text such as `AI 모델은 ...` remains unchanged;
+- external voice provider receives:
+  - guarded text only;
+  - normalized language;
+  - `voiceRole: crew`;
+  - `responseOwner: EXPLORATION_CREW`;
+- any non-crew requested role is coerced to crew.
+
+App correction:
+- direct browser `speechSynthesis` fallback was removed from `app.js`;
+- app TTS now requires `SnapPopVoice`;
+- if voice runtime is unavailable, app falls back to text UI/toast rather than bypassing ownership guard.
+
+Browser TTS is still allowed only INSIDE `voice-runtime.js`, after the same guarded text boundary.
+
+### Validation
+
+Added:
+- `scripts/validate-voice-ownership.mjs`
+
+Isolated execution PASS:
+- legitimate-ai-fact-preserved
+- self-identity-speech-blocked
+- external-voice-forced-to-crew
+- app-has-no-direct-speech-synthesis-bypass
+- app-requires-voice-runtime
+
+Final marker:
+- `VOICE_OWNERSHIP_BOUNDARY_PASS`
+
+### Status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL
+  - isolated voice ownership boundary PASS
+  - browser/device voice runtime NOT_RUN
+  - external realtime voice NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Next P5 increment
+
+Voice ownership is locked.
+
+Next P5 work:
+1. voice quality policy;
+2. Korean/English pacing and interrupt behavior;
+3. browser fallback vs external voice capability separation;
+4. no provider/system identity exposure;
+5. no auto-speaking that increases interaction pressure;
+6. external realtime voice remains OPEN until separately implemented and verified.
