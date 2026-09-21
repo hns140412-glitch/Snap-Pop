@@ -5,6 +5,7 @@ const source=fs.readFileSync(new URL("../authorship-guard-runtime.js",import.met
 const semantic=fs.readFileSync(new URL("../semantic-writing-runtime.js",import.meta.url),"utf8");
 const expression=fs.readFileSync(new URL("../expression-bridge-runtime.js",import.meta.url),"utf8");
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const imagination=fs.readFileSync(new URL("../imagination-controller.js",import.meta.url),"utf8");
 
 const window={};
 vm.runInNewContext(source,{window,Object,Array,String,Number,Math,Error,RegExp,Set});
@@ -59,7 +60,7 @@ assert("expression-runtime-uses-central-guard",
   expression.includes("assertExpressionBridge")
 );
 assert("app-transition-uses-central-guard",
-  app.includes("SnapPopAuthorshipGuard?.transitionPayload")
+  imagination.includes("SnapPopAuthorshipGuard?.transitionPayload")
 );
 
 console.log("CENTRAL_AUTHORSHIP_GUARD_PASS");
