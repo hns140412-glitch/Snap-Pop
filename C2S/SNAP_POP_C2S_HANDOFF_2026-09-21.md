@@ -3362,3 +3362,41 @@ External state remains:
 - merge: NOT_RUN
 - external call count: 0
 - Human Approval: PENDING
+
+
+## 47. LEARNING APP FAMILY INTEGRATION DELTA — 2026-09-21
+
+Integration branch:
+- `taky/learning-app-family-snap-context-v2-2026-09-21`
+- exact verified integration SHA: `a720b5d35e096feda9b83bc88ffe5d06f89b3ed2`
+- current product development branch remains separate and must not be overwritten.
+
+Implemented:
+- `READY_LEARNING_CONTEXT_V1` consumer aligned to central fail-closed contract.
+- learning_unit_id / analysis_id / assignment_id are required lineage.
+- role/permission/family identity/Planner authority/Hanja-grade authority fields are rejected.
+- existing Hide vocabulary bridge remains source-owned:
+  - sourceOwner preserved
+  - role = EXPRESSION_MATERIAL_ONLY
+  - autoInsertAllowed = false
+  - masteryMutationAllowed = false
+  - vocabularyOwnershipTransferred = false
+- reconciled the three main-behind shared-foundation capabilities without broad rebase:
+  - README authority
+  - shared release/PWA safe activation
+  - shared TAKY event envelope
+- latest active Snap runtime diagnostics/CDP browser harness were preserved while reconciling.
+
+Verification:
+- Snap Pop Branch Closure run `35585348067`: SUCCESS.
+- 45 branch closure validators: PASS.
+- Ready learning-context contract: PASS.
+- shared runtime reconciliation: PASS.
+- integrated JavaScript syntax gate: PASS.
+- browser runtime smoke: PASS.
+- central TAKY cross-app contract with exact SHA: PASS.
+- CODED=YES / CI_VERIFIED=YES / RUNTIME_VERIFIED=YES for Snap integration scope.
+- DEVICE_VERIFIED=NO / PRODUCTION_VERIFIED=NO.
+- Netlify/hosted runtime/deploy/merge=NOT_RUN for this integration work.
+
+This integration branch is not a new deployment approval or production/frozen-candidate declaration. Any external action remains under TAKY external-resource gate + explicit Human Approval.
