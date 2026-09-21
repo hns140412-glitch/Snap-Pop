@@ -3,6 +3,8 @@
 let singleton=null;
 function create(deps){
 const store=window.SnapPopStorage;
+function stableHash(s=""){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function affinityTier(score=0){const tiers=deps.getRules()?.affinityEngine?.tiers||[];let t=tiers[0]||{key:"KNOWN",label:"아는 친구",min:0};for(const x of tiers)if(score>=x.min)t=x;return t}
 async function ensureCrewRegistry(){
   const registry=await store.get("crewRegistry")||{},identity=await deps.resolvedIdentity();
   for(const [id,rule] of Object.entries({...deps.getRules()?.legacyCharacterLineages,...deps.getRules()?.definedCharacterLineages})){
@@ -27,7 +29,7 @@ async function recordCrewMemberExperience(memberId,type,meta={}){
   entry.memories.push({eventId,type,at:new Date().toISOString(),...meta});
   entry.affinity=entry.affinity||{levelKey:"KNOWN",scoreInternal:0};
   entry.affinity.scoreInternal=(entry.affinity.scoreInternal||0)+weight;
-  const tier=deps.affinityTier(entry.affinity.scoreInternal);entry.affinity.levelKey=tier.key;entry.lastMetAt=new Date().toISOString();
+  const tier=affinityTier(entry.affinity.scoreInternal);entry.affinity.levelKey=tier.key;entry.lastMetAt=new Date().toISOString();
   await store.set("crewRegistry",registry);return entry;
 }
 async function recordCrewExperience(type,meta={}){
@@ -67,7 +69,7 @@ async function synthesizeCrewWorldState(){
   let mainState=null;
   for(const [id,entry] of Object.entries(registry)){
     const last=entry.lastMetAt?new Date(entry.lastMetAt):null,days=last?Math.max(0,Math.floor((now-last)/86400000)):0,previous=entry.worldState?.state;
-    const seed=deps.stableHash([id,last?.toISOString()?.slice(0,10)||"first",now.toISOString().slice(0,10),entry.memories?.length||0].join("|"));
+    const seed=stableHash([id,last?.toISOString()?.slice(0,10)||"first",now.toISOString().slice(0,10),entry.memories?.length||0].join("|"));
     const state=id===mainId?"MAIN_COMPANION":background[seed%background.length];
     entry.worldState={state,generatedAt:now.toISOString(),daysSinceSeen:days,synthetic:true};
     if(id===mainId){mainState=entry.worldState;if(days>=2){const evId=`reunion_${id}_${now.toISOString().slice(0,10)}`;entry.memories=entry.memories||[];if(!entry.memories.some(x=>x.eventId===evId))entry.memories.push({eventId:evId,type:"REUNION",at:now.toISOString(),daysAway:days,fromState:previous,toState:state})}}
