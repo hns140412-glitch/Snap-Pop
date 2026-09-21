@@ -38,7 +38,7 @@ assert("voice-input-is-explicit-separate-control",
 );
 
 assert("voice-input-appends-child-transcript-to-draft",
-  app.includes('$("#answer").value+=(($("#answer").value?" ":"")+t)')&&
+  support.includes('q("#answer").value+=((q("#answer").value?" ":"")+t)')&&
   support.includes('q("#answer").dispatchEvent(new Event("input"))')
 );
 
