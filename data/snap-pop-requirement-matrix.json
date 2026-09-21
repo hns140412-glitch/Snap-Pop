@@ -264,15 +264,18 @@
         "EXPLORATION_CREW_MASTER"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "app.js:specialCrewRoster",
-        "data/exploration-crew-rules.json:roster.special"
+        "crew-role-guard-runtime.js",
+        "app.js:chooseSceneGuest roleContract",
+        "app.js:renderCrewRoster special encounter-only copy",
+        "app.js:openSpecial special-not-stronger copy",
+        "scripts/validate-crew-special-role-not-power.mjs"
       ],
-      "gap": "콘텐츠/조우 세부는 OPEN"
+      "gap": "SPECIAL role is executable as encounter-style-only with functional/reward equality; exact special encounter content/cadence remains OPEN"
     },
     {
       "id": "SP-CREW-005",
