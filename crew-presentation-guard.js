@@ -1,42 +1,64 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-a";
-  const FORBIDDEN_IDENTITY=/\b(openai|chatgpt|gpt[-_ ]?\d*|assistant|system|developer|provider|model|api)\b/ig;
+  const VERSION="2026.09.21-b";
+  const SELF_IDENTITY_PATTERNS=[
+    /\b(as an? ai|i am an? ai|i'm an? ai|as chatgpt|i am chatgpt|i'm chatgpt|openai assistant|system message|developer message)\b/i,
+    /(저는|나는)\s*(AI|인공지능|ChatGPT|OpenAI)/i,
+    /(시스템|개발자)\s*(메시지|지침)/i
+  ];
 
-  function cleanText(value,max=1600){
+  function cleanText(value,max=1800){
     return typeof value==="string"?value.trim().slice(0,max):"";
   }
 
-  function stripIdentity(value,max=1600){
-    const text=cleanText(value,max);
-    if(!text) return "";
-    return text
-      .replace(FORBIDDEN_IDENTITY,"")
-      .replace(/\s{2,}/g," ")
-      .replace(/^[\s:·\-]+|[\s:·\-]+$/g,"")
-      .trim();
+  function hasSelfIdentityLeak(value){
+    const text=cleanText(value,2400);
+    return !!text&&SELF_IDENTITY_PATTERNS.some(re=>re.test(text));
   }
 
-  function sanitizeNode(node={}){
+  function cleanNode(node={}){
     if(!node||typeof node!=="object") return null;
-    const label=stripIdentity(node.label,80);
-    const value=stripIdentity(node.value,500);
+    const label=cleanText(node.label,80);
+    const value=cleanText(node.value,500);
     if(!label&&!value) return null;
+    if(hasSelfIdentityLeak(label)||hasSelfIdentityLeak(value)) throw new Error("CREW_PRESENTATION_IDENTITY_LEAK");
     return {label,value};
   }
 
-  function sanitizeUserFacing(result={}){
-    const next={...result};
-
-    next.title=stripIdentity(result.title,160)||"상상 구름";
-    next.core=stripIdentity(result.core,1800);
-    next.example=stripIdentity(result.example,700)||null;
-    next.speakable=stripIdentity(result.speakable||result.core,1400);
-
-    if(Array.isArray(result.nodes)){
-      next.nodes=result.nodes.slice(0,8).map(sanitizeNode).filter(Boolean);
+  function genericTitle(result={}){
+    if(result.kind==="ASK_UNDERSTAND"){
+      if(result.verified===true) return "확인해서 정리했어";
+      return "확인된 부분부터 볼게";
     }
+    return "같이 생각해보자";
+  }
+
+  function sanitizeUserFacing(result={}){
+    if(!result||typeof result!=="object") throw new Error("CREW_PRESENTATION_INVALID_RESULT");
+
+    const core=cleanText(result.core,1800);
+    const example=cleanText(result.example,700);
+    const speakable=cleanText(result.speakable||result.core,1400);
+
+    if(hasSelfIdentityLeak(core)||hasSelfIdentityLeak(example)||hasSelfIdentityLeak(speakable)){
+      throw new Error("CREW_PRESENTATION_IDENTITY_LEAK");
+    }
+
+    const nodes=Array.isArray(result.nodes)
+      ? result.nodes.slice(0,8).map(cleanNode).filter(Boolean)
+      : [];
+
+    const next={
+      ...result,
+      title:genericTitle(result),
+      core,
+      example:example||null,
+      speakable,
+      nodes,
+      responseOwner:"EXPLORATION_CREW",
+      presentationGuardVersion:VERSION
+    };
 
     delete next.system;
     delete next.system_message;
@@ -49,28 +71,25 @@
     delete next.raw_response;
     delete next.tool_output;
 
-    next.responseOwner="EXPLORATION_CREW";
-    next.presentationGuardVersion=VERSION;
-
     return next;
   }
 
   function publicHistoryEntry(result={}){
+    const safe=sanitizeUserFacing(result);
     return {
-      intent:result.intent||result.kind||null,
-      verified:result.verified!==false,
-      title:stripIdentity(result.title,160),
-      core:stripIdentity(result.core,1800),
-      nodes:Array.isArray(result.nodes)
-        ? result.nodes.slice(0,8).map(sanitizeNode).filter(Boolean)
-        : [],
-      example:stripIdentity(result.example,700)
+      intent:safe.intent||safe.kind||null,
+      verified:safe.verified!==false,
+      title:safe.title,
+      core:safe.core,
+      nodes:safe.nodes,
+      example:safe.example
     };
   }
 
   window.SnapPopCrewPresentationGuard=Object.freeze({
     version:VERSION,
     sanitizeUserFacing,
-    publicHistoryEntry
+    publicHistoryEntry,
+    hasSelfIdentityLeak
   });
 })();
