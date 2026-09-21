@@ -169,3 +169,5 @@ This closure means interaction hierarchy and structural child-facing flow are va
 - record revision provenance runtime validation trigger.
 
 - records-growth html helper regression fix exact-head validation trigger.
+
+- SP-RECORD-001 runtime matrix closure exact-head validation trigger.
