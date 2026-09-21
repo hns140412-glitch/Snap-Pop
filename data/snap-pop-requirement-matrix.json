@@ -59,13 +59,17 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "data/landmarks.json",
-        "app.js:renderLandmarks"
+        "app.js:renderLandmarks",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "notes": "지도/레벨/EXP/보석으로 잠금 금지"
+      "notes": "지도/레벨/EXP/보석으로 잠금 금지",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: map-has-five-landmarks"
+      ]
     },
     {
       "id": "SP-CORE-002",
@@ -78,13 +82,17 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:renderExplore",
-        "app.js:next"
+        "app.js:next",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "notes": "생각 꺼내기→넓히기→표현 완성"
+      "notes": "생각 꺼내기→넓히기→표현 완성",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: writing step 0→1→2→result"
+      ]
     },
     {
       "id": "SP-GUIDE-001",
@@ -411,11 +419,15 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "data/growth-tree.json",
-        "app.js:renderGrowth"
+        "app.js:renderGrowth",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: growth view active with exactly one growth tree"
       ]
     },
     {
@@ -1198,15 +1210,19 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "index.html:map/explore",
         "index.html:imaginationLayer",
         "app.js:openImagination",
-        "app.js:nav explore handling"
+        "app.js:nav explore handling",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "runtime/device UX validation pending"
+      "gap": "",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: imagination layer hidden by default and opens only on explicit action"
+      ]
     },
     {
       "id": "SP-UNIV-008",
@@ -1261,13 +1277,17 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:homeRadio→openImagination",
-        "index.html:imaginationLayer"
+        "index.html:imaginationLayer",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "external high-quality voice provider and device validation pending"
+      "gap": "external high-quality voice provider and device validation pending",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: home radio explicitly opens hidden imagination layer"
+      ]
     },
     {
       "id": "SP-GROWTH-003",
@@ -1319,14 +1339,18 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:ensureWritingState",
         "app.js:draft/snapshots",
-        "app.js:finalDraft"
+        "app.js:finalDraft",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "runtime/device writing-flow validation pending"
+      "gap": "",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: same draft persisted/carried across all writing steps and final result"
+      ]
     },
     {
       "id": "SP-WRITE-002",
