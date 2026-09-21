@@ -261,3 +261,5 @@ Conservative boundaries retained:
 - DOM freshness stale-analysis regression validation trigger.
 
 - deterministic stale-result race probe validation trigger.
+
+- stale fallback overwrite regression validation trigger.
