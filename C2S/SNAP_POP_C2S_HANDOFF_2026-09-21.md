@@ -853,3 +853,58 @@ Next:
 - after cloud close, restore focus/draft and show at most one short crew acknowledgement;
 - do not trigger a new question automatically;
 - preserve ONE DRAFT → ONE NEXT MOVE.
+
+
+## 20. P3 MINIMAL WRITING RETURN ACKNOWLEDGEMENT — 2026-09-21
+
+### Implemented
+
+After closing Imagination Cloud from WRITING_FLOW:
+- draft restore still requires same activeId + same step;
+- one short crew acknowledgement is shown:
+  - KO: `쓰던 글은 그대로 있어. 준비되면 이어서 쓰면 돼.`
+  - EN: equivalent non-driving message;
+- acknowledgement uses `persist:false`;
+- no new question is generated;
+- no `analyzeWritingMove`;
+- no `runImagination`;
+- no next-step navigation;
+- no automatic step change.
+
+This preserves:
+`ONE DRAFT → ONE NEXT MOVE`
+without turning cloud return into a new interaction branch.
+
+### Validation
+
+Updated:
+- `scripts/validate-imagination-pressure-return.mjs`
+
+Isolated execution:
+- previous 10 pressure/return assertions PASS
+- `return-acknowledgement-is-non-driving` PASS
+
+Total:
+- 11/11 PASS
+- `IMAGINATION_PRESSURE_RETURN_CONTRACT_PASS`
+
+### Status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL
+  - isolated pressure/return/acknowledgement contract PASS
+  - live browser interaction NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Next
+
+P3 branch-only intelligence quality is now materially stronger.
+
+Next axis:
+- review remaining P3/P4 boundary:
+  - Exploration Crew response ownership on all Imagination Cloud paths;
+  - no raw provider/system voice leakage;
+  - crew-specific reaction guard without changing factual content;
+- keep P2 Truth Guard and P3 pressure locks unchanged.
