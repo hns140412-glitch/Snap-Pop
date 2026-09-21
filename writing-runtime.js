@@ -17,8 +17,10 @@
   };
   function features(text="",language="ko"){const r=language==="en"?en:ko;return Object.fromEntries(Object.entries(r).map(([k,re])=>[k,re.test(text)]));}
   function sentenceCount(text=""){return (text.match(/[.!?。！？]|\n/g)||[]).length+(text.trim()?1:0)}
-  function move({landmark="idea",step=0,draft="",language="ko"}={}){
+  function move({landmark="idea",step=0,draft="",language="ko",learnerContext=null}={}){
     const t=(draft||"").trim(),f=features(t,language),n=sentenceCount(t),isEn=language==="en";
+    const bookMove=window.SnapPopBookResponseScaffold?.nextMove?.({draft:t,language,learnerContext})||null;
+    if(bookMove)return {...bookMove,features:f,sentenceCount:n};
     if(!t)return isEn?
       {focus:"START",question:"What is the one thing you most want to say?",hint:"A word or one short sentence is enough."}:
       {focus:"START",question:"지금 제일 먼저 쓰고 싶은 한 가지가 뭐야?",hint:"단어나 짧은 한 문장이어도 충분해."};
