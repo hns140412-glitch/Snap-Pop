@@ -1,9 +1,25 @@
 (() => {
   "use strict";
-  const VERSION="2026.09.21-b";
+  const VERSION="2026.09.21-c";
   let currentRecognition=null;
-  function guardedSpeechText(text){
-    const value=typeof text==="string"?text.trim().slice(0,1600):"";
+  const SPEECH_SOURCES=new Set(["USER_TAP","AUTO_READ"]);
+  function voicePolicy({language="ko",source="USER_TAP",interrupt}={}){
+    const safeLanguage=language==="en"?"en":"ko";
+    const safeSource=SPEECH_SOURCES.has(source)?source:"USER_TAP";
+    const userInitiated=safeSource==="USER_TAP";
+    return Object.freeze({
+      language:safeLanguage,
+      source:safeSource,
+      userInitiated,
+      autoAllowed:safeSource==="AUTO_READ",
+      interrupt:typeof interrupt==="boolean"?interrupt:userInitiated,
+      browserRate:safeLanguage==="en"?0.98:0.94,
+      browserPitch:1,
+      maxChars:userInitiated?1600:700
+    });
+  }
+  function guardedSpeechText(text,maxChars=1600){
+    const value=typeof text==="string"?text.trim().slice(0,Math.max(1,Math.min(1600,maxChars))):"";
     if(!value) throw new Error("VOICE_EMPTY_TEXT");
     const presentation=window.SnapPopCrewPresentationGuard;
     if(presentation&&typeof presentation.hasSelfIdentityLeak==="function"&&presentation.hasSelfIdentityLeak(value)){
@@ -11,33 +27,40 @@
     }
     return value;
   }
-  function browserSpeak(text,language="ko"){
+  function browserSpeak(text,policy){
     if(!("speechSynthesis" in window)) return Promise.reject(new Error("TTS_UNAVAILABLE"));
-    speechSynthesis.cancel();
+    if(policy.interrupt) speechSynthesis.cancel();
     return new Promise((resolve,reject)=>{
       const u=new SpeechSynthesisUtterance(text);
-      u.lang=language==="en"?"en-US":"ko-KR";
-      u.rate=0.96;
-      u.onend=()=>resolve({provider:"browser-tts"});
+      u.lang=policy.language==="en"?"en-US":"ko-KR";
+      u.rate=policy.browserRate;
+      u.pitch=policy.browserPitch;
+      u.onend=()=>resolve({provider:"browser-tts",policy});
       u.onerror=e=>reject(e.error||new Error("TTS_ERROR"));
       speechSynthesis.speak(u);
     });
   }
-  async function speak(text,{language="ko",voiceRole="crew",interrupt=true}={}){
-    const safeText=guardedSpeechText(text);
-    const safeLanguage=language==="en"?"en":"ko";
+  async function speak(text,{language="ko",voiceRole="crew",interrupt,source="USER_TAP"}={}){
+    const policy=voicePolicy({language,source,interrupt});
+    const safeText=guardedSpeechText(text,policy.maxChars);
     const safeRole=voiceRole==="crew"?"crew":"crew";
-    if(interrupt) stopSpeaking();
+    if(policy.interrupt) stopSpeaking();
     const external=window.SnapPopVoiceProvider;
     if(external && typeof external.speak==="function"){
       return external.speak({
         text:safeText,
-        language:safeLanguage,
+        language:policy.language,
         voiceRole:safeRole,
-        responseOwner:"EXPLORATION_CREW"
+        responseOwner:"EXPLORATION_CREW",
+        source:policy.source,
+        interrupt:policy.interrupt,
+        pacing:{
+          rate:policy.browserRate,
+          pitch:policy.browserPitch
+        }
       });
     }
-    return browserSpeak(safeText,safeLanguage);
+    return browserSpeak(safeText,policy);
   }
   function stopSpeaking(){
     try{ window.SnapPopVoiceProvider?.stop?.(); }catch{}
@@ -66,5 +89,16 @@
     try{ window.SnapPopVoiceProvider?.stopListening?.(); }catch{}
     if(currentRecognition){try{currentRecognition.abort()}catch{} currentRecognition=null;}
   }
-  window.SnapPopVoice=Object.freeze({version:VERSION,speak,listen,stopSpeaking,stopListening,guardedSpeechText,get mode(){return window.SnapPopVoiceProvider?"external":"browser-fallback";}});
+  function capabilities(){
+    const external=window.SnapPopVoiceProvider;
+    const extCaps=external&&typeof external.capabilities==="object"?external.capabilities:{};
+    return Object.freeze({
+      mode:external?"external":"browser-fallback",
+      tts:!!(external?.speak||("speechSynthesis" in window)),
+      stt:!!(external?.listen||window.SpeechRecognition||window.webkitSpeechRecognition),
+      realtime:extCaps.realtime===true,
+      browserFallback:!external
+    });
+  }
+  window.SnapPopVoice=Object.freeze({version:VERSION,speak,listen,stopSpeaking,stopListening,guardedSpeechText,voicePolicy,capabilities,get mode(){return capabilities().mode;}});
 })();
