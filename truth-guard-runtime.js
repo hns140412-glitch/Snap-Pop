@@ -20,8 +20,9 @@
     const sourceUrl=text(item.source_url||item.sourceUrl,1000);
     const excerpt=text(item.excerpt,500);
     const checkedAt=text(item.checked_at||item.checkedAt,80);
+    const title=text(item.title,240);
     if(!sourceType||(!sourceId&&!sourceUrl)) return null;
-    return {source_type:sourceType,source_id:sourceId||null,source_url:sourceUrl||null,excerpt:excerpt||null,checked_at:checkedAt||null};
+    return {source_type:sourceType,source_id:sourceId||null,source_url:sourceUrl||null,title:title||null,excerpt:excerpt||null,checked_at:checkedAt||null};
   }
 
   function normalizeClaim(item={}){
