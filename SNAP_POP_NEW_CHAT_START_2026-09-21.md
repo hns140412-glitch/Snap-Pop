@@ -104,3 +104,11 @@ LATEST P2 NOTE:
 - Factual verification uses actual url_citation annotations + retrieved source-set matching.
 - P3 Imagination Cloud intelligence quality is the next branch-only implementation axis.
 - live OpenAI/browser/server runtime is still NOT_RUN; no deploy/Netlify/merge.
+
+
+LATEST P3 NOTE:
+- P3 question-structure scaffold is coded.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md section 15.
+- 12 Korean/English classification fixtures pass after precedence correction.
+- next P3 increment is bounded explanation-order templates without inventing facts.
+- no deploy/Netlify/merge/device testing.
