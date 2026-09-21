@@ -273,3 +273,5 @@ Conservative boundaries retained:
 - fail-soft/low-trust runtime matrix closure validation trigger.
 
 - writing lens + semantic authorship runtime validation trigger.
+
+- writing lens/authorship runtime matrix closure validation trigger.
