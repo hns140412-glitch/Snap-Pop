@@ -39,7 +39,8 @@ const validators=[
   "validate-badge-catalog-activation-guard.mjs",
   "validate-crew-special-role-not-power.mjs",
   "validate-imagination-return-integrity.mjs",
-  "validate-writing-semantic-contract.mjs"
+  "validate-writing-semantic-contract.mjs",
+  "validate-crew-core6-starter-baseline.mjs"
 ];
 
 let passed=0;
