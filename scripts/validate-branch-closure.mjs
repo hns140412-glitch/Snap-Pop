@@ -33,7 +33,8 @@ const validators=[
   "validate-etymology-source-diversity.mjs",
   "validate-central-authorship-guard.mjs",
   "validate-shared-badge-event-contract.mjs",
-  "validate-non-blocking-crew-reaction-ui.mjs"
+  "validate-non-blocking-crew-reaction-ui.mjs",
+  "validate-think-express-verification-separation.mjs"
 ];
 
 let passed=0;
