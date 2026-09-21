@@ -23,7 +23,21 @@ test('Snap active exploration blocks safe update and completion reopens it',asyn
   await page.locator('#nextBtn').click();
   await page.locator('#answer').fill('표현 완성');
   await page.locator('#nextBtn').click();
-  await expect.poll(()=>page.evaluate(()=>globalThis.SnapPopPwaSafePoint())).toBe(true);
+  await expect(page.locator('#growth')).toHaveClass(/active/);
+  const finalState=await page.evaluate(async()=>{
+    const active=await new Promise((resolve,reject)=>{
+      const q=indexedDB.open('snap_pop_rev10',1);
+      q.onsuccess=()=>{
+        const db=q.result;
+        const r=db.transaction('state').objectStore('state').get('active');
+        r.onsuccess=()=>resolve(r.result??null);
+        r.onerror=()=>reject(r.error);
+      };
+      q.onerror=()=>reject(q.error);
+    });
+    return {active,safe:globalThis.SnapPopPwaSafePoint(),href:location.href};
+  });
+  expect(finalState).toEqual({active:null,safe:true,href:'http://127.0.0.1:4173/'});
 });
 
 test('Snap service worker controls app without install-time forced activation',async({page})=>{
