@@ -277,3 +277,5 @@ Conservative boundaries retained:
 - writing lens/authorship runtime matrix closure validation trigger.
 
 - crew relationship/world-state/guest weighting runtime validation trigger.
+
+- stale-safe semantic contract exact-head validation trigger.
