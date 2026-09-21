@@ -611,3 +611,92 @@ Improve explanation quality without increasing pressure:
 - keep child-facing answer compact;
 - keep writing-first surface unchanged;
 - no separate explore hub.
+
+
+## 17. P3 VERIFIED-CLAIM MENTAL MODEL — 2026-09-21
+
+### Implemented
+
+Added:
+- `mental-model-runtime.js`
+
+Purpose:
+- make verified factual explanations easier to picture without generating new facts;
+- reuse only existing VERIFIED claim text;
+- never paraphrase or synthesize new factual content inside the mental model.
+
+Hard boundary:
+- only `verification.claims[].status === VERIFIED` are eligible;
+- claim text is copied verbatim;
+- UNVERIFIED claims are excluded;
+- maximum four mental-model items;
+- `transformsFacts:false`;
+- no verified claim => no mental model.
+
+Mental-model types:
+- FLOW:
+  - CAUSE_EFFECT
+  - MECHANISM
+  - TIME_FLOW
+  - PERSON_EVENT
+  - PLACE_CONTEXT
+  - ETYMOLOGY
+- COMPARE:
+  - COMPARE
+- STACK:
+  - MEANING
+  - CONCEPT
+
+Structure labels provide navigation only.
+They are not evidence and do not create facts.
+
+UI:
+- rendered inside the existing Imagination Cloud response;
+- no separate learning hub;
+- FLOW uses compact arrow sequence;
+- COMPARE uses side-by-side cards where space permits;
+- mobile collapses FLOW vertically;
+- writing-first default surface remains unchanged.
+
+Integration:
+- script load order:
+  `knowledge-runtime → mental-model-runtime → curiosity-scaffold-runtime → intelligence-runtime`
+- `curiosity-scaffold-runtime` attaches mentalModel only after guarded knowledge result.
+
+Validation:
+- `scripts/validate-mental-model.mjs`
+- isolated Node execution PASS:
+  - verified-only
+  - flow-type
+  - verbatim-source
+  - no-fact-transform
+  - compare-type
+  - no-verified-claim-no-model
+  - max-four-items
+- final marker:
+  `MENTAL_MODEL_VERIFIED_CLAIM_CONTRACT_PASS`
+
+Blocked-path note:
+- first execution route attempted direct raw GitHub fetch from the container;
+- container DNS resolution was blocked;
+- classified as NETWORK / CONTAINER DNS;
+- same route was not repeated;
+- switched to GitHub connector readback → local temporary execution.
+
+### Status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL
+  - isolated mental-model runtime PASS
+  - live browser render NOT_RUN
+  - live OpenAI/browser/server NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Next P3 increment
+
+Next quality layer:
+1. prevent structural labels from implying unsupported semantics when verified claim count/order is insufficient;
+2. add bounded mental-model eligibility rules by lens and claim count;
+3. then improve child-facing interaction around one-next-curiosity without increasing question pressure.
