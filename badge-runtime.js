@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-a";
+  const VERSION="2026.09.21-b";
   const TIER_ORDER=["GREEN","BLUE","RED","GOLD","PLATINUM"];
 
   let config=null, catalog=null;
@@ -15,6 +15,8 @@
     if(!cfgRes.ok||!catRes.ok)throw new Error("BADGE_CONFIG_LOAD_FAILED");
     config=await cfgRes.json();
     catalog=await catRes.json();
+    const guard=window.SnapPopBadgeCatalogGuard;
+    if(guard&&typeof guard.validateCatalog==="function") guard.validateCatalog(catalog);
     return {config,catalog};
   }
 
@@ -29,7 +31,11 @@
   }
 
   function activeItems(){
-    return (catalog?.items||[]).filter(x=>x&&x.active===true&&x.status!=="WORKING_DRAFT");
+    const guard=window.SnapPopBadgeCatalogGuard;
+    return (catalog?.items||[]).filter(x=>{
+      if(guard&&typeof guard.canActivate==="function") return guard.canActivate(x,catalog||{});
+      return x&&x.active===true&&x.status!=="WORKING_DRAFT"&&catalog?.status!=="WORKING_DRAFT_NOT_ACTIVE";
+    });
   }
 
   function matchEvent(event){
