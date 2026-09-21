@@ -308,17 +308,17 @@
         "GUIDE_RULES"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "app.js:speak",
-        "browser speech recognition fallback",
-        "voice-runtime.js",
-        "app.js:SnapPopVoice integration"
+        "voice-runtime.js:speak/listen/stopSpeaking/stopListening",
+        "voice-runtime.js:listenPolicy oneShot",
+        "app.js:#listenBtn/#voiceBtn integration",
+        "scripts/validate-voice-boundary-contract.mjs"
       ],
-      "gap": "external high-quality voice provider not connected; browser STT/TTS remains fallback"
+      "gap": "listening and speaking are structurally separated and statically verified; live external high-quality provider/browser/device quality remains NOT_RUN"
     },
     {
       "id": "SP-VOICE-002",
@@ -330,17 +330,17 @@
         "exploration-crew-rules.json"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "index.html",
-        "app.js",
+        "index.html:#homeRadio/#listenBtn/#voiceBtn",
+        "app.js:homeRadio→openImagination HOME_RADIO",
         "voice-runtime.js",
-        "app.js:SnapPopVoice integration"
+        "scripts/validate-voice-boundary-contract.mjs"
       ],
-      "gap": "external high-quality voice provider not connected; browser STT/TTS remains fallback"
+      "gap": "radio is structurally an Imagination/voice access point, not a sixth writing landmark; live external high-quality provider/browser/device quality remains NOT_RUN"
     },
     {
       "id": "SP-IMAGINE-001",
