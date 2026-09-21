@@ -37,6 +37,23 @@
       assert("live-dom-writing-surface-present",!!document.querySelector("#answer")&&document.querySelector("#answer") instanceof HTMLTextAreaElement);
       assert("runtime-mockup-background-not-used",![...document.images].some(img=>/mockup|wireframe|screenshot|prototype/i.test(img.getAttribute("src")||"")));
 
+      const originalOpenAIProvider=window.SnapPopOpenAIProvider;
+      const originalKnowledgeRuntime=window.SnapPopKnowledge;
+      window.SnapPopOpenAIProvider=null;
+      window.SnapPopKnowledge=null;
+      const localThinkKo=await window.SnapPopIntelligence.ask({input:"비 오는 날 창문을 보며 떠오른 생각",language:"ko"});
+      const localThinkEn=await window.SnapPopIntelligence.ask({input:"A quiet thought while watching rain",language:"en"});
+      assert("think-express-local-runtime-kind",localThinkKo?.kind==="THINK_EXPRESS"&&localThinkKo?.verification?.mode==="NOT_APPLICABLE");
+      assert("think-express-local-runtime-has-scaffold",Array.isArray(localThinkKo?.nodes)&&localThinkKo.nodes.length>=3&&!localThinkKo?.finalDraft&&!localThinkKo?.answer);
+      assert("think-express-korean-supported",/생각|장면|마음/.test([localThinkKo?.title,localThinkKo?.core,...(localThinkKo?.nodes||[]).map(x=>x.label)].join(" ")));
+      assert("think-express-english-supported",localThinkEn?.kind==="THINK_EXPRESS"&&/[A-Za-z]/.test([localThinkEn?.title,localThinkEn?.core,...(localThinkEn?.nodes||[]).map(x=>x.label)].join(" ")));
+      assert("think-express-response-owner-is-crew",localThinkKo?.responseOwner==="EXPLORATION_CREW"&&localThinkEn?.responseOwner==="EXPLORATION_CREW");
+      const noGuess=await window.SnapPopIntelligence.ask({input:"조선은 언제 시작됐어?",language:"ko"});
+      assert("ask-without-knowledge-provider-does-not-guess",noGuess?.kind==="ASK_UNDERSTAND"&&noGuess?.verified===false&&/추측|확인|사실/.test((noGuess?.core||"")+" "+(noGuess?.title||"")));
+      assert("ask-no-guess-response-owner-is-crew",noGuess?.responseOwner==="EXPLORATION_CREW");
+      window.SnapPopOpenAIProvider=originalOpenAIProvider;
+      window.SnapPopKnowledge=originalKnowledgeRuntime;
+
       const crewRules=await fetch("data/exploration-crew-rules.json").then(r=>r.json());
       assert("affinity-runtime-is-internal-expression-only",
         crewRules?.affinityEngine?.scoreIsInternal===true&&
