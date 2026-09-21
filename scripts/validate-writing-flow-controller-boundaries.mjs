@@ -12,6 +12,7 @@ assert("legacy-language-bindings-removed",!app.includes('$("#modeKo").onclick=as
 assert("flow-owns-completion-event",flow.includes('new CustomEvent("snap-pop:task-completed"')&&flow.includes("completionEventId"));
 assert("flow-owns-record-gem-exp-transaction",flow.includes('store.setMany([["records",records],["gems",gems],["expLedger",expLedger],["gemLedger",gemLedger]'));
 assert("flow-preserves-empty-draft-wait",flow.includes("emptyAdvanceAttempts")&&flow.includes("SnapPopCrewIntervention"));
+assert("flow-invalidates-stale-analysis-on-input",flow.includes('async function onInput(){deps.bumpWritingAnalysisSeq();'));
 assert("flow-uses-storage-contract",flow.includes("window.SnapPopStorage")&&!flow.includes("indexedDB"));
 assert("app-installs-writing-flow-controller",app.includes("writingFlowController().install()"));
 console.log("WRITING_FLOW_CONTROLLER_BOUNDARY_PASS");
