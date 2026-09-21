@@ -314,11 +314,11 @@
       "deviceVerified": false,
       "codeEvidence": [
         "voice-runtime.js:speak/listen/stopSpeaking/stopListening",
-        "voice-runtime.js:listenPolicy oneShot",
-        "app.js:#listenBtn/#voiceBtn integration",
+        "voice-runtime.js:oneShot listen policy",
+        "app.js:#listenBtn/#voiceBtn handlers",
         "scripts/validate-voice-boundary-contract.mjs"
       ],
-      "gap": "listening and speaking are structurally separated and statically verified; live external high-quality provider/browser/device quality remains NOT_RUN"
+      "gap": "listening and speaking/input are structurally separated and statically verified; external high-quality provider plus live browser/device execution remain NOT_RUN"
     },
     {
       "id": "SP-VOICE-002",
@@ -335,12 +335,13 @@
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "index.html:#homeRadio/#listenBtn/#voiceBtn",
-        "app.js:homeRadio→openImagination HOME_RADIO",
+        "index.html:#homeRadio",
+        "app.js:HOME_RADIO→openImagination",
+        "app.js:no radio landmark path",
         "voice-runtime.js",
         "scripts/validate-voice-boundary-contract.mjs"
       ],
-      "gap": "radio is structurally an Imagination/voice access point, not a sixth writing landmark; live external high-quality provider/browser/device quality remains NOT_RUN"
+      "gap": "radio is implemented as optional Imagination entry, not a sixth writing landmark/tool; external high-quality voice provider and live browser/device execution remain NOT_RUN"
     },
     {
       "id": "SP-IMAGINE-001",
