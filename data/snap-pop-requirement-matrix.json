@@ -185,15 +185,16 @@
       "deviceVerified": false,
       "codeEvidence": [
         "crew-orchestration-runtime.js",
-        "app.js:chooseSceneGuest",
-        "app.js:openSpecial main acknowledgement",
+        "app.js:chooseSceneGuest appearanceAuthorized gate",
+        "app.js:openSpecial explicit activeCrewGuestTrigger",
         "app.js:recordCrewMemberExperience",
         "app.js:specialMemories.guestMemberId",
         "app.js:renderRecords shared guest display",
         "scripts/validate-crew-guest-orchestration.mjs",
-        "scripts/validate-special-guest-shared-memory.mjs"
+        "scripts/validate-special-guest-shared-memory.mjs",
+        "scripts/validate-guest-appearance-gate.mjs"
       ],
-      "gap": "deterministic weighted guest selection implemented for special scene with main continuity, shared guest memory, and record visibility; exact general appearance cadence/probability remains OPEN by canonical rule"
+      "gap": "guest selection/continuity/shared-memory runtime is implemented, but guest appearance itself is default-deny unless an explicit authorized scene trigger exists. Exact encounter cadence/probability remains OPEN and is not invented."
     },
     {
       "id": "SP-CREW-001",
