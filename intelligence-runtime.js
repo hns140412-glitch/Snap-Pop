@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  const VERSION = "2026.09.21-g";
+  const VERSION = "2026.09.21-h";
   function classifyIntent(input="") {
     const text = input.trim();
     if (!text) return "EMPTY";
@@ -30,6 +30,14 @@
     if (language==="en") return {kind:"ASK_UNDERSTAND",verified:false,requiresKnowledgeProvider:true,provider:"none",title:"I should verify this before answering",core:"This looks like a factual question. I won’t guess.",nodes:[{label:"Question",value:input.trim()},{label:"Next",value:"Connect the verified knowledge/search provider, then explain the concept and evidence."}],example:"We can still keep your question here without inventing an answer.",speakable:"That needs a fact check. I won’t make up an answer."};
     return {kind:"ASK_UNDERSTAND",verified:false,requiresKnowledgeProvider:true,provider:"none",title:"확인하고 답해야 하는 질문이야",core:"사실이 필요한 질문으로 보여. 지금은 추측해서 답하지 않을게.",nodes:[{label:"궁금한 것",value:input.trim()},{label:"다음 단계",value:"검증 가능한 지식·검색 provider를 연결한 뒤 개념과 근거를 설명"}],example:"질문은 그대로 보존하고, 확인되지 않은 답은 만들지 않아.",speakable:"이건 사실 확인이 먼저 필요해. 모르는 걸 지어내서 답하지 않을게."};
   }
+  function present(result,language="ko"){
+    const presentation=window.SnapPopCrewPresentationGuard;
+    if(presentation&&typeof presentation.sanitizeUserFacing==="function"){
+      return presentation.sanitizeUserFacing({...result,presentationLanguage:language},{language});
+    }
+    return {...result,responseOwner:"EXPLORATION_CREW",presentationLanguage:language};
+  }
+
   async function ask(payload={}) {
     const input=(payload.input||"").trim();
     const language=payload.language==="en"?"en":"ko";
@@ -46,30 +54,21 @@
           const shaped=scaffold&&typeof scaffold.scaffoldKnowledge==="function"
             ? scaffold.scaffoldKnowledge(result,input,language,payload.context||"GLOBAL")
             : result;
-          const presentation=window.SnapPopCrewPresentationGuard;
-          const safe=presentation&&typeof presentation.sanitizeUserFacing==="function"
-            ? presentation.sanitizeUserFacing(shaped)
-            : shaped;
+          const safe=present(shaped,language);
           return {...safe,intent,external:true};
         }catch{}
       }
       const fallback={...unverifiedKnowledgeResponse(input,language),intent};
-      const presentation=window.SnapPopCrewPresentationGuard;
-      return presentation&&typeof presentation.sanitizeUserFacing==="function"
-        ? presentation.sanitizeUserFacing(fallback)
-        : fallback;
+      return present(fallback,language);
     }
     const external=window.SnapPopOpenAIProvider;
     if (external && typeof external.ask==="function") {
       const raw=await external.ask({...payload,input,language,intent,contract:{responseOwner:"EXPLORATION_CREW",truthFirst:true,noGuessing:true,conceptFirst:true,scaffoldPreferred:true}});
-      const presentation=window.SnapPopCrewPresentationGuard;
-      const safe=presentation&&typeof presentation.sanitizeUserFacing==="function"
-        ? presentation.sanitizeUserFacing(raw)
-        : raw;
+      const safe=present(raw,language);
       return {...safe,provider:raw?.provider||"external",intent,external:true};
     }
-    if (intent==="EMPTY") return localThinkScaffold("",language);
-    return {...localThinkScaffold(input,language),intent};
+    if (intent==="EMPTY") return present(localThinkScaffold("",language),language);
+    return present({...localThinkScaffold(input,language),intent},language);
   }
-  window.SnapPopIntelligence=Object.freeze({version:VERSION,classifyIntent,ask});
+  window.SnapPopIntelligence=Object.freeze({version:VERSION,classifyIntent,ask,present});
 })();
