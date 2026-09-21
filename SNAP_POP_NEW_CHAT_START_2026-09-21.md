@@ -230,3 +230,14 @@ FROZEN CANDIDATE / EXTERNAL GATE NOTE:
 - current decision: HOLD_BEFORE_EXTERNAL_ACTION.
 - do not call Netlify/hosting until explicit approval is given.
 - read C2S section 28 and C2S/SNAP_POP_EXTERNAL_RESOURCE_GATE_2026-09-21.json.
+
+
+POST-FREEZE IMPLEMENTATION NOTE:
+- deployment remains deferred.
+- old frozen candidate a333e735... is superseded by new runtime code; external call count remains 0.
+- crew guest orchestration coded/static verified (9/9).
+- crew interaction safety coded/static verified (9/9).
+- Hide & Seek vocabulary material ownership bridge coded/static verified (11/11).
+- requirement matrix SP-GUIDE-003 / SP-GUIDE-005 / SP-BRIDGE-002 updated.
+- branch closure runner now contains 17 validators.
+- next: Korean↔English meaning-preserving expression bridge.
