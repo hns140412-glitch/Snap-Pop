@@ -5,6 +5,7 @@ const guardSource=fs.readFileSync(new URL("../crew-role-guard-runtime.js",import
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const crewRuntimeSource=fs.readFileSync(new URL("../crew-runtime-controller.js",import.meta.url),"utf8");
 const specialSource=fs.readFileSync(new URL("../special-controller.js",import.meta.url),"utf8");
+const settingsSource=fs.readFileSync(new URL("../settings-profile-controller.js",import.meta.url),"utf8");
 
 const window={};
 vm.runInNewContext(guardSource,{window,Object,Array,String,Number,Math,Error,Set});
@@ -47,8 +48,8 @@ assert("guest-selection-runs-role-guard",
   crewRuntimeSource.includes("SnapPopCrewRoleGuard?.assertRoleContract")
 );
 assert("special-roster-says-encounter-not-power",
-  appSource.includes("만나는 방식만 특별해요")&&
-  appSource.includes("능력의 우열은 없어요")
+  settingsSource.includes("만나는 방식만 특별해요")&&
+  settingsSource.includes("능력의 우열은 없어요")
 );
 assert("special-scene-repeats-child-authorship-not-power",
   specialSource.includes("스페셜은 더 강한 대원이 아니라 만나는 방식만 달라.")
