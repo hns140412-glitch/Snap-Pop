@@ -255,9 +255,11 @@ async function renderCrewRoster(){
   const card=x=>`<div class="crewRosterCard ${x.locked?"locked":x.unassigned?"unassigned":""}"><b>${html(x.title)}</b><span>${html(x.meta||"")}</span></div>`;
 
   if(starter){
-    const order=SNAP_RULES.recoveredStarterSix?.order||Object.keys(pool);
-    starter.innerHTML=order.map(id=>{const m=pool[id];if(!m)return "";const on=identity.crewMember.type===id;const meta=[m.species,m.personality,m.visualStatus==="REFERENCE_APPEARANCE_LOCKED"?"Reference 외형 계보":"Visual ID 검증 필요"].filter(Boolean).join(" · ");return `<button type="button" class="crewRosterCard ${on?"on":""}" data-crew-member-id="${id}"><b>${html(m.label)}</b><span>${html(meta)}</span></button>`}).join("");
-    starter.onclick=async e=>{const b=e.target.closest("[data-crew-member-id]");if(!b)return;const id=b.dataset.crewMemberId,rule=pool[id];if(!rule)return;const next=await selectCrewMember(id);$("#crewMemberName").value=next.crewMember.name;$("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""}`;await renderIdentityPresence();await renderCrewRoster()};
+    const baseline=window.SnapPopCrewCore6?.baseline?.(SNAP_RULES)||{memberIds:SNAP_RULES.recoveredStarterSix?.order||Object.keys(pool),scope:"STARTER_REFERENCE_ONLY",globalAuthority:false,futureExpansionAllowed:true};
+    const order=baseline.memberIds;
+    starter.innerHTML=`<div class="crewRosterNote"><b>시작 기준점 6명</b><span>Starter reference only · 전체 탐험대 고정 아님 · 미래 확장 허용</span></div>`+
+      order.map(id=>{const m=pool[id];if(!m)return "";const on=identity.crewMember.type===id;const meta=[m.species,m.personality,m.visualStatus==="REFERENCE_APPEARANCE_LOCKED"?"Reference 외형 계보":"Visual ID 검증 필요"].filter(Boolean).join(" · ");return `<button type="button" class="crewRosterCard ${on?"on":""}" data-crew-member-id="${id}"><b>${html(m.label)}</b><span>${html(meta)}</span></button>`}).join("");
+    starter.onclick=async e=>{const b=e.target.closest("[data-crew-member-id]");if(!b)return;const id=b.dataset.crewMemberId,rule=pool[id];if(!rule||!window.SnapPopCrewCore6?.isCore6?.(id))return;const next=await selectCrewMember(id);$("#crewMemberName").value=next.crewMember.name;$("#crewMemberPersonalityPreview").textContent=`${rule.label} · ${rule.personality||""}`;await renderIdentityPresence();await renderCrewRoster()};
   }
 
   if(world){
