@@ -323,3 +323,15 @@ CENTRAL AUTHORSHIP GUARD NOTE:
 - validator 9/9 PASS.
 - SP-GUIDE-001 now CODED=true / STATIC_VERIFIED=true.
 - closure runner now has 27 validators.
+
+
+SHARED BADGE / THINK SEPARATION NOTE:
+- added semantic-light TAKY_BADGE_EXPERIENCE_EVENT_V1 envelope.
+- shared envelope does NOT commonize user/family/org identity, role or permission.
+- no badge award/economy authority in shared event.
+- shared contract validator 8/8 PASS.
+- crew reaction now has explicit hidden-by-default non-blocking DOM slot; validator 7/7 PASS.
+- THINK_EXPRESS now uses verified=null / verification=NOT_APPLICABLE for local and external paths.
+- Think verification separation validator 4/4 PASS.
+- SP-BADGE-003/004, SP-GUIDE-004, SP-UNIV-001, SP-IMAGINE-005/006 reconciled.
+- closure runner now has 30 validators.
