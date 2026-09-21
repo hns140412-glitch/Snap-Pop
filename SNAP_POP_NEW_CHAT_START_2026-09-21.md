@@ -379,3 +379,20 @@ INDEPENDENT BADGE AXIS NOTE:
 - independent axis validator 8/8 PASS.
 - SP-BADGE-001 now CODED=true / STATIC_VERIFIED=true.
 - closure runner now has 39 validators.
+
+
+NEW CHAT C2S CLOSURE — 2026-09-21
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md Section 43 first.
+- Then verify current branch HEAD and data/snap-pop-requirement-matrix.json.
+- Current closure runner: 39 validators.
+- Remaining Snap & Pop body PARTIAL items only:
+  1) SP-BADGE-006 — ERROR_DISCOVERY / DEEP_THINKING / SPECIAL_BEHAVIOR need stronger explicit evidence contracts.
+  2) SP-BADGE-008 — stable Profile Character identity implemented; exact Theme Expression system/assets remain OPEN.
+- FAMILY_EXPANSION remains separate scope.
+- current candidate NOT FROZEN.
+- old frozen candidate SUPERSEDED.
+- external calls 0.
+- Netlify/deploy/merge/device verification NOT_RUN.
+- next work: branch-only SP-BADGE-006 evidence contracts first.
+- do not infer weak behavior signals; preserve anti-labeling/no-score/no-power rules.
+- user is not tester/debugger.
