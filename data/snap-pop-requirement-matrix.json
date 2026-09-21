@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21.16",
+  "version": "2026-09-21.17",
   "canonicalPurpose": "Snap & Pop current requirement-to-implementation matrix",
   "authorityOrder": [
     "LATEST_DIRECT_USER",
@@ -1099,9 +1099,11 @@
       "codeEvidence": [
         "writing-runtime.js:analyze",
         "app.js:analyzeWritingMove",
-        "app.js:writingAnalysisSeq"
+        "app.js:writingAnalysisSeq",
+        "openai-semantic-provider.js",
+        "netlify/functions/snap-pop-semantic-writing.mjs"
       ],
-      "gap": "Learning Provider interface implemented; actual external Learning Engine not yet connected"
+      "gap": "secure semantic meaning/flow path is coded and statically verified; live OpenAI runtime and quality regression remain NOT_RUN; local fallback remains heuristic when backend is unavailable"
     },
     {
       "id": "SP-WRITE-003",
@@ -1138,9 +1140,11 @@
       "codeEvidence": [
         "app.js:focusGuide",
         "app.js:stepSpecificReaction",
-        "app.js:analyzeWritingMove"
+        "app.js:analyzeWritingMove",
+        "openai-semantic-provider.js",
+        "netlify/functions/snap-pop-semantic-writing.mjs"
       ],
-      "gap": "external Learning Engine semantic grounding not connected"
+      "gap": "current-draft semantic path is coded; live provider/runtime quality verification remains NOT_RUN"
     },
     {
       "id": "SP-WRITE-005",
@@ -1152,16 +1156,19 @@
         "GUIDE_RULES"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
         "semantic-writing-runtime.js",
+        "openai-semantic-provider.js",
+        "netlify/functions/snap-pop-semantic-writing.mjs",
+        "netlify.toml",
         "writing-runtime.js:SnapPopSemanticWritingProvider",
         "app.js:analyzeWritingMove"
       ],
-      "gap": "secure OpenAI backend/provider connection not yet implemented"
+      "gap": "secure same-origin OpenAI-backed provider boundary is implemented; OPENAI_RUNTIME_CONNECTED remains false until server env/model and live execution are verified"
     },
     {
       "id": "SP-WRITE-006",
@@ -1261,9 +1268,10 @@
       "deviceVerified": false,
       "codeEvidence": [
         "semantic-writing-runtime.js:ANALYSIS_ONLY",
-        "semantic-writing-runtime.js:FORBIDDEN_KEYS"
+        "semantic-writing-runtime.js:FORBIDDEN_KEYS",
+        "netlify/functions/snap-pop-semantic-writing.mjs:single prompt rejection"
       ],
-      "gap": "live OpenAI-backed runtime validation pending"
+      "gap": "server and client authorship guards are coded/static; live OpenAI-backed runtime validation remains NOT_RUN"
     },
     {
       "id": "SP-WRITE-011",
@@ -1305,10 +1313,10 @@
         "app.js:recordBadgeEvent"
       ],
       "recoveryEvidence": [
-        "[0165] 칭호/뱃지 모으기",
-        "[0167] 잘한 것/실수/보완해야 할 것",
-        "[0169] 약 60개 + 아이 활동 따라 추가",
-        "TAKY HISTORY/2026-09-21_BADGE_SYSTEM_SOURCE_RECOVERY.md"
+        "SANITIZED_ACCOUNT_TRANSCRIPT_2026-09-08_[0165]: badge/title collection as fun element",
+        "SANITIZED_ACCOUNT_TRANSCRIPT_2026-09-08_[0167]: include done-well, mistake, improvement experience",
+        "SANITIZED_ACCOUNT_TRANSCRIPT_2026-09-08_[0169]: approx 60 expandable from child activity",
+        "C2S/SNAP_POP_BADGE_SOURCE_RECOVERY_2026-09-21.md"
       ],
       "gap": "runtime data model/event detector/catalog not implemented"
     },
@@ -1365,7 +1373,10 @@
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "badge runtime not implemented; rule prevents false reconstruction"
+      "gap": "badge runtime not implemented; rule prevents false reconstruction",
+      "recoveryEvidence": [
+        "Ready_Set_Ui_Master_Logic_REV_06.md: character level/growth economy, advanced reward economy, social competition are HOLD"
+      ]
     },
     {
       "id": "SP-BADGE-005",
