@@ -5,6 +5,7 @@ const guardSource=fs.readFileSync(new URL("../crew-presentation-guard.js",import
 const voiceSource=fs.readFileSync(new URL("../voice-runtime.js",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const flowSource=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
+const supportSource=fs.readFileSync(new URL("../interaction-support-controller.js",import.meta.url),"utf8");
 
 const externalCalls=[];
 const window={
@@ -57,7 +58,7 @@ assert("auto-read-does-not-speak-hidden-hint",
 );
 
 assert("manual-listen-respects-revealed-hint-only",
-  appSource.includes('(s.crewState?.hintLevel?p[1]:"")')
+  supportSource.includes('(s.crewState?.hintLevel?p[1]:"")')
 );
 
 console.log("VOICE_QUALITY_POLICY_PASS");
