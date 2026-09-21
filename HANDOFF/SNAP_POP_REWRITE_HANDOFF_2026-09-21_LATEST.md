@@ -267,3 +267,5 @@ Conservative boundaries retained:
 - semantic validator alignment after stale-race fix validation trigger.
 
 - safety/overlay/stale-result runtime matrix closure validation trigger.
+
+- semantic fail-soft + low-trust context runtime validation trigger.
