@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  const VERSION = "2026.09.21-a";
+  const VERSION = "2026.09.21-b";
   function classifyIntent(input="") {
     const text = input.trim();
     if (!text) return "EMPTY";
@@ -37,7 +37,12 @@
     const external=window.SnapPopOpenAIProvider;
     if (external && typeof external.ask==="function") {
       const raw=await external.ask({...payload,input,language,intent,contract:{responseOwner:"EXPLORATION_CREW",truthFirst:true,noGuessing:true,conceptFirst:true,scaffoldPreferred:true}});
-      return {...raw,provider:raw?.provider||"external",intent,external:true};
+      const normalized={...raw,provider:raw?.provider||"external",intent,external:true};
+      if(intent==="ASK_UNDERSTAND"){
+        const guard=window.SnapPopTruthGuard;
+        return guard&&typeof guard.guardKnowledge==="function" ? guard.guardKnowledge(normalized) : {...normalized,verified:false,verification:{mode:"UNVERIFIED",reason:"TRUTH_GUARD_UNAVAILABLE"}};
+      }
+      return normalized;
     }
     if (intent==="ASK_UNDERSTAND") return {...unverifiedKnowledgeResponse(input,language),intent};
     if (intent==="EMPTY") return localThinkScaffold("",language);
