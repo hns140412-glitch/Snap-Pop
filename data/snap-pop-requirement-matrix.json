@@ -230,7 +230,7 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "crew-orchestration-runtime.js",
@@ -241,9 +241,16 @@
         "app.js:renderRecords shared guest display",
         "scripts/validate-crew-guest-orchestration.mjs",
         "scripts/validate-special-guest-shared-memory.mjs",
-        "scripts/validate-guest-appearance-gate.mjs"
+        "scripts/validate-guest-appearance-gate.mjs",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "guest selection/continuity/shared-memory runtime is implemented, but guest appearance itself is default-deny unless an explicit authorized scene trigger exists. Exact encounter cadence/probability remains OPEN and is not invented."
+      "gap": "authorized guest runtime and main continuity verified; exact encounter cadence/probability remains OPEN by design",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: weighted guest prefers less-recent non-main",
+        "browser-runtime-selftest: explicitly authorized special guest appears",
+        "browser-runtime-selftest: main identity remains unchanged",
+        "browser-runtime-selftest: guest trigger consumed one-shot"
+      ]
     },
     {
       "id": "SP-CREW-001",
@@ -256,13 +263,20 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:ensureCrewRegistry",
         "app.js:renameCurrentCrewMember",
-        "app.js:recordCrewExperience"
-      ]
+        "app.js:recordCrewExperience",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: Explorer/member id stable after rename",
+        "browser-runtime-selftest: nameHistory appended",
+        "browser-runtime-selftest: memories and affinity preserved across rename"
+      ],
+      "gap": "physical-device verification remains unverified"
     },
     {
       "id": "SP-CREW-002",
@@ -376,15 +390,20 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "voice-runtime.js:speak/listen/stopSpeaking/stopListening",
         "voice-runtime.js:oneShot listen policy",
         "app.js:#listenBtn/#voiceBtn handlers",
-        "scripts/validate-voice-boundary-contract.mjs"
+        "scripts/validate-voice-boundary-contract.mjs",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "listening and speaking/input are structurally separated and statically verified; external high-quality provider plus live browser/device execution remain NOT_RUN"
+      "gap": "UI/runtime routing verified; external high-quality voice provider and physical-device voice quality remain unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: question listen control calls speak only",
+        "browser-runtime-selftest: writing voice input calls listen only with USER_MIC"
+      ]
     },
     {
       "id": "SP-VOICE-002",
@@ -1345,14 +1364,20 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:homeRadio→openImagination",
         "app.js:imaginationVoiceBtn",
-        "voice-runtime.js"
+        "voice-runtime.js",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "external high-quality voice provider and device validation pending"
+      "gap": "UI/runtime routing verified; external high-quality voice provider and physical-device voice quality remain unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: home radio opens hidden imagination layer",
+        "browser-runtime-selftest: imagination voice question uses USER_MIC listen",
+        "browser-runtime-selftest: voice question does not invoke speak"
+      ]
     },
     {
       "id": "SP-RECORD-002",
