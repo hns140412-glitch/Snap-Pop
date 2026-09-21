@@ -30,6 +30,16 @@ jobs:
       - name: Validate shared runtime reconciliation
         run: node tests/shared-runtime-contract.test.js
 
+      - name: Syntax-check integrated Snap runtime
+        run: |
+          node --check app.js
+          node --check snap-bridge.js
+          node --check snap-pwa-update-v01.js
+          node --check snap-release-v01.js
+          node --check vendor/taky/event-envelope.js
+          node --check vendor/taky/pwa-update-state.js
+          node --check vendor/taky/release-contract.js
+
       - name: Browser runtime smoke
         shell: bash
         run: |
