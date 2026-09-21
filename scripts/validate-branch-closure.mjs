@@ -22,7 +22,8 @@ const validators=[
   "validate-crew-guest-orchestration.mjs",
   "validate-crew-interaction-safety.mjs",
   "validate-vocabulary-material-ownership.mjs",
-  "validate-expression-bridge.mjs"
+  "validate-expression-bridge.mjs",
+  "validate-optional-expression-transition.mjs"
 ];
 
 let passed=0;
