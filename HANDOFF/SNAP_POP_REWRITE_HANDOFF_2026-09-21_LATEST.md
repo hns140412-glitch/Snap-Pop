@@ -299,3 +299,5 @@ Conservative boundaries retained:
 - voice probe state-reset + crew identity/guest exact-head validation trigger.
 
 - badge-006 matrix closure alignment exact-head validation trigger.
+
+- badge-008 runtime-contract/art-asset-open closure validation trigger.
