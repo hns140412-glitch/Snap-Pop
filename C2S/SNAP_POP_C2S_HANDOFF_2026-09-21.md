@@ -3525,3 +3525,52 @@ Important:
 - validator changes were ownership-path corrections only; product constraints were not weakened.
 - REWRITE PHASE 2 CLOSED ≠ FULL REWRITE COMPLETE.
 - next owner migration: Crew Controller.
+
+
+## 51. REWRITE SURGERY PHASE 3 CLOSED — 2026-09-21
+
+Phase 3A:
+- crew identity normalization / rule lookup
+- crew name / landmark reaction
+- reaction performance / reaction overlay
+- crew snippet
+- special invite presentation
+→ moved to `crew-controller.js`
+
+Phase 3B:
+- crew registry
+- member experience / affinity accumulation
+- current-member experience wrapper
+- guest selection
+- no-power SPECIAL role contract
+- synthetic world-state / reunion memory
+→ moved to `crew-runtime-controller.js`
+
+Runtime ownership boundaries:
+- Crew presentation SHALL NOT own IndexedDB.
+- Crew runtime SHALL NOT own DOM.
+- guest appearance remains default-deny and requires explicit authorization.
+- SPECIAL role remains encounter-style only: no functional advantage, power boost, reward multiplier or EXP multiplier.
+- world-state remains synthetic runtime state, not canonical identity mutation.
+
+Validator migrations during Phase 3:
+- reaction safety → crew-controller owner
+- non-blocking reaction UI → crew-controller owner
+- shared guest memory helper → crew-runtime owner
+- guest appearance gate → crew-runtime owner
+
+Exact Phase 3 evidence:
+- SHA: `15735698dcb23ab926c3322e5ef619d6e0619653`
+- GitHub Actions run: `35591812660`
+- job: `106307662202`
+- `CREW_CONTROLLER_BOUNDARY_PASS`
+- `CREW_RUNTIME_CONTROLLER_BOUNDARY_PASS`
+- `BRANCH_CLOSURE_VALIDATOR_PASS 52/52`
+- `BROWSER_RUNTIME_CDP_PASS`
+- 390×844 browser runtime preserved
+- IndexedDB OPEN / runtime phase DONE / runtime errors 0
+
+Important:
+- extraction defects encountered in early 3A were parser-generation defects, not product-contract defects.
+- bad async/default-param extraction was corrected from the clean Phase 2 base before Phase 3 closure.
+- next owner migration: Records / Growth / History.

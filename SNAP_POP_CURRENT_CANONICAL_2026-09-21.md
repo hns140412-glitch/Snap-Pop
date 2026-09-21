@@ -489,3 +489,18 @@ Current ownership:
 Validation: 50/50 closure PASS + 390×844 Chrome CDP runtime PASS.
 
 Next surgery owner: Crew Controller.
+
+
+## 14. Rewrite Phase 3 — Crew ownership extracted
+
+Phase 3 closed at `15735698dcb23ab926c3322e5ef619d6e0619653`.
+
+Current ownership:
+- `crew-controller.js` owns crew-facing presentation helpers, reaction overlay and special invitation presentation.
+- `crew-runtime-controller.js` owns crew registry, affinity-memory accumulation, guest selection and synthetic world-state.
+- SPECIAL remains encounter-style only with no gameplay/economy advantage.
+- guest selection remains explicit-authorized/default-deny.
+
+Validation: 52/52 closure PASS + 390×844 Chrome CDP runtime PASS.
+
+Next surgery owner: Records/Growth/History.

@@ -467,3 +467,11 @@ REWRITE SURGERY PHASE 2 CLOSED — 2026-09-21
 - writing start/advance/input/language/completion owner: writing-flow-controller.js
 - 50/50 + Chrome CDP runtime PASS
 - next work: Crew Controller extraction; do not move writing ownership back into app.js
+
+
+REWRITE SURGERY PHASE 3 CLOSED — 2026-09-21
+- phase-3 SHA: 15735698dcb23ab926c3322e5ef619d6e0619653
+- crew presentation owner: crew-controller.js
+- crew registry/affinity/guest/world-state owner: crew-runtime-controller.js
+- 52/52 + Chrome CDP runtime PASS
+- next work: Records/Growth/History extraction; do not return crew ownership to app.js

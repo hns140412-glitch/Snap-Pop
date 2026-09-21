@@ -120,3 +120,22 @@ Phase 2 entry: extract Writing Controller without changing protected writing sem
 
 Phase 2 disposition: CLOSED.
 Phase 3 entry: extract Crew Controller while preserving Guide-derived interaction rules and Special=no-power semantics.
+
+
+## Phase 3 closure evidence
+
+### Extracted ownership
+- crew-controller.js → crew identity/rule presentation, reaction overlay, special invite presentation
+- crew-runtime-controller.js → registry, affinity/memory, guest selection, synthetic world-state
+
+### Exact evidence
+- SHA: `15735698dcb23ab926c3322e5ef619d6e0619653`
+- Actions run: `35591812660`
+- job: `106307662202`
+- CREW_CONTROLLER_BOUNDARY_PASS
+- CREW_RUNTIME_CONTROLLER_BOUNDARY_PASS
+- BRANCH_CLOSURE_VALIDATOR_PASS 52/52
+- BROWSER_RUNTIME_CDP_PASS
+
+Phase 3 disposition: CLOSED.
+Phase 4 entry: extract Records/Growth/History while preserving original-record provenance, revision history, EXP/Gem ledgers and child-facing timeline behavior.
