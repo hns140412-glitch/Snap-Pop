@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-a";
+  const VERSION="2026.09.21-b";
 
   function clean(value,max=240){
     return typeof value==="string"?value.trim().slice(0,max):"";
@@ -31,6 +31,32 @@
     });
   }
 
+  function escapeRegExp(value=""){
+    return value.replace(/[.*+?^$()|[\]\\]/g,"\\$&");
+  }
+
+  function usedInText(material,text=""){
+    if(!material?.word||typeof text!=="string") return false;
+    const word=material.word;
+    if(/^[A-Za-z0-9'’-]+$/.test(word)){
+      const re=new RegExp("(^|[^A-Za-z0-9'’-])"+escapeRegExp(word)+"(?=$|[^A-Za-z0-9'’-])","i");
+      return re.test(text);
+    }
+    return text.includes(word);
+  }
+
+  function usageEvidence(material,text=""){
+    if(!material) return null;
+    return {
+      sourceOwner:material.sourceOwner,
+      role:"EXPRESSION_MATERIAL_ONLY",
+      offeredWord:material.word,
+      usedInDraft:usedInText(material,text),
+      masteryInferred:false,
+      vocabularyOwnershipTransferred:false
+    };
+  }
+
   function writingContext(material){
     if(!material||material.contract_version!=="SNAP_POP_VOCABULARY_MATERIAL_V1") return null;
     return {
@@ -50,6 +76,8 @@
   window.SnapPopVocabularyMaterial=Object.freeze({
     version:VERSION,
     normalize,
-    writingContext
+    writingContext,
+    usedInText,
+    usageEvidence
   });
 })();
