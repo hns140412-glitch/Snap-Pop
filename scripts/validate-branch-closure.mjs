@@ -41,7 +41,8 @@ const validators=[
   "validate-imagination-return-integrity.mjs",
   "validate-writing-semantic-contract.mjs",
   "validate-crew-core6-starter-baseline.mjs",
-  "validate-badge-candidate-review-only.mjs"
+  "validate-badge-candidate-review-only.mjs",
+  "validate-voice-boundary-contract.mjs"
 ];
 
 let passed=0;
