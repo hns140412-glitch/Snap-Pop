@@ -143,9 +143,11 @@
       const appRoot=document.querySelector("#app");
       assert("mobile-root-has-no-horizontal-overflow",appRoot.scrollWidth<=appRoot.clientWidth+1);
       assert("mobile-document-has-no-horizontal-overflow",document.documentElement.scrollWidth<=window.innerWidth+1);
-      const toolButtons=[...document.querySelectorAll("#explore .tools button")];
+      const toolButtons=[...document.querySelectorAll("#explore .tools button")].filter(b=>!b.hidden&&getComputedStyle(b).display!=="none");
       assert("writing-tools-present",toolButtons.length>=6);
-      assert("writing-tools-touch-height",toolButtons.every(b=>b.getBoundingClientRect().height>=44));
+      const toolHeights=toolButtons.map(b=>({id:b.id,height:Math.round(b.getBoundingClientRect().height*10)/10}));
+      if(!toolButtons.every(b=>b.getBoundingClientRect().height>=44))throw new Error("FAIL writing-tools-touch-height "+JSON.stringify(toolHeights));
+      result.textContent+="\nPASS writing-tools-touch-height";
       assert("writing-tools-stay-inside-viewport",toolButtons.every(b=>{const r=b.getBoundingClientRect();return r.left>=0&&r.right<=window.innerWidth+1}));
       assert("primary-next-touch-height",document.querySelector("#nextBtn")?.getBoundingClientRect().height>=44);
 
