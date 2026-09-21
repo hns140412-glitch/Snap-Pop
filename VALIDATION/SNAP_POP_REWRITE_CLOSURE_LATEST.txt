@@ -1,7 +1,7 @@
-validation_sha=689aad200e025fdef7ef4816efb2d4913366af03
-checkout_sha=689aad200e025fdef7ef4816efb2d4913366af03
-closure_status=1
-closure_marker=
+validation_sha=3e06b6ba13f0bc5807196ed51842d88031807cc7
+checkout_sha=3e06b6ba13f0bc5807196ed51842d88031807cc7
+closure_status=0
+closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 62/62
 browser_status=1
 browser_marker=
 viewport=390x844
@@ -559,27 +559,208 @@ PASS ui-shell-loaded-before-app
 PASS app-no-longer-owns-indexeddb
 PASS app-has-no-legacy-db-variable
 PASS storage-runtime-owns-indexeddb
-file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-rewrite-foundation-boundaries.mjs:8
-  if(!condition)throw new Error("FAIL "+name);
-                      ^
+PASS app-uses-storage-only-as-thin-orchestration
+PASS app-delegates-view-shell
+PASS ui-shell-owns-view-class-switching
+REWRITE_FOUNDATION_BOUNDARY_PASS
 
-Error: FAIL app-delegates-storage
-    at assert (file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-rewrite-foundation-boundaries.mjs:8:23)
-    at file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-rewrite-foundation-boundaries.mjs:25:1
-    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
-    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
-    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+=== validate-writing-controller-boundaries.mjs ===
+PASS writing-controller-loads-before-app
+PASS writing-controller-contract-present
+PASS question-bank-owned-by-controller
+PASS writing-steps-owned-by-controller
+PASS app-delegates-promptFor
+PASS app-delegates-ensureWritingState
+PASS app-delegates-setModeButtons
+PASS app-delegates-focusGuide
+PASS app-delegates-stepSpecificReaction
+PASS app-delegates-writingLensLabel
+PASS app-delegates-renderWritingBridge
+PASS app-delegates-setExpressionBridgeButton
+PASS app-delegates-renderExpressionBridge
+PASS app-delegates-renderExplore
+PASS render-explore-owned-by-controller
+PASS writing-controller-does-not-own-persistence
+WRITING_CONTROLLER_BOUNDARY_PASS
 
-Node.js v22.23.2
-BRANCH_CLOSURE_VALIDATOR_FAIL validate-rewrite-foundation-boundaries.mjs status 1
+=== validate-writing-flow-controller-boundaries.mjs ===
+PASS writing-flow-controller-loads-before-app
+PASS writing-flow-contract-present
+PASS legacy-start-binding-removed
+PASS legacy-next-binding-removed
+PASS legacy-answer-input-binding-removed
+PASS legacy-language-bindings-removed
+PASS flow-owns-completion-event
+PASS flow-owns-record-gem-exp-transaction
+PASS flow-preserves-empty-draft-wait
+PASS flow-uses-storage-contract
+PASS app-installs-writing-flow-controller
+WRITING_FLOW_CONTROLLER_BOUNDARY_PASS
+
+=== validate-crew-controller-boundaries.mjs ===
+PASS crew-controller-loads-before-app
+PASS crew-controller-contract-present
+PASS app-delegates-normalizeCrewType
+PASS app-delegates-normalizeIdentity
+PASS app-delegates-crewMemberRule
+PASS app-delegates-crewReaction
+PASS app-delegates-crewMemberName
+PASS app-delegates-crewPerformance
+PASS app-delegates-crewSnippet
+PASS app-delegates-showCrewReaction
+PASS app-delegates-hideCrewReaction
+PASS app-delegates-renderSpecialInvite
+PASS crew-controller-owns-reaction-overlay
+PASS crew-controller-preserves-special-invite-copy
+PASS crew-controller-does-not-own-indexeddb
+PASS crew-role-rule-source-remains-canonical
+CREW_CONTROLLER_BOUNDARY_PASS
+
+=== validate-crew-runtime-controller-boundaries.mjs ===
+PASS crew-runtime-loads-before-app
+PASS crew-runtime-contract-present
+PASS app-delegates-ensureCrewRegistry
+PASS app-delegates-recordCrewMemberExperience
+PASS app-delegates-recordCrewExperience
+PASS app-delegates-chooseSceneGuest
+PASS app-delegates-synthesizeCrewWorldState
+PASS registry-owned-by-crew-runtime
+PASS guest-selection-remains-explicitly-authorized
+PASS special-role-remains-no-power
+PASS world-state-remains-synthetic
+PASS crew-runtime-does-not-own-dom
+CREW_RUNTIME_CONTROLLER_BOUNDARY_PASS
+
+=== validate-records-growth-controller-boundaries.mjs ===
+PASS records-controller-loads-before-app
+PASS records-controller-contract-present
+PASS app-delegates-renderRecords
+PASS app-delegates-renderGems
+PASS app-delegates-renderGrowth
+PASS app-delegates-renderGrowthTimeline
+PASS app-delegates-renderLastResult
+PASS app-delegates-updateStatus
+PASS app-delegates-openRecordEdit
+PASS app-delegates-renderWishHistory
+PASS records-preserve-original-and-revisions
+PASS record-edit-does-not-alter-reward-copy
+PASS growth-keeps-cloud-no-farming-copy
+PASS special-memory-remains-no-reward
+PASS records-controller-does-not-own-indexeddb
+RECORDS_GROWTH_CONTROLLER_BOUNDARY_PASS
+
+=== validate-records-flow-controller-boundaries.mjs ===
+PASS records-flow-loads-before-app
+PASS records-flow-contract-present
+PASS legacy-record-edit-binding-removed
+PASS legacy-bonus-bindings-removed
+PASS legacy-wish-transaction-removed
+PASS revision-preserves-original
+PASS revision-reward-not-recomputed
+PASS bonus-is-idempotent
+PASS bonus-has-no-extra-exp
+PASS wish-spend-ledgered
+PASS records-flow-does-not-own-indexeddb
+RECORDS_FLOW_CONTROLLER_BOUNDARY_PASS
+
+=== validate-special-controller-boundaries.mjs ===
+PASS special-controller-loads-before-app
+PASS special-contract-present
+PASS legacy-special-bindings-removed
+PASS special-guest-remains-explicit-authorized
+PASS special-trigger-consumed-one-shot
+PASS special-memory-is-no-reward-flow
+PASS special-evidence-explicit
+PASS guest-shared-memory-linked
+SPECIAL_CONTROLLER_BOUNDARY_PASS
+
+=== validate-imagination-controller-boundaries.mjs ===
+PASS imagination-controller-loads-before-app
+PASS imagination-contract-present
+PASS imagination-state-no-longer-global-in-app
+PASS writing-return-guard-preserved
+PASS draft-preserved-on-return
+PASS cloud-history-remains-no-direct-reward
+PASS verified-ask-expression-does-not-transfer-answer
+PASS intelligence-output-still-sanitized
+PASS voice-stays-user-mic-only
+IMAGINATION_CONTROLLER_BOUNDARY_PASS
+
+=== validate-settings-profile-controller-boundaries.mjs ===
+PASS settings-profile-loads-before-app
+PASS settings-profile-contract-present
+PASS shared-identity-owned-by-settings-controller
+PASS ready-profile-remains-priority
+PASS local-profile-remains-fallback
+PASS crew-name-history-preserved
+PASS settings-events-owned-by-controller
+PASS legacy-settings-bindings-removed
+PASS settings-controller-does-not-own-indexeddb
+PASS app-installs-settings-controller
+SETTINGS_PROFILE_CONTROLLER_BOUNDARY_PASS
+
+=== validate-badge-controller-boundaries.mjs ===
+PASS badge-controller-loads-before-app
+PASS badge-controller-contract-present
+PASS badge-observation-owned-by-controller
+PASS badge-evidence-keeps-explicit-only-contract
+PASS badge-candidates-remain-review-only
+PASS badge-preview-is-not-award-copy
+PASS badge-controller-does-not-own-economy
+PASS app-delegates-badge-owner
+BADGE_CONTROLLER_BOUNDARY_PASS
+
+=== validate-bridge-context-controller-boundaries.mjs ===
+PASS bridge-controller-loads-before-app
+PASS bridge-controller-contract-present
+PASS hide-seek-material-remains-reference-only
+PASS ready-learning-context-is-read-only-provider
+PASS incoming-handoff-shows-source-owner
+PASS expression-trace-metadata-only
+PASS bridge-does-not-overwrite-draft
+PASS bridge-stale-draft-guard
+PASS optional-expression-banner-owned-here
+PASS legacy-bridge-binding-removed
+PASS app-delegates-bridge-context
+PASS bridge-controller-does-not-own-indexeddb
+BRIDGE_CONTEXT_CONTROLLER_BOUNDARY_PASS
+
+=== validate-bootstrap-controller-boundaries.mjs ===
+PASS bootstrap-loads-before-app
+PASS bootstrap-contract-present
+PASS bootstrap-owns-legacy-migration
+PASS bootstrap-preserves-init-order
+PASS bootstrap-uses-owner-apis
+PASS bootstrap-does-not-own-feature-dom
+PASS app-delegates-bootstrap
+PASS legacy-init-body-removed-from-app
+BOOTSTRAP_CONTROLLER_BOUNDARY_PASS
+
+=== validate-interaction-support-controller-boundaries.mjs ===
+PASS interaction-support-loads-before-app
+PASS interaction-support-contract-present
+PASS selected-state-owned-by-support
+PASS analysis-sequence-owned-by-support
+PASS calendar-cursor-owned-by-support
+PASS hint-and-voice-owned-by-support
+PASS reflection-remains-explicit-child-evidence
+PASS voice-remains-user-mic-one-shot-entry
+PASS calendar-reduce-motion-scroll-preserved
+PASS support-does-not-own-indexeddb
+PASS app-installs-support-controller
+INTERACTION_SUPPORT_CONTROLLER_BOUNDARY_PASS
+
+=== validate-thin-orchestrator-boundary.mjs ===
+THIN_ORCHESTRATOR_BOUNDARY_PASS { bytes: 12650, maxBytes: 13000 }
+
+=== validate-dom-binding-integrity.mjs ===
+PASS all-direct-dom-bindings-have-index-targets
+PASS querySelector-collection-misuse-blocked
+PASS explicit-help-request-control-exists
+PASS hint-control-is-wired-to-explicit-help-path
+DOM_BINDING_INTEGRITY_PASS
+
+BRANCH_CLOSURE_VALIDATOR_PASS 62/62
 --- BROWSER ---
-file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:13
-  throw new Error("CDP_TARGET_NOT_FOUND version="+String(version||"UNAVAILABLE"));
-        ^
-
-Error: CDP_TARGET_NOT_FOUND version=UNAVAILABLE
-    at getTarget (file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:13:9)
-    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
-    at async file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:16:14
-
-Node.js v22.23.2
+BROWSER_RUNTIME_CDP_FAIL
+{"readyState":"complete","smoke":"FAIL","runtime":{"init":"FAIL","appScript":"STARTED","db":"OPEN","errors":[{"type":"init","message":"Cannot read properties of null (reading 'forEach')"}],"phase":"LOAD_SETTINGS"},"result":"BROWSER_RUNTIME_SELFTEST_PENDING\nBROWSER_RUNTIME_SELFTEST_FAIL FAIL app-init runtime={\"init\":\"FAIL\",\"appScript\":\"STARTED\",\"db\":\"OPEN\",\"errors\":[{\"type\":\"init\",\"message\":\"Cannot read properties of null (reading 'forEach')\"}],\"phase\":\"LOAD_SETTINGS\"}","landmarks":5}
