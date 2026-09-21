@@ -301,3 +301,5 @@ Conservative boundaries retained:
 - badge-006 matrix closure alignment exact-head validation trigger.
 
 - badge-008 runtime-contract/art-asset-open closure validation trigger.
+
+- universal Think/Express + bilingual + no-guess runtime validation trigger.
