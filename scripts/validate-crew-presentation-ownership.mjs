@@ -26,6 +26,8 @@ const safe=g.sanitizeUserFacing({
 });
 
 assert("generic-crew-title",safe.title==="확인해서 정리했어");
+const safeEn=g.sanitizeUserFacing({kind:"ASK_UNDERSTAND",verified:true,core:"A verified fact.",speakable:"A verified fact."},{language:"en"});
+assert("english-title-localized",safeEn.title==="I checked this for you"&&safeEn.presentationLanguage==="en");
 assert("factual-core-preserved",safe.core==="경제 모델은 현실을 단순화해서 설명하는 틀이야.");
 assert("factual-node-preserved",safe.nodes[0].value==="경제 모델은 여러 변수의 관계를 표현할 수 있어.");
 assert("response-owner-is-crew",safe.responseOwner==="EXPLORATION_CREW");
@@ -56,6 +58,13 @@ assert("history-still-keeps-provider-provenance",
 assert("app-applies-presentation-guard-before-render",
   appSource.indexOf("sanitizeUserFacing(rawResult)")>=0&&
   appSource.indexOf("sanitizeUserFacing(rawResult)")<appSource.indexOf("renderImaginationResponse(result,identity)")
+);
+
+const intelligenceSource=fs.readFileSync(new URL("../intelligence-runtime.js",import.meta.url),"utf8");
+assert("all-intelligence-paths-have-present-helper",
+  intelligenceSource.includes("function present(result,language=\"ko\")")&&
+  intelligenceSource.includes("return present(localThinkScaffold(\"\",language),language)")&&
+  intelligenceSource.includes("return present({...localThinkScaffold(input,language),intent},language)")
 );
 
 console.log("CREW_PRESENTATION_OWNERSHIP_CONTRACT_PASS");
