@@ -27,17 +27,12 @@ const uid=p=>`${p}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
 
 
 
-function openDB(){return window.SnapPopStorage.open()}
-function get(k){return window.SnapPopStorage.get(k)}
-function set(k,v){return window.SnapPopStorage.set(k,v)}
-function setMany(entries){return window.SnapPopStorage.setMany(entries)}
 
 
 
 
 function toast(t){return window.SnapPopUIShell.toast(t)}
 function show(id){const view=window.SnapPopUIShell.activateView(id);if(view.isMain)lastMain=id;if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="result")renderLastResult()}
-function html(s){return window.SnapPopUIShell.escapeHtml(s)}
 
 
 
@@ -203,6 +198,6 @@ bridgeContextController().install();
 $$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
 interactionSupportController().install();
 settingsProfileController().install();
-$("#nav").onclick=async e=>{const b=e.target.closest("button[data-view]");if(!b)return;const view=b.dataset.view;if(view==="explore"){const active=await get("active");if(active){renderExplore(active);show("explore")}else{show("map");toast("글쓰기 탐험지를 하나 골라 시작해봐.")}}else show(view)}
+$("#nav").onclick=async e=>{const b=e.target.closest("button[data-view]");if(!b)return;const view=b.dataset.view;if(view==="explore"){const active=await window.SnapPopStorage.get("active");if(active){renderExplore(active);show("explore")}else{show("map");toast("글쓰기 탐험지를 하나 골라 시작해봐.")}}else show(view)}
 if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
 init().then(()=>{if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.init="PASS"}).catch(e=>{if(window.__SNAP_RUNTIME_STATUS){window.__SNAP_RUNTIME_STATUS.init="FAIL";window.__SNAP_RUNTIME_STATUS.errors.push({type:"init",message:String(e?.message||e)})}console.error(e);toast("앱 데이터를 준비하지 못했어요.")});
