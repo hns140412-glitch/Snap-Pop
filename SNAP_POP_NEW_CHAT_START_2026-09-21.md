@@ -241,3 +241,15 @@ POST-FREEZE IMPLEMENTATION NOTE:
 - requirement matrix SP-GUIDE-003 / SP-GUIDE-005 / SP-BRIDGE-002 updated.
 - branch closure runner now contains 17 validators.
 - next: Korean↔English meaning-preserving expression bridge.
+
+
+BILINGUAL EXPRESSION BRIDGE NOTE:
+- Korean↔English meaning-preserving bridge is coded/static verified.
+- explicit button only; no auto-translation or draft overwrite.
+- output = meaning anchor + 1-4 phrase fragments + one assembly question.
+- final sentence remains child-authored.
+- Hide & Seek vocabulary remains optional source-owned expression material.
+- validator: 11/11 PASS.
+- requirement SP-UNIV-002 updated.
+- branch closure runner now has 18 validators.
+- next: verified ASK→UNDERSTAND → optional EXPRESS transition.
