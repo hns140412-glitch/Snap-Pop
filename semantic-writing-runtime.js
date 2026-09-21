@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-a";
+  const VERSION="2026.09.21-b";
   const LENSES=new Set(["idea","emotion","description","viewpoint","final"]);
   const FORBIDDEN_KEYS=new Set([
     "finalDraft","final_draft","rewrite","rewrittenText","rewritten_text",
@@ -20,14 +20,35 @@
     return {present,missing};
   }
 
-  function sanitize(raw={}){
-    for(const key of Object.keys(raw||{})){
-      if(FORBIDDEN_KEYS.has(key)) delete raw[key];
+  function hasForbiddenKeyDeep(value,depth=0){
+    if(depth>4||value===null||typeof value!=="object") return false;
+    if(Array.isArray(value)) return value.some(item=>hasForbiddenKeyDeep(item,depth+1));
+    for(const [key,item] of Object.entries(value)){
+      if(FORBIDDEN_KEYS.has(key)) return true;
+      if(hasForbiddenKeyDeep(item,depth+1)) return true;
     }
+    return false;
+  }
+
+  function assertSingleNextMove(question,hint){
+    const q=cleanText(question,180);
+    const h=cleanText(hint,180);
+    if(!q) throw new Error("SEMANTIC_MISSING_NEXT_MOVE");
+    if(/\r|\n/.test(q)) throw new Error("SEMANTIC_MULTI_PROMPT");
+    const marks=(q.match(/[?？]/g)||[]).length;
+    if(marks!==1||!/[?？]$/.test(q)) throw new Error("SEMANTIC_MULTI_PROMPT");
+    if(/[?？]/.test(h)) throw new Error("SEMANTIC_HINT_MUST_NOT_ASK");
+    return {question:q,hint:h};
+  }
+
+  function sanitize(raw={}){
+    if(!raw||typeof raw!=="object") throw new Error("SEMANTIC_INVALID_OUTPUT");
+    if(hasForbiddenKeyDeep(raw)) throw new Error("SEMANTIC_FORBIDDEN_OUTPUT");
+    const next=assertSingleNextMove(raw.question,raw.hint);
     const out={
       focus:cleanText(raw.focus,48)||null,
-      question:cleanText(raw.question,180)||null,
-      hint:cleanText(raw.hint,180)||null,
+      question:next.question,
+      hint:next.hint||null,
       suggestedLens:LENSES.has(raw.suggestedLens)?raw.suggestedLens:null,
       rationale:cleanText(raw.rationale,180)||null,
       confidence:Number.isFinite(raw.confidence)?Math.max(0,Math.min(1,raw.confidence)):null,
