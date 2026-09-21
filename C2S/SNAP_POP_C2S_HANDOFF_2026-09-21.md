@@ -1538,3 +1538,76 @@ Next execution gate:
 2. run closure validators against the exact candidate SHA;
 3. only then assess whether frozen-candidate declaration is justified;
 4. live browser/server/OpenAI and device verification remain separately gated.
+
+
+## 28. FROZEN CANDIDATE + TAKY EXTERNAL-RESOURCE GATE HOLD — 2026-09-21
+
+### Frozen candidate
+
+Exact candidate SHA:
+- `a333e735f69b57164edc8440f7108e49a6ee8c7a`
+
+Classification:
+- `FROZEN_CANDIDATE_BRANCH_ONLY`
+
+Evidence before freeze:
+- required candidate files: 27/27 present at exact SHA
+- exact-SHA cross-layer execution: 15/15 PASS
+- prior integrated P1–P5 isolated regression: 19/19 PASS
+- prior P6 app boundary static: 10/10 PASS
+- candidate runtime files unchanged after the candidate commit; later commits are documentation/gate records only.
+
+Added:
+- `C2S/SNAP_POP_FROZEN_CANDIDATE_2026-09-21.md`
+- `C2S/SNAP_POP_EXTERNAL_RESOURCE_GATE_2026-09-21.json`
+
+### TAKY main gate basis checked
+
+TAKY main inspected directly:
+- `MASTER/ENFORCEMENT_PROTOCOL.md`
+- `MASTER/MASTER_LOGIC.md`
+- `ENFORCEMENT/taky_gate.py`
+- `OS/DEPLOYMENT_OPS.md`
+
+Relevant locks:
+- external deployment/hosting/production validation must not replace lower-cost local/branch validation;
+- default external execution budget for one preview/deploy goal = 1;
+- candidate SHA/build must be frozen before deployment;
+- same external call must not be repeated without new evidence/state transition/override;
+- `ㄱ / ㄱㄱ ≠ PRODUCTION DEPLOY AUTHORITY`;
+- L3 external action requires explicit Human Approval.
+
+### Gate evaluation for Snap & Pop
+
+Satisfied:
+- candidate frozen: YES
+- lower-cost branch closure done: YES
+- external call count for same goal: 0
+- external call budget: 1
+- repeated-call violation: NO
+- deployment before freeze: NO
+- local closure substituted by external call: NO
+
+Not satisfied:
+- explicit Human Approval for external action: NO
+
+Current decision:
+- `HOLD_BEFORE_EXTERNAL_ACTION`
+- `HUMAN_APPROVAL_STATUS=PENDING`
+- `EXTERNAL_ACTION_AUTHORIZED_NOW=false`
+
+Therefore:
+- Netlify call: NOT_RUN
+- hosted preview/deploy: NOT_RUN
+- hosted production validation: NOT_RUN
+- external polling: NOT_RUN
+
+### Next allowed step
+
+Only after explicit approval for the external action:
+- perform at most one controlled hosted runtime/deploy execution for this exact frozen candidate SHA;
+- do not silently switch candidate SHA;
+- do not repeat the external call without new evidence/state change;
+- report hosted result separately from source state and device state.
+
+Until then, all non-external documentation/handoff work may continue.
