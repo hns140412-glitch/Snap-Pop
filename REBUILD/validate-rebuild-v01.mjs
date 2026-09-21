@@ -51,6 +51,14 @@ assert('exploration-step-clamp',exploreMod.clampExplorationStep(9)===2&&exploreM
 assert('exploration-parity-writing-state',legacyApp.includes('function ensureWritingState(s)'));
 assert('exploration-parity-session-shape',legacyApp.includes('answers:["","",""],snapshots:["","",""],draft:"",language:"ko"'));
 
+
+const flowMod=await importSource('src/exploration/exploration-flow.js');
+assert('exploration-empty-waits',flowMod.transitionExploration({step:0,draft:'   '}).kind==='WAIT_FOR_CHILD_INPUT');
+assert('exploration-step-advance',flowMod.transitionExploration({step:1,draft:'child text'}).nextStep===2);
+assert('exploration-step-complete',flowMod.transitionExploration({step:2,draft:'child text'}).complete===true);
+assert('exploration-parity-advance',legacyApp.includes('if(i<2){writingAnalysisSeq++;s.step=i+1'));
+assert('exploration-parity-empty',legacyApp.includes('if(!s.draft){s.crewState=s.crewState||{}'));
+
 console.log('REBUILD_DOMAIN_PARITY_PASS');
 
 console.log('REBUILD_V01_FOUNDATION_PASS snap-pop');
