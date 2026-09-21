@@ -1526,11 +1526,11 @@
         "RECOVERED_BADGE_DIALOGUE"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "behavior taxonomy + anti-labeling guard implemented; explicit evidence contract is now coded for ERROR_DISCOVERY / DEEP_THINKING / SPECIAL_BEHAVIOR with weak-proxy/time/AI-inference rejection and fail-closed SPECIAL allowlists. Existing detectors remain HELP_REQUEST, WRITING_EXPLORATION, EXTRA_TASK, and RETRY-from-explicit-revision; the three new families are still intentionally unwired until real source-specific UI/runtime producers exist.",
+      "gap": "ERROR_DISCOVERY / DEEP_THINKING / SPECIAL_BEHAVIOR now have explicit source-specific producers routed through the fail-closed evidence contract. ERROR_DISCOVERY requires child-marked correction plus before/after artifact refs; DEEP_THINKING requires a child-authored reflection artifact; SPECIAL_BEHAVIOR requires explicit Special Exploration completion plus feature/code allowlists. No elapsed-time, empty-attempt, retry-count, score or AI-inference proxy is accepted. Live browser/device behavior remains NOT_RUN.",
       "codeEvidence": [
         "badge-behavior-runtime.js",
         "badge-evidence-contract-runtime.js",
@@ -1541,7 +1541,13 @@
         "app.js:bonusSave→EXTRA_TASK",
         "app.js:recordEditSave→RETRY explicit revision",
         "scripts/validate-badge-behavior-observation.mjs",
-        "scripts/validate-badge-explicit-evidence-contract.mjs"
+        "scripts/validate-badge-explicit-evidence-contract.mjs",
+        "index.html:#recordEditErrorFound",
+        "app.js:recordEditSave→ERROR_DISCOVERY explicit self-correction",
+        "index.html:#deepThinkOpen/#deepThinkText/#deepThinkSave",
+        "app.js:deepThinkSave→DEEP_THINKING explicit reflection artifact",
+        "app.js:specialSave→SPECIAL_BEHAVIOR declared special exploration",
+        "scripts/validate-badge-evidence-producers.mjs"
       ]
     },
     {

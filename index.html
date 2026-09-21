@@ -60,6 +60,12 @@
    <button class="soft" id="cloudBtn">상상 구름</button>
    <button class="soft" id="expressionBridgeBtn" type="button">English 표현 도움</button>
    <button class="voice" id="voiceBtn"><img src="assets/icons/radio.svg" alt="">말해서 쓰기</button>
+   <button class="soft" id="deepThinkOpen" type="button">생각 한 번 더 정리하기</button>
+  </div>
+  <div id="deepThinkPanel" class="paper" hidden>
+   <span class="kicker">선택 기록 · 자동 판정 없음</span>
+   <textarea id="deepThinkText" placeholder="왜 그렇게 생각했는지, 새로 떠오른 점을 네 말로 한 줄 남겨봐요."></textarea>
+   <button class="soft wide" id="deepThinkSave" type="button">생각 기록 남기기</button>
   </div>
   <div id="handoffWord" class="handoffWord" hidden></div>
   <div id="expressionIntentNote" class="handoffWord" hidden></div>
@@ -134,6 +140,7 @@
  <article class="paper">
   <span class="kicker" id="recordEditMeta"></span>
   <textarea id="recordEditText" placeholder="수정할 글을 입력해요."></textarea>
+  <label class="setting"><span><b>내가 실수를 찾아 고치는 중</b><small>직접 표시한 경우에만 실수 발견 경험으로 남겨요.</small></span><input id="recordEditErrorFound" type="checkbox"></label>
   <button class="primary wide" id="recordEditSave">수정본 저장</button>
  </article>
  <div id="recordRevisionList" class="timeline"></div>
