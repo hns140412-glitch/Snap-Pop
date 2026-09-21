@@ -237,3 +237,5 @@ Conservative boundaries retained:
 - Ready & Set physical cross-app return remains device/runtime-open;
 - final visual/art direction remains OPEN;
 - deploy / Netlify / main merge remain NOT_RUN.
+
+- GUIDE authorship/minimal intervention runtime matrix closure validation trigger.
