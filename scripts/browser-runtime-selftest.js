@@ -56,6 +56,13 @@
 
       const answer=document.querySelector("#answer"),next=document.querySelector("#nextBtn");
       assert("hint-control-restored",!!document.querySelector("#hintBtn"));
+      const safety=window.SnapPopCrewInteractionSafety;
+      assert("unsafe-child-mock-is-blocked",safety?.inspect("넌 또 틀렸어",{mode:"CHILD_REACTION"})?.safe===false);
+      assert("unsafe-child-mock-falls-back-neutral",safety?.safeReaction("넌 또 틀렸어",{language:"ko"})==="작은 한 조각만 같이 보자.");
+      const reactionOverlay=document.querySelector("#crewReactionOverlay");
+      assert("crew-reaction-hidden-by-default",reactionOverlay?.hidden===true);
+      assert("crew-reaction-does-not-capture-input",getComputedStyle(reactionOverlay).pointerEvents==="none");
+      assert("crew-reaction-is-height-bounded",parseFloat(getComputedStyle(reactionOverlay).maxHeight)<=86);
 
       click(next,"empty-advance-1");
       await wait(120);
@@ -71,6 +78,33 @@
       assert("empty-second-attempt-offers-hint",interventionState?.crewState?.interventionStage==="HINT_OFFER");
       assert("hint-is-not-auto-revealed",document.querySelector("#hint")?.hidden===true);
       assert("empty-second-attempt-does-not-write",answer.value==="");
+
+      const originalSemanticProvider=window.SnapPopSemanticWritingProvider;
+      window.SnapPopSemanticWritingProvider={
+        async analyzeWriting(payload){
+          const isOld=(payload.draft||"").includes("오래된 분석");
+          await wait(isOld?1500:10);
+          return {
+            focus:isOld?"OLD":"LATEST",
+            question:isOld?"오래된 분석 결과가 보이나?":"최신 분석 결과만 남아 있나?",
+            hint:"",
+            suggestedLens:null,
+            rationale:"runtime stale-result probe",
+            confidence:1,
+            semanticSignals:{present:[],missing:[]},
+            grounded:true,
+            provider:"runtime-probe"
+          };
+        }
+      };
+      answer.value="오래된 분석 초안";
+      answer.dispatchEvent(new Event("input",{bubbles:true}));
+      await wait(900);
+      answer.value="최신 분석 초안";
+      answer.dispatchEvent(new Event("input",{bubbles:true}));
+      await wait(1900);
+      assert("stale-writing-analysis-cannot-overwrite-latest",document.querySelector("#question")?.textContent==="최신 분석 결과만 남아 있나?");
+      window.SnapPopSemanticWritingProvider=originalSemanticProvider;
 
       const draft1="오늘은 숲에서 작은 빛을 봤어.";
       answer.value=draft1;
