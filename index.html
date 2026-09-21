@@ -36,7 +36,7 @@
  </div>
 </section>
 <section id="records" class="view parchment">
- <header class="pageTitle"><span>나의 탐험 기록</span><h1>기록</h1><p>완료한 탐험과 기억이 한 권의 탐험일지처럼 쌓여요.</p></header>
+ <header class="pageTitle recordsPageTitle"><span>내가 남긴 것</span><h1>탐험 기록</h1><p>내가 쓴 글과 특별한 기억을 날짜별로 다시 볼 수 있어.</p></header>
  <article class="calendarCard">
   <div class="calendarHead"><button class="soft mini" id="calPrev" aria-label="이전 달">←</button><b id="calTitle">탐험 달력</b><button class="soft mini" id="calNext" aria-label="다음 달">→</button></div>
   <div class="weekRow"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
@@ -90,22 +90,36 @@
 </section>
 <section id="result" class="view parchment subflow">
  <button class="back" id="resultBack">← 지도</button>
- <header class="pageTitle"><span>탐험 완료</span><h1 id="resultTitle">오늘의 탐험</h1><p>네가 남긴 생각과 오늘 발견한 글쓰기 힘을 확인해봐요.</p></header>
- <article class="resultCard">
-  <div class="resultReward"><strong id="resultExp">+0 EXP</strong><span id="resultGem">보석 조각 +1</span></div>
+ <header class="pageTitle resultPageTitle"><span>탐험 완료</span><h1 id="resultTitle">오늘의 탐험</h1><p>먼저 네가 만든 글을 보고, 그다음 오늘 발견한 힘을 확인해봐.</p></header>
+ <article class="resultCard resultStoryCard">
+  <span class="kicker">내가 만든 글</span>
   <h2 id="resultDraft">네 글이 여기에 보여요.</h2>
-  <div id="resultStrengths" class="strengths"></div>
   <p id="resultCrewMemberLine" class="crewMemberPreview"></p>
  </article>
- <button class="primary wide" id="resultRecords">기록에서 보기</button>
- <button class="soft wide resultSecondary" id="bonusStart">추가 연습</button>
+ <article class="resultProgressCard">
+  <div>
+   <span class="kicker">오늘 쌓인 흔적</span>
+   <div class="resultReward"><strong id="resultExp">+0 EXP</strong><span id="resultGem">보석 조각 +1</span></div>
+  </div>
+  <div>
+   <span class="kicker">오늘 발견한 힘</span>
+   <div id="resultStrengths" class="strengths"></div>
+  </div>
+ </article>
+ <div class="resultNextActions" aria-label="탐험 완료 후 다음 행동">
+  <button class="primary wide" id="resultRecords">내 기록에 남긴 것 보기</button>
+  <button class="soft wide" id="resultGrowth">내 성장 확인하기</button>
+ </div>
+ <details class="resultOptional">
+  <summary>한 문장 더 해볼까?</summary>
+  <button class="soft wide resultSecondary" id="bonusStart">추가 연습 열기</button>
+ </details>
  <article id="bonusPanel" class="paper bonusPanel" hidden>
   <span class="kicker">선택 연습 · EXP 없음</span>
   <h2 id="bonusQuestion">한 문장 더 만들어볼까?</h2>
   <textarea id="bonusAnswer" placeholder="네 말로 한 문장만 더 남겨봐요."></textarea>
   <button class="primary wide" id="bonusSave">추가 연습 완료</button>
  </article>
- <button class="soft wide resultSecondary" id="resultGrowth">성장 확인하기</button>
 </section>
 <section id="gems" class="view parchment">
  <header class="pageTitle"><span>탐험의 흔적</span><h1>보석함</h1><p>탐험하며 모은 보석과 기록을 한곳에서 확인해요.</p></header>
@@ -114,7 +128,12 @@
  <button class="primary wide" id="shopBtn">탐험가의 소원 상점</button>
 </section>
 <section id="growth" class="view parchment">
- <header class="pageTitle"><span>한 그루가 계속 자라요</span><h1>성장</h1></header>
+ <header class="pageTitle growthPageTitle"><span>내 탐험이 쌓인 모습</span><h1>성장</h1><p>무엇을 얼마나 했는지보다, 네 탐험이 어떻게 이어졌는지 볼 수 있어.</p></header>
+ <div class="growthStoryFlow">
+  <div class="growthStoryStep"><span>1</span><b>탐험하고</b></div>
+  <div class="growthStoryStep"><span>2</span><b>기록하고</b></div>
+  <div class="growthStoryStep"><span>3</span><b>조금씩 자라</b></div>
+ </div>
  <article id="growthActivitySummary" class="growthActivitySummary" aria-label="탐험 활동 요약"></article>
  <section id="badgePreview" class="badgePreview" aria-label="배지 스타일 미리보기">
   <div class="badgePreviewHead"><b>배지 스타일 미리보기</b><span>획득 배지 아님</span></div>
