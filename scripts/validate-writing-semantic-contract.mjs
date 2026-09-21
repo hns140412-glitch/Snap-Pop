@@ -50,12 +50,13 @@ assert("one-next-move-is-enforced-server-side",
   server.includes("OPENAI_SEMANTIC_HINT_QUESTION_REJECTED")
 );
 
-assert("live-result-applies-only-if-draft-and-step-still-match",
-  support.includes("if(cur.draft!==draft||Math.min(2,cur.step||0)!==step)return null")
+assert("live-result-applies-only-if-draft-step-and-dom-still-match",
+  support.includes("if(cur.draft!==draft||Math.min(2,cur.step||0)!==step)return null")&&
+  support.includes("if(q('#answer').value!==draft)return null")
 );
 
 assert("crew-reaction-is-derived-from-current-analysis",
-  flow.includes("const move=await deps.analyzeWritingMove(cur)||deps.refreshWritingMove(cur)")&&
+  flow.includes("const move=await deps.analyzeWritingMove(cur);if(!move)return;")&&
   flow.includes("deps.stepSpecificReaction(cur.draft")
 );
 
