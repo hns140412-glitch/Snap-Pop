@@ -45,8 +45,8 @@ assert("guest-selection-runs-role-guard",
   appSource.includes("SnapPopCrewRoleGuard?.assertRoleContract")
 );
 assert("special-roster-says-encounter-not-power",
-  appSource.includes("조우 방식 · 기능 동일")&&
-  appSource.includes("스페셜은 강함 등급이 아님")
+  appSource.includes("만나는 방식만 특별해요")&&
+  appSource.includes("능력의 우열은 없어요")
 );
 assert("special-scene-repeats-child-authorship-not-power",
   appSource.includes("스페셜은 더 강한 대원이 아니라 만나는 방식만 달라.")
