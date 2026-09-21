@@ -388,10 +388,12 @@ function renderImaginationResponse(result,identity){
         :"확인 필요"
     :"생각 도움";
   const understanding=result?.understanding&&typeof result.understanding==="object"?result.understanding:null;
+  const mentalModel=result?.mentalModel&&Array.isArray(result.mentalModel.items)?result.mentalModel:null;
   host.innerHTML=`<div class="cloudAnswerHead"><b>${html(crewMemberName(identity))} · ${html(result?.title||"상상 구름")}</b><span>${html(badge)}</span></div>`+
     `<p class="cloudCore">${html(result?.core||"")}</p>`+
     (nodes.length?`<div class="mindMap">${nodes.map(n=>`<div class="mindNode"><b>${html(n.label||"")}</b><span>${html(n.value||"")}</span></div>`).join("")}</div>`:"")+
     (understanding?`<p class="kicker">이렇게 보면 쉬워 · ${html(understanding.label||"")}</p>`:"")+
+    (mentalModel?.items?.length?`<div class="mentalModel mentalModel${html(mentalModel.type||"STACK")}">${mentalModel.items.map((item,i)=>`<div class="mentalStep"><b>${html(item.label||String(i+1))}</b><span>${html(item.text||"")}</span></div>`).join(mentalModel.type==="FLOW"?'<i class="mentalArrow">→</i>':"")}</div>`:"")+
     (verifiedClaims.length?`<p class="kicker">확인된 주장 ${verifiedClaims.length}개${evidenceLinks.length?` · 근거 ${evidenceLinks.map(x=>`<a href="${html(x.url)}" target="_blank" rel="noopener noreferrer">${html(x.label)}</a>`).join(" · ")}`:""}</p>`:"")+
     (understanding?.nextCuriosity?`<p class="cloudExample">다음 궁금증 · ${html(understanding.nextCuriosity)}</p>`:"")+
     (result?.example?`<p class="cloudExample">${html(result.example)}</p>`:"");
