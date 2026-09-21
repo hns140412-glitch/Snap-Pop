@@ -4,6 +4,7 @@ import vm from "node:vm";
 const themeSource=fs.readFileSync(new URL("../badge-theme-expression-runtime.js",import.meta.url),"utf8");
 const visualSource=fs.readFileSync(new URL("../badge-visual-runtime.js",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const badgeControllerSource=fs.readFileSync(new URL("../badge-controller.js",import.meta.url),"utf8");
 const indexSource=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const window={};
 vm.runInNewContext(themeSource,{window,Object,Array,String,Number,Math,Error,RegExp,Set});
@@ -30,7 +31,7 @@ const b=visual.model({themeExpression:reviewed,tier:"PLATINUM",stars:5,identity}
 assert("identity-stable-across-theme-expression",a.identity.name===b.identity.name&&a.identity.photo===b.identity.photo&&a.identity.stable===true&&b.identity.stable===true);
 assert("theme-expression-is-cosmetic-only",reviewed.cosmeticOnly===true&&reviewed.identityMutationAllowed===false&&reviewed.growthMutationAllowed===false&&reviewed.economyMutationAllowed===false&&reviewed.awardMutationAllowed===false&&reviewed.powerMutationAllowed===false);
 assert("visual-composition-separates-theme-layer",a.composition.childIdentityLayer===true&&a.composition.themeExpressionLayer===true&&a.composition.badgeGrowthLayer===true);
-assert("unresolved-assets-are-explicit-not-invented",unresolved.assetState==="UNRESOLVED"&&unresolved.assetRefs.length===0&&appSource.includes('assetState:"UNRESOLVED"')&&appSource.includes("테마 표현 자산 검토 전"));
+assert("unresolved-assets-are-explicit-not-invented",unresolved.assetState==="UNRESOLVED"&&unresolved.assetRefs.length===0&&badgeControllerSource.includes('assetState:"UNRESOLVED"')&&badgeControllerSource.includes("테마 표현 자산 검토 전"));
 assert("reviewed-assets-require-reference",reviewed.assetState==="REVIEWED_ASSET_SET"&&reviewed.assetRefs.length===1);
 blocked("reviewed-theme-without-asset-ref-blocked",()=>theme.normalize({themeId:"X",assetState:"REVIEWED_ASSET_SET"}),"BADGE_THEME_EXPRESSION_REVIEWED_ASSET_REQUIRED");
 blocked("identity-mutation-through-theme-blocked",()=>theme.normalize({themeId:"X",assetState:"UNRESOLVED",identity:{name:"other"}}),"BADGE_THEME_EXPRESSION_AUTHORITY_VIOLATION");
