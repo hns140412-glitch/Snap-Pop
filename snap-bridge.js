@@ -19,25 +19,26 @@
       const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
       const value=JSON.parse(new TextDecoder().decode(bytes));
       if (!value || value.contract_version!=='READY_LEARNING_CONTEXT_V1') return null;
-      const list=v=>Array.isArray(v)?v.filter(x=>typeof x==='string').slice(0,12):[];
-      return {
+
+      const text=(v,max)=>typeof v==='string' ? (v.trim().slice(0,max)||null) : null;
+      const list=v=>Array.isArray(v)
+        ? [...new Set(v.filter(x=>typeof x==='string').map(x=>x.trim()).filter(Boolean))].slice(0,16)
+        : [];
+      const requiredIds=['learning_unit_id','analysis_id','assignment_id'];
+      if(requiredIds.some(key=>!text(value[key],120))) return null;
+
+      return Object.freeze({
         contract_version:'READY_LEARNING_CONTEXT_V1',
-        learning_unit_id:String(value.learning_unit_id||'').slice(0,120)||null,
-        analysis_id:String(value.analysis_id||'').slice(0,120)||null,
-        assignment_id:String(value.assignment_id||'').slice(0,120)||null,
-        subject:String(value.subject||'').slice(0,80)||null,
-        concept_skill_target:String(value.concept_skill_target||'').slice(0,180)||null,
-        activity_types:list(value.activity_types),
-        cognitive_load_profile:list(value.cognitive_load_profile),
-        divisible_boundary:String(value.divisible_boundary||'').slice(0,80)||null,
+        learning_unit_id:text(value.learning_unit_id,120),
+        analysis_id:text(value.analysis_id,120),
+        assignment_id:text(value.assignment_id,120),
+        subject:text(value.subject,80),
+        concept_skill_target:text(value.concept_skill_target,180),
+        activity_types:Object.freeze(list(value.activity_types)),
+        cognitive_load_profile:Object.freeze(list(value.cognitive_load_profile)),
         confidence:Number.isFinite(value.confidence)?Math.max(0,Math.min(1,value.confidence)):null,
-        unresolved_flags:list(value.unresolved_flags),
-        provenance:{
-          engine:String(value.provenance?.engine||'').slice(0,80)||null,
-          version:String(value.provenance?.version||'').slice(0,40)||null,
-          confirmation_state:String(value.provenance?.confirmation_state||'').slice(0,40)||null
-        }
-      };
+        unresolved_flags:Object.freeze(list(value.unresolved_flags))
+      });
     } catch { return null; }
   }
 
