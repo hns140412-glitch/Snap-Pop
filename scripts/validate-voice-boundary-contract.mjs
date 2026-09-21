@@ -4,6 +4,7 @@ const voice=fs.readFileSync(new URL("../voice-runtime.js",import.meta.url),"utf8
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const index=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const imagination=fs.readFileSync(new URL("../imagination-controller.js",import.meta.url),"utf8");
+const support=fs.readFileSync(new URL("../interaction-support-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -26,19 +27,19 @@ assert("listen-is-one-shot-not-always-listening",
 
 assert("listening-button-only-reads-current-prompt",
   index.includes('id="listenBtn"')&&
-  app.includes('$("#listenBtn").onclick')&&
-  app.includes('await speak(p[0]+" "+(s.crewState?.hintLevel?p[1]:"")')
+  support.includes('q("#listenBtn").onclick')&&
+  support.includes('await speak(p[0]+" "+(s.crewState?.hintLevel?p[1]:"")')
 );
 
 assert("voice-input-is-explicit-separate-control",
   index.includes('id="voiceBtn"')&&
   index.includes("말해서 쓰기")&&
-  app.includes('$("#voiceBtn").onclick')
+  support.includes('q("#voiceBtn").onclick')
 );
 
 assert("voice-input-appends-child-transcript-to-draft",
   app.includes('$("#answer").value+=(($("#answer").value?" ":"")+t)')&&
-  app.includes('$("#answer").dispatchEvent(new Event("input"))')
+  support.includes('q("#answer").dispatchEvent(new Event("input"))')
 );
 
 assert("radio-is-imagination-entry-not-writing-landmark",
@@ -54,8 +55,8 @@ assert("radio-is-not-sixth-writing-tool",
 );
 
 assert("voice-fallback-does-not-block-text-flow",
-  app.includes("지금은 음성으로 읽어주기 어려워요. 글로 계속 볼 수 있어요.")&&
-  app.includes("이 기기에서는 지금 음성 입력을 사용할 수 없어요.")
+  support.includes("지금은 음성으로 읽어주기 어려워요. 글로 계속 볼 수 있어요.")&&
+  support.includes("이 기기에서는 지금 음성 입력을 사용할 수 없어요.")
 );
 
 assert("external-provider-remains-optional",
