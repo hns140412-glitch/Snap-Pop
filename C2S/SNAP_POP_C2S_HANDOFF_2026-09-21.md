@@ -3362,3 +3362,51 @@ External state remains:
 - merge: NOT_RUN
 - external call count: 0
 - Human Approval: PENDING
+
+
+## 47. FAMILY EXPANSION + BROWSER RUNTIME CLOSURE — 2026-09-21
+
+### Exact candidate
+- frozen candidate: `d8d5b5caf91f21b3cbb72688b8a7d8e8eb9f2f16`
+- GitHub Actions run: `35585160514`
+- closure: 45/45 PASS
+- browser runtime: CDP PASS
+- init: PASS
+- IndexedDB: OPEN
+- runtime phase: DONE
+- runtime errors: 0
+
+### FAMILY_EXPANSION
+- total: 11
+- CODED: 11/11
+- STATIC_VERIFIED: 11/11
+- RUNTIME_VERIFIED: 11/11
+- DEVICE_VERIFIED: 0/11
+
+Validated in browser:
+- feature flag / ORIGINAL preservation
+- diary
+- letter
+- shared special exploration
+- family timeline
+- multi-child isolation
+- local permission isolation
+- support card
+- recovery locks
+- conflict lock / no economy mutation
+
+### Runtime defect closure
+Runtime verification found and fixed real DOM/runtime defects rather than masking them:
+- missing hint button
+- incorrect use of single querySelector with forEach in four collection paths
+- unstable iframe/dump-dom storage validation replaced with first-party Chrome CDP path
+
+### Remaining open
+- SP-BRIDGE-001 static PARTIAL: actual Ready & Set transition/return idempotency
+- device verification
+- live hosted provider verification
+- reviewed Theme Expression assets
+- RECOVERY_LOCKED canonical semantics where source recovery is still required
+
+### Netlify
+Existing Snap-Pop site was identified, but it is production-main linked and the available connector cannot guarantee exact branch/SHA preview deployment. No hosted deploy was triggered. This preserves the exact-candidate rule.

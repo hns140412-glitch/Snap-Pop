@@ -432,3 +432,14 @@ HOSTED VALIDATION ACCEPTANCE PREP — 2026-09-21
 - generic ㄱ is not approval
 - Netlify/hosted runtime/merge remain NOT_RUN
 - external call count remains 0
+
+
+FAMILY EXPANSION + BROWSER RUNTIME CLOSURE — 2026-09-21
+- frozen candidate SHA: d8d5b5caf91f21b3cbb72688b8a7d8e8eb9f2f16
+- exact-SHA closure: 45/45 PASS
+- Chrome CDP browser runtime: PASS
+- Family Expansion: 11/11 CODED + STATIC_VERIFIED + RUNTIME_VERIFIED
+- device verification remains NOT_RUN
+- SP-BRIDGE-001 remains STATIC PARTIAL pending actual Ready & Set transition/return verification
+- Snap-Pop Netlify site identified as cheerful-pothos-d1c3ee, but available connector cannot guarantee exact branch/SHA preview; no unsafe deploy triggered
+- read Handoff Section 47 before further work
