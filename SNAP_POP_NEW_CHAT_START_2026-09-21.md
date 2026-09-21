@@ -279,3 +279,13 @@ EXPRESSION TRACE / INTERVENTION NOTE:
 - SP-GUIDE-002 updated.
 - closure runner now has 21 validators.
 - old frozen candidate remains superseded; external calls still 0.
+
+
+BADGE BEHAVIOR OBSERVATION NOTE:
+- badge behavior taxonomy + anti-labeling guard implemented.
+- current runtime observation wiring is intentionally limited to explicit HELP_REQUEST.
+- no elapsed-silence deep-thinking inference or generic error/retry labeling.
+- historical ~60 badge catalog remains WORKING_DRAFT_NOT_ACTIVE.
+- validator 9/9 PASS.
+- SP-BADGE-006 remains CODED=PARTIAL until source-specific detectors exist.
+- branch closure runner now has 22 validators.
