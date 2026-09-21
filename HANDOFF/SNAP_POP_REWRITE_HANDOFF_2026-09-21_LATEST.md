@@ -133,3 +133,5 @@ Resume target: continue integrated UI rewrite from actual child-facing surfaces.
 - DEVICE_VERIFIED: false
 
 - integrated imagination/special Phase 4 exact-head validation trigger.
+
+- integrated settings/family Phase 5 exact-head validation trigger.
