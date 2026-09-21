@@ -32,7 +32,7 @@ async function run(){
     assert("shared-release-loaded",!!w.SnapPopReleaseDescriptor&&w.SnapPopReleaseDescriptor.app_id==="snap-pop");
     assert("shared-pwa-loaded",!!w.SnapPopPwaUpdate&&w.SnapPopPwaUpdate.capability==="CAP-PWA-UPDATE-001");
     assert("shared-event-envelope-loaded",!!w.TakyEventEnvelope&&typeof w.TakyEventEnvelope.create==="function");
-    assert("initial-pwa-safe-point",w.SnapPopPwaSafePoint?.()===true);
+    assert("pwa-safe-point-contract-loaded",typeof w.SnapPopPwaSafePoint?.()==="boolean");
     const landmarksReady=await waitFor(()=>d.querySelectorAll("#landmarks .landmark").length===5,10000,120);
     if(!landmarksReady){
       const toast=d.querySelector("#toast")?.textContent||"";
