@@ -52,7 +52,16 @@ async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP
     const ledger=await get("badgeBehaviorObservations")||[];
     if(ledger.some(x=>x.eventId===event.eventId))return event;
     ledger.unshift(event);
-    await set("badgeBehaviorObservations",ledger.slice(0,1000));
+    const writes=[["badgeBehaviorObservations",ledger.slice(0,1000)]];
+    const shared=window.TakyBadgeExperienceContract?.fromSnapObservation?.(event)||null;
+    if(shared){
+      const sharedLedger=await get("badgeSharedExperienceEvents")||[];
+      if(!sharedLedger.some(x=>x.event_id===shared.event_id)){
+        sharedLedger.unshift(shared);
+        writes.push(["badgeSharedExperienceEvents",sharedLedger.slice(0,1000)]);
+      }
+    }
+    await setMany(writes);
     return event;
   }catch{return null}
 }
