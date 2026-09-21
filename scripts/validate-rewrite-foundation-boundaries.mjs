@@ -18,8 +18,9 @@ assert("ui-shell-loaded-before-app",
 assert("app-no-longer-owns-indexeddb",
   !app.includes('indexedDB.open("snap_pop_rev10"')
 );
+assert("app-has-no-legacy-db-variable",!/\\bdb\\b/.test(app));
 assert("storage-runtime-owns-indexeddb",
-  storage.includes('indexedDB.open(DB_NAME,DB_VERSION)')&&storage.includes("SNAP_POP_STORAGE_V1")
+  storage.includes('indexedDB.open(DB_NAME,DB_VERSION)')&&storage.includes("SNAP_POP_STORAGE_V1")&&storage.includes("isOpen:()=>!!db")
 );
 assert("app-delegates-storage",
   app.includes("SnapPopStorage.open()")&&

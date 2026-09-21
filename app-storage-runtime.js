@@ -70,6 +70,7 @@
 
   window.SnapPopStorage=Object.freeze({
     contract:"SNAP_POP_STORAGE_V1",
-    open,get,set,setMany
+    open,get,set,setMany,
+    isOpen:()=>!!db
   });
 })();
