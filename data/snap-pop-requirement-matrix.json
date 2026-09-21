@@ -1286,14 +1286,19 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:cloudHistory",
         "app.js:renderCloudHistory",
-        "index.html:cloudHistoryList"
+        "index.html:cloudHistoryList",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "full answer provenance/source snapshot and cross-device sync pending"
+      "gap": "cross-device sync remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: writing record and cloud history render together",
+        "browser-runtime-selftest: cloud history persists in IndexedDB-backed storage"
+      ]
     },
     {
       "id": "SP-UNIV-009",
@@ -1331,13 +1336,19 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:renderGrowth",
-        "app.js:renderGrowthTimeline"
+        "app.js:renderGrowthTimeline",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "Learning Engine 기반 질적 성장 모델은 추후 연결"
+      "gap": "cross-device sync remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: cloud activity appears in growth summary",
+        "browser-runtime-selftest: cloud activity does not change EXP",
+        "browser-runtime-selftest: cloud activity does not change gems"
+      ]
     },
     {
       "id": "SP-IMAGINE-009",
