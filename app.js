@@ -99,7 +99,8 @@ function crewPerformance(identity,kind="observe"){
   const r=crewMemberRule(identity),gesture=r.gestures?.[kind]||r.gestures?.observe||"",motifs=r.reactionMotifs||[];
   return {gesture,motif:motifs.length?motifs[stableHash((identity.crewMember?.type||"")+"|"+kind)%motifs.length]:""};
 }
-async function chooseSceneGuest(sceneKey,{sceneMood=null}={}){
+async function chooseSceneGuest(sceneKey,{sceneMood=null,appearanceAuthorized=false}={}){
+  if(!appearanceAuthorized)return null;
   if(!window.SnapPopCrewOrchestration||!SNAP_RULES?.crewInteractionOrchestration?.guestSelection?.enabled)return null;
   const identity=await resolvedIdentity(),registry=await ensureCrewRegistry(),recent=await get("crewGuestAppearances")||[];
   const members={...SNAP_RULES?.legacyCharacterLineages,...SNAP_RULES?.definedCharacterLineages};
@@ -759,7 +760,9 @@ function specialPromptFor(d=new Date()){const seed=(d.getFullYear()*10000+(d.get
 async function renderSpecialInvite(){const invite=$("#specialInvite");if(!invite)return;invite.hidden=!isWeekend();if(!invite.hidden){const identity=await resolvedIdentity();invite.textContent=`${crewMemberName(identity)}의 특별 탐험 초대장`}}
 async function openSpecial(){
   const p=specialPromptFor(),identity=await resolvedIdentity();
-  const guest=await chooseSceneGuest("SPECIAL_EXPLORATION");
+  const guestTrigger=await get("activeCrewGuestTrigger");
+  const guest=await chooseSceneGuest("SPECIAL_EXPLORATION",{appearanceAuthorized:guestTrigger?.scene==="SPECIAL_EXPLORATION"&&guestTrigger?.authorized===true});
+  if(guestTrigger?.scene==="SPECIAL_EXPLORATION")await set("activeCrewGuestTrigger",null);
   $("#specialDate").textContent=new Date().toLocaleDateString("ko-KR");
   $("#specialPrompt").textContent=p.q;
   $("#specialHint").textContent=`${crewMemberName(identity)} · ${p.h}`;
