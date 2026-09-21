@@ -289,3 +289,14 @@ BADGE BEHAVIOR OBSERVATION NOTE:
 - validator 9/9 PASS.
 - SP-BADGE-006 remains CODED=PARTIAL until source-specific detectors exist.
 - branch closure runner now has 22 validators.
+
+
+GUEST APPEARANCE CORRECTION NOTE:
+- badge observation runtime now wires only explicit HELP_REQUEST / WRITING_EXPLORATION / EXTRA_TASK signals.
+- no inferred DEEP_THINKING / RETRY / ERROR_DISCOVERY / SPECIAL_BEHAVIOR.
+- selected Special Guest now receives shared micro-episode memory and is visible in records.
+- corrected implicit 100% Special Guest appearance: Guest selection is now default-deny and requires a one-shot authorized scene trigger.
+- encounter cadence/probability remains OPEN.
+- special guest shared-memory validator 8/8 PASS.
+- guest appearance gate validator 7/7 PASS.
+- closure runner now has 24 validators.
