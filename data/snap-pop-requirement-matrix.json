@@ -402,12 +402,20 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:renderRecords",
-        "app.js:openRecordEdit"
-      ]
+        "app.js:openRecordEdit",
+        "scripts/browser-runtime-selftest.js",
+        "records-growth-controller.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: original record preserved after revision",
+        "browser-runtime-selftest: revision appended",
+        "browser-runtime-selftest: revision does not recompute reward"
+      ],
+      "gap": "physical-device record editing remains unverified"
     },
     {
       "id": "SP-GROWTH-001",
