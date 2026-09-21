@@ -116,15 +116,17 @@
         "exploration-crew-rules.json"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "app.js:revealHint",
-        "data/exploration-crew-rules.json:interactionContract.stuckBehavior"
+        "crew-intervention-runtime.js",
+        "app.js:emptyAdvanceAttempts/interventionStage",
+        "app.js:revealHint explicit action",
+        "scripts/validate-crew-intervention-ladder.mjs"
       ],
-      "gap": "한 힌트는 구현, 침묵/막힘 판정과 단계적 개입 엔진은 미완료"
+      "gap": "explicit-action intervention ladder implemented/static verified; browser/device interaction timing remains NOT_RUN"
     },
     {
       "id": "SP-GUIDE-003",
