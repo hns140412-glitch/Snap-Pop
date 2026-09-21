@@ -26,6 +26,24 @@ function cleanList(value,max=8){
   return Array.isArray(value)?value.filter(x=>typeof x==="string").map(x=>x.trim()).filter(Boolean).slice(0,max):[];
 }
 
+function cleanVocabularyMaterial(material){
+  if(!material||typeof material!=="object") return null;
+  const word=cleanText(material.word,120);
+  if(!word) return null;
+  return {
+    contract_version:"SNAP_POP_VOCABULARY_MATERIAL_V1",
+    sourceOwner:cleanText(material.sourceOwner,40)||"EXTERNAL_HANDOFF",
+    role:"EXPRESSION_MATERIAL_ONLY",
+    word,
+    context:cleanText(material.context,360)||null,
+    optional:true,
+    autoInsertAllowed:false,
+    masteryMutationAllowed:false,
+    vocabularyOwnershipTransferred:false,
+    doNotInferMastery:true
+  };
+}
+
 function cleanContext(ctx){
   if(!ctx||typeof ctx!=="object") return null;
   return {
@@ -114,7 +132,8 @@ export default async (request) => {
     landmark:LENSES.has(body.landmark)?body.landmark:"idea",
     step:Math.max(0,Math.min(2,Number(body.step)||0)),
     language:body.language==="en"?"en":"ko",
-    learnerContext:cleanContext(body.learnerContext)
+    learnerContext:cleanContext(body.learnerContext),
+    vocabularyMaterial:cleanVocabularyMaterial(body.vocabularyMaterial)
   };
 
   const system = [
@@ -127,6 +146,9 @@ export default async (request) => {
     "Do not write a final answer, do not rewrite the draft, do not supply a completed sentence, do not grade, and do not ask multiple questions.",
     "Treat the five landmarks as writing lenses, not mini-games.",
     "Use learner context only as weak context; never let it override the child's current draft.",
+    "If vocabularyMaterial is present, treat it only as an optional expression material owned by its source app.",
+    "Never auto-insert the vocabulary word into the child's draft, never infer mastery from its presence, and never mutate vocabulary ownership or proficiency.",
+    "You may suggest considering the material only when it genuinely fits the child's current meaning, and still return only one next move.",
     "grounded means grounded in the supplied draft/context, NOT externally fact-verified."
   ].join("\n");
 
