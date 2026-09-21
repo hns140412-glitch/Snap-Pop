@@ -173,7 +173,8 @@ export default async (request) => {
   if(!analysis.question) return json(502,{error:"OPENAI_SEMANTIC_MISSING_NEXT_MOVE"});
   const questionMarks=(analysis.question.match(/[?？]/g)||[]).length;
   const promptLines=analysis.question.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
-  if(questionMarks>1||promptLines.length>1) return json(502,{error:"OPENAI_SEMANTIC_MULTI_PROMPT_REJECTED"});
+  if(questionMarks!==1||promptLines.length!==1||!/[?？]$/.test(analysis.question)) return json(502,{error:"OPENAI_SEMANTIC_MULTI_PROMPT_REJECTED"});
+  if(/[?？]/.test(analysis.hint||"")) return json(502,{error:"OPENAI_SEMANTIC_HINT_QUESTION_REJECTED"});
   return json(200,{
     contract_version:"SNAP_POP_SEMANTIC_WRITING_V1",
     analysis,
