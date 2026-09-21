@@ -39,8 +39,8 @@ assert("presentation-guard-removes-system-meta",
   guard.includes("delete next.raw_response")
 );
 assert("exact-two-user-mic-listen-calls",
-  (app.match(/SnapPopVoice\.listen\(/g)||[]).length===2&&
-  (app.match(/source:"USER_MIC"/g)||[]).length===2
+  ((app.match(/SnapPopVoice\.listen\(/g)||[]).length+(imagination.match(/SnapPopVoice\.listen\(/g)||[]).length)===2&&
+  ((app.match(/source:"USER_MIC"/g)||[]).length+(imagination.match(/source:"USER_MIC"/g)||[]).length)===2
 );
 assert("home-radio-does-not-auto-listen",
   imagination.includes('q("#homeRadio").onclick=()=>openImagination({language:"ko",source:"HOME_RADIO"})')
