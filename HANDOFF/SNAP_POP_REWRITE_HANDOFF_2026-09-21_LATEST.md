@@ -239,3 +239,5 @@ Conservative boundaries retained:
 - deploy / Netlify / main merge remain NOT_RUN.
 
 - GUIDE authorship/minimal intervention runtime matrix closure validation trigger.
+
+- radio ownership/imagination return runtime matrix validation trigger.
