@@ -372,3 +372,10 @@ WRITING / CORE6 / BADGE CANDIDATE / VOICE NOTE:
 - voice boundary validator 9/9 PASS.
 - SP-VOICE-001/002 now CODED=true / STATIC_VERIFIED=true.
 - closure runner now has 38 validators.
+
+
+INDEPENDENT BADGE AXIS NOTE:
+- badge observation axis verified independent from EXP, gems, affinity, award state and economy mutation.
+- independent axis validator 8/8 PASS.
+- SP-BADGE-001 now CODED=true / STATIC_VERIFIED=true.
+- closure runner now has 39 validators.
