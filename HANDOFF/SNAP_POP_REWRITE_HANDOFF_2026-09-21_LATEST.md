@@ -307,3 +307,5 @@ Conservative boundaries retained:
 - universal Think/Express provider probe collision fix validation trigger.
 
 - deterministic reunion probe + universal Think/Express exact-head validation trigger.
+
+- Think/Express ownership/no-guess runtime matrix closure validation trigger.
