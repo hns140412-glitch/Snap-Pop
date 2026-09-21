@@ -52,3 +52,12 @@ After architecture rewrite closes:
 
 Do not deploy, merge, or call Netlify for validation unless exact candidate + external-resource gate + explicit Human Approval are satisfied.
 Generic `ㄱ` is not deploy approval.
+
+
+## Thin orchestrator validation candidate — 2026-09-21
+
+- candidate code lineage: `74795c30ffdceaf548244afd6f2e3d0a2675afe9`
+- `app.js`: 12,594 chars after residual owner cleanup
+- branch closure validator count: 62
+- draft/validation PR: #5, DO NOT MERGE without explicit HUMAN APPROVAL
+- exact-head Actions + 390×844 CDP evidence: PENDING at this note; do not inherit prior 61/61 evidence.
