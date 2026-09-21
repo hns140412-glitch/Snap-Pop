@@ -71,6 +71,7 @@ const validators=[
   "validate-integrated-result-records-growth.mjs",
   "validate-integrated-imagination-special-flow.mjs",
   "validate-integrated-settings-family-flow.mjs",
+  "validate-integrated-ui-closure.mjs",
   "validate-dom-binding-integrity.mjs"
 ];
 
