@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  const VERSION = "2026.09.21-d";
+  const VERSION = "2026.09.21-e";
   function classifyIntent(input="") {
     const text = input.trim();
     if (!text) return "EMPTY";
@@ -35,11 +35,14 @@
     const language=payload.language==="en"?"en":"ko";
     const intent=payload.intent||classifyIntent(input);
     if(intent==="ASK_UNDERSTAND"){
+      const scaffold=window.SnapPopCuriosityScaffold;
+      const questionLens=scaffold&&typeof scaffold.classifyQuestion==="function"
+        ? scaffold.classifyQuestion(input)
+        : "CONCEPT";
       const knowledge=window.SnapPopKnowledge;
       if(knowledge&&typeof knowledge.askVerified==="function"){
         try{
-          const result=await knowledge.askVerified({...payload,input,language,intent});
-          const scaffold=window.SnapPopCuriosityScaffold;
+          const result=await knowledge.askVerified({...payload,input,language,intent,questionLens});
           const shaped=scaffold&&typeof scaffold.scaffoldKnowledge==="function"
             ? scaffold.scaffoldKnowledge(result,input,language)
             : result;
