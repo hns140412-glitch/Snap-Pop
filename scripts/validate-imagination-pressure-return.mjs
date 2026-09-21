@@ -4,6 +4,7 @@ import vm from "node:vm";
 const mentalSource=fs.readFileSync(new URL("../mental-model-runtime.js",import.meta.url),"utf8");
 const scaffoldSource=fs.readFileSync(new URL("../curiosity-scaffold-runtime.js",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const imaginationSource=fs.readFileSync(new URL("../imagination-controller.js",import.meta.url),"utf8");
 
 const window={};
 vm.runInNewContext(mentalSource,{window,Object,Array,String,Number,Math});
@@ -64,42 +65,42 @@ assert("partial-has-no-next-curiosity",
   partialScaffold.understanding.followUpReason==="VERIFICATION_INCOMPLETE"
 );
 
-const saveIndex=appSource.indexOf('s.draft=draft;');
-const persistIndex=appSource.indexOf('await set("active",s);',saveIndex);
-const openIndex=appSource.indexOf('openImagination({',persistIndex);
+const saveIndex=imaginationSource.indexOf('s.draft=draft;');
+const persistIndex=imaginationSource.indexOf('await store.set("active",s);',saveIndex);
+const openIndex=imaginationSource.indexOf('openImagination({',persistIndex);
 assert("draft-persists-before-cloud-open",
   saveIndex>=0&&persistIndex>saveIndex&&openIndex>persistIndex
 );
 
 assert("return-uses-central-integrity-guard",
-  appSource.includes("SnapPopImaginationReturnGuard")&&
-  appSource.includes('guard.returnDraft(current||{},writingReturn)')
+  imaginationSource.includes("SnapPopImaginationReturnGuard")&&
+  imaginationSource.includes('guard.returnDraft(current||{},writingReturn)')
 );
 
 assert("return-context-captures-session-landmark-step-language",
-  appSource.includes('writingReturn:{id:s.id,landmark:s.landmark,step,language:s.language||"ko",draft}')
+  imaginationSource.includes('writingReturn:{id:s.id,landmark:s.landmark,step,language:s.language||"ko",draft}')
 );
 
 assert("return-restores-current-or-snapshot-draft-with-integrity-marker",
-  appSource.includes('$("#answer").value=returned.draft||"";')&&
-  appSource.includes('returnIntegrity:"MATCH"')&&
-  appSource.includes('draftPreserved:true')
+  imaginationSource.includes('q("#answer").value=returned.draft||"";')&&
+  imaginationSource.includes('returnIntegrity:"MATCH"')&&
+  imaginationSource.includes('draftPreserved:true')
 );
 
 assert("context-change-blocks-writing-return",
-  appSource.includes('returnIntegrity:"BLOCKED"')&&
-  appSource.includes('reason:returned.reason||"CONTEXT_CHANGED"')
+  imaginationSource.includes('returnIntegrity:"BLOCKED"')&&
+  imaginationSource.includes('reason:returned.reason||"CONTEXT_CHANGED"')
 );
 
 assert("followup-is-hidden-until-child-reveals",
-  appSource.includes('class="soft cloudFollowUpReveal"')&&
-  appSource.includes('cloudFollowUpText" hidden')&&
-  appSource.includes('follow.hidden=false;reveal.remove()')
+  imaginationSource.includes('class="soft cloudFollowUpReveal"')&&
+  imaginationSource.includes('cloudFollowUpText" hidden')&&
+  imaginationSource.includes('follow.hidden=false;reveal.remove()')
 );
 
-const closeStart=appSource.indexOf("async function closeImagination()");
-const closeEnd=appSource.indexOf("function renderImaginationResponse",closeStart);
-const closeBlock=appSource.slice(closeStart,closeEnd);
+const closeStart=imaginationSource.indexOf("async function closeImagination()");
+const closeEnd=imaginationSource.indexOf("function renderImaginationResponse",closeStart);
+const closeBlock=imaginationSource.slice(closeStart,closeEnd);
 assert("return-acknowledgement-is-non-driving",
   closeBlock.includes("쓰던 글은 그대로 있어. 준비되면 이어서 쓰면 돼.")&&
   !closeBlock.includes("analyzeWritingMove(")&&
