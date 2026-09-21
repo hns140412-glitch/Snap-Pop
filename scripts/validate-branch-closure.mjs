@@ -48,7 +48,8 @@ const validators=[
   "validate-voice-boundary-contract.mjs",
   "validate-badge-independent-experience-axis.mjs",
   "validate-snap-pop-body-matrix-closure.mjs",
-  "validate-family-expansion-runtime.mjs"
+  "validate-family-expansion-runtime.mjs",
+  "validate-dom-binding-integrity.mjs"
 ];
 
 let passed=0;
