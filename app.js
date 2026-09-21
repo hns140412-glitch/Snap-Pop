@@ -1,6 +1,6 @@
 if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.appScript="STARTED";
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
-let marks=[], selected=null, lastMain="map", calendarCursor=new Date(), wishBusy=false, SNAP_RULES=null, writingAnalysisSeq=0;
+let marks=[], selected=null, lastMain="map", calendarCursor=new Date(), SNAP_RULES=null, writingAnalysisSeq=0;
 const LEVEL_NEEDS=[0,80,100,120,150,180,220,260,300,340,380,430,480,540,600,670,740,820,900,990,1080,1180,1280,1390,1500];
 const LEVEL_THRESHOLDS=LEVEL_NEEDS.reduce((a,n,i)=>{a.push(i===0?0:a[i-1]+n);return a},[]);
 const uid=p=>`${p}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
@@ -264,6 +264,7 @@ async function renderLastResult(){return recordsGrowthController().renderLastRes
 async function updateStatus(){return recordsGrowthController().updateStatus()}
 async function openRecordEdit(recordId){return recordsGrowthController().openRecordEdit(recordId)}
 async function renderWishHistory(){return recordsGrowthController().renderWishHistory()}
+function recordsFlowController(){return window.SnapPopRecordsFlowController.instance({query:$,getLandmarks:()=>marks,toast,recordBadgeBehaviorObservation,recordBadgeBehaviorEvidence,updateStatus,renderGems,renderWishHistory,openRecordEdit,uid,show})}
 function runtimePhase(phase){if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.phase=phase}
 async function init(){
   runtimePhase("OPEN_DB");await openDB();
@@ -381,6 +382,7 @@ function refreshWritingMove(s){
   return move;
 }
 writingFlowController().install();
+recordsFlowController().install();
 
 
 
@@ -692,21 +694,8 @@ async function renderBadgePreview(){
 
 
 
-$("#shopBtn").onclick=()=>show("shop");$("#useWish").onclick=()=>$("#blessing").hidden=false;
-$("#confirmBlessing").onclick=async()=>{
-  if(wishBusy)return toast("소원을 처리하고 있어요.");
-  wishBusy=true;$("#confirmBlessing").disabled=true;
-  try{
-    const txns=await get("wishTransactions")||[];
-    const g={...(await get("gems")||{})},gemLedger=await get("gemLedger")||[];let needCompleted=2;const spend={};
-    for(const m of marks){const complete=Math.floor((g[m.id]||0)/6);const take=Math.min(complete,needCompleted);if(take){spend[m.id]=take;g[m.id]-=take*6;needCompleted-=take}if(!needCompleted)break}
-    if(needCompleted){toast("완성 보석 2개가 필요해요.");return}
-    const id=uid("wish_tx"),at=new Date().toISOString();
-    Object.entries(spend).forEach(([landmark,count])=>gemLedger.push({eventId:id,type:"GEM_SPENT",landmark,completedGemDelta:-count,sourceShards:-count*6,at,reason:"WISH_BLESSING"}));
-    txns.push({id,status:"COMPLETED",wish:"가족과 주말 영화 보기",spend,completedGemCount:2,at});
-    await setMany([["gems",g],["gemLedger",gemLedger],["wishTransactions",txns]]);await updateStatus();renderGems();$("#blessing").hidden=true;if(!$("#wishHistoryList").hidden)renderWishHistory();toast("축복을 사용했어요. 소원 사용 내역에 기록됐어요.")
-  }finally{wishBusy=false;$("#confirmBlessing").disabled=false}
-}
+
+
 function isWeekend(d=new Date()){const day=d.getDay();return day===0||day===6}
 function specialPromptFor(d=new Date()){const seed=(d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate())%4;return [
  {q:"오늘 본 것 중 하나를 완전히 다른 물건처럼 설명해볼까?",h:"정답은 없어요. 네가 본 장면을 바꿔 상상해봐요."},
@@ -735,11 +724,11 @@ async function openSpecial(){
 $("#specialInvite").onclick=openSpecial;$("#specialBack").onclick=()=>show("map");$("#specialLater").onclick=()=>show("map");
 $("#specialAnswer").addEventListener("input",()=>set("specialDraft",$("#specialAnswer").value));
 $("#specialSave").onclick=async()=>{const text=$("#specialAnswer").value.trim();if(!text)return toast("한 줄이라도 네 생각을 남겨볼까?");const memories=await get("specialMemories")||[];const id=uid("special"),at=new Date().toISOString(),p=specialPromptFor(new Date(at)),guestMemberId=$("#specialCrewPresence")?.dataset.memberId||null;memories.unshift({id,at,prompt:p.q,text,guestMemberId});await setMany([["specialMemories",memories],["specialDraft",""]]);await recordCrewExperience("SPECIAL_MEMORY",{eventId:id,prompt:p.q,snippet:crewSnippet(text),guestMemberId});if(guestMemberId)await recordCrewMemberExperience(guestMemberId,"SHARED_MICRO_EPISODE",{eventId:`${id}_guest`,sourceEventId:id,scene:"SPECIAL_EXPLORATION"});await recordBadgeBehaviorEvidence("SPECIAL_BEHAVIOR",{explicitChildAction:true,evidenceRef:`special_event_${id}`,sourceContractId:"SNAP_POP_DECLARED_SPECIAL_ACTION_V1",declaredByFeature:true,featureContractId:"SNAP_POP_SPECIAL_EXPLORATION_V1",behaviorCode:"SPECIAL_EXPLORATION_COMPLETED"},{allowedFeatureContracts:["SNAP_POP_SPECIAL_EXPLORATION_V1"],allowedSpecialBehaviorCodes:["SPECIAL_EXPLORATION_COMPLETED"]});$("#specialAnswer").value="";toast("특별 탐험 기억을 남겼어요.");show("records")};
-$("#bonusStart").onclick=async()=>{const r=await get("lastResult");if(!r)return;const bonusEvents=await get("bonusEvents")||{},bonusEventId=`bonus_${r.completionEventId}`;if(bonusEvents[bonusEventId])return toast("이미 완료한 추가 연습이에요.");const prompts={idea:"같은 아이디어로 다른 시작 문장 하나를 만들어볼까?",emotion:"같은 마음을 다른 말로 한 문장 표현해볼까?",description:"오감 하나를 더 넣어 장면을 한 문장 늘려볼까?",viewpoint:"다른 시선에서 한 문장만 더 써볼까?",final:"제목이나 마지막 문장 중 하나를 새로 다듬어볼까?"};$("#bonusQuestion").textContent=prompts[r.landmark]||"한 문장 더 만들어볼까?";$("#bonusAnswer").value="";$("#bonusPanel").hidden=false};
-$("#bonusSave").onclick=async()=>{const r=await get("lastResult");if(!r)return;const text=$("#bonusAnswer").value.trim();if(!text)return toast("한 문장만 더 남겨볼까?");const bonusEvents=await get("bonusEvents")||{},bonusEventId=`bonus_${r.completionEventId}`;if(bonusEvents[bonusEventId])return toast("이미 완료한 추가 연습이에요.");const gems=await get("gems")||{},gemLedger=await get("gemLedger")||[],beforeShard=gems[r.landmark]||0,at=new Date().toISOString();gems[r.landmark]=beforeShard+1;gemLedger.push({eventId:bonusEventId,type:"BONUS_SHARD_EARNED",landmark:r.landmark,amount:1,at});if(Math.floor((beforeShard+1)/6)>Math.floor(beforeShard/6))gemLedger.push({eventId:bonusEventId,type:"COMPLETE_GEM_CONVERTED",landmark:r.landmark,completedGemDelta:1,sourceShards:6,at});bonusEvents[bonusEventId]={at,landmark:r.landmark,text};await setMany([["gems",gems],["gemLedger",gemLedger],["bonusEvents",bonusEvents]]);await recordBadgeBehaviorObservation("EXTRA_TASK",{explicitChoice:true,completed:true,landmark:r.landmark,bonusEventId},"SNAP_POP");await updateStatus();$("#bonusPanel").hidden=true;$("#bonusStart").disabled=true;$("#bonusStart").textContent="추가 연습 완료됨";toast("추가 연습 완료! 보석 조각 +1 · EXP 추가 없음")};
-$("#recordEditBack").onclick=()=>show("records");
-$("#recordEditSave").onclick=async()=>{const recordId=$("#recordEdit").dataset.recordId,text=$("#recordEditText").value.trim();if(!recordId||!text)return toast("수정할 내용을 남겨줘.");const records=await get("records")||[],r=records.find(x=>x.id===recordId);if(!r)return toast("기록을 찾지 못했어요.");const revisions=await get("recordRevisions")||{},list=revisions[recordId]||[],current=list.length?list[list.length-1].text:r.answers.join(" ");if(text===current)return toast("바뀐 내용이 없어요.");const explicitErrorFound=$("#recordEditErrorFound")?.checked===true;const previousArtifactRef=list.length?`record:${recordId}:revision:${list[list.length-1].id}`:`record:${recordId}:original`;const revisionId=uid("revision"),revisionAt=new Date().toISOString();list.push({id:revisionId,at:revisionAt,text,source:"CHILD_EDIT",originalPreserved:true});revisions[recordId]=list;await set("recordRevisions",revisions);await recordBadgeBehaviorObservation("RETRY",{explicitRevision:true,recordId,revisionId,revisionNumber:list.length,originalPreserved:true,rewardChanged:false},"SNAP_POP");if(explicitErrorFound){await recordBadgeBehaviorEvidence("ERROR_DISCOVERY",{explicitChildAction:true,evidenceRef:`error_${revisionId}`,sourceContractId:"SNAP_POP_CHILD_SELF_CORRECTION_V1",errorMarkedByChild:true,beforeArtifactRef:previousArtifactRef,afterArtifactRef:`record:${recordId}:revision:${revisionId}`});}toast("수정본을 저장했어요. 원문은 그대로 보존돼요.");openRecordEdit(recordId)};
-$("#wishHistoryBtn").onclick=renderWishHistory;
+
+
+
+
+
 $("#historyBtn").onclick=renderGrowthTimeline;$("#resultBack").onclick=()=>show("map");$("#resultRecords").onclick=()=>show("records");$("#resultGrowth").onclick=()=>show("growth");$("#calPrev").onclick=()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()-1,1);renderRecords()};$("#calNext").onclick=()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+1,1);renderRecords()};
 $("#settingsBtn").onclick=()=>show("settings");$("#settingsBack").onclick=()=>show(lastMain);$$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
 $("#characterBtn").onclick=()=>$("#characterPanel").hidden=!$("#characterPanel").hidden;
