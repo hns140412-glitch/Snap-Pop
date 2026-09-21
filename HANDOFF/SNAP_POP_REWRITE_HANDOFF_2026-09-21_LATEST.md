@@ -61,3 +61,5 @@ Generic `ㄱ` is not deploy approval.
 - branch closure validator count: 62
 - validation PR #5: CLOSED / NOT MERGED / no Actions trigger observed
 - exact-head Actions + 390×844 CDP evidence: PENDING; connector has no workflow-dispatch action and PR #5 produced no retrievable run. Do not inherit prior 61/61 evidence.
+
+- validation workflow trigger: branch-only exact-head closure requested after workflow installation.
