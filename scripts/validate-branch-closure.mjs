@@ -63,6 +63,7 @@ const validators=[
   "validate-settings-profile-controller-boundaries.mjs",
   "validate-badge-controller-boundaries.mjs",
   "validate-bridge-context-controller-boundaries.mjs",
+  "validate-bootstrap-controller-boundaries.mjs",
   "validate-dom-binding-integrity.mjs"
 ];
 

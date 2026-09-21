@@ -27,30 +27,7 @@ function affinityTier(score=0){const tiers=SNAP_RULES?.affinityEngine?.tiers||[]
 
 
 
-async function migrateLegacyState(){
-  const marker=await get("migration_20260920_state_v1");
-  if(marker)return;
-  const entries=[],records=await get("records")||[],events=await get("completionEvents")||{},expLedger=await get("expLedger")||[],legacyExp=Number(await get("exp")||0),active=await get("active");
-  let changedRecords=false;
-  records.forEach((r,i)=>{
-    if(!r.id){r.id=uid("record");changedRecords=true}
-    if(!r.completionEventId){r.completionEventId=`legacy_completion_${r.id}`;changedRecords=true}
-    if(!r.language){r.language="ko";changedRecords=true}
-    if(r.completionEventId&&!events[r.completionEventId])events[r.completionEventId]={at:r.date||new Date(0).toISOString(),recordId:r.id,legacy:true};
-  });
-  if(changedRecords)entries.push(["records",records]);
-  entries.push(["completionEvents",events]);
-  const ledgerTotal=expLedger.reduce((s,e)=>s+(Number(e.amount)||0),0);
-  if(legacyExp>ledgerTotal){
-    expLedger.unshift({eventId:"legacy_exp_baseline_20260920",type:"LEGACY_EXP_BASELINE",amount:legacyExp-ledgerTotal,at:new Date().toISOString(),legacy:true});
-    entries.push(["expLedger",expLedger],["exp",legacyExp]);
-  }else if(ledgerTotal>legacyExp){
-    entries.push(["exp",ledgerTotal]);
-  }
-  if(active&&!active.id){active.id=uid("explore_legacy");active.language=active.language||"ko";entries.push(["active",active])}
-  entries.push(["migration_20260920_state_v1",{at:new Date().toISOString(),records:records.length,legacyExp,ledgerTotalBefore:ledgerTotal}]);
-  await setMany(entries);
-}
+
 
 
 
@@ -167,29 +144,18 @@ async function recordExpressionTrace(type,meta={}){return bridgeContextControlle
 async function dismissPendingExpressionIntent(){return bridgeContextController().dismissPendingExpressionIntent()}
 async function renderPendingExpressionIntent(){return bridgeContextController().renderPendingExpressionIntent()}
 function renderExpressionIntentNote(s){return bridgeContextController().renderExpressionIntentNote(s)}
-function runtimePhase(phase){if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.phase=phase}
-async function init(){
-  runtimePhase("OPEN_DB");await openDB();
-  runtimePhase("MIGRATE_LEGACY");await migrateLegacyState();
-  runtimePhase("LOAD_CREW_RULES");SNAP_RULES=await fetch("data/exploration-crew-rules.json").then(r=>{if(!r.ok)throw new Error("CREW_RULES_HTTP_"+r.status);return r.json()});
-  runtimePhase("LOAD_LANDMARKS");marks=await fetch("data/landmarks.json").then(r=>{if(!r.ok)throw new Error("LANDMARKS_HTTP_"+r.status);return r.json()});
-  runtimePhase("MIGRATE_IDENTITY");await migrateIdentityFallback();
-  runtimePhase("ENSURE_CREW_REGISTRY");await ensureCrewRegistry();
-  runtimePhase("SYNTHESIZE_CREW_WORLD");await synthesizeCrewWorldState();
-  runtimePhase("RENDER_LANDMARKS");renderLandmarks();
-  runtimePhase("PENDING_EXPRESSION");await renderPendingExpressionIntent();
-  runtimePhase("LOAD_SETTINGS");await loadSettings();
-  runtimePhase("RENDER_IDENTITY");await renderIdentityPresence();
-  runtimePhase("UPDATE_STATUS");await updateStatus();
-  runtimePhase("RENDER_RECORDS");await renderRecords();
-  runtimePhase("RENDER_GEMS");renderGems();
-  runtimePhase("RENDER_GROWTH");renderGrowth();
-  runtimePhase("INCOMING_HANDOFF");await renderIncomingHandoff();
-  runtimePhase("SPECIAL_INVITE");renderSpecialInvite();
-  runtimePhase("ACTIVE");const active=await get("active");if(active)renderExplore(active);
-  runtimePhase("DONE");
-}
 
+
+
+function bootstrapController(){return window.SnapPopBootstrapController.instance({
+  uid,
+  setRules:v=>{SNAP_RULES=v},
+  setLandmarks:v=>{marks=v},
+  migrateIdentityFallback,ensureCrewRegistry,synthesizeCrewWorldState,renderLandmarks,renderPendingExpressionIntent,loadSettings,renderIdentityPresence,updateStatus,renderRecords,renderGems,renderGrowth,renderIncomingHandoff,renderSpecialInvite,renderExplore
+})}
+async function migrateLegacyState(){return bootstrapController().migrateLegacyState()}
+function runtimePhase(phase){return bootstrapController().runtimePhase(phase)}
+async function init(){return bootstrapController().init()}
 function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;$$(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await get("active"),g=await get("gems")||{};$("#selTitle").textContent=m.title;$("#selDesc").textContent=m.desc;const identity=await resolvedIdentity();$("#selCrewMemberReaction").textContent=`${crewMemberName(identity)} · ${crewReaction(identity,m.id)}`;$("#selProgress").textContent="진행 "+(a?.landmark===m.id?(Math.min(3,(a.step||0)+1)):0)+" / 3";$("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";$("#selection").hidden=false};host.appendChild(b)})}
 
 
