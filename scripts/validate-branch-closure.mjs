@@ -23,7 +23,8 @@ const validators=[
   "validate-crew-interaction-safety.mjs",
   "validate-vocabulary-material-ownership.mjs",
   "validate-expression-bridge.mjs",
-  "validate-optional-expression-transition.mjs"
+  "validate-optional-expression-transition.mjs",
+  "validate-expression-trace-and-dismiss.mjs"
 ];
 
 let passed=0;
