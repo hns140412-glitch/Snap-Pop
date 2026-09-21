@@ -171,3 +171,38 @@ This supersedes the earlier 62/62 closure as the latest exact-head evidence.
 - deploy / Netlify / main merge: NOT_RUN
 
 This closure means interaction hierarchy and structural child-facing flow are validated. It does not mean final visual styling, production hosting, or physical-device verification is complete.
+
+
+## Runtime evidence reconciliation + record regression closure — 2026-09-22
+
+- exact validated SHA: `0856261357cacb921eaf8bb112897f9c3ad361dc`
+- evidence commit: `717bd5b0396941daf7eaf3977d88f70fe710fb76`
+- branch closure: `69/69 PASS`
+- browser runtime: `BROWSER_RUNTIME_CDP_PASS`
+- viewport: `390×844`
+- matrix: CODED 80/80 · STATIC 80/80 · RUNTIME 20/80 · DEVICE 0/80
+- architecture rewrite: CLOSED
+- integrated UI structural rewrite: CLOSED
+
+Runtime reconciliation added evidence for:
+- 5 free landmarks
+- three-step writing loop
+- same-draft continuity across writing steps
+- one growth tree runtime
+- imagination layer hidden/on-demand
+- home radio opens imagination
+- record original/revision provenance
+
+Regression found by expanded runtime test:
+- `records-growth-controller.js` still referenced removed legacy `html()` helper.
+- symptom: `unhandledrejection: html is not defined` and record edit cards failed to render.
+- fix: replace residual `.map(html)` with owner-local `.map(esc)`.
+- regression guard added to Records/Growth boundary validator.
+- record revision runtime now proves original preserved, revision appended, and reward not recomputed.
+
+Still OPEN:
+- real-device verification
+- external OpenAI live runtime quality
+- physical cross-app Ready & Set return/device idempotency
+- final visual/art direction
+- deploy / Netlify / main merge
