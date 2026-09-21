@@ -578,3 +578,18 @@ Evidence:
 - DEVICE_VERIFIED=false
 
 Integrated UI rewrite has started with the child writing flow. The current writing surface hierarchy is runtime verified, but this does not lock the final visual/art direction. Continue with home/map, result/records/growth, imagination/special, and settings/family surfaces while preserving the closed architecture boundaries.
+
+
+## 19. Integrated UI Phase 2 — Home/Map
+
+Exact validated SHA: `91c57ad6709885d3a173b8ee07f4c60d8daaa5b0`.
+
+Verified:
+- 64/64 branch closure PASS
+- 390×844 Browser CDP PASS
+- home/map has a single child-facing guidance prompt
+- landmark selection remains the primary interaction
+- selection card remains explicit before starting
+- radio / special invitation remain secondary actions
+
+Final visual direction remains OPEN and DEVICE_VERIFIED=false.
