@@ -6,10 +6,11 @@ on:
       - taky/snap-pop-implementation-2026-09-20
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   rewrite-closure:
+    if: ${{ !contains(github.event.head_commit.message, '[skip-closure]') }}
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout exact branch HEAD
@@ -18,20 +19,49 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 1
 
-      - name: Show exact candidate SHA
+      - name: Validate exact candidate and persist evidence
+        shell: bash
         run: |
-          echo "SNAP_POP_VALIDATION_SHA=${GITHUB_SHA}"
-          test "$(git rev-parse HEAD)" = "${GITHUB_SHA}"
+          set +e
+          SHA="${GITHUB_SHA}"
+          ACTUAL="$(git rev-parse HEAD)"
+          node scripts/validate-branch-closure.mjs > /tmp/closure.log 2>&1
+          CLOSURE_STATUS=$?
 
-      - name: Run branch closure validators
-        run: node scripts/validate-branch-closure.mjs
-
-      - name: Browser runtime smoke at 390x844
-        run: |
           BROWSER="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
           if [ -z "$BROWSER" ]; then
-            echo "BROWSER_RUNTIME_INFRA_BLOCKED no chromium browser"
+            echo "BROWSER_RUNTIME_INFRA_BLOCKED no chromium browser" > /tmp/browser.log
+            BROWSER_STATUS=2
+          else
+            export BROWSER
+            node scripts/browser-runtime-cdp.mjs > /tmp/browser.log 2>&1
+            BROWSER_STATUS=$?
+          fi
+
+          mkdir -p VALIDATION
+          CLOSURE_MARKER="$(grep -E 'BRANCH_CLOSURE_VALIDATOR_PASS [0-9]+/[0-9]+' /tmp/closure.log | tail -1 || true)"
+          BROWSER_MARKER="$(grep -E 'BROWSER_RUNTIME_CDP_PASS' /tmp/browser.log | tail -1 || true)"
+          cat > VALIDATION/SNAP_POP_REWRITE_CLOSURE_LATEST.txt <<EOF
+          validation_sha=$SHA
+          checkout_sha=$ACTUAL
+          closure_status=$CLOSURE_STATUS
+          closure_marker=$CLOSURE_MARKER
+          browser_status=$BROWSER_STATUS
+          browser_marker=$BROWSER_MARKER
+          viewport=390x844
+          generated_by=github-actions-branch-only
+          EOF
+
+          cat /tmp/closure.log >> VALIDATION/SNAP_POP_REWRITE_CLOSURE_LATEST.txt
+          echo "--- BROWSER ---" >> VALIDATION/SNAP_POP_REWRITE_CLOSURE_LATEST.txt
+          cat /tmp/browser.log >> VALIDATION/SNAP_POP_REWRITE_CLOSURE_LATEST.txt
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add VALIDATION/SNAP_POP_REWRITE_CLOSURE_LATEST.txt
+          git commit -m "Record rewrite closure evidence [skip-closure]"
+          git push origin HEAD:taky/snap-pop-implementation-2026-09-20
+
+          if [ "$SHA" != "$ACTUAL" ] || [ "$CLOSURE_STATUS" -ne 0 ] || [ "$BROWSER_STATUS" -ne 0 ]; then
             exit 1
           fi
-          export BROWSER
-          node scripts/browser-runtime-cdp.mjs
