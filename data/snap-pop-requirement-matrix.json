@@ -691,16 +691,20 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "index.html:hubModeKo/hubModeEn",
-        "app.js:hubLanguage",
-        "writing ko/en mode"
+        "expression-bridge-runtime.js",
+        "openai-expression-bridge-provider.js",
+        "netlify/functions/snap-pop-expression-bridge.mjs",
+        "netlify.toml:/api/snap-pop-expression-bridge",
+        "app.js:runExpressionBridge/renderExpressionBridge",
+        "index.html:expressionBridgeBtn/expressionBridgePanel",
+        "scripts/validate-expression-bridge.mjs"
       ],
-      "gap": "cross-language meaning-preserving transform engine pending"
+      "gap": "meaning-preserving phrase-level bridge implemented and isolated/static verified; live provider/browser/device runtime remains NOT_RUN"
     },
     {
       "id": "SP-UNIV-003",
