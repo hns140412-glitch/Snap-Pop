@@ -188,3 +188,13 @@ LATEST P5 VOICE QUALITY NOTE:
 - external provider does not imply realtime.
 - isolated voice policy runtime 8/8 PASS.
 - next: STT session ownership / overlapping-listen prevention / no always-listening without separate approval.
+
+
+LATEST P5 STT NOTE:
+- P5 STT session ownership is coded.
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md section 24.
+- continuous/realtime listen is blocked.
+- one active one-shot USER_MIC session only.
+- stale callbacks from superseded sessions are ignored.
+- isolated STT validator 6/6 PASS.
+- next: explicit mic-entry audit and misleading autoVoice semantics cleanup.
