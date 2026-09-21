@@ -55,6 +55,7 @@ try{
   result=await call({contract_version:"SNAP_POP_KNOWLEDGE_V1",input:"질문",language:"ko"});
   assert("retrieved-source-promotes-evidence",
     result.status===200&&
+    result.body.answer.verification.coverage==="CLAIM_SET_ONLY"&&
     result.body.answer.verification.claims[0].status==="VERIFIED"&&
     result.body.answer.verification.claims[0].evidence[0].source_url==="https://example.com/real"
   );
