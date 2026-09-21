@@ -61,6 +61,7 @@ const validators=[
   "validate-special-controller-boundaries.mjs",
   "validate-imagination-controller-boundaries.mjs",
   "validate-settings-profile-controller-boundaries.mjs",
+  "validate-badge-controller-boundaries.mjs",
   "validate-dom-binding-integrity.mjs"
 ];
 

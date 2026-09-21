@@ -13,88 +13,13 @@ const IDENTITY_DEFAULT={profile:{name:"",photo:"",style:"editorial",shareAvatar:
 
 function stableHash(s=""){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function affinityTier(score=0){const tiers=SNAP_RULES?.affinityEngine?.tiers||[];let t=tiers[0]||{key:"KNOWN",label:"아는 친구",min:0};for(const x of tiers)if(score>=x.min)t=x;return t}
-async function proposeBadgeCandidateFromObservations({id,title,families=[],reason=""}={}){
-  if(!window.SnapPopBadgeCandidate) throw new Error("BADGE_CANDIDATE_RUNTIME_UNAVAILABLE");
-  const observations=await get("badgeBehaviorObservations")||[];
-  const candidate=window.SnapPopBadgeCandidate.fromObservationCluster(observations,{id,title,families,reason});
-  const ledger=await get("badgeCandidateReviews")||[];
-  const existing=ledger.find(x=>x.id===candidate.id);
-  if(existing) return existing;
-  ledger.unshift(candidate);
-  await set("badgeCandidateReviews",ledger.slice(0,200));
-  return candidate;
-}
 
-async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP"){
-  if(!window.SnapPopBadgeBehavior)return null;
-  try{
-    const event=window.SnapPopBadgeBehavior.normalize({
-      eventId:uid("badgeobs"),
-      family,
-      source,
-      at:new Date().toISOString(),
-      payload
-    });
-    const ledger=await get("badgeBehaviorObservations")||[];
-    if(ledger.some(x=>x.eventId===event.eventId))return event;
-    ledger.unshift(event);
-    const writes=[["badgeBehaviorObservations",ledger.slice(0,1000)]];
-    const shared=window.TakyBadgeExperienceContract?.fromSnapObservation?.(event)||null;
-    if(shared){
-      const sharedLedger=await get("badgeSharedExperienceEvents")||[];
-      if(!sharedLedger.some(x=>x.event_id===shared.event_id)){
-        sharedLedger.unshift(shared);
-        writes.push(["badgeSharedExperienceEvents",sharedLedger.slice(0,1000)]);
-      }
-    }
-    await setMany(writes);
-    return event;
-  }catch{return null}
-}
 
-async function recordBadgeBehaviorEvidence(family,evidence={},options={}){
-  if(!window.SnapPopBadgeEvidenceContract)return null;
-  try{
-    const verifiedEvidence=window.SnapPopBadgeEvidenceContract.verify(family,evidence,options);
-    return await recordBadgeBehaviorObservation(family,{
-      evidenceContract:verifiedEvidence.contract_version,
-      evidenceRef:verifiedEvidence.evidenceRef,
-      sourceContractId:verifiedEvidence.sourceContractId,
-      explicitChildAction:true,
-      inferenceAllowed:false,
-      elapsedTimeEvidenceAllowed:false,
-      scoreEvidenceAllowed:false,
-      beforeArtifactRef:verifiedEvidence.beforeArtifactRef||"",
-      afterArtifactRef:verifiedEvidence.afterArtifactRef||"",
-      reflectionArtifactRef:verifiedEvidence.reflectionArtifactRef||"",
-      featureContractId:verifiedEvidence.featureContractId||"",
-      behaviorCode:verifiedEvidence.behaviorCode||""
-    },"SNAP_POP_EXPLICIT_EVIDENCE");
-  }catch{return null}
-}
 
-async function recordBadgeEvent(family,payload={},source="SNAP_POP"){
-  if(!window.SnapPopBadges)return null;
-  try{
-    await window.SnapPopBadges.load();
-    const event=window.SnapPopBadges.normalizeEvent({eventId:uid("badgeevt"),family,source,payload,at:new Date().toISOString()});
-    const ledger=await get("badgeEvents")||[];
-    if(ledger.some(x=>x.eventId===event.eventId))return event;
-    ledger.unshift(event);
-    await set("badgeEvents",ledger.slice(0,1000));
-    const matches=window.SnapPopBadges.matchEvent(event);
-    if(matches.length){
-      const owned=await get("badgeProgress")||{};
-      for(const item of matches){
-        const key=item.id||item.draftId;
-        const prev=owned[key]||{count:0};
-        owned[key]={count:(prev.count||0)+1,...window.SnapPopBadges.nextProgress(prev.count||0),lastAt:event.at};
-      }
-      await set("badgeProgress",owned);
-    }
-    return event;
-  }catch{return null}
-}
+
+
+
+
 
 
 
@@ -226,6 +151,12 @@ async function renameCurrentCrewMember(nextName){return settingsProfileControlle
 async function loadSettings(){return settingsProfileController().loadSettings()}
 async function renderCrewRoster(){return settingsProfileController().renderCrewRoster()}
 async function renderIdentityPresence(){return settingsProfileController().renderIdentityPresence()}
+function badgeController(){return window.SnapPopBadgeController.instance({query:$,uid,resolvedIdentity})}
+async function proposeBadgeCandidateFromObservations(args={}){return badgeController().proposeBadgeCandidateFromObservations(args)}
+async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP"){return badgeController().recordBadgeBehaviorObservation(family,payload,source)}
+async function recordBadgeBehaviorEvidence(family,evidence={},options={}){return badgeController().recordBadgeBehaviorEvidence(family,evidence,options)}
+async function recordBadgeEvent(family,payload={},source="SNAP_POP"){return badgeController().recordBadgeEvent(family,payload,source)}
+async function renderBadgePreview(){return badgeController().renderBadgePreview()}
 function runtimePhase(phase){if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.phase=phase}
 async function init(){
   runtimePhase("OPEN_DB");await openDB();
@@ -459,29 +390,7 @@ function renderCalendar(records,special=[]){
 }
 
 
-async function renderBadgePreview(){
-  const host=$("#badgePreviewVisual");if(!host||!window.SnapPopBadgeVisual||!window.SnapPopBadges)return;
-  const identity=await resolvedIdentity(),observations=await get("badgeBehaviorObservations")||[];
-  const progress=window.SnapPopBadges.progressFromCount(Math.max(1,observations.length));
-  const themeExpression=window.SnapPopBadgeThemeExpression?.normalize({
-    themeId:"EXPLORATION",
-    assetState:"UNRESOLVED"
-  })||null;
-  const model=window.SnapPopBadgeVisual.model({
-    title:"경험 배지 미리보기",
-    theme:"EXPLORATION",
-    themeExpression,
-    tier:progress.tier||"GREEN",
-    stars:progress.stars||1,
-    identity
-  });
-  const slots=window.SnapPopBadgeVisual.starSlots(model.stars);
-  host.innerHTML=`<div class="badgeMedallion" data-tier="${html(model.tier)}">
-    <div class="badgeGemArc">${slots.map(x=>`<i class="${x.active?"on":""}" aria-hidden="true"></i>`).join("")}</div>
-    <div class="badgeIdentity">${model.identity.photo?`<img src="${html(model.identity.photo)}" alt="">`:`<span>${html(model.identity.name.slice(0,4))}</span>`}</div>
-  </div>
-  <div class="badgePreviewMeta"><b>${html(model.title)}</b><span>${html(model.tier)} · 별 ${model.stars}/5 · 획득/수여 아님</span><span>${model.themeExpression?.assetState==="UNRESOLVED"?"테마 표현 자산 검토 전":"검토된 테마 표현 자산"}</span></div>`;
-}
+
 
 
 
