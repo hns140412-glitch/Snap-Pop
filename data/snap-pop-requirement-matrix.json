@@ -437,15 +437,21 @@
         "REV12"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
-      "staticVerified": false,
+      "coded": true,
+      "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "snap-bridge.js",
-        "index.html:handoffWord"
+        "vocabulary-material-runtime.js",
+        "snap-bridge.js:vocabularyMaterial",
+        "writing-runtime.js:vocabularyMaterialPolicy",
+        "semantic-writing-runtime.js:vocabularyMaterialPolicy",
+        "openai-semantic-provider.js:cleanVocabularyMaterial",
+        "netlify/functions/snap-pop-semantic-writing.mjs:EXPRESSION_MATERIAL_ONLY",
+        "app.js:vocabularyRef/vocabulary_material",
+        "scripts/validate-vocabulary-material-ownership.mjs"
       ],
-      "gap": "장기 어휘 소유권 중복 방지 runtime contract 제한적"
+      "gap": "ownership-safe expression-material contract implemented and isolated verified; live cross-app runtime/device transition remains NOT_RUN"
     },
     {
       "id": "SP-PWA-001",
