@@ -127,3 +127,9 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 .mentalArrow{align-self:center;font-style:normal;font-weight:800;opacity:.5}
 @media(max-width:520px){.mentalModelFLOW{grid-template-columns:1fr}.mentalModelFLOW .mentalArrow{transform:rotate(90deg);justify-self:center}.mentalModelCOMPARE{grid-template-columns:1fr 1fr}}
 @media(max-width:360px){.mentalModelCOMPARE{grid-template-columns:1fr}}
+
+.expressionBridgePanel{margin-top:10px;padding:11px;border:1px solid #b7a47744;border-radius:14px;background:#fffdf7}
+.expressionBridgePanel p{margin:6px 0;line-height:1.45}
+.expressionFragments{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+.expressionFragments span{display:inline-flex;padding:6px 9px;border-radius:999px;background:#f4eedf;border:1px solid #b7a47733;font-size:12px;font-weight:700}
+.expressionAssembly{font-weight:700}
