@@ -1,7 +1,7 @@
-validation_sha=ccc468b14b1739a4d1374364aadc38eb7629916b
-checkout_sha=ccc468b14b1739a4d1374364aadc38eb7629916b
+validation_sha=38bca4990a1cff1769d31b09c46fe8299f971315
+checkout_sha=38bca4990a1cff1769d31b09c46fe8299f971315
 closure_status=0
-closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 64/64
+closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 65/65
 browser_status=0
 browser_marker=BROWSER_RUNTIME_CDP_PASS
 viewport=390x844
@@ -772,6 +772,16 @@ PASS selection-remains-explicit-before-start
 PASS landmark-layer-remains-primary-map-target
 INTEGRATED_HOME_MAP_FLOW_PASS
 
+=== validate-integrated-result-records-growth.mjs ===
+PASS result-leads-with-child-work
+PASS result-separates-progress-from-work
+PASS result-next-actions-link-records-and-growth
+PASS bonus-is-optional-collapsed
+PASS records-copy-is-reflection-first
+PASS growth-has-three-step-narrative
+PASS growth-summary-is-readable-grid
+INTEGRATED_RESULT_RECORDS_GROWTH_PASS
+
 === validate-dom-binding-integrity.mjs ===
 PASS all-direct-dom-bindings-have-index-targets
 PASS querySelector-collection-misuse-blocked
@@ -779,7 +789,7 @@ PASS explicit-help-request-control-exists
 PASS hint-control-is-wired-to-explicit-help-path
 DOM_BINDING_INTEGRITY_PASS
 
-BRANCH_CLOSURE_VALIDATOR_PASS 64/64
+BRANCH_CLOSURE_VALIDATOR_PASS 65/65
 --- BROWSER ---
 BROWSER_RUNTIME_CDP_PASS
 {"readyState":"complete","smoke":"PASS","runtime":{"init":"PASS","appScript":"STARTED","db":"OPEN","errors":[],"phase":"DONE"},"result":"BROWSER_RUNTIME_SELFTEST_PENDING\nPASS app-init-pass\nPASS indexeddb-open\nPASS map-has-five-landmarks\nPASS first-landmark-exists\nPASS start-writing-exists\nPASS writing-view-active\nPASS mobile-root-has-no-horizontal-overflow\nPASS mobile-document-has-no-horizontal-overflow\nPASS writing-tools-present\nPASS writing-tools-touch-height\nPASS writing-tools-stay-inside-viewport\nPASS primary-next-touch-height\nPASS hint-control-restored\nPASS writing-step-1-exists\nPASS writing-step-2-exists\nPASS writing-complete-exists\nPASS writing-result-active\nPASS family-open-exists\nPASS family-view-active\nPASS family-mode-enabled\nPASS family-child-add-exists\nPASS family-child-created\nPASS family-diary-save-exists\nPASS family-letter-save-exists\nPASS family-support-save-exists\nPASS family-shared-special-save-exists\nPASS family-diary-in-timeline\nPASS family-letter-in-timeline\nPASS family-support-card-in-timeline\nPASS family-shared-special-in-timeline\nPASS family-conflict-lock-hidden-from-user\nPASS family-recovery-lock-hidden-from-user\nPASS family-second-child-add-exists\nPASS family-second-child-created\nPASS family-second-child-diary-save-exists\nPASS second-child-timeline-isolated\nPASS first-child-timeline-restored\nPASS family-runtime-present\nPASS child-permission-isolation\nPASS parent-contract-present\nPASS locked-feature-blocked-family_group\nPASS locked-feature-blocked-mailbox_decor\nPASS locked-feature-blocked-composite_diary_illustration\nPASS locked-feature-blocked-gem_gift\nPASS gem-gift-economy-mutation-blocked\nPASS original-mode-restored\nPASS family-mode-reenabled\nBROWSER_RUNTIME_SELFTEST_PASS","landmarks":5}
