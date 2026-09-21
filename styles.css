@@ -135,3 +135,15 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 .expressionAssembly{font-weight:700}
 
 .expressionIntentBanner{position:absolute;left:16px;right:16px;top:74px;z-index:8;padding:10px 12px;border-radius:14px;background:#fffdf1e8;border:1px solid #b7a47755;box-shadow:0 8px 20px rgba(0,0,0,.08);font-size:12px;font-weight:700;line-height:1.4}
+
+.badgePreview{margin:0 0 12px;padding:12px;border:1px solid #cbb27a;border-radius:18px;background:#fffaf0cc}
+.badgePreviewHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.badgePreviewHead b{font-family:"Noto Serif CJK KR","Batang",serif}.badgePreviewHead span{font-size:9px;color:#7a6f5c}
+.badgeMedallion{--badge-accent:#9bc88c;position:relative;width:156px;height:156px;margin:4px auto 2px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--badge-accent) 72%,#fff) 0 34%,color-mix(in srgb,var(--badge-accent) 32%,#fff) 62%,rgba(255,255,255,.12) 100%);border:1px solid #bba77b66;box-shadow:inset 0 0 24px #fff9,0 8px 22px #6b53321c;overflow:visible}
+.badgeMedallion[data-tier="GREEN"]{--badge-accent:#9bc88c}.badgeMedallion[data-tier="BLUE"]{--badge-accent:#91b8d6}.badgeMedallion[data-tier="RED"]{--badge-accent:#d89a96}.badgeMedallion[data-tier="GOLD"]{--badge-accent:#d7bd69}.badgeMedallion[data-tier="PLATINUM"]{--badge-accent:#b7b8c7}
+.badgeIdentity{width:78px;height:86px;border-radius:42% 42% 45% 45%;display:grid;place-items:center;overflow:hidden;background:#fff8e5cc;border:2px solid #fff9;box-shadow:0 4px 12px #5d513623;font-size:12px;font-weight:900;color:#4e5e51;text-align:center;padding:5px}
+.badgeIdentity img{width:100%;height:100%;object-fit:cover}
+.badgeGemArc{position:absolute;inset:-12px 6px auto 6px;height:62px;pointer-events:none}
+.badgeGemArc i{position:absolute;left:50%;top:50%;width:19px;height:19px;transform-origin:50% 58px;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-50px) rotate(calc(-1 * var(--a)));clip-path:polygon(50% 0,61% 34%,98% 38%,69% 59%,79% 96%,50% 75%,21% 96%,31% 59%,2% 38%,39% 34%);background:#ffffff66;border:1px solid #ffffff88}
+.badgeGemArc i.on{background:color-mix(in srgb,var(--badge-accent) 86%,#fff);box-shadow:0 0 9px color-mix(in srgb,var(--badge-accent) 45%,transparent)}
+.badgeGemArc i:nth-child(1){--a:-48deg}.badgeGemArc i:nth-child(2){--a:-24deg}.badgeGemArc i:nth-child(3){--a:0deg}.badgeGemArc i:nth-child(4){--a:24deg}.badgeGemArc i:nth-child(5){--a:48deg}
+.badgePreviewMeta{text-align:center;margin-top:8px}.badgePreviewMeta b{display:block;font-family:"Noto Serif CJK KR","Batang",serif}.badgePreviewMeta span{font-size:9px;color:#726c5d}
