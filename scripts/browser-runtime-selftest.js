@@ -51,6 +51,67 @@
       const noGuess=await window.SnapPopIntelligence.ask({input:"조선은 언제 시작됐어?",language:"ko"});
       assert("ask-without-knowledge-provider-does-not-guess",noGuess?.kind==="ASK_UNDERSTAND"&&noGuess?.verified===false&&/추측|확인|사실/.test((noGuess?.core||"")+" "+(noGuess?.title||"")));
       assert("ask-no-guess-response-owner-is-crew",noGuess?.responseOwner==="EXPLORATION_CREW");
+
+      window.SnapPopKnowledge=originalKnowledgeRuntime;
+      const originalKnowledgeBackend=window.SnapPopKnowledgeBackend;
+      window.SnapPopKnowledgeBackend={
+        async ask(){
+          return {
+            kind:"ASK_UNDERSTAND",
+            intent:"ASK_UNDERSTAND",
+            title:"왜 하늘이 파랄까?",
+            core:"햇빛이 공기 분자와 만나 산란될 때 파란빛이 더 잘 퍼져 보여.",
+            nodes:[
+              {label:"원인",value:"햇빛이 대기를 통과함"},
+              {label:"과정",value:"공기 분자에서 짧은 파장의 빛이 더 많이 산란됨"},
+              {label:"결과",value:"여러 방향에서 파란빛이 더 많이 눈에 들어옴"}
+            ],
+            provider:"runtime-verified-backend",
+            verification:{
+              mode:"CLAIM_EVIDENCE",
+              coverage:"FULL_FACTUAL_CONTENT",
+              claims:[{
+                claim:"짧은 파장의 가시광은 대기 분자에서 더 강하게 산란된다.",
+                status:"VERIFIED",
+                evidence:[{source_type:"WEB",source_url:"https://example.org/sky",title:"Runtime Evidence",excerpt:"verified runtime probe"}]
+              }],
+              unresolved:[]
+            }
+          };
+        }
+      };
+      const verifiedAsk=await window.SnapPopIntelligence.ask({input:"왜 하늘이 파래?",language:"ko",context:"GLOBAL"});
+      assert("ask-verified-runtime-is-understand",verifiedAsk?.kind==="ASK_UNDERSTAND"&&verifiedAsk?.verified===true);
+      assert("ask-verified-runtime-has-full-coverage",verifiedAsk?.verification?.coverage==="FULL_FACTUAL_CONTENT"&&verifiedAsk?.verification?.verifiedClaimCount===1);
+      assert("ask-verified-response-owner-is-crew",verifiedAsk?.responseOwner==="EXPLORATION_CREW");
+      assert("ask-verified-followup-only-after-full-coverage",verifiedAsk?.understanding?.followUpAvailable===true);
+
+      window.SnapPopKnowledgeBackend={
+        async ask(){
+          return {
+            kind:"ASK_UNDERSTAND",
+            intent:"ASK_UNDERSTAND",
+            title:"아직 확인 중",
+            core:"확인되지 않은 부분이 남아 있어.",
+            provider:"runtime-partial-backend",
+            verification:{
+              mode:"CLAIM_EVIDENCE",
+              coverage:"PARTIAL",
+              claims:[{
+                claim:"일부 주장",
+                status:"VERIFIED",
+                evidence:[{source_type:"WEB",source_url:"https://example.org/partial",title:"Partial Evidence"}]
+              }],
+              unresolved:["추가 확인 필요"]
+            }
+          };
+        }
+      };
+      const partialAsk=await window.SnapPopIntelligence.ask({input:"왜 그런 일이 생겼어?",language:"ko",context:"GLOBAL"});
+      assert("ask-partial-runtime-stays-unverified",partialAsk?.kind==="ASK_UNDERSTAND"&&partialAsk?.verified===false);
+      assert("ask-partial-runtime-blocks-followup",partialAsk?.understanding?.followUpAvailable===false);
+      assert("ask-partial-runtime-keeps-crew-owner",partialAsk?.responseOwner==="EXPLORATION_CREW");
+      window.SnapPopKnowledgeBackend=originalKnowledgeBackend;
       window.SnapPopOpenAIProvider=originalUniversalOpenAIProvider;
       window.SnapPopKnowledge=originalKnowledgeRuntime;
 
