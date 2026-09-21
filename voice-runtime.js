@@ -4,6 +4,7 @@
   let currentRecognition=null;
   let currentExternalListenStop=null;
   let listenSessionSeq=0;
+  let activeListenSessionId=0;
   const SPEECH_SOURCES=new Set(["USER_TAP","AUTO_READ"]);
   const LISTEN_SOURCES=new Set(["USER_MIC"]);
   function voicePolicy({language="ko",source="USER_TAP",interrupt}={}){
@@ -89,10 +90,10 @@
     const r=new R(); currentRecognition=r;
     r.lang=policy.language==="en"?"en-US":"ko-KR";
     r.interimResults=false; r.continuous=false;
-    r.onstart=()=>onStart?.({provider:"browser-stt",sessionId,source:policy.source});
-    r.onresult=e=>{const text=e.results?.[0]?.[0]?.transcript||""; if(text) onText?.(text,{provider:"browser-stt",sessionId,source:policy.source});};
-    r.onerror=e=>onError?.(e.error||"STT_ERROR");
-    r.onend=()=>{if(currentRecognition===r)currentRecognition=null;onEnd?.({sessionId});};
+    r.onstart=()=>{if(activeListenSessionId===sessionId)onStart?.({provider:"browser-stt",sessionId,source:policy.source})};
+    r.onresult=e=>{if(activeListenSessionId!==sessionId)return;const text=e.results?.[0]?.[0]?.transcript||""; if(text) onText?.(text,{provider:"browser-stt",sessionId,source:policy.source});};
+    r.onerror=e=>{if(activeListenSessionId===sessionId)onError?.(e.error||"STT_ERROR")};
+    r.onend=()=>{if(currentRecognition===r)currentRecognition=null;if(activeListenSessionId===sessionId){activeListenSessionId=0;onEnd?.({sessionId})}};
     r.start();
     return ()=>{try{r.abort()}catch{}};
   }
@@ -100,6 +101,7 @@
     const policy=listenPolicy(opts);
     stopListening();
     const sessionId=++listenSessionSeq;
+    activeListenSessionId=sessionId;
     const external=window.SnapPopVoiceProvider;
     if(external && typeof external.listen==="function"){
       const result=await external.listen({
@@ -110,10 +112,10 @@
         realtime:false,
         responseOwner:"EXPLORATION_CREW",
         sessionId,
-        onStart:opts.onStart,
-        onText:opts.onText,
-        onError:opts.onError,
-        onEnd:opts.onEnd
+        onStart:meta=>{if(activeListenSessionId===sessionId)opts.onStart?.({...meta,sessionId,source:policy.source})},
+        onText:(text,meta)=>{if(activeListenSessionId===sessionId)opts.onText?.(text,{...meta,sessionId,source:policy.source})},
+        onError:error=>{if(activeListenSessionId===sessionId)opts.onError?.(error)},
+        onEnd:meta=>{if(activeListenSessionId===sessionId){activeListenSessionId=0;opts.onEnd?.({...meta,sessionId})}}
       });
       currentExternalListenStop=typeof result==="function"
         ? result
@@ -127,6 +129,7 @@
   function stopListening(){
     try{ currentExternalListenStop?.(); }catch{}
     currentExternalListenStop=null;
+    activeListenSessionId=0;
     try{ window.SnapPopVoiceProvider?.stopListening?.(); }catch{}
     if(currentRecognition){try{currentRecognition.abort()}catch{} currentRecognition=null;}
   }
