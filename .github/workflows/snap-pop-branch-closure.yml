@@ -41,4 +41,4 @@ jobs:
           fi
           "$BROWSER" --headless --disable-gpu --no-sandbox --disable-dev-shm-usage             --virtual-time-budget=12000 --dump-dom             http://127.0.0.1:4173/scripts/browser-runtime-smoke.html             > /tmp/snap-pop-browser-smoke.html
           cat /tmp/snap-pop-browser-smoke.html
-          grep -q "BROWSER_RUNTIME_SMOKE_PASS" /tmp/snap-pop-browser-smoke.html
+          grep -q '<body data-status="PASS">' /tmp/snap-pop-browser-smoke.html
