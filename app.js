@@ -438,10 +438,17 @@ async function runImagination(inputOverride){
   const btn=$("#imaginationAskBtn"); btn.disabled=true; btn.textContent="생각 중…";
   try{
     const active=await get("active");
-    const result=await window.SnapPopIntelligence.ask({input,language:imaginationLanguage,context:imaginationSource,landmark:active?.landmark||null,step:active?.step||0,crewMember:{type:identity.crewMember?.type,name:crewMemberName(identity)}});
+    const rawResult=await window.SnapPopIntelligence.ask({input,language:imaginationLanguage,context:imaginationSource,landmark:active?.landmark||null,step:active?.step||0,crewMember:{type:identity.crewMember?.type,name:crewMemberName(identity)}});
+    const presentation=window.SnapPopCrewPresentationGuard;
+    const result=presentation&&typeof presentation.sanitizeUserFacing==="function"
+      ? presentation.sanitizeUserFacing(rawResult)
+      : rawResult;
     renderImaginationResponse(result,identity);
     const history=await get("cloudHistory")||[];
-    history.unshift({id:uid("cloud"),input,intent:result.intent||result.kind,verified:result.verified!==false,provider:result.provider||"unknown",title:result.title||"",core:result.core||"",nodes:Array.isArray(result.nodes)?result.nodes.slice(0,8):[],example:result.example||"",language:imaginationLanguage,source:imaginationSource,at:new Date().toISOString()});
+    const publicEntry=presentation&&typeof presentation.publicHistoryEntry==="function"
+      ? presentation.publicHistoryEntry(result)
+      : {intent:result.intent||result.kind,verified:result.verified!==false,title:result.title||"",core:result.core||"",nodes:Array.isArray(result.nodes)?result.nodes.slice(0,8):[],example:result.example||""};
+    history.unshift({id:uid("cloud"),input,...publicEntry,provider:rawResult.provider||"unknown",language:imaginationLanguage,source:imaginationSource,at:new Date().toISOString()});
     await set("cloudHistory",history.slice(0,100));
     if(active&&imaginationSource==="WRITING_FLOW"){active.crewState=active.crewState||{};active.crewState.cloudLast={input,intent:result.intent||result.kind,verified:result.verified!==false,provider:result.provider||"unknown",at:new Date().toISOString()};await set("active",active)}
     if(result.verified===false){
@@ -505,7 +512,7 @@ $("#voiceBtn").onclick=async()=>{
 async function renderCloudHistory(){
   const host=$("#cloudHistoryList"); if(!host)return;
   const history=await get("cloudHistory")||[];
-  host.innerHTML=history.length?history.map(x=>`<article class="card cloudHistoryCard"><b>${x.intent==="ASK_UNDERSTAND"?"궁금증":"생각"} · ${new Date(x.at).toLocaleDateString("ko-KR")}</b><p class="cloudHistoryQuestion">${html(x.input||"")}</p>${x.core?`<p class="cloudHistoryAnswer">${html(x.core)}</p>`:""}${Array.isArray(x.nodes)&&x.nodes.length?`<div class="cloudHistoryNodes">${x.nodes.slice(0,4).map(n=>`<span><b>${html(n.label||"")}</b> ${html(n.value||"")}</span>`).join("")}</div>`:""}<span class="kicker">${x.verified?"확인된 흐름":"확인 필요"} · ${html(x.provider||"")} · ${x.language==="en"?"English":"한국어"}</span></article>`).join(""):'<article class="card"><b>아직 상상 구름 기록이 없어요.</b><p>궁금한 것과 떠오른 생각을 자유롭게 남겨봐요.</p></article>';
+  host.innerHTML=history.length?history.map(x=>`<article class="card cloudHistoryCard"><b>${x.intent==="ASK_UNDERSTAND"?"궁금증":"생각"} · ${new Date(x.at).toLocaleDateString("ko-KR")}</b><p class="cloudHistoryQuestion">${html(x.input||"")}</p>${x.core?`<p class="cloudHistoryAnswer">${html(x.core)}</p>`:""}${Array.isArray(x.nodes)&&x.nodes.length?`<div class="cloudHistoryNodes">${x.nodes.slice(0,4).map(n=>`<span><b>${html(n.label||"")}</b> ${html(n.value||"")}</span>`).join("")}</div>`:""}<span class="kicker">${x.verified?"확인된 흐름":"확인 필요"} · ${x.language==="en"?"English":"한국어"}</span></article>`).join(""):'<article class="card"><b>아직 상상 구름 기록이 없어요.</b><p>궁금한 것과 떠오른 생각을 자유롭게 남겨봐요.</p></article>';
 }
 async function renderRecords(){
   if(!db)return;
