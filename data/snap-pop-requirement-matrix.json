@@ -681,16 +681,17 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "index.html:exploreHub",
-        "app.js:runHubCloud",
-        "intelligence-runtime.js"
+        "intelligence-runtime.js:THINK_EXPRESS/localThinkScaffold",
+        "crew-presentation-guard.js",
+        "app.js:openImagination/runImagination",
+        "scripts/validate-think-express-verification-separation.mjs"
       ],
-      "gap": "verified knowledge provider and richer learning scaffold still pending"
+      "gap": "Think→Express path is coded and statically verified with non-factual verification separation; live browser/device quality remains NOT_RUN"
     },
     {
       "id": "SP-UNIV-002",
@@ -873,14 +874,19 @@
         "SNAP_POP_UNIVERSAL_CORE"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "central post-model validation/guard remains incomplete",
+      "gap": "central post-model presentation/authorship/safety guards are coded/static verified; live provider/browser/device execution remains NOT_RUN",
       "codeEvidence": [
-        "intelligence-runtime.js contract",
-        "app.js:renderCloudResponse"
+        "crew-presentation-guard.js:sanitizeUserFacing",
+        "authorship-guard-runtime.js",
+        "crew-interaction-safety-runtime.js",
+        "intelligence-runtime.js:present",
+        "app.js:renderImaginationResponse",
+        "scripts/validate-crew-presentation-ownership.mjs",
+        "scripts/validate-central-authorship-guard.mjs"
       ]
     },
     {
@@ -893,13 +899,17 @@
         "EXPLORATION_CREW_RULES"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "external model output still needs full crew guard/voice transformation",
+      "gap": "Exploration Crew response ownership is centrally enforced/static verified; live provider/browser/device execution remains NOT_RUN",
       "codeEvidence": [
-        "app.js:renderCloudResponse uses current crew identity"
+        "crew-presentation-guard.js:responseOwner=EXPLORATION_CREW",
+        "intelligence-runtime.js:present",
+        "app.js:renderImaginationResponse",
+        "scripts/validate-crew-presentation-ownership.mjs",
+        "scripts/validate-think-express-verification-separation.mjs"
       ]
     },
     {
