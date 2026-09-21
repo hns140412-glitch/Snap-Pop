@@ -102,3 +102,14 @@ Generic `ㄱ` is not deploy approval.
 Resume target: continue integrated UI rewrite from actual child-facing surfaces. Do not restart architecture extraction phases.
 
 - integrated home/map Phase 2 exact-head validation trigger.
+
+
+## Integrated UI Phase 2 — Home/Map verified
+
+- exact validated SHA: `91c57ad6709885d3a173b8ee07f4c60d8daaa5b0`
+- closure: `64/64 PASS`
+- browser runtime: `BROWSER_RUNTIME_CDP_PASS`
+- viewport: `390×844`
+- home/map hierarchy: VERIFIED
+- final visual direction: OPEN
+- DEVICE_VERIFIED: false
