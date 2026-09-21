@@ -298,8 +298,8 @@ async function renderCrewRoster(){
 
   if(world){
     const slots=board.filter(x=>x.role==="WORLD");
-    world.innerHTML=slots.map(x=>card({title:`${String(x.slot).padStart(2,"0")} · ${x.core}`,meta:`${x.worldFlavor} · ${x.visualCue} · WORKING ROLE SLOT`,unassigned:true})).join("")+
-      card({title:"거점 인원 규칙",meta:"6명은 WORKING 설계판 · 실제 인원은 앱/거점 역할 계산 후 확정",unassigned:true});
+    world.innerHTML=slots.map(x=>card({title:`${String(x.slot).padStart(2,"0")} · ${x.core}`,meta:`${x.worldFlavor} · ${x.visualCue} · 앞으로 만날 탐험대원`,unassigned:true})).join("")+
+      card({title:"거점에서 만나는 친구들",meta:"탐험 지역에 따라 새로운 친구를 차근차근 만나게 돼요.",unassigned:true});
   }
 
   if(special){
@@ -307,8 +307,8 @@ async function renderCrewRoster(){
     special.innerHTML=slots.map(x=>{
       const state=encounters[`slot-${x.slot}`]?.status||"UNDISCOVERED";
       const roleContract=window.SnapPopCrewRoleGuard?.assertRoleContract?.({role:"SPECIAL",functionalAdvantage:false,powerBoost:false,rewardMultiplier:1,expMultiplier:1})||{roleMeaning:"ENCOUNTER_STYLE_ONLY",functionalAbility:"EQUAL"};
-      return card({title:`${String(x.slot).padStart(2,"0")} · ${x.core}`,meta:`${x.encounterGimmick||x.worldFlavor} · ${state==="UNDISCOVERED"?"미발견/설계 슬롯":state} · 조우 방식 · 기능 동일`,locked:state==="UNDISCOVERED"});
-    }).join("")+card({title:`확장 여유 · 최대 ${max}명 이하`,meta:"현재 8개 WORKING 스페셜 슬롯 + 추가 최대 4개 여유 · 실제 인원 OPEN · 스페셜은 강함 등급이 아님",unassigned:true});
+      return card({title:`${String(x.slot).padStart(2,"0")} · ${x.core}`,meta:`${x.encounterGimmick||x.worldFlavor} · ${state==="UNDISCOVERED"?"아직 만나지 못한 친구":"만난 친구"} · 만나는 방식만 특별해요`,locked:state==="UNDISCOVERED"});
+    }).join("")+card({title:`스페셜 탐험대 · 최대 ${max}명`,meta:"새로운 친구는 탐험 속 특별한 만남으로 이어져요. 능력의 우열은 없어요.",unassigned:true});
   }
 }
 function promptFor(landmark,step,language="ko",draft=""){
