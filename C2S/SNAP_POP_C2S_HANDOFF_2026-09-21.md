@@ -2410,3 +2410,87 @@ scripts/validate-branch-closure.mjs now contains 26 validators.
 - previous frozen candidate remains superseded;
 - external call count remains 0;
 - Netlify/deploy/merge remain NOT_RUN.
+
+
+## 37. CENTRAL CHILD AUTHORSHIP GUARD — 2026-09-21
+
+### Implemented
+
+Added:
+- `authorship-guard-runtime.js`
+- `scripts/validate-central-authorship-guard.mjs`
+
+Purpose:
+- consolidate previously fragmented anti-ghostwriting rules into one executable runtime guard.
+
+### Covered paths
+
+1. Semantic writing assist
+- routed through `SnapPopAuthorshipGuard.assertWritingAssist`
+- rejects final/rewrite/completed-text fields
+- requires exactly one next-move question
+- hint cannot become a second question
+
+2. Korean↔English expression bridge
+- routed through `SnapPopAuthorshipGuard.assertExpressionBridge`
+- phrase fragments only
+- max 4 fragments
+- full sentence fragment rejected
+- long fragment rejected
+
+3. Verified ASK→EXPRESS transition
+- routed through `SnapPopAuthorshipGuard.transitionPayload`
+- transfers only the child's original question/topic
+- `answerTransferred=false`
+- `draftTransferred=false`
+- no AI answer body or draft content included
+
+### Central forbidden output keys
+
+Examples:
+- finalDraft / final_draft
+- rewrite / rewrittenText
+- suggestedSentence
+- completedText
+- fullAnswer
+- modelDraft
+
+Deep nested keys are also rejected.
+
+### Validation
+
+`CENTRAL_AUTHORSHIP_GUARD_PASS`
+- 9/9 PASS
+
+Checks:
+- valid one-next-move writing assist passes
+- final draft field blocked
+- question flooding blocked
+- valid expression fragments pass
+- complete sentence fragment blocked
+- ASK transition transfers neither answer nor draft
+- semantic writing runtime wired to central guard
+- expression bridge runtime wired to central guard
+- app transition wired to central guard
+
+### Requirement matrix
+
+`SP-GUIDE-001`
+- CODED=true
+- STATIC_VERIFIED=true
+- RUNTIME_VERIFIED=false
+- DEVICE_VERIFIED=false
+
+Remaining gap:
+- live browser/provider/device execution only.
+
+### Closure runner
+
+`scripts/validate-branch-closure.mjs` now contains 27 validators.
+
+### External state
+
+- current candidate is not frozen
+- previous frozen candidate remains superseded
+- external call count remains 0
+- Netlify/deploy/merge remain NOT_RUN
