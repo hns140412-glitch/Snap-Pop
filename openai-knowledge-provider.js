@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-a";
+  const VERSION="2026.09.21-b";
   const ENDPOINT="/api/snap-pop-knowledge";
   const TIMEOUT_MS=18000;
 
@@ -34,7 +34,8 @@
         body:JSON.stringify({
           contract_version:"SNAP_POP_KNOWLEDGE_V1",
           input,
-          language:payload.language==="en"?"en":"ko"
+          language:payload.language==="en"?"en":"ko",
+          question_lens:typeof payload.questionLens==="string"?payload.questionLens:"CONCEPT"
         })
       });
 
