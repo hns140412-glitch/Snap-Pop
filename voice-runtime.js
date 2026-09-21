@@ -1,7 +1,16 @@
 (() => {
   "use strict";
-  const VERSION="2026.09.21-a";
+  const VERSION="2026.09.21-b";
   let currentRecognition=null;
+  function guardedSpeechText(text){
+    const value=typeof text==="string"?text.trim().slice(0,1600):"";
+    if(!value) throw new Error("VOICE_EMPTY_TEXT");
+    const presentation=window.SnapPopCrewPresentationGuard;
+    if(presentation&&typeof presentation.hasSelfIdentityLeak==="function"&&presentation.hasSelfIdentityLeak(value)){
+      throw new Error("VOICE_IDENTITY_LEAK");
+    }
+    return value;
+  }
   function browserSpeak(text,language="ko"){
     if(!("speechSynthesis" in window)) return Promise.reject(new Error("TTS_UNAVAILABLE"));
     speechSynthesis.cancel();
@@ -15,11 +24,20 @@
     });
   }
   async function speak(text,{language="ko",voiceRole="crew",interrupt=true}={}){
-    if(!text) return;
+    const safeText=guardedSpeechText(text);
+    const safeLanguage=language==="en"?"en":"ko";
+    const safeRole=voiceRole==="crew"?"crew":"crew";
     if(interrupt) stopSpeaking();
     const external=window.SnapPopVoiceProvider;
-    if(external && typeof external.speak==="function") return external.speak({text,language,voiceRole});
-    return browserSpeak(text,language);
+    if(external && typeof external.speak==="function"){
+      return external.speak({
+        text:safeText,
+        language:safeLanguage,
+        voiceRole:safeRole,
+        responseOwner:"EXPLORATION_CREW"
+      });
+    }
+    return browserSpeak(safeText,safeLanguage);
   }
   function stopSpeaking(){
     try{ window.SnapPopVoiceProvider?.stop?.(); }catch{}
@@ -48,5 +66,5 @@
     try{ window.SnapPopVoiceProvider?.stopListening?.(); }catch{}
     if(currentRecognition){try{currentRecognition.abort()}catch{} currentRecognition=null;}
   }
-  window.SnapPopVoice=Object.freeze({version:VERSION,speak,listen,stopSpeaking,stopListening,get mode(){return window.SnapPopVoiceProvider?"external":"browser-fallback";}});
+  window.SnapPopVoice=Object.freeze({version:VERSION,speak,listen,stopSpeaking,stopListening,guardedSpeechText,get mode(){return window.SnapPopVoiceProvider?"external":"browser-fallback";}});
 })();
