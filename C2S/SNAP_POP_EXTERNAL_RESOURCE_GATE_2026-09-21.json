@@ -1,8 +1,8 @@
 {
   "gate_id": "SNAP_POP_EXTERNAL_RESOURCE_GATE_2026-09-21",
   "candidate_sha": "a333e735f69b57164edc8440f7108e49a6ee8c7a",
-  "candidate_sha_frozen": true,
-  "candidate_classification": "FROZEN_CANDIDATE_BRANCH_ONLY",
+  "candidate_sha_frozen": false,
+  "candidate_classification": "SUPERSEDED_BY_NEW_IMPLEMENTATION",
   "external_resource_action": true,
   "external_resource_name": "Netlify_or_equivalent_hosted_runtime_validation",
   "external_call_budget": 1,
@@ -26,14 +26,14 @@
   "device_verified": "NOT_RUN",
   "human_approval_required": true,
   "human_approval_present": false,
-  "human_approval_status": "PENDING",
+  "human_approval_status": "NOT_APPLICABLE_WHILE_IMPLEMENTATION_CONTINUES",
   "external_action_authorized_now": false,
-  "decision": "HOLD_BEFORE_EXTERNAL_ACTION",
+  "decision": "NO_EXTERNAL_ACTION_IMPLEMENTATION_CONTINUES",
   "reason": [
-    "TAKY MASTER_LOGIC L3 external action requires human approval",
-    "TAKY MASTER_LOGIC: ㄱ / ㄱㄱ is not production deploy authority",
-    "TAKY external-resource budget gate requires frozen candidate and local closure before external execution",
-    "Frozen candidate and local closure are satisfied, but explicit human approval for the external action is not present"
+    "Previous frozen candidate is no longer current after new runtime implementation.",
+    "User chose to continue implementation instead of deployment validation.",
+    "External call budget remains unused.",
+    "A new frozen candidate must be declared only after the next implementation closure."
   ],
   "allowed_next_actions_without_external_call": [
     "record gate evidence",
@@ -47,5 +47,8 @@
     "quota-bearing external preview creation",
     "repeated external status polling",
     "merge based on unperformed external verification"
-  ]
+  ],
+  "superseded_candidate_sha": "a333e735f69b57164edc8440f7108e49a6ee8c7a",
+  "superseded_reason": "Runtime implementation changed after the frozen candidate: crew guest orchestration and crew interaction safety were added.",
+  "current_candidate_sha": null
 }
