@@ -3,6 +3,7 @@ import vm from "node:vm";
 
 const source=fs.readFileSync(new URL("../badge-evidence-contract-runtime.js",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const badgeControllerSource=fs.readFileSync(new URL("../badge-controller.js",import.meta.url),"utf8");
 const window={};
 vm.runInNewContext(source,{window,Object,Array,String,Number,Math,Error,RegExp,Set});
 const evidence=window.SnapPopBadgeEvidenceContract;
@@ -87,8 +88,8 @@ blocked("ai-inference-key-forbidden",()=>evidence.verify("DEEP_THINKING",{
 }),"BADGE_EVIDENCE_WEAK_PROXY_FORBIDDEN");
 
 assert("app-has-evidence-gated-recorder",
-  appSource.includes("recordBadgeBehaviorEvidence")&&
-  appSource.includes("SnapPopBadgeEvidenceContract.verify")
+  badgeControllerSource.includes("recordBadgeBehaviorEvidence")&&
+  badgeControllerSource.includes("SnapPopBadgeEvidenceContract.verify")
 );
 assert("app-still-has-no-direct-weak-detector-wiring",
   !appSource.includes('recordBadgeBehaviorObservation("ERROR_DISCOVERY"')&&
