@@ -12,6 +12,11 @@
 <main>
 <section id="map" class="view active">
  <div class="mapWorld">
+  <div class="mapPrompt" aria-label="오늘의 탐험 안내">
+   <span class="kicker">오늘의 탐험</span>
+   <h1>어디부터 둘러볼까?</h1>
+   <p>마음 가는 곳 하나만 골라도 좋아.</p>
+  </div>
   <img class="scene" src="assets/world/golden_world_scene.jpg" alt="">
   <div class="atmo"></div>
   <div id="landmarks" class="landmarks"></div>
@@ -21,12 +26,12 @@
   </div>
   <button class="specialInvite" id="specialInvite" hidden>특별 탐험 초대장</button>
   <div id="expressionIntentBanner" class="expressionIntentBanner" hidden></div>
-  <button class="radioFab" id="homeRadio"><img src="assets/icons/radio.svg" alt=""><span>무전</span></button>
+  <button class="radioFab" id="homeRadio" aria-label="상상 구름 무전 열기"><img src="assets/icons/radio.svg" alt=""><span>무전</span></button>
   <div class="selection" id="selection" hidden>
    <span class="kicker">선택한 탐험지</span><h2 id="selTitle"></h2><p id="selDesc"></p>
    <p id="selCrewMemberReaction" class="crewMemberPreview"></p>
    <div class="meta"><span id="selProgress">진행 0 / 3</span><span id="selShard">보석 조각 0 / 6</span></div>
-   <button class="primary" id="startBtn">탐험 시작</button>
+   <button class="primary" id="startBtn">이곳에서 시작</button>
   </div>
  </div>
 </section>
