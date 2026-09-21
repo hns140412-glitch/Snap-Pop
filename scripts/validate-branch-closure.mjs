@@ -34,7 +34,9 @@ const validators=[
   "validate-central-authorship-guard.mjs",
   "validate-shared-badge-event-contract.mjs",
   "validate-non-blocking-crew-reaction-ui.mjs",
-  "validate-think-express-verification-separation.mjs"
+  "validate-think-express-verification-separation.mjs",
+  "validate-badge-visual-compositor.mjs",
+  "validate-badge-catalog-activation-guard.mjs"
 ];
 
 let passed=0;
