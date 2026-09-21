@@ -283,3 +283,5 @@ Conservative boundaries retained:
 - special skip / wish transaction runtime validation trigger.
 
 - special/wish/crew runtime matrix closure validation trigger.
+
+- crew identity/name history + authorized guest runtime validation trigger.
