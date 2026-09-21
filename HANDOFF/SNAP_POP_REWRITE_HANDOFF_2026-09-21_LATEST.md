@@ -251,3 +251,5 @@ Conservative boundaries retained:
 - IndexedDB reload recovery runtime matrix closure validation trigger.
 
 - PWA offline shell + live DOM runtime validation trigger.
+
+- PWA offline shell/live DOM runtime matrix closure validation trigger.
