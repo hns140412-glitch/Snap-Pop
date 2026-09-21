@@ -360,3 +360,15 @@ IMAGINATION RETURN INTEGRITY NOTE:
 - return integrity validator 9/9 PASS.
 - SP-IMAGINE-001 now CODED=true / STATIC_VERIFIED=true.
 - closure runner now has 34 validators.
+
+
+WRITING / CORE6 / BADGE CANDIDATE / VOICE NOTE:
+- writing semantic contract validator 10/10 PASS.
+- SP-WRITE-002/003/004 now CODED=true / STATIC_VERIFIED=true.
+- Core 6 locked as STARTER_REFERENCE_ONLY, not global authority; validator 8/8 PASS.
+- SP-CREW-005 now CODED=true / STATIC_VERIFIED=true.
+- review-only badge candidate runtime added; no auto-call/activation; validator 6/6 PASS.
+- SP-BADGE-005 now CODED=true / STATIC_VERIFIED=true.
+- voice boundary validator 9/9 PASS.
+- SP-VOICE-001/002 now CODED=true / STATIC_VERIFIED=true.
+- closure runner now has 38 validators.
