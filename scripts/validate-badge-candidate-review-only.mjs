@@ -3,6 +3,7 @@ import vm from "node:vm";
 
 const source=fs.readFileSync(new URL("../badge-candidate-runtime.js",import.meta.url),"utf8");
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const badgeController=fs.readFileSync(new URL("../badge-controller.js",import.meta.url),"utf8");
 
 const window={};
 vm.runInNewContext(source,{window,Object,Array,String,Number,Math,Error,Set,Date});
@@ -51,11 +52,12 @@ try{
 assert("no-evidence-candidate-blocked",noEvidenceBlocked);
 
 assert("app-persists-candidate-in-review-ledger",
-  app.includes("async function proposeBadgeCandidateFromObservations")&&
-  app.includes('badgeCandidateReviews')
+  badgeController.includes("async function proposeBadgeCandidateFromObservations")&&
+  badgeController.includes('badgeCandidateReviews')
 );
 assert("app-does-not-auto-call-candidate-proposal",
-  (app.match(/proposeBadgeCandidateFromObservations\(/g)||[]).length===1
+  (app.match(/proposeBadgeCandidateFromObservations\(/g)||[]).length===1&&
+  (badgeController.match(/proposeBadgeCandidateFromObservations\(/g)||[]).length===1
 );
 
 console.log("BADGE_CANDIDATE_REVIEW_ONLY_PASS");
