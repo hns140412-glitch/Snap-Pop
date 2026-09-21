@@ -3341,3 +3341,24 @@ Therefore:
 
 Branch-only documentation and handoff synchronization may continue.
 A hosted runtime execution requires a separate explicit approval identifying that external action.
+
+
+## 46. HOSTED VALIDATION ACCEPTANCE PREP — 2026-09-21
+
+Prepared without external calls:
+- `C2S/SNAP_POP_HOSTED_RUNTIME_ACCEPTANCE_2026-09-21.md`
+
+The acceptance contract now locks:
+- one hosted attempt only after explicit approval;
+- exact frozen candidate SHA only;
+- PASS criteria for boot, writing flow, Imagination Cloud, badge evidence, Theme Expression, crew/guest, voice, and Truth Guard;
+- fail-fast classification;
+- no identical retry under unchanged failure conditions;
+- hosted PASS does not imply DEVICE_VERIFIED / merge / FAMILY_EXPANSION / final asset approval.
+
+External state remains:
+- Netlify: NOT_RUN
+- hosted runtime: NOT_RUN
+- merge: NOT_RUN
+- external call count: 0
+- Human Approval: PENDING

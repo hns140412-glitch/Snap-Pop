@@ -424,3 +424,11 @@ FROZEN CANDIDATE V2 NOTE — 2026-09-21
 - HUMAN APPROVAL for external action: PENDING
 - generic ㄱ is NOT external-action approval.
 - read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md Section 45 before any hosted/deploy action.
+
+
+HOSTED VALIDATION ACCEPTANCE PREP — 2026-09-21
+- acceptance contract: C2S/SNAP_POP_HOSTED_RUNTIME_ACCEPTANCE_2026-09-21.md
+- one hosted attempt only after explicit Human Approval
+- generic ㄱ is not approval
+- Netlify/hosted runtime/merge remain NOT_RUN
+- external call count remains 0
