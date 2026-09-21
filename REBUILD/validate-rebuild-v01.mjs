@@ -62,3 +62,22 @@ assert('exploration-parity-empty',legacyApp.includes('if(!s.draft){s.crewState=s
 console.log('REBUILD_DOMAIN_PARITY_PASS');
 
 console.log('REBUILD_V01_FOUNDATION_PASS snap-pop');
+
+const bookScaffoldSource=loadSource('book-response-scaffold-runtime.js');
+const writingSourceForBook=loadSource('writing-runtime.js');
+assert('book-response-scaffold-loaded',
+  indexSource.includes('book-response-scaffold-runtime.js') &&
+  indexSource.indexOf('book-response-scaffold-runtime.js')<indexSource.indexOf('writing-runtime.js')
+);
+assert('book-response-child-authorship',
+  bookScaffoldSource.includes('SELECTION_REASON') &&
+  bookScaffoldSource.includes('SCENE_OR_STORY') &&
+  bookScaffoldSource.includes('WHY_MEMORABLE') &&
+  bookScaffoldSource.includes('OWN_POSITION') &&
+  bookScaffoldSource.includes('TARGETED_REVISION') &&
+  !bookScaffoldSource.includes('finalDraft') &&
+  !bookScaffoldSource.includes('suggestedSentence')
+);
+assert('book-response-writing-integration',
+  writingSourceForBook.includes('SnapPopBookResponseScaffold?.nextMove')
+);
