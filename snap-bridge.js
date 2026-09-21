@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const BRIDGE_VERSION = '2026.09.20-a';
+  const BRIDGE_VERSION = '2026.09.21-b';
   const CONTEXT_KEY = 'snap_pop_shared_context_v1';
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
   const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','target_time_ms','session_start_at','paused_at','issue_ms','learning_context'];
@@ -269,7 +269,18 @@
       emit,
       returnToBase,
       validate,
-      learningContext: () => decodeLearningContext(context.learning_context)
+      learningContext: () => decodeLearningContext(context.learning_context),
+      vocabularyMaterial: () => {
+        try {
+          return window.SnapPopVocabularyMaterial?.normalize?.({
+            word: context.word || "",
+            word_context: context.word_context || "",
+            from_app: context.from_app || ""
+          }) || null;
+        } catch {
+          return null;
+        }
+      }
     });
     window.dispatchEvent(new CustomEvent('snap-pop:bridge-ready'));
   }
