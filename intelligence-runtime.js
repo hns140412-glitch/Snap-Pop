@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  const VERSION = "2026.09.21-f";
+  const VERSION = "2026.09.21-g";
   function classifyIntent(input="") {
     const text = input.trim();
     if (!text) return "EMPTY";
@@ -46,15 +46,27 @@
           const shaped=scaffold&&typeof scaffold.scaffoldKnowledge==="function"
             ? scaffold.scaffoldKnowledge(result,input,language,payload.context||"GLOBAL")
             : result;
-          return {...shaped,intent,external:true};
+          const presentation=window.SnapPopCrewPresentationGuard;
+          const safe=presentation&&typeof presentation.sanitizeUserFacing==="function"
+            ? presentation.sanitizeUserFacing(shaped)
+            : shaped;
+          return {...safe,intent,external:true};
         }catch{}
       }
-      return {...unverifiedKnowledgeResponse(input,language),intent};
+      const fallback={...unverifiedKnowledgeResponse(input,language),intent};
+      const presentation=window.SnapPopCrewPresentationGuard;
+      return presentation&&typeof presentation.sanitizeUserFacing==="function"
+        ? presentation.sanitizeUserFacing(fallback)
+        : fallback;
     }
     const external=window.SnapPopOpenAIProvider;
     if (external && typeof external.ask==="function") {
       const raw=await external.ask({...payload,input,language,intent,contract:{responseOwner:"EXPLORATION_CREW",truthFirst:true,noGuessing:true,conceptFirst:true,scaffoldPreferred:true}});
-      return {...raw,provider:raw?.provider||"external",intent,external:true};
+      const presentation=window.SnapPopCrewPresentationGuard;
+      const safe=presentation&&typeof presentation.sanitizeUserFacing==="function"
+        ? presentation.sanitizeUserFacing(raw)
+        : raw;
+      return {...safe,provider:raw?.provider||"external",intent,external:true};
     }
     if (intent==="EMPTY") return localThinkScaffold("",language);
     return {...localThinkScaffold(input,language),intent};
