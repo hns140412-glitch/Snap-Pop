@@ -1427,11 +1427,19 @@
         "RECOVERED_BADGE_DIALOGUE"
       ],
       "classification": "CONFIRMED",
-      "coded": false,
+      "coded": "PARTIAL",
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
-      "gap": "behavior event taxonomy and anti-labeling guard not implemented"
+      "gap": "behavior taxonomy + anti-labeling guard implemented; only explicit HELP_REQUEST signal is currently wired. Other families require source-specific evidence contracts before runtime detection; historical badge catalog remains inactive.",
+      "codeEvidence": [
+        "badge-behavior-runtime.js",
+        "app.js:recordBadgeBehaviorObservation",
+        "app.js:revealHint→HELP_REQUEST explicit observation",
+        "data/badge-system.json:eventFamilies",
+        "data/badge-catalog-working.json:WORKING_DRAFT_NOT_ACTIVE",
+        "scripts/validate-badge-behavior-observation.mjs"
+      ]
     },
     {
       "id": "SP-BADGE-007",
