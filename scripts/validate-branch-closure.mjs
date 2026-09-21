@@ -56,6 +56,7 @@ const validators=[
   "validate-writing-flow-controller-boundaries.mjs",
   "validate-crew-controller-boundaries.mjs",
   "validate-crew-runtime-controller-boundaries.mjs",
+  "validate-records-growth-controller-boundaries.mjs",
   "validate-dom-binding-integrity.mjs"
 ];
 
