@@ -176,12 +176,16 @@
         "crew-presentation-guard.js:GENERAL safety",
         "app.js:showCrewReaction safeReaction",
         "scripts/validate-crew-interaction-safety.mjs",
-        "scripts/browser-runtime-selftest.js"
+        "scripts/browser-runtime-selftest.js",
+        "writing-flow-controller.js",
+        "interaction-support-controller.js"
       ],
       "gap": "physical-device behavior remains unverified",
       "runtimeEvidence": [
         "browser-runtime-selftest: unsafe child-directed mock is blocked",
-        "browser-runtime-selftest: unsafe child-directed reaction falls back to neutral wording"
+        "browser-runtime-selftest: unsafe child-directed reaction falls back to neutral wording",
+        "browser-runtime-selftest: child-directed mock/deficit language blocked",
+        "browser-runtime-selftest: unsafe reaction falls back to neutral support copy"
       ]
     },
     {
@@ -202,13 +206,17 @@
         "styles.css:.crewReactionOverlay pointer-events:none/max-height/overflow",
         "app.js:showCrewReaction/hideCrewReaction",
         "scripts/validate-non-blocking-crew-reaction-ui.mjs",
-        "scripts/browser-runtime-selftest.js"
+        "scripts/browser-runtime-selftest.js",
+        "writing-flow-controller.js",
+        "interaction-support-controller.js"
       ],
       "gap": "physical-device behavior remains unverified",
       "runtimeEvidence": [
         "browser-runtime-selftest: crew reaction hidden by default",
         "browser-runtime-selftest: reaction overlay pointer-events none",
-        "browser-runtime-selftest: reaction overlay max-height bounded"
+        "browser-runtime-selftest: reaction overlay max-height bounded",
+        "browser-runtime-selftest: crew reaction pointer-events none",
+        "browser-runtime-selftest: crew reaction max-height bounded"
       ]
     },
     {
@@ -1545,14 +1553,20 @@
       "codeEvidence": [
         "app.js:writingAnalysisSeq",
         "app.js:draft stale guard",
-        "scripts/browser-runtime-selftest.js"
+        "scripts/browser-runtime-selftest.js",
+        "writing-flow-controller.js",
+        "interaction-support-controller.js"
       ],
       "gap": "physical-device behavior remains unverified",
       "runtimeEvidence": [
         "browser-runtime-selftest: old and latest semantic analyses forced concurrently",
         "browser-runtime-selftest: stale old analysis cannot overwrite latest prompt",
         "writing-flow: input invalidates in-flight analysis immediately",
-        "interaction-support: store + step + DOM draft freshness guards"
+        "interaction-support: store + step + DOM draft freshness guards",
+        "browser-runtime-selftest: deterministic two-request race; latest analysis remains visible",
+        "writing flow invalidates prior analysis immediately on input",
+        "interaction support checks storage draft + step + current textarea before applying result",
+        "stale null cannot fall through to local prompt overwrite"
       ]
     },
     {
