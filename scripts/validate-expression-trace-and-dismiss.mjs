@@ -1,6 +1,7 @@
 import fs from "node:fs";
 
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const flow=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -51,8 +52,8 @@ assert("selection-trace-keeps-answer-out",
 );
 
 assert("attach-trace-is-new-session-only",
-  app.includes('if(created){const pending=await get("pendingExpressionIntent")')&&
-  app.includes('recordExpressionTrace("VERIFIED_ASK_EXPRESSION_ATTACHED"')
+  flow.includes('if(created){const pending=await store.get("pendingExpressionIntent")')&&
+  flow.includes('deps.recordExpressionTrace("VERIFIED_ASK_EXPRESSION_ATTACHED"')
 );
 
 assert("bilingual-trace-has-no-fragment-content",
