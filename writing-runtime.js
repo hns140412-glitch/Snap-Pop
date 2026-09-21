@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  const VERSION="2026.09.21-a";
+  const VERSION="2026.09.21-b";
   const ko={
     reason:/왜|이유|때문|그래서|그러니까|느낌|생각|마음/,
     sensory:/보이|봤|색|빛|소리|들리|냄새|향|맛|촉감|따뜻|차갑|거칠|부드럽|밝|어둡|풍경|장면/,
@@ -71,7 +71,7 @@
   }
 
   function normalizeAnalysis(raw,fallback){
-    if(!raw||typeof raw!=="object")return {...fallback,provider:"local-writing-fallback"};
+    if(!raw||typeof raw!=="object")return {...fallback,provider:"local-writing-fallback",providerError:true};
     const safeFocus=typeof raw.focus==="string"&&raw.focus.length<48?raw.focus:fallback.focus;
     const safeQuestion=typeof raw.question==="string"&&raw.question.trim().length<=180?raw.question.trim():fallback.question;
     const safeHint=typeof raw.hint==="string"&&raw.hint.trim().length<=180?raw.hint.trim():fallback.hint;
@@ -84,7 +84,7 @@
       suggestedLens:safeLens,
       rationale:typeof raw.rationale==="string"?raw.rationale.slice(0,180):"",
       confidence:Number.isFinite(raw.confidence)?Math.max(0,Math.min(1,raw.confidence)):null,
-      provider:raw.provider||"semantic-writing-provider",
+      provider:typeof raw.provider==="string"&&raw.provider.trim()?raw.provider.trim().slice(0,80):"semantic-writing-provider",
       semanticSignals:raw.semanticSignals&&typeof raw.semanticSignals==="object"?raw.semanticSignals:null,
       grounded:raw.grounded!==false,
       factVerified:false
