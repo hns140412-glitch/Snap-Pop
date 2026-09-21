@@ -3,6 +3,7 @@ const fs=require('fs');
 const path=require('path');
 const release=require('../vendor/taky/release-contract.js');
 const pwa=require('../vendor/taky/pwa-update-state.js');
+const eventEnvelope=require('../vendor/taky/event-envelope.js');
 
 delete globalThis.SnapPopReleaseDescriptor;
 require('../snap-release-v01.js');
@@ -21,6 +22,7 @@ assert(!sw.includes(".then(()=>self.skipWaiting())"));
 assert(sw.includes("e.data?.type==='APPLY_UPDATE'"));
 assert(index.includes('vendor/taky/release-contract.js'));
 assert(index.includes('vendor/taky/pwa-update-state.js'));
+assert(index.includes('vendor/taky/event-envelope.js'));
 assert(index.includes('snap-release-v01.js'));
 assert(index.includes('snap-pwa-update-v01.js'));
 assert(app.includes('globalThis.SnapPopPwaSafePoint=()=>!snapActiveExploration'));
@@ -40,3 +42,12 @@ for(const [event,ctx,expected] of [
   s=r.state;
 }
 console.log('PASS: Snap consumes TAKY shared release/PWA mechanisms while retaining Snap exploration semantics');
+
+
+const ev1=eventEnvelope.create({source:'snap-pop',event_type:'TASK_PROGRESS',payload:{x:1}});
+const ev2=eventEnvelope.create({source:'snap-pop',event_type:'TASK_PROGRESS',payload:{x:1}});
+assert.notEqual(ev1.event_id,ev2.event_id);
+assert.equal(ev1.payload_digest,ev2.payload_digest);
+assert(bridge.includes("EventEnvelope.create"));
+assert(!bridge.includes("const eventId = () =>"));
+console.log('PASS: Snap bridge event identity uses TAKY immutable event envelope');
