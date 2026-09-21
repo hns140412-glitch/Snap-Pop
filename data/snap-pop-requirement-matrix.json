@@ -556,13 +556,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "manifest.json",
         "service-worker.js",
-        "sw.js"
-      ]
+        "sw.js",
+        "scripts/browser-runtime-selftest.js",
+        "scripts/browser-runtime-cdp.mjs"
+      ],
+      "runtimeEvidence": [
+        "CDP: active service worker script is sw.js",
+        "CDP: offline shell cache contains index.html, styles.css, app.js",
+        "CDP: PWA_OFFLINE_SHELL_PASS"
+      ],
+      "gap": "physical-device verification remains unverified"
     },
     {
       "id": "SP-UI-001",
@@ -575,13 +583,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "index.html",
-        "styles.css"
+        "styles.css",
+        "scripts/browser-runtime-selftest.js",
+        "scripts/browser-runtime-cdp.mjs"
       ],
-      "gap": "현재 visual Golden regression 미완료"
+      "gap": "physical-device verification remains unverified",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: live DOM map surface",
+        "browser-runtime-selftest: live DOM primary navigation",
+        "browser-runtime-selftest: live DOM writing textarea",
+        "browser-runtime-selftest: mockup/wireframe/screenshot runtime background absent"
+      ]
     },
     {
       "id": "SP-EXP-001",
