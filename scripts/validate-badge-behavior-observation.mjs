@@ -5,6 +5,7 @@ const runtimeSource=fs.readFileSync(new URL("../badge-behavior-runtime.js",impor
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const flowSource=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
 const recordsFlowSource=fs.readFileSync(new URL("../records-flow-controller.js",import.meta.url),"utf8");
+const supportSource=fs.readFileSync(new URL("../interaction-support-controller.js",import.meta.url),"utf8");
 const catalog=JSON.parse(fs.readFileSync(new URL("../data/badge-catalog-working.json",import.meta.url),"utf8"));
 
 const window={};
@@ -71,8 +72,8 @@ assert("working-catalog-stays-inactive",
 );
 
 assert("app-records-explicit-help-signal",
-  appSource.includes('recordBadgeBehaviorObservation("HELP_REQUEST"')&&
-  appSource.includes("explicitAction:true")
+  supportSource.includes('deps.recordBadgeBehaviorObservation("HELP_REQUEST"')&&
+  supportSource.includes("explicitAction:true")
 );
 assert("app-records-writing-completion-as-fact-event",
   flowSource.includes('deps.recordBadgeBehaviorObservation("WRITING_EXPLORATION"')&&
@@ -84,7 +85,8 @@ assert("app-records-optional-extra-task-completion",
   recordsFlowSource.includes("completed:true")
 );
 assert("app-does-not-infer-deep-thinking-from-empty-attempts",
-  !appSource.includes('recordBadgeBehaviorObservation("DEEP_THINKING"')
+  !appSource.includes('recordBadgeBehaviorObservation("DEEP_THINKING"')&&
+  !supportSource.includes('recordBadgeBehaviorObservation("DEEP_THINKING"')
 );
 assert("app-records-retry-only-from-explicit-revision",
   recordsFlowSource.includes('deps.recordBadgeBehaviorObservation("RETRY"')&&
@@ -94,7 +96,9 @@ assert("app-records-retry-only-from-explicit-revision",
 );
 assert("app-still-does-not-infer-error-or-special-without-source-contract",
   !appSource.includes('recordBadgeBehaviorObservation("ERROR_DISCOVERY"')&&
-  !appSource.includes('recordBadgeBehaviorObservation("SPECIAL_BEHAVIOR"')
+  !appSource.includes('recordBadgeBehaviorObservation("SPECIAL_BEHAVIOR"')&&
+  !supportSource.includes('recordBadgeBehaviorObservation("ERROR_DISCOVERY"')&&
+  !supportSource.includes('recordBadgeBehaviorObservation("SPECIAL_BEHAVIOR"')
 );
 
 console.log("BADGE_BEHAVIOR_OBSERVATION_PASS");
