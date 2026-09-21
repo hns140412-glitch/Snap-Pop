@@ -37,7 +37,7 @@
       assert("live-dom-writing-surface-present",!!document.querySelector("#answer")&&document.querySelector("#answer") instanceof HTMLTextAreaElement);
       assert("runtime-mockup-background-not-used",![...document.images].some(img=>/mockup|wireframe|screenshot|prototype/i.test(img.getAttribute("src")||"")));
 
-      const originalOpenAIProvider=window.SnapPopOpenAIProvider;
+      const originalUniversalOpenAIProvider=window.SnapPopOpenAIProvider;
       const originalKnowledgeRuntime=window.SnapPopKnowledge;
       window.SnapPopOpenAIProvider=null;
       window.SnapPopKnowledge=null;
@@ -51,7 +51,7 @@
       const noGuess=await window.SnapPopIntelligence.ask({input:"조선은 언제 시작됐어?",language:"ko"});
       assert("ask-without-knowledge-provider-does-not-guess",noGuess?.kind==="ASK_UNDERSTAND"&&noGuess?.verified===false&&/추측|확인|사실/.test((noGuess?.core||"")+" "+(noGuess?.title||"")));
       assert("ask-no-guess-response-owner-is-crew",noGuess?.responseOwner==="EXPLORATION_CREW");
-      window.SnapPopOpenAIProvider=originalOpenAIProvider;
+      window.SnapPopOpenAIProvider=originalUniversalOpenAIProvider;
       window.SnapPopKnowledge=originalKnowledgeRuntime;
 
       const crewRules=await fetch("data/exploration-crew-rules.json").then(r=>r.json());
