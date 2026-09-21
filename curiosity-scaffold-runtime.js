@@ -18,11 +18,11 @@
     const t=input.trim();
     if(!t) return "CONCEPT";
     if(/어원|유래|어근|한자|말.*어디서|word root|etymolog|origin of (the )?word/i.test(t)) return "ETYMOLOGY";
-    if(/뜻|의미|뭐야|무엇이야|what does .* mean|meaning of|what is /i.test(t)) return "MEANING";
     if(/차이|비교|같은 점|다른 점|vs\.?|versus|difference|compare/i.test(t)) return "COMPARE";
-    if(/왜|이유|원인|때문|결과|그래서|why|cause|effect|result/i.test(t)) return "CAUSE_EFFECT";
-    if(/어떻게.*작동|원리|과정|만들어|되는 거|how does|how do|mechanism|process/i.test(t)) return "MECHANISM";
     if(/언제|순서|먼저|다음|역사|시대|연표|when|timeline|history|before|after/i.test(t)) return "TIME_FLOW";
+    if(/왜|이유|원인|때문|결과|그래서|why|cause|effect|result/i.test(t)) return "CAUSE_EFFECT";
+    if(/어떻게.*(?:작동|움직|되는지|이루어)|원리|과정|how does|how do|mechanism|process/i.test(t)) return "MECHANISM";
+    if(/뜻|의미|뭐야|무엇이야|what does .* mean|meaning of|what is /i.test(t)) return "MEANING";
     if(/누가|인물|왕|대통령|작가|과학자|who |person|inventor/i.test(t)) return "PERSON_EVENT";
     if(/어디|지역|나라|도시|위치|where|country|city|place/i.test(t)) return "PLACE_CONTEXT";
     return "CONCEPT";
