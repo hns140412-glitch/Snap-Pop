@@ -89,3 +89,10 @@ D. 현재 검증 상태:
 E. 첫 보고에서 “거의 완료” 같은 총괄 추정 금지. 실제 구현 gap과 다음 조치만 보여줘.
 
 바로 이어서 진행해.
+
+
+LATEST CONTINUATION NOTE:
+- P1 semantic output guard was hardened after this prompt was first written.
+- P2 now includes `truth-guard-runtime.js` + `knowledge-runtime.js`.
+- Read `C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md` section 12 before continuing.
+- Verified external search provider is still OPEN; do not claim OPENAI runtime connection.
