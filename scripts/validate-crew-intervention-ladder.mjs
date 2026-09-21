@@ -3,6 +3,7 @@ import vm from "node:vm";
 
 const runtimeSource=fs.readFileSync(new URL("../crew-intervention-runtime.js",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const flowSource=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
 
 const window={};
 vm.runInNewContext(runtimeSource,{window,Object,Array,String,Number,Math});
@@ -25,18 +26,18 @@ assert("hint-never-auto-revealed",[first,second,third,afterHint].every(x=>x.auto
 assert("crew-never-auto-writes",[first,second,third,afterHint].every(x=>x.autoWrite===false));
 assert("after-hint-returns-to-wait",afterHint.stage==="WAIT_AFTER_HINT");
 
-const emptyBlockStart=appSource.indexOf("if(!s.draft)");
-const emptyBlockEnd=appSource.indexOf("if(i<2)",emptyBlockStart);
-const emptyBlock=appSource.slice(emptyBlockStart,emptyBlockEnd);
-assert("app-uses-intervention-runtime",
+const emptyBlockStart=flowSource.indexOf("if(!s.draft)");
+const emptyBlockEnd=flowSource.indexOf("if(i<2)",emptyBlockStart);
+const emptyBlock=flowSource.slice(emptyBlockStart,emptyBlockEnd);
+assert("flow-uses-intervention-runtime",
   emptyBlock.includes("SnapPopCrewIntervention")&&
   emptyBlock.includes("interventionStage")
 );
-assert("app-does-not-auto-click-hint",
+assert("flow-does-not-auto-click-hint",
   !emptyBlock.includes('$("#hintBtn").click')&&
   !emptyBlock.includes("revealHint()")
 );
-assert("app-does-not-write-draft-in-intervention",
+assert("flow-does-not-write-draft-in-intervention",
   !emptyBlock.includes('$("#answer").value=')&&
   !emptyBlock.includes("s.draft=")
 );
