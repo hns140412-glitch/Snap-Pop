@@ -1,6 +1,7 @@
 import fs from "node:fs";
 
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const crewRuntime=fs.readFileSync(new URL("../crew-runtime-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -8,7 +9,7 @@ function assert(name,condition){
 }
 
 assert("guest-selection-default-deny",
-  app.includes("if(!appearanceAuthorized)return null;")
+  crewRuntime.includes("if(!appearanceAuthorized)return null;")
 );
 assert("special-scene-reads-explicit-trigger",
   app.includes('const guestTrigger=await get("activeCrewGuestTrigger")')
@@ -23,7 +24,7 @@ assert("no-automatic-100-percent-guest-call",
   !app.includes('chooseSceneGuest("SPECIAL_EXPLORATION");')
 );
 assert("weighted-selection-engine-retained",
-  app.includes("window.SnapPopCrewOrchestration.chooseGuest")
+  crewRuntime.includes("window.SnapPopCrewOrchestration.chooseGuest")
 );
 assert("shared-memory-only-if-guest-exists",
   app.includes('if(guestMemberId)await recordCrewMemberExperience')
