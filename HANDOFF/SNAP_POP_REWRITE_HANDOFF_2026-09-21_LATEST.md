@@ -263,3 +263,5 @@ Conservative boundaries retained:
 - deterministic stale-result race probe validation trigger.
 
 - stale fallback overwrite regression validation trigger.
+
+- semantic validator alignment after stale-race fix validation trigger.
