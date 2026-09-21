@@ -5,6 +5,7 @@ const runtime=fs.readFileSync(new URL("../badge-visual-runtime.js",import.meta.u
 const index=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const css=fs.readFileSync(new URL("../styles.css",import.meta.url),"utf8");
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const badgeController=fs.readFileSync(new URL("../badge-controller.js",import.meta.url),"utf8");
 
 const window={};
 vm.runInNewContext(runtime,{window,Object,Array,String,Number,Math,Set});
@@ -50,13 +51,13 @@ assert("upper-semicircle-five-gem-stars",
   css.includes("nth-child(5)")
 );
 assert("profile-character-rendered-as-identity-layer",
-  app.includes("model.identity.photo")&&
-  app.includes("badgeIdentity")
+  badgeController.includes("model.identity.photo")&&
+  badgeController.includes("badgeIdentity")
 );
 assert("growth-view-renders-preview-not-catalog-award",
-  app.includes("async function renderBadgePreview()")&&
-  app.includes("획득/수여 아님")&&
-  !app.includes("badgeAwarded=true")
+  badgeController.includes("async function renderBadgePreview()")&&
+  badgeController.includes("획득/수여 아님")&&
+  !badgeController.includes("badgeAwarded=true")
 );
 
 console.log("BADGE_VISUAL_LAYER_COMPOSITOR_PASS");
