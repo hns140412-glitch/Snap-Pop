@@ -163,16 +163,17 @@
         "EXPLORATION_CREW_MASTER"
       ],
       "classification": "CONFIRMED",
-      "coded": "PARTIAL",
+      "coded": true,
       "staticVerified": true,
       "runtimeVerified": false,
       "deviceVerified": false,
       "codeEvidence": [
-        "index.html",
-        "styles.css",
-        "data/exploration-crew-rules.json:interactionContract.dialoguePresence"
+        "index.html:#crewReactionOverlay hidden aria-live",
+        "styles.css:.crewReactionOverlay pointer-events:none/max-height/overflow",
+        "app.js:showCrewReaction/hideCrewReaction",
+        "scripts/validate-non-blocking-crew-reaction-ui.mjs"
       ],
-      "gap": "구조상 준수하나 런타임 visual regression 미검증"
+      "gap": "bounded hidden-by-default non-blocking crew reaction slot is implemented/static verified; device visual regression remains NOT_RUN"
     },
     {
       "id": "SP-GUIDE-005",
