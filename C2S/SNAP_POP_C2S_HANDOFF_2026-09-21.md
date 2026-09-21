@@ -700,3 +700,72 @@ Next quality layer:
 1. prevent structural labels from implying unsupported semantics when verified claim count/order is insufficient;
 2. add bounded mental-model eligibility rules by lens and claim count;
 3. then improve child-facing interaction around one-next-curiosity without increasing question pressure.
+
+
+## 18. P3 MENTAL MODEL ELIGIBILITY LOCK — 2026-09-21
+
+### Problem addressed
+
+A verified claim set must not automatically become a semantic flow diagram.
+
+Risk examples:
+- partial evidence visually implying a complete cause → process → result chain;
+- one verified sentence being presented as a complete timeline;
+- structural labels overstating relationships that evidence did not establish.
+
+### Eligibility rules
+
+Current mental-model runtime:
+- STACK types (MEANING / CONCEPT):
+  - may render with at least one VERIFIED claim;
+  - can render under partial claim coverage because the structure is non-relational.
+- FLOW / COMPARE structural types:
+  - require `verification.coverage === FULL_FACTUAL_CONTENT`;
+  - require at least 2 VERIFIED claims;
+  - otherwise no mental model is rendered.
+
+Existing hard locks remain:
+- VERIFIED claim text only;
+- verbatim text;
+- UNVERIFIED excluded;
+- max 4 items;
+- no factual transformation.
+
+### Validation
+
+Updated:
+- `scripts/validate-mental-model.mjs`
+
+Isolated Node execution:
+- verified-only PASS
+- flow-type PASS
+- verbatim-source PASS
+- no-fact-transform PASS
+- compare-type PASS
+- no-verified-claim-no-model PASS
+- partial-coverage-no-structural-flow PASS
+- single-claim-no-structural-flow PASS
+- single-stack-can-render PASS
+- max-four-items PASS
+
+Final marker:
+- `MENTAL_MODEL_VERIFIED_CLAIM_CONTRACT_PASS`
+
+### Status
+
+- CODED: PASS
+- STATIC_VERIFIED: PASS
+- RUNTIME_VERIFIED: PARTIAL
+  - isolated mental-model eligibility runtime PASS
+  - live browser render NOT_RUN
+- DEVICE_VERIFIED: NOT_RUN
+- merge/deploy/Netlify: NOT_RUN
+
+### Next P3 increment
+
+The next intelligence-quality task is not more structure.
+It is interaction pressure control:
+- preserve one-next-curiosity;
+- avoid automatic follow-up chains;
+- suppress next curiosity when the answer is still partially verified or the child did not ask to continue;
+- keep writing flow resumable without losing the draft.
