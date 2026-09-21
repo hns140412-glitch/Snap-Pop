@@ -2726,3 +2726,103 @@ Requirement matrix:
 - previous frozen candidate remains superseded
 - external call count remains 0
 - Netlify/deploy/merge remain NOT_RUN
+
+
+## 40. IMAGINATION CLOUD RETURN INTEGRITY GUARD — 2026-09-21
+
+### Implemented
+
+Added:
+- `imagination-return-runtime.js`
+- `scripts/validate-imagination-return-integrity.mjs`
+
+Purpose:
+- make Imagination Cloud a true on-demand thinking layer that returns safely to the original writing task;
+- prevent stale context from being restored into the wrong writing session.
+
+### Return snapshot contract
+
+`SNAP_POP_IMAGINATION_RETURN_V1`
+
+Captured when opening from WRITING_FLOW:
+- active session id
+- landmark
+- step
+- language
+- draft snapshot
+- capturedAt
+
+### Return validation
+
+Return is allowed only when all still match:
+- same active session id
+- same landmark
+- same step
+- same language
+
+Any mismatch fails closed with explicit reason:
+- ACTIVE_SESSION_CHANGED
+- LANDMARK_CHANGED
+- STEP_CHANGED
+- LANGUAGE_CHANGED
+
+### Draft preservation rule
+
+The snapshot never overwrites a newer current draft.
+
+Return preference:
+1. current active draft if it exists
+2. opening snapshot only as fallback
+
+On valid return:
+- textarea restores the preserved/current draft
+- cloudReturn stores:
+  - activeId
+  - landmark
+  - step
+  - language
+  - draftPreserved=true
+  - returnIntegrity=MATCH
+
+On invalid return:
+- writing content is not restored into the changed context
+- cloudReturn records:
+  - returnIntegrity=BLOCKED
+  - reason=<context mismatch>
+
+### Existing pressure rules preserved
+
+- WRITING_FLOW suppresses optional follow-up curiosity
+- cloud close does not auto-run analysis
+- cloud close does not advance step
+- cloud close does not click Next
+- non-driving acknowledgement only
+- original writing remains primary task
+
+Validation:
+- updated `validate-imagination-pressure-return.mjs`
+- added `validate-imagination-return-integrity.mjs`
+- isolated integrity validation: 9/9 PASS
+
+### Requirement matrix
+
+`SP-IMAGINE-001`
+- CODED=true
+- STATIC_VERIFIED=true
+- RUNTIME_VERIFIED=false
+- DEVICE_VERIFIED=false
+
+Remaining gap:
+- live browser/device interaction quality only.
+
+### Closure runner
+
+`scripts/validate-branch-closure.mjs` now contains 34 validators.
+
+### External state
+
+- implementation continues
+- current candidate is not frozen
+- previous frozen candidate remains superseded
+- external call count remains 0
+- Netlify/deploy/merge remain NOT_RUN
