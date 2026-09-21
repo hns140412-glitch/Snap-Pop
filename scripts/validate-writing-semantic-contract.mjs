@@ -4,6 +4,7 @@ const writing=fs.readFileSync(new URL("../writing-runtime.js",import.meta.url),"
 const semantic=fs.readFileSync(new URL("../semantic-writing-runtime.js",import.meta.url),"utf8");
 const server=fs.readFileSync(new URL("../netlify/functions/snap-pop-semantic-writing.mjs",import.meta.url),"utf8");
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const controller=fs.readFileSync(new URL("../writing-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -33,7 +34,7 @@ assert("five-landmarks-are-lenses-not-minigames",
 assert("cross-lens-suggestion-is-optional-one-lens",
   writing.includes("suggestedLens")&&
   semantic.includes('suggestedLens:"optional one lens"')&&
-  app.includes("필요하면")&&app.includes("관점으로도 한 번 볼 수 있어")
+  controller.includes("필요하면")&&controller.includes("관점으로도 한 번 볼 수 있어")
 );
 
 assert("one-next-move-is-enforced-client-side",
