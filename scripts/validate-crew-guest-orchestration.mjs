@@ -3,6 +3,7 @@ import vm from "node:vm";
 
 const runtimeSource=fs.readFileSync(new URL("../crew-orchestration-runtime.js",import.meta.url),"utf8");
 const appSource=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const specialSource=fs.readFileSync(new URL("../special-controller.js",import.meta.url),"utf8");
 const indexSource=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 
 const window={};
@@ -62,15 +63,15 @@ assert("guest-appearance-ledger-recorded",
 );
 
 assert("app-connects-guest-only-to-special-scene",
-  appSource.includes('chooseSceneGuest("SPECIAL_EXPLORATION",{appearanceAuthorized:')&&
-  appSource.includes('guestTrigger?.scene==="SPECIAL_EXPLORATION"')&&
-  appSource.includes('guestTrigger?.authorized===true')&&
-  appSource.includes('$("#specialCrewPresence")')
+  specialSource.includes('deps.chooseSceneGuest("SPECIAL_EXPLORATION",{appearanceAuthorized:')&&
+  specialSource.includes('guestTrigger?.scene==="SPECIAL_EXPLORATION"')&&
+  specialSource.includes('guestTrigger?.authorized===true')&&
+  specialSource.includes('q("#specialCrewPresence")')
 );
 
 assert("special-memory-preserves-guest-id",
-  appSource.includes("guestMemberId")&&
-  appSource.includes("memories.unshift({id,at,prompt:p.q,text,guestMemberId})")
+  specialSource.includes("guestMemberId")&&
+  specialSource.includes("memories.unshift({id,at,prompt:p.q,text,guestMemberId})")
 );
 
 assert("special-presence-is-lightweight",
