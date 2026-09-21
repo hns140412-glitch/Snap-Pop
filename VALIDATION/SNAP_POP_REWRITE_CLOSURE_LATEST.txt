@@ -1,7 +1,7 @@
-validation_sha=fbd0628e92c0be659e1897f9cda7f47178b8fd36
-checkout_sha=fbd0628e92c0be659e1897f9cda7f47178b8fd36
-closure_status=1
-closure_marker=
+validation_sha=0cef75de449b17111610aa4dea449b19066b9efc
+checkout_sha=0cef75de449b17111610aa4dea449b19066b9efc
+closure_status=0
+closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 63/63
 browser_status=0
 browser_marker=BROWSER_RUNTIME_CDP_PASS
 viewport=390x844
@@ -758,19 +758,20 @@ PASS writing-focus-card-present
 PASS question-is-framed-as-single-current-focus
 PASS child-answer-label-present
 PASS primary-writing-controls-are-voice-and-hint
-file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-integrated-child-writing-flow.mjs:6
-  if(!condition) throw new Error("FAIL "+name);
-                       ^
+PASS optional-assists-are-collapsed-by-default
+PASS next-action-has-dedicated-dock
+PASS writing-dock-stays-above-bottom-nav
+PASS answer-remains-large-writing-surface
+INTEGRATED_CHILD_WRITING_FLOW_PASS
 
-Error: FAIL optional-assists-are-collapsed-by-default
-    at assert (file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-integrated-child-writing-flow.mjs:6:24)
-    at file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-integrated-child-writing-flow.mjs:24:1
-    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
-    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
-    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+=== validate-dom-binding-integrity.mjs ===
+PASS all-direct-dom-bindings-have-index-targets
+PASS querySelector-collection-misuse-blocked
+PASS explicit-help-request-control-exists
+PASS hint-control-is-wired-to-explicit-help-path
+DOM_BINDING_INTEGRITY_PASS
 
-Node.js v22.23.2
-BRANCH_CLOSURE_VALIDATOR_FAIL validate-integrated-child-writing-flow.mjs status 1
+BRANCH_CLOSURE_VALIDATOR_PASS 63/63
 --- BROWSER ---
 BROWSER_RUNTIME_CDP_PASS
 {"readyState":"complete","smoke":"PASS","runtime":{"init":"PASS","appScript":"STARTED","db":"OPEN","errors":[],"phase":"DONE"},"result":"BROWSER_RUNTIME_SELFTEST_PENDING\nPASS app-init-pass\nPASS indexeddb-open\nPASS map-has-five-landmarks\nPASS first-landmark-exists\nPASS start-writing-exists\nPASS writing-view-active\nPASS mobile-root-has-no-horizontal-overflow\nPASS mobile-document-has-no-horizontal-overflow\nPASS writing-tools-present\nPASS writing-tools-touch-height\nPASS writing-tools-stay-inside-viewport\nPASS primary-next-touch-height\nPASS hint-control-restored\nPASS writing-step-1-exists\nPASS writing-step-2-exists\nPASS writing-complete-exists\nPASS writing-result-active\nPASS family-open-exists\nPASS family-view-active\nPASS family-mode-enabled\nPASS family-child-add-exists\nPASS family-child-created\nPASS family-diary-save-exists\nPASS family-letter-save-exists\nPASS family-support-save-exists\nPASS family-shared-special-save-exists\nPASS family-diary-in-timeline\nPASS family-letter-in-timeline\nPASS family-support-card-in-timeline\nPASS family-shared-special-in-timeline\nPASS family-conflict-lock-hidden-from-user\nPASS family-recovery-lock-hidden-from-user\nPASS family-second-child-add-exists\nPASS family-second-child-created\nPASS family-second-child-diary-save-exists\nPASS second-child-timeline-isolated\nPASS first-child-timeline-restored\nPASS family-runtime-present\nPASS child-permission-isolation\nPASS parent-contract-present\nPASS locked-feature-blocked-family_group\nPASS locked-feature-blocked-mailbox_decor\nPASS locked-feature-blocked-composite_diary_illustration\nPASS locked-feature-blocked-gem_gift\nPASS gem-gift-economy-mutation-blocked\nPASS original-mode-restored\nPASS family-mode-reenabled\nBROWSER_RUNTIME_SELFTEST_PASS","landmarks":5}
