@@ -450,3 +450,12 @@ TAKY USER-OUTCOME / MOBILE UI REALIZATION — 2026-09-21
 - SP-UX-001 and SP-UX-002 are CODED + STATIC + RUNTIME verified; DEVICE remains false
 - final visual/UI direction is still OPEN; do not report browser/mobile structural PASS as final design completion
 - read Handoff Section 48 before continuing UI work
+
+
+REWRITE SURGERY PHASE 1 CLOSED — 2026-09-21
+- surgery canonical: C2S/SNAP_POP_REWRITE_SURGERY_2026-09-21.md
+- phase-1 SHA: 66d08c1ea3e5398eb1a33420cf76ad20c29098ba
+- storage owner extracted to app-storage-runtime.js
+- UI shell owner extracted to app-shell-runtime.js
+- 48/48 + Chrome CDP runtime PASS
+- next work MUST continue with Writing Controller extraction, not app.js patch stacking

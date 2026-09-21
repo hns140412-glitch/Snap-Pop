@@ -3450,3 +3450,40 @@ Truth boundary:
 - DESIGN REALIZATION remains PARTIAL;
 - DEVICE_VERIFIED remains false;
 - hosted/live-provider and cross-app Ready return remain separate evidence boundaries.
+
+
+## 49. REWRITE SURGERY PHASE 1 CLOSED — 2026-09-21
+
+Trigger:
+- direct user decision: current structure has too many accumulated problems; preserve context and begin controlled rewrite surgery rather than continued patch stacking.
+
+Canonical surgery document:
+- `C2S/SNAP_POP_REWRITE_SURGERY_2026-09-21.md`
+
+Phase 1 ownership migration:
+- IndexedDB persistence mechanism → `app-storage-runtime.js`
+- view activation / toast / HTML escaping → `app-shell-runtime.js`
+- legacy `app.js` delegates these concerns and no longer owns the IndexedDB handle.
+
+Structural evidence at surgery start:
+- app.js repository blob ~92 KB
+- 94 named functions
+- 225 direct DOM references
+- 56 direct event-property bindings
+
+Phase 1 exact evidence:
+- SHA: `66d08c1ea3e5398eb1a33420cf76ad20c29098ba`
+- GitHub Actions run: `35588685883`
+- job: `106297888041`
+- `REWRITE_FOUNDATION_BOUNDARY_PASS`
+- `BRANCH_CLOSURE_VALIDATOR_PASS 48/48`
+- `BROWSER_RUNTIME_CDP_PASS`
+- 390×844 browser runtime preserved.
+
+Important:
+- REWRITE STARTED ≠ REWRITE COMPLETE.
+- Existing legacy code remains temporary regression evidence/compatibility adapter.
+- Do not resume patch stacking into app.js when an ownership family can be extracted.
+- Next surgery phase: Writing Controller / writing-flow ownership extraction.
+- After that: Crew Controller → Records/Growth → Settings/Special/Imagination orchestration cleanup.
+- Final target: app.js thin orchestration only.

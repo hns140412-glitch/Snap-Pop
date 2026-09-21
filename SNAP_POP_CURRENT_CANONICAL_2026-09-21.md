@@ -464,3 +464,14 @@ Evidence update:
 - next-step primary control satisfies the same touch-height gate.
 
 This is **mobile browser realization evidence**, not real-device DESIGN/DEVICE PASS.
+
+
+## 12. Controlled rewrite surgery — 2026-09-21
+
+Direct user decision activates a controlled architectural rewrite. The legacy implementation is now regression evidence and temporary compatibility scaffolding, not the target architecture.
+
+Canonical rewrite plan: `C2S/SNAP_POP_REWRITE_SURGERY_2026-09-21.md`.
+
+Phase 1 closed at `66d08c1ea3e5398eb1a33420cf76ad20c29098ba`: persistence ownership and UI shell ownership were extracted from `app.js`; full 48/48 closure and 390×844 Chrome runtime passed.
+
+Next owner migration: Writing Controller. Continued feature patch stacking into `app.js` is not the preferred route when extraction is feasible.
