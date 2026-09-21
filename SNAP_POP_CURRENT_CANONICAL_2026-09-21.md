@@ -593,3 +593,20 @@ Verified:
 - radio / special invitation remain secondary actions
 
 Final visual direction remains OPEN and DEVICE_VERIFIED=false.
+
+
+## 20. Integrated UI Phase 3 — Result / Records / Growth
+
+Exact validated SHA: `38bca4990a1cff1769d31b09c46fe8299f971315`.
+
+Evidence:
+- `BRANCH_CLOSURE_VALIDATOR_PASS 65/65`
+- `BROWSER_RUNTIME_CDP_PASS`
+- 390×844 viewport
+
+Child-facing hierarchy now separates:
+1. child-authored work;
+2. the trace/reward that was recorded;
+3. the longer-term growth view.
+
+Bonus practice remains optional and collapsed by default. Reward/economy semantics were not changed. Final visual direction remains OPEN and DEVICE_VERIFIED=false.
