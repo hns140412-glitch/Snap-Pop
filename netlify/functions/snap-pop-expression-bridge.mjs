@@ -58,7 +58,7 @@ function sanitizeBridge(raw={},sourceLanguage,targetLanguage){
   if(!fragments.length) throw new Error("NO_FRAGMENTS");
   const assemblyPrompt=clean(raw.assemblyPrompt,180);
   const marks=(assemblyPrompt.match(/[?？]/g)||[]).length;
-  if(!assemblyPrompt||marks!==1||!/[[?？]$/.test(assemblyPrompt)) throw new Error("INVALID_ASSEMBLY_PROMPT");
+  if(!assemblyPrompt||marks!==1||!/[?？]$/.test(assemblyPrompt)) throw new Error("INVALID_ASSEMBLY_PROMPT");
   return {
     meaningAnchor:clean(raw.meaningAnchor,220)||null,
     phraseFragments:fragments,
