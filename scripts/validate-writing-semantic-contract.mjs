@@ -6,6 +6,7 @@ const server=fs.readFileSync(new URL("../netlify/functions/snap-pop-semantic-wri
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const controller=fs.readFileSync(new URL("../writing-controller.js",import.meta.url),"utf8");
 const flow=fs.readFileSync(new URL("../writing-flow-controller.js",import.meta.url),"utf8");
+const support=fs.readFileSync(new URL("../interaction-support-controller.js",import.meta.url),"utf8");
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -50,7 +51,7 @@ assert("one-next-move-is-enforced-server-side",
 );
 
 assert("live-result-applies-only-if-draft-and-step-still-match",
-  app.includes("if(cur.draft!==draft||Math.min(2,cur.step||0)!==step)return null")
+  support.includes("if(cur.draft!==draft||Math.min(2,cur.step||0)!==step)return null")
 );
 
 assert("crew-reaction-is-derived-from-current-analysis",
