@@ -311,3 +311,5 @@ Conservative boundaries retained:
 - Think/Express ownership/no-guess runtime matrix closure validation trigger.
 
 - verified/partial Ask→Understand intelligence runtime validation trigger.
+
+- no-guess reconciliation validator alignment exact-head trigger.
