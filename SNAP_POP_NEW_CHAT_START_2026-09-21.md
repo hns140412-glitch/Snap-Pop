@@ -335,3 +335,16 @@ SHARED BADGE / THINK SEPARATION NOTE:
 - Think verification separation validator 4/4 PASS.
 - SP-BADGE-003/004, SP-GUIDE-004, SP-UNIV-001, SP-IMAGINE-005/006 reconciled.
 - closure runner now has 30 validators.
+
+
+BADGE VISUAL / SPECIAL ROLE NOTE:
+- added layered badge preview compositor: circle/pastel/Profile Character identity/5-tier upper gem-star arc.
+- preview explicitly says not an earned badge.
+- visual compositor validator 10/10 PASS.
+- added fail-closed working badge catalog activation guard; validator 6/6 PASS.
+- SP-BADGE-002/007/009/010 reconciled; SP-BADGE-008 remains PARTIAL because Theme Expression system/assets remain OPEN.
+- added crew-role-guard-runtime.js.
+- SPECIAL = ENCOUNTER_STYLE_ONLY / functional ability equal / no power or reward multiplier.
+- special role validator 8/8 PASS.
+- SP-CREW-004 now CODED=true / STATIC_VERIFIED=true.
+- closure runner now has 33 validators.
