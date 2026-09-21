@@ -42,10 +42,11 @@ assert("backend-cannot-self-verify",blocked.verified===false);
 const evidenceBackend=makeWindow({
   ask:async()=>({
     kind:"ASK_UNDERSTAND",
-    title:"확인된 답",
+    title:"부분 확인 답",
     core:"근거 있는 설명",
     verification:{
       mode:"CLAIM_EVIDENCE",
+      coverage:"CLAIM_SET_ONLY",
       claims:[{
         claim:"근거 있는 주장",
         status:"VERIFIED",
@@ -55,7 +56,27 @@ const evidenceBackend=makeWindow({
     }
   })
 });
-const passed=await evidenceBackend.SnapPopIntelligence.ask({input:"사실 질문?",language:"ko"});
-assert("evidence-backed-backend-can-pass",passed.verified===true);
+const partial=await evidenceBackend.SnapPopIntelligence.ask({input:"사실 질문?",language:"ko"});
+assert("claim-evidence-does-not-overstate-full-answer",partial.verified===false&&partial.verification.verifiedClaimCount===1);
+
+const fullCoverageBackend=makeWindow({
+  ask:async()=>({
+    kind:"ASK_UNDERSTAND",
+    title:"확인된 답",
+    core:"근거 있는 설명",
+    verification:{
+      mode:"CLAIM_EVIDENCE",
+      coverage:"FULL_FACTUAL_CONTENT",
+      claims:[{
+        claim:"근거 있는 주장",
+        status:"VERIFIED",
+        evidence:[{source_type:"WEB",source_url:"https://example.com/evidence"}]
+      }],
+      unresolved:[]
+    }
+  })
+});
+const passed=await fullCoverageBackend.SnapPopIntelligence.ask({input:"사실 질문?",language:"ko"});
+assert("full-covered-evidence-backend-can-pass",passed.verified===true);
 
 console.log("KNOWLEDGE_RUNTIME_STATIC_CONTRACT_PASS");
