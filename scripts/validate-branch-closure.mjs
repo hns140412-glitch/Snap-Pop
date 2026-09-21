@@ -46,7 +46,8 @@ const validators=[
   "validate-crew-core6-starter-baseline.mjs",
   "validate-badge-candidate-review-only.mjs",
   "validate-voice-boundary-contract.mjs",
-  "validate-badge-independent-experience-axis.mjs"
+  "validate-badge-independent-experience-axis.mjs",
+  "validate-snap-pop-body-matrix-closure.mjs"
 ];
 
 let passed=0;

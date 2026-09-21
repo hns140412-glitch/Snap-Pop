@@ -396,3 +396,17 @@ NEW CHAT C2S CLOSURE — 2026-09-21
 - next work: branch-only SP-BADGE-006 evidence contracts first.
 - do not infer weak behavior signals; preserve anti-labeling/no-score/no-power rules.
 - user is not tester/debugger.
+
+
+BODY IMPLEMENTATION CLOSURE NOTE — 2026-09-21
+- Read C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md Section 44.
+- SP-BADGE-006 is CODED=true / STATIC_VERIFIED=true.
+- SP-BADGE-008 is CODED=true / STATIC_VERIFIED=true.
+- Snap & Pop body PARTIAL = 0.
+- Remaining CODED=false = 11 FAMILY_EXPANSION items only; separate scope.
+- closure runner = 43 validators.
+- exact reviewed Theme Expression assets remain OPEN and are represented as UNRESOLVED; no theme semantics/assets were invented.
+- current candidate is NOT FROZEN because full exact-SHA 43-validator execution has not yet run in a reproducible environment.
+- local clone path is BLOCKED by container DNS/network; do not repeat same path.
+- Netlify/deploy/merge/device verification remain NOT_RUN.
+- next: exact-SHA non-deployment closure execution, then new frozen-candidate decision.

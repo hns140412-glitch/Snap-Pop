@@ -3161,3 +3161,124 @@ Priority order:
 Start the next conversation with:
 
 `최신 TAKY 기준으로 Snap & Pop을 재개해. GitHub의 SNAP_POP_NEW_CHAT_START_2026-09-21.md와 C2S/SNAP_POP_C2S_HANDOFF_2026-09-21.md Section 43을 먼저 읽고, branch taky/snap-pop-implementation-2026-09-20 최신 HEAD 및 data/snap-pop-requirement-matrix.json을 확인해. 현재 본체 PARTIAL은 SP-BADGE-006과 SP-BADGE-008 두 개만 남아 있고, FAMILY_EXPANSION은 별도 범위다. 사용자를 테스터/디버거로 쓰지 말고, Netlify/배포/merge는 새 frozen candidate + TAKY external-resource gate 전에는 호출하지 마. 먼저 SP-BADGE-006의 명시적 evidence contract부터 branch-only로 이어서 구현해.`
+
+
+## 44. SNAP & POP BODY IMPLEMENTATION CLOSURE — 2026-09-21
+
+### Scope
+
+This section supersedes Section 43 only for current implementation status.
+
+Repository / branch:
+- repository: `hns140412-glitch/Snap-Pop`
+- branch: `taky/snap-pop-implementation-2026-09-20`
+
+Current branch HEAD before this closure documentation commit:
+- `bbdcc9de91324e706d852022d6c7886c130526e2`
+
+### SP-BADGE-006 closure
+
+Implemented:
+- fail-closed explicit evidence contract for:
+  - ERROR_DISCOVERY
+  - DEEP_THINKING
+  - SPECIAL_BEHAVIOR
+- weak proxy rejection:
+  - elapsed / idle / silence time
+  - empty-attempt count
+  - retry/edit count
+  - score/confidence
+  - AI/model inference
+- source-specific producers:
+  - ERROR_DISCOVERY = child-marked self-correction + before/after artifact refs
+  - DEEP_THINKING = explicit child-authored reflection artifact
+  - SPECIAL_BEHAVIOR = explicit Special Exploration completion + feature/code allowlists
+
+Status:
+- CODED=true
+- STATIC_VERIFIED=true
+- RUNTIME_VERIFIED=false
+- DEVICE_VERIFIED=false
+
+### SP-BADGE-008 closure
+
+Implemented:
+- `SNAP_POP_BADGE_THEME_EXPRESSION_V1`
+- Theme Expression is a separate cosmetic-only layer between stable Profile Character Identity and badge derivatives.
+- Theme Expression cannot mutate:
+  - profile identity
+  - badge tier/stars
+  - EXP / gems / economy
+  - award state
+  - power / ability
+- reviewed theme asset sets require explicit asset references.
+- until canonical assets are approved, preview uses explicit `UNRESOLVED` asset state.
+- no exact final theme semantics/assets were invented.
+
+Status:
+- CODED=true
+- STATIC_VERIFIED=true
+- RUNTIME_VERIFIED=false
+- DEVICE_VERIFIED=false
+
+### Matrix residue
+
+Current requirement matrix:
+- CODED=true: 67
+- CODED=false: 11
+- CODED=PARTIAL: 0
+
+All 11 CODED=false items are `FAMILY_EXPANSION` and remain separate scope.
+
+Therefore:
+- Snap & Pop body coded residue: 0
+- FAMILY_EXPANSION: OPEN / separate scope
+- exact reviewed Theme Expression assets: OPEN design/asset input, not falsely marked complete
+- live browser/server/OpenAI/device verification: NOT_RUN where previously unrun
+
+Added:
+- `scripts/validate-snap-pop-body-matrix-closure.mjs`
+
+Closure runner after this section:
+- 43 validators
+
+### Frozen candidate decision
+
+A new frozen candidate is NOT declared in this section.
+
+Reason:
+- the current execution environment cannot reach github.com from the local container (DNS/network blocked);
+- the repository currently has no attached GitHub CI/status checks;
+- therefore the full 43-validator runner has not been executed against this exact post-closure SHA in a reproducible exact-SHA environment.
+
+TAKY decision:
+- implementation closure may be recorded;
+- false freeze is prohibited;
+- next step is exact-SHA closure execution through an available non-deployment validation path;
+- only after that PASS may a NEW frozen candidate be declared;
+- Netlify / deploy / merge remain NOT_RUN.
+
+### BLOCKED classification
+
+Blocked path:
+- local `git clone` for exact-SHA validator execution
+
+Cause:
+- execution-container external DNS/network unavailable
+
+Do not repeat:
+- same unauthenticated clone / network path under the same environment
+
+Alternate path required:
+- direct connector-materialized exact-SHA validation environment, existing CI if later available, or another TAKY-approved non-deployment execution path.
+
+### Current handoff
+
+- body PARTIAL: 0
+- family expansion unresolved: 11
+- closure runner: 43 validators
+- current candidate: NOT FROZEN
+- external deployment calls: 0
+- Netlify: NOT_RUN
+- merge: NOT_RUN
+- device verification: NOT_RUN
