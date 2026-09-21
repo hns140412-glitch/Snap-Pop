@@ -1,6 +1,6 @@
 {
-  "version": "2026-09-21.1",
-  "status": "RECOVERED_CONFIRMED_STRUCTURE",
+  "version": "2026-09-21.2",
+  "status": "RECOVERY_CLASSIFIED_CURRENT_SCOPE",
   "productRole": "PROCESS_AND_EXPERIENCE_COLLECTION_NOT_SCORE_OR_POWER",
   "catalog": {
     "targetScaleApprox": 60,
@@ -70,5 +70,20 @@
     "PLAN_ADAPTATION",
     "SPECIAL_BEHAVIOR",
     "WRITING_EXPLORATION"
+  ],
+  "recovery": {
+    "classification": "CONFIRMED_HOLD_WORKING_OPEN_CLOSED_FOR_RETRIEVED_SCOPE",
+    "sourceCoverage": "OPEN",
+    "closureDocument": "C2S/SNAP_POP_BADGE_SOURCE_RECOVERY_2026-09-21.md",
+    "catalogActivation": "FORBIDDEN_UNTIL_CANONICAL_REVIEW"
+  },
+  "separation": [
+    "CHARACTER_LEVEL",
+    "EXP",
+    "GEM",
+    "AFFINITY",
+    "WORLD_STATE",
+    "LEADERBOARD",
+    "POWER"
   ]
 }
