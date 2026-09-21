@@ -152,6 +152,8 @@
       await wait(80);
       assert("writing-voice-input-uses-listen-only",voiceCalls.some(x=>x.kind==="listen"&&x.source==="USER_MIC")&&!voiceCalls.some(x=>x.kind==="speak"));
       window.SnapPopVoice=originalVoiceRuntime;
+      reactionOverlay.hidden=true;
+      reactionOverlay.textContent="";
 
       click(next,"empty-advance-1");
       await wait(120);
