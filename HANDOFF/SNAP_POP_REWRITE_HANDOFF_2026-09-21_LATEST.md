@@ -281,3 +281,5 @@ Conservative boundaries retained:
 - stale-safe semantic contract exact-head validation trigger.
 
 - special skip / wish transaction runtime validation trigger.
+
+- special/wish/crew runtime matrix closure validation trigger.
