@@ -30,18 +30,60 @@ jobs:
 
           python3 -m http.server 4173 >/tmp/snap-pop-http.log 2>&1 &
           SERVER_PID=$!
+          for i in $(seq 1 50); do
+            if curl -fsS http://127.0.0.1:4173/index.html >/dev/null 2>&1; then break; fi
+            sleep 0.1
+          done
+
           BROWSER="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
           if [ -z "$BROWSER" ]; then
             echo "BROWSER_RUNTIME_INFRA_BLOCKED no chromium browser" > /tmp/browser.log
             BROWSER_STATUS=2
           else
-            "$BROWSER" --headless=new --disable-gpu --no-sandbox --disable-dev-shm-usage --window-size=390,844 \
-              --remote-debugging-port=9222 \
-              "http://127.0.0.1:4173/index.html?runtime-smoke=1" \
-              >/tmp/snap-pop-chrome.log 2>&1 &
-            BROWSER_PID=$!
-            node scripts/browser-runtime-cdp.mjs > /tmp/browser.log 2>&1
-            BROWSER_STATUS=$?
+            PROFILE_DIR="/tmp/snap-pop-chrome-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+            rm -rf "$PROFILE_DIR"
+            launch_browser() {
+              local HEADLESS_MODE="$1"
+              "$BROWSER" "$HEADLESS_MODE" --disable-gpu --no-sandbox --disable-dev-shm-usage --window-size=390,844 \
+                --remote-debugging-address=127.0.0.1 \
+                --remote-debugging-port=9222 \
+                --user-data-dir="$PROFILE_DIR" \
+                "http://127.0.0.1:4173/index.html?runtime-smoke=1" \
+                >/tmp/snap-pop-chrome.log 2>&1 &
+              BROWSER_PID=$!
+            }
+
+            launch_browser "--headless=new"
+            BROWSER_READY=0
+            for i in $(seq 1 120); do
+              if curl -fsS http://127.0.0.1:9222/json/version >/dev/null 2>&1; then BROWSER_READY=1; break; fi
+              if ! kill -0 "$BROWSER_PID" 2>/dev/null; then break; fi
+              sleep 0.1
+            done
+
+            if [ "$BROWSER_READY" -ne 1 ]; then
+              kill "$BROWSER_PID" 2>/dev/null || true
+              echo "--- first chrome launch failed; retrying alternate headless mode ---" >> /tmp/snap-pop-chrome.log
+              rm -rf "$PROFILE_DIR"
+              launch_browser "--headless"
+              for i in $(seq 1 120); do
+                if curl -fsS http://127.0.0.1:9222/json/version >/dev/null 2>&1; then BROWSER_READY=1; break; fi
+                if ! kill -0 "$BROWSER_PID" 2>/dev/null; then break; fi
+                sleep 0.1
+              done
+            fi
+
+            if [ "$BROWSER_READY" -ne 1 ]; then
+              {
+                echo "BROWSER_RUNTIME_INFRA_BLOCKED chrome debugging port unavailable"
+                echo "--- CHROME LOG ---"
+                cat /tmp/snap-pop-chrome.log
+              } > /tmp/browser.log
+              BROWSER_STATUS=2
+            else
+              node scripts/browser-runtime-cdp.mjs > /tmp/browser.log 2>&1
+              BROWSER_STATUS=$?
+            fi
             kill "$BROWSER_PID" 2>/dev/null || true
           fi
           kill "$SERVER_PID" 2>/dev/null || true
