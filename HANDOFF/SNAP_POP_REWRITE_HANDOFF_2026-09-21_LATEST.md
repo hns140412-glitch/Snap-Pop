@@ -393,3 +393,5 @@ Canonical ownership correction:
 - rerun exact-head browser evidence after CDP_TARGET_NOT_FOUND infrastructure-only failure.
 
 - current-draft next-move + grounded crew-reaction runtime matrix closure validation trigger.
+
+- bilingual bridge + imagination gateway runtime matrix closure validation trigger.
