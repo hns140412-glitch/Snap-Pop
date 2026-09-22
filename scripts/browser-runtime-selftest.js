@@ -158,9 +158,9 @@
       });
       assert("crew-presentation-forces-exploration-crew-owner",presentationProbe?.responseOwner==="EXPLORATION_CREW");
       assert("crew-presentation-strips-provider-model-raw-meta",!("provider_label" in presentationProbe)&&!("model_name" in presentationProbe)&&!("raw_response" in presentationProbe));
-      let identityLeakBlocked=false;
-      try{window.SnapPopCrewPresentationGuard.sanitizeUserFacing({kind:"ASK_UNDERSTAND",core:"As an AI, I think this is correct."})}catch{identityLeakBlocked=true}
-      assert("crew-presentation-blocks-ai-identity-leak",identityLeakBlocked===true);
+      let presentationIdentityLeakBlocked=false;
+      try{window.SnapPopCrewPresentationGuard.sanitizeUserFacing({kind:"ASK_UNDERSTAND",core:"As an AI, I think this is correct."})}catch{presentationIdentityLeakBlocked=true}
+      assert("crew-presentation-blocks-ai-identity-leak",presentationIdentityLeakBlocked===true);
 
       const etymologyScaffold=window.SnapPopCuriosityScaffold.scaffoldKnowledge({
         kind:"ASK_UNDERSTAND",
