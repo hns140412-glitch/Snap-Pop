@@ -1,0 +1,221 @@
+{
+  "version": "2026-09-22.1",
+  "status": "PRODUCT_UI_CONTRACT_DRAFT",
+  "basisHeadBeforeWork": "5cc3ae0f1dc7d11b1fad4fc60298feb1725abfdd",
+  "primaryNavigation": [
+    {
+      "id": "SP_NAV_EXPLORE",
+      "label": "탐험",
+      "screen": "SP_HOME"
+    },
+    {
+      "id": "SP_NAV_RECORDS",
+      "label": "기록",
+      "screen": "SP_RECORDS"
+    },
+    {
+      "id": "SP_NAV_GROWTH",
+      "label": "성장",
+      "screen": "SP_GROWTH"
+    },
+    {
+      "id": "SP_NAV_TREASURE",
+      "label": "보물함",
+      "screen": "SP_TREASURE"
+    }
+  ],
+  "contextualScreens": [
+    "SP_LANDMARK_SHEET",
+    "SP_WRITING",
+    "SP_RESULT",
+    "SP_ASK",
+    "SP_UNDERSTAND",
+    "SP_IMAGINATION",
+    "SP_CREW",
+    "SP_SPECIAL",
+    "SP_WISH_SHOP",
+    "SP_RECORD_EDIT",
+    "SP_FAMILY",
+    "SP_SETTINGS"
+  ],
+  "slots": [
+    "CHARACTER_SLOT",
+    "MAIN_COMPANION_SLOT",
+    "CREW_REACTION_SLOT",
+    "GUEST_SLOT"
+  ],
+  "truthStates": [
+    "VERIFIED",
+    "PARTIAL",
+    "INSUFFICIENT"
+  ],
+  "standardStates": [
+    "LOADING",
+    "EMPTY",
+    "READY",
+    "SUCCESS",
+    "PARTIAL",
+    "BLOCKED",
+    "RETRY",
+    "OFFLINE",
+    "STALE",
+    "RECOVERY"
+  ],
+  "invariants": [
+    "CHILD_FINAL_AUTHORSHIP",
+    "NO_AUTO_DRAFT_REWRITE",
+    "ONE_NEXT_MOVE",
+    "STALE_RESULT_NO_VISIBLE_SIDE_EFFECT",
+    "IMAGINATION_RETURN_INTEGRITY",
+    "SNAP_POP_WISH_ECONOMY_OWNERSHIP",
+    "BADGE_NOT_SCORE",
+    "CREW_AFFINITY_NOT_POWER",
+    "SPECIAL_SKIP_NO_PENALTY"
+  ],
+  "components": [
+    {
+      "id": "SP_HOME_MAP",
+      "screen": "SP_HOME",
+      "owner": "APP_SHELL_WRITING_ENTRY",
+      "event": "LANDMARK_SELECT"
+    },
+    {
+      "id": "SP_RESUME_BANNER",
+      "screen": "SP_HOME",
+      "owner": "WRITING",
+      "event": "RESUME"
+    },
+    {
+      "id": "SP_ASK_ENTRY",
+      "screen": "SP_HOME",
+      "owner": "KNOWLEDGE",
+      "event": "OPEN_ASK"
+    },
+    {
+      "id": "SP_IMAGINATION_ENTRY",
+      "screen": "SP_HOME",
+      "owner": "IMAGINATION",
+      "event": "OPEN_IMAGINATION"
+    },
+    {
+      "id": "SP_MAIN_COMPANION_SLOT",
+      "screen": "SP_HOME",
+      "owner": "CREW",
+      "event": "OPEN_CREW"
+    },
+    {
+      "id": "SP_WRITING_DRAFT",
+      "screen": "SP_WRITING",
+      "owner": "WRITING",
+      "event": "DRAFT_INPUT"
+    },
+    {
+      "id": "SP_WRITING_HINT",
+      "screen": "SP_WRITING",
+      "owner": "WRITING",
+      "states": [
+        "HIDDEN",
+        "OFFERED",
+        "REVEALED"
+      ],
+      "event": "REVEAL_HINT"
+    },
+    {
+      "id": "SP_CREW_REACTION",
+      "screen": "SP_WRITING",
+      "owner": "CREW",
+      "states": [
+        "HIDDEN",
+        "VISIBLE"
+      ]
+    },
+    {
+      "id": "SP_VOICE_INPUT",
+      "screen": "SP_WRITING",
+      "owner": "VOICE",
+      "states": [
+        "READY",
+        "LISTENING",
+        "ERROR"
+      ],
+      "event": "USER_MIC"
+    },
+    {
+      "id": "SP_TRUTH_STATUS",
+      "screen": "SP_UNDERSTAND",
+      "owner": "TRUTH",
+      "states": [
+        "VERIFIED",
+        "PARTIAL",
+        "INSUFFICIENT"
+      ]
+    },
+    {
+      "id": "SP_EXPRESSION_TRANSITION",
+      "screen": "SP_UNDERSTAND",
+      "owner": "BRIDGE_WRITING",
+      "states": [
+        "HIDDEN",
+        "READY"
+      ],
+      "event": "START_EXPRESSION"
+    },
+    {
+      "id": "SP_WISH_CONFIRM",
+      "screen": "SP_WISH_SHOP",
+      "owner": "SNAP_POP_WISH_ECONOMY",
+      "states": [
+        "READY",
+        "BUSY",
+        "INSUFFICIENT",
+        "SUCCESS"
+      ],
+      "event": "CONFIRM"
+    },
+    {
+      "id": "SP_BADGE_PREVIEW",
+      "screen": "SP_GROWTH",
+      "owner": "BADGE_VISUAL",
+      "states": [
+        "PREVIEW_ONLY"
+      ]
+    },
+    {
+      "id": "SP_FAMILY_CHILD_SWITCH",
+      "screen": "SP_FAMILY",
+      "owner": "FAMILY",
+      "event": "CHILD_SELECT"
+    }
+  ],
+  "newRequirementCandidates": [
+    "SP-UI-003",
+    "SP-UI-004",
+    "SP-UI-005",
+    "SP-UI-006",
+    "SP-UI-007",
+    "SP-UI-008",
+    "SP-UI-009",
+    "SP-UI-010",
+    "SP-UI-011",
+    "SP-UI-012",
+    "SP-UI-013",
+    "SP-UI-014",
+    "SP-UI-015",
+    "SP-UI-016",
+    "SP-UI-017",
+    "SP-UI-018",
+    "SP-UI-019",
+    "SP-UI-020",
+    "SP-UI-021",
+    "SP-UI-022"
+  ],
+  "evidenceIndexBeforeReconciliation": {
+    "coded": "80/80",
+    "staticVerified": "80/80",
+    "runtimeVerified": "69/80",
+    "deviceVerified": "0/80"
+  },
+  "projectedDenominatorIfAllCandidatesAccepted": 100,
+  "deployment": "NOT_RUN",
+  "finalVisualArtDirection": "OPEN"
+}
