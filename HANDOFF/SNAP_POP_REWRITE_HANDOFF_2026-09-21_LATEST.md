@@ -379,3 +379,5 @@ Canonical ownership correction:
 - current-draft next-move + grounded crew reaction runtime validation trigger.
 
 - current-draft/crew-reaction runtime matrix closure validation trigger.
+
+- async records render probe stabilization validation trigger.
