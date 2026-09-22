@@ -1,0 +1,56 @@
+{
+  "version": "2026-09-22.1",
+  "status": "PREDEPLOY_FROZEN_CANDIDATE",
+  "repository": "hns140412-glitch/Snap-Pop",
+  "branch": "taky/snap-pop-implementation-2026-09-20",
+  "validatedCodeSha": "683b1d98bd553f0e6a2a2e0a725b549412645aba",
+  "evidenceHeadSha": "4c0b6210ef52dac1e2cc9e84b36b93bd37f76351",
+  "validation": {
+    "branchClosure": "73/73 PASS",
+    "browserRuntime": "BROWSER_RUNTIME_CDP_PASS",
+    "viewport": "390x844",
+    "pwaReloadRecovery": "PASS",
+    "pwaOfflineShell": "PASS",
+    "deployment": "NOT_RUN",
+    "netlifyMutation": "NOT_RUN",
+    "mainMerge": "NOT_RUN",
+    "deviceVerified": "NOT_RUN"
+  },
+  "evidenceIndex": {
+    "coded": "80/80",
+    "staticVerified": "80/80",
+    "runtimeVerified": "69/80",
+    "deviceVerified": "0/80"
+  },
+  "architectureSurgery": "CLOSED",
+  "integratedUiStructuralRewrite": "CLOSED",
+  "finalVisualArtDirection": "OPEN",
+  "runtimeOpen": {
+    "crossApp": [
+      "SP-BRIDGE-001",
+      "SP-BRIDGE-002",
+      "SP-WRITE-007",
+      "SP-WRITE-009",
+      "SP-BADGE-003"
+    ],
+    "liveProvider": [
+      "SP-UNIV-003",
+      "SP-UNIV-004",
+      "SP-UNIV-005",
+      "SP-IMAGINE-004",
+      "SP-TRUTH-002",
+      "SP-WRITE-005"
+    ]
+  },
+  "ownershipLocks": {
+    "wishEconomyOwner": "SNAP_POP_WISH_ECONOMY",
+    "dedicatedCodeOwner": "wish-economy-controller.js",
+    "externalSpendAuthority": false
+  },
+  "prohibitions": [
+    "Do not treat evidenceHeadSha as validatedCodeSha.",
+    "Do not promote mock-only evidence to runtimeVerified for cross-app/live-provider requirements.",
+    "Do not deploy or merge without explicit human approval and external-resource gate.",
+    "Do not claim DEVICE_VERIFIED before physical-device evidence."
+  ]
+}
