@@ -395,3 +395,5 @@ Canonical ownership correction:
 - current-draft next-move + grounded crew-reaction runtime matrix closure validation trigger.
 
 - bilingual bridge + imagination gateway runtime matrix closure validation trigger.
+
+- bilingual expression bridge runtime matrix closure validation trigger.
