@@ -20,6 +20,12 @@
     if(!backend) throw new Error("KNOWLEDGE_BACKEND_UNAVAILABLE");
 
     const controller=new AbortController();
+    const outerSignal=payload.signal;
+    const relay=()=>controller.abort("outer-abort");
+    if(outerSignal){
+      if(outerSignal.aborted)controller.abort("outer-abort");
+      else outerSignal.addEventListener("abort",relay,{once:true});
+    }
     const timer=setTimeout(()=>controller.abort("timeout"),TIMEOUT_MS);
     try{
       const raw=await backend.ask({
@@ -53,6 +59,7 @@
       });
     } finally {
       clearTimeout(timer);
+      if(outerSignal)outerSignal.removeEventListener("abort",relay);
     }
   }
 
