@@ -396,6 +396,36 @@
       await wait(120);
       let activeState=await window.SnapPopStorage.get("active");
       assert("writing-draft-persists-step-0",activeState?.draft===draft1);
+
+      const originalExpressionBridgeBackend=window.SnapPopExpressionBridgeBackend;
+      window.SnapPopExpressionBridgeBackend={
+        async bridge(payload){
+          const toEnglish=payload.targetLanguage==="en";
+          return {
+            meaningAnchor:toEnglish?"작은 빛을 본 장면":"a quiet moment by the window",
+            phraseFragments:toEnglish?["a small light","between the leaves"]:["조용한 순간","창가에서"],
+            assemblyPrompt:toEnglish?"Which fragment fits your meaning best?":"어떤 표현 조각이 네 뜻에 가장 잘 맞아?",
+            sourceLanguage:payload.sourceLanguage,
+            targetLanguage:payload.targetLanguage,
+            provider:"runtime-expression-bridge"
+          };
+        }
+      };
+      const bridgeDraftBefore=answer.value;
+      click(document.querySelector("#expressionBridgeBtn"),"expression-bridge-ko-en");
+      assert("expression-bridge-panel-renders",await waitFor(()=>document.querySelector("#expressionBridgePanel")?.hidden===false,2000,25));
+      assert("expression-bridge-keeps-draft-unchanged",answer.value===bridgeDraftBefore);
+      assert("expression-bridge-renders-phrase-fragments",document.querySelectorAll("#expressionBridgePanel .expressionFragments span").length===2);
+      assert("expression-bridge-ui-reminds-child-authorship",document.querySelector("#expressionBridgePanel")?.textContent?.includes("문장은 직접 조립해"));
+      const reverseBridge=await window.SnapPopExpressionBridge.bridge({
+        draft:"I watched quiet rain by the window.",
+        sourceLanguage:"en",
+        targetLanguage:"ko"
+      });
+      assert("expression-bridge-supports-en-to-ko",reverseBridge?.sourceLanguage==="en"&&reverseBridge?.targetLanguage==="ko"&&reverseBridge?.phraseFragments?.length===2);
+      assert("expression-bridge-never-provides-final-sentence",reverseBridge?.finalSentenceProvided===false&&reverseBridge?.autoInsertAllowed===false);
+      window.SnapPopExpressionBridgeBackend=originalExpressionBridgeBackend;
+
       click(next,"writing-step-1");
       await wait(180);
       activeState=await window.SnapPopStorage.get("active");
