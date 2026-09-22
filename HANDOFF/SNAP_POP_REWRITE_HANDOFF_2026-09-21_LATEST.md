@@ -399,3 +399,5 @@ Canonical ownership correction:
 - bilingual expression bridge runtime matrix closure validation trigger.
 
 - imagination gateway reconciliation contradiction fix exact-head validation trigger.
+
+- Truth Guard / presentation guard / scaffold browser runtime validation trigger.
