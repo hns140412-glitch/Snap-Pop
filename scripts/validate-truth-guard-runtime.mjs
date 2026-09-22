@@ -53,6 +53,63 @@ const strong=guard.guardKnowledge({
 });
 assert("full-covered-evidence-contract-can-pass",strong.verified===true);
 
+const communityOnly=guard.guardKnowledge({
+  verification:{
+    mode:"CLAIM_EVIDENCE",
+    coverage:"FULL_FACTUAL_CONTENT",
+    sourceQualityEnforced:true,
+    eligibleSourceQualities:["INSTITUTIONAL","STANDARD"],
+    claims:[{
+      claim:"사실 주장",
+      status:"VERIFIED",
+      evidence:[{source_type:"WEB",source_url:"https://reddit.com/r/example",source_quality:"COMMUNITY"}]
+    }],
+    unresolved:[]
+  }
+});
+assert("community-only-source-quality-is-fail-closed",communityOnly.verified===false&&communityOnly.verification.reason==="LOW_AUTHORITY_ONLY");
+assert("source-quality-is-preserved",communityOnly.verification.claims[0].evidence[0].source_quality==="COMMUNITY");
+
+const etymologyOneHost=guard.guardKnowledge({
+  verification:{
+    mode:"CLAIM_EVIDENCE",
+    coverage:"FULL_FACTUAL_CONTENT",
+    sourceQualityEnforced:true,
+    eligibleSourceQualities:["INSTITUTIONAL","STANDARD"],
+    etymologySourceDiversityRequired:true,
+    claims:[{
+      claim:"어원 주장",
+      status:"VERIFIED",
+      evidence:[
+        {source_type:"WEB",source_url:"https://dictionary.example/a",source_quality:"STANDARD"},
+        {source_type:"WEB",source_url:"https://dictionary.example/b",source_quality:"STANDARD"}
+      ]
+    }],
+    unresolved:[]
+  }
+});
+assert("etymology-one-host-is-fail-closed",etymologyOneHost.verified===false&&etymologyOneHost.verification.reason==="ETYMOLOGY_SOURCE_DIVERSITY_INSUFFICIENT");
+
+const etymologyTwoHosts=guard.guardKnowledge({
+  verification:{
+    mode:"CLAIM_EVIDENCE",
+    coverage:"FULL_FACTUAL_CONTENT",
+    sourceQualityEnforced:true,
+    eligibleSourceQualities:["INSTITUTIONAL","STANDARD"],
+    etymologySourceDiversityRequired:true,
+    claims:[{
+      claim:"어원 주장",
+      status:"VERIFIED",
+      evidence:[
+        {source_type:"WEB",source_url:"https://dictionary-a.example/root",source_quality:"STANDARD"},
+        {source_type:"WEB",source_url:"https://linguistics.example.edu/root",source_quality:"INSTITUTIONAL"}
+      ]
+    }],
+    unresolved:[]
+  }
+});
+assert("etymology-two-independent-hosts-can-pass-client-guard",etymologyTwoHosts.verified===true&&etymologyTwoHosts.verification.eligibleSourceHostCount===2);
+
 const unresolved=guard.guardKnowledge({
   verification:{
     mode:"CLAIM_EVIDENCE",
