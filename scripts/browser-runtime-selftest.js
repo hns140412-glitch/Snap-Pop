@@ -318,6 +318,22 @@
       assert("five-writing-lenses-are-distinct",new Set(lensMoves.map(m=>m.focus+"|"+m.question)).size===5);
       assert("writing-lens-next-move-remains-single",lensMoves.every(m=>(m.question.match(/[?？]/g)||[]).length===1));
 
+      const currentDraftMoveA=window.SnapPopWriting.move({landmark:"idea",step:0,draft:"비가 왔어.",language:"ko"});
+      const currentDraftMoveB=window.SnapPopWriting.move({landmark:"idea",step:0,draft:"비가 와서 우산을 썼고 그래서 마음이 편했어.",language:"ko"});
+      assert("current-draft-dynamically-changes-next-move",
+        currentDraftMoveA?.focus!==currentDraftMoveB?.focus&&
+        currentDraftMoveA?.question!==currentDraftMoveB?.question
+      );
+      assert("current-draft-next-move-is-single",
+        [currentDraftMoveA,currentDraftMoveB].every(m=>typeof m?.question==="string"&&m.question.trim()&&(m.question.match(/[?？]/g)||[]).length===1)
+      );
+      const writingCtl=window.SnapPopWritingController.instance({});
+      const reactionProbeText="창문에 빗방울이 반짝였어";
+      const reactionProbe=writingCtl.stepSpecificReaction(reactionProbeText,"ko",{focus:"SENSORY"});
+      assert("crew-reaction-quotes-current-child-draft",reactionProbe.includes(reactionProbeText));
+      assert("crew-reaction-gives-one-next-direction",reactionProbe.includes("감각 단서 하나만 더"));
+      assert("crew-reaction-does-not-author-final-answer",!/(완성 문장|정답은|이렇게 쓰면 돼)/.test(reactionProbe));
+
       const originalOpenAIProvider=window.SnapPopOpenAIProvider;
       window.SnapPopOpenAIProvider={
         async analyzeWriting(){
