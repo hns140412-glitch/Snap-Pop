@@ -1,71 +1,63 @@
 # FUNCTION_STATUS
 
-> **STATUS MODEL UPDATED — 2026-09-21**
+> STATUS MODEL — 2026-09-22
 >
-> This file is no longer a coarse "implemented/not implemented" summary.
-> Canonical implementation status is tracked in:
-> `data/snap-pop-requirement-matrix.json`
-> and summarized by:
-> `C2S/SNAP_POP_FULL_IMPLEMENTATION_AUDIT_2026-09-21.md`
-> and scorecard:
-> `data/snap-pop-implementation-scorecard.json`
+> Canonical requirement truth is `data/snap-pop-requirement-matrix.json`.
+> The derived evidence index is `data/snap-pop-implementation-scorecard.json`.
+> This document is a human-readable summary only.
 
-## Current headline
+## Current evidence index
 
-- FULL SCOPE CODED estimate: **RECALCULATION REQUIRED — scope expanded**
-- Previous ~67% score is **SUPERSEDED AS SCOPE-INCOMPLETE**
-- Reason: universal `ASK → UNDERSTAND` / child curiosity resolver was missing from the denominator
-- RUNTIME_VERIFIED: **NOT CLOSED**
-- DEVICE_VERIFIED: **NOT ESTABLISHED**
+- Requirements: **80**
+- CODED: **80/80**
+- STATIC_VERIFIED: **80/80**
+- RUNTIME_VERIFIED: **69/80**
+- DEVICE_VERIFIED: **0/80**
+- Architecture surgery: **CLOSED**
+- Integrated UI structural rewrite: **CLOSED**
+- Final visual / art direction: **OPEN**
+- Deployment / Netlify / main merge: **NOT_RUN**
 
-## Strongly coded
+Do not collapse these axes into a single completion percentage.
 
-- HOME landmark selection
-- five ORIGINAL places
-- 3-step exploration
-- IndexedDB persistence
-- records / revisions
-- gem shards / EXP
-- single growth tree
-- wish / blessing local transaction history
-- weekend special exploration
-- speech synthesis + browser recognition fallback
-- crew registry / rename history / affinity / world-state runtime
-- shared session bridge code
-- service worker / offline shell
+## Runtime-verified product areas
 
-## Partial
+Browser/runtime evidence currently covers the core child-authorship writing loop, five writing lenses, WAIT → HINT_OFFER minimal intervention, draft continuity, stale semantic-result protection, crew presentation/identity/affinity/world-state behavior, records/revisions, one growth tree, Snap-owned wish economy, Special skip/no-penalty, Family expansion and multi-child isolation, badge fail-closed contracts, Imagination return integrity, verified/partial truth gating, expression transition rules, PWA reload recovery, offline shell, and 390×844 live DOM runtime.
 
-- Guide-derived interaction rules as executable runtime behavior
-- adaptive question engine
-- Imagination Cloud depth
-- exploration-crew orchestration / complete roster content
-- Ready & Set / Hide & Seek real app-switch runtime closure
-- final Golden-reference visual fidelity
+Family Expansion is therefore **not** “largely unimplemented” in the current branch. Its 11 canonical requirements are CODED + STATIC + browser RUNTIME verified; physical-device evidence remains open.
 
-## Largely unimplemented
+The universal `THINK → EXPRESS + ASK → UNDERSTAND` core is implemented at code/static level. Browser evidence covers the local and guarded paths, while live OpenAI/provider quality requirements remain explicitly runtime-open.
 
-- FAMILY / Snap expansion runtime:
-  - diary
-  - letters / notes / family pen-pal
-  - family sharing
-  - family joint special exploration
-  - family growth timeline
-  - multiple child profiles / childId isolation
-  - family group / relationship / permission model
+## Remaining runtime-open requirements: 11
+
+### Cross-app runtime required
+
+- `SP-BRIDGE-001` — Ready & Set session/task/lap/return context
+- `SP-BRIDGE-002` — Hide & Seek vocabulary expression-material transition
+- `SP-WRITE-007` — Ready confirmed Learning Unit → Snap writing
+- `SP-WRITE-009` — Snap completion/provenance → Ready task
+- `SP-BADGE-003` — cross-app badge producer/consumer integration
+
+### Live provider/runtime required
+
+- `SP-UNIV-003` — broad Ask→Understand
+- `SP-UNIV-004` — broad knowledge domains
+- `SP-UNIV-005` — fact/uncertainty + child-friendly live explanation quality
+- `SP-IMAGINE-004` — live OpenAI model/tool execution
+- `SP-TRUTH-002` — high-risk factual source/runtime quality
+- `SP-WRITE-005` — live semantic writing provider
+
+Mocks alone must not close these items.
+
+## Locked ownership
+
+- Wish shop / blessing / gem spend / `wishTransactions` / `gemLedger` are Snap & Pop Wish Economy.
+- Canonical owner: `SNAP_POP_WISH_ECONOMY`.
+- Dedicated owner: `wish-economy-controller.js`.
+- Ready & Set / Hide & Seek / TAKY have no authority to spend Snap gems or execute Snap wishes.
 
 ## Explicit boundary
 
-`DOCUMENTED != CODED != RUNTIME_VERIFIED != DEVICE_VERIFIED`
+`DOCUMENTED != CODED != STATIC_VERIFIED != RUNTIME_VERIFIED != DEVICE_VERIFIED`
 
-Prior prototype/static PASS documents must not be interpreted as full Snap & Pop completion.
-
-
-## Universal core correction — 2026-09-21
-Canonical: `SNAP_POP_UNIVERSAL_CORE_2026-09-21.md`
-
-Core is:
-`THINK → EXPRESS + ASK → UNDERSTAND`
-
-Broad child Q&A across society/history/culture/science/etc is CORE, not expansion.
-Current branch does not yet implement a general CuriosityResolver.
+Final visual direction, live-provider evidence, cross-app runtime evidence, hosted deployment, and physical-device evidence remain separate gates.
