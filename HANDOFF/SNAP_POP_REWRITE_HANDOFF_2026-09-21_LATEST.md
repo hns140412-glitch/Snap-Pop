@@ -356,3 +356,5 @@ Canonical ownership correction:
 - verified HOME_RADIO optional expression transition regression validation trigger.
 
 - optional Home Radio expression transition static/runtime alignment validation trigger.
+
+- optional expression + mental-model runtime matrix closure validation trigger.
