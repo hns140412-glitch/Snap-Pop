@@ -385,3 +385,5 @@ Canonical ownership correction:
 - browser question-lens intent routing validation trigger.
 
 - imagination intent-routing runtime matrix closure validation trigger.
+
+- bilingual expression bridge browser runtime validation trigger.
