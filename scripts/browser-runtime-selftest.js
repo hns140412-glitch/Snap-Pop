@@ -169,6 +169,7 @@
       );
 
       const crewRuntime=window.SnapPopCrewRuntimeController.instance({});
+      await crewRuntime.synthesizeCrewWorldState();
       let runtimeRegistry=await window.SnapPopStorage.get("crewRegistry")||{};
       let runtimeMainId=Object.keys(runtimeRegistry).find(id=>runtimeRegistry[id]?.worldState?.state==="MAIN_COMPANION")||Object.keys(runtimeRegistry)[0];
       assert("crew-runtime-main-id-present",!!runtimeMainId&&runtimeRegistry[runtimeMainId]?.memberId===runtimeMainId);
