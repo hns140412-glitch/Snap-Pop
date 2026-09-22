@@ -46,6 +46,9 @@ assert("partial-answer-suppresses-followup",
 assert("writing-flow-suppresses-followup",
   s.followUpPolicy(full,"WRITING_FLOW").available===false
 );
+assert("home-radio-full-can-offer-optional-followup",
+  s.followUpPolicy(full,"HOME_RADIO").available===true
+);
 
 const fullScaffold=s.scaffoldKnowledge(full,"왜 비가 내려?","ko","GLOBAL");
 assert("global-full-has-one-next-curiosity",
