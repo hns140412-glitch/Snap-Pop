@@ -1,6 +1,6 @@
 {
-  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-20_R9",
-  "canonicalMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
+  "version": "SNAP_EXPLORATION_CREW_RULES_2026-09-22_R10_INTEGRATED",
+  "canonicalMaster": "TAKY:C2S/LEARNING_APP_FAMILY_INTEGRATED_LOGIC_UI_CANONICAL_2026-09-22.md",
   "terminology": {
     "explorer": "탐험가",
     "crew": "탐험대",
@@ -8,9 +8,10 @@
     "rules": "탐험대 규칙"
   },
   "ownership": {
-    "profile": "READY_SET_SHARED_WHEN_CONNECTED",
-    "explorationCrew": "SNAP_POP_OWNED",
-    "crewBehaviorRules": "SNAP_POP_OWNED",
+    "profile": "FAMILY_IDENTITY_OWNER / APP_AUTHORIZED_CONTEXT",
+    "explorationCrew": "TAKY_SHARED_EXPLORATION_CREW_CANONICAL",
+    "crewBehaviorRules": "TAKY_SHARED_EXPLORATION_CREW_CANONICAL",
+    "snapCrewProjection": "SNAP_POP_OWNED",
     "readySetSessionTimer": "READY_SET_OWNED",
     "hideSeekVocabularyMemory": "HIDE_SEEK_OWNED"
   },
@@ -26,11 +27,11 @@
   },
   "interventionLadder": [
     "OBSERVE",
-    "SHORT_REACTION",
-    "ASK",
-    "HINT",
     "WAIT",
-    "MINIMAL_REASK",
+    "SHORT_REACTION",
+    "QUESTION",
+    "HINT",
+    "MINIMAL_REQUESTION",
     "CHILD_EXPRESSES"
   ],
   "forbidden": [
@@ -142,17 +143,24 @@
   "members": {},
   "roster": {
     "total": {
-      "longTermCeiling": 20,
+      "standardTarget": 18,
+      "coreCount": 6,
+      "expansionCount": 12,
+      "specialGuestSeparate": true,
       "launchFillRequired": false,
-      "status": "CONFIRMED_DIRECTION",
-      "rationale": "20명은 즉시 채우는 목표가 아니라 장기 세계관 상한. 성장하며 천천히 추가."
+      "status": "CURRENT_INTEGRATED_DIRECTION",
+      "legacyLongTermCeiling20": {
+        "value": 20,
+        "status": "SUPERSEDED_AS_CHARACTER_CAP_PRESERVED_AS_PROVENANCE"
+      },
+      "rationale": "초기 Core 6의 시스템 완성도를 먼저 닫은 뒤 Expansion 12를 추가한다. Special Guest는 별도 encounter class다."
     },
     "starter": {
       "targetCount": 6,
-      "currentUserRange": "6_RECOVERED_CORE",
+      "currentUserRange": "6_CURRENT_LOCK",
       "canonicalWorkingCount": 6,
-      "selection": "MEET_ALL_THEN_CHOOSE_ONE_TO_DEPART_WITH",
-      "unselectedState": "KNOWN_FRIEND_NOT_LOCKED",
+      "selection": "MEET_AND_INTRODUCE_ALL_6_THEN_CHOOSE_ONE_PRIMARY",
+      "unselectedState": "KNOWN_ACTIVE_CREW_NOT_REJECTED",
       "nameFlow": "DIRECT_NAME_OR_RECOMMENDED_NAME",
       "personalitySlots": [
         {
@@ -351,11 +359,11 @@
     "enabled": true,
     "powerEffect": false,
     "basis": [
-      "자주 만남",
-      "함께한 탐험",
-      "녹음 동행",
-      "공동 사건",
-      "배지/기억"
+      "의미 있는 함께한 탐험",
+      "녹음 동행/경청이 실제 상호작용으로 남은 경우",
+      "공동 사건/에피소드",
+      "배지/기억과 연결된 경험",
+      "반복 만남은 의미 있는 상호작용이 있을 때만 보조 신호"
     ],
     "exactStageNames": "OPEN",
     "expressionsOnly": [
@@ -369,7 +377,8 @@
       "특별 일러스트"
     ],
     "preservesOnSwitch": true,
-    "memoryJournal": true
+    "memoryJournal": true,
+    "frequencyRule": "RAW_LOGIN_OPEN_SESSION_COUNT_DOES_NOT_INCREASE_AFFINITY"
   },
   "naming": {
     "stableMemberId": true,
@@ -479,20 +488,33 @@
     },
     {
       "id": "CREW-STARTER-COUNT-004",
-      "olderClaim": "시작 6명 고정",
-      "disposition": "SUPERSEDED_PARTIAL",
-      "reason": "최신 사용자 정정은 초기 5~6명 중 선택"
+      "olderClaim": "초기 선택 후보 5~6명",
+      "disposition": "SUPERSEDED",
+      "reason": "최신 직접 정정: 초기 6명 모두 자기소개/친숙화 후 1명 primary companion 선택"
+    },
+    {
+      "id": "CREW-ROSTER-COUNT-005",
+      "olderClaim": "탐험대 장기 ceiling 20명",
+      "disposition": "SUPERSEDED_AS_CHARACTER_CAP",
+      "reason": "최신 직접 정정: Core 6 + Expansion 12 = Standard 18, Special Guest는 별도 class. 기존 20 behavior slots는 행동 archetype으로 보존"
+    },
+    {
+      "id": "CREW-OWNER-006",
+      "olderClaim": "Snap & Pop이 family-wide 탐험대 정체성/행동 규칙 소유",
+      "disposition": "CENTRALIZED",
+      "reason": "탐험대가 Ready/Hide/Snap 전체를 관통하므로 TAKY shared canonical이 family semantics를 소유하고 Snap은 app-local projection을 소유"
     }
   ],
   "openItems": [
-    "STARTER_REMAINING_1_TO_2_IDENTITIES",
-    "FULL_20_MEMBER_IDENTITIES",
+    "EXPANSION_12_IDENTITIES",
+    "EXPANSION_12_PERSONALITY_PACKS",
     "EXACT_HUB_MEMBER_COUNT",
-    "EXACT_SPECIAL_MEMBER_COUNT_WITHIN_MAX_12",
+    "EXACT_SPECIAL_GUEST_COUNT",
     "EXACT_SPECIAL_ENCOUNTER_CYCLE",
     "EXACT_SPECIAL_ENCOUNTER_PROBABILITY",
     "EXACT_AFFINITY_STAGE_NAMES",
-    "FINAL_VISUAL_SPECIES_AND_NAMES"
+    "CORE_6_MISSING_HABIT_REACTION_WORLD_ROUTINE_MEMORY_RECOVERY",
+    "LORI_ENGLISH_CANONICAL_SPELLING"
   ],
   "evidence": {
     "primarySource": "Google Drive sanitized transcript P03_SANITIZED_6aa5d901-2c80-83e8-aaa2-3f6a57902a8a_연결 대화 재개",
@@ -571,9 +593,9 @@
     ]
   },
   "sourceStatus": {
-    "latestUserCorrection": "초기 선택 후보는 5~6명",
+    "latestUserCorrection": "초기 Core 6 모두 자기소개/친숙화 후 1명 primary companion 선택; 추가 12명은 Core 품질 안정 후 제작; Special Guest 별도",
     "recoveredUserEvidenceDate": "2026-09-08",
-    "rule": "LATEST_USER_CORRECTION_OVERRIDES_OLDER_USER_EVIDENCE_AND_ASSISTANT_PROPOSALS"
+    "rule": "LATEST_DIRECT_USER_CORRECTION_OVERRIDES_OLDER_USER_EVIDENCE_AND_ASSISTANT_PROPOSALS"
   },
   "provenance": {
     "source": "DIRECT_RAW_CHAT_2026-09-08",
@@ -1999,5 +2021,26 @@
       "Main Guide": "현재 메인 탐험대원",
       "Guest Guide": "장면 Guest 탐험대원"
     }
+  },
+  "sharedCanonical": "TAKY:C2S/LEARNING_APP_FAMILY_INTEGRATED_LOGIC_UI_CANONICAL_2026-09-22.md",
+  "sourceLineageMaster": "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md",
+  "listeningStates": [
+    "CREW_OBSERVING",
+    "CREW_LISTENING",
+    "CREW_WAITING",
+    "CREW_REACTING",
+    "CREW_QUESTIONING",
+    "CREW_HINTING",
+    "CREW_COMPLETION_ACK"
+  ],
+  "machineMigration": {
+    "status": "MIGRATED_TO_INTEGRATED_CANONICAL_2026-09-22",
+    "preserveSourceLineage": true,
+    "runtimeImpact": "RULE_DATA_ONLY_NO_DEPLOY",
+    "requiresCodeAudit": [
+      "VOICE_ROLE_SEPARATION",
+      "CHILD_RECORDING_OWNERSHIP",
+      "EPISODE_MEMORY_ENVELOPE"
+    ]
   }
 }
