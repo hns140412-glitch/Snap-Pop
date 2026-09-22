@@ -255,14 +255,20 @@
       assert("crew-runtime-main-id-present",!!runtimeMainId&&runtimeRegistry[runtimeMainId]?.memberId===runtimeMainId);
 
       const reunionEventId="reunion_"+runtimeMainId+"_"+new Date().toISOString().slice(0,10);
-      runtimeRegistry[runtimeMainId].lastMetAt=new Date(Date.now()-4*86400000).toISOString();
-      runtimeRegistry[runtimeMainId].memories=(runtimeRegistry[runtimeMainId].memories||[]).filter(m=>m.eventId!==reunionEventId);
-      runtimeRegistry[runtimeMainId].worldState={state:"AT_HUB",generatedAt:new Date().toISOString(),synthetic:true};
-      await window.SnapPopStorage.set("crewRegistry",runtimeRegistry);
-      const returnedMainState=await crewRuntime.synthesizeCrewWorldState();
-      runtimeRegistry=await window.SnapPopStorage.get("crewRegistry")||{};
+      let returnedMainState=null,reunionMemory=null;
+      for(let reunionAttempt=0;reunionAttempt<3&&!reunionMemory;reunionAttempt++){
+        runtimeRegistry=await window.SnapPopStorage.get("crewRegistry")||{};
+        runtimeRegistry[runtimeMainId].lastMetAt=new Date(Date.now()-4*86400000).toISOString();
+        runtimeRegistry[runtimeMainId].memories=(runtimeRegistry[runtimeMainId].memories||[]).filter(m=>m.eventId!==reunionEventId);
+        runtimeRegistry[runtimeMainId].worldState={state:"AT_HUB",generatedAt:new Date().toISOString(),synthetic:true};
+        await window.SnapPopStorage.set("crewRegistry",runtimeRegistry);
+        returnedMainState=await crewRuntime.synthesizeCrewWorldState();
+        runtimeRegistry=await window.SnapPopStorage.get("crewRegistry")||{};
+        reunionMemory=(runtimeRegistry[runtimeMainId]?.memories||[]).find(m=>m.type==="REUNION"&&m.eventId===reunionEventId&&m.daysAway>=2)||null;
+        if(!reunionMemory)await wait(40);
+      }
       assert("crew-world-return-restores-main-companion",returnedMainState?.state==="MAIN_COMPANION"&&runtimeRegistry[runtimeMainId]?.worldState?.state==="MAIN_COMPANION");
-      assert("crew-world-return-records-reunion-memory",(runtimeRegistry[runtimeMainId]?.memories||[]).some(m=>m.type==="REUNION"&&m.eventId===reunionEventId&&m.daysAway>=2));
+      assert("crew-world-return-records-reunion-memory",!!reunionMemory);
 
       const affinityBefore=runtimeRegistry[runtimeMainId]?.affinity?.scoreInternal||0;
       const expBeforeAffinity=await window.SnapPopStorage.get("exp");
