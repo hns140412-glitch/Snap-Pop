@@ -124,6 +124,69 @@
       assert("imagination-intent-routing-covers-eight-question-lenses",
         lensCases.every(([input,lens])=>window.SnapPopCuriosityScaffold.classifyQuestion(input)===lens)
       );
+
+      const truthUngrounded=window.SnapPopTruthGuard.guardKnowledge({
+        kind:"ASK_UNDERSTAND",
+        verified:true,
+        core:"근거 없는 사실 주장",
+        verification:{mode:"CLAIM_EVIDENCE",coverage:"FULL_FACTUAL_CONTENT",claims:[],unresolved:[]}
+      });
+      assert("truth-guard-rejects-self-declared-verified-without-evidence",truthUngrounded?.verified===false&&truthUngrounded?.verification?.reason==="NO_CLAIM_EVIDENCE");
+
+      const truthGrounded=window.SnapPopTruthGuard.guardKnowledge({
+        kind:"ASK_UNDERSTAND",
+        core:"근거 있는 사실 주장",
+        verification:{
+          mode:"CLAIM_EVIDENCE",
+          coverage:"FULL_FACTUAL_CONTENT",
+          claims:[
+            {claim:"첫 번째 검증 주장",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://example.org/a",title:"A"}]},
+            {claim:"두 번째 검증 주장",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://example.org/b",title:"B"}]},
+            {claim:"세 번째 검증 주장",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://example.org/c",title:"C"}]}
+          ],
+          unresolved:[]
+        }
+      });
+      assert("truth-guard-allows-full-evidence-only",truthGrounded?.verified===true&&truthGrounded?.verification?.verifiedClaimCount===3);
+
+      let identityLeakBlocked=false;
+      try{
+        window.SnapPopCrewPresentationGuard.sanitizeUserFacing({
+          kind:"ASK_UNDERSTAND",
+          verified:true,
+          core:"저는 AI라서 이렇게 답합니다.",
+          verification:truthGrounded.verification
+        },{language:"ko"});
+      }catch{identityLeakBlocked=true}
+      assert("imagination-presentation-guard-blocks-ai-self-identity",identityLeakBlocked===true);
+
+      const guardedPresentation=window.SnapPopCrewPresentationGuard.sanitizeUserFacing({
+        kind:"ASK_UNDERSTAND",
+        intent:"ASK_UNDERSTAND",
+        verified:true,
+        core:"검증된 내용을 아이가 보기 쉽게 정리했어.",
+        provider_label:"INTERNAL_PROVIDER",
+        model_name:"INTERNAL_MODEL",
+        system_message:"hidden",
+        verification:truthGrounded.verification
+      },{language:"ko"});
+      assert("imagination-presentation-guard-owns-response",guardedPresentation?.responseOwner==="EXPLORATION_CREW");
+      assert("imagination-presentation-guard-strips-provider-meta",
+        !("provider_label" in guardedPresentation)&&!("model_name" in guardedPresentation)&&!("system_message" in guardedPresentation)
+      );
+
+      const scaffoldSource={
+        ...truthGrounded,
+        kind:"ASK_UNDERSTAND",
+        intent:"ASK_UNDERSTAND",
+        core:"세 개의 검증된 주장으로 구조를 만든다."
+      };
+      const etymologyScaffold=window.SnapPopCuriosityScaffold.scaffoldKnowledge(scaffoldSource,"이 말의 어원이 뭐야?","ko","GLOBAL");
+      const mechanismScaffold=window.SnapPopCuriosityScaffold.scaffoldKnowledge(scaffoldSource,"이건 어떤 원리로 작동해?","ko","GLOBAL");
+      const conceptScaffold=window.SnapPopCuriosityScaffold.scaffoldKnowledge(scaffoldSource,"이 개념이 뭐야?","ko","GLOBAL");
+      assert("imagination-scaffold-etymology-runtime",etymologyScaffold?.understanding?.lens==="ETYMOLOGY"&&etymologyScaffold?.mentalModel?.source==="VERIFIED_CLAIMS_ONLY");
+      assert("imagination-scaffold-mechanism-runtime",mechanismScaffold?.understanding?.lens==="MECHANISM"&&mechanismScaffold?.mentalModel?.source==="VERIFIED_CLAIMS_ONLY");
+      assert("imagination-scaffold-concept-runtime",conceptScaffold?.understanding?.lens==="MEANING"||conceptScaffold?.understanding?.lens==="CONCEPT");
       window.SnapPopKnowledgeBackend=originalKnowledgeBackend;
       window.SnapPopOpenAIProvider=originalUniversalOpenAIProvider;
       window.SnapPopKnowledge=originalKnowledgeRuntime;
