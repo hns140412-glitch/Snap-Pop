@@ -1,5 +1,5 @@
-validation_sha=df32557ad3c7b0f660e41609ffc9b2842e8c7459
-checkout_sha=df32557ad3c7b0f660e41609ffc9b2842e8c7459
+validation_sha=5db8e7bc40e0d6a72bf91ac829394f19d7d2f947
+checkout_sha=5db8e7bc40e0d6a72bf91ac829394f19d7d2f947
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 71/71
 browser_status=0
@@ -34,6 +34,7 @@ PASS no-backend-does-not-guess
 PASS backend-cannot-self-verify
 PASS claim-evidence-does-not-overstate-full-answer
 PASS full-covered-evidence-backend-can-pass
+PASS knowledge-runtime-relays-outer-abort-signal
 KNOWLEDGE_RUNTIME_STATIC_CONTRACT_PASS
 
 === validate-knowledge-search-boundary.mjs ===
@@ -106,6 +107,7 @@ PASS return-context-captures-session-landmark-step-language
 PASS return-restores-current-or-snapshot-draft-with-integrity-marker
 PASS context-change-blocks-writing-return
 PASS stale-imagination-responses-are-invalidated-on-open-close
+PASS imagination-close-and-supersede-abort-live-request
 PASS followup-is-hidden-until-child-reveals
 PASS return-acknowledgement-is-non-driving
 IMAGINATION_PRESSURE_RETURN_CONTRACT_PASS
