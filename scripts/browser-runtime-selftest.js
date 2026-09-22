@@ -670,6 +670,7 @@
       assert("imagination-full-verified-allows-expression-transition",!!document.querySelector("#imaginationAnswer .cloudExpressBtn"));
       assert("imagination-verified-mental-model-renders",document.querySelectorAll("#imaginationAnswer .mentalStep").length>=2);
       assert("imagination-verified-mental-model-is-flow",!!document.querySelector("#imaginationAnswer .mentalModelFLOW"));
+      assert("imagination-verified-request-finished",await waitFor(()=>document.querySelector("#imaginationAskBtn")?.disabled===false,1500,25));
 
       window.SnapPopKnowledgeBackend={
         async ask(){
