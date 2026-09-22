@@ -1,7 +1,7 @@
-validation_sha=3159366c5e68d8d6c520f4dd53b902f59b5d6f24
-checkout_sha=3159366c5e68d8d6c520f4dd53b902f59b5d6f24
-closure_status=0
-closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 69/69
+validation_sha=a1761774b51545121f9abac73b8849ddef5abc6d
+checkout_sha=a1761774b51545121f9abac73b8849ddef5abc6d
+closure_status=1
+closure_marker=
 browser_status=0
 browser_marker=BROWSER_RUNTIME_CDP_PASS
 viewport=390x844
@@ -663,176 +663,19 @@ PASS revision-preserves-original
 PASS revision-reward-not-recomputed
 PASS bonus-is-idempotent
 PASS bonus-has-no-extra-exp
-PASS wish-spend-ledgered
-PASS records-flow-does-not-own-indexeddb
-RECORDS_FLOW_CONTROLLER_BOUNDARY_PASS
+file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-records-flow-controller-boundaries.mjs:5
+function assert(name,condition){if(!condition)throw new Error("FAIL "+name);console.log("PASS",name)}
+                                                    ^
 
-=== validate-special-controller-boundaries.mjs ===
-PASS special-controller-loads-before-app
-PASS special-contract-present
-PASS legacy-special-bindings-removed
-PASS special-guest-remains-explicit-authorized
-PASS special-trigger-consumed-one-shot
-PASS special-memory-is-no-reward-flow
-PASS special-evidence-explicit
-PASS guest-shared-memory-linked
-SPECIAL_CONTROLLER_BOUNDARY_PASS
+Error: FAIL wish-spend-ledgered
+    at assert (file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-records-flow-controller-boundaries.mjs:5:53)
+    at file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/validate-records-flow-controller-boundaries.mjs:15:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
 
-=== validate-imagination-controller-boundaries.mjs ===
-PASS imagination-controller-loads-before-app
-PASS imagination-contract-present
-PASS imagination-state-no-longer-global-in-app
-PASS writing-return-guard-preserved
-PASS draft-preserved-on-return
-PASS cloud-history-remains-no-direct-reward
-PASS verified-ask-expression-does-not-transfer-answer
-PASS intelligence-output-still-sanitized
-PASS voice-stays-user-mic-only
-IMAGINATION_CONTROLLER_BOUNDARY_PASS
-
-=== validate-settings-profile-controller-boundaries.mjs ===
-PASS settings-profile-loads-before-app
-PASS settings-profile-contract-present
-PASS shared-identity-owned-by-settings-controller
-PASS ready-profile-remains-priority
-PASS local-profile-remains-fallback
-PASS crew-name-history-preserved
-PASS settings-events-owned-by-controller
-PASS legacy-settings-bindings-removed
-PASS settings-controller-does-not-own-indexeddb
-PASS app-installs-settings-controller
-SETTINGS_PROFILE_CONTROLLER_BOUNDARY_PASS
-
-=== validate-badge-controller-boundaries.mjs ===
-PASS badge-controller-loads-before-app
-PASS badge-controller-contract-present
-PASS badge-observation-owned-by-controller
-PASS badge-evidence-keeps-explicit-only-contract
-PASS badge-candidates-remain-review-only
-PASS badge-preview-is-not-award-copy
-PASS badge-controller-does-not-own-economy
-PASS app-delegates-badge-owner
-BADGE_CONTROLLER_BOUNDARY_PASS
-
-=== validate-bridge-context-controller-boundaries.mjs ===
-PASS bridge-controller-loads-before-app
-PASS bridge-controller-contract-present
-PASS hide-seek-material-remains-reference-only
-PASS ready-learning-context-is-read-only-provider
-PASS incoming-handoff-shows-source-owner
-PASS expression-trace-metadata-only
-PASS bridge-does-not-overwrite-draft
-PASS bridge-stale-draft-guard
-PASS optional-expression-banner-owned-here
-PASS legacy-bridge-binding-removed
-PASS app-delegates-bridge-context
-PASS bridge-controller-does-not-own-indexeddb
-BRIDGE_CONTEXT_CONTROLLER_BOUNDARY_PASS
-
-=== validate-ready-snap-bridge-context.mjs ===
-PASS incoming-context-preserves-session-task-lap-return
-PASS linked-context-requires-session-task-lap
-PASS return-url-restores-session-task-lap
-PASS completion-is-idempotent
-PASS context-persists-in-session-storage
-PASS return-target-is-http-safe
-READY_SNAP_BRIDGE_CONTEXT_STATIC_PASS
-
-=== validate-bootstrap-controller-boundaries.mjs ===
-PASS bootstrap-loads-before-app
-PASS bootstrap-contract-present
-PASS bootstrap-owns-legacy-migration
-PASS bootstrap-preserves-init-order
-PASS bootstrap-uses-owner-apis
-PASS bootstrap-does-not-own-feature-dom
-PASS app-delegates-bootstrap
-PASS legacy-init-body-removed-from-app
-BOOTSTRAP_CONTROLLER_BOUNDARY_PASS
-
-=== validate-interaction-support-controller-boundaries.mjs ===
-PASS interaction-support-loads-before-app
-PASS interaction-support-contract-present
-PASS selected-state-owned-by-support
-PASS analysis-sequence-owned-by-support
-PASS analysis-result-checks-current-dom-draft
-PASS calendar-cursor-owned-by-support
-PASS hint-and-voice-owned-by-support
-PASS reflection-remains-explicit-child-evidence
-PASS voice-remains-user-mic-one-shot-entry
-PASS calendar-reduce-motion-scroll-preserved
-PASS support-does-not-own-indexeddb
-PASS app-installs-support-controller
-INTERACTION_SUPPORT_CONTROLLER_BOUNDARY_PASS
-
-=== validate-thin-orchestrator-boundary.mjs ===
-THIN_ORCHESTRATOR_BOUNDARY_PASS { bytes: 12652, maxBytes: 13000 }
-
-=== validate-integrated-child-writing-flow.mjs ===
-PASS writing-focus-card-present
-PASS question-is-framed-as-single-current-focus
-PASS child-answer-label-present
-PASS primary-writing-controls-are-voice-and-hint
-PASS optional-assists-are-collapsed-by-default
-PASS next-action-has-dedicated-dock
-PASS writing-dock-stays-above-bottom-nav
-PASS answer-remains-large-writing-surface
-INTEGRATED_CHILD_WRITING_FLOW_PASS
-
-=== validate-integrated-home-map-flow.mjs ===
-PASS home-map-has-single-guidance-prompt
-PASS home-map-guidance-does-not-block-input
-PASS home-radio-remains-secondary-action
-PASS selection-remains-explicit-before-start
-PASS landmark-layer-remains-primary-map-target
-INTEGRATED_HOME_MAP_FLOW_PASS
-
-=== validate-integrated-result-records-growth.mjs ===
-PASS result-leads-with-child-work
-PASS result-separates-progress-from-work
-PASS result-next-actions-link-records-and-growth
-PASS bonus-is-optional-collapsed
-PASS records-copy-is-reflection-first
-PASS growth-has-three-step-narrative
-PASS growth-summary-is-readable-grid
-INTEGRATED_RESULT_RECORDS_GROWTH_PASS
-
-=== validate-integrated-imagination-special-flow.mjs ===
-PASS special-is-explicitly-optional
-PASS special-has-child-owned-input
-PASS special-actions-include-skip
-PASS imagination-is-framed-as-optional-support
-PASS imagination-has-single-question-input
-PASS imagination-primary-action-is-thinking
-PASS listen-last-is-secondary-collapsed
-PASS special-hierarchy-styled
-INTEGRATED_IMAGINATION_SPECIAL_FLOW_PASS
-
-=== validate-integrated-settings-family-flow.mjs ===
-PASS settings-separate-identity-group
-PASS settings-separate-family-group
-PASS settings-separate-accessibility-group
-PASS family-entry-remains-explicit
-PASS family-copy-preserves-child-isolation
-PASS accessibility-controls-preserved
-PASS settings-group-hierarchy-styled
-INTEGRATED_SETTINGS_FAMILY_FLOW_PASS
-
-=== validate-integrated-ui-closure.mjs ===
-PASS all-integrated-surface-validators-gated
-PASS primary-child-surfaces-present
-PASS optional-world-surfaces-present
-PASS settings-and-family-surfaces-present
-PASS navigation-does-not-replace-child-authorship
-INTEGRATED_UI_CLOSURE_PASS
-
-=== validate-dom-binding-integrity.mjs ===
-PASS all-direct-dom-bindings-have-index-targets
-PASS querySelector-collection-misuse-blocked
-PASS explicit-help-request-control-exists
-PASS hint-control-is-wired-to-explicit-help-path
-DOM_BINDING_INTEGRITY_PASS
-
-BRANCH_CLOSURE_VALIDATOR_PASS 69/69
+Node.js v22.23.2
+BRANCH_CLOSURE_VALIDATOR_FAIL validate-records-flow-controller-boundaries.mjs status 1
 --- BROWSER ---
 PWA_RELOAD_RECOVERY_PASS
 {"readyState":"complete","init":"PASS","db":"OPEN","probe":{"status":"PERSISTED","token":"snap-pop-runtime-recovery-v1"}}
