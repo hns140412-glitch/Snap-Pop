@@ -1233,9 +1233,9 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "central post-model presentation/authorship/safety guards are coded/static verified; live provider/browser/device execution remains NOT_RUN",
+      "gap": "browser post-model Crew presentation/safety guard contract verified; live external-provider execution and physical-device behavior remain open",
       "codeEvidence": [
         "crew-presentation-guard.js:sanitizeUserFacing",
         "authorship-guard-runtime.js",
@@ -1243,7 +1243,13 @@
         "intelligence-runtime.js:present",
         "app.js:renderImaginationResponse",
         "scripts/validate-crew-presentation-ownership.mjs",
-        "scripts/validate-central-authorship-guard.mjs"
+        "scripts/validate-central-authorship-guard.mjs",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: Crew Presentation Guard forces EXPLORATION_CREW response ownership",
+        "browser-runtime-selftest: provider/model/raw metadata is stripped from user-facing output",
+        "browser-runtime-selftest: AI/system identity leakage is blocked"
       ]
     },
     {
@@ -1286,13 +1292,18 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "concept/principle/etymology/relationship-oriented verified scaffolds are coded; source quality/live runtime remain open",
+      "gap": "browser concept/etymology scaffold contract verified; live source quality and physical-device behavior remain open",
       "codeEvidence": [
         "curiosity-scaffold-runtime.js",
         "mental-model-runtime.js",
-        "netlify/functions/snap-pop-knowledge.mjs:ETYMOLOGY/MECHANISM/CONCEPT"
+        "netlify/functions/snap-pop-knowledge.mjs:ETYMOLOGY/MECHANISM/CONCEPT",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: verified etymology question uses ETYMOLOGY / 말의 뿌리 scaffold",
+        "browser-runtime-selftest: fully verified scaffold offers one optional next-curiosity"
       ]
     },
     {
@@ -1333,15 +1344,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "Truth Guard plus citation/source coverage gate is coded/static verified; live OpenAI verification remains NOT_RUN",
+      "gap": "browser Truth Guard contract verified; live OpenAI/source-quality verification and physical-device behavior remain open",
       "codeEvidence": [
         "truth-guard-runtime.js",
         "knowledge-runtime.js",
         "netlify/functions/snap-pop-knowledge.mjs",
         "scripts/validate-truth-guard-runtime.mjs",
-        "scripts/validate-knowledge-search-boundary.mjs"
+        "scripts/validate-knowledge-search-boundary.mjs",
+        "scripts/browser-runtime-selftest.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: raw verified flag without evidence is blocked",
+        "browser-runtime-selftest: FULL_FACTUAL_CONTENT with evidence is accepted",
+        "browser-runtime-selftest: partial/unresolved verification remains false"
       ]
     },
     {
