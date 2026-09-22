@@ -22,6 +22,7 @@ assert("all-reconciled-items-static-verified",reconciled.every(id=>byId[id].stat
 assert("runtime-not-overclaimed",liveRuntimeStillOpen.every(id=>byId[id].runtimeVerified===false));
 assert("truth-003-browser-no-guess-runtime-verified",byId["SP-TRUTH-003"].runtimeVerified===true&&byId["SP-TRUTH-003"].deviceVerified===false);
 assert("imagine-008-browser-mental-model-runtime-verified",byId["SP-IMAGINE-008"].runtimeVerified===true&&byId["SP-IMAGINE-008"].deviceVerified===false);
+assert("imagine-002-browser-gateway-runtime-verified",byId["SP-IMAGINE-002"].runtimeVerified===true&&byId["SP-IMAGINE-002"].deviceVerified===false);
 assert("imagine-003-browser-intent-routing-runtime-verified",byId["SP-IMAGINE-003"].runtimeVerified===true&&byId["SP-IMAGINE-003"].deviceVerified===false);
 assert("univ-006-browser-optional-expression-runtime-verified",byId["SP-UNIV-006"].runtimeVerified===true&&byId["SP-UNIV-006"].deviceVerified===false);
 assert("device-not-overclaimed",reconciled.every(id=>byId[id].deviceVerified===false));
