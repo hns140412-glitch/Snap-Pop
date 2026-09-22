@@ -58,6 +58,7 @@ const validators=[
   "validate-crew-runtime-controller-boundaries.mjs",
   "validate-records-growth-controller-boundaries.mjs",
   "validate-records-flow-controller-boundaries.mjs",
+  "validate-wish-economy-controller-boundaries.mjs",
   "validate-special-controller-boundaries.mjs",
   "validate-imagination-controller-boundaries.mjs",
   "validate-settings-profile-controller-boundaries.mjs",
