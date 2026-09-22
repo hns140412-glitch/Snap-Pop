@@ -387,3 +387,5 @@ Canonical ownership correction:
 - imagination intent-routing runtime matrix closure validation trigger.
 
 - bilingual expression bridge browser runtime validation trigger.
+
+- hardened Chrome startup + bilingual expression bridge exact-head validation trigger.
