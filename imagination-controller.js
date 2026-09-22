@@ -3,7 +3,7 @@
 let singleton=null;
 function create(deps){
 const q=deps.query,qa=deps.queryAll,store=window.SnapPopStorage,esc=window.SnapPopUIShell.escapeHtml;
-let imaginationLanguage="ko",imaginationReturnFocus=null,imaginationSource="GLOBAL",imaginationWritingReturn=null;
+let imaginationLanguage="ko",imaginationReturnFocus=null,imaginationSource="GLOBAL",imaginationWritingReturn=null,imaginationRequestSeq=0;
 function setImaginationLanguage(language="ko"){
   imaginationLanguage=language==="en"?"en":"ko";
   q("#imaginationModeKo")?.classList.toggle("on",imaginationLanguage==="ko");
@@ -11,6 +11,7 @@ function setImaginationLanguage(language="ko"){
 }
 async function openImagination({input="",language="ko",source="GLOBAL",writingReturn=null}={}){
   const layer=q("#imaginationLayer"),identity=await deps.resolvedIdentity(); if(!layer)return;
+  imaginationRequestSeq++;
   imaginationReturnFocus=document.activeElement instanceof HTMLElement?document.activeElement:null;
   imaginationSource=source;
   imaginationWritingReturn=source==="WRITING_FLOW"&&writingReturn
@@ -26,6 +27,7 @@ async function openImagination({input="",language="ko",source="GLOBAL",writingRe
 }
 async function closeImagination(){
   const layer=q("#imaginationLayer"); if(!layer)return;
+  imaginationRequestSeq++;
   window.SnapPopVoice?.stopListening?.();
   layer.hidden=true; layer.setAttribute("aria-hidden","true"); document.documentElement.classList.remove("imaginationOpen");
 
@@ -124,10 +126,11 @@ async function runImagination(inputOverride){
   const input=(inputOverride??q("#imaginationInput")?.value??"").trim(),identity=await deps.resolvedIdentity();
   if(!input)return deps.toast("막힌 생각이나 궁금한 걸 한 조각만 남겨줘.");
   if(!window.SnapPopIntelligence)return deps.toast("상상 구름 엔진을 불러오지 못했어요.");
-  const btn=q("#imaginationAskBtn"); btn.disabled=true; btn.textContent="생각 중…";
+  const btn=q("#imaginationAskBtn"),requestSeq=++imaginationRequestSeq; btn.disabled=true; btn.textContent="생각 중…";
   try{
     const active=await store.get("active");
     const rawResult=await window.SnapPopIntelligence.ask({input,language:imaginationLanguage,context:imaginationSource,landmark:active?.landmark||null,step:active?.step||0,crewMember:{type:identity.crewMember?.type,name:deps.crewMemberName(identity)}});
+    if(requestSeq!==imaginationRequestSeq||q("#imaginationLayer")?.hidden)return;
     const presentation=window.SnapPopCrewPresentationGuard;
     const result=presentation&&typeof presentation.sanitizeUserFacing==="function"
       ? presentation.sanitizeUserFacing(rawResult)
@@ -150,8 +153,10 @@ async function runImagination(inputOverride){
       );
     }
   }catch{
-    await deps.showCrewReaction(`${deps.crewMemberName(identity)}: 지금 연결이 매끄럽지 않네. 질문은 그대로 남겨둘게.`,{persist:false});
-  }finally{btn.disabled=false;btn.textContent="도움 받기"}
+    if(requestSeq===imaginationRequestSeq)await deps.showCrewReaction(`${deps.crewMemberName(identity)}: 지금 연결이 매끄럽지 않네. 질문은 그대로 남겨둘게.`,{persist:false});
+  }finally{
+    if(requestSeq===imaginationRequestSeq){btn.disabled=false;btn.textContent="도움 받기"}
+  }
 }
 async function listenVoice(){
   const identity=await deps.resolvedIdentity(); if(!window.SnapPopVoice)return deps.toast("지금은 음성 입력을 사용할 수 없어요.");
