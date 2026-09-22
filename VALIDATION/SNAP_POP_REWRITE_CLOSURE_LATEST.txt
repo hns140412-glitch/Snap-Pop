@@ -1,5 +1,5 @@
-validation_sha=c185ea87f019ce27bc4b632cfaf8ffbc74e8becd
-checkout_sha=c185ea87f019ce27bc4b632cfaf8ffbc74e8becd
+validation_sha=6750eca1ec3a029cb2b2768e3a9c2a5f08248819
+checkout_sha=6750eca1ec3a029cb2b2768e3a9c2a5f08248819
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 71/71
 browser_status=0
@@ -41,6 +41,7 @@ PASS missing-key-fails-closed
 PASS all-cited-sentences-get-full-coverage
 PASS citation-url-must-exist-in-retrieved-source-set
 PASS uncited-sentence-blocks-full-coverage
+PASS upstream-network-error-fails-closed
 KNOWLEDGE_SEARCH_CITATION_BOUNDARY_PASS
 
 === validate-knowledge-source-quality.mjs ===
@@ -467,6 +468,7 @@ PASS five-landmarks-are-lenses-not-minigames
 PASS cross-lens-suggestion-is-optional-one-lens
 PASS one-next-move-is-enforced-client-side
 PASS one-next-move-is-enforced-server-side
+PASS semantic-upstream-has-bounded-timeout-and-fail-closed-errors
 PASS live-result-applies-only-if-draft-step-and-dom-still-match
 PASS crew-reaction-is-derived-from-current-analysis
 PASS authorship-guard-prevents-draft-rewrite
