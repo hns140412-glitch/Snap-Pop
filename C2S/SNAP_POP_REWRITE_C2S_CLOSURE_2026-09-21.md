@@ -246,3 +246,23 @@ Canonical ownership correction:
 - `records-growth-controller.js` no longer owns wish history or wish transactions.
 - Ready & Set / Hide & Seek / TAKY must not spend Snap gems or execute Snap wishes. Cross-app sharing, if any, is semantic-light evidence/event only and carries no spend authority.
 - Runtime contract remains unchanged: explicit confirmation, exactly two completed gems, GEM_SPENT ledger, completed wish transaction, no hidden spend.
+
+
+## Wish Economy ownership exact validation — 2026-09-22
+
+- exact validated SHA: `39bf0c471dd7190e6df6a86b6359d25de6e975ca`
+- evidence commit: `a42e7c1f2a0edd9fba9d334b9a130ec20d928319`
+- branch closure: `70/70 PASS`
+- browser runtime: `BROWSER_RUNTIME_CDP_PASS`
+- viewport: `390×844`
+- PWA reload recovery: PASS
+- PWA offline shell: PASS
+- Wish Economy owner boundary: PASS
+- existing runtime behavior preserved:
+  - explicit wish confirmation
+  - exactly two completed gems consumed
+  - completed wish transaction recorded
+  - GEM_SPENT ledger recorded
+  - runtime test state restored
+- DEVICE_VERIFIED: false
+- deploy / Netlify / main merge: NOT_RUN
