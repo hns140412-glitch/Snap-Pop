@@ -111,6 +111,72 @@
       assert("ask-partial-runtime-stays-unverified",partialAsk?.kind==="ASK_UNDERSTAND"&&partialAsk?.verified===false);
       assert("ask-partial-runtime-blocks-followup",partialAsk?.understanding?.followUpAvailable===false);
       assert("ask-partial-runtime-keeps-crew-owner",partialAsk?.responseOwner==="EXPLORATION_CREW");
+
+      const truthRawNoEvidence=window.SnapPopTruthGuard.guardKnowledge({
+        kind:"ASK_UNDERSTAND",
+        verified:true,
+        verification:{mode:"CLAIM_EVIDENCE",coverage:"FULL_FACTUAL_CONTENT",claims:[],unresolved:[]}
+      });
+      assert("truth-guard-blocks-raw-verified-without-evidence",truthRawNoEvidence?.verified===false);
+
+      const truthRawFull=window.SnapPopTruthGuard.guardKnowledge({
+        kind:"ASK_UNDERSTAND",
+        verified:false,
+        verification:{
+          mode:"CLAIM_EVIDENCE",
+          coverage:"FULL_FACTUAL_CONTENT",
+          claims:[
+            {claim:"검증된 주장 A",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://example.org/a"}]},
+            {claim:"검증된 주장 B",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://example.org/b"}]}
+          ],
+          unresolved:[]
+        }
+      });
+      assert("truth-guard-allows-full-evidence-contract",truthRawFull?.verified===true&&truthRawFull?.verification?.verifiedClaimCount===2);
+
+      const truthRawPartial=window.SnapPopTruthGuard.guardKnowledge({
+        kind:"ASK_UNDERSTAND",
+        verified:true,
+        verification:{
+          mode:"CLAIM_EVIDENCE",
+          coverage:"PARTIAL",
+          claims:[{claim:"일부 주장",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://example.org/p"}]}],
+          unresolved:["남은 확인"]
+        }
+      });
+      assert("truth-guard-blocks-partial-or-unresolved",truthRawPartial?.verified===false);
+
+      const presentationProbe=window.SnapPopCrewPresentationGuard.sanitizeUserFacing({
+        kind:"ASK_UNDERSTAND",
+        verified:true,
+        title:"provider title",
+        core:"확인된 설명",
+        nodes:[{label:"핵심",value:"검증된 내용"}],
+        provider_label:"hidden-provider",
+        model_name:"hidden-model",
+        raw_response:"hidden-raw"
+      });
+      assert("crew-presentation-forces-exploration-crew-owner",presentationProbe?.responseOwner==="EXPLORATION_CREW");
+      assert("crew-presentation-strips-provider-model-raw-meta",!("provider_label" in presentationProbe)&&!("model_name" in presentationProbe)&&!("raw_response" in presentationProbe));
+      let identityLeakBlocked=false;
+      try{window.SnapPopCrewPresentationGuard.sanitizeUserFacing({kind:"ASK_UNDERSTAND",core:"As an AI, I think this is correct."})}catch{identityLeakBlocked=true}
+      assert("crew-presentation-blocks-ai-identity-leak",identityLeakBlocked===true);
+
+      const etymologyScaffold=window.SnapPopCuriosityScaffold.scaffoldKnowledge({
+        kind:"ASK_UNDERSTAND",
+        verified:true,
+        verification:{
+          coverage:"FULL_FACTUAL_CONTENT",
+          verifiedClaimCount:2,
+          claims:[
+            {claim:"첫 번째 검증 주장",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://example.org/e1"}]},
+            {claim:"두 번째 검증 주장",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://example.org/e2"}]}
+          ],
+          unresolved:[]
+        }
+      },"이 말의 어원이 뭐야?","ko","GLOBAL");
+      assert("verified-etymology-scaffold-uses-word-root-lens",etymologyScaffold?.understanding?.lens==="ETYMOLOGY"&&etymologyScaffold?.understanding?.label==="말의 뿌리");
+      assert("verified-etymology-scaffold-offers-one-optional-next-curiosity",typeof etymologyScaffold?.understanding?.nextCuriosity==="string"&&etymologyScaffold.understanding.nextCuriosity.length>0);
       const lensCases=[
         ["이 단어 뜻이 뭐야?","MEANING"],
         ["이 말의 어원이 뭐야?","ETYMOLOGY"],
