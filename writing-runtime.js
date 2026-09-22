@@ -105,6 +105,7 @@
         language:payload.language==="en"?"en":"ko",
         learnerContext:payload.learnerContext||null,
         vocabularyMaterial:payload.vocabularyMaterial||null,
+        signal:payload.signal||null,
         contract:{
           childAuthorship:true,
           oneNextMoveOnly:true,
