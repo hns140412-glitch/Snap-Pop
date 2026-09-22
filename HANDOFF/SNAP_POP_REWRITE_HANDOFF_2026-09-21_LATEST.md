@@ -317,3 +317,16 @@ Conservative boundaries retained:
 - conservative truth runtime reconciliation exact-head validation trigger.
 
 - imagination expression-expansion runtime matrix closure validation trigger.
+
+
+## Snap & Pop Wish Economy ownership correction — 2026-09-22
+
+Canonical ownership correction:
+- 소원상점 / 축복 사용하기 / 보석 차감 / wish transaction / gem ledger are owned by **Snap & Pop Wish Economy**.
+- They are not Growth-owned and are not a shared cross-app economy.
+- Existing requirement key `SP-GROWTH-002` is retained only as a stable legacy trace key; canonical domain is `SNAP_WISH_ECONOMY`, owner `SNAP_POP_WISH_ECONOMY`.
+- `wish-economy-controller.js` now owns `renderGems`, `renderWishHistory`, and `confirmBlessing`.
+- `records-flow-controller.js` now owns only record revision / bonus flow.
+- `records-growth-controller.js` no longer owns wish history or wish transactions.
+- Ready & Set / Hide & Seek / TAKY must not spend Snap gems or execute Snap wishes. Cross-app sharing, if any, is semantic-light evidence/event only and carries no spend authority.
+- Runtime contract remains unchanged: explicit confirmation, exactly two completed gems, GEM_SPENT ledger, completed wish transaction, no hidden spend.
