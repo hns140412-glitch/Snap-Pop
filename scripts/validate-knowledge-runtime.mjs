@@ -79,4 +79,13 @@ const fullCoverageBackend=makeWindow({
 const passed=await fullCoverageBackend.SnapPopIntelligence.ask({input:"사실 질문?",language:"ko"});
 assert("full-covered-evidence-backend-can-pass",passed.verified===true);
 
+let receivedSignal=null;
+const signalBackend=makeWindow({
+  ask:async payload=>{receivedSignal=payload.signal;throw Object.assign(new Error("aborted"),{name:"AbortError"})}
+});
+const outer=new AbortController();
+outer.abort();
+await signalBackend.SnapPopIntelligence.ask({input:"사실 질문?",language:"ko",signal:outer.signal});
+assert("knowledge-runtime-relays-outer-abort-signal",receivedSignal?.aborted===true);
+
 console.log("KNOWLEDGE_RUNTIME_STATIC_CONTRACT_PASS");
