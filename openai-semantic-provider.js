@@ -47,6 +47,12 @@
     if(!draft) throw new Error("OPENAI_SEMANTIC_EMPTY_DRAFT");
 
     const controller=new AbortController();
+    const outerSignal=payload.signal;
+    const relay=()=>controller.abort("outer-abort");
+    if(outerSignal){
+      if(outerSignal.aborted)controller.abort("outer-abort");
+      else outerSignal.addEventListener("abort",relay,{once:true});
+    }
     const timer=setTimeout(()=>controller.abort("timeout"),TIMEOUT_MS);
     try{
       const response=await fetch(ENDPOINT,{
@@ -71,6 +77,7 @@
       return {...data.analysis,provider:"openai-semantic-writing-secure"};
     } finally {
       clearTimeout(timer);
+      if(outerSignal)outerSignal.removeEventListener("abort",relay);
     }
   }
 
