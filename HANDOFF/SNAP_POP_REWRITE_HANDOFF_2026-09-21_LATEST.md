@@ -383,3 +383,5 @@ Canonical ownership correction:
 - async records render probe stabilization validation trigger.
 
 - browser question-lens intent routing validation trigger.
+
+- imagination intent-routing runtime matrix closure validation trigger.
