@@ -352,3 +352,5 @@ Canonical ownership correction:
 - deploy / Netlify / main merge: NOT_RUN
 
 - verified/partial imagination UI routing + mental-model runtime validation trigger.
+
+- verified HOME_RADIO optional expression transition regression validation trigger.
