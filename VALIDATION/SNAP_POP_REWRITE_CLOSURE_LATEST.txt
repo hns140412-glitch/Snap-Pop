@@ -1,5 +1,5 @@
-validation_sha=6750eca1ec3a029cb2b2768e3a9c2a5f08248819
-checkout_sha=6750eca1ec3a029cb2b2768e3a9c2a5f08248819
+validation_sha=82faa493ef754b10e822b5004262560630027b0b
+checkout_sha=82faa493ef754b10e822b5004262560630027b0b
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 71/71
 browser_status=0
@@ -105,6 +105,7 @@ PASS return-uses-central-integrity-guard
 PASS return-context-captures-session-landmark-step-language
 PASS return-restores-current-or-snapshot-draft-with-integrity-marker
 PASS context-change-blocks-writing-return
+PASS stale-imagination-responses-are-invalidated-on-open-close
 PASS followup-is-hidden-until-child-reveals
 PASS return-acknowledgement-is-non-driving
 IMAGINATION_PRESSURE_RETURN_CONTRACT_PASS
