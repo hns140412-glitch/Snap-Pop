@@ -403,3 +403,5 @@ Canonical ownership correction:
 - Truth Guard / presentation guard / scaffold browser runtime validation trigger.
 
 - truth/presentation/scaffold browser runtime validation trigger.
+
+- remove duplicate Truth/Presentation/scaffold probe block and rerun exact-head browser validation.
