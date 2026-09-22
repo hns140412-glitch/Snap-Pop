@@ -422,8 +422,8 @@
       assert("writing-completion-has-three-snapshots",Array.isArray(completedRecord?.snapshots)&&completedRecord.snapshots.length===3);
 
       click(document.querySelector("#resultRecords"),"result-records");
-      await wait(180);
-      assert("records-view-active",document.querySelector("#records")?.classList.contains("active")===true);
+      assert("records-view-active",await waitFor(()=>document.querySelector("#records")?.classList.contains("active")===true,1500,25));
+      assert("record-edit-button-rendered",await waitFor(()=>!!document.querySelector(".recordEditBtn"),2500,25));
       const recordBefore=(await window.SnapPopStorage.get("records"))?.[0]||null;
       const originalText=recordBefore?.answers?.join(" ")||"";
       const originalExp=recordBefore?.expAward;
