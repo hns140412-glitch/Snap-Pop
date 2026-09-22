@@ -1,7 +1,7 @@
-validation_sha=e62968ce52f1ff522575de9c31d23611bbce63a1
-checkout_sha=e62968ce52f1ff522575de9c31d23611bbce63a1
+validation_sha=8d16060012599d5d25a692a1f879f5e39e1e7cd2
+checkout_sha=8d16060012599d5d25a692a1f879f5e39e1e7cd2
 closure_status=0
-closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 70/70
+closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 71/71
 browser_status=0
 browser_marker=BROWSER_RUNTIME_CDP_PASS
 viewport=390x844
@@ -38,6 +38,15 @@ PASS all-cited-sentences-get-full-coverage
 PASS citation-url-must-exist-in-retrieved-source-set
 PASS uncited-sentence-blocks-full-coverage
 KNOWLEDGE_SEARCH_CITATION_BOUNDARY_PASS
+
+=== validate-knowledge-source-quality.mjs ===
+PASS community-only-cannot-reach-full-coverage
+PASS community-evidence-is-labelled
+PASS eligible-plus-community-can-pass-when-fully-cited
+PASS institutional-source-is-labelled
+PASS community-does-not-count-for-etymology-diversity
+PASS two-independent-non-community-etymology-sources-can-pass
+KNOWLEDGE_SOURCE_QUALITY_PASS
 
 === validate-curiosity-scaffold.mjs ===
 PASS ko-etymology
@@ -853,7 +862,7 @@ PASS explicit-help-request-control-exists
 PASS hint-control-is-wired-to-explicit-help-path
 DOM_BINDING_INTEGRITY_PASS
 
-BRANCH_CLOSURE_VALIDATOR_PASS 70/70
+BRANCH_CLOSURE_VALIDATOR_PASS 71/71
 --- BROWSER ---
 PWA_RELOAD_RECOVERY_PASS
 {"readyState":"complete","init":"PASS","db":"OPEN","probe":{"status":"PERSISTED","token":"snap-pop-runtime-recovery-v1"}}
