@@ -407,3 +407,5 @@ Canonical ownership correction:
 - remove duplicate Truth/Presentation/scaffold probe block and rerun exact-head browser validation.
 
 - truth/presentation/scaffold runtime probe variable-collision regression validation trigger.
+
+- truth/crew-guard/scaffold runtime matrix closure validation trigger.
