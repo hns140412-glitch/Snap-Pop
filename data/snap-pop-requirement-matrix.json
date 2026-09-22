@@ -1121,16 +1121,23 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "verified ASK→optional EXPRESS routing implemented/static verified; live browser interaction remains NOT_RUN",
+      "gap": "browser optional-expression routing verified; live external-provider quality and physical-device behavior remain open",
       "codeEvidence": [
         "app.js:renderImaginationResponse canExpress gate",
         "app.js:pendingExpressionIntent",
         "app.js:renderPendingExpressionIntent",
         "app.js:renderExpressionIntentNote",
         "index.html:expressionIntentBanner/expressionIntentNote",
-        "scripts/validate-optional-expression-transition.mjs"
+        "scripts/validate-optional-expression-transition.mjs",
+        "scripts/browser-runtime-selftest.js",
+        "imagination-controller.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: fully verified Home Radio answer exposes optional expression transition",
+        "browser-runtime-selftest: partial verification blocks expression transition",
+        "optional expression transition carries question/topic only, not AI answer"
       ]
     },
     {
@@ -1277,13 +1284,19 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "cause/process/result, compare and timeline/flow mental models are coded from verified claims only; live browser/device rendering remains NOT_RUN",
+      "gap": "browser verified-claim mental-model rendering verified; live external-provider quality and physical-device rendering remain open",
       "codeEvidence": [
         "mental-model-runtime.js",
         "app.js:mentalModel renderer",
-        "scripts/validate-mental-model.mjs"
+        "scripts/validate-mental-model.mjs",
+        "scripts/browser-runtime-selftest.js",
+        "imagination-controller.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: verified cause/process/result mental model renders in Imagination UI",
+        "browser-runtime-selftest: partial verification blocks structural FLOW mental model"
       ]
     },
     {
