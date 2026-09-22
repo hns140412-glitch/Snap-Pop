@@ -350,3 +350,5 @@ Canonical ownership correction:
   - runtime test state restored
 - DEVICE_VERIFIED: false
 - deploy / Netlify / main merge: NOT_RUN
+
+- verified/partial imagination UI routing + mental-model runtime validation trigger.
