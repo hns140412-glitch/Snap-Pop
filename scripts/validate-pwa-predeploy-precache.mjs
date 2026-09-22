@@ -3,6 +3,7 @@ import fs from "node:fs";
 const index=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const sw=fs.readFileSync(new URL("../sw.js",import.meta.url),"utf8");
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const manifest=JSON.parse(fs.readFileSync(new URL("../manifest.json",import.meta.url),"utf8"));
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -36,6 +37,17 @@ assert("runtime-selftest-is-available-offline-when-requested",
 );
 assert("core-shell-is-precached",
   ["./","index.html","styles.css","manifest.json","app.js","snap-bridge.js"].every(x=>precache.includes(x))
+);
+assert("manifest-install-icons-are-declared",
+  Array.isArray(manifest.icons)&&
+  manifest.icons.some(x=>x.src==="icons/icon-192.png"&&x.sizes==="192x192"&&x.type==="image/png")&&
+  manifest.icons.some(x=>x.src==="icons/icon-512.png"&&x.sizes==="512x512"&&x.type==="image/png")
+);
+assert("install-icons-are-precached",
+  ["icons/icon-192.png","icons/icon-512.png"].every(x=>precache.includes(x))
+);
+assert("apple-touch-icon-is-declared",
+  index.includes('rel="apple-touch-icon" href="icons/icon-192.png"')
 );
 assert("legacy-service-worker-is-not-registered",
   !index.includes('service-worker.js')&&!app.includes('service-worker.js')
