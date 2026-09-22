@@ -102,6 +102,12 @@ assert("stale-imagination-responses-are-invalidated-on-open-close",
   imaginationSource.includes('if(requestSeq===imaginationRequestSeq){btn.disabled=false;btn.textContent="도움 받기"}')
 );
 
+assert("imagination-close-and-supersede-abort-live-request",
+  imaginationSource.includes('imaginationAbortController?.abort("closed")')&&
+  imaginationSource.includes('imaginationAbortController?.abort("superseded")')&&
+  imaginationSource.includes("signal:controller.signal")
+);
+
 assert("followup-is-hidden-until-child-reveals",
   imaginationSource.includes('class="soft cloudFollowUpReveal"')&&
   imaginationSource.includes('cloudFollowUpText" hidden')&&
