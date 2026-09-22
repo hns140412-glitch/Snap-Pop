@@ -95,6 +95,13 @@ assert("context-change-blocks-writing-return",
   imaginationSource.includes('reason:returned.reason||"CONTEXT_CHANGED"')
 );
 
+assert("stale-imagination-responses-are-invalidated-on-open-close",
+  imaginationSource.includes("imaginationRequestSeq++")&&
+  imaginationSource.includes("requestSeq=++imaginationRequestSeq")&&
+  imaginationSource.includes('if(requestSeq!==imaginationRequestSeq||q("#imaginationLayer")?.hidden)return;')&&
+  imaginationSource.includes('if(requestSeq===imaginationRequestSeq){btn.disabled=false;btn.textContent="도움 받기"}')
+);
+
 assert("followup-is-hidden-until-child-reveals",
   imaginationSource.includes('class="soft cloudFollowUpReveal"')&&
   imaginationSource.includes('cloudFollowUpText" hidden')&&
