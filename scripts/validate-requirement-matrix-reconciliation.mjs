@@ -14,7 +14,7 @@ const reconciled=[
   "SP-IMAGINE-002","SP-IMAGINE-003","SP-IMAGINE-004","SP-IMAGINE-007","SP-IMAGINE-008",
   "SP-TRUTH-001","SP-TRUTH-002","SP-TRUTH-003"
 ];
-const liveRuntimeStillOpen=reconciled.filter(id=>!["SP-TRUTH-003","SP-IMAGINE-003","SP-IMAGINE-008"].includes(id));
+const liveRuntimeStillOpen=reconciled.filter(id=>!["SP-TRUTH-003","SP-IMAGINE-002","SP-IMAGINE-003","SP-IMAGINE-008"].includes(id));
 
 assert("all-reconciled-items-exist",reconciled.every(id=>!!byId[id]));
 assert("all-reconciled-items-coded",reconciled.every(id=>byId[id].coded===true));
