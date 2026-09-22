@@ -50,6 +50,13 @@ assert("one-next-move-is-enforced-server-side",
   server.includes("OPENAI_SEMANTIC_HINT_QUESTION_REJECTED")
 );
 
+assert("semantic-upstream-has-bounded-timeout-and-fail-closed-errors",
+  server.includes("UPSTREAM_TIMEOUT_MS=15000")&&
+  server.includes("controller.abort()")&&
+  server.includes("OPENAI_SEMANTIC_UPSTREAM_TIMEOUT")&&
+  server.includes("OPENAI_SEMANTIC_UPSTREAM_UNAVAILABLE")
+);
+
 assert("live-result-applies-only-if-draft-step-and-dom-still-match",
   support.includes("if(cur.draft!==draft||Math.min(2,cur.step||0)!==step)return null")&&
   support.includes("if(q('#answer').value!==draft)return null")
