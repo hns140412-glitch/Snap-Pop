@@ -14,13 +14,16 @@ const reconciled=[
   "SP-IMAGINE-002","SP-IMAGINE-003","SP-IMAGINE-004","SP-IMAGINE-007","SP-IMAGINE-008",
   "SP-TRUTH-001","SP-TRUTH-002","SP-TRUTH-003"
 ];
-const liveRuntimeStillOpen=reconciled.filter(id=>!["SP-TRUTH-003","SP-IMAGINE-002","SP-IMAGINE-003","SP-IMAGINE-008"].includes(id));
+const liveRuntimeStillOpen=reconciled.filter(id=>!["SP-TRUTH-001","SP-TRUTH-003","SP-IMAGINE-002","SP-IMAGINE-003","SP-IMAGINE-005","SP-IMAGINE-007","SP-IMAGINE-008"].includes(id));
 
 assert("all-reconciled-items-exist",reconciled.every(id=>!!byId[id]));
 assert("all-reconciled-items-coded",reconciled.every(id=>byId[id].coded===true));
 assert("all-reconciled-items-static-verified",reconciled.every(id=>byId[id].staticVerified===true));
 assert("runtime-not-overclaimed",liveRuntimeStillOpen.every(id=>byId[id].runtimeVerified===false));
 assert("truth-003-browser-no-guess-runtime-verified",byId["SP-TRUTH-003"].runtimeVerified===true&&byId["SP-TRUTH-003"].deviceVerified===false);
+assert("truth-001-browser-gate-runtime-verified",byId["SP-TRUTH-001"].runtimeVerified===true&&byId["SP-TRUTH-001"].deviceVerified===false);
+assert("imagine-005-browser-crew-guard-runtime-verified",byId["SP-IMAGINE-005"].runtimeVerified===true&&byId["SP-IMAGINE-005"].deviceVerified===false);
+assert("imagine-007-browser-scaffold-runtime-verified",byId["SP-IMAGINE-007"].runtimeVerified===true&&byId["SP-IMAGINE-007"].deviceVerified===false);
 assert("imagine-008-browser-mental-model-runtime-verified",byId["SP-IMAGINE-008"].runtimeVerified===true&&byId["SP-IMAGINE-008"].deviceVerified===false);
 assert("imagine-002-browser-gateway-runtime-verified",byId["SP-IMAGINE-002"].runtimeVerified===true&&byId["SP-IMAGINE-002"].deviceVerified===false);
 assert("imagine-003-browser-intent-routing-runtime-verified",byId["SP-IMAGINE-003"].runtimeVerified===true&&byId["SP-IMAGINE-003"].deviceVerified===false);
