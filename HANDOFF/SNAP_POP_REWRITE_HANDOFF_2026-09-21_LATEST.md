@@ -409,3 +409,5 @@ Canonical ownership correction:
 - truth/presentation/scaffold runtime probe variable-collision regression validation trigger.
 
 - truth/crew-guard/scaffold runtime matrix closure validation trigger.
+
+- imagination partial-probe request-completion race validation trigger.
