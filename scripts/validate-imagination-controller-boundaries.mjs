@@ -10,6 +10,7 @@ assert("writing-return-guard-preserved",ctl.includes("SnapPopImaginationReturnGu
 assert("draft-preserved-on-return",ctl.includes("draftPreserved:true")&&ctl.includes("returned.draft"));
 assert("cloud-history-remains-no-direct-reward",ctl.includes('store.get("cloudHistory")')&&!ctl.includes("expLedger")&&!ctl.includes("gemLedger"));
 assert("verified-ask-expression-does-not-transfer-answer",ctl.includes("answerTransferred:false")&&ctl.includes("draftTransferred:false"));
+assert("verified-expression-transition-allows-home-radio-but-not-writing-flow",ctl.includes('const canExpress=imaginationSource!=="WRITING_FLOW"')&&ctl.includes('coverage==="FULL_FACTUAL_CONTENT"'));
 assert("intelligence-output-still-sanitized",ctl.includes("sanitizeUserFacing(rawResult)"));
 assert("voice-stays-user-mic-only",ctl.includes('source:"USER_MIC"'));
 console.log("IMAGINATION_CONTROLLER_BOUNDARY_PASS");
