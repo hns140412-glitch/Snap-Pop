@@ -1,169 +1,239 @@
 {
-  "version": "2026-09-21.1",
-  "basis": "Evidence-backed domain scorecard; percentages are implementation estimates, not runtime/device verification.",
-  "fullScopeMax": 100,
-  "verificationBoundary": "CODED_SCORE_ONLY",
-  "domains": [
-    {
-      "domain": "ORIGINAL_CORE",
-      "max": 20,
-      "score": 17.5,
-      "status": "STRONG_PARTIAL",
-      "evidence": [
-        "5 landmarks",
-        "3-step exploration",
-        "persistence",
-        "fixed question bank"
-      ],
-      "gaps": [
-        "adaptive question engine depth"
-      ]
+  "version": "2026-09-22.1",
+  "basis": "Derived directly from data/snap-pop-requirement-matrix.json; no subjective weighted completion score.",
+  "sourceMatrixVersion": "2026-09-21.17",
+  "statusModel": "EVIDENCE_INDEX",
+  "totalRequirements": 80,
+  "evidence": {
+    "coded": {
+      "count": 80,
+      "total": 80,
+      "percent": 100
     },
-    {
-      "domain": "GUIDE_RULES",
-      "max": 15,
-      "score": 10.5,
-      "status": "PARTIAL",
-      "evidence": [
-        "blank-answer wait",
-        "one-hint flow",
-        "input-specific reaction",
-        "child wording preservation",
-        "transient reaction UI",
-        "main continuity"
-      ],
-      "gaps": [
-        "Guest weighted orchestration",
-        "central authorship guard",
-        "copy regression guard"
-      ]
+    "staticVerified": {
+      "count": 80,
+      "total": 80,
+      "percent": 100
     },
-    {
-      "domain": "EXPLORATION_CREW",
-      "max": 15,
-      "score": 10,
-      "status": "PARTIAL",
-      "evidence": [
-        "crewRegistry",
-        "rename/nameHistory",
-        "affinity",
-        "memories",
-        "world state",
-        "role rosters"
-      ],
-      "gaps": [
-        "full roster/content",
-        "encounter lifecycle depth",
-        "pairwise relationship behavior"
-      ]
+    "runtimeVerified": {
+      "count": 69,
+      "total": 80,
+      "percent": 86.25
     },
-    {
-      "domain": "RECORD_GROWTH_REWARD",
-      "max": 10,
-      "score": 8,
-      "status": "STRONG_PARTIAL",
-      "evidence": [
-        "records",
-        "revisions",
-        "gems",
-        "wish/blessing",
-        "single tree",
-        "timeline"
-      ],
-      "gaps": [
-        "final approved assets",
-        "some long-term semantics"
-      ]
+    "deviceVerified": {
+      "count": 0,
+      "total": 80,
+      "percent": 0
+    }
+  },
+  "architectureSurgery": "CLOSED",
+  "integratedUiStructuralRewrite": "CLOSED",
+  "finalVisualArtDirection": "OPEN",
+  "deployment": "NOT_RUN",
+  "netlifyMutation": "NOT_RUN",
+  "mainMerge": "NOT_RUN",
+  "domains": {
+    "ORIGINAL_CORE": {
+      "total": 2,
+      "coded": 2,
+      "staticVerified": 2,
+      "runtimeVerified": 2,
+      "deviceVerified": 0
     },
-    {
-      "domain": "SPECIAL_IMAGINATION_VOICE",
-      "max": 10,
-      "score": 7,
-      "status": "PARTIAL",
-      "evidence": [
-        "weekend special",
-        "basic Imagination Cloud",
-        "TTS",
-        "STT fallback"
-      ],
-      "gaps": [
-        "context-adaptive cloud",
-        "production speech/device behavior"
-      ]
+    "GUIDE_RULES": {
+      "total": 5,
+      "coded": 5,
+      "staticVerified": 5,
+      "runtimeVerified": 5,
+      "deviceVerified": 0
     },
+    "EXPLORATION_CREW": {
+      "total": 5,
+      "coded": 5,
+      "staticVerified": 5,
+      "runtimeVerified": 5,
+      "deviceVerified": 0
+    },
+    "VOICE_ACCESSIBILITY": {
+      "total": 2,
+      "coded": 2,
+      "staticVerified": 2,
+      "runtimeVerified": 2,
+      "deviceVerified": 0
+    },
+    "IMAGINATION_CLOUD": {
+      "total": 9,
+      "coded": 9,
+      "staticVerified": 9,
+      "runtimeVerified": 8,
+      "deviceVerified": 0
+    },
+    "SPECIAL_EXPLORATION": {
+      "total": 1,
+      "coded": 1,
+      "staticVerified": 1,
+      "runtimeVerified": 1,
+      "deviceVerified": 0
+    },
+    "RECORDS": {
+      "total": 2,
+      "coded": 2,
+      "staticVerified": 2,
+      "runtimeVerified": 2,
+      "deviceVerified": 0
+    },
+    "GROWTH_REWARD": {
+      "total": 2,
+      "coded": 2,
+      "staticVerified": 2,
+      "runtimeVerified": 2,
+      "deviceVerified": 0
+    },
+    "SNAP_WISH_ECONOMY": {
+      "total": 1,
+      "coded": 1,
+      "staticVerified": 1,
+      "runtimeVerified": 1,
+      "deviceVerified": 0
+    },
+    "CONNECTED_APP": {
+      "total": 3,
+      "coded": 3,
+      "staticVerified": 3,
+      "runtimeVerified": 0,
+      "deviceVerified": 0
+    },
+    "PWA_DATA": {
+      "total": 2,
+      "coded": 2,
+      "staticVerified": 2,
+      "runtimeVerified": 2,
+      "deviceVerified": 0
+    },
+    "UI_ASSET": {
+      "total": 1,
+      "coded": 1,
+      "staticVerified": 1,
+      "runtimeVerified": 1,
+      "deviceVerified": 0
+    },
+    "FAMILY_EXPANSION": {
+      "total": 11,
+      "coded": 11,
+      "staticVerified": 11,
+      "runtimeVerified": 11,
+      "deviceVerified": 0
+    },
+    "UNIVERSAL_CORE": {
+      "total": 9,
+      "coded": 9,
+      "staticVerified": 9,
+      "runtimeVerified": 6,
+      "deviceVerified": 0
+    },
+    "TRUTH_GUARD": {
+      "total": 3,
+      "coded": 3,
+      "staticVerified": 3,
+      "runtimeVerified": 2,
+      "deviceVerified": 0
+    },
+    "WRITING_CORE": {
+      "total": 10,
+      "coded": 10,
+      "staticVerified": 10,
+      "runtimeVerified": 8,
+      "deviceVerified": 0
+    },
+    "BADGE_SYSTEM": {
+      "total": 10,
+      "coded": 10,
+      "staticVerified": 10,
+      "runtimeVerified": 9,
+      "deviceVerified": 0
+    },
+    "USER_EXPERIENCE_SURFACE": {
+      "total": 2,
+      "coded": 2,
+      "staticVerified": 2,
+      "runtimeVerified": 2,
+      "deviceVerified": 0
+    }
+  },
+  "runtimeOpenCount": 11,
+  "runtimeOpenRequirements": [
     {
+      "id": "SP-BRIDGE-001",
       "domain": "CONNECTED_APP",
-      "max": 10,
-      "score": 7,
-      "status": "PARTIAL",
-      "evidence": [
-        "snap-bridge session/task/lap/return context",
-        "Hide handoff display"
-      ],
-      "gaps": [
-        "real app-switch idempotency",
-        "partial-return runtime closure",
-        "device behavior"
-      ]
+      "title": "Ready & Set session/task/lap/return context 보존",
+      "gap": "actual cross-app transition/return runtime and physical-device idempotency verification remain open"
     },
     {
-      "domain": "PWA_DATA",
-      "max": 5,
-      "score": 4,
-      "status": "STRONG_PARTIAL",
-      "evidence": [
-        "manifest",
-        "service worker",
-        "IndexedDB",
-        "offline shell"
-      ],
-      "gaps": [
-        "current real-device install/offline regression"
-      ]
+      "id": "SP-BRIDGE-002",
+      "domain": "CONNECTED_APP",
+      "title": "Hide & Seek 단어를 표현 재료로 사용",
+      "gap": "ownership-safe expression-material contract implemented and isolated verified; live cross-app runtime/device transition remains NOT_RUN"
     },
     {
-      "domain": "UI_ASSET",
-      "max": 5,
-      "score": 2.5,
-      "status": "PARTIAL",
-      "evidence": [
-        "live DOM UI",
-        "asset structure",
-        "Golden preview images"
-      ],
-      "gaps": [
-        "current runtime visual regression",
-        "final asset fidelity"
-      ]
+      "id": "SP-UNIV-003",
+      "domain": "UNIVERSAL_CORE",
+      "title": "Ask→Understand 범용 궁금증 해결",
+      "gap": "verified broad-domain ASK→UNDERSTAND pipeline is coded and statically verified; live OpenAI/browser/device execution remains NOT_RUN"
     },
     {
-      "domain": "FAMILY_EXPANSION",
-      "max": 10,
-      "score": 0.5,
-      "status": "SPECIFICATION_DOMINANT",
-      "evidence": [
-        "canonical/recovery specs"
-      ],
-      "gaps": [
-        "feature flags",
-        "diary",
-        "letters",
-        "penpal",
-        "sharing",
-        "joint exploration",
-        "multi-child",
-        "family backend/runtime"
-      ]
+      "id": "SP-UNIV-004",
+      "domain": "UNIVERSAL_CORE",
+      "title": "사회·역사·문화·과학 등 폭넓은 지식 질문",
+      "gap": "generic source-backed web-search resolver supports broad factual domains; domain-specific source-quality hardening and live runtime remain open"
+    },
+    {
+      "id": "SP-UNIV-005",
+      "domain": "UNIVERSAL_CORE",
+      "title": "답변의 사실/불확실성 구분 및 쉬운 설명",
+      "gap": "fact/uncertainty separation, citation evidence, child-friendly question lens and mental-model shaping are coded; live runtime quality remains NOT_RUN"
+    },
+    {
+      "id": "SP-IMAGINE-004",
+      "domain": "IMAGINATION_CLOUD",
+      "title": "상상구름 OpenAI model/tool execution layer",
+      "gap": "same-origin OpenAI knowledge execution layer is coded; OPENAI_RUNTIME_CONNECTED remains false until live execution is verified"
+    },
+    {
+      "id": "SP-TRUTH-002",
+      "domain": "TRUTH_GUARD",
+      "title": "어원·역사·사회·과학 고위험 사실 검증",
+      "gap": "etymology/history/social/science questions route through required web_search + citation/source-set verification; ETYMOLOGY additionally requires at least two distinct source hosts for FULL_FACTUAL_CONTENT. Domain-specific authority ranking and live runtime quality remain open."
+    },
+    {
+      "id": "SP-WRITE-005",
+      "domain": "WRITING_CORE",
+      "title": "Semantic Writing Provider는 현재 초안 의미를 분석해 한 가지 next move만 반환",
+      "gap": "secure same-origin OpenAI-backed provider boundary is implemented; OPENAI_RUNTIME_CONNECTED remains false until server env/model and live execution are verified"
+    },
+    {
+      "id": "SP-WRITE-007",
+      "domain": "WRITING_CORE",
+      "title": "Ready Learning Master의 confirmed Learning Unit context를 Snap & Pop 글쓰기 분석에 전달",
+      "gap": "cross-app runtime/device verification pending"
+    },
+    {
+      "id": "SP-WRITE-009",
+      "domain": "CONNECTED_APP",
+      "title": "Snap & Pop 완료 시 Learning Unit/글쓰기 분석 provenance를 Ready & Set task로 반환",
+      "gap": "cross-app runtime/device verification pending"
+    },
+    {
+      "id": "SP-BADGE-003",
+      "domain": "BADGE_SYSTEM",
+      "title": "배지는 Ready & Set뿐 아니라 TAKY 앱 전체를 관통하는 공통 경험 수집축",
+      "gap": "semantic-light shared event envelope is implemented without shared user/family/org identity, role or permission; cross-app producer/consumer integration remains NOT_RUN"
     }
   ],
-  "fullCodedScore": 67,
-  "coreWithoutFamilyScore": 66.5,
-  "coreWithoutFamilyMax": 90,
-  "coreWithoutFamilyPercent": 73.9,
-  "notes": [
-    "This supersedes the earlier provisional 65% headline for current CODED estimation.",
-    "The change is mainly due to direct code review finding more Guide-derived behavior already implemented.",
-    "RUNTIME_VERIFIED and DEVICE_VERIFIED remain separate and are not implied by this score.",
-    "Expansion pack remains almost entirely unimplemented and is included in full-scope denominator."
+  "invariants": [
+    "CODED != STATIC_VERIFIED != RUNTIME_VERIFIED != DEVICE_VERIFIED",
+    "No composite percentage may replace the four evidence axes.",
+    "Mock-only evidence cannot close live-provider or cross-app runtime requirements.",
+    "Final visual/art direction remains separate from structural UI runtime closure.",
+    "Snap Wish Economy remains SNAP_POP_WISH_ECONOMY owned."
   ]
 }
