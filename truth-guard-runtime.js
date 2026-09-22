@@ -21,8 +21,9 @@
     const excerpt=text(item.excerpt,500);
     const checkedAt=text(item.checked_at||item.checkedAt,80);
     const title=text(item.title,240);
+    const sourceQuality=text(item.source_quality||item.sourceQuality,40).toUpperCase();
     if(!sourceType||(!sourceId&&!sourceUrl)) return null;
-    return {source_type:sourceType,source_id:sourceId||null,source_url:sourceUrl||null,title:title||null,excerpt:excerpt||null,checked_at:checkedAt||null};
+    return {source_type:sourceType,source_id:sourceId||null,source_url:sourceUrl||null,title:title||null,excerpt:excerpt||null,checked_at:checkedAt||null,source_quality:sourceQuality||null};
   }
 
   function normalizeClaim(item={}){
@@ -34,6 +35,10 @@
     return {claim,status,evidence};
   }
 
+  function sourceHost(url=""){
+    try{return new URL(url).hostname.replace(/^www\./,"").toLowerCase()}catch{return ""}
+  }
+
   function assess(raw={}){
     const verification=raw?.verification&&typeof raw.verification==="object"?raw.verification:{};
     const claims=list(verification.claims,MAX_CLAIMS).map(normalizeClaim).filter(Boolean);
@@ -41,7 +46,25 @@
     const mode=text(verification.mode,60);
     const coverage=text(verification.coverage,60);
     const claimEvidenceVerified=claims.length>0&&claims.every(x=>x.status==="VERIFIED");
-    const verified=mode==="CLAIM_EVIDENCE"&&coverage==="FULL_FACTUAL_CONTENT"&&claimEvidenceVerified&&unresolved.length===0;
+    const sourceQualityEnforced=verification.sourceQualityEnforced===true;
+    const eligibleQualities=new Set(
+      list(verification.eligibleSourceQualities,8)
+        .map(x=>text(x,40).toUpperCase())
+        .filter(Boolean)
+    );
+    if(sourceQualityEnforced&&eligibleQualities.size===0){
+      eligibleQualities.add("INSTITUTIONAL");
+      eligibleQualities.add("STANDARD");
+    }
+    const allEvidence=claims.flatMap(x=>x.evidence||[]);
+    const eligibleEvidence=sourceQualityEnforced
+      ? allEvidence.filter(x=>eligibleQualities.has(text(x.source_quality,40).toUpperCase()))
+      : allEvidence;
+    const eligibleHosts=[...new Set(eligibleEvidence.map(x=>sourceHost(x.source_url)).filter(Boolean))];
+    const communityOnlyBlocked=sourceQualityEnforced&&allEvidence.length>0&&eligibleEvidence.length===0;
+    const etymologySourceDiversityRequired=verification.etymologySourceDiversityRequired===true;
+    const etymologySourceDiversityOk=!etymologySourceDiversityRequired||eligibleHosts.length>=2;
+    const verified=mode==="CLAIM_EVIDENCE"&&coverage==="FULL_FACTUAL_CONTENT"&&claimEvidenceVerified&&unresolved.length===0&&!communityOnlyBlocked&&etymologySourceDiversityOk;
     return Object.freeze({
       version:VERSION,
       verified,
@@ -51,13 +74,23 @@
       verifiedClaimCount:claims.filter(x=>x.status==="VERIFIED").length,
       claims,
       unresolved,
+      sourceQualityEnforced,
+      eligibleSourceQualities:[...eligibleQualities],
+      eligibleSourceHostCount:eligibleHosts.length,
+      communityOnlyBlocked,
+      etymologySourceDiversityRequired,
+      etymologySourceDiversityOk,
       reason:verified
         ?"ALL_FACTUAL_CONTENT_EVIDENCE_BACKED"
         :claims.length===0
           ?"NO_CLAIM_EVIDENCE"
-          :claimEvidenceVerified&&coverage!=="FULL_FACTUAL_CONTENT"
-            ?"CLAIM_SET_VERIFIED_COVERAGE_OPEN"
-            :"CLAIM_VERIFICATION_INCOMPLETE"
+          :communityOnlyBlocked
+            ?"LOW_AUTHORITY_ONLY"
+            :etymologySourceDiversityRequired&&!etymologySourceDiversityOk
+              ?"ETYMOLOGY_SOURCE_DIVERSITY_INSUFFICIENT"
+              :claimEvidenceVerified&&coverage!=="FULL_FACTUAL_CONTENT"
+                ?"CLAIM_SET_VERIFIED_COVERAGE_OPEN"
+                :"CLAIM_VERIFICATION_INCOMPLETE"
     });
   }
 
