@@ -1557,16 +1557,23 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "writing-runtime.js:analyze current draft + previousSnapshot",
         "semantic-writing-runtime.js:current draft required",
         "netlify/functions/snap-pop-semantic-writing.mjs:CURRENT draft semantic analysis",
         "app.js:stale result draft/step guard",
-        "scripts/validate-writing-semantic-contract.mjs"
+        "scripts/validate-writing-semantic-contract.mjs",
+        "scripts/browser-runtime-selftest.js",
+        "writing-runtime.js",
+        "writing-controller.js"
       ],
-      "gap": "current-draft semantic next-move path is coded/static verified; live OpenAI/browser/device quality remains NOT_RUN and local fallback remains heuristic when backend unavailable"
+      "gap": "browser current-draft dynamic next-move contract verified; live OpenAI provider quality and physical-device behavior remain open",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: different current drafts produce different next-move focus/question",
+        "browser-runtime-selftest: each current-draft next move remains single"
+      ]
     },
     {
       "id": "SP-WRITE-003",
@@ -1608,16 +1615,24 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "semantic-writing-runtime.js:assertSingleNextMove",
         "authorship-guard-runtime.js",
         "netlify/functions/snap-pop-semantic-writing.mjs:single next move + tiny hint",
         "app.js:analyzeWritingMove/stepSpecificReaction current draft",
-        "scripts/validate-writing-semantic-contract.mjs"
+        "scripts/validate-writing-semantic-contract.mjs",
+        "scripts/browser-runtime-selftest.js",
+        "writing-runtime.js",
+        "writing-controller.js"
       ],
-      "gap": "crew next-direction reaction is grounded in current child draft and constrained to one next move; live provider/browser/device quality remains NOT_RUN"
+      "gap": "browser current-child-draft grounded crew reaction verified; live provider quality and physical-device behavior remain open",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: crew reaction quotes the current child draft",
+        "browser-runtime-selftest: crew reaction gives one next direction",
+        "browser-runtime-selftest: crew reaction does not author a final answer"
+      ]
     },
     {
       "id": "SP-WRITE-005",
