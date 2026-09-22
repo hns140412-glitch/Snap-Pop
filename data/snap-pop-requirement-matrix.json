@@ -1574,10 +1574,12 @@
         "writing-runtime.js",
         "writing-controller.js"
       ],
-      "gap": "browser current-draft dynamic next-move contract verified; live OpenAI provider quality and physical-device behavior remain open",
+      "gap": "browser current-draft next-move behavior verified; live OpenAI semantic quality and physical-device behavior remain open",
       "runtimeEvidence": [
         "browser-runtime-selftest: different current drafts produce different next-move focus/question",
-        "browser-runtime-selftest: each current-draft next move remains single"
+        "browser-runtime-selftest: each current-draft next move remains single",
+        "browser-runtime-selftest: two different current drafts produce different next-move focus/question",
+        "browser-runtime-selftest: each current-draft next move remains a single question"
       ]
     },
     {
@@ -1632,11 +1634,12 @@
         "writing-runtime.js",
         "writing-controller.js"
       ],
-      "gap": "browser current-child-draft grounded crew reaction verified; live provider quality and physical-device behavior remain open",
+      "gap": "browser grounded crew-reaction behavior verified; live provider semantic quality and physical-device behavior remain open",
       "runtimeEvidence": [
         "browser-runtime-selftest: crew reaction quotes the current child draft",
         "browser-runtime-selftest: crew reaction gives one next direction",
-        "browser-runtime-selftest: crew reaction does not author a final answer"
+        "browser-runtime-selftest: crew reaction does not author a final answer",
+        "browser-runtime-selftest: crew reaction quotes current child draft"
       ]
     },
     {
