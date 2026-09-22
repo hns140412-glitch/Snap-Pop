@@ -161,7 +161,9 @@ function normalizeAnswer(answer,sources,questionLens="CONCEPT"){
       sourceHostCount:evidenceHosts.length,
       eligibleSourceHostCount:eligibleHosts.length,
       communityOnlyBlocked:communityOnly,
-      etymologySourceDiversityRequired:questionLens==="ETYMOLOGY"
+      etymologySourceDiversityRequired:questionLens==="ETYMOLOGY",
+      sourceQualityEnforced:true,
+      eligibleSourceQualities:["INSTITUTIONAL","STANDARD"]
     }
   };
 }
