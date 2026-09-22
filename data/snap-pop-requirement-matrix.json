@@ -1043,13 +1043,17 @@
         "app.js:runExpressionBridge/renderExpressionBridge",
         "index.html:expressionBridgeBtn/expressionBridgePanel",
         "scripts/validate-expression-bridge.mjs",
-        "scripts/browser-runtime-selftest.js"
+        "scripts/browser-runtime-selftest.js",
+        "bridge-context-controller.js"
       ],
-      "gap": "browser bilingual expression-bridge contract verified; live external-provider quality and physical-device behavior remain open",
+      "gap": "browser bilingual expression-bridge contract verified; live OpenAI bridge provider quality and physical-device behavior remain open",
       "runtimeEvidence": [
         "browser-runtime-selftest: Korean→English expression bridge panel renders",
         "browser-runtime-selftest: phrase fragments render without overwriting child draft",
-        "browser-runtime-selftest: UI explicitly preserves child authorship"
+        "browser-runtime-selftest: UI explicitly preserves child authorship",
+        "browser-runtime-selftest: Korean→English expression bridge renders phrase fragments without draft overwrite",
+        "browser-runtime-selftest: English→Korean expression bridge returns phrase fragments",
+        "browser-runtime-selftest: bridge forbids final sentence and auto insert"
       ]
     },
     {
