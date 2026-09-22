@@ -3,7 +3,7 @@ import vm from "node:vm";
 
 const source=fs.readFileSync(new URL("../truth-guard-runtime.js",import.meta.url),"utf8");
 const window={};
-vm.runInNewContext(source,{window,Object,Array,String,Number,Math});
+vm.runInNewContext(source,{window,Object,Array,String,Number,Math,URL});
 const guard=window.SnapPopTruthGuard;
 
 function assert(name,condition){
