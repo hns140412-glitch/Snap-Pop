@@ -89,7 +89,7 @@ function renderImaginationResponse(result,identity){
     :"생각 도움";
   const understanding=result?.understanding&&typeof result.understanding==="object"?result.understanding:null;
   const mentalModel=result?.mentalModel&&Array.isArray(result.mentalModel.items)?result.mentalModel:null;
-  const canExpress=imaginationSource==="GLOBAL"&&result?.kind==="ASK_UNDERSTAND"&&result?.verified===true&&result?.verification?.coverage==="FULL_FACTUAL_CONTENT";
+  const canExpress=imaginationSource!=="WRITING_FLOW"&&result?.kind==="ASK_UNDERSTAND"&&result?.verified===true&&result?.verification?.coverage==="FULL_FACTUAL_CONTENT";
   host.innerHTML=`<div class="cloudAnswerHead"><b>${esc(deps.crewMemberName(identity))} · ${esc(result?.title||"상상 구름")}</b><span>${esc(badge)}</span></div>`+
     `<p class="cloudCore">${esc(result?.core||"")}</p>`+
     (nodes.length?`<div class="mindMap">${nodes.map(n=>`<div class="mindNode"><b>${esc(n.label||"")}</b><span>${esc(n.value||"")}</span></div>`).join("")}</div>`:"")+
