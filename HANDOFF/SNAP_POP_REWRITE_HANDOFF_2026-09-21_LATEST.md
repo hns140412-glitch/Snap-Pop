@@ -358,3 +358,5 @@ Canonical ownership correction:
 - optional Home Radio expression transition static/runtime alignment validation trigger.
 
 - optional expression + mental-model runtime matrix closure validation trigger.
+
+- optional-expression/mental-model reconciliation + deterministic crew reunion validation trigger.
