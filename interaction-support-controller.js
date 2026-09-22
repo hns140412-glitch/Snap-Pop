@@ -3,16 +3,19 @@
 let singleton=null;
 function create(deps){
 const q=deps.query,qa=deps.queryAll,store=window.SnapPopStorage,esc=window.SnapPopUIShell.escapeHtml;
-let selected=null,calendarCursor=new Date(),analysisSeq=0;
+let selected=null,calendarCursor=new Date(),analysisSeq=0,analysisAbortController=null;
 function renderLandmarks(){const host=q("#landmarks");host.innerHTML="";deps.getLandmarks().forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;qa(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await store.get("active"),g=await store.get("gems")||{};q("#selTitle").textContent=m.title;q("#selDesc").textContent=m.desc;const identity=await deps.resolvedIdentity();q("#selCrewMemberReaction").textContent=`${deps.crewMemberName(identity)} · ${deps.crewReaction(identity,m.id)}`;q("#selProgress").textContent="진행 "+(a?.landmark===m.id?(Math.min(3,(a.step||0)+1)):0)+" / 3";q("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";q("#selection").hidden=false};host.appendChild(b)})}
 async function revealHint(){const s=await store.get("active");if(!s)return;const p=deps.promptFor(s.landmark,s.step||0,s.language||"ko",deps.ensureWritingState(s).draft);s.crewState=s.crewState||{};s.crewState.hintLevel=Math.max(1,s.crewState.hintLevel||0);s.crewState.lastHintAt=new Date().toISOString();await store.set("active",s);await deps.recordBadgeBehaviorObservation("HELP_REQUEST",{explicitAction:true,landmark:s.landmark,step:Math.min(2,s.step||0),hintLevel:s.crewState.hintLevel},"SNAP_POP");q("#hint").textContent=p[1];q("#hint").hidden=false;q("#hintBtn").disabled=true;const identity=await deps.resolvedIdentity();await deps.showCrewReaction((s.language||"ko")==="en"?`${deps.crewMemberName(identity)}: Just one hint. The rest is yours.`:`${deps.crewMemberName(identity)}: 힌트는 하나만. 나머지는 네 생각으로 가보자.`)}
 async function resetStepCrewState(s){s.crewState={hintLevel:0,lastReaction:"",cloudReturn:null,lastVoiceLength:0};await store.set("active",s)}
 async function analyzeWritingMove(s){
   if(!s||!window.SnapPopWriting?.analyze)return refreshWritingMove(s);
   deps.ensureWritingState(s);
+  analysisAbortController?.abort("superseded");
+  const controller=new AbortController();analysisAbortController=controller;
   const seq=++analysisSeq,draft=s.draft,step=Math.min(2,s.step||0),language=s.language||'ko';
   const previousSnapshot=(s.snapshots||[])[Math.max(0,step-1)]||'';
-  const result=await window.SnapPopWriting.analyze({landmark:s.landmark,step,draft,previousSnapshot,language,learnerContext:deps.learnerContext(),vocabularyMaterial:deps.vocabularyMaterial()});
+  const result=await window.SnapPopWriting.analyze({landmark:s.landmark,step,draft,previousSnapshot,language,learnerContext:deps.learnerContext(),vocabularyMaterial:deps.vocabularyMaterial(),signal:controller.signal});
+  if(analysisAbortController===controller)analysisAbortController=null;
   const cur=await store.get('active');
   if(seq!==analysisSeq||!cur||cur.id!==s.id)return null;
   deps.ensureWritingState(cur);
@@ -54,7 +57,7 @@ function renderCalendar(records,special=[]){
 }
 function isWeekend(d=new Date()){const day=d.getDay();return day===0||day===6}
 function getSelected(){return selected}
-function bumpWritingAnalysisSeq(){analysisSeq++;return analysisSeq}
+function bumpWritingAnalysisSeq(){analysisAbortController?.abort("invalidated");analysisAbortController=null;analysisSeq++;return analysisSeq}
 function install(){
  q("#deepThinkOpen").onclick=()=>{const panel=q("#deepThinkPanel");if(panel){panel.hidden=!panel.hidden;if(!panel.hidden)q("#deepThinkText")?.focus()}};
  q("#deepThinkSave").onclick=async()=>{const s=await store.get("active");if(!s)return;const text=q("#deepThinkText").value.trim();if(!text)return deps.toast("생각을 한 줄만 남겨줘.");const reflectionId=deps.uid("reflection"),at=new Date().toISOString(),ledger=await store.get("writingReflections")||[];ledger.unshift({id:reflectionId,at,activeId:s.id,landmark:s.landmark,step:Math.min(2,s.step||0),language:s.language||"ko",text,source:"CHILD_EXPLICIT_REFLECTION"});await store.set("writingReflections",ledger.slice(0,500));await deps.recordBadgeBehaviorEvidence("DEEP_THINKING",{explicitChildAction:true,evidenceRef:`reflection_event_${reflectionId}`,sourceContractId:"SNAP_POP_CHILD_REFLECTION_ARTIFACT_V1",childChoseToReflect:true,reflectionArtifactRef:`writingReflection:${reflectionId}`});q("#deepThinkText").value="";q("#deepThinkPanel").hidden=true;deps.toast("생각 기록을 남겼어요.")};
