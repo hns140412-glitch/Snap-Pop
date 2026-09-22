@@ -108,6 +108,12 @@ try{
     result.body.answer.verification.unresolved.includes("UNCITED_SENTENCE_2")
   );
 
+  globalThis.fetch=async()=>{throw new TypeError("network down")};
+  result=await call({contract_version:"SNAP_POP_KNOWLEDGE_V1",input:"질문",language:"ko"});
+  assert("upstream-network-error-fails-closed",
+    result.status===502&&result.body.error==="OPENAI_KNOWLEDGE_UPSTREAM_UNAVAILABLE"
+  );
+
   console.log("KNOWLEDGE_SEARCH_CITATION_BOUNDARY_PASS");
 } finally {
   globalThis.fetch=originalFetch;
