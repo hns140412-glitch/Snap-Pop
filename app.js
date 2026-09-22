@@ -76,14 +76,15 @@ async function chooseSceneGuest(sceneKey,options={}){return crewRuntimeControlle
 async function synthesizeCrewWorldState(){return crewRuntimeController().synthesizeCrewWorldState()}
 function recordsGrowthController(){return window.SnapPopRecordsGrowthController.instance({query:$,queryAll:$$,getLandmarks:()=>marks,ensureCrewRegistry,getRules:()=>SNAP_RULES,renderCalendar,renderCloudHistory,renderBadgePreview,renderIdentityPresence,resolvedIdentity,crewSnippet,crewMemberName,show,toast})}
 async function renderRecords(){return recordsGrowthController().renderRecords()}
-async function renderGems(){return recordsGrowthController().renderGems()}
 async function renderGrowth(){return recordsGrowthController().renderGrowth()}
 async function renderGrowthTimeline(){return recordsGrowthController().renderGrowthTimeline()}
 async function renderLastResult(){return recordsGrowthController().renderLastResult()}
 async function updateStatus(){return recordsGrowthController().updateStatus()}
 async function openRecordEdit(recordId){return recordsGrowthController().openRecordEdit(recordId)}
-async function renderWishHistory(){return recordsGrowthController().renderWishHistory()}
-function recordsFlowController(){return window.SnapPopRecordsFlowController.instance({query:$,getLandmarks:()=>marks,toast,recordBadgeBehaviorObservation,recordBadgeBehaviorEvidence,updateStatus,renderGems,renderWishHistory,openRecordEdit,uid,show})}
+function wishEconomyController(){return window.SnapPopWishEconomyController.instance({query:$,getLandmarks:()=>marks,toast,updateStatus,uid,show})}
+async function renderGems(){return wishEconomyController().renderGems()}
+async function renderWishHistory(){return wishEconomyController().renderWishHistory()}
+function recordsFlowController(){return window.SnapPopRecordsFlowController.instance({query:$,toast,recordBadgeBehaviorObservation,recordBadgeBehaviorEvidence,updateStatus,openRecordEdit,uid,show})}
 function specialController(){return window.SnapPopSpecialController.instance({query:$,resolvedIdentity,chooseSceneGuest,crewMemberName,recordCrewExperience,recordCrewMemberExperience,recordBadgeBehaviorEvidence,crewSnippet,uid,toast,show})}
 function specialPromptFor(d=new Date()){return specialController().specialPromptFor(d)}
 async function openSpecial(){return specialController().openSpecial()}
@@ -161,6 +162,7 @@ async function init(){return bootstrapController().init()}
 
 writingFlowController().install();
 recordsFlowController().install();
+wishEconomyController().install();
 specialController().install();
 imaginationController().install();
 
