@@ -111,6 +111,19 @@
       assert("ask-partial-runtime-stays-unverified",partialAsk?.kind==="ASK_UNDERSTAND"&&partialAsk?.verified===false);
       assert("ask-partial-runtime-blocks-followup",partialAsk?.understanding?.followUpAvailable===false);
       assert("ask-partial-runtime-keeps-crew-owner",partialAsk?.responseOwner==="EXPLORATION_CREW");
+      const lensCases=[
+        ["이 단어 뜻이 뭐야?","MEANING"],
+        ["이 말의 어원이 뭐야?","ETYMOLOGY"],
+        ["왜 이런 일이 생겼어?","CAUSE_EFFECT"],
+        ["이건 어떻게 작동해?","MECHANISM"],
+        ["둘의 차이를 비교해줘","COMPARE"],
+        ["이 사건은 언제 일어났어?","TIME_FLOW"],
+        ["이 사람은 누가 만들었어?","PERSON_EVENT"],
+        ["이 나라는 어디에 있어?","PLACE_CONTEXT"]
+      ];
+      assert("imagination-intent-routing-covers-eight-question-lenses",
+        lensCases.every(([input,lens])=>window.SnapPopCuriosityScaffold.classifyQuestion(input)===lens)
+      );
       window.SnapPopKnowledgeBackend=originalKnowledgeBackend;
       window.SnapPopOpenAIProvider=originalUniversalOpenAIProvider;
       window.SnapPopKnowledge=originalKnowledgeRuntime;
