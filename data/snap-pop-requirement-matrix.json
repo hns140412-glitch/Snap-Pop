@@ -1171,13 +1171,18 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
-      "gap": "question lens routing now covers meaning/etymology/cause/mechanism/compare/time/person/place/concept; live runtime quality remains NOT_RUN",
+      "gap": "browser question-lens intent routing verified; live provider/source-quality behavior and physical-device interaction remain open",
       "codeEvidence": [
         "curiosity-scaffold-runtime.js:classifyQuestion",
         "netlify/functions/snap-pop-knowledge.mjs:allowedLenses",
-        "scripts/validate-question-lens-routing.mjs"
+        "scripts/validate-question-lens-routing.mjs",
+        "scripts/browser-runtime-selftest.js",
+        "curiosity-scaffold-runtime.js"
+      ],
+      "runtimeEvidence": [
+        "browser-runtime-selftest: meaning/etymology/cause/mechanism/compare/time/person/place questions route to distinct lenses"
       ]
     },
     {
