@@ -11,8 +11,8 @@ function assert(name,condition){
   console.log("PASS",name);
 }
 
-assert("express-action-requires-full-verified-global-ask",
-  imagination.includes('const canExpress=imaginationSource==="GLOBAL"&&result?.kind==="ASK_UNDERSTAND"&&result?.verified===true&&result?.verification?.coverage==="FULL_FACTUAL_CONTENT"')
+assert("express-action-requires-full-verified-non-writing-ask",
+  imagination.includes('const canExpress=imaginationSource!=="WRITING_FLOW"&&result?.kind==="ASK_UNDERSTAND"&&result?.verified===true&&result?.verification?.coverage==="FULL_FACTUAL_CONTENT"')
 );
 
 assert("express-action-is-explicit-button",
