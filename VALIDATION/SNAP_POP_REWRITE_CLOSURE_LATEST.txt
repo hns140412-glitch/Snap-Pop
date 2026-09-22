@@ -1,5 +1,5 @@
-validation_sha=5db8e7bc40e0d6a72bf91ac829394f19d7d2f947
-checkout_sha=5db8e7bc40e0d6a72bf91ac829394f19d7d2f947
+validation_sha=2a2ed161aa1f8598c1932ae2a1c9aba787f54e66
+checkout_sha=2a2ed161aa1f8598c1932ae2a1c9aba787f54e66
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 71/71
 browser_status=0
@@ -339,6 +339,8 @@ PASS shared-memory-only-if-guest-exists
 GUEST_APPEARANCE_GATE_PASS
 
 === validate-requirement-matrix-reconciliation.mjs ===
+PASS scorecard-derived-from-current-matrix
+PASS scorecard-keeps-evidence-axes-separate
 PASS all-reconciled-items-exist
 PASS all-reconciled-items-coded
 PASS all-reconciled-items-static-verified
