@@ -1,5 +1,6 @@
 const MAX_DRAFT=6000;
 const MAX_SNAPSHOT=6000;
+const UPSTREAM_TIMEOUT_MS=15000;
 const LENSES=new Set(["idea","emotion","description","viewpoint","final"]);
 const FORBIDDEN_KEYS=new Set([
   "finalDraft","final_draft","rewrite","rewrittenText","rewritten_text",
@@ -154,29 +155,41 @@ export default async (request) => {
 
   const user = JSON.stringify(payload);
 
-  const openaiResponse=await fetch("https://api.openai.com/v1/responses",{
-    method:"POST",
-    headers:{
-      "authorization":`Bearer ${apiKey}`,
-      "content-type":"application/json"
-    },
-    body:JSON.stringify({
-      model,
-      reasoning:{effort:"low"},
-      input:[
-        {role:"system",content:[{type:"input_text",text:system}]},
-        {role:"user",content:[{type:"input_text",text:user}]}
-      ],
-      text:{
-        format:{
-          type:"json_schema",
-          name:"snap_pop_semantic_writing",
-          strict:true,
-          schema
-        }
-      }
-    })
-  });
+  let openaiResponse;
+  try{
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),UPSTREAM_TIMEOUT_MS);
+    try{
+      openaiResponse=await fetch("https://api.openai.com/v1/responses",{
+        method:"POST",
+        headers:{
+          "authorization":`Bearer ${apiKey}`,
+          "content-type":"application/json"
+        },
+        signal:controller.signal,
+        body:JSON.stringify({
+          model,
+          reasoning:{effort:"low"},
+          input:[
+            {role:"system",content:[{type:"input_text",text:system}]},
+            {role:"user",content:[{type:"input_text",text:user}]}
+          ],
+          text:{
+            format:{
+              type:"json_schema",
+              name:"snap_pop_semantic_writing",
+              strict:true,
+              schema
+            }
+          }
+        })
+      });
+    }finally{
+      clearTimeout(timer);
+    }
+  }catch(error){
+    return json(error?.name==="AbortError"?504:502,{error:error?.name==="AbortError"?"OPENAI_SEMANTIC_UPSTREAM_TIMEOUT":"OPENAI_SEMANTIC_UPSTREAM_UNAVAILABLE"});
+  }
 
   const data=await openaiResponse.json().catch(()=>null);
   if(!openaiResponse.ok){
