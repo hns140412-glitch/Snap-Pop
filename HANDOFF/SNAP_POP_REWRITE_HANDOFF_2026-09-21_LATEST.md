@@ -377,3 +377,5 @@ Canonical ownership correction:
 - Product ownership/affinity semantics are unchanged.
 
 - current-draft next-move + grounded crew reaction runtime validation trigger.
+
+- current-draft/crew-reaction runtime matrix closure validation trigger.
