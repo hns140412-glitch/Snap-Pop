@@ -3,6 +3,7 @@ import fs from "node:fs";
 const matrix=JSON.parse(fs.readFileSync(new URL("../data/snap-pop-requirement-matrix.json",import.meta.url),"utf8"));
 const rows=Array.isArray(matrix)?matrix:(matrix.requirements||matrix.items||[]);
 const byId=Object.fromEntries(rows.map(x=>[x.id,x]));
+const scorecard=JSON.parse(fs.readFileSync(new URL("../data/snap-pop-implementation-scorecard.json",import.meta.url),"utf8"));
 
 function assert(name,condition){
   if(!condition) throw new Error("FAIL "+name);
@@ -15,6 +16,21 @@ const reconciled=[
   "SP-TRUTH-001","SP-TRUTH-002","SP-TRUTH-003"
 ];
 const liveRuntimeStillOpen=reconciled.filter(id=>!["SP-TRUTH-001","SP-TRUTH-003","SP-IMAGINE-002","SP-IMAGINE-003","SP-IMAGINE-005","SP-IMAGINE-007","SP-IMAGINE-008"].includes(id));
+
+const count=field=>rows.filter(x=>x[field]===true).length;
+assert("scorecard-derived-from-current-matrix",
+  scorecard.sourceMatrixVersion===matrix.version&&
+  scorecard.totalRequirements===rows.length&&
+  scorecard.evidence?.coded?.count===count("coded")&&
+  scorecard.evidence?.staticVerified?.count===count("staticVerified")&&
+  scorecard.evidence?.runtimeVerified?.count===count("runtimeVerified")&&
+  scorecard.evidence?.deviceVerified?.count===count("deviceVerified")
+);
+assert("scorecard-keeps-evidence-axes-separate",
+  scorecard.statusModel==="EVIDENCE_INDEX"&&
+  Array.isArray(scorecard.invariants)&&
+  scorecard.invariants.some(x=>/No composite percentage/i.test(x))
+);
 
 assert("all-reconciled-items-exist",reconciled.every(id=>!!byId[id]));
 assert("all-reconciled-items-coded",reconciled.every(id=>byId[id].coded===true));
