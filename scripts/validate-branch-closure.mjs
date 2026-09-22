@@ -9,6 +9,7 @@ const validators=[
   "validate-truth-guard-runtime.mjs",
   "validate-knowledge-runtime.mjs",
   "validate-knowledge-search-boundary.mjs",
+  "validate-knowledge-source-quality.mjs",
   "validate-curiosity-scaffold.mjs",
   "validate-question-lens-routing.mjs",
   "validate-mental-model.mjs",
