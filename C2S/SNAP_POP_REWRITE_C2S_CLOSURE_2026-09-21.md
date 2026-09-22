@@ -266,3 +266,18 @@ Canonical ownership correction:
   - runtime test state restored
 - DEVICE_VERIFIED: false
 - deploy / Netlify / main merge: NOT_RUN
+
+
+## Runtime regression findings — 2026-09-22
+
+1. HOME_RADIO verified-expression routing regression
+- Symptom: a fully verified ASK→UNDERSTAND answer rendered correctly but "내 말로 표현해보기" was absent when Imagination Cloud was entered through HOME_RADIO.
+- Root cause: expression transition gate allowed only `imaginationSource==="GLOBAL"`.
+- Correction: only `WRITING_FLOW` is excluded; GLOBAL and HOME_RADIO may offer the transition after FULL_FACTUAL_CONTENT verification.
+- Authorship boundary remains locked: question/topic may transfer, AI answer/draft does not transfer.
+
+2. Crew reunion runtime probe nondeterminism
+- Symptom: `crew-world-return-restores-main-companion` could fail even though product runtime was otherwise healthy.
+- Root cause: probe selected main crew from stale bootstrap worldState instead of first synthesizing against current identity priority.
+- Correction: probe now synthesizes current crew world state first, then derives the current MAIN_COMPANION before reunion mutation.
+- Product ownership/affinity semantics are unchanged.
