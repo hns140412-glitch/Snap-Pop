@@ -389,3 +389,5 @@ Canonical ownership correction:
 - bilingual expression bridge browser runtime validation trigger.
 
 - hardened Chrome startup + bilingual expression bridge exact-head validation trigger.
+
+- rerun exact-head browser evidence after CDP_TARGET_NOT_FOUND infrastructure-only failure.
