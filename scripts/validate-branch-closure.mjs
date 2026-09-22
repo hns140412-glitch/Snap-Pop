@@ -75,6 +75,7 @@ const validators=[
   "validate-integrated-imagination-special-flow.mjs",
   "validate-integrated-settings-family-flow.mjs",
   "validate-integrated-ui-closure.mjs",
+  "validate-pwa-predeploy-precache.mjs",
   "validate-dom-binding-integrity.mjs"
 ];
 
