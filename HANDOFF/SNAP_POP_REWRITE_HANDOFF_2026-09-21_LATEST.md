@@ -411,3 +411,5 @@ Canonical ownership correction:
 - truth/crew-guard/scaffold runtime matrix closure validation trigger.
 
 - imagination partial-probe request-completion race validation trigger.
+
+- current-draft next-move + grounded crew reaction runtime matrix closure validation trigger.
