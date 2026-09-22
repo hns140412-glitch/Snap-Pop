@@ -1,5 +1,5 @@
-validation_sha=82faa493ef754b10e822b5004262560630027b0b
-checkout_sha=82faa493ef754b10e822b5004262560630027b0b
+validation_sha=df32557ad3c7b0f660e41609ffc9b2842e8c7459
+checkout_sha=df32557ad3c7b0f660e41609ffc9b2842e8c7459
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 71/71
 browser_status=0
@@ -464,6 +464,7 @@ IMAGINATION_RETURN_INTEGRITY_PASS
 === validate-writing-semantic-contract.mjs ===
 PASS semantic-analysis-requires-current-draft
 PASS provider-receives-current-and-previous-draft-state
+PASS semantic-cancellation-signal-reaches-provider
 PASS server-explicitly-analyzes-current-draft-semantically
 PASS five-landmarks-are-lenses-not-minigames
 PASS cross-lens-suggestion-is-optional-one-lens
@@ -792,6 +793,7 @@ PASS interaction-support-contract-present
 PASS selected-state-owned-by-support
 PASS analysis-sequence-owned-by-support
 PASS analysis-result-checks-current-dom-draft
+PASS superseded-semantic-analysis-is-aborted
 PASS calendar-cursor-owned-by-support
 PASS hint-and-voice-owned-by-support
 PASS reflection-remains-explicit-child-evidence
