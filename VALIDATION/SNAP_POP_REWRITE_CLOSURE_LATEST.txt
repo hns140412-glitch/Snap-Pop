@@ -1,5 +1,5 @@
-validation_sha=2d9c9166a21aa12ad75fb29f12e24e647079905f
-checkout_sha=2d9c9166a21aa12ad75fb29f12e24e647079905f
+validation_sha=06d869887ea16a34ea38b5ca523034a23091ddc1
+checkout_sha=06d869887ea16a34ea38b5ca523034a23091ddc1
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 71/71
 browser_status=0
@@ -22,6 +22,10 @@ PASS verified-claim-needs-evidence
 PASS claim-set-evidence-does-not-imply-full-answer
 PASS claim-set-evidence-is-preserved
 PASS full-covered-evidence-contract-can-pass
+PASS community-only-source-quality-is-fail-closed
+PASS source-quality-is-preserved
+PASS etymology-one-host-is-fail-closed
+PASS etymology-two-independent-hosts-can-pass-client-guard
 PASS unresolved-blocks-verified
 TRUTH_GUARD_STATIC_CONTRACT_PASS
 
