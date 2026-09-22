@@ -514,6 +514,60 @@
       click(document.querySelector("#homeRadio"),"home-radio");
       await wait(120);
       assert("home-radio-opens-imagination",document.querySelector("#imaginationLayer")?.hidden===false);
+
+      const originalImaginationKnowledgeBackend=window.SnapPopKnowledgeBackend;
+      window.SnapPopKnowledgeBackend={
+        async ask(){
+          return {
+            kind:"ASK_UNDERSTAND",
+            intent:"ASK_UNDERSTAND",
+            title:"왜 하늘이 파랄까?",
+            core:"확인된 근거를 바탕으로 원인과 과정을 나눠 볼 수 있어.",
+            provider:"runtime-ui-verified-backend",
+            verification:{
+              mode:"CLAIM_EVIDENCE",
+              coverage:"FULL_FACTUAL_CONTENT",
+              claims:[
+                {claim:"햇빛은 여러 파장의 가시광을 포함한다.",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://example.org/light",title:"Light"}]},
+                {claim:"대기 분자는 짧은 파장의 빛을 더 강하게 산란시킨다.",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://example.org/scatter",title:"Scatter"}]},
+                {claim:"여러 방향에서 산란된 파란빛이 관찰자의 눈에 많이 들어온다.",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://example.org/sky",title:"Sky"}]}
+              ],
+              unresolved:[]
+            }
+          };
+        }
+      };
+      document.querySelector("#imaginationInput").value="왜 하늘이 파래?";
+      click(document.querySelector("#imaginationAskBtn"),"imagination-verified-ask");
+      assert("imagination-verified-answer-rendered",await waitFor(()=>document.querySelector("#imaginationAnswer")?.hidden===false&&document.querySelector("#imaginationAnswer")?.textContent?.includes("확인 완료"),2500,25));
+      assert("imagination-full-verified-allows-expression-transition",!!document.querySelector("#imaginationAnswer .cloudExpressBtn"));
+      assert("imagination-verified-mental-model-renders",document.querySelectorAll("#imaginationAnswer .mentalStep").length>=2);
+      assert("imagination-verified-mental-model-is-flow",!!document.querySelector("#imaginationAnswer .mentalModelFLOW"));
+
+      window.SnapPopKnowledgeBackend={
+        async ask(){
+          return {
+            kind:"ASK_UNDERSTAND",
+            intent:"ASK_UNDERSTAND",
+            title:"아직 확인 중",
+            core:"확인되지 않은 부분이 남아 있어.",
+            provider:"runtime-ui-partial-backend",
+            verification:{
+              mode:"CLAIM_EVIDENCE",
+              coverage:"PARTIAL",
+              claims:[{claim:"일부 확인된 주장",status:"VERIFIED",evidence:[{source_type:"WEB",source_url:"https://example.org/partial",title:"Partial"}]}],
+              unresolved:["추가 확인 필요"]
+            }
+          };
+        }
+      };
+      document.querySelector("#imaginationInput").value="왜 그런 일이 생겼어?";
+      click(document.querySelector("#imaginationAskBtn"),"imagination-partial-ask");
+      assert("imagination-partial-answer-rendered",await waitFor(()=>document.querySelector("#imaginationAnswer")?.hidden===false&&document.querySelector("#imaginationAnswer")?.textContent?.includes("일부 근거 확인"),2500,25));
+      assert("imagination-partial-blocks-expression-transition",!document.querySelector("#imaginationAnswer .cloudExpressBtn"));
+      assert("imagination-partial-blocks-structural-flow-model",!document.querySelector("#imaginationAnswer .mentalModelFLOW"));
+      window.SnapPopKnowledgeBackend=originalImaginationKnowledgeBackend;
+
       const originalCloudVoice=window.SnapPopVoice;
       const cloudVoiceCalls=[];
       window.SnapPopVoice={
