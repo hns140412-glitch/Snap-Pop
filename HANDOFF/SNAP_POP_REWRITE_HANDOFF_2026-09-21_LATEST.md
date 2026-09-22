@@ -413,3 +413,59 @@ Canonical ownership correction:
 - imagination partial-probe request-completion race validation trigger.
 
 - current-draft next-move + grounded crew reaction runtime matrix closure validation trigger.
+
+
+## C2S continuation closure — 2026-09-22 / NEW CHAT boundary
+
+Latest exact validated implementation state:
+- validated code SHA: `8d16060012599d5d25a692a1f879f5e39e1e7cd2`
+- evidence commit: `581816834093b060cd6dd30e7fd8ae22eed7b1db`
+- branch closure: `71/71 PASS`
+- browser runtime: `BROWSER_RUNTIME_CDP_PASS`
+- viewport: `390×844`
+- PWA reload recovery: PASS
+- PWA offline shell: PASS
+- matrix at handoff: CODED `80/80` · STATIC `80/80` · RUNTIME `69/80` · DEVICE `0/80`
+- architecture rewrite: CLOSED
+- integrated UI structural rewrite: CLOSED
+- final visual/art direction: OPEN
+- deploy / Netlify / main merge: NOT_RUN
+- DEVICE_VERIFIED: false
+
+### Ownership correction locked
+- 소원상점 / 축복 사용하기 / 보석 차감 / wish transaction / gem ledger = **Snap & Pop Wish Economy**.
+- dedicated owner: `wish-economy-controller.js`
+- legacy trace key `SP-GROWTH-002` remains only for history; canonical domain/owner = `SNAP_WISH_ECONOMY / SNAP_POP_WISH_ECONOMY`.
+- Ready & Set / Hide & Seek / TAKY have no spend authority over Snap gems/wishes.
+
+### Additional runtime evidence locked before handoff
+- current child draft dynamically changes next move;
+- next move remains single-direction;
+- crew reaction quotes current child draft and does not author final answer;
+- verified HOME_RADIO answer may offer optional "내 말로 표현해보기";
+- WRITING_FLOW remains excluded from that transfer path;
+- partial verification blocks expression transition;
+- verified claim set can render structural mental model;
+- partial verification blocks structural FLOW mental model;
+- source-quality hardening: community/social-only evidence cannot reach FULL_FACTUAL_CONTENT;
+- etymology source diversity counts only eligible non-community hosts;
+- knowledge source quality validator is part of branch closure.
+
+### Remaining runtime-open requirements = 11
+Cross-app runtime required:
+- `SP-BRIDGE-001` Ready session/task/lap/return context
+- `SP-BRIDGE-002` Hide vocabulary expression-material transition
+- `SP-WRITE-007` Ready confirmed Learning Unit → Snap writing
+- `SP-WRITE-009` Snap completion/provenance → Ready task
+- `SP-BADGE-003` cross-app badge producer/consumer integration
+
+Live provider/runtime required:
+- `SP-UNIV-003` broad Ask→Understand
+- `SP-UNIV-004` broad knowledge domains
+- `SP-UNIV-005` fact/uncertainty + child-friendly explanation live quality
+- `SP-IMAGINE-004` live OpenAI model/tool execution
+- `SP-TRUTH-002` high-risk factual source/runtime quality
+- `SP-WRITE-005` live semantic writing provider
+
+Do not convert the remaining 11 to runtimeVerified using mocks alone.
+Do not touch Ready & Set or Hide & Seek repos from the Snap-only continuation unless the new task explicitly changes scope.
