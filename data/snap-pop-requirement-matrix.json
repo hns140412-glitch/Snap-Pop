@@ -538,8 +538,8 @@
     },
     {
       "id": "SP-GROWTH-002",
-      "domain": "GROWTH_REWARD",
-      "title": "보석/소원/축복",
+      "domain": "SNAP_WISH_ECONOMY",
+      "title": "Snap & Pop 소원상점 / 축복 사용하기",
       "authority": [
         "REV10",
         "REV11"
@@ -552,7 +552,9 @@
       "codeEvidence": [
         "app.js:renderGems",
         "app.js:renderWishHistory",
-        "scripts/browser-runtime-selftest.js"
+        "scripts/browser-runtime-selftest.js",
+        "wish-economy-controller.js:renderGems/renderWishHistory/confirmBlessing",
+        "scripts/validate-wish-economy-controller-boundaries.mjs"
       ],
       "runtimeEvidence": [
         "browser-runtime-selftest: wish confirmation explicit",
@@ -560,7 +562,9 @@
         "browser-runtime-selftest: completed wish transaction recorded",
         "browser-runtime-selftest: GEM_SPENT ledger recorded and test state restored"
       ],
-      "gap": "physical-device verification remains unverified"
+      "gap": "Snap & Pop wish-economy ownership/runtime verified; physical-device verification remains unverified",
+      "owner": "SNAP_POP_WISH_ECONOMY",
+      "legacyIdNote": "SP-GROWTH-002 is retained only as a stable legacy trace key; canonical ownership is SNAP_POP_WISH_ECONOMY."
     },
     {
       "id": "SP-BRIDGE-001",
