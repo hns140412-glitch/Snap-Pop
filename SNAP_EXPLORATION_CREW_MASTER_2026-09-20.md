@@ -17,12 +17,17 @@
 과거 문서의 길잡이/Guide/Guide Companion은 모두 **탐험대원**으로 해석한다.
 코드에서 과거 `guide` 필드는 읽기 전용 마이그레이션 입력으로만 허용하며 신규 저장에는 사용하지 않는다.
 
-## 2. 소유권
+## 2. 소유권 — 2026-09-22 cross-app correction
 
-- **Ready & Set 소유:** 사용자 프로필/사진, 상위 세션, Planner, Timer.
-- **Snap & Pop 소유:** 탐험대, 탐험대원 정체성, 성격, 행동, 반응, 개입 강도, 표현 방식, 탐험 문법.
-- 외부 앱은 탐험가의 상태/맥락을 제공할 수 있으나 탐험대 규칙을 덮어쓰지 않는다.
-- 향후 권한이 이양되어도 Snap & Pop 고유 성격은 탐험대 규칙이 계속 발전시킨다.
+Latest integrated authority:
+`TAKY:C2S/LEARNING_APP_FAMILY_INTEGRATED_LOGIC_UI_CANONICAL_2026-09-22.md`
+
+- **TAKY shared layer 소유:** 탐험대 canonical identity, family-wide 성격 코어, 행동/개입 규칙, 관계/기억/에피소드/voice identity semantics.
+- **Snap & Pop 소유:** Beach/표현 맥락에서의 app-local Crew projection, 대사/타이밍/표현 화면.
+- **Ready & Set 소유:** 상위 세션, Planner, Timer 및 Ready 지역에서의 Crew projection.
+- **Hide & Seek 소유:** vocabulary/retrieval logic 및 Jungle/Waterfall에서의 Crew projection.
+- 앱 로컬 표현은 shared 탐험대 규칙을 덮어쓰지 않는다.
+- 이 문서의 과거 `SNAP_POP_OWNED` family-wide 소유권 표현은 source lineage로만 보존하며 현재 authority가 아니다.
 
 ## 3. 핵심 불변식
 
