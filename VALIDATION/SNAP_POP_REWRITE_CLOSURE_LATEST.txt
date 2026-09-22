@@ -1,7 +1,7 @@
-validation_sha=9e1c39fd0ea5a1297cb8109ab5356852f879eaa4
-checkout_sha=9e1c39fd0ea5a1297cb8109ab5356852f879eaa4
+validation_sha=683b1d98bd553f0e6a2a2e0a725b549412645aba
+checkout_sha=683b1d98bd553f0e6a2a2e0a725b549412645aba
 closure_status=0
-closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 72/72
+closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 73/73
 browser_status=0
 browser_marker=BROWSER_RUNTIME_CDP_PASS
 viewport=390x844
@@ -881,6 +881,20 @@ PASS apple-touch-icon-is-declared
 PASS legacy-service-worker-is-not-registered
 PWA_PREDEPLOY_PRECACHE_COVERAGE_PASS
 
+=== validate-predeploy-readiness.mjs ===
+PASS all-requirements-coded-before-predeploy
+PASS all-requirements-static-verified-before-predeploy
+PASS runtime-evidence-remains-separated
+PASS device-evidence-not-overclaimed
+PASS architecture-surgery-closed
+PASS integrated-ui-structural-rewrite-closed
+PASS deployment-not-run
+PASS runtime-open-count-is-explicit
+PASS runtime-open-set-is-stable
+PASS scorecard-open-set-matches-matrix
+PASS final-visual-direction-remains-explicit-open
+SNAP_POP_PREDEPLOY_READINESS_CONTRACT_PASS
+
 === validate-dom-binding-integrity.mjs ===
 PASS all-direct-dom-bindings-have-index-targets
 PASS querySelector-collection-misuse-blocked
@@ -888,7 +902,7 @@ PASS explicit-help-request-control-exists
 PASS hint-control-is-wired-to-explicit-help-path
 DOM_BINDING_INTEGRITY_PASS
 
-BRANCH_CLOSURE_VALIDATOR_PASS 72/72
+BRANCH_CLOSURE_VALIDATOR_PASS 73/73
 --- BROWSER ---
 PWA_RELOAD_RECOVERY_PASS
 {"readyState":"complete","init":"PASS","db":"OPEN","probe":{"status":"PERSISTED","token":"snap-pop-runtime-recovery-v1"}}
