@@ -401,3 +401,5 @@ Canonical ownership correction:
 - imagination gateway reconciliation contradiction fix exact-head validation trigger.
 
 - Truth Guard / presentation guard / scaffold browser runtime validation trigger.
+
+- truth/presentation/scaffold browser runtime validation trigger.
