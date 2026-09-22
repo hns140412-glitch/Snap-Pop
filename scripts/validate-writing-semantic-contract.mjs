@@ -23,6 +23,12 @@ assert("provider-receives-current-and-previous-draft-state",
   writing.includes('previousSnapshot:(payload.previousSnapshot||"").slice(0,6000)')
 );
 
+assert("semantic-cancellation-signal-reaches-provider",
+  support.includes("signal:controller.signal")&&
+  writing.includes("signal:payload.signal||null")&&
+  semantic.includes("signal:payload.signal||null")
+);
+
 assert("server-explicitly-analyzes-current-draft-semantically",
   server.includes("Analyze the CURRENT draft semantically")&&
   server.includes("Choose the single most useful next move")
