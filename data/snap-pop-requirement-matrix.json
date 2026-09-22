@@ -1033,7 +1033,7 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "expression-bridge-runtime.js",
@@ -1042,9 +1042,15 @@
         "netlify.toml:/api/snap-pop-expression-bridge",
         "app.js:runExpressionBridge/renderExpressionBridge",
         "index.html:expressionBridgeBtn/expressionBridgePanel",
-        "scripts/validate-expression-bridge.mjs"
+        "scripts/validate-expression-bridge.mjs",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "meaning-preserving phrase-level bridge implemented and isolated/static verified; live provider/browser/device runtime remains NOT_RUN"
+      "gap": "browser bilingual expression-bridge contract verified; live external-provider quality and physical-device behavior remain open",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: Korean→English expression bridge panel renders",
+        "browser-runtime-selftest: phrase fragments render without overwriting child draft",
+        "browser-runtime-selftest: UI explicitly preserves child authorship"
+      ]
     },
     {
       "id": "SP-UNIV-003",
@@ -1151,15 +1157,22 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "intelligence-runtime.js",
         "knowledge-runtime.js",
         "curiosity-scaffold-runtime.js",
-        "app.js:openImagination/runImagination"
+        "app.js:openImagination/runImagination",
+        "scripts/browser-runtime-selftest.js"
       ],
-      "gap": "Think/Ask gateway plus verified knowledge path is coded; live provider/browser/device runtime remains NOT_RUN"
+      "gap": "browser Think/Ask gateway routing verified with local/mock knowledge paths; live external-provider quality and physical-device behavior remain open",
+      "runtimeEvidence": [
+        "browser-runtime-selftest: Think→Express local gateway returns scaffold",
+        "browser-runtime-selftest: verified Ask→Understand path returns verified result",
+        "browser-runtime-selftest: partial Ask remains unverified",
+        "browser-runtime-selftest: Home Radio opens Imagination gateway"
+      ]
     },
     {
       "id": "SP-IMAGINE-003",
