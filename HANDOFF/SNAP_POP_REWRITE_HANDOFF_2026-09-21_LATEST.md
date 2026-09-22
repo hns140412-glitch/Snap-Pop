@@ -375,3 +375,5 @@ Canonical ownership correction:
 - Root cause: probe selected main crew from stale bootstrap worldState instead of first synthesizing against current identity priority.
 - Correction: probe now synthesizes current crew world state first, then derives the current MAIN_COMPANION before reunion mutation.
 - Product ownership/affinity semantics are unchanged.
+
+- current-draft next-move + grounded crew reaction runtime validation trigger.
