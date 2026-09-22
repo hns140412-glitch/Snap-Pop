@@ -354,3 +354,5 @@ Canonical ownership correction:
 - verified/partial imagination UI routing + mental-model runtime validation trigger.
 
 - verified HOME_RADIO optional expression transition regression validation trigger.
+
+- optional Home Radio expression transition static/runtime alignment validation trigger.
