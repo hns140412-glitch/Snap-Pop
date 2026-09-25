@@ -24,3 +24,6 @@ assert(html.includes('id="learnerChip"'));
 assert(app.includes("SHARED_MEMBER_DISPLAY_NAME"));
 assert(app.includes("learnerChip.dataset.memberId"));
 assert(app.includes("member_display_name"));
+
+assert(src.includes('TakyExplorationEvent'));
+assert(src.includes("taky-exploration-event"));
