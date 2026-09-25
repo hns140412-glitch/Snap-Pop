@@ -19,4 +19,18 @@ assert("context-persists-in-session-storage",
 assert("return-target-is-http-safe",
  bridge.includes("safeReturnTarget")&&bridge.includes("['http:','https:']")
 );
+
+assert("learning-context-is-consumed",
+ bridge.includes("'learning_context'")&&bridge.includes("decodeLearningContext")
+);
+assert("ready-source-binding-is-preserved",
+ bridge.includes("source_range:String(value.source_range")&&bridge.includes("workbook_ref_id:String(value.workbook_ref_id")
+);
+assert("learning-context-fails-closed-on-authority-keys",
+ bridge.includes("forbiddenKeys")&&bridge.includes("planner_authority")&&bridge.includes("allocation_authority")
+);
+assert("learning-context-requires-ready-identity",
+ bridge.includes("required=['learning_unit_id','analysis_id','assignment_id']")
+);
+
 console.log("READY_SNAP_BRIDGE_CONTEXT_STATIC_PASS");
