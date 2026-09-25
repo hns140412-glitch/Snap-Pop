@@ -71,3 +71,31 @@ test('Snap bridge emits shared immutable event envelope while preserving legacy 
   expect(out.a.app).toBe('snap-pop');
   expect(out.valid).toBe(true);
 });
+
+
+test('Snap emits contextual Learning outcome without global mastery claim',async({page})=>{
+  await page.goto('http://127.0.0.1:4173/');
+  await expect.poll(()=>page.evaluate(()=>!!globalThis.SnapPopBridge?.emitLearningOutcome)).toBe(true);
+  const out=await page.evaluate(()=>{
+    const event=globalThis.SnapPopBridge.emitLearningOutcome({
+      concept_skill_target:'writing',
+      completed:true,
+      evidence_of_improvement:true,
+      rubric_ref:'rubric-v1',
+      rubric_result:{passed:true}
+    });
+    return {
+      type:event.type,
+      event_type:event.event_type,
+      payload:event.payload,
+      valid:globalThis.TakyEventEnvelope.validate(event).ok
+    };
+  });
+  expect(out.type).toBe('LEARNING_OUTCOME');
+  expect(out.event_type).toBe('LEARNING_OUTCOME');
+  expect(out.payload.completed).toBe(true);
+  expect(out.payload.evidence_of_improvement).toBe(true);
+  expect(out.payload.contextual_evidence_only).toBe(true);
+  expect(out.payload.global_mastery_claim).toBe(false);
+  expect(out.valid).toBe(true);
+});
