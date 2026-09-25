@@ -13,6 +13,8 @@ const STORAGE_SCOPE_SESSION=(()=>{
   return family_id&&member_id?{authenticated:true,family_id,member_id}:{authenticated:false};
 })();
 const SNAP_DB_NAME=StorageScope.storageKey('app/snap/db','snap_pop_rev10',STORAGE_SCOPE_SESSION);
+const SHARED_MEMBER_DISPLAY_NAME=String(launchParams.get('member_display_name')||'').trim();
+const SHARED_MEMBER_AVATAR_REF=String(launchParams.get('member_avatar_ref')||'').trim();
 const STEPS=[["생각 꺼내기","무엇이 먼저 떠올랐어?","완벽한 문장이 아니어도 좋아. 작은 조각 하나만 잡아보자."],["생각 넓히기","그 생각 옆에는 뭐가 더 있을까?","이유, 느낌, 장면 중 하나를 더 붙여보자."],["표현 완성하기","이제 네 문장으로 마무리해볼까?","앞의 생각을 이어서 네 말로 정리해보자."]];
 function openDB(){return new Promise((ok,no)=>{const r=indexedDB.open(SNAP_DB_NAME,1);r.onupgradeneeded=()=>r.result.createObjectStore("state");r.onsuccess=()=>{db=r.result;ok()};r.onerror=()=>no(r.error)})}
 function get(k){return new Promise(ok=>{const r=db.transaction("state").objectStore("state").get(k);r.onsuccess=()=>ok(r.result)})}
@@ -31,7 +33,17 @@ $("#voiceBtn").onclick=()=>{const R=window.SpeechRecognition||window.webkitSpeec
 async function renderRecords(){if(!db)return;const r=await get("records")||[];$("#recordList").innerHTML=r.length?r.map(x=>{const m=marks.find(z=>z.id===x.landmark);return `<article class="card"><b>${m?.title||"탐험"}</b><p>${x.answers.map(html).join(" ")}</p><span class="kicker">${new Date(x.date).toLocaleDateString("ko-KR")}</span></article>`}).join(""):'<article class="card"><b>첫 기록을 기다리고 있어요.</b><p>지도에서 탐험지를 골라 시작해봐요.</p></article>'}
 async function renderGems(){if(!db)return;const g=await get("gems")||{};$("#gemRows").innerHTML=marks.map(m=>{const n=g[m.id]||0;return `<article class="gemRow"><div><b>${m.title}</b><span>보석 조각 ${n%6}/6</span></div><strong>완성 ${Math.floor(n/6)}</strong></article>`}).join("")}
 async function renderGrowth(){if(!db)return;const cfg=await fetch("data/growth.json").then(r=>r.json()),exp=await get("exp")||0,lv=Math.floor(exp/120)+1;let s=cfg[0];cfg.forEach(x=>{if(lv>=x.min)s=x});$("#growthLv").textContent="Lv."+lv;$("#growthName").textContent=s.name;$("#treeImage").src="assets/growth/"+s.image;$("#expBar").style.width=((exp%120)/120*100)+"%";$("#expText").textContent="EXP "+exp+" · 다음 성장까지 "+(120-exp%120)+" EXP"}
-async function updateStatus(){const exp=await get("exp")||0,g=await get("gems")||{},lv=Math.floor(exp/120)+1,complete=Object.values(g).reduce((a,n)=>a+Math.floor(n/6),0);$("#levelChip").textContent="Lv."+lv;$("#gemChip").textContent="보석 "+complete}
+async function updateStatus(){
+ const learnerChip=$("#learnerChip");
+ if(learnerChip){
+  learnerChip.hidden=!SHARED_MEMBER_DISPLAY_NAME;
+  learnerChip.textContent=SHARED_MEMBER_DISPLAY_NAME||"";
+  learnerChip.dataset.memberId=String(launchParams.get('member_id')||'');
+  learnerChip.dataset.avatarRef=SHARED_MEMBER_AVATAR_REF||"";
+ }
+ const exp=await get("exp")||0,g=await get("gems")||{},lv=Math.floor(exp/120)+1,complete=Object.values(g).reduce((a,n)=>a+Math.floor(n/6),0);
+ $("#levelChip").textContent="Lv."+lv;$("#gemChip").textContent="보석 "+complete
+}
 $("#shopBtn").onclick=()=>show("shop");$("#useWish").onclick=()=>$("#blessing").hidden=false;
 $("#confirmBlessing").onclick=async()=>{const g=await get("gems")||{};let need=12;for(const k of Object.keys(g)){const use=Math.min(Math.floor(g[k]/6)*6,need);g[k]-=use;need-=use;if(!need)break}if(need)return toast("완성 보석 2개가 필요해요.");await set("gems",g);await updateStatus();renderGems();$("#blessing").hidden=true;toast("축복을 사용했어요. 소원이 기록됐어요.")}
 $("#historyBtn").onclick=()=>toast("성장 기록 타임라인은 기능 검토 후 연결하는 HOLD 항목이에요.");
