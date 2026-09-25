@@ -31,3 +31,27 @@ jobs:
         run: node scripts/validate-ready-snap-bridge-context.mjs
       - name: Run Snap branch closure validators
         run: node scripts/validate-branch-closure.mjs
+      - name: Package exact validated source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p release
+          git archive --format=zip --output=release/snap-ready-integration-source.zip "${GITHUB_SHA}"
+          SHA256="$(sha256sum release/snap-ready-integration-source.zip | awk '{print $1}')"
+          {
+            echo "repository=${GITHUB_REPOSITORY}"
+            echo "branch=${GITHUB_REF_NAME}"
+            echo "source_sha=${GITHUB_SHA}"
+            echo "archive=snap-ready-integration-source.zip"
+            echo "archive_sha256=${SHA256}"
+            echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "validation=Snap Ready-context exact-source CI + branch closure"
+          } > release/manifest.txt
+          cat release/manifest.txt
+      - name: Upload exact validated source
+        uses: actions/upload-artifact@v4
+        with:
+          name: snap-ready-integration-${{ github.sha }}
+          path: release/
+          retention-days: 7
+          if-no-files-found: error
