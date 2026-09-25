@@ -17,3 +17,10 @@ console.log('SNAP_APP_EXECUTION_CONTEXT_BRIDGE_PASS');
 
 assert(src.includes('member_display_name'));
 assert(src.includes('actor_member_id'));
+
+const app=fs.readFileSync('app.js','utf8');
+const html=fs.readFileSync('index.html','utf8');
+assert(html.includes('id="learnerChip"'));
+assert(app.includes("SHARED_MEMBER_DISPLAY_NAME"));
+assert(app.includes("learnerChip.dataset.memberId"));
+assert(app.includes("member_display_name"));
