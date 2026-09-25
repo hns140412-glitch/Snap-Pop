@@ -26,6 +26,8 @@ jobs:
           node --check vendor/taky/pwa-update-state.js
       - name: Validate shared runtime contract
         run: node tests/shared-runtime-contract.test.js
+      - name: Validate Snap human-rubric verification adapter
+        run: node tests/snap-rubric-verifier.test.js
       - name: Install Playwright
         run: |
           npm install --no-save @playwright/test@1.55.0
