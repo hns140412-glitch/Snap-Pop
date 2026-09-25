@@ -1,0 +1,33 @@
+name: Ready Learning Context Integration
+
+on:
+  push:
+    branches:
+      - integration/ready-learning-context-binding-2026-09-25
+
+permissions:
+  contents: read
+
+jobs:
+  exact-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Show candidate SHA
+        run: |
+          echo "SNAP_READY_INTEGRATION_SHA=${GITHUB_SHA}"
+          test "$(git rev-parse HEAD)" = "${GITHUB_SHA}"
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check bridge
+        run: node --check snap-bridge.js
+      - name: Validate Ready-Snap context contract
+        run: node scripts/validate-ready-snap-bridge-context.mjs
+      - name: Run Snap branch closure validators
+        run: node scripts/validate-branch-closure.mjs
