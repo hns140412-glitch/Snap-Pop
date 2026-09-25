@@ -4,7 +4,7 @@
   const BRIDGE_VERSION = '2026.09.07-a';
   const CONTEXT_KEY = 'snap_pop_shared_context_v1';
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
-  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context'];
+  const PARAMS = ['family_id','member_id','profile_id','assignment_id','analysis_id','learning_unit_id','todo_id','session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context'];
 
   const EventEnvelope = globalThis.TakyEventEnvelope;
   if(!EventEnvelope?.create) throw new Error('SNAP_SHARED_EVENT_ENVELOPE_UNAVAILABLE');
@@ -53,6 +53,13 @@
       type,
       app:'snap-pop',
       at:envelope.occurred_at,
+      family_id: context.family_id || null,
+      member_id: context.member_id || context.child_id || null,
+      profile_id: context.profile_id || null,
+      assignment_id: context.assignment_id || null,
+      analysis_id: context.analysis_id || null,
+      learning_unit_id: context.learning_unit_id || null,
+      todo_id: context.todo_id || null,
       session_id: context.session_id || null,
       goal_id: context.goal_id || null,
       task_id: context.task_id || null,
@@ -75,10 +82,9 @@
     try {
       const url = new URL(context.return_target, location.href);
       if (!['http:','https:'].includes(url.protocol)) return null;
-      if (context.session_id) url.searchParams.set('session_id', context.session_id);
-      if (context.goal_id) url.searchParams.set('goal_id', context.goal_id);
-      if (context.task_id) url.searchParams.set('task_id', context.task_id);
-      if (context.lap_id) url.searchParams.set('lap_id', context.lap_id);
+      for (const key of ['family_id','member_id','profile_id','assignment_id','analysis_id','learning_unit_id','todo_id','session_id','goal_id','task_id','lap_id']) {
+        if (context[key]) url.searchParams.set(key, context[key]);
+      }
       url.searchParams.set('task_state', taskState);
       url.searchParams.set('from_app', 'snap-pop');
       return url.href;
