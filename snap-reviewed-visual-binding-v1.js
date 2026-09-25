@@ -42,6 +42,12 @@
     }catch{return String(value||'').replace(/^\.\//,'').replace(/^\//,'');}
   }
 
+  function crewRegistry(){
+    if(typeof globalThis!=='undefined'&&globalThis.SnapCrewAssetRegistry)return globalThis.SnapCrewAssetRegistry;
+    if(typeof require==='function'){try{return require('./snap-crew-asset-registry-v1.js')}catch{}}
+    return null;
+  }
+
   function resolve(input={}){
     const world_state=String(input.world_state||'').trim();
     const theme_expression=String(input.theme_expression||'').trim();
@@ -53,14 +59,30 @@
     if(theme_expression&&theme_expression!==WORLD_BINDING.theme_expression){
       return {ok:false,reason:'THEME_EXPRESSION_NOT_REVIEWED',theme_expression};
     }
+    let crew={...CREW_BINDING};
     if(crew_visual&&crew_visual!==CREW_BINDING.crew_visual){
-      return {ok:false,reason:'CREW_VISUAL_REQUIRES_REVIEWED_ASSET',crew_visual};
+      const registry=crewRegistry();
+      const approved=registry?.runtimeBinding?.(crew_visual);
+      if(!approved?.ok)return {ok:false,reason:'CREW_VISUAL_REQUIRES_REVIEWED_ASSET',crew_visual,registry:approved||null};
+      crew={
+        crew_visual,
+        runtime_asset:approved.asset_path,
+        review_status:'APPROVED_RUNTIME_ASSET',
+        dynamic_binding_allowed:true,
+        implementation_ready:true
+      };
+    }else{
+      crew={
+        ...crew,
+        implementation_ready:true,
+        content_state:'CONTENT_APPROVAL_HOLD'
+      };
     }
     return {
       ok:true,
       version:VERSION,
       world:{...WORLD_BINDING},
-      crew:{...CREW_BINDING},
+      crew,
       guards:{
         reference_board_direct_binding:false,
         reward_reference_direct_binding:false,
