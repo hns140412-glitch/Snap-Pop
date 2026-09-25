@@ -192,6 +192,21 @@
     history.replaceState(null, '', clean);
   }
 
+  function requestRubricReview(input = {}) {
+    const verifier = globalThis.SnapRubricVerifier;
+    if (!verifier?.createReviewRequest) return { ok:false, reason:'SNAP_RUBRIC_VERIFIER_UNAVAILABLE' };
+    return verifier.createReviewRequest({
+      event_id: input.event_id,
+      member_id: input.member_id || context.member_id || context.child_id || '',
+      subject: input.subject || context.subject || '',
+      concept_skill_target: input.concept_skill_target || context.concept_skill_target || '',
+      rubric_ref: input.rubric_ref,
+      reviewer_role: input.reviewer_role,
+      rubric_version: input.rubric_version,
+      production_summary: input.production_summary || null
+    });
+  }
+
   function validate() {
     const checks = {
       noLocalTimer: true,
@@ -217,6 +232,7 @@
       context: () => ({ ...context }),
       emit,
       returnToBase,
+      requestRubricReview,
       validate
     });
   }
