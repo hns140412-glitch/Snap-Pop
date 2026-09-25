@@ -52,3 +52,13 @@ assert.equal(ev1.payload_digest,ev2.payload_digest);
 assert(bridge.includes("EventEnvelope.create"));
 assert(!bridge.includes("const eventId = () =>"));
 console.log('PASS: Snap bridge event identity uses TAKY immutable event envelope');
+
+const snapIndex=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
+const snapRubric=fs.readFileSync(path.join(__dirname,'..','snap-rubric-verifier.js'),'utf8');
+const snapBridgeSource=fs.readFileSync(path.join(__dirname,'..','snap-bridge.js'),'utf8');
+assert(snapIndex.includes('snap-rubric-verifier.js'));
+assert(snapRubric.includes('SnapRubricVerifier'));
+assert(snapRubric.includes('HUMAN_RUBRIC_BINARY'));
+assert(snapBridgeSource.includes('requestRubricReview'));
+assert(!snapRubric.includes('auto_verification:true'));
+console.log('PASS: Snap exposes human-rubric review requests and forbids automatic production verification');
