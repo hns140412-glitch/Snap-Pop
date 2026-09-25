@@ -27,3 +27,6 @@ assert(app.includes("member_display_name"));
 
 assert(src.includes('TakyExplorationEvent'));
 assert(src.includes("taky-exploration-event"));
+
+assert(src.includes('companion_id'));
+assert(src.includes('companion_name'));
