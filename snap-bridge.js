@@ -4,7 +4,7 @@
   const BRIDGE_VERSION = '2026.09.07-a';
   const CONTEXT_KEY = 'snap_pop_shared_context_v1';
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
-  const PARAMS = ['family_id','member_id','actor_member_id','profile_id','member_display_name','member_avatar_ref','assignment_id','analysis_id','learning_unit_id','todo_id','session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context'];
+  const PARAMS = ['family_id','member_id','actor_member_id','profile_id','member_display_name','member_avatar_ref','companion_id','companion_name','assignment_id','analysis_id','learning_unit_id','todo_id','session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context'];
 
   const EventEnvelope = globalThis.TakyEventEnvelope;
   if(!EventEnvelope?.create) throw new Error('SNAP_SHARED_EVENT_ENVELOPE_UNAVAILABLE');
@@ -87,7 +87,7 @@
     try {
       const url = new URL(context.return_target, location.href);
       if (!['http:','https:'].includes(url.protocol)) return null;
-      for (const key of ['family_id','member_id','actor_member_id','profile_id','member_display_name','member_avatar_ref','assignment_id','analysis_id','learning_unit_id','todo_id','session_id','goal_id','task_id','lap_id']) {
+      for (const key of ['family_id','member_id','actor_member_id','profile_id','member_display_name','member_avatar_ref','companion_id','companion_name','assignment_id','analysis_id','learning_unit_id','todo_id','session_id','goal_id','task_id','lap_id']) {
         if (context[key]) url.searchParams.set(key, context[key]);
       }
       url.searchParams.set('task_state', taskState);
