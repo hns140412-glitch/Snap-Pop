@@ -4,8 +4,17 @@ const RELEASE=globalThis.SnapPopReleaseDescriptor;
 if(!globalThis.TakyReleaseContract?.validateDescriptor?.(RELEASE)?.ok)throw new Error('INVALID_SNAP_RELEASE_DESCRIPTOR');
 let db, marks=[], selected=null, lastMain="map", snapActiveExploration=false;
 globalThis.SnapPopPwaSafePoint=()=>!snapActiveExploration;
+const StorageScope=globalThis.TakyStorageScope;
+if(!StorageScope?.storageKey)throw new Error('SNAP_STORAGE_SCOPE_UNAVAILABLE');
+const launchParams=new URLSearchParams(location.search);
+const STORAGE_SCOPE_SESSION=(()=>{
+  const family_id=String(launchParams.get('family_id')||'').trim();
+  const member_id=String(launchParams.get('member_id')||'').trim();
+  return family_id&&member_id?{authenticated:true,family_id,member_id}:{authenticated:false};
+})();
+const SNAP_DB_NAME=StorageScope.storageKey('app/snap/db','snap_pop_rev10',STORAGE_SCOPE_SESSION);
 const STEPS=[["생각 꺼내기","무엇이 먼저 떠올랐어?","완벽한 문장이 아니어도 좋아. 작은 조각 하나만 잡아보자."],["생각 넓히기","그 생각 옆에는 뭐가 더 있을까?","이유, 느낌, 장면 중 하나를 더 붙여보자."],["표현 완성하기","이제 네 문장으로 마무리해볼까?","앞의 생각을 이어서 네 말로 정리해보자."]];
-function openDB(){return new Promise((ok,no)=>{const r=indexedDB.open("snap_pop_rev10",1);r.onupgradeneeded=()=>r.result.createObjectStore("state");r.onsuccess=()=>{db=r.result;ok()};r.onerror=()=>no(r.error)})}
+function openDB(){return new Promise((ok,no)=>{const r=indexedDB.open(SNAP_DB_NAME,1);r.onupgradeneeded=()=>r.result.createObjectStore("state");r.onsuccess=()=>{db=r.result;ok()};r.onerror=()=>no(r.error)})}
 function get(k){return new Promise(ok=>{const r=db.transaction("state").objectStore("state").get(k);r.onsuccess=()=>ok(r.result)})}
 function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>{if(k==="active"){snapActiveExploration=!!v;if(!snapActiveExploration)window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}ok()};r.onerror=()=>no(r.error)})}
 function toast(t){$("#toast").textContent=t;$("#toast").classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>$("#toast").classList.remove("show"),1800)}
