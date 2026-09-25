@@ -1,4 +1,9 @@
-'use strict';
+(function(root,factory){
+  const api=factory();
+  if(typeof module!=='undefined'&&module.exports)module.exports=api;
+  if(root)root.SnapRubricVerifier=api;
+})(typeof globalThis!=='undefined'?globalThis:this,function(){
+  'use strict';
 
 const clean=v=>String(v??'').trim();
 
@@ -59,4 +64,5 @@ function toVerificationInput(review_request={},outcome,receipt_id,verified_at){
   };
 }
 
-module.exports=Object.freeze({createReviewRequest,toVerificationInput});
+  return Object.freeze({createReviewRequest,toVerificationInput});
+});
