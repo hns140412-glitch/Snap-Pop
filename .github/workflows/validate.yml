@@ -30,6 +30,8 @@ jobs:
         run: node tests/app-execution-context-bridge.test.js
       - name: Validate family member scope isolation
         run: node tests/family-member-scope-isolation.test.js
+      - name: Validate badge source evidence boundary
+        run: node tests/badge-source-evidence-boundary.test.js
       - name: Validate Snap human-rubric verification adapter
         run: node tests/snap-rubric-verifier.test.js
       - name: Install Playwright
