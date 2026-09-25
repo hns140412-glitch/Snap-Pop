@@ -25,8 +25,15 @@
   const FORBIDDEN_DIRECT_RUNTIME_ASSETS=Object.freeze([
     'assets/reference/approved_visual_source.png',
     'assets/rewards/gem_chest_reference_hd.jpg',
-    'assets/rewards/wish_shop_reference_hd.jpg'
+    'assets/rewards/wish_shop_reference_hd.jpg',
+    'assets/character/character_master_hd.jpg',
+    'assets/guide/maltipoo_guide_hd.jpg'
   ]);
+  const CROSS_APP_VISUAL_IMPORT_POLICY=Object.freeze({
+    ready_core6_auto_import:false,
+    reason:'PROJECT_VISUAL_AUTHORITY_IS_OWNER_SCOPED',
+    shared_family_contract_does_not_grant_visual_asset_substitution:true
+  });
 
   function normalizePath(value=''){
     try{
@@ -58,7 +65,8 @@
         reference_board_direct_binding:false,
         reward_reference_direct_binding:false,
         auto_asset_promotion:false,
-        auto_release_pass:false
+        auto_release_pass:false,
+        cross_app_visual_substitution:false
       }
     };
   }
@@ -99,6 +107,7 @@
     WORLD_BINDING,
     CREW_BINDING,
     FORBIDDEN_DIRECT_RUNTIME_ASSETS,
+    CROSS_APP_VISUAL_IMPORT_POLICY,
     resolve,
     bind
   });
