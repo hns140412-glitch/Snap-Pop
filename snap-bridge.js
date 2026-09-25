@@ -192,6 +192,23 @@
     history.replaceState(null, '', clean);
   }
 
+  function emitLearningOutcome(input = {}) {
+    const payload = {
+      skill_id: input.skill_id || input.concept_skill_target || context.concept_skill_target || null,
+      concept_skill_target: input.concept_skill_target || context.concept_skill_target || null,
+      completed: !!input.completed,
+      evidence_of_improvement: !!input.evidence_of_improvement,
+      needed_assistance: !!(input.needed_assistance || input.help_used),
+      error_persisted: !!input.error_persisted,
+      production_ref: input.production_ref || input.event_id || null,
+      rubric_ref: input.rubric_ref || null,
+      rubric_result: input.rubric_result || null,
+      contextual_evidence_only: true,
+      global_mastery_claim: false
+    };
+    return emit('LEARNING_OUTCOME', payload);
+  }
+
   function requestRubricReview(input = {}) {
     const verifier = globalThis.SnapRubricVerifier;
     if (!verifier?.createReviewRequest) return { ok:false, reason:'SNAP_RUBRIC_VERIFIER_UNAVAILABLE' };
@@ -233,6 +250,7 @@
       emit,
       returnToBase,
       requestRubricReview,
+      emitLearningOutcome,
       validate
     });
   }
