@@ -81,4 +81,35 @@ assert.equal(resolved.ok,true);
 assert.equal(resolved.guards.auto_asset_promotion,false);
 assert.equal(resolved.guards.auto_release_pass,false);
 assert.equal(visualBinding.resolve({crew_visual:'AUTO_GENERATED_CREW'}).ok,false);
+const crewRegistry=require('../snap-crew-asset-registry-v1.js');
+assert.equal(crewRegistry.runtimeBinding('unknown').state,'CONTENT_APPROVAL_HOLD');
+assert.equal(crewRegistry.runtimeBinding('unknown').implementation_ready,true);
+assert.equal(crewRegistry.validateCandidate({
+  owner:'snap-pop',
+  visual_id:'crew-x',
+  asset_path:'assets/character/character_master_hd.jpg',
+  review_status:'APPROVED_RUNTIME_ASSET',
+  user_confirmed:true,
+  review_evidence_refs:['fake']
+}).ok,false);
+assert.equal(crewRegistry.validateCandidate({
+  owner:'ready-set',
+  visual_id:'core6-x',
+  asset_path:'assets/crew-approved/core6-x.webp',
+  review_status:'APPROVED_RUNTIME_ASSET',
+  user_confirmed:true,
+  review_evidence_refs:['ready-evidence']
+}).reason,'OWNER_SCOPE_MISMATCH');
+assert.equal(crewRegistry.validateCandidate({
+  owner:'snap-pop',
+  visual_id:'crew-approved-x',
+  asset_path:'assets/crew-approved/crew-approved-x.webp',
+  review_status:'APPROVED_RUNTIME_ASSET',
+  user_confirmed:false,
+  review_evidence_refs:['review-1']
+}).reason,'USER_CONFIRMATION_REQUIRED');
+const crewHold=visualBinding.resolve({world_state:'BASE_WORLD',theme_expression:'GOLDEN_WORLD',crew_visual:'STATIC_REFERENCE_LINEAGE_ONLY'});
+assert.equal(crewHold.ok,true);
+assert.equal(crewHold.crew.implementation_ready,true);
+assert.equal(crewHold.crew.content_state,'CONTENT_APPROVAL_HOLD');
 console.log('PASS: SP-BADGE-008 binds only reviewed runtime world visual and holds unreviewed crew assets');
