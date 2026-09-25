@@ -70,6 +70,10 @@
     let outbox = [];
     try { outbox = JSON.parse(sessionStorage.getItem(OUTBOX_KEY) || '[]') || []; } catch {}
     sessionStorage.setItem(OUTBOX_KEY, JSON.stringify([...outbox, event].slice(-120)));
+    try{
+      const exploration=globalThis.TakyExplorationEvent?.fromAppEvent?.(event);
+      if(exploration)window.dispatchEvent(new CustomEvent('taky-exploration-event',{detail:exploration}));
+    }catch{}
     try {
       if (window.opener && !window.opener.closed && context.return_target) {
         window.opener.postMessage({ type:'TAKY_LEARNING_EVENT', event }, new URL(context.return_target).origin);
