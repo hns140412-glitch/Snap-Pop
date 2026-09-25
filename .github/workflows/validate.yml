@@ -3,7 +3,7 @@ name: Validate Snap & Pop
 on:
   pull_request:
   push:
-    branches: ["main"]
+    branches: ["main", "taky/learning-consumer-adapter-2026-09-25"]
 
 permissions:
   contents: read
