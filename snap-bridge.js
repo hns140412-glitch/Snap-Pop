@@ -4,7 +4,7 @@
   const BRIDGE_VERSION = '2026.09.07-a';
   const CONTEXT_KEY = 'snap_pop_shared_context_v1';
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
-  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context'];
+  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','subject','concept_skill_target','learning_target_id'];
 
   const EventEnvelope = globalThis.TakyEventEnvelope;
   if(!EventEnvelope?.create) throw new Error('SNAP_SHARED_EVENT_ENVELOPE_UNAVAILABLE');
