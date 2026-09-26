@@ -25,7 +25,32 @@
 </section>
 <section id="records" class="view parchment">
  <header class="pageTitle"><span>나의 탐험 기록</span><h1>기록</h1><p>완료한 탐험과 기억이 한 권의 탐험일지처럼 쌓여요.</p></header>
- <div id="recordList" class="cards"></div>
+ <div class="recordModeTabs" role="tablist" aria-label="기록 보기">
+  <button type="button" data-record-mode="journal" role="tab" aria-selected="true" class="on">탐험일지</button>
+  <button type="button" data-record-mode="collection" role="tab" aria-selected="false">배지 도감</button>
+  <button type="button" data-record-mode="calendar" role="tab" aria-selected="false">캘린더</button>
+ </div>
+ <div id="recordJournalPanel" class="recordModePanel"><div id="recordList" class="cards"></div></div>
+ <section id="badgeCollectionPanel" class="recordModePanel" hidden aria-label="내 배지 도감">
+  <div class="badgePanelTitle"><b>나의 탐험 훈장</b><small>실제 획득 기록만 반영해요.</small></div>
+  <div id="badgeCollectionItems" class="badgeCollectionItems" aria-live="polite"><p class="badgeReadNotice">인증된 배지 기록 연결 전이에요.</p></div>
+ </section>
+ <section id="badgeCalendarPanel" class="recordModePanel" hidden aria-label="배지 획득 캘린더">
+  <div class="badgeCalendarHead">
+   <button id="badgeMonthPrev" type="button" aria-label="지난달">←</button>
+   <b id="badgeMonthLabel">획득 달력</b>
+   <button id="badgeMonthNext" type="button" aria-label="다음달">→</button>
+  </div>
+  <div class="badgeCalendarLegend">탐험 훈장과 가족의 선물은 다른 기록으로 보관해요.</div>
+  <div id="badgeCalendarGrid" class="badgeCalendarGrid" aria-live="polite"></div>
+  <div id="badgeCalendarDay" class="badgeCalendarDay" aria-live="polite"></div>
+  <div id="badgeCalendarUndated" class="badgeCalendarUndated"></div>
+ </section>
+ <section id="badgeDetailPanel" class="recordModePanel" hidden aria-label="배지 획득 이력">
+  <button id="badgeDetailBack" class="badgeDetailBack" type="button">← 도감으로</button>
+  <h2 id="badgeDetailTitle">획득 기록</h2>
+  <div id="badgeDetailHistory"></div>
+ </section>
 </section>
 <section id="explore" class="view parchment">
  <header class="pageTitle"><span>3단계 탐험</span><h1 id="exploreTitle">탐험 진행</h1></header>
@@ -79,4 +104,4 @@
  <button data-view="growth"><img src="assets/icons/growth.svg" alt=""><span>성장</span></button>
 </nav>
 <div id="toast" role="status" aria-live="polite"></div>
-</div><script src="vendor/taky/release-contract.js"></script><script src="vendor/taky/pwa-update-state.js"></script><script src="vendor/taky/event-envelope.js"></script><script src="snap-release-v01.js"></script><script src="app.js"></script><script src="snap-crew-asset-registry-v1.js"></script><script src="snap-reviewed-visual-binding-v1.js"></script><script src="snap-rubric-verifier.js"></script><script src="snap-bridge.js"></script><script src="snap-pwa-update-v01.js"></script></body></html>
+</div><script src="vendor/taky/release-contract.js"></script><script src="vendor/taky/pwa-update-state.js"></script><script src="vendor/taky/event-envelope.js"></script><script src="snap-release-v01.js"></script><script src="app.js"></script><script src="snap-crew-asset-registry-v1.js"></script><script src="snap-reviewed-visual-binding-v1.js"></script><script src="snap-rubric-verifier.js"></script><script src="snap-badge-records.js"></script><script src="snap-bridge.js"></script><script src="snap-pwa-update-v01.js"></script></body></html>
