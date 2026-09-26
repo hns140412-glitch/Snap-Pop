@@ -12,6 +12,8 @@ self.addEventListener('activate',e=>e.waitUntil(
 self.addEventListener('fetch',e=>{
  if(e.request.method!=='GET')return;
  const u=new URL(e.request.url);if(u.origin!==location.origin)return;
+ // Authenticated child/family responses must never enter shared Service Worker cache.
+ if(u.pathname.startsWith('/api/')){e.respondWith(fetch(e.request));return;}
  if(e.request.mode==='navigate'){
    e.respondWith(fetch(e.request).then(r=>{const copy=r.clone();caches.open(C).then(c=>c.put('index.html',copy));return r}).catch(()=>caches.match('index.html')));return;
  }
