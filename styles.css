@@ -50,3 +50,30 @@ textarea{width:100%;min-height:190px;resize:vertical;border:1px solid #d9c9a8;bo
 #toast{position:fixed;z-index:80;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,9px);max-width:360px;background:#062f2bf1;color:#fff3ca;border:1px solid #c6a75c66;border-radius:13px;padding:10px 13px;font-size:11px;opacity:0;pointer-events:none;transition:.2s}#toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-height:760px){.mapWorld{min-height:535px}.treeStage{height:335px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+
+/* Child-scoped badge records — no unapproved base art substituted. */
+.recordModeTabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;background:#e9dcc0;border-radius:16px;padding:5px;margin:14px 0}
+.recordModeTabs button{border:0;border-radius:12px;padding:10px 3px;background:transparent;color:#456055;font-size:11px;font-weight:800}
+.recordModeTabs button.on{background:#fff8e8;box-shadow:0 3px 12px #75603d23;color:#143b30}
+.recordModePanel[hidden]{display:none!important}.recordModePanel{min-height:130px}
+.badgePanelTitle{display:flex;align-items:center;justify-content:space-between;gap:7px;margin:12px 0}.badgePanelTitle b{font-family:"Noto Serif CJK KR","Batang",serif;font-size:17px}.badgePanelTitle small{font-size:10px;color:#6a766b}
+.badgeReadNotice{font-size:12px;line-height:1.65;color:#66776a;background:#fff7e8bb;padding:13px;border:1px dashed #c9b485;border-radius:14px;margin:8px 0}
+.badgeCollectionItems{display:grid;gap:8px}.badgeCollectionItem{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:10px;align-items:center;background:#fffaf0c9;border:1px solid #d5c49f;border-radius:16px;padding:10px}
+.badgeCollectionOutline{width:40px;height:40px;border-radius:13px;background:#e7e5dd;display:grid;place-items:center;font-size:8px;color:#6d796f;border:1px dashed #9ba997}
+.badgeCollectionInfo b,.badgeCollectionInfo small{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.badgeCollectionInfo b{font-size:12px}.badgeCollectionInfo small{font-size:9px;margin-top:3px;color:#6a786d}
+.badgeHistoryOpen{border:1px solid #b7bc9f;background:#e8eddb;border-radius:11px;padding:9px 8px;font-size:10px;font-weight:800;color:#365645}
+.badgeCalendarHead{display:flex;align-items:center;justify-content:space-between;margin:14px 0 7px}.badgeCalendarHead b{font-size:17px;font-family:"Noto Serif CJK KR","Batang",serif}.badgeCalendarHead button{width:38px;height:38px;border:1px solid #c8b887;background:#fff5dd;border-radius:13px;color:#214a3b}
+.badgeCalendarLegend{font-size:10px;color:#68786b;line-height:1.4;margin:5px 0 13px}
+.badgeCalendarGrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;align-items:stretch}
+.badgeCalendarGrid>.badgeReadNotice{grid-column:1/-1}.badgeWeekday{text-align:center;font-size:9px;font-weight:800;color:#597061;padding:5px 0}.badgeCalendarBlank{min-height:47px}
+.badgeCalendarCell{display:flex;flex-direction:column;align-items:center;gap:5px;min-height:48px;background:#fff9ecd4;border:1px solid #e0d2b4;border-radius:11px;padding:7px 2px;color:#335544;font-size:12px;font-weight:900}
+.badgeCalendarCell.chosen{background:#265847;color:#fff6dd;border-color:#265847}
+.badgeDayCount{font-size:7px;line-height:1.1;color:#35664b;background:#e3efdf;border-radius:99px;padding:3px 2px;max-width:100%;white-space:nowrap}
+.badgeCalendarDay{margin:12px 0 5px;background:#fff9ebbd;border-radius:17px;padding:10px;border:1px solid #d4c5a2}
+.badgeCalendarDay:empty{display:none}.badgeCalendarDay h3{font-size:13px;margin:3px 4px 10px}
+.badgeDayEvent{display:flex;justify-content:space-between;align-items:center;text-align:left;gap:8px;width:100%;border:1px solid #d8c9a7;border-radius:12px;background:#fffef8;padding:11px;font-size:11px;margin:5px 0;color:#234c3b}
+.badgeDayEvent small{font-size:9px;white-space:nowrap;color:#557861}.badgeDetailBack{border:0;background:none;font-size:11px;font-weight:850;color:#305944;padding:5px 0 12px}
+#badgeDetailTitle{font-size:23px;margin:5px 0 16px}.badgeDetailEvent{display:flex;justify-content:space-between;gap:10px;border-left:3px solid #97b398;border-bottom:1px solid #d8d1b9;padding:12px 10px}
+.badgeDetailEvent b{font-size:12px}.badgeDetailEvent small{font-size:10px;color:#65786d}
+@media(prefers-reduced-motion:reduce){.badgeCalendarCell,.badgeDayEvent,.badgeHistoryOpen{transition:none!important;animation:none!important}}
