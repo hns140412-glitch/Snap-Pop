@@ -67,7 +67,7 @@ test('Test-only verified view adapter opens approved collection, month day and f
   await page.locator('#badgeDetailBack').click();
   await expect(page.locator('#badgeCollectionPanel')).toBeVisible();
   await page.locator('[data-record-mode="calendar"]').click();
-  await expect(page.locator('.badgeCalendarCell')).toHaveCount(28);
+  await expect(page.locator('.badgeCalendarCell').first()).toBeVisible();
   // Month length is time-dependent; assert one verified day marker, not fabricated awards.
   await expect(page.locator('.badgeDayCount')).toHaveCount(1);
   await page.locator('.badgeCalendarCell').first().click();
