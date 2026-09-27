@@ -1,0 +1,267 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>동행탐험 이야기</title><style>
+*{box-sizing:border-box}body{margin:0;background:#ddd2b7;color:#463625;font:15px system-ui,-apple-system,sans-serif}button,input{font:inherit}button{cursor:pointer}main{max-width:430px;min-height:100dvh;margin:auto;position:relative;overflow:hidden;background:linear-gradient(#d6e4d2,#f4e2bb 38%,#ac9b73 60%,#765c43);padding:calc(env(safe-area-inset-top) + 25px) 19px calc(env(safe-area-inset-bottom) + 24px)}.land{position:absolute;inset:0;pointer-events:none;background:url('world/canonical/island_mobile.png') center center/cover no-repeat;opacity:1}main:before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,#f8efdac9 0%,#f8efdab0 23%,#f8efd900 43%,#35281900 64%,#3b291b70 100%)}.content{position:relative;z-index:2;min-height:calc(100dvh - 80px);display:flex;flex-direction:column}.eyebrow{font-size:12px;letter-spacing:.12em;font-weight:800;color:#756043}.title{font-size:28px;line-height:1.2;margin:12px 0}.desc{line-height:1.6;margin:0 0 15px}.grow{flex:1;min-height:30px}.glass{background:#fff9e7b8;backdrop-filter:blur(14px);border:1px solid #fff8e8;border-radius:24px;padding:15px;box-shadow:0 8px 25px #4b382326}.action{background:#f0dbb9;border:1px solid #94704d;color:#4b3522;border-radius:22px;padding:14px 17px;font-weight:800}.action:disabled{opacity:.45}.sub{background:#fff7e8a8;border:1px solid #ab906e;border-radius:18px;padding:10px}.actions{display:flex;gap:9px}.actions>*{flex:1}.field{width:100%;border:1px solid #ad8f68;background:#fff9e9;border-radius:14px;padding:12px;margin:8px 0 13px}.crewspace{position:relative;height:min(48vh,390px);min-height:300px}.crew{position:absolute;border:0;background:none;width:34%;height:42%;padding:0}.crew img{height:100%;width:100%;object-fit:contain;filter:drop-shadow(0 6px 5px #46352155)}.crew:after{content:attr(data-name);position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);background:#fff6dddf;border-radius:15px;padding:2px 8px;font-weight:700;font-size:12px}.crew[aria-pressed=true]{filter:drop-shadow(0 0 11px #ffe09a);transform:translateY(-5px)}.crew[aria-pressed=true]:before{content:'✦';position:absolute;top:0;right:12%;font-size:27px;color:#fff0a7}.crew:nth-child(1){left:0;top:5%}.crew:nth-child(2){left:33%;top:1%}.crew:nth-child(3){left:66%;top:7%}.crew:nth-child(4){left:0;top:52%}.crew:nth-child(5){left:33%;top:49%}.crew:nth-child(6){left:66%;top:54%}.slotrow{display:flex;gap:5px;margin:10px 0}.slot{flex:1;aspect-ratio:1;border:1px dashed #9e825e;border-radius:50%;overflow:hidden}.slot img{width:100%;height:100%;object-fit:contain}.sceneimage{width:100%;max-height:37vh;object-fit:contain;border-radius:25px}.nav{display:flex;justify-content:space-around;background:#fff9e8ac;backdrop-filter:blur(16px);border:1px solid #fff;border-radius:26px;padding:11px 2px}.nav button{border:0;background:none;color:#624f3c;font-size:12px}.nav button.active{color:var(--accent,#796647);font-weight:900;border-bottom:3px solid var(--accent,#796647)}.status{font-size:12px;color:#6b573e;margin-top:8px}.swatches{display:flex;gap:9px}.swatches button{width:40px;height:40px;border-radius:50%;border:2px solid #fff;outline:1px solid #987}.swatches button[aria-pressed=true]{outline:3px solid #493522}.hidden{display:none}@media(min-width:600px){main{min-height:844px;max-height:920px;margin:18px auto;border-radius:32px;box-shadow:0 18px 50px #55432a55}.content{min-height:760px}}
+.packing{min-height:350px;position:relative;display:flex;flex-direction:column;gap:14px}.tabletop{min-height:220px;border:12px solid #765335;border-radius:45% 45% 28px 28px;background:repeating-linear-gradient(5deg,#bd9360 0 35px,#ae8052 36px 39px,#c59c68 40px 70px);box-shadow:inset 0 14px 20px #53381b60,0 13px 17px #523a2740;display:grid;grid-template-columns:repeat(3,1fr);align-items:center;justify-items:center;padding:16px 8px;gap:8px}.object{width:82px;height:78px;border:0;background:transparent;filter:drop-shadow(3px 5px 3px #3b271e65);color:#3b2b1a;touch-action:manipulation}.objecticon{width:54px;height:54px;display:block;margin:auto}.object small,.backpack small{display:block;background:#fff3d4bb;border-radius:9px;font-weight:700}.object.picked{outline:3px solid #f8dfa0;border-radius:15px}.object.packed{opacity:.25}.backpack{align-self:center;border:0;background:transparent;font-size:83px;filter:drop-shadow(3px 8px 5px #3b271e65)}.backpack small{font-size:14px;padding:6px 15px}.crewspace .crew{touch-action:manipulation} .destination{display:grid;grid-template-columns:1fr 1fr;gap:9px}.destination span{background:#fff6e1a8;border:1px solid #d6bb91;border-radius:14px;padding:16px 6px;text-align:center}.crewlist{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.crewlist div{text-align:center}.crewlist img{width:100%;height:90px;object-fit:contain}.crewlist span{display:block;font-weight:700}.accentchip{width:38px;height:38px;border:3px solid #fff;border-radius:50%}@media(min-width:700px){main{max-width:1024px;min-height:768px}.land{background-image:url('world/canonical/island_tablet.png');background-position:center}.content{max-width:480px;margin-left:auto;margin-right:auto}} 
+/* V7: preserve world/characters; correct viewport-safe responsive layout. */
+.grow{min-height:0}
+.crewspace{height:clamp(245px,40dvh,342px);min-height:245px;flex-shrink:1}
+.crew:nth-child(1){left:2%;top:15%;width:31%;height:39%;z-index:2}
+.crew:nth-child(2){left:35%;top:0%;width:32%;height:45%;z-index:2}
+.crew:nth-child(3){left:69%;top:15%;width:29%;height:40%;z-index:2}
+.crew:nth-child(4){left:1%;top:56%;width:30%;height:43%;z-index:3}
+.crew:nth-child(5){left:35%;top:48%;width:33%;height:51%;z-index:3}
+.crew:nth-child(6){left:70%;top:56%;width:29%;height:43%;z-index:3}
+.crew:focus-visible,.object:focus-visible,.action:focus-visible{outline:3px solid #6a815a;outline-offset:2px}
+.bagart{width:94px;height:102px;object-fit:contain;display:block;margin:auto}
+.backpack{font-size:inherit;min-height:126px}
+#app[data-step="2"] .glass{padding:11px 14px}
+#app[data-step="2"] .slotrow{margin:7px 0}
+#app[data-step="2"] .title{margin:8px 0}
+#app[data-step="2"] .desc{margin-bottom:3px}
+@media(min-width:600px){main{min-height:100dvh;max-height:none;margin:0 auto;border-radius:0;box-shadow:none;padding:22px 25px}.content{min-height:calc(100dvh - 44px)}}
+@media(min-width:700px){main{width:min(100%,1024px);max-width:1024px}.content{max-width:480px}.crewspace{height:clamp(270px,39dvh,355px);min-height:270px}}
+@media(max-height:740px){main{padding-top:14px;padding-bottom:12px}.content{min-height:calc(100dvh - 26px)}.eyebrow{font-size:11px}.title{font-size:24px;margin:5px 0}.desc{font-size:13px;margin:0 0 6px}.crewspace{height:clamp(210px,37dvh,292px);min-height:210px}.glass{padding:10px}.slotrow{margin:5px 0}.action{padding:11px 13px}.packing{min-height:0;gap:5px}.tabletop{min-height:165px;border-width:7px;padding:5px}.object{height:66px}.objecticon{height:43px}.backpack{min-height:100px}.bagart{height:75px}.backpack small{padding:3px}}
+/* Local photo-source intake; this is NOT avatar rendering. */
+.photo-source{display:flex;gap:12px;align-items:center;margin:12px 0;min-height:100px}.photo-frame{width:86px;height:100px;flex:0 0 86px;border:2px solid #b7986b;border-radius:19px;background:#f8edcf;overflow:hidden;display:flex;align-items:center;justify-content:center}.photo-frame img{width:100%;height:100%;object-fit:cover}.photo-frame [data-child-message]{text-align:center;font-size:11px;padding:6px}.photo-copy{flex:1;min-width:0}.photo-copy p{font-size:12px;margin:5px 0}.photo-input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}.photo-select{display:inline-block;margin-top:5px;padding:7px 11px;font-size:12px;cursor:pointer}.photo-input:focus-visible+.photo-select{outline:3px solid #6a815a;outline-offset:2px}.photo-remove{font-size:12px;padding:7px 10px;margin-top:6px}.photo-state{font-size:11px;color:#5e4c32;overflow-wrap:anywhere}.photo-status[role=status]{min-height:1.1em}
+
+/* Canonical selection screen: exact approved first-meeting source with independent functional hit layers.
+   Fixed artwork remains immutable: do not replace character identity or generate a lookalike. */
+main[data-step="1"],main[data-step="2"]{padding:0;background:#2b2218;display:flex;align-items:center;justify-content:center}
+main[data-step="1"]:before,main[data-step="2"]:before{display:none}
+main[data-step="1"] .land,main[data-step="2"] .land{display:none}
+main[data-step="1"] .content,main[data-step="2"] .content{max-width:none;width:100%;height:100dvh;min-height:0;display:flex;align-items:center;justify-content:center}
+.approved-stage{position:relative;width:min(100%,calc(100dvh * 851 / 1848));max-height:100dvh;aspect-ratio:851 / 1848;flex:0 0 auto;overflow:hidden;isolation:isolate;background:#3b281d}
+.approved-stage>img{display:block;width:100%;height:100%;object-fit:fill;pointer-events:none;user-select:none;-webkit-user-select:none}
+.approved-tap{position:absolute;border:0;padding:0;background:transparent;color:transparent;border-radius:50%;touch-action:manipulation;z-index:2}
+.approved-tap:focus-visible{outline:3px solid #fff3bf;outline-offset:2px}
+.approved-tap.hero.selected{outline:none;box-shadow:none;background:transparent}.approved-tap.hero.selected:after{content:'✦';position:absolute;right:5%;top:5%;color:#fff2b4;text-shadow:0 0 8px #ff9b25,0 0 15px #ffd76c;font-size:clamp(17px,5vw,30px)}
+.approved-tap.portrait.selected{outline:3px solid #ffe8a6;box-shadow:0 0 13px #ffd371}
+.approved-tap.portrait.selected:after{content:'✓';display:flex;align-items:center;justify-content:center;position:absolute;right:-5%;top:-9%;width:30%;aspect-ratio:1;background:#213e75;color:#fff;border:2px solid #ffefbc;border-radius:50%;font-size:clamp(11px,2.4vw,19px);font-weight:900}
+.approved-tap.cta{border-radius:999px}
+.approved-tap.cta:disabled{background:#614d3a48;cursor:not-allowed}
+.approved-tap.cta:focus-visible{outline:3px solid #ffe6a4;outline-offset:-6px}
+.approved-tap.cta[aria-disabled="true"]{background:#66533a65}
+.approved-count{position:absolute;left:85.8%;top:86.05%;width:12%;height:3.5%;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:10px;background:#ecd5b3;color:#52341c;font-size:clamp(12px,3.6vw,19px);font-weight:800;line-height:1.1;z-index:3}
+.approved-progress{position:absolute;left:4.0%;top:88%;width:92%;font-size:12px;text-align:center;color:#fff;z-index:0}
+.approved-slot-check{position:absolute;display:flex;align-items:center;justify-content:center;width:6.5%;height:3%;border-radius:50%;color:#fff;font-size:clamp(12px,3.1vw,18px);font-weight:900;background:#25467e;border:2px solid #ffe8aa;box-shadow:0 1px 9px #442d2199;z-index:3}
+.approved-status{position:absolute;top:83%;left:9%;width:79%;border-radius:999px;background:#eed6b1e8;z-index:4;text-align:center;font-weight:700;color:#52341c;font-size:12px;padding:3px 4px}
+.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;clip:rect(0,0,0,0)!important;clip-path:inset(50%)!important;overflow:hidden!important;white-space:nowrap!important}
+@media(min-width:700px){main[data-step="1"],main[data-step="2"]{max-width:none;width:100%;height:100dvh;min-height:100dvh;background-image:url('world/canonical/island_tablet.png');background-size:cover;background-position:center}main[data-step="1"] .content,main[data-step="2"] .content{max-width:none;min-height:0}.approved-stage{box-shadow:0 18px 60px #21140dcc;border-left:2px solid #ffffff55;border-right:2px solid #ffffff55}}
+
+/* First screen: standalone editorial composition, not stacked cards.
+   The approved island artwork remains byte-identical. */
+body{background:#1e3340}
+main[data-step="0"]{padding:0;width:100%;max-width:430px;min-height:100dvh;height:100dvh;background:#bad8db;isolation:isolate}
+main[data-step="0"] .land{inset:0;background-image:url('world/canonical/island_mobile.png');background-size:cover;background-position:center;opacity:1}
+main[data-step="0"]:before{display:block;background:linear-gradient(180deg,rgba(247,241,220,.89) 0%,rgba(247,241,220,.64) 18%,rgba(247,241,220,.12) 34%,transparent 46%,transparent 64%,rgba(22,34,34,.22) 81%,rgba(13,25,28,.54) 100%)}
+main[data-step="0"] .content{width:100%;max-width:none;height:100dvh;min-height:100dvh;position:relative;z-index:2;display:block}
+.welcome{position:relative;min-height:100%;height:100%;width:100%;}
+.welcome-copy{position:absolute;top:calc(env(safe-area-inset-top) + clamp(35px,8dvh,76px));left:clamp(23px,6.1vw,42px);right:26px;color:#263b3e;text-shadow:0 1px 7px #fff8eb80}
+.welcome-index{display:inline-flex;align-items:center;letter-spacing:.17em;font-size:12px;font-weight:800;color:#415450;margin:0 0 15px}
+.welcome-index:after{content:'';width:38px;height:1px;background:currentColor;opacity:.52;margin-left:12px}
+.welcome h1{font-size:clamp(33px,9vw,44px);letter-spacing:-.058em;line-height:1.13;font-weight:800;margin:0 0 12px;max-width:325px;word-break:keep-all}
+.welcome p{font-size:clamp(14px,3.7vw,16px);line-height:1.5;letter-spacing:-.026em;font-weight:600;margin:0;color:#3a4c47}
+.welcome-bottom{position:absolute;left:clamp(21px,6vw,40px);right:clamp(21px,6vw,40px);bottom:calc(env(safe-area-inset-bottom) + clamp(34px,6dvh,66px))}
+.welcome-cta{width:100%;min-height:61px;display:flex;align-items:center;justify-content:center;gap:18px;border:1px solid rgba(255,252,231,.91);border-radius:19px;background:linear-gradient(165deg,#fff6df,#e8d3ac);color:#493c2b;font-size:17px;font-weight:800;letter-spacing:-.035em;box-shadow:0 6px 0 #80604044,0 14px 28px #181f2370;cursor:pointer}
+.welcome-cta .arrow{font-size:25px;font-weight:500;line-height:1;transform:translateY(-1px)}
+.welcome-cta:focus-visible{outline:3px solid #ffe7a0;outline-offset:4px}
+.welcome-cta:active:not(:disabled){transform:translateY(2px);box-shadow:0 3px 0 #80604044,0 8px 17px #181f234b}
+.welcome-cta:disabled{cursor:default}
+@media(min-width:600px){main[data-step="0"]{margin:0 auto;border-radius:0;box-shadow:none;max-height:none}}
+@media(min-width:700px){main[data-step="0"]{max-width:1024px;width:100%;height:100dvh}main[data-step="0"] .land{background-image:url('world/canonical/island_tablet.png');background-position:center}main[data-step="0"]:before{background:radial-gradient(ellipse 58% 57% at 100% 24%,rgba(249,238,208,.85) 0%,rgba(249,238,208,.52) 36%,transparent 100%),linear-gradient(0deg,rgba(8,27,35,.42),transparent 35%)}.welcome-copy{left:auto;right:6%;top:18%;width:min(410px,44%);max-width:none;text-align:right}.welcome-copy h1{margin-left:auto}.welcome-bottom{left:auto;right:6%;width:min(375px,40%);bottom:12%}}
+@media(max-height:700px) and (max-width:699px){.welcome-copy{top:calc(env(safe-area-inset-top) + 34px)}.welcome h1{font-size:33px}.welcome-bottom{bottom:calc(env(safe-area-inset-bottom) + 27px)}.welcome-cta{min-height:56px}}
+
+/* Mobile-first correction: preserve the immutable approved art; fill short-phone side gutters with its atmospheric copy. */
+@media(max-width:699px){
+ main[data-step="1"],main[data-step="2"]{isolation:isolate;background:#3b271c}
+ main[data-step="1"]:after,main[data-step="2"]:after{content:"";position:absolute;inset:-16px;z-index:0;pointer-events:none;background:url('ui/approved/first_meeting_selection_source.png') center center/cover no-repeat;filter:blur(17px) brightness(.58);opacity:.88}
+ main[data-step="1"] .content,main[data-step="2"] .content{z-index:1;position:relative}
+ .approved-tap.portrait{margin-left:-.6%;width:13.7%!important;min-height:7.2%}
+}
+/* Mobile profile and packing use the existing world and approved individual assets; no new artwork. */
+main[data-step="3"],main[data-step="4"]{padding:0;isolation:isolate}
+main[data-step="3"] .content,main[data-step="4"] .content{min-height:100dvh;height:100dvh;max-width:none;width:100%;display:block}
+.mobile-scene{height:100%;position:relative;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + 19px) 22px calc(env(safe-area-inset-bottom) + 24px);gap:0;color:#423021}
+.mobile-topline{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.14em;font-size:12px;color:#51625b}
+.mobile-topline:after{content:"";height:1px;width:42px;background:currentColor;opacity:.5}
+.mobile-scene h1{font-size:clamp(29px,7.8vw,36px);letter-spacing:-.056em;line-height:1.15;margin:15px 0 7px;word-break:keep-all}
+.mobile-scene .lede{font-size:14px;font-weight:600;line-height:1.45;margin:0;color:#47574e}
+.mobile-panel{margin-top:auto;margin-bottom:16px;padding:18px 17px 16px;border:1px solid #fff7de;border-radius:25px;background:linear-gradient(165deg,#fff9e9ed,#f3dfbfe8);box-shadow:0 16px 35px #2922176e;backdrop-filter:blur(12px)}
+.mobile-profile .profile-fields{display:flex;gap:13px;flex-direction:column}
+.mobile-profile .field{margin:6px 0 0;min-height:49px;font-size:16px;border:1px solid #bca47c;background:#fffdf4}
+.mobile-profile .profile-label{font-size:13px;font-weight:800;display:block}
+.mobile-profile .swatches{margin-top:8px;gap:10px}
+.mobile-profile .swatches button{width:35px;height:35px}
+.mobile-profile .photo-source{display:flex;gap:12px;align-items:center;margin:0;padding:9px 0 0;border:0;border-top:1px solid #c8ad815c;background:transparent;box-shadow:none;border-radius:0}
+.mobile-profile .photo-frame{width:83px;min-width:83px;height:98px;border-radius:16px}
+.mobile-profile .photo-copy{min-width:0}
+.mobile-profile .photo-copy>strong{font-size:13px}
+.mobile-profile .photo-copy>p:not(.photo-status):not(.photo-state){font-size:11px;line-height:1.35;margin:3px 0}
+.mobile-profile .photo-copy>.photo-state:last-child{display:none}
+.mobile-profile .photo-state{font-size:10px;line-height:1.3;margin:2px 0}
+.mobile-profile .photo-select{font-size:11px;margin-top:3px;padding:6px 9px}
+.mobile-profile .photo-remove{font-size:10px;padding:5px 8px}
+.mobile-scene .mobile-cta{width:100%;min-height:55px;border:1px solid #fff9e2;border-radius:18px;background:linear-gradient(150deg,#fff1d2,#e0c299);box-shadow:0 7px 23px #28231980;color:#473321;font-weight:800;font-size:16px;flex-shrink:0}
+.mobile-scene .mobile-cta:disabled{opacity:.56}
+.mobile-packing .packing-board{margin-top:auto;margin-bottom:10px}
+.mobile-packing .packing{min-height:0;gap:5px}
+.mobile-packing .tabletop{min-height:210px;border-width:10px;border-radius:42% 42% 24px 24px;padding:12px 7px;gap:3px}
+.mobile-packing .object{width:84px;max-width:100%;height:74px}
+.mobile-packing .objecticon{width:49px;height:47px}
+.mobile-packing .object small{font-size:11px}
+.mobile-packing .backpack{min-height:0;height:123px;display:flex;flex-direction:column;align-items:center;gap:0;filter:none}
+.mobile-packing .bagart{height:96px;width:88px;filter:drop-shadow(0 8px 5px #271c155e)}
+.mobile-packing .backpack small{font-size:12px;padding:3px 11px}
+.mobile-packing .packing-hint{text-align:center;font-size:12px;min-height:19px;margin:0 0 7px;color:#fff7e7;font-weight:700;text-shadow:0 2px 6px #24160f}
+.mobile-packing .packing-note{font-size:12px;color:#44584f;font-weight:700;margin-top:7px}
+@media(max-height:730px) and (max-width:699px){
+ .mobile-scene{padding-top:calc(env(safe-area-inset-top) + 12px);padding-bottom:calc(env(safe-area-inset-bottom) + 12px)}
+ .mobile-scene h1{margin-top:8px;font-size:29px}.mobile-scene .lede{font-size:12px}
+ .mobile-panel{padding:12px 13px;margin-bottom:10px}
+ .mobile-profile .profile-fields{gap:7px}.mobile-profile .photo-source{padding-top:6px}.mobile-profile .photo-frame{height:79px;min-width:71px;width:71px}
+ .mobile-profile .photo-copy>p:not(.photo-status):not(.photo-state){display:none}
+ .mobile-profile .swatches button{width:31px;height:31px}
+ .mobile-profile .field{min-height:42px}
+ .mobile-packing .tabletop{min-height:185px;padding:6px}.mobile-packing .object{height:63px}.mobile-packing .objecticon{height:41px;width:42px}
+ .mobile-packing .backpack{height:101px}.mobile-packing .bagart{height:78px;width:73px}
+ .mobile-scene .mobile-cta{min-height:50px}
+}
+</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script>
+const people=[['zero','제로'],['take','테이크'],['nova','노바'],['ink','잉크'],['lori','로리'],['dubi','두비']];
+const palette=['#a46d59','#668a65','#b38a47','#9d7293','#617f84'];
+const itemKeys=['map','lamp','water','camera','cap','compass'];
+const tabKeys=['오늘','지도','기록','탐험대','나'];
+const initial={step:0,crew:[],name:'',color:'#a46d59',items:[],travel:'',island:'',camp:'',tab:'오늘',photoSourceId:'',photoSha256:''};
+function cleanText(v,max){return typeof v==='string'?v.slice(0,max):''}
+function validPhotoRef(s){return typeof s==='string' && /^CHILD_VISUAL_SOURCE_SHA256_[a-f0-9]{64}$/.test(s)}
+function sanitizeDraft(raw){
+  if(!raw || typeof raw!=='object' || Array.isArray(raw))return {...initial};
+  const validCrew=people.map(x=>x[0]);
+  const pick=(v,whitelist,max)=>Array.isArray(v)?[...new Set(v.filter(x=>typeof x==='string'&&whitelist.includes(x)))].slice(0,max):[];
+  const o={...initial,crew:pick(raw.crew,validCrew,6),items:pick(raw.items,itemKeys,6),name:cleanText(raw.name,18),island:cleanText(raw.island,24),camp:cleanText(raw.camp,24),color:palette.includes(raw.color)?raw.color:initial.color,travel:['cloud','sea'].includes(raw.travel)?raw.travel:'',tab:tabKeys.includes(raw.tab)?raw.tab:'오늘',step:Number.isInteger(raw.step)?Math.max(0,Math.min(10,raw.step)):0};
+  if(validPhotoRef(raw.photoSourceId) && typeof raw.photoSha256==='string'){
+    const h=raw.photoSourceId.slice('CHILD_VISUAL_SOURCE_SHA256_'.length);
+    if(h===raw.photoSha256){o.photoSourceId=raw.photoSourceId;o.photoSha256=h}
+  }
+  // A stale or edited browser draft must not bypass required onboarding steps.
+  if(o.step>=3&&o.crew.length<5)o.step=2;
+  else if(o.step>=4&&!o.name.trim())o.step=3;
+  else if(o.step>=5&&!o.items.length)o.step=4;
+  else if(o.step>=6&&!o.travel)o.step=5;
+  else if(o.step>=8&&!o.island.trim())o.step=7;
+  else if(o.step>=10&&!o.camp.trim())o.step=9;
+  return o;
+}
+let state={...initial};try{const prior=JSON.parse(localStorage.getItem('expedition_ui_draft')||'null');state=sanitizeDraft(prior)}catch{}state.returnToHome=false;
+const el=document.getElementById('screen');const img=id=>'characters/ui_cutouts/'+id+'.png';const save=()=>{try{const {returnToHome,...persisted}=state;localStorage.setItem('expedition_ui_draft',JSON.stringify(persisted))}catch(e){/* in-memory fallback for offline preview */}};function go(step){state.step=step;save();render()}function next(){if(state.returnToHome && (state.step===2 || state.step===3)){state.returnToHome=false;go(10)}else go(state.step+1)}function back(){if(state.returnToHome){state.returnToHome=false;go(10)}else if(state.step>0)go(state.step-1)}function shell(k,title,desc,body,foot=''){el.innerHTML=(k==='탐험 홈'?'':'<div class="eyebrow">'+k+'</div>')+'<h1 class="title">'+title+'</h1><p class="desc">'+desc+'</p>'+body+'<div class="grow"></div>'+foot;if(el.querySelector('[data-child-preview]'))void refreshChildPhoto()}function btn(t,fn,disabled=false){return '<button class="action" '+(disabled?'disabled':'')+' onclick="'+fn+'">'+t+'</button>'}
+const approvedCrewLocations={
+  dubi:{hero:[3.8,47.4,29.5,16],portrait:[6.4,76.7,12.5,7.0],slot:[10.25,85.9]},
+  lori:{hero:[5.6,31.0,29.8,19.9],portrait:[20.6,76.7,12.5,7.0],slot:[24.5,85.9]},
+  ink:{hero:[34.0,32.1,30.0,18.0],portrait:[35.0,76.7,12.5,7.0],slot:[38.9,85.9]},
+  nova:{hero:[60.5,35.0,27.0,15.7],portrait:[49.1,76.7,12.5,7.0],slot:[53.4,85.9]},
+  take:{hero:[63.5,48.0,30.8,14.0],portrait:[63.4,76.7,12.5,7.0],slot:[67.7,85.9]},
+  zero:{hero:[30.0,47.9,32.0,17.0],portrait:[77.4,76.7,12.5,7.0],slot:[82.0,85.9]}
+};
+const referenceOrder=['dubi','lori','ink','nova','take','zero'];
+function hotspotRect(rect){return 'left:'+rect[0]+'%;top:'+rect[1]+'%;width:'+rect[2]+'%;height:'+rect[3]+'%;'}
+function renderApprovedCrewScene(choose){
+  const picked=state.crew;
+  const scene='<img alt="베이스캠프에서 여섯 친구와 만나는 확정 첫 만남 원화" draggable="false" src="ui/approved/first_meeting_selection_source.png">';
+  const hero=choose?referenceOrder.map(id=>{
+    const n=people.find(person=>person[0]===id)[1],selected=picked.includes(id);
+    return '<button type="button" data-name="'+n+'" class="approved-tap hero '+(selected?'selected':'')+'" aria-label="'+n+' '+(selected?'선택 해제':'선택')+'" aria-pressed="'+selected+'" style="'+hotspotRect(approvedCrewLocations[id].hero)+'" onclick="toggleCrew(\''+id+'\')"></button>';
+  }).join(''):'';
+  const portraits=choose?referenceOrder.map(id=>{
+    const n=people.find(person=>person[0]===id)[1],selected=picked.includes(id);
+    return '<button type="button" data-name="'+n+'" class="approved-tap portrait '+(selected?'selected':'')+'" aria-label="'+n+' 초상화 '+(selected?'선택 해제':'선택')+'" aria-pressed="'+selected+'" style="'+hotspotRect(approvedCrewLocations[id].portrait)+'" onclick="toggleCrew(\''+id+'\')"></button>';
+  }).join(''):'';
+  const slots=choose?referenceOrder.filter(id=>picked.includes(id)).map(id=>{
+    const r=approvedCrewLocations[id].slot;
+    return '<span class="approved-slot-check" aria-hidden="true" style="left:'+r[0]+'%;top:'+r[1]+'%">✓</span>';
+  }).join(''):'';
+  const action=choose?(state.returnToHome?'변경 저장하고 캠프로':'이 친구들과 함께하기'):'친구 선택하기';
+  const canGo=!choose||picked.length>=5;
+  el.innerHTML='<section class="approved-stage" aria-label="동행탐험대원 첫 만남 원화">'+scene+hero+portraits+slots+
+    (choose?'<span class="approved-count" role="status" aria-live="polite">'+picked.length+'/6</span>':'')+
+    '<button type="button" class="approved-tap cta" style="left:13%;top:90.2%;width:72%;height:6.4%" aria-label="'+action+'" '+(!canGo?'disabled':'')+' onclick="'+(choose?'next()':'next()')+'"></button>'+
+    (choose&&!canGo?'<span class="visually-hidden" role="status">친구 다섯 명 이상을 선택하세요. 현재 '+picked.length+'명</span>':'')+
+    '</section>';
+}
+
+function render(){if(state.step!==3&&(state.step!==10||state.tab!=='나'))releasePhotoPreview();document.getElementById('app').style.setProperty('--accent',state.color);document.getElementById('app').dataset.step=String(state.step);switch(state.step){
+case 0:el.innerHTML='<section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section>';break;
+case 1:renderApprovedCrewScene(false);break;
+case 2:renderApprovedCrewScene(true);break;
+case 3:{
+ const colors=['#a46d59','#668a65','#b38a47','#9d7293','#617f84'];
+ el.innerHTML='<section class="mobile-scene mobile-profile" aria-label="나의 프로필"><div class="mobile-topline">04 / 11</div><h1>이제 나의 차례</h1><p class="lede">함께할 친구들을 골랐으니, 나를 알려줘요.</p><div class="mobile-panel"><div class="profile-fields"><label class="profile-label">나의 이름<input class="field" maxlength="18" placeholder="어떻게 부르면 좋을까요?" value="'+escapeHTML(state.name)+'" oninput="state.name=this.value;save();document.getElementById(\'profileNext\').disabled=photoOperationActive||!this.value.trim()"></label><div><span class="profile-label">내 포인트 색</span><div class="swatches">'+colors.map(c=>'<button aria-label="색상 '+c+'" aria-pressed="'+(state.color===c)+'" style="background:'+c+'" onclick="state.color=\''+c+'\';save();render()"></button>').join('')+'</div></div>'+childPhotoPanel(true)+'</div></div><button id="profileNext" class="mobile-cta" onclick="next()" '+(!state.name.trim()?'disabled':'')+'>'+(state.returnToHome?'변경 저장하고 캠프로':'여행 가방 챙기기')+' &nbsp; ›</button></section>';
+ void refreshChildPhoto();break;}
+case 4:{
+ const items=[['map','지도'],['lamp','랜턴'],['water','물병'],['camera','카메라'],['cap','모자'],['compass','나침반']];
+ const objects=items.map(([id,n])=>`<button type="button" draggable="true" class="object ${state.items.includes(id)?'packed':''}" data-item="${id}" aria-label="${n} 집기" onclick="pickItem(this.dataset.item)" ondragstart="event.dataTransfer.setData('text/plain',this.dataset.item)"><img class="objecticon" src="ui/packing_objects/${id}.svg" alt=""><small>${n}</small></button>`).join('');
+ el.innerHTML='<section class="mobile-scene mobile-packing" aria-label="짐 싸기"><div class="mobile-topline">05 / 11</div><h1>여행 준비 완료?</h1><p class="lede">탁자에서 챙길 물건을 골라 가방에 넣어봐요.</p><div class="packing-board"><div class="packing"><div class="tabletop">'+objects+'</div><button type="button" id="bag" class="backpack" aria-label="선택한 물건을 여행 가방에 넣기" ondragover="event.preventDefault()" ondrop="event.preventDefault();packItem(event.dataTransfer.getData(\'text/plain\'))" onclick="packPicked()"><img class="bagart" src="ui/packing_objects/backpack.svg" alt=""><small>가방에 담은 물건 '+state.items.length+'/6</small></button></div></div><p class="packing-hint" id="packhint" role="status">물건을 누른 뒤 가방을 터치해요.</p><button class="mobile-cta" onclick="next()" '+(!state.items.length?'disabled':'')+'>섬으로 출발 &nbsp; ›</button></section>';break;}
+case 5:shell('06 / 11','어떤 길로 떠날까요?','하늘에서 내려가거나 바다를 건너 섬으로 향합니다.','<div class="glass actions"><button class="action" onclick="state.travel=\'cloud\';next()">구름을 타고 내려가기</button><button class="action" onclick="state.travel=\'sea\';next()">배를 타고 항해하기</button></div>');break;
+case 6:shell('07 / 11','드디어 섬이 보여요','폭포와 정글, 해변과 항구가 이어지는 하나의 섬입니다.','<div class="glass">우리가 찾아온 섬이에요. 폭포와 정글, 해변과 항구가 하나로 이어져 있어요.</div>',btn('섬에 이름 붙이기','next()'));break;
+case 7:shell('08 / 11','우리 섬의 이름은?','탐험할 섬의 이름을 직접 정해요.','<input class="field" maxlength="24" value="'+escapeHTML(state.island)+'" placeholder="섬 이름" oninput="state.island=this.value;save();document.getElementById(\'islandNext\').disabled=!this.value.trim()">','<button class="action" id="islandNext" onclick="next()" '+(!state.island.trim()?'disabled':'')+'>베이스캠프 찾아가기</button>');break;
+case 8:shell('09 / 11','베이스캠프를 발견했어요','이곳에서 오늘의 탐험을 준비하고, 기록하고, 다시 출발합니다.','<div class="glass">나무 데크와 캔버스 천이 이어지는 베이스캠프입니다. 이름을 정하고 이곳에서 첫 탐험을 시작해요.</div>',btn('캠프 이름 정하기','next()'));break;
+case 9:shell('10 / 11','캠프 이름도 정해요','섬과 캠프는 서로 다른 이름을 가질 수 있어요.','<input class="field" maxlength="24" value="'+escapeHTML(state.camp)+'" placeholder="베이스캠프 이름" oninput="state.camp=this.value;save();document.getElementById(\'campNext\').disabled=!this.value.trim()">','<button class="action" id="campNext" onclick="next()" '+(!state.camp.trim()?'disabled':'')+'>베이스캠프에 도착하기</button>');break;
+case 10:{const nav=['오늘','지도','기록','탐험대','나'];if(!nav.includes(state.tab))state.tab='오늘';let content='';if(state.tab==='오늘')content='<div class="glass"><strong>'+escapeHTML(state.camp)+'</strong><p>오늘의 탐험은 이곳에서 시작해요.</p><div class="actions"><button class="sub" onclick="state.tab=\'지도\';save();render()">섬 지도</button><button class="sub" onclick="state.tab=\'탐험대\';save();render()">동행 친구</button></div><p class="status">여기에서 지도와 친구들을 먼저 둘러볼 수 있어요.</p></div>';else if(state.tab==='지도')content='<div class="glass"><strong>'+escapeHTML(state.island)+'</strong><p>하나의 섬에서 이어지는 장소</p><div class="destination"><span>베이스캠프</span><span>정글 · 폭포</span><span>해변</span><span>항구</span></div><p class="status">폭포·정글·해변·항구가 이어지는 우리의 섬이에요.</p></div>';else if(state.tab==='탐험대')content='<div class="glass"><strong>함께하는 친구 '+state.crew.length+'명</strong><div class="crewlist">'+state.crew.map(id=>'<div><img src="'+img(id)+'" alt=""><span>'+people.find(x=>x[0]===id)[1]+'</span></div>').join('')+'</div><button class="sub" onclick="editFromHome(2)">친구 선택 변경</button></div>';else if(state.tab==='나')content='<div class="glass"><strong>'+escapeHTML(state.name)+'</strong><p>나의 포인트 색</p><div class="accentchip" style="background:'+state.color+'"></div><p>섬: '+escapeHTML(state.island)+'<br>캠프: '+escapeHTML(state.camp)+'</p>'+childPhotoPanel(false)+'<button class="sub" onclick="editFromHome(3)">프로필 수정</button></div>';else content='<div class="glass"><strong>탐험 기록</strong><p>함께할 친구 '+state.crew.length+'명 · 챙긴 물건 '+state.items.length+'개</p><p class="status">탐험에서 쌓은 실제 기록은 앞으로 이곳에 모을 거예요.</p></div>';shell('탐험 홈','어서 와요, '+escapeHTML(state.name)+'!','우리의 '+escapeHTML(state.camp)+'에서 탐험을 시작해요.',content,'<nav class="nav">'+nav.map(n=>'<button class="'+(state.tab===n?'active':'')+'" onclick="state.tab=\''+n+'\';save();render()">'+n+'</button>').join('')+'</nav>');break;}
+default:go(0)}}
+// The photo original lives in browser IndexedDB only; no base64/bytes are sent to localStorage or network.
+const PHOTO_DB='expedition_child_visual_sources_v1',PHOTO_STORE='visual_sources';let photoObjectURL=null,photoPreviewEpoch=0,photoOperationActive=false;
+const PHOTO_MIMES=['image/jpeg','image/png','image/webp','image/heic','image/heif'];
+async function sha256Hex(bytes){if(!globalThis.crypto?.subtle)throw new Error('보안 연결에서만 사진을 확인할 수 있어요.');const digest=await crypto.subtle.digest('SHA-256',bytes);return [...new Uint8Array(digest)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function releasePhotoPreview(){photoPreviewEpoch++;if(photoObjectURL){URL.revokeObjectURL(photoObjectURL);photoObjectURL=null}}
+function childPhotoPanel(edit){
+  const add=edit?'<input id="child-source-input" class="photo-input" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" onchange="registerChildSource(this)"><label class="sub photo-select" for="child-source-input">내 사진 고르기</label>'+(state.photoSourceId?'<br><button type="button" class="sub photo-remove" onclick="clearChildSources()">등록 사진 지우기</button>':''):'';
+  return '<section class="photo-source" data-child-preview aria-label="아이 사진 원본 등록"><div class="photo-frame"><img data-child-image hidden alt="내 사진 원본 미리보기"><span data-child-message>사진 원본 미등록</span></div><div class="photo-copy"><strong>내 사진 원본</strong><p>사진 등록은 선택사항이에요. 나의 아바타와는 구분해서 보관해요.</p>'+add+'<p class="photo-state" data-child-sha></p><p role="status" aria-live="polite" class="photo-status" data-child-status></p><p class="photo-state">이 기기 브라우저에만 보관 · 서버 전송 없음</p></div></section>';
+}
+function photoDB(){return new Promise((res,rej)=>{if(!('indexedDB' in window)){rej(new Error('IndexedDB unavailable'));return}const q=indexedDB.open(PHOTO_DB,1);q.onupgradeneeded=()=>{if(!q.result.objectStoreNames.contains(PHOTO_STORE))q.result.createObjectStore(PHOTO_STORE,{keyPath:'id'})};q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error||new Error('IndexedDB open failed'))})}
+async function photoTransaction(mode,operation){const db=await photoDB();try{return await new Promise((res,rej)=>{const tx=db.transaction(PHOTO_STORE,mode),store=tx.objectStore(PHOTO_STORE);let value;let request;try{request=operation(store)}catch(e){rej(e);return}if(request){request.onsuccess=()=>{value=request.result};request.onerror=()=>rej(request.error||new Error('asset operation failed'))}tx.oncomplete=()=>res(value);tx.onerror=()=>rej(tx.error||new Error('asset transaction failed'));tx.onabort=()=>rej(tx.error||new Error('asset transaction aborted'))})}finally{db.close()}}
+async function readChildSource(id){return photoTransaction('readonly',s=>s.get(id))}
+function photoStatus(msg){const box=el.querySelector('[data-child-status]');if(box)box.textContent=msg}
+async function decodeImage(file){const u=URL.createObjectURL(file);try{await new Promise((res,rej)=>{const image=new Image();image.onload=()=>res();image.onerror=()=>rej(new Error('이 브라우저에서 사진을 표시할 수 없어요. JPEG/PNG/WebP 파일을 선택해 주세요.'));image.src=u})}finally{URL.revokeObjectURL(u)}}
+async function registerChildSource(input){
+  const file=input.files&&input.files[0];if(!file||photoOperationActive)return;
+  photoOperationActive=true;input.disabled=true;const nextButton=el.querySelector('#profileNext');if(nextButton)nextButton.disabled=true;
+  photoStatus('사진을 확인하고 이 기기에 저장하고 있어요.');
+  try{
+    if(!PHOTO_MIMES.includes(file.type))throw new Error('JPEG, PNG, WebP 또는 표시 가능한 HEIC 사진을 선택해 주세요.');
+    if(file.size<1||file.size>8*1024*1024)throw new Error('8MB 이하 사진을 선택해 주세요.');
+    await decodeImage(file);
+    const hash=await sha256Hex(await file.arrayBuffer()),id='CHILD_VISUAL_SOURCE_SHA256_'+hash;
+    // One local profile only: clear any previous/orphan original and put the new one in ONE IDB transaction.
+    // A failed transaction must preserve the old stored original and its draft reference.
+    await photoTransaction('readwrite',store=>{store.clear();return store.put({id,sha256:hash,mime:file.type,size:file.size,blob:file,createdAt:new Date().toISOString()})});
+    state.photoSourceId=id;state.photoSha256=hash;save();const previewVerified=await refreshChildPhoto();
+    if(previewVerified)photoStatus('사진 원본을 이 기기에 등록했어요. 아바타로 변환한 것은 아니에요.');
+  }catch(e){photoStatus('등록 실패: '+(e?.message||'사진을 저장하지 못했어요.'))}
+  finally{photoOperationActive=false;if(el.contains(input)){input.disabled=false;input.value='';}if(nextButton&&el.contains(nextButton))nextButton.disabled=!state.name.trim()}
+}
+async function refreshChildPhoto(){
+  const ticket=++photoPreviewEpoch,area=el.querySelector('[data-child-preview]');if(!area){releasePhotoPreview();return}
+  const id=state.photoSourceId,view=area.querySelector('[data-child-image]'),msg=area.querySelector('[data-child-message]'),sha=area.querySelector('[data-child-sha]');
+  if(photoObjectURL){URL.revokeObjectURL(photoObjectURL);photoObjectURL=null}
+  view.hidden=true;view.removeAttribute('src');msg.hidden=false;
+  if(!id){msg.textContent='사진 원본 미등록';sha.textContent='아직 사진을 넣지 않았어요';return false}
+  sha.textContent='이 기기에 등록된 사진 원본을 확인하고 있어요.';
+  try{
+    const record=await readChildSource(id);
+    if(ticket!==photoPreviewEpoch||!el.contains(area)||id!==state.photoSourceId)return false;
+    if(!record||!record.blob||record.sha256!==state.photoSha256||record.id!==id||record.size!==record.blob.size||record.mime!==record.blob.type||!PHOTO_MIMES.includes(record.mime))throw new Error('원본의 등록 정보를 확인할 수 없어요.');
+    // Validate the STORED bytes against the approved reference, not just the metadata strings.
+    const actual=await sha256Hex(await record.blob.arrayBuffer());
+    if(ticket!==photoPreviewEpoch||!el.contains(area)||id!==state.photoSourceId)return false;
+    if(actual!==state.photoSha256)throw new Error('저장된 원본의 내용이 등록 정보와 달라요.');
+    const url=URL.createObjectURL(record.blob);photoObjectURL=url;view.src=url;view.hidden=false;msg.hidden=true;sha.textContent='사진 원본 확인됨 · 이 기기에만 보관';return true;
+  }catch(e){if(ticket===photoPreviewEpoch&&el.contains(area)){msg.hidden=false;msg.textContent='원본 확인 필요';sha.textContent='사진 원본을 표시하지 않았어요.';photoStatus('원본 확인 실패: '+(e?.message||'다시 등록해 주세요.'))}return false}
+}
+async function clearChildSources(){
+  if(photoOperationActive){photoStatus('사진 등록이 끝난 다음 다시 시도해 주세요.');return}
+  if(!confirm('이 기기에 보관된 탐험가 사진 원본을 모두 지울까요? 이름과 탐험 기록은 유지됩니다.'))return;
+  photoOperationActive=true;
+  try{await photoTransaction('readwrite',s=>s.clear());releasePhotoPreview();state.photoSourceId='';state.photoSha256='';save();render();photoStatus('이 기기의 사진 원본을 삭제했습니다.')}
+  catch(e){photoStatus('삭제 실패: 사진 저장소를 열지 못했어요.')}
+  finally{photoOperationActive=false}
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function editFromHome(step){state.returnToHome=true;go(step)}function toggleCrew(id){if(state.crew.includes(id))state.crew=state.crew.filter(x=>x!==id);else if(state.crew.length<6)state.crew.push(id);save();render()}let picked=null;function pickItem(id){picked=id;document.querySelectorAll('.object').forEach(e=>e.classList.toggle('picked',e.dataset.item===id));document.getElementById('packhint').textContent='선택한 물건을 가방으로 옮겨주세요.'}function packPicked(){if(picked)packItem(picked)}function packItem(id){if(!['map','lamp','water','camera','cap','compass'].includes(id))return;if(!state.items.includes(id))state.items.push(id);picked=null;save();render()}render();
+</script></body></html>
