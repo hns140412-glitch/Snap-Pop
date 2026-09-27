@@ -171,6 +171,28 @@ main[data-step="10"] .land{background-position:center center}
 @media(min-width:700px){.home-stage{max-width:1024px;margin:auto;padding:30px max(30px,5%) 27px}.home-top h1{font-size:33px}.home-drawer{max-width:420px;align-self:flex-end;width:41%}.home-navigation{max-width:480px;align-self:flex-end;width:48%}.home-map{width:100%}.world-stage{max-width:430px;margin-left:auto;margin-right:3%}}
 @media(max-height:710px){.home-stage{padding-top:calc(env(safe-area-inset-top) + 10px);padding-bottom:calc(env(safe-area-inset-bottom) + 8px)}.home-drawer{padding:11px 13px;max-height:48dvh}.home-navigation{min-height:52px;padding-top:5px;padding-bottom:4px}.home-navigation button{gap:2px}.home-drawer .crewlist img{height:53px}}
 
+
+/* Approved-layout correction: map-first default HOME, active landscape pins, compact caption.
+   No new artwork, no duplicate card collection, no simulated specialist launch. */
+.home-map{isolation:isolate}
+.home-map:after{content:'';pointer-events:none;position:absolute;inset:auto -12px -1px;height:min(18%,72px);background:linear-gradient(transparent,#12313434);z-index:-1}
+.home-place{min-height:36px;display:inline-flex;align-items:center;gap:6px;border:1px solid #f8ebcb;background:linear-gradient(155deg,#fff5decf,#edd2a8e9);border-radius:13px;padding:7px 11px;color:#4d3b2b;box-shadow:0 5px 11px #192b2c79;white-space:nowrap;font-size:12px;font-weight:850}
+.home-place:before{content:'';display:block;flex:none;width:10px;height:10px;border:2px solid currentColor;border-radius:50%;box-shadow:0 0 0 2px #fff7e0aa}
+.home-place:focus-visible{outline:3px solid #fff1ac;outline-offset:3px}
+.home-place[data-place="camp"]{left:0%;top:66%}
+.home-place[data-place="jungle"]{left:48%;top:14%}
+.home-place[data-place="beach"]{right:0%;top:48%}
+.home-place[data-place="harbor"]{left:27%;top:84%}
+.home-drawer[data-tab="오늘"]{max-height:106px;padding:11px 16px;margin-bottom:10px}
+.home-drawer[data-tab="오늘"] h2{font-size:18px;margin:0 0 4px}
+.home-drawer[data-tab="오늘"] p{font-size:12px;margin:0}
+@media(max-height:710px){.home-place{padding:5px 7px;min-height:30px;font-size:11px}.home-place[data-place="camp"]{top:65%}.home-place[data-place="harbor"]{top:82%}.home-drawer[data-tab="오늘"]{max-height:88px;padding:8px 12px}}
+@media(min-width:700px){.home-place{font-size:14px;min-height:40px}.home-place[data-place="camp"]{left:8%;top:54%}.home-place[data-place="jungle"]{left:48%;top:14%}.home-place[data-place="beach"]{right:9%;top:42%}.home-place[data-place="harbor"]{left:40%;top:79%}}
+/* Discovery of the camp and its naming should focus on the known approved island camp.
+   Reframe the source crop without inventing or replacing artwork. */
+main[data-step="8"] .land,main[data-step="9"] .land{background-size:auto 119%;background-position:43% 84%}
+main[data-step="8"]:before,main[data-step="9"]:before{background:linear-gradient(180deg,#132d377d,transparent 36%,transparent 52%,#182d3691 100%)}
+main[data-step="8"] .world-location{margin-left:3%;border-radius:10px 15px 10px 15px;transform:rotate(-2deg);background:#f1dfbdf2;border:2px solid #8b6136;box-shadow:0 4px 0 #664b37bb,0 6px 17px #131b19a0}
 </style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script>
 const people=[['zero','제로'],['take','테이크'],['nova','노바'],['ink','잉크'],['lori','로리'],['dubi','두비']];
 const palette=['#a46d59','#668a65','#b38a47','#9d7293','#617f84'];
@@ -260,7 +282,7 @@ case 10:{
     '나':'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>'};
   let drawer='';
   if(state.tab==='오늘'){
-    drawer='<h2>'+escapeHTML(state.camp)+'</h2><p>오늘은 어디로 떠나 볼까요?</p><div class="actions"><button class="sub" onclick="state.tab=\'지도\';save();render()">섬 둘러보기</button><button class="sub" onclick="state.tab=\'탐험대\';save();render()">동행 친구</button></div>';
+    drawer='<h2>'+escapeHTML(state.camp)+'</h2><p>지도에서 가고 싶은 곳을 직접 눌러 보세요.</p>';
   }else if(state.tab==='지도'){
     const places={camp:['베이스캠프','출발을 준비하고 쉬어 가는 곳'],jungle:['정글 · 폭포','새로운 단서와 기억을 만나는 곳'],beach:['해변','생각을 이야기로 펼치는 곳'],harbor:['항구','다음 탐험으로 이어지는 길']};
     const selected=places[state.spot]||null;
@@ -272,7 +294,7 @@ case 10:{
   }else{
     drawer='<h2>'+escapeHTML(state.name)+'</h2><p>'+escapeHTML(state.island)+' · '+escapeHTML(state.camp)+'</p>'+childPhotoPanel(false)+'<button class="sub" onclick="editFromHome(3)">프로필 수정</button>';
   }
-  el.innerHTML='<section class="home-stage" aria-label="탐험 홈"><header class="home-top"><div><h1>'+escapeHTML(state.island)+'</h1><p>'+escapeHTML(state.camp)+'에서 시작하는 하루</p></div><button class="home-profile" onclick="state.tab=\'나\';save();render()" aria-label="내 프로필 보기">'+escapeHTML(state.name)+' ▾</button></header><div class="home-map" aria-label="섬 지도">'+(state.tab==='지도'?[['camp','베이스캠프'],['jungle','정글 · 폭포'],['beach','해변'],['harbor','항구']].map(([id,n])=>'<button type="button" class="home-place" data-place="'+id+'" aria-pressed="'+(state.spot===id)+'" onclick="state.spot=\''+id+'\';render()">'+n+'</button>').join(''):'')+'</div><div class="home-drawer" aria-live="polite">'+drawer+'</div><nav class="home-navigation" aria-label="탐험 홈 메뉴">'+nav.map(n=>'<button type="button" class="'+(state.tab===n?'active':'')+'" aria-current="'+(state.tab===n?'page':'false')+'" onclick="state.tab=\''+n+'\';save();render()">'+svgs[n]+'<span>'+n+'</span></button>').join('')+'</nav></section>';
+  el.innerHTML='<section class="home-stage" aria-label="탐험 홈"><header class="home-top"><div><h1>'+escapeHTML(state.island)+'</h1><p>'+escapeHTML(state.camp)+'에서 시작하는 하루</p></div><button class="home-profile" onclick="state.tab=\'나\';save();render()" aria-label="내 프로필 보기">'+escapeHTML(state.name)+' ▾</button></header><div class="home-map" aria-label="섬 지도">'+[['camp','베이스캠프'],['jungle','정글 · 폭포'],['beach','해변'],['harbor','항구']].map(([id,n])=>'<button type="button" class="home-place" data-place="'+id+'" aria-pressed="'+(state.tab==='지도'&&state.spot===id)+'" onclick="visitSpot(\''+id+'\')">'+n+'</button>').join('')+'</div><div class="home-drawer" data-tab="'+state.tab+'" aria-live="polite">'+drawer+'</div><nav class="home-navigation" aria-label="탐험 홈 메뉴">'+nav.map(n=>'<button type="button" class="'+(state.tab===n?'active':'')+'" aria-current="'+(state.tab===n?'page':'false')+'" onclick="state.tab=\''+n+'\';save();render()">'+svgs[n]+'<span>'+n+'</span></button>').join('')+'</nav></section>';
   if(state.tab==='나')void refreshChildPhoto();break;
 }
 default:go(0)}}
@@ -333,5 +355,5 @@ async function clearChildSources(){
   catch(e){photoStatus('삭제 실패: 사진 저장소를 열지 못했어요.')}
   finally{photoOperationActive=false}
 }
-function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function editFromHome(step){state.returnToHome=true;go(step)}function toggleCrew(id){if(state.crew.includes(id))state.crew=state.crew.filter(x=>x!==id);else if(state.crew.length<6)state.crew.push(id);save();render()}let picked=null;function pickItem(id){picked=id;document.querySelectorAll('.object').forEach(e=>e.classList.toggle('picked',e.dataset.item===id));document.getElementById('packhint').textContent='선택한 물건을 가방으로 옮겨주세요.'}function packPicked(){if(picked)packItem(picked)}function packItem(id){if(!['map','lamp','water','camera','cap','compass'].includes(id))return;if(!state.items.includes(id))state.items.push(id);picked=null;save();render()}render();
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function visitSpot(id){if(!['camp','jungle','beach','harbor'].includes(id))return;state.spot=id;state.tab='지도';save();render()}function editFromHome(step){state.returnToHome=true;go(step)}function toggleCrew(id){if(state.crew.includes(id))state.crew=state.crew.filter(x=>x!==id);else if(state.crew.length<6)state.crew.push(id);save();render()}let picked=null;function pickItem(id){picked=id;document.querySelectorAll('.object').forEach(e=>e.classList.toggle('picked',e.dataset.item===id));document.getElementById('packhint').textContent='선택한 물건을 가방으로 옮겨주세요.'}function packPicked(){if(picked)packItem(picked)}function packItem(id){if(!['map','lamp','water','camera','cap','compass'].includes(id))return;if(!state.items.includes(id))state.items.push(id);picked=null;save();render()}render();
 </script></body></html>
