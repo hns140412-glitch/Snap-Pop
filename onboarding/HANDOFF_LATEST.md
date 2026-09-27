@@ -1,5 +1,12 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## Google Drive current archive pointer (2026-09-27)
+- ZIP: [동행탐험_재개_2026-09-27_LATEST.zip](https://drive.google.com/file/d/1DBISraYctCYwH5mUU_v5i_01-uqZ2aJN/view?usp=drivesdk)
+- Account/folder: TAKY / 80_HANDOFF; file ID: `1DBISraYctCYwH5mUU_v5i_01-uqZ2aJN`; size: 29,996,625 bytes (local and Drive metadata agree).
+- ZIP original local SHA-256: `18b39ed1673045b844724603c307049d8b15a705de698a8b00acc272d8b4ad98` (remote byte hash not independently re-downloaded).
+- Detailed Drive-linked start prompt: [COMPANION_ONBOARDING_NEW_CHAT_START_DRIVE_LATEST.md](https://drive.google.com/file/d/1V5z5yhUBDFYW9T2TCISLm-_W2MhHd1KM/view?usp=drivesdk)
+- This is an immutable resume snapshot, NOT evidence of a successful main merge, runtime deployment, or visual release pass. Refresh current PR/main HEAD and inspect actual contents before editing.
+
 ## Resume order
 INHERIT APPROVED STATE → CURRENT → verify exact Snap main + PR HEAD → CLOSED inheritance → remaining OPEN only. Think Again, Keep Your Key. Think Again, You’re The Key. USER != DEBUGGER. Do not re-generate approved artwork, create V12/V13 copies, or make the user test unfinished UI.
 
