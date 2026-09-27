@@ -1,0 +1,53 @@
+{
+  "task_id": "COMPANION_ONBOARDING_INTEGRATION_20260927",
+  "source_authority": "Existing user-approved standalone source; additive Snap-Pop route only",
+  "source_file": "onboarding/index.html",
+  "source_sha256": "af3c97399f7d6623e787e3728a1631c91b061accf59876da71ab8998a2e877a7",
+  "base_head": "3de97be0d12dd6244a942b0c137c2efe578a43b6",
+  "status": "INTEGRATION_CANDIDATE_NOT_RELEASED",
+  "main_integration": false,
+  "visual_validation": {
+    "first_meeting_selection": "APPROVED_SOURCE_BUT_COMPOSITE_SKIN_ONLY",
+    "welcome": "MOBILE_LAYOUT_REVIEWED_NOT_APPROVED_PIXEL_MATCH",
+    "profile_packing_arrival_naming_home": "VISUAL_REVIEW_OPEN",
+    "actual_child_photo_avatar": "NOT_IMPLEMENTED",
+    "full_20_member_roster": "NOT_AVAILABLE_ONLY_SIX"
+  },
+  "required_assets": {
+    "ui/approved/first_meeting_selection_source.png": "9f55faf85c45d4236172a797e07a809a876f53b9afb083c9d8f8df1e799ab0f7",
+    "world/canonical/island_mobile.png": "b5996014d11b3195789180c1524fcd45daf450e735d9cfdbd6a58432bf89df64",
+    "world/canonical/island_tablet.png": "54efc228af6c66ae8f162cb7235854cab1a8a9fad7f5a32ed8a6637e92bdde43",
+    "characters/originals/dubi_source.jpeg": "bbfc57e9b4e8d8d132452b802826e5fd7c9ef400f5d454d9150a2b7e38d33820",
+    "characters/originals/ink_source.jpeg": "a03261f0dbf1e2a60158ceba32948b31c5372595ca73d39c400b1330c446b7e7",
+    "characters/originals/lori_source.jpeg": "fa5e10a042f86354cfabafc1e09be5a0250e8942bf467eca5ed462b9405771fb",
+    "characters/originals/nova_source.jpeg": "f627926282be3d0dc95f6cd94461e041c39c30f8a5843f4a42a995790348a1db",
+    "characters/originals/take_source.jpeg": "1bd65ebb545efa0c06132d4d6cac153171bc3b6cef3c7547915c9c8acecc88b2",
+    "characters/originals/zero_source.jpeg": "84dd276b4099f3f73348cd69f8c5117c52f3ab4d587e5f80363c7cf43350572e",
+    "characters/ui_cutouts/dubi.png": "611f460174a09e0ed186e909812464e8a991cc24a9891e21c087050e78d6109b",
+    "characters/ui_cutouts/ink.png": "5108c5d31437afda09eebd414ac3fd7000dabeca7504b469e630f2368160ef30",
+    "characters/ui_cutouts/lori.png": "1642e080034e48cf7a11cd3bea12be8db44e10468b20b231f5f714360f27fcac",
+    "characters/ui_cutouts/nova.png": "11aea6f91f0197a0c2ab70a203550530ebe2e2aad39136198851ca97092a0d34",
+    "characters/ui_cutouts/take.png": "3cd6720c13473f20f4b23f64fa3d42c7491ea9277ba204f80f096e3f0d57d88a",
+    "characters/ui_cutouts/zero.png": "7eb9ad58b94349eb8367236a3058a7feb0c9e994b981915c6ef82f74dd88b233",
+    "ui/packing_objects/backpack.svg": "0ccda9ca4b8045fdef8bac330975d8c6b6f44543ae47b8102dba4b134d9fb801",
+    "ui/packing_objects/camera.svg": "83ef6e231e7d83de50cfb9a05c470a628ae843cb4f39688b1112560935cca12a",
+    "ui/packing_objects/cap.svg": "275e9b69c648005bb1effffdf2a1f9e388617369f70e9ff3fa8e161c123425ce",
+    "ui/packing_objects/compass.svg": "7e2f505c0d41a5e4ef0286e9b1317aed2bf477992fc9330cf7d78738ebc3b3a4",
+    "ui/packing_objects/lamp.svg": "1546b2e1002ccec8cbc8d07e07a3965d157fb1e89d4cb046f127c19e323303b8",
+    "ui/packing_objects/map.svg": "99b2bf7dc7431046ab479825d00f9e613efdabe77387c3fcc5ff6f3794c7ffc7",
+    "ui/packing_objects/water.svg": "4dfc225ad387064d8c289a11889958c78bac99b3bda44bcd6a5c1c5495cfe511"
+  },
+  "forbidden_changes": [
+    "do not replace Snap-Pop root index/home",
+    "do not directly import unapproved crew art into Snap runtime",
+    "do not change Ready/Hide/Snap learning ownership",
+    "do not deploy/Netlify"
+  ],
+  "promotion_gate": [
+    "all required asset byte hashes present",
+    "complete screen reference versus rendered UI review",
+    "four-viewport browser regression",
+    "HTTPS reload + browser IndexedDB test",
+    "exact main head/CI green and explicit human approval"
+  ]
+}
