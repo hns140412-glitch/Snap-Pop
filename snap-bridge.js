@@ -7,7 +7,11 @@
   const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','subject','concept_skill_target','learning_target_id'];
 
   const EventEnvelope = globalThis.TakyEventEnvelope;
+  const ScopeGuard = globalThis.SnapReadyScopeGuardV01;
   if(!EventEnvelope?.create) throw new Error('SNAP_SHARED_EVENT_ENVELOPE_UNAVAILABLE');
+  if(!ScopeGuard?.prepareContext) throw new Error('SNAP_READY_SCOPE_GUARD_UNAVAILABLE');
+  // Configured by the owning host, never learned from a link or referrer.
+  const trustedReadyTargets=ScopeGuard.allowedTargets(globalThis.SnapPopTrustedReadyTargets);
   const iso = () => new Date().toISOString();
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -31,13 +35,24 @@
   }
 
   let context = readStoredContext();
+  let handoffRejection=null;
 
   function bootContext() {
     const incoming = readIncomingContext();
-    if (incoming.session_id || incoming.task_id || incoming.word) {
-      context = { ...context, ...incoming, received_at: iso(), task_completed: false };
-      persistContext(context);
-    }
+    const params=new URLSearchParams(location.search);
+    const hasIncoming=PARAMS.some(key=>params.has(key));
+    // NEVER merge old run fields into a different new run. A child_id is a
+    // continuity label, not identity proof; Ready must validate on receipt.
+    const result=ScopeGuard.prepareContext(incoming,context,trustedReadyTargets,
+      {incoming:hasIncoming,now:iso()});
+    handoffRejection=result.ok?null:result.reason;
+    context=result.context;
+    persistContext(context);
+  }
+
+  function trustedReturnTarget(){
+    return context.linked_context_valid
+      ?ScopeGuard.trustedTarget(context.return_target,trustedReadyTargets):null;
   }
 
   function emit(type, payload = {}) {
@@ -63,18 +78,19 @@
     try { outbox = JSON.parse(sessionStorage.getItem(OUTBOX_KEY) || '[]') || []; } catch {}
     sessionStorage.setItem(OUTBOX_KEY, JSON.stringify([...outbox, event].slice(-120)));
     try {
-      if (window.opener && !window.opener.closed && context.return_target) {
-        window.opener.postMessage({ type:'TAKY_LEARNING_EVENT', event }, new URL(context.return_target).origin);
+      const ready=trustedReturnTarget();
+      if (window.opener && !window.opener.closed && ready) {
+        window.opener.postMessage({ type:'TAKY_LEARNING_EVENT', event }, ready.origin);
       }
     } catch {}
     return event;
   }
 
   function safeReturnUrl(taskState = 'PARTIAL') {
-    if (!context.return_target) return null;
+    const ready=trustedReturnTarget();
+    if (!ready || !context.session_id || !context.task_id || !context.lap_id) return null;
     try {
-      const url = new URL(context.return_target, location.href);
-      if (!['http:','https:'].includes(url.protocol)) return null;
+      const url = new URL(ready.href);
       if (context.session_id) url.searchParams.set('session_id', context.session_id);
       if (context.goal_id) url.searchParams.set('goal_id', context.goal_id);
       if (context.task_id) url.searchParams.set('task_id', context.task_id);
@@ -129,7 +145,8 @@
   }
 
   function ensureBaseCampChip() {
-    const linked = !!(context.session_id && context.task_id && context.return_target);
+    const linked = !!(context.session_id && context.task_id &&
+      context.lap_id && trustedReturnTarget());
     let chip = document.getElementById('snapBaseCampChip');
     if (!linked) { chip?.remove(); return; }
     if (!chip) {
@@ -193,12 +210,17 @@
   }
 
   function emitLearningOutcome(input = {}) {
+    // No linked, context-free event can claim a member or learning target.
+    // This emits only specialist observation, never a verified receipt.
+    const binding=ScopeGuard.boundScope(context,input,{targetRequired:true});
+    if(!binding.ok)return binding;
+    const scope=binding.scope;
     const payload = {
-      skill_id: input.skill_id || input.concept_skill_target || context.concept_skill_target || null,
-      concept_skill_target: input.concept_skill_target || context.concept_skill_target || null,
-      member_id: input.member_id || context.child_id || null,
-      subject: input.subject || context.subject || null,
-      learning_target_id: input.learning_target_id || context.learning_target_id || null,
+      skill_id: scope.concept_skill_target,
+      concept_skill_target: scope.concept_skill_target,
+      member_id: scope.member_id,
+      subject: scope.subject,
+      learning_target_id: scope.learning_target_id,
       completed: !!input.completed,
       evidence_of_improvement: !!input.evidence_of_improvement,
       needed_assistance: !!(input.needed_assistance || input.help_used),
@@ -217,11 +239,17 @@
   function requestRubricReview(input = {}) {
     const verifier = globalThis.SnapRubricVerifier;
     if (!verifier?.createReviewRequest) return { ok:false, reason:'SNAP_RUBRIC_VERIFIER_UNAVAILABLE' };
+    // A standalone child may prepare a review *request*, never certify its
+    // own result. An active linked run may not rebind its member/subject/skill.
+    const linked=!!(context.session_id||context.task_id);
+    const bound=linked?ScopeGuard.boundScope(context,input,{targetRequired:false}):null;
+    if(linked&&!bound?.ok)return bound;
+    const scope=bound?.scope||{};
     return verifier.createReviewRequest({
       event_id: input.event_id,
-      member_id: input.member_id || context.member_id || context.child_id || '',
-      subject: input.subject || context.subject || '',
-      concept_skill_target: input.concept_skill_target || context.concept_skill_target || '',
+      member_id: linked?scope.member_id:(input.member_id||''),
+      subject: linked?scope.subject:(input.subject||''),
+      concept_skill_target: linked?scope.concept_skill_target:(input.concept_skill_target||''),
       rubric_ref: input.rubric_ref,
       reviewer_role: input.reviewer_role,
       rubric_version: input.rubric_version,
@@ -235,7 +263,10 @@
       sessionIdPresentWhenLinked: !context.return_target || !!context.session_id,
       taskIdPresentWhenLinked: !context.return_target || !!context.task_id,
       lapIdPresentWhenLinked: !context.return_target || !!context.lap_id,
-      safeReturnTarget: !context.return_target || (() => { try { return ['http:','https:'].includes(new URL(context.return_target).protocol); } catch { return false; } })()
+      safeReturnTarget: !context.return_target || !!trustedReturnTarget(),
+      linkedRunValid: !handoffRejection,
+      noUnscopedLinkedReturn: !context.session_id || !!(
+        context.linked_context_valid && context.task_id && context.lap_id && trustedReturnTarget())
     };
     return { ok:Object.values(checks).every(Boolean), checks };
   }
@@ -248,10 +279,15 @@
     ensureWordChip();
     wrapCompletion();
     cleanIncomingQuery();
-    if (context.session_id && context.task_id) emit('APP_ENTERED', { from_app: context.from_app || null, word: context.word || null });
+    if (context.linked_context_valid && context.session_id && context.task_id)
+      emit('APP_ENTERED', { from_app: context.from_app || null, word: context.word || null });
     window.SnapPopBridge = Object.freeze({
       version: BRIDGE_VERSION,
       context: () => ({ ...context }),
+      handoffStatus:()=>({ok:!handoffRejection,reason:handoffRejection,
+        ready_target_configured:trustedReadyTargets.length>0,
+        linked_context_valid:context.linked_context_valid===true,
+        authenticated:false}),
       emit,
       returnToBase,
       requestRubricReview,
