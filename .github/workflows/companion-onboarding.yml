@@ -1,0 +1,22 @@
+name: Companion Onboarding Source/Asset Gate
+
+on:
+  pull_request:
+    paths:
+      - 'onboarding/**'
+      - '.github/workflows/companion-onboarding.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  approved-asset-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Verify exact original assets (fail closed)
+        run: node onboarding/tests/asset-integrity.cjs
