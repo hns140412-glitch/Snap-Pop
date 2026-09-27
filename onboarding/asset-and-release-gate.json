@@ -2,7 +2,7 @@
   "task_id": "COMPANION_ONBOARDING_INTEGRATION_20260927",
   "source_authority": "Existing user-approved standalone source; additive Snap-Pop route only",
   "source_file": "onboarding/index.html",
-  "source_sha256": "0d41363de67717c0a939df1de1492551350ef7f230472ef4bc62cb82a8d05f7b",
+  "source_sha256": "8a645892712691f6245c3125640566fd119cdc4ae2a223292ad94ddbc1cd2717",
   "base_head": "3de97be0d12dd6244a942b0c137c2efe578a43b6",
   "status": "INTEGRATION_CANDIDATE_NOT_RELEASED",
   "main_integration": false,
