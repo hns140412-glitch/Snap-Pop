@@ -101,3 +101,21 @@ test('New Ready run with omitted scope must not inherit prior child from same br
  expect(standalone.session_id).toBeUndefined();
  expect(standalone.return_target).toBeUndefined();
 });
+
+
+test('Approved Ready return uses only the exact host-configured destination and HELP_NEEDED state',async({page})=>{
+ await page.addInitScript(()=>{globalThis.SnapPopTrustedReadyTargets=['https://ready.example.test/'];});
+ await page.goto(launch(),{waitUntil:'load'});
+ await page.route('https://ready.example.test/**',route=>route.abort());
+ const outbound=page.waitForRequest(r=>r.url().startsWith('https://ready.example.test/'));
+ await page.evaluate(()=>{window.SnapPopBridge.returnToBase('HELP_NEEDED',{child_authored:true});});
+ const url=new URL((await outbound).url());
+ expect(url.origin).toBe('https://ready.example.test');
+ expect(url.pathname).toBe('/');
+ expect(url.searchParams.get('session_id')).toBe('SESSION_A');
+ expect(url.searchParams.get('task_id')).toBe('TASK_A');
+ expect(url.searchParams.get('lap_id')).toBe('LAP_A');
+ expect(url.searchParams.get('task_state')).toBe('HELP_NEEDED');
+ expect(url.searchParams.get('from_app')).toBe('snap-pop');
+ expect(url.searchParams.has('child_id')).toBe(false); // URL is never an auth receipt.
+});
