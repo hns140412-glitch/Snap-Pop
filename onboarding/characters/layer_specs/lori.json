@@ -6,8 +6,8 @@
     1402
   ],
   "status": "SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
-  "semantic_note": "Own approved flattened static cutout. Visible source pixel partition only; contour QA, occluded-surface restoration, six independent action drawings and approved motion-safe rig are OPEN.",
-  "visual_review": "DRAFT_MASK_VISUAL_QA_HOLD_NOT_USER_APPROVED",
+  "semantic_note": "Visual ID lori: source-locked original cutout, refined hair-clip outline against 4x approved original detail. Original hair stays on BODY; visible clip isolated into GEAR. Notebook/hand occlusion and six independent expression art remain OPEN.",
+  "visual_review": "LORI_STAR_CLIP_SHAPE_REFINED_BEFORE_AFTER_QA_STILL_HOLD_NOTEBOOK_UNDER_HAND_UNRESTORED",
   "independent_roles": {
     "PERSONALITY_PROP": {
       "identity": "Visible navy star notebook held at chest, excluding occluding fingers",
@@ -93,52 +93,172 @@
       ]
     },
     "THEME_GEAR": {
-      "identity": "Single visible star hair clip on the approved hairstyle",
+      "identity": "Source-traced standalone golden-and-white star hair clip; excludes pink hair backing (source pixels only)",
       "include": [
         [
           [
-            675,
-            383
+            718,
+            341
           ],
           [
-            701,
-            367
+            710,
+            350
           ],
           [
-            727,
-            346
+            709,
+            374
           ],
           [
-            757,
-            366
+            711,
+            375
           ],
           [
-            774,
+            708,
+            377
+          ],
+          [
+            708,
+            382
+          ],
+          [
+            696,
+            388
+          ],
+          [
+            694,
+            388
+          ],
+          [
+            691,
+            385
+          ],
+          [
+            687,
+            387
+          ],
+          [
+            683,
+            391
+          ],
+          [
+            683,
             396
           ],
           [
-            804,
-            410
+            685,
+            399
           ],
           [
-            791,
-            444
+            684,
+            404
           ],
           [
-            757,
-            463
+            694,
+            412
           ],
           [
-            726,
-            446
+            705,
+            413
           ],
           [
-            690,
-            457
+            712,
+            420
           ],
           [
-            674,
-            430
+            715,
+            438
+          ],
+          [
+            725,
+            448
+          ],
+          [
+            731,
+            447
+          ],
+          [
+            731,
+            445
+          ],
+          [
+            747,
+            431
+          ],
+          [
+            756,
+            433
+          ],
+          [
+            768,
+            439
+          ],
+          [
+            770,
+            439
+          ],
+          [
+            771,
+            437
+          ],
+          [
+            775,
+            439
+          ],
+          [
+            781,
+            437
+          ],
+          [
+            784,
+            431
+          ],
+          [
+            776,
+            427
+          ],
+          [
+            777,
+            419
+          ],
+          [
+            774,
+            414
+          ],
+          [
+            776,
+            408
+          ],
+          [
+            773,
+            404
+          ],
+          [
+            779,
+            387
+          ],
+          [
+            778,
+            379
+          ],
+          [
+            750,
+            375
+          ],
+          [
+            747,
+            369
+          ],
+          [
+            734,
+            355
+          ],
+          [
+            735,
+            352
+          ],
+          [
+            723,
+            340
           ]
         ]
       ],

@@ -1,5 +1,10 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 two actual source-traced Visual ID contour corrections — ARTISTIC QA HOLD
+
+- LORI/THEME_GEAR: approved source gold/white star clip was overbroad pink hair-patch (~9859 visible pixels); individually revised 4x-source-traced contour isolates just the clip (~5865 visible pixels), pink hair remains in original IDENTITY_BODY. NOVA/PERSONALITY_PROP: old mask includes large region of brown head fur (~84073 visible pixels); individually revised 2x-source-traced paired copper/blue goggles silhouette reduces this to ~52390 visible pixels, brown fur remains in BODY. No per-ID cross-copy, repaint, new generic UI or original file overwrite.
+- Physically updated per-ID lori.json and nova.json SHA-locked source mask specifications. All six 1122x1402 clean-transparent original-pixel draft packs regenerate via one existing script; two member-specific anti-regression silhouette coverage tests added on top of approved original SHAs and byte-exact visible image reconstruction. Local before/after art QA and all-six ZIP prepared. Before treating CI as PASS, verify exact new HEAD. Still neither independent animated rig nor 36 authored emotion frames; LORI notebook hidden by hand, NOVA strap/hair occlusion and all user-approved pixel-parity work remain OPEN. Draft only, no ROOT/Netlify. USER != DEBUGGER.
+
 ## CURRENT OVERRIDE — 2026-09-29 Visual ID six-member true alpha-payload isolation correction (NOT motion-art approval)
 
 - Existing 6×3 mask outputs kept full source RGB beneath alpha=0 in each derived role PNG. That is not a clean physically isolated layer even if a flattened composite looked identical. Root cause corrected in generic generator: bind source file name AND spec name to exact visual_id; verify approved original source SHA before any work; mask role visible pixels only; zero ALL alpha-zero RGB in every derived PNG; compare final composite byte-for-byte against a visually identical canonical-transparent copy of the original (original 22 source assets NEVER edited, only derived zero-alpha payload cleared).

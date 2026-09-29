@@ -14,6 +14,8 @@ with tempfile.TemporaryDirectory() as td:
         assert res['status']=='SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY'
         assert set(res['independent_roles'])=={'IDENTITY_BODY','PERSONALITY_PROP','THEME_GEAR'}
         assert all(v['nontransparent_pixels']>1000 for v in res['independent_roles'].values())
+        if id=='lori':assert 5500 <= res['independent_roles']['THEME_GEAR']['nontransparent_pixels'] <= 6300,'LORI_STAR_HAIR_CONTAMINATION_REGRESSION'
+        if id=='nova':assert 50000 <= res['independent_roles']['PERSONALITY_PROP']['nontransparent_pixels'] <= 55000,'NOVA_GOGGLE_FUR_CONTAMINATION_REGRESSION'
         roles=[Image.open(dst/(n+'.png')).convert('RGBA') for n in ('identity_body','personality_prop','theme_gear')]
         orig=Image.open(src).convert('RGBA');assert len({hashlib.sha256(x.tobytes()).hexdigest() for x in roles})==3
         # Source cutouts use RGB(255,255,255) at fully transparent points;
