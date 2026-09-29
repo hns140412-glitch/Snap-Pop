@@ -4,7 +4,7 @@
   "consumer": "snap-pop",
   "central": {
     "repository": "hns140412-glitch/TAKY-ASSETS",
-    "commit_sha": "d4702471db5fa6c437647671131359f559be9639",
+    "commit_sha": "baad4eb2945fabaab70afec3da9e5420f4c88a7e",
     "pr": 2,
     "review_state": "DRAFT_NOT_MAIN",
     "manifest_path": "assets/snap-pop/onboarding/packing_objects/manifest.v1.json"
@@ -65,5 +65,21 @@
       "local_build_path": "onboarding/ui/packing_objects/water.svg",
       "source_sha256": "4dfc225ad387064d8c289a11889958c78bac99b3bda44bcd6a5c1c5495cfe511"
     }
-  ]
+  ],
+  "environment": {
+    "asset_id": "TAKY-LAF-SNAP-HOME-COAST-20260927-A",
+    "central_path": "assets/snap-pop/environments/coast/TAKY-LAF-SNAP-HOME-COAST-20260927-A/snap_pop_beach_asset.png",
+    "central_manifest_path": "assets/snap-pop/environments/coast/TAKY-LAF-SNAP-HOME-COAST-20260927-A/manifest.v1.json",
+    "original_sha256": "f15af01680e2db44ef8af1dff749169f1082ddd15b3760a96da7ff2211eb8259",
+    "original_git_blob_sha": "7c2b83ae566ebc5468d42e0720f9092e096360ae",
+    "dimensions_px": [
+      941,
+      1672
+    ],
+    "scope": "APPROVED_ENVIRONMENT_ONLY",
+    "reference_board_runtime_reuse": "FORBIDDEN",
+    "local_pwa_copy": "NOT_INSTALLED",
+    "runtime_binding": "HOLD_PENDING_DESIGN_TO_UI_AND_USER_APPROVAL",
+    "root_world_replacement": "FORBIDDEN"
+  }
 }
