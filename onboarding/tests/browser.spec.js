@@ -11,7 +11,7 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   expect(await page.evaluate(()=>!!globalThis.CompanionCrewState)).toBe(true);
   await page.locator('.welcome-cta').click();
   await expect(page.locator('.approved-stage>img')).toHaveAttribute('src','ui/approved/first_meeting_selection_source.png');
-  expect(await page.locator('.approved-stage>img').evaluate(img=>img.complete&&img.naturalWidth>0)).toBe(true);
+  await expect.poll(()=>page.locator('.approved-stage>img').evaluate(img=>img.complete&&img.naturalWidth>0),{timeout:10000}).toBe(true);
   await page.locator('button.approved-tap.cta').click();
   await expect(page.locator('#app')).toHaveAttribute('data-step','2');
   await expect(page.locator('.approved-stage')).toHaveAttribute('data-selection-phase','crew');

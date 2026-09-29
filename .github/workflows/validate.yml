@@ -40,6 +40,9 @@ jobs:
         run: npx playwright test tests/shared-runtime.spec.js --reporter=line
       - name: Run isolated companion browser journeys at four viewports
         run: npx playwright test onboarding/tests/browser.spec.js --reporter=line
+      - name: Verify eight viewport captures exist
+        run: |
+          test "$(find onboarding/render-evidence -maxdepth 1 -type f -name '*.png' | wc -l)" -eq 8
       - name: Upload companion candidate render evidence (not visual approval)
         if: always()
         uses: actions/upload-artifact@v4
