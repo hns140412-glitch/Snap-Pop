@@ -1,5 +1,12 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-30 Core6 original-art REAL layered interactive motion QA preview, no invented characters
+
+- Existing approved six original cutouts (`dubi/lori/ink/nova/take/zero`) SHA locked. New reproducible builder packages each member's SAME source cutout, independently separated BODY/PROP/GEAR and existing local source-pixel partial underpaint, with exact individual per-file SHA/provenance checks. At rest the four-layer RGBA composite is BYTE-EXACT to the canonical original visible source for all six. It builds 30 true PNG copies and self-contained offline HTML showing real original art; user may independently select a member, compare original/static stack, and move either PROP 24/-12 or GEAR -18/+13 in source coordinates (one at a time only). The distinct 6 original styles/Visual IDs cannot be substituted by any newly imagined illustration.
+- New source-art CI step makes this preview **actual HTML + original PNG deliverable** instead of six-row work-order report, and a separate Playwright browser test loads actual 5 PNG per member through the UI at 375×667 / 390×844 / 1024×768, checks each own identity/art and controls, captures 18 real images. Root app/first meeting approvals unchanged. This is an isolated QA route artifact only, not an approved 11-screen production binding, 18 final motion-safe art or 36 hand-illustrated expressions. DO NOT mark Core6 completed merely for tech QA.
+- This corrects the invalid imagined anime-girl poster; it has no source authority, isn't used or committed, and all existing original assets remain intact. No Codex, no main/Netlify. Verify exact new HEAD CI and retain UI design/artistic QA HOLD. USER != DEBUGGER.
+
+
 ## CURRENT OVERRIDE — 2026-09-29 seventh-source TRUE end-to-end staging regression, no real extra art
 
 - Previous 20-slot test ONLY passed identifier-list cardinality and tested the real Core6 batch; actual 7th stage→source split→motion exposure→underpaint was NEVER run end-to-end. New fully temporary, separately illustrated geometric CI-fixture suite (NOT a real seventh character, NOT any actual user-approved art) executes valid six + one properly fixture-hash-locked stage through *all* current pipelines. Requires missing per-ID spec to remain OPEN; then verifies 7 distinct three-role PNG packs, all 7 source-visible exact reconstructions, 14 real role-motion exposure masks, 7 separate partial underpaint candidates and 14 fixed poses with no transparent holes.
