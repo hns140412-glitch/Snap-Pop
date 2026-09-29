@@ -40,6 +40,8 @@ jobs:
           if-no-files-found: error
       - name: Verify explicit child-authored Crew turns and hint consent
         run: node onboarding/tests/crew-interaction-runtime.cjs
+      - name: Verify Visual ID to actual approved art in HOME radio (6 members x 3 states; new ID fallback gate)
+        run: node onboarding/tests/crew-visual-presenter.cjs
       - name: Verify explicit primary selection, rename and reload recovery
         run: node onboarding/tests/primary-selection.cjs
 

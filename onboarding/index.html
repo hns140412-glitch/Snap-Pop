@@ -257,7 +257,13 @@ main[data-step="10"] .home-drawer .photo-copy p,main[data-step="10"] .home-drawe
 .crew-radio-panel .child-authored{white-space:pre-wrap;overflow-wrap:anywhere;background:#efdfbd;border-radius:10px;padding:9px;color:#4d3c2c}
 .crew-radio-panel .crew-reply{background:#dde9dc;padding:10px;border-radius:10px;color:#2d5148}
 @media(prefers-reduced-motion:reduce){.crew-radio-cover{transition:none;animation:none}}
-</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script src="crew-behavior-runtime.js"></script><script src="visual-id-runtime.js"></script><script src="crew-interaction-runtime.js"></script><script>
+.crew-radio-head{display:grid;grid-template-columns:52px minmax(0,1fr) auto;align-items:center;gap:9px}
+.crew-radio-art{width:52px;height:64px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.crew-radio-art img{width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block}
+.crew-radio-head h2{min-width:0;overflow-wrap:anywhere}
+@media(max-height:710px){.crew-radio-panel{padding:12px}.crew-radio-art{width:45px;height:56px}.crew-radio-head{grid-template-columns:45px minmax(0,1fr) auto;gap:7px}}
+
+</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script src="crew-behavior-runtime.js"></script><script src="visual-id-runtime.js"></script><script src="crew-interaction-runtime.js"></script><script src="crew-visual-presenter.js"></script><script>
 const people=[['zero','제로'],['take','테이크'],['nova','노바'],['ink','잉크'],['lori','로리'],['dubi','두비']];
 const palette=['#a46d59','#668a65','#b38a47','#9d7293','#617f84'];
 const itemKeys=['map','lamp','water','camera','cap','compass'];
@@ -266,6 +272,7 @@ const crewLogic=window.CompanionCrewState;if(!crewLogic)throw new Error('CREW_LO
 const crewBehavior=window.CompanionCrewBehavior;if(!crewBehavior)throw new Error('CREW_BEHAVIOR_PROJECTION_MISSING');
 const visualID=window.CompanionVisualAssets;if(!visualID)throw new Error('VISUAL_ID_RUNTIME_MISSING');
 const crewInteract=window.CompanionCrewInteraction;if(!crewInteract)throw new Error('CREW_INTERACTION_RUNTIME_MISSING');
+const crewVisual=window.CompanionCrewVisualPresenter;if(!crewVisual)throw new Error('CREW_VISUAL_PRESENTER_MISSING');
 let radioOpen=false,radioScene='description',radioResult=null;
 if(JSON.stringify(visualID.memberIds)!==JSON.stringify(crewLogic.ids))throw new Error('VISUAL_ID_CREW_LEDGER_MISMATCH');
 const initial={step:0,crew:[],primaryCompanionId:'',selectionPhase:'crew',crewLedger:crewLogic.initial(),name:'',color:'#a46d59',items:[],travel:'',island:'',camp:'',tab:'오늘',photoSourceId:'',photoSha256:''};
@@ -336,7 +343,10 @@ function pickPrimaryCompanion(id){
 function crewRadioMarkup(){
  if(!radioOpen||state.step!==10||state.tab!=='오늘')return '';
  const name=escapeHTML(crewLogic.displayName(state.crewLedger,state.primaryCompanionId)||'동행 친구');
- const head='<section class="crew-radio-cover"><div class="crew-radio-panel" role="dialog" aria-modal="true" aria-labelledby="crew-radio-title"><div class="crew-radio-head"><h2 id="crew-radio-title">'+name+'에게 말 걸기</h2><button type="button" class="crew-radio-close" onclick="closeCrewRadio()" aria-label="대화 닫기">닫기</button></div>';
+ const visual=crewVisual.present({visualId:state.primaryCompanionId,interactionState:radioResult?radioResult.kind:'WAIT_CHILD'},visualID);
+ if(!visual)return '';
+ const art='<div class="crew-radio-art" data-approved-crew-art data-art-status="'+visual.assetStatus+'"><img src="'+escapeHTML(visual.src)+'" alt="'+name+'의 승인 원화" draggable="false"></div>';
+ const head='<section class="crew-radio-cover" data-visual-id="'+visual.id+'" data-reaction-state="'+visual.interactionState+'" data-art-readiness="STATIC_ONLY"><div class="crew-radio-panel" role="dialog" aria-modal="true" aria-labelledby="crew-radio-title"><div class="crew-radio-head">'+art+'<h2 id="crew-radio-title">'+name+'에게 말 걸기</h2><button type="button" class="crew-radio-close" onclick="closeCrewRadio()" aria-label="대화 닫기">닫기</button></div>';
  if(!radioResult)return head+'<p>내 이야기를 직접 적어 주세요. 이 화면에서만 표시하고 저장하지 않아요.</p><label for="crew-radio-scene">이야기 방향</label><select id="crew-radio-scene" onchange="radioScene=this.value"><option value="description">장면 이야기</option><option value="idea">생각 이야기</option><option value="emotion">마음 이야기</option><option value="viewpoint">다른 시선</option><option value="final">마무리</option></select><label for="crew-radio-text">내가 전할 말</label><textarea id="crew-radio-text" maxlength="180" placeholder="내가 보고 느낀 것을 직접 적어요."></textarea><div class="crew-radio-actions"><button type="button" onclick="sendCrewRadio()">무전 보내기</button></div><p id="crew-radio-status" role="status" aria-live="polite"></p></div></section>';
  return head+'<p>내가 전한 말</p><p class="child-authored" data-child-authored>'+escapeHTML(radioResult.childText)+'</p><p class="crew-reply" data-crew-reply>'+escapeHTML(radioResult.reply)+'</p>'+(radioResult.hintUsed?'<p data-one-hint>한 가지 힌트: '+escapeHTML(radioResult.hint)+'</p>':'<div class="crew-radio-actions"><button type="button" onclick="oneCrewHint()">힌트 하나 듣기</button></div>')+'<div class="crew-radio-actions"><button type="button" onclick="resetCrewRadio()">다른 이야기 보내기</button></div></div></section>';
 }

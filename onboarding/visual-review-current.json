@@ -157,6 +157,11 @@
       "id": "CORE6-ACTUAL-HOME-TURN",
       "evidence": "Earlier HOME had a fixed primary signature and pure scene previews but no actual user input to current Crew",
       "correction": "Actual opt-in text only in existing HOME, source-member reaction after real child input, explicit one hint and ephemeral close. 30 pure paths + 4-size browser actual events. No fictional child memory/grade/voice or original art re-generation."
+    },
+    {
+      "id": "HOME-VISUAL-ID-RENDER-BINDING",
+      "evidence": "Functional HOME radio presented companion text/name but no primary's Visual ID art",
+      "correction": "Pure per-Visual-ID static approved cutout presenter plus actual rendered image and semantic states in HOME. No fake emotion sprite; future authorized ID same renderer; test six originals x three states and real four-size browser load"
     }
   ],
   "gates": {
@@ -184,7 +189,8 @@
     "original_22": "PASS_SAME_APPROVED_BINARIES_C8F3DF5",
     "visual_id_work_order_report": "PASS_TWO_PER_ID_SHA_LOCKED_SOURCE_PARTITION_PROTOTYPES_ALL_18_PLUS_36_RELEASE_SLOTS_OPEN",
     "source_pixel_partition_prototypes": "PASS_CI_DUBI_INK_2_X_3_DIFFERENT_FULL_CANVAS_PNG_EXACT_SOURCE_RGBA_HEAD_C8F3DF5_NOT_MOTION_READY",
-    "actual_home_crew_text_interaction": "CODED_REAL_CHILD_TEXT_6_ID_5_SCENE_ONE_OPTIONAL_HINT_CI_PENDING_VISUAL_APPROVAL_OPEN"
+    "actual_home_crew_text_interaction": "CODED_REAL_CHILD_TEXT_6_ID_5_SCENE_ONE_OPTIONAL_HINT_CI_PENDING_VISUAL_APPROVAL_OPEN",
+    "home_radio_visual_id_binding": "CODED_REAL_APPROVED_PER_ID_CUTOUT_TO_REAL_HOME_RADIO_WITH_THREE_SEMANTIC_STATES_CI_PENDING_PIXELS_NOT_APPROVED"
   },
   "source_provenance": {
     "approved_asset_identity": "onboarding/asset-and-release-gate.json required_assets 22 exact SHA256",

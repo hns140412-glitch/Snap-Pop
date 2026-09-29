@@ -57,14 +57,27 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   await expect(page.locator('.home-crew-line')).toHaveText('괜찮아, 천천히 해도 돼!');await capture('10-home-today');
   await page.locator('.home-crew-line').click();
   await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-visual-id','lori');
+  await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-reaction-state','WAIT_CHILD');
+  await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-art-readiness','STATIC_ONLY');
+  await expect(page.locator('[data-approved-crew-art] img')).toHaveAttribute('src','characters/ui_cutouts/lori.png');
+  await expect.poll(()=>page.locator('[data-approved-crew-art] img').evaluate(img=>img.complete&&img.naturalWidth>0),{timeout:10000}).toBe(true);
   await page.locator('#crew-radio-scene').selectOption('description');
   await page.locator('#crew-radio-text').fill('폭포 소리가 크게 들려요 <안전>');
   await page.getByRole('button',{name:'무전 보내기'}).click();
   await expect(page.locator('[data-child-authored]')).toHaveText('폭포 소리가 크게 들려요 <안전>');
   await expect(page.locator('[data-crew-reply]')).toHaveText('네가 느낀 걸 그대로 말해도 좋아.');
+  await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-reaction-state','SHORT_REACTION');
+  await expect(page.locator('[data-approved-crew-art] img')).toHaveAttribute('src','characters/ui_cutouts/lori.png');
   await page.getByRole('button',{name:'힌트 하나 듣기'}).click();
   await expect(page.locator('[data-one-hint]')).toContainText('눈에 들어온 장면 하나만');
+  await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-reaction-state','ONE_REQUESTED_HINT');
   await expect(page.getByRole('button',{name:'힌트 하나 듣기'})).toHaveCount(0);
+  const visualLayout=await page.locator('[data-approved-crew-art] img').evaluate(el=>{
+    const r=el.getBoundingClientRect(),dialog=el.closest('.crew-radio-panel').getBoundingClientRect();
+    return {loaded:el.complete&&el.naturalWidth>0,within:r.left>=dialog.left&&r.right<=dialog.right&&r.top>=dialog.top&&r.bottom<=dialog.bottom};
+  });
+  expect(visualLayout.loaded).toBe(true);expect(visualLayout.within).toBe(true);
   await capture('10-home-crew-radio');
   await page.getByRole('button',{name:'대화 닫기'}).click();
   expect(await page.evaluate(()=>localStorage.getItem('expedition_ui_draft'))).not.toContain('폭포 소리가 크게');

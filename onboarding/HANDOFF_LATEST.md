@@ -1,5 +1,10 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 actual selected Visual ID art bound into HOME radio
+
+- Added `crew-visual-presenter.js`: a reusable per-ID actual approved static cutout presenter using the existing isolated Visual Registry, not a new/Core6-specific art path. A registered and preview-authorized *future* ID uses identical code once its asset/owner gate is approved; no missing or arbitrary path allowed. Semantic WAIT_CHILD / SHORT_REACTION / ONE_REQUESTED_HINT travel with actual UI as data state, while visual art truthfully remains `STATIC_ONLY`, no fake independent expression frame, no generated art, no Snap ROOT promotion.
+- Real HOME radio now displays the current primary's original-approved PNG and literal primary visual ID (not only name and text). Node validates 6 members ×3 states and synthetic authorized new-ID reuse vs nonapproved fail closed. Playwright actual Lori browser click checks image load/source, 3 semantic states and short-phone positioning at four viewport sizes. 22 originals unchanged; code HEAD CI and visual approval must be verified before release.
+
 ## CURRENT OVERRIDE — 2026-09-29 real user-triggered primary companion reaction in existing HOME (candidate)
 
 - Real child-authored text now enters a temporary opt-in HOME overlay by tapping the existing primary's sourced signature. User chooses one of five recovered Snap scenes; only actual submitted content is displayed verbatim and HTML-escaped, then the actual chosen Core6 signature lineage's contextual one-line response is shown. ONE shared hint only after explicit click, no repeated hint. Dialogue is transient (no localStorage/IDB/network); no child grade, score, reward, affinity, transcript rewrite, voice recording or fake external app session. Existing original 22 asset bytes untouched, root untouched. The overlay is a functional visual CANDIDATE, NOT signed-off design pixel parity.

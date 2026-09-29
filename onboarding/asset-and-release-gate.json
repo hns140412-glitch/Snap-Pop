@@ -2,7 +2,7 @@
   "task_id": "COMPANION_ONBOARDING_INTEGRATION_20260927",
   "source_authority": "Existing user-approved standalone source; additive Snap-Pop route only",
   "source_file": "onboarding/index.html",
-  "source_sha256": "1355c2ee1008ba53b109589c90497c3255486ff736bbf27c79bab7f569fdf045",
+  "source_sha256": "de9a37821d696ea27846e55cdf89107edba47db879cbbf926cf550a54db8b62f",
   "base_head": "3de97be0d12dd6244a942b0c137c2efe578a43b6",
   "status": "INTEGRATION_CANDIDATE_CORE6_STATE_CODED_NOT_RELEASED",
   "main_integration": false,
@@ -22,7 +22,8 @@
     "visual_id_to_runtime_pipeline": "STATIC_CORE6_PATH_AND_SCENE_BINDING_CODED_ACTION_LAYER_AND_ALL_SCREEN_PARITY_BLOCKED_FAIL_CLOSED",
     "extra_visual_id_onboarding": "NEW_ID_REQUIRES_APPROVED_SOURCE_HASH_ALL_LAYER_AND_REACTION_ASSETS_SCENE_BINDINGS_4_VIEWPORTS_AND_USER_APPROVAL",
     "visual_id_work_method": "PASS_WORK_METHOD_CODE_AND_CI_AT_BDFF5FB_MISSING_54_ASSET_PRODUCTION_OPEN",
-    "home_text_radio": "ACTUAL_OPT_IN_CHILD_TEXT_AND_EXPLICIT_ONE_HINT_CODED_SCREEN_VISUAL_APPROVAL_OPEN_NO_AUDIO"
+    "home_text_radio": "ACTUAL_OPT_IN_CHILD_TEXT_AND_EXPLICIT_ONE_HINT_CODED_SCREEN_VISUAL_APPROVAL_OPEN_NO_AUDIO",
+    "home_radio_visual_id_static_binding": "APPROVED_CUTOUT_FOR_CURRENT_PRIMARY_WIRED_WITH_LISTEN_REACT_HINT_SEMANTIC_STATES_NO_SPRITE_OR_PX_APPROVAL"
   },
   "required_assets": {
     "ui/approved/first_meeting_selection_source.png": "9f55faf85c45d4236172a797e07a809a876f53b9afb083c9d8f8df1e799ab0f7",
@@ -65,7 +66,8 @@
     "crew-state-runtime.js": "09243339e1e3eddb0d2933612973bbd7fad574b16755ef0cbf2b709610cbb435",
     "crew-behavior-runtime.js": "92bee7691da35d3ce75886b10325727f36a3605bfdbc498b61c635187fe06fdc",
     "visual-id-runtime.js": "1d86119ef7feb4f81d99ae92580a4b7b5ce1f53e15f71dc001f48c48a329df70",
-    "crew-interaction-runtime.js": "bce13eb9f62524e14b9026f76f1e80168a14cf93453b69fe7b0c4eecdda6bbe3"
+    "crew-interaction-runtime.js": "bce13eb9f62524e14b9026f76f1e80168a14cf93453b69fe7b0c4eecdda6bbe3",
+    "crew-visual-presenter.js": "052e7ac84aab1434ea82f1c554bed665943777811aad00b64dcb9e3c5d30559f"
   },
   "production_method_contract": "visual-id-production-contract.json",
   "production_method": "SOURCE_LOCK_PLAN_REGISTER_ASSET_PRODUCTION_SCENE_BINDING_IMPLEMENT_RENDER_CROSS_VALIDATE_HUMAN_APPROVAL"
