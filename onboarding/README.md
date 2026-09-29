@@ -1,28 +1,23 @@
-# Companion Onboarding — integration candidate (not runtime/release)
+# Companion Onboarding — isolated integration candidate (DRAFT / HOLD)
 
-## Authority and boundaries
-- Exact Snap & Pop main base: `3de97be0d12dd6244a942b0c137c2efe578a43b6`.
-- `onboarding/index.html` is now synchronized to the locally tested source SHA-256 `0d41363de67717c0a939df1de1492551350ef7f230472ef4bc62cb82a8d05f7b`; this branch does NOT hook it into Snap's home, router, nav or learning session.
-- `asset-and-release-gate.json` records all 22 source images/cutouts/props and immutable SHA-256 checksums. These binaries are present in the locally tested artifact, NOT yet uploaded to this branch. Never present this branch URL as a working web preview while they are absent.
-- `node onboarding/tests/asset-integrity.cjs` fails closed on missing or different bytes; even a technical PASS must not be called visual/release PASS.
+## Exact scope and approval boundary
+- The existing Snap & Pop root home, learning session, runtime crew registry and release state are unchanged. This is an additive `onboarding/` route candidate, **not integrated into the production navigation**.
+- The exact source in this candidate is `onboarding/index.html`; the SHA-256 authority is `asset-and-release-gate.json` (`8a645892712691f6245c3125640566fd119cdc4ae2a223292ad94ddbc1cd2717`). Earlier 0d4136... source and the old missing-binary handoff are historical, not current.
+- All 22 original files are registered in the PR; the `approved-asset-integrity` and `Validate Snap & Pop` workflows passed on commit `725d62a`. This demonstrates byte identity and static CI **only**, not 11-screen visual, HTTPS persistence or iPhone approval.
+- `crew-scope-contract.json` keeps the six approved onboarding originals and immutable identifiers `dubi/lori/ink/nova/take/zero`, selected-crew 5–6, and an independently chosen primary companion **separate**. The latter currently has no approved user-visible screen or stored primary ID; never auto-promote the first selected member.
+- Unselected Core 6 remain known friends. Do not claim Expansion 12, a full 20-character roster or Special Guest release based on these six images. The historical 20 ceiling and later 18+Special design are a documented unresolved conflict, not an automatic new count.
+- The Snap-origin Exploration Crew rule source is preserved. The development-branch JSON's TAKY shared semantic-owner pointer is not present as a verified central canonical file in TAKY main at the inspected revision; therefore ownership transfer stays P0 HOLD. TAKY governs integration, Learning App Family governs handoff, and app-specific visual/runtime decisions stay scoped to their relevant owner.
+- Approval for use of originals in **this standalone onboarding** does not grant automatic approval to the Snap ROOT Crew runtime registry or a Ready/Hide UI. That separate owner-scoped reviewed-binding gate remains authoritative and no cross-app lookalikes are substituted.
 
-## Actual QA evidence, performed against the complete local source
-- Chromium simulated viewport: 375×667, 390×844, 430×932 and 1024×768.
-- Complete 11-step navigation, five-member selection gate, all five HOME tabs and edit-return flows: PASS; JavaScript page errors: none.
-- HOME now exposes four functional location pins on the default mobile map (camp, jungle/waterfall, beach, harbor). Tapping a pin opens the corresponding map detail; tested across all four simulated viewport sizes.
-- Camp discovery/naming uses a crop of the existing approved island instead of a newly generated illustration.
-- Test method: page.set_content with local asset-routing. This is NOT a genuine served HTTPS origin / IndexedDB-reload / physical iPhone/Safari test.
-- Visual gate: approved first meeting source is linked as a fixed composite and hotspot overlay; remaining scenes, especially HOME, are NOT pixel-matched. Current generic panel styling is still BELOW approved visual target.
+## Current verification
+- Run `node onboarding/tests/asset-integrity.cjs` for source + exact bytes of 22 originals.
+- Run `node onboarding/tests/crew-contract.cjs` for Core 6 names/IDs, 13 image references, original-scene hotspot/selection contract, separate primary state and non-promotion/ownership/roster gates.
+- Earlier isolated Chromium page-content simulations covered 375×667, 390×844, 430×932 and 1024×768, 11 steps, 5-member gate, HOME navigation, edit-return and local image loads. Those historical tests are not a real served HTTPS origin or physical iPhone/Safari proof.
+- Approved first-meeting scene is currently a composite with hit areas. Other screens, especially HOME/profile/packing/naming, have **OPEN** 1:1 comparison and must reuse approved originals/layers rather than become generic cards.
+- Actual child-photo source registration in IndexedDB is not a photo-derived Visual ID/avatar generation pipeline.
+- No main merge / Netlify / deployment before exact source+asset, visual, secure-origin persistence, real-device, TAKY and human-approval gates.
 
-## Branch CI status
-- Existing Snap & Pop validation: previously passed for this PR.
-- New asset-integrity gate: **FAIL / EXPECTED while 22 original binary assets remain absent from remote branch**. The local package is complete; do not describe the remote branch as runnable.
-- Source checksum in the remote manifest has been corrected to match the exact tested source.
+## Source-priority correction
+Current exact evidence > older handoff statement. Never reactivate the previous binary-upload failure, copy the old 0d4136... source into this PR, equate the full 22 asset registration with Snap ROOT Crew approval, or quietly choose 18/20 as current implemented character count.
 
-## MAIN promotion prerequisites
-1. Transfer the approved binary assets with exact source SHA-256; verify tests PASS.
-2. Compare mobile screens one-by-one with approved visuals and correct mismatches (not create substitute artwork).
-3. Secure-origin browser persistence/reload, regression, exact HEAD, CI and physical device as applicable.
-4. TAKY review and explicit human approval. Main and Netlify remain unchanged by this candidate.
-
-Status: `DRAFT / DO NOT MERGE / NO DEPLOY`.
+Status: **CODE/ASSET CI CANDIDATE; VISUAL/RUNTIME/DEVICE/INTEGRATION OPEN; DRAFT / DO NOT MERGE / NO DEPLOY**.
