@@ -28,5 +28,15 @@ jobs:
         run: node onboarding/tests/crew-behavior-runtime.cjs
       - name: Verify Visual ID to asset/scene/interaction production gate (fail closed)
         run: node onboarding/tests/visual-id-production.cjs
+      - name: Verify Visual ID registration-to-UI production workflow and repeatable work orders
+        run: |
+          node onboarding/tests/visual-id-workflow.cjs
+          node onboarding/tools/visual-id-workflow.cjs report > onboarding/visual-id-work-order-report.json
+          cat onboarding/visual-id-work-order-report.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-id-work-orders
+          path: onboarding/visual-id-work-order-report.json
+          if-no-files-found: error
       - name: Verify explicit primary selection, rename and reload recovery
         run: node onboarding/tests/primary-selection.cjs

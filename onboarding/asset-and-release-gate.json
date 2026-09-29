@@ -20,7 +20,8 @@
     "short_phone_crew_action": "CANDIDATE_FIXED_WITH_ACTION_VISIBILITY_ASSERTION",
     "home_crew_signature": "EXISTING_HOME_CAPTION_BINDS_RECOVERED_CORE6_SIGNATURE_NO_NEW_ART_VISUAL_APPROVAL_OPEN",
     "visual_id_to_runtime_pipeline": "STATIC_CORE6_PATH_AND_SCENE_BINDING_CODED_ACTION_LAYER_AND_ALL_SCREEN_PARITY_BLOCKED_FAIL_CLOSED",
-    "extra_visual_id_onboarding": "NEW_ID_REQUIRES_APPROVED_SOURCE_HASH_ALL_LAYER_AND_REACTION_ASSETS_SCENE_BINDINGS_4_VIEWPORTS_AND_USER_APPROVAL"
+    "extra_visual_id_onboarding": "NEW_ID_REQUIRES_APPROVED_SOURCE_HASH_ALL_LAYER_AND_REACTION_ASSETS_SCENE_BINDINGS_4_VIEWPORTS_AND_USER_APPROVAL",
+    "visual_id_work_method": "MACHINE_PLAN_STAGE_AUDIT_REPORT_CODED_CI_PENDING_NOT_ART_CREATED"
   },
   "required_assets": {
     "ui/approved/first_meeting_selection_source.png": "9f55faf85c45d4236172a797e07a809a876f53b9afb083c9d8f8df1e799ab0f7",
@@ -63,5 +64,7 @@
     "crew-state-runtime.js": "09243339e1e3eddb0d2933612973bbd7fad574b16755ef0cbf2b709610cbb435",
     "crew-behavior-runtime.js": "92bee7691da35d3ce75886b10325727f36a3605bfdbc498b61c635187fe06fdc",
     "visual-id-runtime.js": "1d86119ef7feb4f81d99ae92580a4b7b5ce1f53e15f71dc001f48c48a329df70"
-  }
+  },
+  "production_method_contract": "visual-id-production-contract.json",
+  "production_method": "SOURCE_LOCK_PLAN_REGISTER_ASSET_PRODUCTION_SCENE_BINDING_IMPLEMENT_RENDER_CROSS_VALIDATE_HUMAN_APPROVAL"
 }

@@ -137,6 +137,11 @@
       "id": "V-ID-TO-ASSET-GATE-01",
       "evidence": "Approved Visual ID registration was not connected to one fail-closed renderer/independent action asset and scene contract; static cutout plus signature falsely risked DONE labeling",
       "correction": "Single browser/server registry now owns six image paths and first-meeting hotspots; production plan enumerates absent independent body/prop/gear and OBSERVE/LISTEN/IDEA/REACT/WAIT/COMPLETE per member. New ID audit requires source hashes, every layer/state, five scene contracts, viewport/pixel and owner approval. No synthetic image/art assumed"
+    },
+    {
+      "id": "V-ID-PRODUCTION-WORKFLOW-02",
+      "evidence": "Previous audit listed missing assets but had no actual registration/staging/production work-order runner",
+      "correction": "Source-lock-only stage register, deterministic per-ID work order, actual bytes+SHA+transparent image/provenance audit and per-PR action artifact. Distinct source vs output vs scene vs release gates; no auto art or silent root activation"
     }
   ],
   "gates": {
@@ -155,7 +160,8 @@
     "sourced_crew_behavior": "PASS_6_SIGNATURES_6_SCENE_PROJECTIONS_EXPLICIT_PRIMARY_HOME_BINDING",
     "captures_52": "PASS_52_13_STATES_X_4_VIEWPORTS_AT_F8D0252",
     "visual_id_production": "SINGLE_BINDING_REGISTRY_STATIC_CORE6_SIX_REACTION_AND_THREE_INDEPENDENT_LAYERS_OPEN",
-    "automatic_promotion": "BLOCKED_NEW_ID_AND_ROOT_RELEASE_MUST_PASS_PER_MEMBER_ASSET_HASH_SCENE_PARITY_AND_DEVICE"
+    "automatic_promotion": "BLOCKED_NEW_ID_AND_ROOT_RELEASE_MUST_PASS_PER_MEMBER_ASSET_HASH_SCENE_PARITY_AND_DEVICE",
+    "visual_id_work_method": "MACHINE_CONTRACT_PLAN_STAGE_AUDIT_REPORT_CI_PENDING"
   },
   "source_provenance": {
     "approved_asset_identity": "onboarding/asset-and-release-gate.json required_assets 22 exact SHA256",

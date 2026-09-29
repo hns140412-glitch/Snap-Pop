@@ -1,5 +1,9 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 repeatable Visual ID work method
+
+- Confirmed user intent is **작업방식**. New `VISUAL_ID_WORK_METHOD.md` and `visual-id-production-contract.json` specify actual source-lock → deterministic plan → staged register → approved-source layer and six reaction asset production → five screen bindings → implement/render → self-QA → human/owner release decision. `tools/visual-id-workflow.cjs` exposes plan/register/audit/report: register is STAGED only, requires exact real file and manifest SHA plus user Visual ID reference; candidates are audited against actual files, SHA, transparent PNG headers, provenance and 4-size scene evidence. No art is auto-invented; 6 original Core6 identities remain unmodified. CI publishes individual missing-work-order report artifact. Final asset/scene/device approvals remain OPEN until independently verified. This new code update is pending exact HEAD CI; do not claim completion on documentation alone.
+
 ## CURRENT OVERRIDE — 2026-09-29 Visual ID → layered asset → UI gate correction
 
 This newer section supersedes all earlier completion language. At code HEAD before the following documentation/CI commit: `7c4c9420434e4d41b844c20767b2e843edd68832`, MAIN `3de97be0d12dd6244a942b0c137c2efe578a43b6` — refresh exact refs. User correction: a Visual ID registration is NOT complete until its independent art layers, scene mapping, interaction effects, matching actual rendered screen, regression and approval exist. Static portraits/cutouts and personality text are not equivalent to functional Crew visual production.
