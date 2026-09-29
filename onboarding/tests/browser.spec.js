@@ -19,7 +19,7 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   expect(Object.values(first.crewLedger.members).every(x=>!!x.firstMetAt)).toBe(true);
   for(let i=0;i<5;i++)await page.locator('button.approved-tap.portrait').nth(i).click();
   await expect(page.locator('.approved-count')).toHaveText('5/6');
-  await page.screenshot({path:'onboarding/.test-artifacts/crew-'+width+'x'+height+'.png'});
+  await page.screenshot({path:'onboarding/render-evidence/crew-'+width+'x'+height+'.png'});
   await page.locator('button.approved-tap.cta').click();
   await expect(page.locator('.approved-stage')).toHaveAttribute('data-selection-phase','primary');
   await expect(page.locator('button.approved-tap.cta')).toBeDisabled();
@@ -55,7 +55,7 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   await page.locator('#rename-lori').fill('별로리');
   await page.locator('.crewlist>div').nth(1).getByRole('button',{name:'저장'}).click();
   await expect(page.locator('.crew-primary')).toContainText('별로리');
-  await page.screenshot({path:'onboarding/.test-artifacts/home-'+width+'x'+height+'.png'});
+  await page.screenshot({path:'onboarding/render-evidence/home-'+width+'x'+height+'.png'});
   await page.reload();
   await expect(page.locator('#app')).toHaveAttribute('data-step','10');
   const persisted=JSON.parse(await page.evaluate(()=>localStorage.getItem('expedition_ui_draft')));
