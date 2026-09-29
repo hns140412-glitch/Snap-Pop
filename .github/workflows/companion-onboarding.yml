@@ -52,14 +52,18 @@ jobs:
         run: python -m pip install 'Pillow==12.0.0'
       - name: Verify approved source SHA, semantic roles and pixel-exact reconstruction
         run: python onboarding/tests/source-layer-extraction.py
-      - name: Generate DUBI alpha separation prototype (never auto-activate)
+      - name: Generate independently masked DUBI and INK alpha separation prototypes (never auto-activate)
         run: |
-          python onboarding/tools/extract-source-layers.py --source onboarding/characters/ui_cutouts/dubi.png --spec onboarding/characters/layer_specs/dubi.json --out onboarding/visual-prototypes/dubi > onboarding/visual-prototypes-dubi-report.json
-          cat onboarding/visual-prototypes-dubi-report.json >> "$GITHUB_STEP_SUMMARY"
+          for id in dubi ink; do
+            python onboarding/tools/extract-source-layers.py --source "onboarding/characters/ui_cutouts/$id.png" --spec "onboarding/characters/layer_specs/$id.json" --out "onboarding/visual-prototypes/$id" > "onboarding/visual-prototypes-$id-report.json"
+            cat "onboarding/visual-prototypes-$id-report.json" >> "$GITHUB_STEP_SUMMARY"
+          done
       - uses: actions/upload-artifact@v4
         with:
-          name: dubi-source-pixel-partition-prototype-not-release-art
+          name: core6-two-source-pixel-partition-prototypes-not-release-art
           path: |
             onboarding/visual-prototypes/dubi/
+            onboarding/visual-prototypes/ink/
             onboarding/visual-prototypes-dubi-report.json
+            onboarding/visual-prototypes-ink-report.json
           if-no-files-found: error

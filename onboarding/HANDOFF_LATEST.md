@@ -1,5 +1,11 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 second Visual ID uses SAME source-locked partition generator (INK)
+
+- Two independently authored **member-specific** masks now cover Dubi (visible map + cap) and Ink (visible tablet + goggles); both exact approved cutout SHA and full 1122×1402 source-pixel partition tests run via one generic Python pipeline. CI regenerates three distinct full-canvas transparent files PER member and independently checks each reconstructs its own original source RGBA byte-for-byte, with altered-source reject. First meeting original + 22 approved binaries remain untouched.
+- Same tool has now been used on two different Visual IDs without reusing Dubi mask coordinates. **Neither candidate is motion-ready:** prop occlusion, head/fur under gear, expressive reaction frames and real UI visual parity are missing. Work-order report lists two prototypes separately; counts for production approved motion layers (18) and reaction assets (36) are intentionally NOT reduced. New CI pending; source of truth is exact new PR HEAD.
+- User is not the debugger. Next action is derive/fidelity-check valid occluded backfills against approved design for first rig and bind tested action states; defer additional Visual ID expansion and root/deployment approval.
+
 ## CURRENT OVERRIDE — 2026-09-29 Dubi pixel-separation proof + provenance integrated
 
 - Exact implementation HEAD before this work-order reporting commit `8f06d5026079ff75cf50b7bcda98eaf44015412f`, Snap MAIN was `3de97be0d12dd6244a942b0c137c2efe578a43b6`; recheck future live authority. CI initial prototype failed only due to `Pillow 12.0` lacking `get_flattened_data`; root cause repaired using portable alpha `tobytes()` at `8f06d50` and the **final exact prototype CI passed**. No hidden failure counted as success.

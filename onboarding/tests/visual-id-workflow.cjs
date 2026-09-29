@@ -13,11 +13,10 @@ assert.equal(p.inside('../unsafe'),null);assert.equal(p.inside('/etc/passwd'),nu
 const first=p.report();
 assert.equal(first.existing.length,6);assert.equal(first.counts.independentLayerAssetsMissing,18);
 assert.equal(first.counts.independentReactionAssetsMissing,36);
-assert.equal(first.partitionPrototypes.length,1);
-assert.equal(first.partitionPrototypes[0].visualId,'dubi');
-assert.equal(first.partitionPrototypes[0].sourceSHA256,gate.required_assets['characters/ui_cutouts/dubi.png']);
-assert.equal(first.partitionPrototypes[0].actionReady,false);
-assert.equal(first.counts.sourcePartitionPrototypes,1);
+assert.equal(first.partitionPrototypes.length,2);
+assert.deepEqual(first.partitionPrototypes.map(x=>x.visualId),['dubi','ink']);
+for(const item of first.partitionPrototypes){assert.equal(item.sourceSHA256,gate.required_assets['characters/ui_cutouts/'+item.visualId+'.png']);assert.equal(item.actionReady,false);assert.equal(item.releaseReady,false);}
+assert.equal(first.counts.sourcePartitionPrototypes,2);
 assert.equal(first.counts.independentLayerAssetsMissing,18,'Prototype is NOT counted as approved motion-ready role art');
 assert.equal(first.existing.every(x=>x.stage==='STATIC_PREVIEW'&&!x.actionReady&&!x.releaseReady),true);
 for(const x of first.existing)assert.equal(gate.required_assets[x.source]!==undefined,true);
