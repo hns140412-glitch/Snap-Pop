@@ -38,3 +38,13 @@ jobs:
           echo $! > /tmp/snap-http.pid
       - name: Run shared runtime browser regression
         run: npx playwright test tests/shared-runtime.spec.js --reporter=line
+      - name: Run isolated companion browser journeys at four viewports
+        run: npx playwright test onboarding/tests/browser.spec.js --reporter=line
+      - name: Upload companion candidate render evidence (not visual approval)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: companion-render-candidate
+          path: onboarding/.test-artifacts/*.png
+          if-no-files-found: ignore
+          retention-days: 7
