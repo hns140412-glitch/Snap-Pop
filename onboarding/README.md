@@ -30,3 +30,6 @@ Status: **CORE6 CODED / CI CHECKS; LOCAL HTTP CHROMIUM BROWSER JOURNEY AND EIGHT
 - Browser CI must collect 12 states (11 stages plus distinct primary choice) × 4 viewports = exactly 48 candidate renders. See `visual-review-current.json`; capture ≠ approved screen parity. The old eight screenshot artifact is historical, not the new gate.
 
 - Follow-up from direct 48-image review: 375×667 crew-change CTA was clipped by the 45dvh drawer. Short-phone layout now preserves that action in-view without internal scrolling; CI checks the actual button rectangle is inside the drawer and above the bottom navigation at all four viewports. Requires new exact-head CI and screenshot confirmation.
+
+## CI-only genuine HTTPS origin probe
+- The temporary `127.0.0.1:4174` self-signed TLS server exercises secure-context WebCrypto, IndexedDB image-blob SHA-256, reload/persistent original preview, explicit clearing and zero outbound requests using a **non-child JPEG fixture**. It is not Netlify/deployment, physical iPhone/Safari verification or child-photo-to-avatar generation. Never treat the self-signed loopback as a public trusted origin.
