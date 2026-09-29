@@ -63,7 +63,8 @@
   "required_runtime_scripts": {
     "crew-state-runtime.js": "09243339e1e3eddb0d2933612973bbd7fad574b16755ef0cbf2b709610cbb435",
     "crew-behavior-runtime.js": "92bee7691da35d3ce75886b10325727f36a3605bfdbc498b61c635187fe06fdc",
-    "visual-id-runtime.js": "1d86119ef7feb4f81d99ae92580a4b7b5ce1f53e15f71dc001f48c48a329df70"
+    "visual-id-runtime.js": "1d86119ef7feb4f81d99ae92580a4b7b5ce1f53e15f71dc001f48c48a329df70",
+    "crew-interaction-runtime.js": "bce13eb9f62524e14b9026f76f1e80168a14cf93453b69fe7b0c4eecdda6bbe3"
   },
   "production_method_contract": "visual-id-production-contract.json",
   "production_method": "SOURCE_LOCK_PLAN_REGISTER_ASSET_PRODUCTION_SCENE_BINDING_IMPLEMENT_RENDER_CROSS_VALIDATE_HUMAN_APPROVAL"

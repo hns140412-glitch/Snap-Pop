@@ -38,6 +38,8 @@ jobs:
           name: visual-id-work-orders
           path: onboarding/visual-id-work-order-report.json
           if-no-files-found: error
+      - name: Verify explicit child-authored Crew turns and hint consent
+        run: node onboarding/tests/crew-interaction-runtime.cjs
       - name: Verify explicit primary selection, rename and reload recovery
         run: node onboarding/tests/primary-selection.cjs
 
