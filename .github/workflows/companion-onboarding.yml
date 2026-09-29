@@ -20,3 +20,5 @@ jobs:
           node-version: '20'
       - name: Verify exact original assets (fail closed)
         run: node onboarding/tests/asset-integrity.cjs
+      - name: Verify Core 6 identity, onboarding scope and non-promotion boundaries
+        run: node onboarding/tests/crew-contract.cjs
