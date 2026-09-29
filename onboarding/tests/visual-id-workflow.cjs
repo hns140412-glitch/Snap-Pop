@@ -20,6 +20,9 @@ assert.equal(partial.releaseReady,false);assert.ok(partial.open.includes('ORIGIN
 for(const name of ['IDENTITY_BODY','PERSONALITY_PROP','THEME_GEAR','OBSERVE','LISTEN','IDEA','REACT','WAIT','COMPLETE'])assert.ok(partial.open.some(x=>x==='EXACT_INDEPENDENT_TRANSPARENT_ASSET:'+name));
 for(const k of cfg.sceneKeys){assert.ok(partial.open.includes('SCENE_REFERENCE_AND_EXPLICIT_BINDING:'+k));assert.ok(partial.open.includes('SCENE_FOUR_VIEWPORT_EVIDENCE:'+k));}
 assert.ok(partial.open.includes('ACTUAL_UI_REGISTRY_AND_LEDGER_BINDING'));
+assert.equal(partial.technicalReady,false);
+assert.throws(()=>p.inspectCandidate({...order,stage:'RELEASE_READY'}),/CANDIDATE_CLAIMED_READY_WITH_OPEN_PROOFS/);
+assert.ok(!p.inspectCandidate({id:'dubi'}).open.includes('NEW_IMMUTABLE_VISUAL_ID_REQUIRED'),'Staged identity remains auditable after actual renderer binding');
 assert.throws(()=>p.register('dubi','approval-evidence','characters/originals/dubi_source.jpeg'),/NEW_IMMUTABLE_VISUAL_ID_REQUIRED/);
 assert.throws(()=>p.plan('../unsafe'),/VISUAL_ID_BAD_FORMAT/);
 assert.throws(()=>p.register('new_explorer','approved-reference','../unsafe'),/SOURCE_PATH_IDENTITY_MISMATCH/);

@@ -82,7 +82,7 @@ function approvedTransparentImage(rel){
 function inspectCandidate(item){
   const open=[],passed=[],id=item&&item.id;
   const add=(yes,reason)=>{(yes?passed:open).push(reason);};
-  if(!validId(id)||registry.memberIds.includes(id))return {id:id||null,stage:'SOURCE_MISSING',passed,open:['NEW_IMMUTABLE_VISUAL_ID_REQUIRED'],releaseReady:false};
+  if(!validId(id))return {id:id||null,stage:'SOURCE_MISSING',passed,open:['IMMUTABLE_VISUAL_ID_BAD_FORMAT'],releaseReady:false};
   const p=pathsFor(id),v=item.visualApproval||{};
   add(item.schema===cfg.schema,'SCHEMA_AND_VERSION');
   add(v.status==='LOCKED'&&typeof v.reference==='string'&&v.reference.trim().length>=6,'USER_APPROVED_SOURCE_REFERENCE');
@@ -92,7 +92,7 @@ function inspectCandidate(item){
   const checkDerived=(record,expected,slot)=>{
     const actual=record&&typeof record==='object'?record:{};
     const rel=actual.path;
-    const correct=rel===expected&&verified(rel,actual.sha256)&&approvedTransparentImage(rel);
+    const correct=rel===expected&&verified(rel,actual.sha256)&&(slot==='NEW_FIRST_MEETING_COMPOSITION'||approvedTransparentImage(rel));
     add(correct,'EXACT_INDEPENDENT_TRANSPARENT_ASSET:'+slot);
     if(correct)allAssets.push(actual.sha256);
     const prov=item.provenance?.[slot];
@@ -115,8 +115,12 @@ function inspectCandidate(item){
   add(Boolean(item.visualReview?.userApproved===true&&item.visualReview?.sourceToRenderComparisonRef),'HUMAN_1_TO_1_VISUAL_APPROVAL');
   add(Boolean(item.realDeviceEvidence?.verified===true&&item.realDeviceEvidence?.reference),'REAL_DEVICE_INTERACTION');
   add(Boolean(item.rootOwnerApproval?.userConfirmed===true&&item.rootOwnerApproval?.reference),'SNAP_ROOT_RELEASE_SEPARATE_APPROVAL');
+  if(['RUNTIME_ACTIVE','RELEASE_READY','APPROVED_RUNTIME_ASSET'].includes(item.stage)&&open.length)throw Error('CANDIDATE_CLAIMED_READY_WITH_OPEN_PROOFS:'+id+':'+open.join(','));
+  const technicalKeys=['USER_APPROVED_SOURCE_REFERENCE','ORIGINAL_SOURCE_IDENTITY_MATCH','ORIGINAL_BYTE_HASH_AND_MANIFEST',
+    'SEMANTIC_OWNER_PERSONALITY_AND_ALIAS','ACTUAL_UI_REGISTRY_AND_LEDGER_BINDING','ACTUAL_REACTION_AND_UI_REGRESSION'];
+  const technicalReady=technicalKeys.every(k=>passed.includes(k))&&cfg.independentLayers.concat(cfg.reactions).every(k=>passed.includes('EXACT_INDEPENDENT_TRANSPARENT_ASSET:'+k))&&passed.includes('NEW_FIRST_MEETING_COMPOSITION');
   return {id,stage:open.length?'ASSET_OR_INTEGRATION_OPEN':'RELEASE_CANDIDATE_NOT_AUTO_RELEASED',passed,open,
-    technicalReady:false,releaseReady:false,automaticArtGeneration:false,automaticPublish:false,
+    technicalReady,releaseReady:false,automaticArtGeneration:false,automaticPublish:false,
     note:'Self-reported evidence references do not substitute independent human image/interaction review. This agent workflow never activates ROOT.'};
 }
 function report(){
@@ -126,7 +130,9 @@ function report(){
     const id=name.slice(0,-5),full=candidateFile(id);
     if(fs.lstatSync(full).isSymbolicLink())throw Error('CANDIDATE_SYMLINK_REJECTED');
     const obj=JSON.parse(fs.readFileSync(full,'utf8'));if(obj.id!==id)throw Error('CANDIDATE_FILENAME_ID_MISMATCH:'+name);
-    staged.push(inspectCandidate(obj));
+    const audit=inspectCandidate(obj);
+    if(registry.memberIds.includes(id)&&audit.open.length)throw Error('ACTIVE_REGISTRY_ID_WITH_INCOMPLETE_PRODUCTION_EVIDENCE:'+id+':'+audit.open.join(','));
+    staged.push(audit);
   }
   return {schema:cfg.schema,referenceAuthority:'LIVE_MANIFEST_PLUS_ORIGINAL_SOURCE',existing,staged,
     counts:{staticBound:existing.length,independentLayerAssetsMissing:existing.reduce((n,x)=>n+x.missing.filter(s=>s.startsWith('LAYER:')).length,0),

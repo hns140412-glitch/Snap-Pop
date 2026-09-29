@@ -22,3 +22,7 @@
 - 진행상태는 `STATIC_PREVIEW` / `STAGED_SOURCE_LOCKED` / `ASSET_PRODUCTION_OPEN` / `SCENE_BINDING_OPEN` / `RENDER_QA_OPEN` / `HUMAN_APPROVAL_OPEN` / `ROOT_RELEASE_HOLD`로 구분한다. 각 항목에 실파일·화면 캡처·CI 근거를 붙인다.
 
 **현재 Core6 증거:** 승인 원본과 정적 컷아웃·첫 만남 경로는 연결됐지만 독립 레이어 18종 및 반응 36종은 아직 확보되지 않았다. 이 54개 항목은 결과물이 생성되어 검증되기 전까지 모두 OPEN이다. 11개 화면 확정 시안 1:1 및 물리기기 승인은 별개 OPEN.
+
+## 독립 검증 보정
+- 첫 만남의 통합 **장면 PNG는 불투명 원화도 허용**하며, 본체·장비·표정/동작의 독립 렌더용 에셋만 투명 PNG와 개별 출처를 강제한다.
+- STAGED 신원은 실제 렌더러와 연동된 뒤에도 감사 가능해야 한다. 등록은 기존 ID와 충돌하면 거부하되, 제작 중 후보가 런타임에 들어간 뒤에는 누락된 증거가 있다면 CI를 실패시킨다. 작업 완료 상태를 임의로 먼저 표시한 후보 역시 FAIL CLOSED.
