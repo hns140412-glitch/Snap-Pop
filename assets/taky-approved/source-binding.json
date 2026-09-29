@@ -1,0 +1,30 @@
+{
+  "schema": "TAKY_APP_APPROVED_ENVIRONMENT_PIN_V1",
+  "date": "2026-09-30",
+  "state": "STAGED_PINNED_SOURCE_COPY_NOT_RUNTIME_BOUND",
+  "app": "Snap & Pop",
+  "governing_rule": "TKY-ASSET-001",
+  "visual_id": "TAKY-LAF-SNAP-HOME-COAST-20260927-A",
+  "original_reference_id": "TAKY-LAF-UI-HOME-SNAP-HIDE-20260927-A",
+  "central_repository": "hns140412-glitch/TAKY-ASSETS",
+  "central_staging_commit": "a251775daac51236193bcbc951ac2f74b561a8a3",
+  "central_staging_pr": 3,
+  "central_source_path": "approved/learning-app-family/snap-pop/home/TAKY-LAF-SNAP-HOME-COAST-20260927-A/source/snap_pop_beach_asset.png",
+  "deployment_copy_path": "assets/taky-approved/snap_pop_beach_asset.png",
+  "sha256": "f15af01680e2db44ef8af1dff749169f1082ddd15b3760a96da7ff2211eb8259",
+  "git_blob_sha1": "7c2b83ae566ebc5468d42e0720f9092e096360ae",
+  "bytes": 2287028,
+  "dimensions_px": [
+    941,
+    1672
+  ],
+  "source_role": "APPROVED_ENVIRONMENT_NO_CHARACTER_NO_UI_TEXT",
+  "requires_owner_screen_contract": true,
+  "existing_main_backgrounds": [
+    "assets/world/golden_world_scene.jpg"
+  ],
+  "runtime_imported": false,
+  "real_render_verified": false,
+  "app_main_changed": false,
+  "released": false
+}
