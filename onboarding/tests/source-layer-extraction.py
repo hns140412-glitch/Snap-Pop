@@ -16,6 +16,25 @@ with tempfile.TemporaryDirectory() as td:
         assert all(v['nontransparent_pixels']>1000 for v in res['independent_roles'].values())
         if id=='lori':assert 5500 <= res['independent_roles']['THEME_GEAR']['nontransparent_pixels'] <= 6300,'LORI_STAR_HAIR_CONTAMINATION_REGRESSION'
         if id=='nova':assert 50000 <= res['independent_roles']['PERSONALITY_PROP']['nontransparent_pixels'] <= 55000,'NOVA_GOGGLE_FUR_CONTAMINATION_REGRESSION'
+        # Anti-regression: source-specific probes must land in the right semantic role,
+        # not merely compose into the original flattened source.
+        if id in ('dubi','ink','take','zero'):
+            expected={
+              'dubi':(796559,53777,67626),
+              'ink':(798033,37612,52924),
+              'take':(863820,24186,12021),
+              'zero':(726369,63910,51032)
+            }[id]
+            actual=tuple(res['independent_roles'][role]['nontransparent_pixels'] for role in ('IDENTITY_BODY','PERSONALITY_PROP','THEME_GEAR'))
+            assert actual==expected,(id,'VISUAL_ID_SILHOUETTE_CHANGED',actual,expected)
+            probes={
+              'dubi':(('identity_body',(815,745)),('personality_prop',(909,800))),
+              'ink':(('identity_body',(762,827)),('personality_prop',(850,850))),
+              'take':(('identity_body',(528,682)),('identity_body',(218,561)),('personality_prop',(501,750)),('theme_gear',(140,610))),
+              'zero':(('identity_body',(578,352)),('identity_body',(815,600)),('personality_prop',(895,550)),('theme_gear',(435,255)))
+            }[id]
+            for role,xy in probes:
+                assert Image.open(dst/(role+'.png')).getpixel(xy)[3]>0,(id,role,xy)
         roles=[Image.open(dst/(n+'.png')).convert('RGBA') for n in ('identity_body','personality_prop','theme_gear')]
         orig=Image.open(src).convert('RGBA');assert len({hashlib.sha256(x.tobytes()).hexdigest() for x in roles})==3
         # Source cutouts use RGB(255,255,255) at fully transparent points;

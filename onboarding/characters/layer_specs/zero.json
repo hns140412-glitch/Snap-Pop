@@ -6,11 +6,11 @@
     1402
   ],
   "status": "SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
-  "semantic_note": "Own approved flattened static cutout. Visible source pixel partition only; contour QA, occluded-surface restoration, six independent action drawings and approved motion-safe rig are OPEN.",
-  "visual_review": "DRAFT_MASK_VISUAL_QA_HOLD_NOT_USER_APPROVED",
+  "semantic_note": "Visual ID zero source-pixel separation adjusted against its approved enlarged original: cap-to-forelock and right headphone-to-gloved-hand confusion reduced. Unseen headset backside, hair under cap and six expression art still require genuine authored restoration.",
+  "visual_review": "ZERO_VISOR_HAIR_FROM_GEAR_AND_RIGHT_CUP_GLOVE_FROM_PROP_REMOVED_ARTIST_QA_HOLD",
   "independent_roles": {
     "PERSONALITY_PROP": {
-      "identity": "Visible left and right headphone cups plus separate top headband; cap is excluded",
+      "identity": "Source-visible separated stereo headset cups and overhead black padded band; front cap visor and right gloved hand excluded",
       "include": [
         [
           [
@@ -64,48 +64,68 @@
         ],
         [
           [
-            818,
-            442
+            822,
+            470
           ],
           [
-            862,
-            426
+            841,
+            453
           ],
           [
-            901,
-            438
+            858,
+            456
           ],
           [
-            938,
-            468
+            875,
+            482
           ],
           [
-            963,
-            518
+            900,
+            492
           ],
           [
-            963,
-            575
+            925,
+            509
           ],
           [
-            930,
+            939,
+            539
+          ],
+          [
+            943,
+            563
+          ],
+          [
+            935,
+            593
+          ],
+          [
+            916,
+            624
+          ],
+          [
+            889,
+            638
+          ],
+          [
+            866,
             630
           ],
           [
-            888,
-            645
+            843,
+            609
           ],
           [
-            846,
-            621
-          ],
-          [
-            817,
-            583
+            823,
+            581
           ],
           [
             813,
-            528
+            550
+          ],
+          [
+            815,
+            512
           ]
         ],
         [
@@ -211,10 +231,45 @@
           ]
         ]
       ],
-      "exclude": []
+      "exclude": [
+        [
+          [
+            795,
+            574
+          ],
+          [
+            812,
+            568
+          ],
+          [
+            831,
+            588
+          ],
+          [
+            850,
+            616
+          ],
+          [
+            854,
+            647
+          ],
+          [
+            833,
+            656
+          ],
+          [
+            808,
+            638
+          ],
+          [
+            790,
+            604
+          ]
+        ]
+      ]
     },
     "THEME_GEAR": {
-      "identity": "Visible cap crown and brim excluding standalone outer headphone cups",
+      "identity": "Source-visible blue cap crown and white star front with brim; dark hair/fur under the visor returns to BODY",
       "include": [
         [
           [
@@ -325,7 +380,70 @@
           ]
         ]
       ],
-      "exclude": []
+      "exclude": [
+        [
+          [
+            440,
+            324
+          ],
+          [
+            479,
+            323
+          ],
+          [
+            535,
+            326
+          ],
+          [
+            594,
+            342
+          ],
+          [
+            646,
+            362
+          ],
+          [
+            695,
+            382
+          ],
+          [
+            747,
+            405
+          ],
+          [
+            800,
+            414
+          ],
+          [
+            803,
+            450
+          ],
+          [
+            756,
+            466
+          ],
+          [
+            706,
+            453
+          ],
+          [
+            650,
+            428
+          ],
+          [
+            602,
+            392
+          ],
+          [
+            541,
+            364
+          ],
+          [
+            486,
+            342
+          ]
+        ]
+      ]
     }
   }
 }

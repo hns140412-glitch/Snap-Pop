@@ -6,55 +6,87 @@
     1402
   ],
   "status": "SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
-  "semantic_note": "Own approved flattened static cutout. Visible source pixel partition only; contour QA, occluded-surface restoration, six independent action drawings and approved motion-safe rig are OPEN.",
-  "visual_review": "DRAFT_MASK_VISUAL_QA_HOLD_NOT_USER_APPROVED",
+  "semantic_note": "Visual ID take approved static original only. Notebook cover and rolled mat source-pixel boundaries refined from own enlarged approved image, no invented unseen backside; glove/coat/scarf return to BODY. Not independent motion-ready rig.",
+  "visual_review": "TAKE_SOURCE_TRACED_NOTEBOOK_SLEEVE_STRIP_REMOVED_AND_ROLL_MAT_SEPARATED_ARTIST_QA_HOLD",
   "independent_roles": {
     "PERSONALITY_PROP": {
-      "identity": "Visible handheld rectangular notebook, excludes glove occlusion",
+      "identity": "Only original-source-visible tan notebook cover with navy star and binding; glove, sleeve, chest strap and white drawstring remain BODY",
       "include": [
         [
           [
-            461,
-            665
+            420,
+            703
           ],
           [
-            547,
-            670
+            430,
+            690
           ],
           [
-            631,
-            705
+            453,
+            679
           ],
           [
-            653,
-            743
+            482,
+            683
           ],
           [
-            658,
+            524,
+            694
+          ],
+          [
+            570,
+            710
+          ],
+          [
+            599,
+            728
+          ],
+          [
+            612,
+            745
+          ],
+          [
+            606,
+            783
+          ],
+          [
+            589,
+            813
+          ],
+          [
+            579,
+            842
+          ],
+          [
+            562,
+            864
+          ],
+          [
+            538,
+            849
+          ],
+          [
+            504,
+            835
+          ],
+          [
+            478,
+            828
+          ],
+          [
+            451,
+            814
+          ],
+          [
+            415,
             812
           ],
           [
-            639,
-            874
+            402,
+            792
           ],
           [
-            608,
-            897
-          ],
-          [
-            537,
-            895
-          ],
-          [
-            458,
-            865
-          ],
-          [
-            428,
-            820
-          ],
-          [
-            433,
+            409,
             754
           ]
         ]
@@ -62,99 +94,115 @@
       "exclude": [
         [
           [
-            459,
-            823
+            446,
+            816
           ],
           [
-            505,
-            813
+            481,
+            811
           ],
           [
-            550,
-            827
+            514,
+            818
           ],
           [
-            595,
-            852
+            548,
+            833
           ],
           [
-            635,
-            887
+            577,
+            853
           ],
           [
-            632,
+            593,
+            877
+          ],
+          [
+            592,
+            910
+          ],
+          [
+            572,
+            935
+          ],
+          [
+            530,
+            939
+          ],
+          [
+            485,
             929
           ],
           [
-            580,
-            950
+            451,
+            899
           ],
           [
-            529,
-            928
-          ],
-          [
-            486,
-            907
-          ],
-          [
-            457,
-            867
+            436,
+            858
           ]
         ]
       ]
     },
     "THEME_GEAR": {
-      "identity": "Visible rolled blue travel mat at left shoulder, separate from character body",
+      "identity": "Original visible rolled blue mat at left shoulder, not the blue neck scarf nor chest coat",
       "include": [
         [
           [
-            86,
-            523
+            73,
+            556
           ],
           [
-            114,
-            499
+            89,
+            534
           ],
           [
-            151,
-            492
+            120,
+            522
           ],
           [
-            196,
-            513
+            152,
+            524
           ],
           [
-            229,
-            541
+            178,
+            535
           ],
           [
-            244,
-            582
-          ],
-          [
-            232,
-            638
+            195,
+            555
           ],
           [
             207,
-            666
+            586
           ],
           [
-            160,
-            672
+            205,
+            611
           ],
           [
-            115,
-            655
+            187,
+            642
           ],
           [
-            83,
+            163,
+            668
+          ],
+          [
+            124,
+            671
+          ],
+          [
+            87,
+            651
+          ],
+          [
+            67,
             620
           ],
           [
-            73,
-            572
+            64,
+            580
           ]
         ]
       ],

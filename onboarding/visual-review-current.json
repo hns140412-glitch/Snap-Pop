@@ -177,6 +177,11 @@
       "id": "LORI-NOVA-SOURCE-ART-SILHOUETTE-CORRECTION",
       "evidence": "Previous original-byte pixel reconstruction did not detect semantically wrong masks. Enlarged approved originals showed pink hair included in Lori's star-clip asset and brown head fur included in Nova's goggle asset.",
       "correction": "Directly reauthor separate approved-source-traced polygon contours for each immutable Visual ID, preserve full source-visible composite, add per-member source-visible coverage regression checks, leave occluded anatomy and independent animation art OPEN."
+    },
+    {
+      "id": "DUBI-INK-TAKE-ZERO-SOURCE-CONTOUR-AUDIT",
+      "evidence": "Separate own-approved-source zoom comparison showed sleeve/strap fragments wrongly assigned to Dubi/Ink/Take props, blue scarf included in Take rolled-mat gear and Zero hair assigned to cap gear",
+      "correction": "Four separately source-traced visible polygon corrections, exact member-SHA, pixel-probe and member silhouette count anti-regressions. Source-visible technical drafts only; zero independent motion-safe underlays or reaction frames approved."
     }
   ],
   "gates": {
@@ -212,7 +217,9 @@
     "core6_reaction_art": "ZERO_APPROVED_36_INDEPENDENT_REACTION_FRAMES_OPEN",
     "visual_id_clean_alpha_export": "CODED_ALL_SIX_VISUAL_IDS_CLEAN_RGBA_OUTPUTS_AND_EXACT_VISIBLE_PIXEL_ROUNDTRIP_CI_PENDING_18_MOTION_ASSET_SLOTS_STILL_OPEN",
     "lori_star_clip_boundary": "SOURCE_TRACED_9859_HAIR_PATCH_TO_5865_REAL_VISIBLE_CLIP_ARTISTIC_QA_HOLD",
-    "nova_goggle_boundary": "SOURCE_TRACED_84073_GOGGLE_PLUS_FUR_TO_52390_VISIBLE_GOGGLES_ARTISTIC_QA_HOLD"
+    "nova_goggle_boundary": "SOURCE_TRACED_84073_GOGGLE_PLUS_FUR_TO_52390_VISIBLE_GOGGLES_ARTISTIC_QA_HOLD",
+    "four_remaining_visible_boundary": "DUBI_INK_TAKE_ZERO_PER_VISUAL_ID_SOURCE_MASKS_REFINED_LOCAL_FULL_RGBA_AND_SEMANTIC_PROBES_PASS_CI_PENDING_ART_QA_HOLD",
+    "all6_source_visible_drafts": "6_OF_6_ID_SPECIFIC_SOURCE_ONLY_MASKS_WITH_18_DERIVED_CLEAN_ALPHA_PNG_DRAFTS_NOT_18_APPROVED_MOTION_ASSETS"
   },
   "source_provenance": {
     "approved_asset_identity": "onboarding/asset-and-release-gate.json required_assets 22 exact SHA256",

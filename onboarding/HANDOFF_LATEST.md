@@ -1,5 +1,10 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 remaining four Visual ID source-visible contour improvements — ART QA HOLD
+
+- No Codex called (Plus 5-hour budget preserved). Assistant directly revised four individual approved-source SHA locked specs after original-versus-three-layer crop inspection: DUBI map left clothing fragment returned to body; INK tablet diagonal left sleeve patch returned to body; TAKE notebook back-jacket/sleeve fragment and rolled mat vs scarf corrected; ZERO under-visor forelock returned from cap gear to body, right cup/glove boundary narrowed. The preceding independent LORI star-clip and NOVA goggles fixes remain inherited.
+- Four member-specific independent pixel-count and semantic pixel-probe assertions added to existing six-original-hash/18-PNG/true transparent pixels/exact visually faithful composition checks. Six-source technical PNG packs can regenerate repeatably with same Visual ID and per-ID provenance. Explicitly NOT new art under occlusion and NOT complete true 18 motion-ready role artworks or 36 authored independent reactions. QA crops and individual asset ZIP produced in this conversation; user original assets unmodified. Verify exact new HEAD and CI after PR update, remain Draft and do NOT deploy.
+
 ## CURRENT OVERRIDE — 2026-09-29 two actual source-traced Visual ID contour corrections — ARTISTIC QA HOLD
 
 - LORI/THEME_GEAR: approved source gold/white star clip was overbroad pink hair-patch (~9859 visible pixels); individually revised 4x-source-traced contour isolates just the clip (~5865 visible pixels), pink hair remains in original IDENTITY_BODY. NOVA/PERSONALITY_PROP: old mask includes large region of brown head fur (~84073 visible pixels); individually revised 2x-source-traced paired copper/blue goggles silhouette reduces this to ~52390 visible pixels, brown fur remains in BODY. No per-ID cross-copy, repaint, new generic UI or original file overwrite.
