@@ -241,7 +241,23 @@ main[data-step="10"] .home-drawer .photo-copy p,main[data-step="10"] .home-drawe
 
 /* Tablet HOME needs 9px more than the previous 45dvh to show all controls without inner scrolling. */
 @media(min-width:700px){main[data-step="10"] .home-drawer{max-height:48dvh}}
-</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script src="crew-behavior-runtime.js"></script><script src="visual-id-runtime.js"></script><script>
+/* Optional crew radio is temporary, text-only and does not replace canonical art. */
+.home-crew-line{border:0;background:transparent;color:inherit;font:inherit;padding:0;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;cursor:pointer}
+.home-crew-line:focus-visible{outline:2px solid #ffe4ac;outline-offset:3px;border-radius:3px}
+.crew-radio-cover{position:absolute;inset:0;z-index:7;display:flex;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top) + 18px) 16px calc(env(safe-area-inset-bottom) + 18px);background:#142f33ad;backdrop-filter:blur(6px)}
+.crew-radio-panel{width:min(100%,430px);max-height:100%;overflow-y:auto;border:1px solid #ffebc5;border-radius:20px;background:#fff6e6;color:#463927;box-shadow:0 15px 40px #0d252a99;padding:16px}
+.crew-radio-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.crew-radio-head h2{margin:0;font-size:19px}
+.crew-radio-close{background:transparent;border:1px solid #bca27e;color:#473825;border-radius:10px;min-height:38px;min-width:50px}
+.crew-radio-panel label{display:block;font-size:13px;font-weight:800;margin:10px 0 5px}
+.crew-radio-panel select,.crew-radio-panel textarea{width:100%;box-sizing:border-box;font:inherit;font-size:15px;border:1px solid #c7a985;border-radius:11px;padding:9px;background:#fffdf7;color:#372b20}
+.crew-radio-panel textarea{resize:vertical;min-height:88px;max-height:150px}
+.crew-radio-actions{display:flex;gap:8px;margin-top:10px}.crew-radio-actions button{flex:1;border:1px solid #6c7e68;border-radius:11px;padding:10px;background:#325950;color:#fff9e7;font:inherit;font-size:13px;font-weight:750}
+.crew-radio-actions button:disabled{opacity:.4}
+.crew-radio-panel p{font-size:13px;line-height:1.55;margin:8px 0}
+.crew-radio-panel .child-authored{white-space:pre-wrap;overflow-wrap:anywhere;background:#efdfbd;border-radius:10px;padding:9px;color:#4d3c2c}
+.crew-radio-panel .crew-reply{background:#dde9dc;padding:10px;border-radius:10px;color:#2d5148}
+@media(prefers-reduced-motion:reduce){.crew-radio-cover{transition:none;animation:none}}
+</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script src="crew-behavior-runtime.js"></script><script src="visual-id-runtime.js"></script><script src="crew-interaction-runtime.js"></script><script>
 const people=[['zero','제로'],['take','테이크'],['nova','노바'],['ink','잉크'],['lori','로리'],['dubi','두비']];
 const palette=['#a46d59','#668a65','#b38a47','#9d7293','#617f84'];
 const itemKeys=['map','lamp','water','camera','cap','compass'];
@@ -249,6 +265,8 @@ const tabKeys=['오늘','지도','기록','탐험대','나'];
 const crewLogic=window.CompanionCrewState;if(!crewLogic)throw new Error('CREW_LOCAL_STATE_RUNTIME_MISSING');
 const crewBehavior=window.CompanionCrewBehavior;if(!crewBehavior)throw new Error('CREW_BEHAVIOR_PROJECTION_MISSING');
 const visualID=window.CompanionVisualAssets;if(!visualID)throw new Error('VISUAL_ID_RUNTIME_MISSING');
+const crewInteract=window.CompanionCrewInteraction;if(!crewInteract)throw new Error('CREW_INTERACTION_RUNTIME_MISSING');
+let radioOpen=false,radioScene='description',radioResult=null;
 if(JSON.stringify(visualID.memberIds)!==JSON.stringify(crewLogic.ids))throw new Error('VISUAL_ID_CREW_LEDGER_MISMATCH');
 const initial={step:0,crew:[],primaryCompanionId:'',selectionPhase:'crew',crewLedger:crewLogic.initial(),name:'',color:'#a46d59',items:[],travel:'',island:'',camp:'',tab:'오늘',photoSourceId:'',photoSha256:''};
 function cleanText(v,max){return typeof v==='string'?v.slice(0,max):''}
@@ -315,7 +333,26 @@ function pickPrimaryCompanion(id){
   state.crewLedger=crewLogic.choosePrimary(state.crewLedger,state.crew,id,state.primaryCompanionId);state.primaryCompanionId=id;save();render();
 }
 
-function render(){if(state.step!==3&&(state.step!==10||state.tab!=='나'))releasePhotoPreview();document.getElementById('app').style.setProperty('--accent',state.color);document.getElementById('app').dataset.step=String(state.step);document.getElementById('app').dataset.travel=state.travel||'';switch(state.step){
+function crewRadioMarkup(){
+ if(!radioOpen||state.step!==10||state.tab!=='오늘')return '';
+ const name=escapeHTML(crewLogic.displayName(state.crewLedger,state.primaryCompanionId)||'동행 친구');
+ const head='<section class="crew-radio-cover"><div class="crew-radio-panel" role="dialog" aria-modal="true" aria-labelledby="crew-radio-title"><div class="crew-radio-head"><h2 id="crew-radio-title">'+name+'에게 말 걸기</h2><button type="button" class="crew-radio-close" onclick="closeCrewRadio()" aria-label="대화 닫기">닫기</button></div>';
+ if(!radioResult)return head+'<p>내 이야기를 직접 적어 주세요. 이 화면에서만 표시하고 저장하지 않아요.</p><label for="crew-radio-scene">이야기 방향</label><select id="crew-radio-scene" onchange="radioScene=this.value"><option value="description">장면 이야기</option><option value="idea">생각 이야기</option><option value="emotion">마음 이야기</option><option value="viewpoint">다른 시선</option><option value="final">마무리</option></select><label for="crew-radio-text">내가 전할 말</label><textarea id="crew-radio-text" maxlength="180" placeholder="내가 보고 느낀 것을 직접 적어요."></textarea><div class="crew-radio-actions"><button type="button" onclick="sendCrewRadio()">무전 보내기</button></div><p id="crew-radio-status" role="status" aria-live="polite"></p></div></section>';
+ return head+'<p>내가 전한 말</p><p class="child-authored" data-child-authored>'+escapeHTML(radioResult.childText)+'</p><p class="crew-reply" data-crew-reply>'+escapeHTML(radioResult.reply)+'</p>'+(radioResult.hintUsed?'<p data-one-hint>한 가지 힌트: '+escapeHTML(radioResult.hint)+'</p>':'<div class="crew-radio-actions"><button type="button" onclick="oneCrewHint()">힌트 하나 듣기</button></div>')+'<div class="crew-radio-actions"><button type="button" onclick="resetCrewRadio()">다른 이야기 보내기</button></div></div></section>';
+}
+function showCrewRadio(){if(state.step!==10||state.tab!=='오늘'||!state.primaryCompanionId||!state.crew.includes(state.primaryCompanionId))return;radioOpen=true;radioResult=null;radioScene='description';render();el.querySelector('#crew-radio-text')?.focus()}
+function closeCrewRadio(){radioOpen=false;radioResult=null;render()}
+function resetCrewRadio(){radioResult=null;render();el.querySelector('#crew-radio-text')?.focus()}
+function sendCrewRadio(){
+ if(!radioOpen||radioResult)return;
+ const message=el.querySelector('#crew-radio-text')?.value,scene=el.querySelector('#crew-radio-scene')?.value||radioScene;
+ const start=crewInteract.open({primaryId:state.primaryCompanionId,selectedIds:state.crew,scene},crewBehavior);
+ const result=start&&crewInteract.submit(start,message);
+ if(!result){const s=el.querySelector('#crew-radio-status');if(s)s.textContent='직접 적은 말을 확인해 주세요.';return}
+ radioResult=result;radioScene=scene;render()
+}
+function oneCrewHint(){if(!radioOpen||!radioResult)return;const one=crewInteract.hint(radioResult);if(one){radioResult=one;render()}}
+function render(){if(state.step!==10||state.tab!=='오늘'){radioOpen=false;radioResult=null}if(state.step!==3&&(state.step!==10||state.tab!=='나'))releasePhotoPreview();document.getElementById('app').style.setProperty('--accent',state.color);document.getElementById('app').dataset.step=String(state.step);document.getElementById('app').dataset.travel=state.travel||'';switch(state.step){
 case 0:el.innerHTML='<section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section>';break;
 case 1:renderApprovedCrewScene(false);break;
 case 2:renderApprovedCrewScene(true);break;
@@ -343,7 +380,7 @@ case 10:{
   let drawer='';
   if(state.tab==='오늘'){
     const cue=crewBehavior.preview({primaryId:state.primaryCompanionId,selectedIds:state.crew,scene:'home'});
-     drawer='<h2>'+escapeHTML(state.camp)+'</h2><p>오늘의 동행 '+escapeHTML(crewLogic.displayName(state.crewLedger,state.primaryCompanionId)||'선택 필요')+(cue?' · <span class="home-crew-line" data-member-id="'+cue.memberId+'">'+escapeHTML(cue.text)+'</span>':'')+'</p>';
+     drawer='<h2>'+escapeHTML(state.camp)+'</h2><p>오늘의 동행 '+escapeHTML(crewLogic.displayName(state.crewLedger,state.primaryCompanionId)||'선택 필요')+(cue?' · <button type="button" class="home-crew-line" aria-label="주 동행과 한마디" onclick="showCrewRadio()" data-member-id="'+cue.memberId+'">'+escapeHTML(cue.text)+'</button>':'')+'</p>';
   }else if(state.tab==='지도'){
     const places={camp:['베이스캠프','출발을 준비하고 쉬어 가는 곳'],jungle:['정글 · 폭포','새로운 단서와 기억을 만나는 곳'],beach:['해변','생각을 이야기로 펼치는 곳'],harbor:['항구','다음 탐험으로 이어지는 길']};
     const selected=places[state.spot]||null;
@@ -360,7 +397,7 @@ case 10:{
   }else{
     drawer='<h2>'+escapeHTML(state.name)+'</h2><p>'+escapeHTML(state.island)+' · '+escapeHTML(state.camp)+'</p>'+childPhotoPanel(false)+'<button class="sub" onclick="editFromHome(3)">프로필 수정</button>';
   }
-  el.innerHTML='<section class="home-stage" aria-label="탐험 홈"><header class="home-top"><div><h1>'+escapeHTML(state.island)+'</h1><p>'+escapeHTML(state.camp)+'에서 시작하는 하루</p></div><button class="home-profile" onclick="state.tab=\'나\';save();render()" aria-label="내 프로필 보기">'+escapeHTML(state.name)+' ▾</button></header><div class="home-map" aria-label="섬 지도">'+[['camp','베이스캠프'],['jungle','정글 · 폭포'],['beach','해변'],['harbor','항구']].map(([id,n])=>'<button type="button" class="home-place" data-place="'+id+'" aria-pressed="'+(state.tab==='지도'&&state.spot===id)+'" onclick="visitSpot(\''+id+'\')">'+n+'</button>').join('')+'</div><div class="home-drawer" data-tab="'+state.tab+'" aria-live="polite">'+drawer+'</div><nav class="home-navigation" aria-label="탐험 홈 메뉴">'+nav.map(n=>'<button type="button" class="'+(state.tab===n?'active':'')+'" aria-current="'+(state.tab===n?'page':'false')+'" onclick="state.tab=\''+n+'\';save();render()">'+svgs[n]+'<span>'+n+'</span></button>').join('')+'</nav></section>';
+  el.innerHTML='<section class="home-stage" aria-label="탐험 홈"><header class="home-top"><div><h1>'+escapeHTML(state.island)+'</h1><p>'+escapeHTML(state.camp)+'에서 시작하는 하루</p></div><button class="home-profile" onclick="state.tab=\'나\';save();render()" aria-label="내 프로필 보기">'+escapeHTML(state.name)+' ▾</button></header><div class="home-map" aria-label="섬 지도">'+[['camp','베이스캠프'],['jungle','정글 · 폭포'],['beach','해변'],['harbor','항구']].map(([id,n])=>'<button type="button" class="home-place" data-place="'+id+'" aria-pressed="'+(state.tab==='지도'&&state.spot===id)+'" onclick="visitSpot(\''+id+'\')">'+n+'</button>').join('')+'</div><div class="home-drawer" data-tab="'+state.tab+'" aria-live="polite">'+drawer+'</div><nav class="home-navigation" aria-label="탐험 홈 메뉴">'+nav.map(n=>'<button type="button" class="'+(state.tab===n?'active':'')+'" aria-current="'+(state.tab===n?'page':'false')+'" onclick="state.tab=\''+n+'\';save();render()">'+svgs[n]+'<span>'+n+'</span></button>').join('')+'</nav>'+crewRadioMarkup()+'</section>';
   if(state.tab==='나')void refreshChildPhoto();break;
 }
 default:go(0)}}

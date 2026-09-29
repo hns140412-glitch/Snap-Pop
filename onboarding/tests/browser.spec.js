@@ -1,6 +1,6 @@
 const {test,expect}=require('@playwright/test');
 const sizes=[[375,667],[390,844],[430,932],[1024,768]];
-const expectedScreens=13;
+const expectedScreens=14;
 for(const [width,height] of sizes){
 test('isolated companion onboarding complete path, assets, restore and rename '+width+'x'+height,async({page})=>{
   test.setTimeout(60000);
@@ -55,6 +55,19 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   await page.locator('#campNext').click();
   await expect(page.locator('#app')).toHaveAttribute('data-step','10');
   await expect(page.locator('.home-crew-line')).toHaveText('괜찮아, 천천히 해도 돼!');await capture('10-home-today');
+  await page.locator('.home-crew-line').click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.locator('#crew-radio-scene').selectOption('description');
+  await page.locator('#crew-radio-text').fill('폭포 소리가 크게 들려요 <안전>');
+  await page.getByRole('button',{name:'무전 보내기'}).click();
+  await expect(page.locator('[data-child-authored]')).toHaveText('폭포 소리가 크게 들려요 <안전>');
+  await expect(page.locator('[data-crew-reply]')).toHaveText('네가 느낀 걸 그대로 말해도 좋아.');
+  await page.getByRole('button',{name:'힌트 하나 듣기'}).click();
+  await expect(page.locator('[data-one-hint]')).toContainText('눈에 들어온 장면 하나만');
+  await expect(page.getByRole('button',{name:'힌트 하나 듣기'})).toHaveCount(0);
+  await capture('10-home-crew-radio');
+  await page.getByRole('button',{name:'대화 닫기'}).click();
+  expect(await page.evaluate(()=>localStorage.getItem('expedition_ui_draft'))).not.toContain('폭포 소리가 크게');
   await page.locator('.home-navigation button').filter({hasText:'탐험대'}).click();
   await expect(page.locator('.crew-primary')).toContainText('로리');
   const lori=page.locator('.crewlist>div').nth(1);

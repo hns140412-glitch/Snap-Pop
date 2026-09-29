@@ -1,5 +1,10 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 real user-triggered primary companion reaction in existing HOME (candidate)
+
+- Real child-authored text now enters a temporary opt-in HOME overlay by tapping the existing primary's sourced signature. User chooses one of five recovered Snap scenes; only actual submitted content is displayed verbatim and HTML-escaped, then the actual chosen Core6 signature lineage's contextual one-line response is shown. ONE shared hint only after explicit click, no repeated hint. Dialogue is transient (no localStorage/IDB/network); no child grade, score, reward, affinity, transcript rewrite, voice recording or fake external app session. Existing original 22 asset bytes untouched, root untouched. The overlay is a functional visual CANDIDATE, NOT signed-off design pixel parity.
+- New `crew-interaction-runtime.js` source-hash guarded, Node unit test covers 6×5 scenes, VM loads new script, Playwright clicks the real UI at four viewport sizes and captures new radio state (14 states×4=56 expected). CI must be checked on exact new HEAD. True animated character layers, voice, child-avatar generation, root/Ready/Hide and 11-screen 1:1 remain OPEN.
+
 ## CURRENT OVERRIDE — 2026-09-29 dual Core6 source-pixel extraction CI VERIFIED
 
 This supersedes earlier PENDING prototype statements below. Exact IMPLEMENTATION HEAD c8f3df574d4f6d456a7111029377b9ceee770071 at verification; live MAIN 3de97be0d12dd6244a942b0c137c2efe578a43b6. Both will change, always refresh CURRENT before edits. Draft PR #10, no merge or Netlify.

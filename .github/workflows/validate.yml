@@ -48,9 +48,9 @@ jobs:
         run: npx playwright test onboarding/tests/browser.spec.js --reporter=line
       - name: Verify isolated HTTPS IndexedDB photo-source persistence and clearing
         run: npx playwright test onboarding/tests/secure-origin.spec.js --reporter=line
-      - name: Verify all thirteen captured states at four viewport sizes
+      - name: Verify all fourteen captured states at four viewport sizes
         run: |
-          test "$(find onboarding/render-evidence -maxdepth 1 -type f -name '*.png' | wc -l)" -eq 52
+          test "$(find onboarding/render-evidence -maxdepth 1 -type f -name '*.png' | wc -l)" -eq 56
       - name: Upload companion candidate render evidence (not visual approval)
         if: always()
         uses: actions/upload-artifact@v4
