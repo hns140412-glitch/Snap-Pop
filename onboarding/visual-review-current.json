@@ -182,6 +182,11 @@
       "id": "DUBI-INK-TAKE-ZERO-SOURCE-CONTOUR-AUDIT",
       "evidence": "Separate own-approved-source zoom comparison showed sleeve/strap fragments wrongly assigned to Dubi/Ink/Take props, blue scarf included in Take rolled-mat gear and Zero hair assigned to cap gear",
       "correction": "Four separately source-traced visible polygon corrections, exact member-SHA, pixel-probe and member silhouette count anti-regressions. Source-visible technical drafts only; zero independent motion-safe underlays or reaction frames approved."
+    },
+    {
+      "id": "ALL-SIX-PRIMARY-REAL-BROWSER-COVERAGE",
+      "evidence": "Previous Playwright branch verified the source behavior matrix in Node and rendered only Lori selected end-to-end; did not exercise actual child primary-change UI / art/ledger/reload for five others",
+      "correction": "Add 3-viewport six-member real primary-change browser loop for six IDs with real approved image source loaded, actual conversation/reaction, exact one hint, persistence and layout checks; keep source art static and six animation/reaction-art completion OPEN"
     }
   ],
   "gates": {
@@ -203,7 +208,7 @@
     "automatic_promotion": "BLOCKED_NEW_ID_AND_ROOT_RELEASE_MUST_PASS_PER_MEMBER_ASSET_HASH_SCENE_PARITY_AND_DEVICE",
     "visual_id_work_method": "PASS_PLAN_REGISTER_AUDIT_REPORT_EXACT_IMPLEMENTATION_HEAD_BDFF5FB",
     "visual_id_work_orders": "PASS_ARTIFACT_CURRENT_SIX_STATIC_18_ROLE_36_REACTION_OPEN",
-    "current_52_render": "SUPERSEDED_PASS_56_14_STATES_X_4_HEAD_47246485_NOT_USER_VISUAL_APPROVAL",
+    "current_52_render": "SUPERSEDED_74_CANDIDATE_56_PLUS_18_ALL_SIX_PRIMARY_SCREENSHOTS_CI_PENDING",
     "dubi_source_partition": "PASS_CI_THREE_DIFFERENT_SOURCE_PIXEL_PNG_EXACT_RGBA_AT_HEAD_8F06D50_NOT_MOTION_READY",
     "core6_independent_motion_assets": "STILL_OPEN_18_BODY_PROP_GEAR_AND_36_REACTIONS",
     "original_22": "PASS_HEAD_47246485_IMMUTABLE_APPROVED_ORIGINALS",
@@ -219,7 +224,8 @@
     "lori_star_clip_boundary": "SOURCE_TRACED_9859_HAIR_PATCH_TO_5865_REAL_VISIBLE_CLIP_ARTISTIC_QA_HOLD",
     "nova_goggle_boundary": "SOURCE_TRACED_84073_GOGGLE_PLUS_FUR_TO_52390_VISIBLE_GOGGLES_ARTISTIC_QA_HOLD",
     "four_remaining_visible_boundary": "DUBI_INK_TAKE_ZERO_PER_VISUAL_ID_SOURCE_MASKS_REFINED_LOCAL_FULL_RGBA_AND_SEMANTIC_PROBES_PASS_CI_PENDING_ART_QA_HOLD",
-    "all6_source_visible_drafts": "6_OF_6_ID_SPECIFIC_SOURCE_ONLY_MASKS_WITH_18_DERIVED_CLEAN_ALPHA_PNG_DRAFTS_NOT_18_APPROVED_MOTION_ASSETS"
+    "all6_source_visible_drafts": "6_OF_6_ID_SPECIFIC_SOURCE_ONLY_MASKS_WITH_18_DERIVED_CLEAN_ALPHA_PNG_DRAFTS_NOT_18_APPROVED_MOTION_ASSETS",
+    "all_six_real_primary_journeys": "CODED_6_SOURCE_IDS_X_3_VIEWPORT_REAL_UI_PRIMARY_CHANGE_HOME_RESPONSE_SCREENSHOTS_CI_PENDING_STATIC_SOURCE_ART_ONLY"
   },
   "source_provenance": {
     "approved_asset_identity": "onboarding/asset-and-release-gate.json required_assets 22 exact SHA256",

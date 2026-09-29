@@ -1,0 +1,96 @@
+const {test,expect}=require('@playwright/test');
+'use strict';
+// A real user journey for EACH original Visual ID, not six hard-coded cutout
+// insertions or state-only mock calls. Existing 5/6 journey remains separate.
+const ids=Object.freeze(['dubi','lori','ink','nova','take','zero']);
+const names=Object.freeze({dubi:'두비',lori:'로리',ink:'잉크',nova:'노바',take:'테이크',zero:'제로'});
+for(const [width,height] of [[375,667],[390,844],[1024,768]]){
+ test('six independently selected primaries: source ID > HOME > original art > sourced reaction '+width+'x'+height,async({page})=>{
+  test.setTimeout(120000);
+  await page.setViewportSize({width,height});
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.goto('http://127.0.0.1:4173/onboarding/');
+  await page.locator('.welcome-cta').click();
+  await page.locator('button.approved-tap.cta').click();
+  await expect(page.locator('#app')).toHaveAttribute('data-step','2');
+  for(const id of ids)await page.locator('button.approved-tap.portrait[data-visual-id="'+id+'"]').click();
+  await expect(page.locator('.approved-count')).toHaveText('6/6');
+  await page.locator('button.approved-tap.cta').click();
+  await expect(page.locator('.approved-stage')).toHaveAttribute('data-selection-phase','primary');
+  await page.locator('button.approved-tap.portrait[data-visual-id="dubi"]').click();
+  await page.locator('button.approved-tap.cta').click();
+  await expect(page.locator('#app')).toHaveAttribute('data-step','3');
+  await page.locator('.mobile-profile input.field').fill('전원검증');
+  await page.locator('#profileNext').click();
+  await page.locator('.object[data-item="map"]').click();
+  await page.locator('#bag').click();
+  await page.locator('.mobile-packing .mobile-cta').click();
+  await page.locator('.world-option').first().click();
+  await page.locator('.world-cta').click();
+  await page.locator('#islandName').fill('여섯친구섬');
+  await page.locator('#islandNext').click();
+  await page.locator('.world-cta').click();
+  await page.locator('#campName').fill('원본캠프');
+  await page.locator('#campNext').click();
+  await expect(page.locator('#app')).toHaveAttribute('data-step','10');
+  const captured=new Set(),usedArt=new Set(),usedReplies=new Set();
+  for(const id of ids){
+   await page.locator('.home-navigation button').filter({hasText:'탐험대'}).click();
+   await expect(page.locator('.crewlist>div')).toHaveCount(6);
+   await page.locator('.crew-primary button').click();
+   await expect(page.locator('#app')).toHaveAttribute('data-step','2');
+   await expect(page.locator('.approved-stage')).toHaveAttribute('data-selection-phase','primary');
+   await page.locator('button.approved-tap.portrait[data-visual-id="'+id+'"]').click();
+   await expect(page.locator('button.approved-tap.portrait[data-visual-id="'+id+'"]')).toHaveAttribute('aria-pressed','true');
+   await expect(page.locator('.approved-primary-guide')).toContainText(names[id]);
+   await page.locator('button.approved-tap.cta').click();
+   await expect(page.locator('#app')).toHaveAttribute('data-step','10');
+   await expect(page.locator('.crew-primary strong')).toHaveText(names[id]);
+   await expect(page.locator('.crew-primary img')).toHaveAttribute('src','characters/ui_cutouts/'+id+'.png');
+   const actual=JSON.parse(await page.evaluate(()=>localStorage.getItem('expedition_ui_draft')));
+   expect(actual.primaryCompanionId).toBe(id);
+   expect(actual.crew).toHaveLength(6);expect(actual.crewLedger.members[id].id).toBe(id);
+   await page.reload();
+   await expect(page.locator('#app')).toHaveAttribute('data-step','10');
+   await expect(page.locator('.crew-primary strong')).toHaveText(names[id]);
+   await page.locator('.home-navigation button').filter({hasText:'오늘'}).click();
+   const expectedSignature=await page.evaluate(id=>CompanionCrewBehavior.preview({primaryId:id,selectedIds:CompanionVisualAssets.memberIds,scene:'home'}).text,id);
+   await expect(page.locator('.home-crew-line')).toHaveText(expectedSignature);
+   await page.locator('.home-crew-line').click();
+   const cover=page.locator('.crew-radio-cover');
+   await expect(cover).toHaveAttribute('data-visual-id',id);
+   await expect(cover).toHaveAttribute('data-art-readiness','STATIC_ONLY');
+   await expect(cover).toHaveAttribute('data-reaction-state','WAIT_CHILD');
+   await expect(page.locator('[data-child-authored]')).toHaveCount(0);
+   const art=page.locator('[data-approved-crew-art] img');
+   await expect(art).toHaveAttribute('src','characters/ui_cutouts/'+id+'.png');
+   await expect.poll(()=>art.evaluate(img=>img.complete&&img.naturalWidth>0),{timeout:10000}).toBe(true);
+   const src=await art.getAttribute('src');usedArt.add(src);
+   const child='내가 고른 '+names[id]+'의 이야기 <안전>';
+   await page.locator('#crew-radio-scene').selectOption('description');
+   await page.locator('#crew-radio-text').fill(child);
+   await page.getByRole('button',{name:'무전 보내기'}).click();
+   await expect(page.locator('[data-child-authored]')).toHaveText(child);
+   await expect(cover).toHaveAttribute('data-reaction-state','SHORT_REACTION');
+   const expectedReply=await page.evaluate(id=>CompanionCrewBehavior.preview({primaryId:id,selectedIds:CompanionVisualAssets.memberIds,scene:'description'}).text,id);
+   await expect(page.locator('[data-crew-reply]')).toHaveText(expectedReply);
+   usedReplies.add(expectedReply);
+   await page.getByRole('button',{name:'힌트 하나 듣기'}).click();
+   await expect(cover).toHaveAttribute('data-reaction-state','ONE_REQUESTED_HINT');
+   await expect(page.locator('[data-one-hint]')).toBeVisible();
+   await expect(page.getByRole('button',{name:'힌트 하나 듣기'})).toHaveCount(0);
+   const region=await art.evaluate(img=>{
+    const r=img.getBoundingClientRect(),p=img.closest('.crew-radio-panel').getBoundingClientRect();
+    return {inside:r.left>=p.left&&r.right<=p.right&&r.top>=p.top&&r.bottom<=p.bottom,overflow:document.documentElement.scrollWidth-innerWidth};
+   });
+   expect(region.inside).toBe(true);expect(region.overflow).toBeLessThanOrEqual(1);
+   const capture='11-six-primary-'+id;
+   await page.screenshot({path:'onboarding/render-evidence/'+capture+'-'+width+'x'+height+'.png'});
+   captured.add(id);
+   await page.getByRole('button',{name:'대화 닫기'}).click();
+   expect(await page.evaluate(()=>localStorage.getItem('expedition_ui_draft'))).not.toContain(child);
+  }
+  expect(usedArt.size).toBe(6);expect(usedReplies.size).toBe(6);
+  expect(captured.size).toBe(6);expect(errors).toEqual([]);
+ });
+}

@@ -1,5 +1,11 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 ALL SIX primary selections exercised in real UI, no Codex
+
+- Core6 six member source-specific visible outline revisions inherited from exact implementation HEAD e0d4d8c3e861253b43669a8f4f44012190972933; that HEAD's source/asset and 56 baseline browser CI both SUCCESS. Six independent 3-role source-pixel draft packs are available, still not motion art.
+- Previously actual Chrome HOME radio path was only exercised for LORI, leaving user's legitimate "need all six to be selectable before arbitrary choice" insufficiently verified. Added separate REAL browser journey at 375×667, 390×844, and 1024×768: child selects all six through approved first meeting, chooses one primary, finishes onboarding, changes primary SIX times through the actual 탐험대→동행 변경 UI, then for EACH Visual ID checks real ledger/save/reload, own original PNG physically loaded, own sourced signature and distinct contextual response, real child-authored escaped input, exact one optional hint, no stored transcript, geometry and errors. Three sizes ×six real member UI captures=18, in addition to 14 states×4 baseline=56, expected 74 PNG. Five-member minimum route still covered separately.
+- This is **static original all-six selection and read-only reaction function QA**, NOT drawing 36 independent expression illustrations or certifying motion-ready layer art; no source originals touched. Source integrity/HTML registry unchanged. Require exact new HEAD CI; no main/Netlify/root/Ready/Hide, preserve Plus/Codex budget. USER != DEBUGGER.
+
 ## CURRENT OVERRIDE — 2026-09-29 remaining four Visual ID source-visible contour improvements — ART QA HOLD
 
 - No Codex called (Plus 5-hour budget preserved). Assistant directly revised four individual approved-source SHA locked specs after original-versus-three-layer crop inspection: DUBI map left clothing fragment returned to body; INK tablet diagonal left sleeve patch returned to body; TAKE notebook back-jacket/sleeve fragment and rolled mat vs scarf corrected; ZERO under-visor forelock returned from cap gear to body, right cup/glove boundary narrowed. The preceding independent LORI star-clip and NOVA goggles fixes remain inherited.
