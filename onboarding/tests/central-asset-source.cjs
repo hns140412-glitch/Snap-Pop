@@ -39,9 +39,10 @@ const check=(asset,bytes)=>{
   assert.equal(sha(bytes),asset.source_sha256,'LOCAL_BUILD_COPY_HASH_MISMATCH');
 };
 for(const asset of pointer.assets){
-  const rel=asset.local_build_path;
-  assert(/^onboarding\\/ui\\/packing_objects\\/[a-z]+\\.svg$/.test(rel),'UNSAFE_LOCAL_PATH');
-  const bytes=fs.readFileSync(path.join(root,rel.replace(/^onboarding\\//,'')));
+  const n=asset.asset_id.replace('snap-pop.onboarding.packing.','');
+  assert(names.includes(n),'UNSAFE_ASSET_ID');
+  assert.equal(asset.local_build_path,expectedLocalPrefix+n+'.svg','UNSAFE_LOCAL_PATH');
+  const bytes=fs.readFileSync(path.join(root,'ui','packing_objects',n+'.svg'));
   check(asset,bytes);
 }
 assert.deepEqual([...seen].sort(),[...names].sort());
