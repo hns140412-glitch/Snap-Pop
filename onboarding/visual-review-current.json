@@ -1,0 +1,122 @@
+{
+  "schema": "COMPANION_VISUAL_REVIEW_MATRIX_20260929",
+  "status": "RENDER_CORRECTION_NOT_USER_APPROVED",
+  "approved_original_assets_immutable": 22,
+  "viewports": [
+    "375x667",
+    "390x844",
+    "430x932",
+    "1024x768"
+  ],
+  "capture_states": [
+    {
+      "capture": "00-welcome",
+      "step": 0,
+      "reference_status": "ISLAND_ORIGINAL_ONLY",
+      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "01-first-meeting",
+      "step": 1,
+      "reference_status": "APPROVED_FIRST_MEETING_SOURCE",
+      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "02-crew-selection",
+      "step": 2,
+      "reference_status": "FIRST_MEETING_COMPOSITE_PLUS_HOTSPOTS",
+      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "02-primary-choice",
+      "step": 2,
+      "reference_status": "UNAPPROVED_FUNCTIONAL_OVERLAY_SAME_ORIGINAL",
+      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "03-profile",
+      "step": 3,
+      "reference_status": "SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "04-packing",
+      "step": 4,
+      "reference_status": "APPROVED_OBJECT_ASSETS_SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "05-voyage-choice",
+      "step": 5,
+      "reference_status": "SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "06-island-arrival",
+      "step": 6,
+      "reference_status": "SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "07-island-naming",
+      "step": 7,
+      "reference_status": "SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "08-camp-discovery",
+      "step": 8,
+      "reference_status": "SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "09-camp-naming",
+      "step": 9,
+      "reference_status": "SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "10-home-crew",
+      "step": 10,
+      "reference_status": "NEW_CANDIDATE_RESPONSIVE_CORRECTION_VISUAL_APPROVAL_OPEN",
+      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "pixel_match": "NOT_CLAIMED"
+    }
+  ],
+  "findings": [
+    {
+      "id": "V-HOME-TABLET-01",
+      "evidence": "Prior 1024x768 HOME screenshot: parent .content max-width 480 then .home-drawer width41% generated unreadable ~170px panel",
+      "correction": "HOME parent full viewport; tablet drawer minimum 340px; numeric browser assertion"
+    },
+    {
+      "id": "V-HOME-MOBILE-02",
+      "evidence": "Prior 375x667 HOME screenshot: large cream floating card occluded environment",
+      "correction": "same original island, scene-colored lower overlay replacing white rounded container; user-approved parity still OPEN"
+    },
+    {
+      "id": "V-REF-03",
+      "evidence": "Approved originals are assets, not eleven individually confirmed screen-level mockup screenshots",
+      "correction": "Capture all candidate states and require source-vs-render visual review before visual release"
+    }
+  ],
+  "gates": {
+    "source_and_asset": "PENDING_HEAD_CI",
+    "captures_48": "PENDING_HEAD_CI",
+    "visual_1to1": "OPEN",
+    "device": "OPEN",
+    "merge": false,
+    "deploy": false
+  }
+}

@@ -1,17 +1,19 @@
 const {test,expect}=require('@playwright/test');
 const sizes=[[375,667],[390,844],[430,932],[1024,768]];
+const expectedScreens=12;
 for(const [width,height] of sizes){
 test('isolated companion onboarding complete path, assets, restore and rename '+width+'x'+height,async({page})=>{
   test.setTimeout(60000);
   await page.setViewportSize({width,height});
   const failures=[];page.on('pageerror',e=>failures.push(e.message));
+  const captured=new Set();async function capture(id){await page.screenshot({path:'onboarding/render-evidence/'+id+'-'+width+'x'+height+'.png'});captured.add(id);}
   await page.goto('http://127.0.0.1:4173/onboarding/');
   await expect(page.locator('#app')).toHaveAttribute('data-step','0');
-  await expect(page.locator('.welcome-cta')).toBeVisible();
+  await expect(page.locator('.welcome-cta')).toBeVisible();await capture('00-welcome');
   expect(await page.evaluate(()=>!!globalThis.CompanionCrewState)).toBe(true);
   await page.locator('.welcome-cta').click();
   await expect(page.locator('.approved-stage>img')).toHaveAttribute('src','ui/approved/first_meeting_selection_source.png');
-  await expect.poll(()=>page.locator('.approved-stage>img').evaluate(img=>img.complete&&img.naturalWidth>0),{timeout:10000}).toBe(true);
+  await expect.poll(()=>page.locator('.approved-stage>img').evaluate(img=>img.complete&&img.naturalWidth>0),{timeout:10000}).toBe(true);await capture('01-first-meeting');
   await page.locator('button.approved-tap.cta').click();
   await expect(page.locator('#app')).toHaveAttribute('data-step','2');
   await expect(page.locator('.approved-stage')).toHaveAttribute('data-selection-phase','crew');
@@ -19,33 +21,33 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   expect(Object.values(first.crewLedger.members).every(x=>!!x.firstMetAt)).toBe(true);
   for(let i=0;i<5;i++)await page.locator('button.approved-tap.portrait').nth(i).click();
   await expect(page.locator('.approved-count')).toHaveText('5/6');
-  await page.screenshot({path:'onboarding/render-evidence/crew-'+width+'x'+height+'.png'});
+  await capture('02-crew-selection');
   await page.locator('button.approved-tap.cta').click();
   await expect(page.locator('.approved-stage')).toHaveAttribute('data-selection-phase','primary');
   await expect(page.locator('button.approved-tap.cta')).toBeDisabled();
   await page.locator('button.approved-tap.portrait').nth(1).click();
-  await expect(page.locator('.approved-primary-guide')).toContainText('로리');
+  await expect(page.locator('.approved-primary-guide')).toContainText('로리');await capture('02-primary-choice');
   await page.locator('button.approved-tap.cta').click();
   await expect(page.locator('#app')).toHaveAttribute('data-step','3');
   await page.reload();
   await expect(page.locator('#app')).toHaveAttribute('data-step','3');
-  const reloaded=JSON.parse(await page.evaluate(()=>localStorage.getItem('expedition_ui_draft')));
+  await capture('03-profile');const reloaded=JSON.parse(await page.evaluate(()=>localStorage.getItem('expedition_ui_draft')));
   expect(reloaded.primaryCompanionId).toBe('lori');
   await page.locator('.mobile-profile input.field').fill('테스트아이');
   await page.locator('#profileNext').click();
   await expect(page.locator('#app')).toHaveAttribute('data-step','4');
   await page.locator('.object[data-item="map"]').click();
-  await page.locator('#bag').click();
+  await page.locator('#bag').click();await capture('04-packing');
   await page.locator('.mobile-packing .mobile-cta').click();
-  await expect(page.locator('#app')).toHaveAttribute('data-step','5');
+  await expect(page.locator('#app')).toHaveAttribute('data-step','5');await capture('05-voyage-choice');
   await page.locator('.world-option').first().click();
-  await expect(page.locator('#app')).toHaveAttribute('data-step','6');
+  await expect(page.locator('#app')).toHaveAttribute('data-step','6');await capture('06-island-arrival');
   await page.locator('.world-cta').click();
-  await page.locator('#islandName').fill('테스트섬');
+  await page.locator('#islandName').fill('테스트섬');await capture('07-island-naming');
   await page.locator('#islandNext').click();
-  await expect(page.locator('#app')).toHaveAttribute('data-step','8');
+  await expect(page.locator('#app')).toHaveAttribute('data-step','8');await capture('08-camp-discovery');
   await page.locator('.world-cta').click();
-  await page.locator('#campName').fill('테스트캠프');
+  await page.locator('#campName').fill('테스트캠프');await capture('09-camp-naming');
   await page.locator('#campNext').click();
   await expect(page.locator('#app')).toHaveAttribute('data-step','10');
   await page.locator('.home-navigation button').filter({hasText:'탐험대'}).click();
@@ -55,7 +57,16 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   await page.locator('#rename-lori').fill('별로리');
   await page.locator('.crewlist>div').nth(1).getByRole('button',{name:'저장'}).click();
   await expect(page.locator('.crew-primary')).toContainText('별로리');
-  await page.screenshot({path:'onboarding/render-evidence/home-'+width+'x'+height+'.png'});
+  const geometry=await page.evaluate(()=>{
+    const root=document.querySelector('main[data-step="10"]'),content=root.querySelector('.content'),drawer=root.querySelector('.home-drawer'),nav=root.querySelector('.home-navigation'),r=drawer.getBoundingClientRect();
+    return {contentWidth:content.getBoundingClientRect().width,drawerWidth:r.width,drawerLeft:r.left,drawerRight:r.right,navWidth:nav.getBoundingClientRect().width,overflow:document.documentElement.scrollWidth-innerWidth};
+  });
+  expect(geometry.overflow).toBeLessThanOrEqual(1);
+  expect(geometry.drawerLeft).toBeGreaterThanOrEqual(-1);
+  expect(geometry.drawerRight).toBeLessThanOrEqual(width+1);
+  if(width>=700){expect(geometry.contentWidth).toBeGreaterThan(700);expect(geometry.drawerWidth).toBeGreaterThanOrEqual(340);expect(geometry.navWidth).toBeGreaterThanOrEqual(360);}
+  else expect(geometry.drawerWidth).toBeGreaterThanOrEqual(width-3);
+  await capture('10-home-crew');expect(captured.size).toBe(expectedScreens);
   await page.reload();
   await expect(page.locator('#app')).toHaveAttribute('data-step','10');
   const persisted=JSON.parse(await page.evaluate(()=>localStorage.getItem('expedition_ui_draft')));
