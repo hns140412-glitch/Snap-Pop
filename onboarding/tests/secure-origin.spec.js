@@ -6,7 +6,7 @@ test('real HTTPS secure-origin photo-source bytes persist through reload, then c
   test.setTimeout(60000);
   const outbound=[];const errors=[];
   page.on('pageerror',e=>errors.push(e.message));
-  page.on('request',r=>{try{if(new URL(r.url()).hostname!=='127.0.0.1')outbound.push(r.url());}catch{}});
+  page.on('request',r=>{try{const u=new URL(r.url());if(u.protocol==='blob:'&&u.origin==='https://127.0.0.1:4174')return;if(u.protocol==='data:')return;if(u.hostname!=='127.0.0.1')outbound.push(r.url());}catch{}});
   await page.goto(base);
   const secure=await page.evaluate(()=>({secure:isSecureContext,crypto:!!globalThis.crypto?.subtle,idb:!!indexedDB,scheme:location.protocol}));
   expect(secure).toEqual({secure:true,crypto:true,idb:true,scheme:'https:'});
