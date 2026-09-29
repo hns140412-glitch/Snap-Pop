@@ -1,0 +1,19 @@
+{
+  "visual_id": "dubi",
+  "cutout_sha256": "611f460174a09e0ed186e909812464e8a991cc24a9891e21c087050e78d6109b",
+  "size": [1122, 1402],
+  "status": "SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+  "semantic_note": "Approved existing cutout only. Map is partially hidden by the hand, cap hides hair/fur; separated alpha cannot be moved without previously unseen surface restoration and independent review.",
+  "independent_roles": {
+    "PERSONALITY_PROP": {
+      "identity": "Visible folded map, fingers explicitly excluded",
+      "include": [[[867,663],[929,701],[963,713],[1010,688],[1085,728],[1032,833],[1008,878],[967,958],[944,990],[890,975],[854,950],[817,955],[724,920],[758,847],[803,751]]],
+      "exclude": [[[947,845],[977,825],[1012,823],[1047,838],[1068,870],[1063,933],[1034,973],[991,992],[963,981],[943,954],[924,918],[929,876]]]
+    },
+    "THEME_GEAR": {
+      "identity": "Visible blue and white cap; dynamic-motion occlusion not restored",
+      "include": [[[293,362],[316,313],[354,265],[398,230],[450,208],[513,190],[578,184],[642,188],[708,211],[753,245],[770,292],[762,336],[739,346],[722,338],[683,313],[635,300],[589,298],[558,302],[530,326],[499,340],[463,368],[428,407],[396,430],[370,454],[346,502],[325,530],[308,508],[297,474],[289,424]]],
+      "exclude": []
+    }
+  }
+}

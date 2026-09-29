@@ -1,5 +1,9 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 first actual source-layer prototype (Dubi)
+
+- Real approved 2026-09-27 ZIP inspected: 6 originals/6 static alpha cutouts but no true independent body/prop/gear original layers. A new **Dubi-only source pixel partition prototype** now uses a member-specific authored mask and unchanged SHA-locked source; generated 3 full-canvas transparent roles reconstruct the source pixel-for-pixel, verified locally. Mask config `onboarding/characters/layer_specs/dubi.json` and generic generator `onboarding/tools/extract-source-layers.py` have CI tests with wrong SHA fail-closed and publish binary prototype evidence. **PROTOTYPE ONLY:** original occlusions not inpainted; not independent face reactions or approved motion-capable sprite. No source/22 originals changed; no root registry activation. Exact new HEAD CI must be checked. Do not advertise missing 54 slots as resolved on a mask partition prototype.
+
 ## CURRENT OVERRIDE — 2026-09-29 executable Visual ID work method VERIFIED
 
 This supersedes older workflow pending assertions below. At verified IMPLEMENTATION HEAD `bdff5fb580434100044195817a5fee5b181d26f1`, actual MAIN `3de97be0d12dd6244a942b0c137c2efe578a43b6`, PR #10 remains DRAFT and unmerged. Refresh both heads on resume. **This is process implementation, NOT completion of missing illustration assets.**
