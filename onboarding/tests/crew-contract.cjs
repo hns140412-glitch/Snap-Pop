@@ -46,9 +46,14 @@ assert.equal(scope.interaction.first_meeting_all_six,true);
 assert.equal(scope.interaction.selected_crew.min,5);
 assert.equal(scope.interaction.selected_crew.max,6);
 assert.equal(scope.interaction.primary_companion.must_not_default_from_array,true);
-assert.match(scope.interaction.primary_companion.implementation_state,/^OPEN_/);
-// An approved primary-selection screen is absent; never silently promote crew[0].
-assert.doesNotMatch(html,/primaryCompanion|mainCompanion|primary_companion_id/);
+assert.equal(scope.interaction.primary_companion.implementation_state, 'CODED_IN_ISOLATED_ONBOARDING_CANDIDATE_VISUAL_APPROVAL_OPEN');
+assert.equal(scope.interaction.primary_companion.persisted_field, 'primaryCompanionId');
+assert.equal(scope.interaction.primary_companion.must_not_default_from_array,true);
+assert.match(html,/primaryCompanionId/);
+assert.match(html,/pickPrimaryCompanion/);
+assert.match(html,/selectionPhase/);
+assert.match(scope.roster.additional_members_creation_gate,/AFTER_CORE6_RULES/);
+assert.doesNotMatch(html,/primaryCompanionId\s*=\s*state\.crew\[0\]/);
 
 assert.equal(scope.approval_scopes.automatic_runtime_promotion,false);
 assert.equal(scope.approval_scopes.automatic_active_roster_promotion,false);
@@ -60,7 +65,7 @@ console.log(JSON.stringify({
   gate:'COMPANION_CREW_IDENTITY_AND_SCOPE',
   core6_identity:'PASS', asset_manifest_references: 'PASS_13_REFERENCES',
   crew_selection:'PASS_5_TO_6',
-  primary_companion:'OPEN_NOT_SILENTLY_DEFAULTED',
+  primary_companion:'CODED_EXPLICIT_CHOICE_ISOLATED_NOT_PIXEL_APPROVED',
   shared_owner:'RECONCILIATION_HOLD',
   '18_vs_20_roster':'CONFLICT_PRESERVED_NOT_AUTO_PROMOTED',
   visual_and_device_release:'OPEN',
