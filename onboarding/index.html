@@ -238,6 +238,9 @@ main[data-step="10"] .home-drawer .photo-copy p,main[data-step="10"] .home-drawe
  main[data-step="10"] .home-drawer .crewlist .sub{font-size:10px;padding:4px 3px}
  main[data-step="10"] .home-drawer>.sub{padding:5px 9px}
 }
+
+/* Tablet HOME needs 9px more than the previous 45dvh to show all controls without inner scrolling. */
+@media(min-width:700px){main[data-step="10"] .home-drawer{max-height:48dvh}}
 </style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script>
 const people=[['zero','제로'],['take','테이크'],['nova','노바'],['ink','잉크'],['lori','로리'],['dubi','두비']];
 const palette=['#a46d59','#668a65','#b38a47','#9d7293','#617f84'];

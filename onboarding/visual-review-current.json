@@ -114,11 +114,16 @@
       "id": "V-HOME-MOBILE-03",
       "evidence": "Prior 375x667 candidate screenshot has return-to-friend-selection CTA clipped at bottom of crew drawer",
       "correction": "Short-phone compact crew row and 50dvh max; browser asserts no internal scroll and CTA above nav"
+    },
+    {
+      "id": "V-HOME-TABLET-02",
+      "evidence": "CI at c039bb87: 1024x768 drawer scrollHeight-clientHeight 9px after short-phone correction; all mobile sizes passed",
+      "correction": "48dvh tablet drawer max-height only; no new art or semantic logic"
     }
   ],
   "gates": {
-    "source_and_asset": "PENDING_NEW_HEAD_CI",
-    "captures_48": "PASSED_AT_PREVIOUS_HEAD_C5AE27_NEW_HEAD_RECHECK_REQUIRED",
+    "source_and_asset": "PENDING_EXACT_HEAD_RECHECK",
+    "captures_48": "PENDING_EXACT_HEAD_RECHECK",
     "visual_1to1": "OPEN",
     "device": "OPEN",
     "merge": false,
