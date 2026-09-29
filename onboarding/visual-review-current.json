@@ -197,6 +197,11 @@
       "id": "ACTUAL_ALL_SIX_PARTIAL_SOURCE_LOCAL_UNDERPAINT",
       "evidence": "Previous all-six exposure-masks gave coordinates for missing body textures but did not produce any physical fill pixels",
       "correction": "Generate real 6 original-coordinate BODY underpaint patch PNGs using only same-ID visible BODY donor pixels in safe fully-opaque exposed regions, compare static source exact and before/after 12 fixed translated poses; separate QA artifact; retain full unseen artwork/36 expression/user-approved UI parity OPEN"
+    },
+    {
+      "id": "VISUAL_ID_SIX_HARDCODED_CI_SCALABILITY",
+      "evidence": "Source draft CI and both follow-up motion-exposure/partial underpaint loops named six IDs literally, making up-to-20 technical source validation require repeated code edits",
+      "correction": "New source-locked batch discovery from baseline/staged candidate+individual mask specs, no hidden or new art invented; one manifest drives extractor, source-exposure and partial underpaint; reject missing approval, unsafe path, duplicates or >20 technical IDs; no runtime roster activation."
     }
   ],
   "gates": {
@@ -237,7 +242,8 @@
     "all6_source_visible_drafts": "6_OF_6_ID_SPECIFIC_SOURCE_ONLY_MASKS_WITH_18_DERIVED_CLEAN_ALPHA_PNG_DRAFTS_NOT_18_APPROVED_MOTION_ASSETS",
     "all_six_real_primary_journeys": "PASS_6_IDS_X_3_VIEWPORT_REAL_PRIMARY_SELECT_LEDGER_RELOAD_STATIC_APPROVED_IMAGE_SOURCED_REPLY_ONE_HINT_HEAD_96c51cd",
     "core6_original_exposure_guides": "CODED_6_VISUAL_IDS_X_2_MOVED_SOURCE_ROLES_12_FULL_CANVAS_EXPOSED_PIXEL_MASKS_6_INDIVIDUAL_QA_PANELS_CI_PENDING_NO_AUTHORED_UNSEEN_BODY",
-    "core6_partial_inferred_underpaint": "CODED_6_REAL_SOURCE_LOCAL_BODY_PATCH_DRAFT_PNG_12_BEFORE_AFTER_FIXED_POSES_ZERO_SHIFT_ORIGINAL_PIXEL_EXACT_CI_PENDING_ARTISTIC_QA_HOLD_NOT_TRUE_ANATOMY"
+    "core6_partial_inferred_underpaint": "CODED_6_REAL_SOURCE_LOCAL_BODY_PATCH_DRAFT_PNG_12_BEFORE_AFTER_FIXED_POSES_ZERO_SHIFT_ORIGINAL_PIXEL_EXACT_CI_PENDING_ARTISTIC_QA_HOLD_NOT_TRUE_ANATOMY",
+    "scalable_visual_id_batch": "CODED_APPROVED_SHA_LOCKED_BATCH_SOURCE_PIXEL_PIPELINE_20_TECHNICAL_CAPACITY_DOWNSTREAM_MASK_AND_PARTIAL_UNDERPAINT_USE_SHARED_ID_MANIFEST_CI_PENDING_ART_STILL_PER_ID"
   },
   "source_provenance": {
     "approved_asset_identity": "onboarding/asset-and-release-gate.json required_assets 22 exact SHA256",

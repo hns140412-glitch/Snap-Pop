@@ -56,12 +56,12 @@ jobs:
         run: python -m pip install 'Pillow==12.0.0'
       - name: Verify six immutable Visual IDs, clean alpha payload and byte-exact visible original pixel reconstruction
         run: python onboarding/tests/source-layer-extraction.py
-      - name: Generate independently masked six Core6 source-pixel prototypes (never auto-activate)
+      - name: Preflight batch Visual ID provenance, duplicate rejection and 20 technical slots
+        run: python onboarding/tests/visual-id-batch.py
+      - name: Batch build per-Visual-ID approved-source partition drafts (never activate)
         run: |
-          for id in dubi ink lori nova take zero; do
-            python onboarding/tools/extract-source-layers.py --source "onboarding/characters/ui_cutouts/$id.png" --spec "onboarding/characters/layer_specs/$id.json" --out "onboarding/visual-prototypes/$id" > "onboarding/visual-prototypes-$id-report.json"
-            cat "onboarding/visual-prototypes-$id-report.json" >> "$GITHUB_STEP_SUMMARY"
-          done
+          python onboarding/tools/visual-id-batch.py --root onboarding --out onboarding/visual-prototypes > onboarding/visual-id-batch-summary.json
+          cat onboarding/visual-id-batch-summary.json >> "$GITHUB_STEP_SUMMARY"
       - name: Build original-source-bound individual restoration exposure guides; NOT painted underlays
         run: |
           python onboarding/tools/visual-id-occlusion-qa.py --source-root onboarding/characters/ui_cutouts --layer-root onboarding/visual-prototypes --spec-root onboarding/characters/layer_specs --out onboarding/occlusion-qa
@@ -87,5 +87,5 @@ jobs:
           name: core6-six-source-pixel-partition-prototypes-not-release-art
           path: |
             onboarding/visual-prototypes/
-            onboarding/visual-prototypes-*-report.json
+            onboarding/visual-id-batch-summary.json
           if-no-files-found: error

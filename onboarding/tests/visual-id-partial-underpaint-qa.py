@@ -4,7 +4,8 @@ import hashlib,json,pathlib
 from PIL import Image
 root=pathlib.Path(__file__).resolve().parents[1];out=root/'underpaint-qa'
 m=json.loads((out/'MANIFEST.json').read_text(encoding='utf8'))
-ids=('dubi','lori','ink','nova','take','zero')
+ids=tuple(json.loads((root/'visual-prototypes/BATCH_MANIFEST.json').read_text(encoding='utf8'))['ids'])
+assert ids[:6]==('dubi','lori','ink','nova','take','zero')
 assert tuple(m['members'])==ids
 assert m['noFullAnatomyOrExpressionClaim'] and m['originalFilesModified'] is False
 assert m['runtimeAssetApproval'] is False and m['independentReactionDrawingsCompleted']==0
@@ -27,5 +28,5 @@ for sid in ids:
   assert (out/sid/(role.lower()+'_moving_before.png')).is_file()
   assert (out/sid/(role.lower()+'_moving_partial_underpaint_QA_HOLD.png')).is_file()
   count+=1
-assert count==12
-print('CORE6_SOURCE_LOCAL_PARTIAL_UNDERPAINT_QA_PASS: six actual underlay PNGs, 12 fixed translations no full opaque hole, zero-shift source exact; NOT 6 art-complete characters or 36 reactions')
+assert count==2*len(ids)
+print(f'BATCH_PARTIAL_SOURCE_LOCAL_UNDERPAINT_QA_PASS: {len(ids)} draft underlay PNGs, {count} fixed translations no full opaque hole, zero-shift original exact; no character art auto-approval')

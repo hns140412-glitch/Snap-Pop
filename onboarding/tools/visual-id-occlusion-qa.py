@@ -2,7 +2,7 @@
 """Per-Visual-ID source-motion exposure QA only. Not invented hidden artwork or active animation."""
 import argparse,hashlib,json,pathlib
 from PIL import Image,ImageChops,ImageDraw
-IDS=('dubi','lori','ink','nova','take','zero')
+# IDs are dynamically inherited from approved-source batch manifest, never hardcoded here.
 MOVES={'PERSONALITY_PROP':(24,-12),'THEME_GEAR':(-18,13)}
 FILES={'IDENTITY_BODY':'identity_body.png','PERSONALITY_PROP':'personality_prop.png','THEME_GEAR':'theme_gear.png'}
 def sha(p):return hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
@@ -28,7 +28,9 @@ def run(sources,roles,specs,out):
       'scope':'SOURCE_VISIBLE_PIXELS_EXPOSED_ON_MOVING_APPROVED_VISIBLE_ROLE_NOT_AUTHORED_HIDDEN_BODY',
       'artApproval':'NOT_APPROVED','motionAssetReady':False,'independentReactionAssets':0,
       'sourceOriginalModified':False,'members':{}}
-    for sid in IDS:
+    batch=json.loads((roles/'BATCH_MANIFEST.json').read_text(encoding='utf8'))
+    ids=tuple(batch['ids']);assert len(ids)==len(set(ids)) and ids,'BAD_SOURCE_BATCH_IDS'
+    for sid in ids:
         spec_path=specs/(sid+'.json');spec=json.loads(spec_path.read_text(encoding='utf8'))
         source=sources/(sid+'.png')
         assert spec.get('visual_id')==sid and source.name==sid+'.png','VISUAL_ID_SPEC_FILE_MISMATCH:'+sid

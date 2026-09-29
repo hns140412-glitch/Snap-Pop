@@ -3,7 +3,7 @@
 import argparse,hashlib,json,pathlib
 import cv2,numpy as np
 from PIL import Image,ImageDraw
-IDS=('dubi','lori','ink','nova','take','zero')
+# Own source batch manifest supplies authorized IDs. No new ID automatically enters runtime.
 ROLES=('IDENTITY_BODY','PERSONALITY_PROP','THEME_GEAR')
 MOVES={'PERSONALITY_PROP':(24,-12),'THEME_GEAR':(-18,13)}
 def sha(p):return hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
@@ -27,11 +27,13 @@ def run(source_root,layer_root,exposure_root,out):
  out.mkdir(parents=True,exist_ok=True)
  manifest=json.loads((exposure_root/'MANIFEST.json').read_text(encoding='utf8'))
  assert manifest['artApproval']=='NOT_APPROVED' and manifest['motionAssetReady'] is False,'SOURCE_GUIDE_PREMATURE_ART_PROMOTION'
- assert tuple(manifest['members'])==IDS,'SOURCE_GUIDE_VISUAL_ID_MISMATCH'
+ batch=json.loads((layer_root/'BATCH_MANIFEST.json').read_text(encoding='utf8'))
+ ids=tuple(batch['ids'])
+ assert ids and tuple(manifest['members'])==ids,'SOURCE_GUIDE_VISUAL_ID_MISMATCH'
  result={'schema':'TAKY_CORE6_SOURCE_LOCAL_PARTIAL_OPAQUE_UNDERPAINT_DRAFT',
          'noFullAnatomyOrExpressionClaim':True,'originalFilesModified':False,
          'independentReactionDrawingsCompleted':0,'runtimeAssetApproval':False,'members':{}}
- for sid in IDS:
+ for sid in ids:
   original_file=source_root/(sid+'.png');guide=manifest['members'][sid]
   prov=json.loads((layer_root/sid/'provenance.json').read_text(encoding='utf8'))
   assert sid==guide['visual_id']==prov['visual_id'],'WRONG_VISUAL_ID:'+sid

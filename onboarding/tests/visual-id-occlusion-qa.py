@@ -4,7 +4,8 @@ import hashlib,json,pathlib
 from PIL import Image
 base=pathlib.Path(__file__).resolve().parents[1]
 out=base/'occlusion-qa';r=json.loads((out/'MANIFEST.json').read_text(encoding='utf8'))
-ids=('dubi','lori','ink','nova','take','zero')
+ids=tuple(json.loads((base/'visual-prototypes/BATCH_MANIFEST.json').read_text(encoding='utf8'))['ids'])
+assert ids[:6]==('dubi','lori','ink','nova','take','zero')
 assert tuple(r['members'])==ids,'INCOMPLETE_VISUAL_ID_COVERAGE'
 assert r['motionAssetReady'] is False and r['independentReactionAssets']==0 and r['artApproval']=='NOT_APPROVED','INVALID_ART_PROMOTION'
 seen=0
@@ -29,5 +30,5 @@ for sid in ids:
         assert m['missing_source_visible_pixels']>0 and 0<=m['body_bbox_possible_NOT_ART']<=m['missing_source_visible_pixels'],'INVALID_EXPOSURE_COUNT:'+sid+':'+role
         assert m['is_independent_motion_art'] is False,'PROHIBIT_FAKE_MOTION_ART'
         seen+=1
-assert seen==12
-print('6 APPROVED VISUAL IDs / 12 source-visible exposure masks / 6 individual QA panels / immutable originals / NO ART OR RUNTIME APPROVAL: PASS')
+assert seen==2*len(ids)
+print(f'{len(ids)} APPROVED/STAGED SOURCE VISUAL IDs / {seen} source-visible exposure masks / immutable originals / NO ART OR RUNTIME APPROVAL: PASS')
