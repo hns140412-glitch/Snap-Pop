@@ -136,9 +136,24 @@ function report(){
     if(registry.memberIds.includes(id)&&productionBlockers.length)throw Error('ISOLATED_RENDERER_ID_WITH_MISSING_ASSET_OR_SCENE_EVIDENCE:'+id+':'+productionBlockers.join(','));
     staged.push(audit);
   }
-  return {schema:cfg.schema,referenceAuthority:'LIVE_MANIFEST_PLUS_ORIGINAL_SOURCE',existing,staged,
+  const partitionPrototypes=[],specDir=path.join(ROOT,'characters','layer_specs');
+  if(fs.existsSync(specDir))for(const filename of fs.readdirSync(specDir).filter(f=>f.endsWith('.json')).sort()){
+    const specFile=path.join(specDir,filename);if(fs.lstatSync(specFile).isSymbolicLink())throw Error('MASK_SPEC_SYMLINK_FORBIDDEN');
+    const spec=JSON.parse(fs.readFileSync(specFile,'utf8')),id=filename.slice(0,-5);
+    if(spec.visual_id!==id||!registry.memberIds.includes(id))throw Error('MASK_SPEC_UNKNOWN_OR_MISMATCHED_VISUAL_ID:'+filename);
+    const cutout=registry.member(id).cutout;
+    if(sourceManifest.required_assets[cutout]!==spec.cutout_sha256||hashFile(cutout)!==spec.cutout_sha256)throw Error('MASK_SPEC_SOURCE_SHA_DRIFT:'+filename);
+    if(spec.status!=='SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY')throw Error('MASK_SPEC_UNAUTHORIZED_PROMOTION:'+filename);
+    partitionPrototypes.push({visualId:id,maskSpec:'characters/layer_specs/'+filename,
+      sourceCutout:cutout,sourceSHA256:spec.cutout_sha256,maskSpecSHA256:digest(fs.readFileSync(specFile)),
+      rolePixelPartition:['IDENTITY_BODY','PERSONALITY_PROP','THEME_GEAR'],
+      status:'SOURCE_PIXEL_PARTITION_PROTOTYPE_ONLY_NOT_MOTION_READY',
+      nextOpen:['OCCLUSION_RECONSTRUCTION','PER_CHARACTER_REACTION_FRAMES','FULL_UI_ANIMATION_BINDING','VISUAL_DEVICE_OWNER_APPROVAL'],
+      actionReady:false,releaseReady:false});
+  }
+  return {schema:cfg.schema,referenceAuthority:'LIVE_MANIFEST_PLUS_ORIGINAL_SOURCE',existing,staged,partitionPrototypes,
     counts:{staticBound:existing.length,independentLayerAssetsMissing:existing.reduce((n,x)=>n+x.missing.filter(s=>s.startsWith('LAYER:')).length,0),
-      independentReactionAssetsMissing:existing.reduce((n,x)=>n+x.missing.filter(s=>s.startsWith('REACTION:')).length,0),pendingNewRegistrations:staged.length},
+      independentReactionAssetsMissing:existing.reduce((n,x)=>n+x.missing.filter(s=>s.startsWith('REACTION:')).length,0),pendingNewRegistrations:staged.length,sourcePartitionPrototypes:partitionPrototypes.length},
     nextAction:'Produce independent approved-source assets and bind actual scenes; reject silent art generation or release',
     rootActivation:false,mainMerge:false,netlify:false};
 }
