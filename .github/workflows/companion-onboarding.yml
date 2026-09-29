@@ -82,6 +82,7 @@ jobs:
           python onboarding/tests/core6-motion-preview-build.py
       - name: Browser-test six real approved image sets (no production route)
         run: |
+          node --check onboarding/tests/core6-motion-preview.spec.js
           npm install --no-save @playwright/test@1.55.0
           npx playwright install --with-deps chromium
           mkdir -p onboarding/qa-original-rig/render-evidence

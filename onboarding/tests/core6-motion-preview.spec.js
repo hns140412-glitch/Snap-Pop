@@ -20,7 +20,7 @@ for(const [width,height] of [[375,667],[390,844],[1024,768]]){
    for(const state of ['prop','gear','rest']){
     await page.locator('button[data-motion="'+state+'"]').click();
     await expect(page.locator('#rig')).toHaveAttribute('data-motion',state);
-    await expect(page.locator('button[data-motion="'+state+'"]').toHaveAttribute('aria-pressed','true');
+    await expect(page.locator('button[data-motion="'+state+'"]')).toHaveAttribute('aria-pressed','true');
    }
    await page.locator('#sourceSwitch').click();await expect(page.locator('#rig')).toHaveAttribute('data-mode','source');
    await page.locator('#sourceSwitch').click();await expect(page.locator('#rig')).toHaveAttribute('data-mode','layers');

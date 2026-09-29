@@ -1,5 +1,8 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-30 browser QA regression caught a test-parenthesis syntax error; corrected at source
+- Previous exact HEAD 61168eb successfully built all six SHA locked original-motion QA bundles, but separate Playwright test parser rejected one missing closing parenthesis in test source; NO claim of browser pass. Corrected actual test expression and added `node --check` before browser install to stop repeat; rerun new exact HEAD CI. Source originals, derived art and real UI unchanged. Prior local build/manifest source exact already PASS.
+
 ## CURRENT OVERRIDE — 2026-09-30 Core6 original-art REAL layered interactive motion QA preview, no invented characters
 
 - Existing approved six original cutouts (`dubi/lori/ink/nova/take/zero`) SHA locked. New reproducible builder packages each member's SAME source cutout, independently separated BODY/PROP/GEAR and existing local source-pixel partial underpaint, with exact individual per-file SHA/provenance checks. At rest the four-layer RGBA composite is BYTE-EXACT to the canonical original visible source for all six. It builds 30 true PNG copies and self-contained offline HTML showing real original art; user may independently select a member, compare original/static stack, and move either PROP 24/-12 or GEAR -18/+13 in source coordinates (one at a time only). The distinct 6 original styles/Visual IDs cannot be substituted by any newly imagined illustration.
