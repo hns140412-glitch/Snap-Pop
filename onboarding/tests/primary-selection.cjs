@@ -30,6 +30,6 @@ edit('editFromHome(2)');assert.equal(state().selectionPhase,'crew');
 edit("toggleCrew('ink')");assert.equal(state().primaryCompanionId,'','Removing the primary clears it');
 edit('next()');assert.equal(state().selectionPhase,'crew','Four selected cannot proceed');
 edit("toggleCrew('zero')");edit('next()');assert.equal(state().selectionPhase,'primary');edit('next()');assert.equal(state().step,2,'Must explicitly select a new primary');
-const changed=JSON.parse(draft.get('expedition_ui_draft'));changed.step=10;changed.primaryCompanionId='zero';draft.set('expedition_ui_draft',JSON.stringify(changed));
+const changed=JSON.parse(draft.get('expedition_ui_draft'));changed.step=10;changed.primaryCompanionId='ink';draft.set('expedition_ui_draft',JSON.stringify(changed));
 const invalid=context();const repaired=JSON.parse(vm.runInContext('JSON.stringify(state)',invalid));assert.equal(repaired.primaryCompanionId,'');assert.equal(repaired.step,2);assert.equal(repaired.selectionPhase,'primary','Invalid primary must not bypass selection');
 console.log(JSON.stringify({gate:'PRIMARY_COMPANION_STATE',five_member_gate:'PASS',explicit_choice:'PASS',nonmember_rejection:'PASS',draft_reload:'PASS',home_reselection:'PASS',removal_recovery:'PASS',corrupt_draft:'PASS',new_art_created:false},null,2));
