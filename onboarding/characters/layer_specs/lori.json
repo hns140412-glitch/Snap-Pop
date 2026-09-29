@@ -1,0 +1,148 @@
+{
+  "visual_id": "lori",
+  "cutout_sha256": "1642e080034e48cf7a11cd3bea12be8db44e10468b20b231f5f714360f27fcac",
+  "size": [
+    1122,
+    1402
+  ],
+  "status": "SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+  "semantic_note": "Own approved flattened static cutout. Visible source pixel partition only; contour QA, occluded-surface restoration, six independent action drawings and approved motion-safe rig are OPEN.",
+  "visual_review": "DRAFT_MASK_VISUAL_QA_HOLD_NOT_USER_APPROVED",
+  "independent_roles": {
+    "PERSONALITY_PROP": {
+      "identity": "Visible navy star notebook held at chest, excluding occluding fingers",
+      "include": [
+        [
+          [
+            714,
+            776
+          ],
+          [
+            817,
+            783
+          ],
+          [
+            875,
+            806
+          ],
+          [
+            915,
+            855
+          ],
+          [
+            908,
+            910
+          ],
+          [
+            925,
+            948
+          ],
+          [
+            884,
+            988
+          ],
+          [
+            815,
+            986
+          ],
+          [
+            737,
+            944
+          ],
+          [
+            700,
+            901
+          ]
+        ]
+      ],
+      "exclude": [
+        [
+          [
+            661,
+            837
+          ],
+          [
+            697,
+            825
+          ],
+          [
+            747,
+            840
+          ],
+          [
+            780,
+            864
+          ],
+          [
+            789,
+            919
+          ],
+          [
+            762,
+            970
+          ],
+          [
+            718,
+            973
+          ],
+          [
+            678,
+            938
+          ]
+        ]
+      ]
+    },
+    "THEME_GEAR": {
+      "identity": "Single visible star hair clip on the approved hairstyle",
+      "include": [
+        [
+          [
+            675,
+            383
+          ],
+          [
+            701,
+            367
+          ],
+          [
+            727,
+            346
+          ],
+          [
+            757,
+            366
+          ],
+          [
+            774,
+            396
+          ],
+          [
+            804,
+            410
+          ],
+          [
+            791,
+            444
+          ],
+          [
+            757,
+            463
+          ],
+          [
+            726,
+            446
+          ],
+          [
+            690,
+            457
+          ],
+          [
+            674,
+            430
+          ]
+        ]
+      ],
+      "exclude": []
+    }
+  }
+}

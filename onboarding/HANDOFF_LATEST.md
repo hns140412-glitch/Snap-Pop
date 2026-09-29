@@ -1,5 +1,12 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 6/6 original-pixel partition preparation; ZERO motion-art approvals
+
+- User directive: **make actual assets according to TAKY, do not substitute work-order prose or a new arbitrary card UI**. Existing approved six original JPEGs, six cutouts, first meeting composite, island backdrops and all other 22 assets stay immutable.
+- Six immutable Visual IDs (Dubi, Ink, Lori, Nova, Take, Zero) now each have their OWN approved-cutout SHA-locked mask spec. The same generator creates real full-canvas transparent BODY/visible PROP/visible GEAR PNGs, verifies 3 distinct files/member and pixel-exact composite equality with that member's original cutout, preserves source and per-file hashes. New four specs are **draft semantic masks, explicit DRAFT_MASK_VISUAL_QA_HOLD** (may capture edge/body artifacts); do NOT bind/proclaim high-density motion-ready user-approved art from them. Two earlier specs remain prototype only. This is source-pixel material preparation, **not six character art finishes**. Unseen body under props/hat/headphones still requires genuine reconstruction from user-approved design, six expression frames each, direct UI and visual parity checks.
+- CI now generates six output packs as a separate artifact and reports all six prototypes. Its success proves source SHA/exact RGBA/unique files, NOT artistic mask quality. The production work-order deliberately remains **18 motion-safe layer slots OPEN, 36 independent reaction illustrations OPEN**; actual runtime still renders only approved original static cutout, never these drafts. No Netlify/main/ROOT. USER != DEBUGGER.
+- Exact new PR HEAD and both workflows must be separately confirmed; no fabricated completion claims.
+
 ## CURRENT OVERRIDE — 2026-09-29 approved Visual ID art actually rendered in HOME radio — CI VERIFIED
 
 - Exact verified implementation HEAD: `47246485b4b1250246dd9f7b3ba9b9b76a705135`; Snap main at verification `3de97be0d12dd6244a942b0c137c2efe578a43b6`. DRAFT PR #10; no merge/Netlify/root/Ready/Hide import. Refresh exact HEAD and latest CI on resume.

@@ -162,6 +162,11 @@
       "id": "HOME-VISUAL-ID-RENDER-BINDING",
       "evidence": "Functional HOME radio presented companion text/name but no primary's Visual ID art",
       "correction": "Pure per-Visual-ID static approved cutout presenter plus actual rendered image and semantic states in HOME. No fake emotion sprite; future authorized ID same renderer; test six originals x three states and real four-size browser load"
+    },
+    {
+      "id": "CORE6-ALL-PER-ID-SOURCE-PARTITION-DRAFT",
+      "evidence": "Four remaining approved flattened original cutouts require per-member source-pixel splitting, not reused Dubi coordinates",
+      "correction": "Add source-locked unique visible prop/gear mask specs for Lori/Nova/Take/Zero and regenerate six per-ID three-role packs through common CI, while explicitly marking four new masks artistic QA HOLD; zero new runtime activation."
     }
   ],
   "gates": {
@@ -191,7 +196,10 @@
     "source_pixel_partition_prototypes": "PASS_CI_DUBI_INK_2_X_3_DIFFERENT_FULL_CANVAS_PNG_EXACT_SOURCE_RGBA_HEAD_C8F3DF5_NOT_MOTION_READY",
     "actual_home_crew_text_interaction": "CODED_REAL_CHILD_TEXT_6_ID_5_SCENE_ONE_OPTIONAL_HINT_CI_PENDING_VISUAL_APPROVAL_OPEN",
     "home_radio_visual_id_binding": "PASS_REAL_APPROVED_PER_ID_CUTOUT_6_X_3_UNIT_AND_REAL_LORI_4_VIEWPORT_HEAD_47246485_STATIC_ONLY",
-    "motion_ready_core6": "OPEN_18_INDEPENDENT_ROLE_ASSETS_36_REACTION_SPRITES"
+    "motion_ready_core6": "OPEN_18_INDEPENDENT_ROLE_ASSETS_36_REACTION_SPRITES",
+    "core6_pixel_prototype_count": "SIX_OF_SIX_SOURCE_PARTITION_SPECS_CREATED_CI_PENDING_4_NEW_MASKS_ARTIST_QA_HOLD",
+    "core6_motion_ready": "ZERO_APPROVED_18_MOTION_SAFE_ROLE_ASSETS_OPEN",
+    "core6_reaction_art": "ZERO_APPROVED_36_INDEPENDENT_REACTION_FRAMES_OPEN"
   },
   "source_provenance": {
     "approved_asset_identity": "onboarding/asset-and-release-gate.json required_assets 22 exact SHA256",

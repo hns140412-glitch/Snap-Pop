@@ -1,0 +1,164 @@
+{
+  "visual_id": "take",
+  "cutout_sha256": "3cd6720c13473f20f4b23f64fa3d42c7491ea9277ba204f80f096e3f0d57d88a",
+  "size": [
+    1122,
+    1402
+  ],
+  "status": "SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+  "semantic_note": "Own approved flattened static cutout. Visible source pixel partition only; contour QA, occluded-surface restoration, six independent action drawings and approved motion-safe rig are OPEN.",
+  "visual_review": "DRAFT_MASK_VISUAL_QA_HOLD_NOT_USER_APPROVED",
+  "independent_roles": {
+    "PERSONALITY_PROP": {
+      "identity": "Visible handheld rectangular notebook, excludes glove occlusion",
+      "include": [
+        [
+          [
+            461,
+            665
+          ],
+          [
+            547,
+            670
+          ],
+          [
+            631,
+            705
+          ],
+          [
+            653,
+            743
+          ],
+          [
+            658,
+            812
+          ],
+          [
+            639,
+            874
+          ],
+          [
+            608,
+            897
+          ],
+          [
+            537,
+            895
+          ],
+          [
+            458,
+            865
+          ],
+          [
+            428,
+            820
+          ],
+          [
+            433,
+            754
+          ]
+        ]
+      ],
+      "exclude": [
+        [
+          [
+            459,
+            823
+          ],
+          [
+            505,
+            813
+          ],
+          [
+            550,
+            827
+          ],
+          [
+            595,
+            852
+          ],
+          [
+            635,
+            887
+          ],
+          [
+            632,
+            929
+          ],
+          [
+            580,
+            950
+          ],
+          [
+            529,
+            928
+          ],
+          [
+            486,
+            907
+          ],
+          [
+            457,
+            867
+          ]
+        ]
+      ]
+    },
+    "THEME_GEAR": {
+      "identity": "Visible rolled blue travel mat at left shoulder, separate from character body",
+      "include": [
+        [
+          [
+            86,
+            523
+          ],
+          [
+            114,
+            499
+          ],
+          [
+            151,
+            492
+          ],
+          [
+            196,
+            513
+          ],
+          [
+            229,
+            541
+          ],
+          [
+            244,
+            582
+          ],
+          [
+            232,
+            638
+          ],
+          [
+            207,
+            666
+          ],
+          [
+            160,
+            672
+          ],
+          [
+            115,
+            655
+          ],
+          [
+            83,
+            620
+          ],
+          [
+            73,
+            572
+          ]
+        ]
+      ],
+      "exclude": []
+    }
+  }
+}
