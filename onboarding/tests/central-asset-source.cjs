@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+'use strict';
+const fs=require('node:fs');
+const path=require('node:path');
+const crypto=require('node:crypto');
+const assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..');
+const pointer=JSON.parse(fs.readFileSync(path.join(root,'central-asset-source.v1.json'),'utf8'));
+const source=JSON.parse(fs.readFileSync(path.join(root,'asset-and-release-gate.json'),'utf8'));
+const names=['backpack','camera','cap','compass','lamp','map','water'];
+const expectedCentralRepo='hns140412-glitch/TAKY-ASSETS';
+const expectedLocalPrefix='onboarding/ui/packing_objects/';
+const expectedCentralPrefix='assets/snap-pop/onboarding/packing_objects/';
+const sha=buf=>crypto.createHash('sha256').update(buf).digest('hex');
+assert.equal(pointer.rule_id,'TKY-ASSET-001');
+assert.equal(pointer.consumer,'snap-pop');
+assert.equal(pointer.central.repository,expectedCentralRepo);
+assert.match(pointer.central.commit_sha,/^[a-f0-9]{40}$/);
+assert.equal(pointer.central.review_state,'DRAFT_NOT_MAIN');
+assert.equal(pointer.central.manifest_path,expectedCentralPrefix+'manifest.v1.json');
+assert.equal(pointer.approved_source.repository,'hns140412-glitch/Snap-Pop');
+assert.match(pointer.approved_source.revision,/^[a-f0-9]{40}$/);
+assert.equal(pointer.release_boundary.remote_runtime_fetch,'FORBIDDEN');
+assert.equal(pointer.release_boundary.central_main_promotion,'HOLD');
+assert.equal(pointer.release_boundary.snap_main_merge,'HOLD');
+assert.equal(pointer.release_boundary.netlify,'HOLD');
+assert.equal(pointer.assets.length,names.length);
+const seen=new Set();
+const check=(asset,bytes)=>{
+  const n=asset.asset_id.replace('snap-pop.onboarding.packing.','');
+  assert(names.includes(n),'UNKNOWN_ASSET_ID');
+  assert(!seen.has(n),'DUPLICATE_ASSET_ID');
+  seen.add(n);
+  assert.equal(asset.asset_id,'snap-pop.onboarding.packing.'+n);
+  assert.equal(asset.canonical_path,expectedCentralPrefix+n+'.svg');
+  assert.equal(asset.local_build_path,expectedLocalPrefix+n+'.svg');
+  const original='ui/packing_objects/'+n+'.svg';
+  assert.equal(asset.source_sha256,source.required_assets[original],'ORIGINAL_MANIFEST_MISMATCH');
+  assert.equal(sha(bytes),asset.source_sha256,'LOCAL_BUILD_COPY_HASH_MISMATCH');
+};
+for(const asset of pointer.assets){
+  const rel=asset.local_build_path;
+  assert(/^onboarding\\/ui\\/packing_objects\\/[a-z]+\\.svg$/.test(rel),'UNSAFE_LOCAL_PATH');
+  const bytes=fs.readFileSync(path.join(root,rel.replace(/^onboarding\\//,'')));
+  check(asset,bytes);
+}
+assert.deepEqual([...seen].sort(),[...names].sort());
+assert.throws(()=>check({...pointer.assets[0],asset_id:'snap-pop.onboarding.packing.unknown'},Buffer.alloc(0)),/UNKNOWN_ASSET_ID/);
+assert.throws(()=>{const altered={...pointer.assets[0],asset_id:'snap-pop.onboarding.packing.backpack',source_sha256:'0'.repeat(64)};const s=new Set(seen);seen.delete('backpack');try{check(altered,fs.readFileSync(path.join(root,'ui/packing_objects/backpack.svg')))}finally{seen.clear();for(const n of s)seen.add(n)}},/ORIGINAL_MANIFEST_MISMATCH/);
+console.log(JSON.stringify({gate:'SNAP_CENTRAL_PACKING_ASSET_CONSUMER_POINTER',central_revision:pointer.central.commit_sha,source_revision:pointer.approved_source.revision,local_integrity:'PASS',assets_verified:names.length,central_remote_readback:'INDEPENDENTLY_VERIFIED_IN_TAKY_ASSETS_PR_2_NOT_NETWORK_POLLED',visual_release_pass:false,main_merge_allowed:false,netlify:'HOLD'},null,2));
