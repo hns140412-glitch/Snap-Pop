@@ -7,11 +7,12 @@ const raw=html.split('<script>')[1]?.split('</script>')[0];
 assert.ok(raw,'Inline runtime unavailable');
 const script=raw.replace(/render\(\);\s*$/,'');assert.notEqual(script,raw,'Boot render anchor missing');
 const crewSource=fs.readFileSync(path.join(root,'crew-state-runtime.js'),'utf8');
+const behaviorSource=fs.readFileSync(path.join(root,'crew-behavior-runtime.js'),'utf8');
 const draft=new Map();const view={innerHTML:'',contains(){return false},querySelector(){return null}},app={style:{setProperty(){}},dataset:{}};
 function context(){const ctx=vm.createContext({
  console,localStorage:{getItem:k=>draft.has(k)?draft.get(k):null,setItem:(k,v)=>draft.set(k,v)},
  document:{getElementById:id=>id==='app'?app:view,querySelectorAll:()=>[]},URL:{revokeObjectURL(){}}
- });ctx.window=ctx;vm.runInContext(crewSource,ctx,{timeout:2000});vm.runInContext(script,ctx,{timeout:2000});return ctx;}
+ });ctx.window=ctx;vm.runInContext(crewSource,ctx,{timeout:2000});vm.runInContext(behaviorSource,ctx,{timeout:2000});vm.runInContext(script,ctx,{timeout:2000});return ctx;}
 let ctx=context();const call=expr=>vm.runInContext(expr,ctx,{timeout:2000});
 const snap=()=>JSON.parse(call('JSON.stringify(state)'));
 call('go(1)');call('next()');assert.equal(snap().selectionPhase,'crew');assert.ok(snap().crewLedger.members.lori.firstMetAt);
@@ -25,8 +26,8 @@ call("pickPrimaryCompanion('lori')");assert.equal(snap().primaryCompanionId,'lor
 call('next()');assert.equal(snap().step,3);
 ctx=context();assert.equal(JSON.parse(vm.runInContext('JSON.stringify(state)',ctx)).primaryCompanionId,'lori','Local reload preserves explicit primary');
 const edit=expr=>vm.runInContext(expr,ctx,{timeout:2000}),state=()=>JSON.parse(edit('JSON.stringify(state)'));
-edit('go(10)');edit("editFromHome(2,'primary')");assert.equal(state().selectionPhase,'primary');
-edit("pickPrimaryCompanion('ink')");edit('next()');assert.equal(state().step,10);assert.equal(state().primaryCompanionId,'ink');assert.equal(state().crewLedger.primaryHistory.at(-1).reason,'CHANGED');
+edit('go(10)');assert.match(view.innerHTML,/괜찮아, 천천히 해도 돼!/,'HOME reflects Lori with existing line, no new bubble');edit("editFromHome(2,'primary')");assert.equal(state().selectionPhase,'primary');
+edit("pickPrimaryCompanion('ink')");edit('next()');assert.equal(state().step,10);assert.equal(state().primaryCompanionId,'ink');assert.match(view.innerHTML,/음\.\.\. 다른 방법도 있지\./,'Primary change updates read-only HOME behavior');assert.equal(state().crewLedger.primaryHistory.at(-1).reason,'CHANGED');
 edit("beginCrewRename('lori')");assert.equal(state().renameEditingId,'lori');view.querySelector=()=>({value:'새로리'});edit("commitCrewRename('lori')");view.querySelector=()=>null;assert.equal(state().crewLedger.members.lori.currentName,'새로리');assert.equal(state().crewLedger.members.lori.id,'lori');
 edit('editFromHome(2)');assert.equal(state().selectionPhase,'crew');
 edit("toggleCrew('ink')");assert.equal(state().primaryCompanionId,'','Removing the primary clears it');assert.equal(state().crewLedger.primaryHistory.at(-1).reason,'CLEARED');assert.equal(state().crewLedger.members.lori.currentName,'새로리');

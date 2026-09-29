@@ -119,6 +119,11 @@
       "id": "V-HOME-TABLET-02",
       "evidence": "CI at c039bb87: 1024x768 drawer scrollHeight-clientHeight 9px after short-phone correction; all mobile sizes passed",
       "correction": "48dvh tablet drawer max-height only; no new art or semantic logic"
+    },
+    {
+      "id": "V-CREW-HOME-LINEAGE-01",
+      "evidence": "Existing HOME '오늘' copy previously generic regardless of selected Core6 identity",
+      "correction": "Bind recovered exact six signatures to explicit primary using same existing caption; no new card, bubble, art; 11-screen 1:1 approval remains open"
     }
   ],
   "gates": {
@@ -133,6 +138,7 @@
     "iphone_safari": "OPEN",
     "public_https": "OPEN",
     "root_runtime_integration": "HOLD_SEPARATE_OWNER_APPROVAL",
-    "expansion_character_generation": "DEFERRED_AFTER_CORE6"
+    "expansion_character_generation": "DEFERRED_AFTER_CORE6",
+    "sourced_crew_behavior": "IMPLEMENTATION_CANDIDATE_PENDING_HEAD_CI"
   }
 }

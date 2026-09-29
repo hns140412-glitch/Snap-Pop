@@ -102,7 +102,10 @@
     "primary_switch_preserves_names_memories": true,
     "local_experience_candidate": "SNAP_POP_LOCAL_TASK_RESULT_EVENT_ID_SESSION_TASK_EVIDENCE_ONLY_NO_AUTO_AFFINITY",
     "reunion_voice_events_cannot_gain_affinity": true,
-    "cross_app_snapshot_authority": "NONE_NOT_INTEGRATED"
+    "cross_app_snapshot_authority": "NONE_NOT_INTEGRATED",
+    "home_primary_behavior": "EXPLICIT_PRIMARY_ONLY_SOURCED_SIGNATURE_ON_EXISTING_HOME_CAPTION",
+    "behavior_scene_previews": "PURE_READ_ONLY_SIX_SCENES_NO_TASK_AUTOMATION",
+    "voice_playback": "NOT_CONNECTED"
   },
   "approval_scopes": {
     "onboarding_original_assets": "REGISTERED_BYTE_HASH_VERIFIED",
@@ -116,6 +119,7 @@
     "physical_device": "OPEN",
     "merge_or_deploy": false,
     "crew_state_local_runtime": "CODED_IN_PR_ISOLATED",
-    "crew_state_ui_visual": "OPEN_HOMEPAGE_RENAME_OVERLAY_NOT_APPROVED"
+    "crew_state_ui_visual": "OPEN_HOMEPAGE_RENAME_OVERLAY_NOT_APPROVED",
+    "behavior_projection": "ISOLATED_ONBOARDING_ONLY_NOT_SNAP_ROOT_OR_READY_HIDE"
   }
 }

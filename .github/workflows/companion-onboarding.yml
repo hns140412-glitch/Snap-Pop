@@ -24,5 +24,7 @@ jobs:
         run: node onboarding/tests/crew-contract.cjs
       - name: Verify immutable crew identity, history and evidence boundaries
         run: node onboarding/tests/crew-state-runtime.cjs
+      - name: Verify sourced Core 6 behavior projection and no silent authority transfer
+        run: node onboarding/tests/crew-behavior-runtime.cjs
       - name: Verify explicit primary selection, rename and reload recovery
         run: node onboarding/tests/primary-selection.cjs

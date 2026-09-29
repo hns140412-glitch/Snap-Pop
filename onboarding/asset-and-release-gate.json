@@ -2,7 +2,7 @@
   "task_id": "COMPANION_ONBOARDING_INTEGRATION_20260927",
   "source_authority": "Existing user-approved standalone source; additive Snap-Pop route only",
   "source_file": "onboarding/index.html",
-  "source_sha256": "bfed14690c1a0e97d439669b6b0d6c5f05a9d03d91ba4098795dfab4a9a58ec4",
+  "source_sha256": "4d24371c1ecb6843f0a617ac134c3a0bca9ea6ea7420ce737096fc302bba7657",
   "base_head": "3de97be0d12dd6244a942b0c137c2efe578a43b6",
   "status": "INTEGRATION_CANDIDATE_CORE6_STATE_CODED_NOT_RELEASED",
   "main_integration": false,
@@ -17,7 +17,8 @@
     "crew_identity_rename": "CODED_LOCAL_CANDIDATE_PIXEL_AND_DEVICE_OPEN",
     "home_responsive_correction": "CANDIDATE_CODED_TABLET_PARENT_WIDTH_AND_MOBILE_SCENE_OVERLAY_VISUAL_APPROVAL_OPEN",
     "twelve_screen_state_capture": "CI_CANDIDATE_12_STATES_X_4_VIEWPORTS_NOT_PIXEL_APPROVAL",
-    "short_phone_crew_action": "CANDIDATE_FIXED_WITH_ACTION_VISIBILITY_ASSERTION"
+    "short_phone_crew_action": "CANDIDATE_FIXED_WITH_ACTION_VISIBILITY_ASSERTION",
+    "home_crew_signature": "EXISTING_HOME_CAPTION_BINDS_RECOVERED_CORE6_SIGNATURE_NO_NEW_ART_VISUAL_APPROVAL_OPEN"
   },
   "required_assets": {
     "ui/approved/first_meeting_selection_source.png": "9f55faf85c45d4236172a797e07a809a876f53b9afb083c9d8f8df1e799ab0f7",
@@ -57,6 +58,7 @@
     "exact main head/CI green and explicit human approval"
   ],
   "required_runtime_scripts": {
-    "crew-state-runtime.js": "09243339e1e3eddb0d2933612973bbd7fad574b16755ef0cbf2b709610cbb435"
+    "crew-state-runtime.js": "09243339e1e3eddb0d2933612973bbd7fad574b16755ef0cbf2b709610cbb435",
+    "crew-behavior-runtime.js": "92bee7691da35d3ce75886b10325727f36a3605bfdbc498b61c635187fe06fdc"
   }
 }

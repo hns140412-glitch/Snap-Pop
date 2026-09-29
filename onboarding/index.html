@@ -241,12 +241,13 @@ main[data-step="10"] .home-drawer .photo-copy p,main[data-step="10"] .home-drawe
 
 /* Tablet HOME needs 9px more than the previous 45dvh to show all controls without inner scrolling. */
 @media(min-width:700px){main[data-step="10"] .home-drawer{max-height:48dvh}}
-</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script>
+</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script src="crew-behavior-runtime.js"></script><script>
 const people=[['zero','제로'],['take','테이크'],['nova','노바'],['ink','잉크'],['lori','로리'],['dubi','두비']];
 const palette=['#a46d59','#668a65','#b38a47','#9d7293','#617f84'];
 const itemKeys=['map','lamp','water','camera','cap','compass'];
 const tabKeys=['오늘','지도','기록','탐험대','나'];
 const crewLogic=window.CompanionCrewState;if(!crewLogic)throw new Error('CREW_LOCAL_STATE_RUNTIME_MISSING');
+const crewBehavior=window.CompanionCrewBehavior;if(!crewBehavior)throw new Error('CREW_BEHAVIOR_PROJECTION_MISSING');
 const initial={step:0,crew:[],primaryCompanionId:'',selectionPhase:'crew',crewLedger:crewLogic.initial(),name:'',color:'#a46d59',items:[],travel:'',island:'',camp:'',tab:'오늘',photoSourceId:'',photoSha256:''};
 function cleanText(v,max){return typeof v==='string'?v.slice(0,max):''}
 function validPhotoRef(s){return typeof s==='string' && /^CHILD_VISUAL_SOURCE_SHA256_[a-f0-9]{64}$/.test(s)}
@@ -346,7 +347,8 @@ case 10:{
     '나':'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>'};
   let drawer='';
   if(state.tab==='오늘'){
-    drawer='<h2>'+escapeHTML(state.camp)+'</h2><p>오늘의 동행 '+escapeHTML(crewLogic.displayName(state.crewLedger,state.primaryCompanionId)||'선택 필요')+'와 함께 출발해요. 지도에서 가고 싶은 곳을 직접 눌러 보세요.</p>';
+    const cue=crewBehavior.preview({primaryId:state.primaryCompanionId,selectedIds:state.crew,scene:'home'});
+     drawer='<h2>'+escapeHTML(state.camp)+'</h2><p>오늘의 동행 '+escapeHTML(crewLogic.displayName(state.crewLedger,state.primaryCompanionId)||'선택 필요')+(cue?' · <span class="home-crew-line" data-member-id="'+cue.memberId+'">'+escapeHTML(cue.text)+'</span>':'')+'</p>';
   }else if(state.tab==='지도'){
     const places={camp:['베이스캠프','출발을 준비하고 쉬어 가는 곳'],jungle:['정글 · 폭포','새로운 단서와 기억을 만나는 곳'],beach:['해변','생각을 이야기로 펼치는 곳'],harbor:['항구','다음 탐험으로 이어지는 길']};
     const selected=places[state.spot]||null;

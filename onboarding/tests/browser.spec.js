@@ -50,6 +50,7 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   await page.locator('#campName').fill('테스트캠프');await capture('09-camp-naming');
   await page.locator('#campNext').click();
   await expect(page.locator('#app')).toHaveAttribute('data-step','10');
+  await expect(page.locator('.home-crew-line')).toHaveText('괜찮아, 천천히 해도 돼!');
   await page.locator('.home-navigation button').filter({hasText:'탐험대'}).click();
   await expect(page.locator('.crew-primary')).toContainText('로리');
   const lori=page.locator('.crewlist>div').nth(1);
