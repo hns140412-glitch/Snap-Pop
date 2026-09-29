@@ -1,5 +1,10 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 remove remaining staged-candidate blocker in existing Visual ID workflow
+
+- After generic batch path was implemented, an older visual-id-workflow.report() still explicitly rejected mask specs for EVERY ID not already activated in the six-member runtime. That would prevent any approved staged seventh ID from passing current asset CI. Corrected report's cutout resolver to accept ONLY a staged, audited Visual ID whose user source-approval reference and exact original SHA+manifest checks both pass. Candidate remains STAGED, never runtime active; no missing hash bypass. Explicit regressions reject unapproved/missing source stage and allow old six without behavior change.
+- This completes connecting source intake → shared source batch → per-ID source drafts → occlusion → partial-underpaint diagnostics without editing CI per new approved ID. It does NOT generate artists' missing artwork, change first meeting composition, settle roster 18+Special conflict or approve 20 for production. CI must verify exact new HEAD.
+
 ## CURRENT OVERRIDE — 2026-09-29 scalable approved Visual ID batch pipeline (no Codex)
 
 - Root scalability defect addressed in executable files: previous CI and downstream partial-restoration tools explicitly hardcoded SIX character identifiers, requiring hand edits as roster grew. New `onboarding/tools/visual-id-batch.py` discovers original six in inherited crew scope and new candidates ONLY after stage-approved original source path/reference/SHA, source-cutout SHA in immutable manifest and independently authored per-ID mask spec SHA all agree. One batch builds all currently authorized source-pixel draft packs and emits a real batch manifest (no copied ID masks, no invented art, no runtime auto-bind). Validates 20 *technical processing* capacity, duplicate/traversal/21 IDs rejection; a staged candidate without authored mask is explicitly returned OPEN and not silently treated as produced.

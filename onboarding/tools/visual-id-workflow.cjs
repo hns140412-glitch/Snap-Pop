@@ -124,6 +124,12 @@ function inspectCandidate(item){
     technicalReady,releaseReady:false,automaticArtGeneration:false,automaticPublish:false,
     note:'Self-reported evidence references do not substitute independent human image/interaction review. This agent workflow never activates ROOT.'};
 }
+function partitionCutout(id,stagedAudits){
+  const existing=registry.memberIds.includes(id);
+  const approvedStage=Array.isArray(stagedAudits)&&stagedAudits.some(x=>x.id===id&&x.passed.includes('ORIGINAL_BYTE_HASH_AND_MANIFEST')&&x.passed.includes('USER_APPROVED_SOURCE_REFERENCE'));
+  if(!existing&&!approvedStage)throw Error('MASK_SPEC_UNKNOWN_OR_UNAPPROVED_STAGED_VISUAL_ID:'+id);
+  return existing?registry.member(id).cutout:'characters/ui_cutouts/'+id+'.png';
+}
 function report(){
   const existing=registry.memberIds.map(id=>{const row=registry.renderPlan(id);return {id,stage:'STATIC_PREVIEW',source:registry.member(id).source,staticCutout:row.staticCutout,missing:row.missing,actionReady:false,releaseReady:false}});
   const staged=[];
@@ -140,8 +146,8 @@ function report(){
   if(fs.existsSync(specDir))for(const filename of fs.readdirSync(specDir).filter(f=>f.endsWith('.json')).sort()){
     const specFile=path.join(specDir,filename);if(fs.lstatSync(specFile).isSymbolicLink())throw Error('MASK_SPEC_SYMLINK_FORBIDDEN');
     const spec=JSON.parse(fs.readFileSync(specFile,'utf8')),id=filename.slice(0,-5);
-    if(spec.visual_id!==id||!registry.memberIds.includes(id))throw Error('MASK_SPEC_UNKNOWN_OR_MISMATCHED_VISUAL_ID:'+filename);
-    const cutout=registry.member(id).cutout;
+    if(spec.visual_id!==id)throw Error('MASK_SPEC_UNKNOWN_OR_MISMATCHED_VISUAL_ID:'+filename);
+    const cutout=partitionCutout(id,staged);
     if(sourceManifest.required_assets[cutout]!==spec.cutout_sha256||hashFile(cutout)!==spec.cutout_sha256)throw Error('MASK_SPEC_SOURCE_SHA_DRIFT:'+filename);
     if(spec.status!=='SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY')throw Error('MASK_SPEC_UNAUTHORIZED_PROMOTION:'+filename);
     partitionPrototypes.push({visualId:id,maskSpec:'characters/layer_specs/'+filename,
@@ -167,4 +173,4 @@ function cli(argv){
   process.stdout.write(JSON.stringify(out,null,2)+'\n');
 }
 if(require.main===module){try{cli(process.argv.slice(2));}catch(e){process.stderr.write(String(e.message)+'\n');process.exitCode=1;}}
-module.exports={plan,register,inspectCandidate,report,pathsFor,inside,hashFile,verified};
+module.exports={plan,register,inspectCandidate,report,partitionCutout,pathsFor,inside,hashFile,verified};
