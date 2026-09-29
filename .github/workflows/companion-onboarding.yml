@@ -72,6 +72,8 @@ jobs:
         run: |
           python onboarding/tools/visual-id-partial-underpaint-qa.py --source-root onboarding/characters/ui_cutouts --layer-root onboarding/visual-prototypes --exposure-root onboarding/occlusion-qa --out onboarding/underpaint-qa
           python onboarding/tests/visual-id-partial-underpaint-qa.py
+      - name: Simulate a real seventh staged ID through ALL source-pixel and partial-restoration stages, then reject 21st
+        run: python onboarding/tests/visual-id-staged-integration.py
       - uses: actions/upload-artifact@v4
         with:
           name: core6-six-partial-source-local-underpaint-drafts-12-poses-artistic-hold

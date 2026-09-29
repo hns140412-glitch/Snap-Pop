@@ -1,5 +1,11 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 seventh-source TRUE end-to-end staging regression, no real extra art
+
+- Previous 20-slot test ONLY passed identifier-list cardinality and tested the real Core6 batch; actual 7th stage→source split→motion exposure→underpaint was NEVER run end-to-end. New fully temporary, separately illustrated geometric CI-fixture suite (NOT a real seventh character, NOT any actual user-approved art) executes valid six + one properly fixture-hash-locked stage through *all* current pipelines. Requires missing per-ID spec to remain OPEN; then verifies 7 distinct three-role PNG packs, all 7 source-visible exact reconstructions, 14 real role-motion exposure masks, 7 separate partial underpaint candidates and 14 fixed poses with no transparent holes.
+- Red-team rejects source-byte tampering, misbound Visual ID mask spec and wrong cutout SHA. It then generates unique SOURCE+SPEC metadata for 20 **temporary synthetic** IDs and verifies full real `discover/check-only` accepts all 20 with no asset writing, and candidate #21 rejects. The temporary fixture is destroyed; existing user-approved 22 source images, runtime six, first-meeting art and all HANDOFF CLOSED states stay unchanged.
+- This is proof of extensible technical plumbing, NOT art for fourteen new members or authority over historical 20 versus 18+Special count. Codex not invoked. New exact HEAD CI must succeed. No main/Netlify.
+
 ## CURRENT OVERRIDE — 2026-09-29 remove remaining staged-candidate blocker in existing Visual ID workflow
 
 - After generic batch path was implemented, an older visual-id-workflow.report() still explicitly rejected mask specs for EVERY ID not already activated in the six-member runtime. That would prevent any approved staged seventh ID from passing current asset CI. Corrected report's cutout resolver to accept ONLY a staged, audited Visual ID whose user source-approval reference and exact original SHA+manifest checks both pass. Candidate remains STAGED, never runtime active; no missing hash bypass. Explicit regressions reject unapproved/missing source stage and allow old six without behavior change.

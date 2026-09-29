@@ -202,6 +202,11 @@
       "id": "VISUAL_ID_SIX_HARDCODED_CI_SCALABILITY",
       "evidence": "Source draft CI and both follow-up motion-exposure/partial underpaint loops named six IDs literally, making up-to-20 technical source validation require repeated code edits",
       "correction": "New source-locked batch discovery from baseline/staged candidate+individual mask specs, no hidden or new art invented; one manifest drives extractor, source-exposure and partial underpaint; reject missing approval, unsafe path, duplicates or >20 technical IDs; no runtime roster activation."
+    },
+    {
+      "id": "UNTESTED_STAGED_SEVENTH_E2E",
+      "evidence": "Prior 20 technical slot validation only called validate_ids with 20 strings, no actual seventh-source stage to source-pixel split and downstream restoration test",
+      "correction": "Add fully temporary fixture with six distinctly keyed dummy baseline sources plus separately dummy-staged seventh, negative source/spec tamper tests, run seven full pipelines, check 20 real source/spec preflight and reject #21 without publishing artwork"
     }
   ],
   "gates": {
@@ -243,7 +248,8 @@
     "all_six_real_primary_journeys": "PASS_6_IDS_X_3_VIEWPORT_REAL_PRIMARY_SELECT_LEDGER_RELOAD_STATIC_APPROVED_IMAGE_SOURCED_REPLY_ONE_HINT_HEAD_96c51cd",
     "core6_original_exposure_guides": "CODED_6_VISUAL_IDS_X_2_MOVED_SOURCE_ROLES_12_FULL_CANVAS_EXPOSED_PIXEL_MASKS_6_INDIVIDUAL_QA_PANELS_CI_PENDING_NO_AUTHORED_UNSEEN_BODY",
     "core6_partial_inferred_underpaint": "CODED_6_REAL_SOURCE_LOCAL_BODY_PATCH_DRAFT_PNG_12_BEFORE_AFTER_FIXED_POSES_ZERO_SHIFT_ORIGINAL_PIXEL_EXACT_CI_PENDING_ARTISTIC_QA_HOLD_NOT_TRUE_ANATOMY",
-    "scalable_visual_id_batch": "CODED_APPROVED_SHA_LOCKED_BATCH_SOURCE_PIXEL_PIPELINE_20_TECHNICAL_CAPACITY_DOWNSTREAM_MASK_AND_PARTIAL_UNDERPAINT_USE_SHARED_ID_MANIFEST_CI_PENDING_ART_STILL_PER_ID"
+    "scalable_visual_id_batch": "CODED_APPROVED_SHA_LOCKED_BATCH_SOURCE_PIXEL_PIPELINE_20_TECHNICAL_CAPACITY_DOWNSTREAM_MASK_AND_PARTIAL_UNDERPAINT_USE_SHARED_ID_MANIFEST_CI_PENDING_ART_STILL_PER_ID",
+    "staged_seventh_real_end_to_end_fixture": "CODED_TEMP_CI_GEOMETRIC_FIXTURE_7_SOURCE_PIXEL_TRIPLETS_14_EXPOSURE_MOVES_7_UNDERPAINT_20_SOURCE_SPEC_PREFLIGHT_21_REJECT_CI_PENDING_NOT_NEW_REAL_ART"
   },
   "source_provenance": {
     "approved_asset_identity": "onboarding/asset-and-release-gate.json required_assets 22 exact SHA256",
