@@ -109,11 +109,16 @@
       "id": "V-REF-03",
       "evidence": "Approved originals are assets, not eleven individually confirmed screen-level mockup screenshots",
       "correction": "Capture all candidate states and require source-vs-render visual review before visual release"
+    },
+    {
+      "id": "V-HOME-MOBILE-03",
+      "evidence": "Prior 375x667 candidate screenshot has return-to-friend-selection CTA clipped at bottom of crew drawer",
+      "correction": "Short-phone compact crew row and 50dvh max; browser asserts no internal scroll and CTA above nav"
     }
   ],
   "gates": {
-    "source_and_asset": "PENDING_HEAD_CI",
-    "captures_48": "PENDING_HEAD_CI",
+    "source_and_asset": "PENDING_NEW_HEAD_CI",
+    "captures_48": "PASSED_AT_PREVIOUS_HEAD_C5AE27_NEW_HEAD_RECHECK_REQUIRED",
     "visual_1to1": "OPEN",
     "device": "OPEN",
     "merge": false,

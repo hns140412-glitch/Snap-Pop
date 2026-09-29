@@ -2,7 +2,7 @@
   "task_id": "COMPANION_ONBOARDING_INTEGRATION_20260927",
   "source_authority": "Existing user-approved standalone source; additive Snap-Pop route only",
   "source_file": "onboarding/index.html",
-  "source_sha256": "223524044dfc441b03283a698cbdd23cbf62f52b7a53b4c27f36d208e448c774",
+  "source_sha256": "04136d860a05088b65f7437f30660e2240f166e309401ed7e047a96f90d85753",
   "base_head": "3de97be0d12dd6244a942b0c137c2efe578a43b6",
   "status": "INTEGRATION_CANDIDATE_CORE6_STATE_CODED_NOT_RELEASED",
   "main_integration": false,
@@ -16,7 +16,8 @@
     "additional_members": "DEFERRED_UNTIL_CORE6_RULES_AND_FUNCTIONS_VALIDATED",
     "crew_identity_rename": "CODED_LOCAL_CANDIDATE_PIXEL_AND_DEVICE_OPEN",
     "home_responsive_correction": "CANDIDATE_CODED_TABLET_PARENT_WIDTH_AND_MOBILE_SCENE_OVERLAY_VISUAL_APPROVAL_OPEN",
-    "twelve_screen_state_capture": "CI_CANDIDATE_12_STATES_X_4_VIEWPORTS_NOT_PIXEL_APPROVAL"
+    "twelve_screen_state_capture": "CI_CANDIDATE_12_STATES_X_4_VIEWPORTS_NOT_PIXEL_APPROVAL",
+    "short_phone_crew_action": "CANDIDATE_FIXED_WITH_ACTION_VISIBILITY_ASSERTION"
   },
   "required_assets": {
     "ui/approved/first_meeting_selection_source.png": "9f55faf85c45d4236172a797e07a809a876f53b9afb083c9d8f8df1e799ab0f7",

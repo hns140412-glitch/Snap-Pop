@@ -226,6 +226,18 @@ main[data-step="10"] .home-drawer .crew-rename-status{color:#fff0c4}
 main[data-step="10"] .home-drawer .photo-copy p,main[data-step="10"] .home-drawer .photo-state{color:#fff4de}
 @media(max-height:710px){main[data-step="10"] .home-drawer{max-height:45dvh;padding:10px 15px}}
 @media(min-width:700px){main[data-step="10"] .home-stage{padding:30px max(30px,5%) 27px}main[data-step="10"] .home-drawer{align-self:flex-end;width:46%;min-width:340px;max-width:460px;margin-left:0;margin-right:0;padding:15px 17px}main[data-step="10"] .home-navigation{align-self:flex-end;width:50%;min-width:360px;max-width:480px}}
+
+/* Short phone: keep friend-list return CTA visible above HOME navigation, not under a scroll clip. */
+@media(max-height:710px) and (max-width:699px){
+ main[data-step="10"] .home-drawer{max-height:50dvh;padding:8px 14px}
+ main[data-step="10"] .home-drawer .crew-primary{margin:4px 0 5px;padding:4px 6px;gap:6px}
+ main[data-step="10"] .home-drawer .crew-primary img{height:46px;width:44px}
+ main[data-step="10"] .home-drawer .crewlist{margin:2px 0 5px}
+ main[data-step="10"] .home-drawer .crewlist img{height:40px}
+ main[data-step="10"] .home-drawer .crewlist span{font-size:10px}
+ main[data-step="10"] .home-drawer .crewlist .sub{font-size:10px;padding:4px 3px}
+ main[data-step="10"] .home-drawer>.sub{padding:5px 9px}
+}
 </style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script>
 const people=[['zero','제로'],['take','테이크'],['nova','노바'],['ink','잉크'],['lori','로리'],['dubi','두비']];
 const palette=['#a46d59','#668a65','#b38a47','#9d7293','#617f84'];

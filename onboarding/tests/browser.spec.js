@@ -66,6 +66,14 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   expect(geometry.drawerRight).toBeLessThanOrEqual(width+1);
   if(width>=700){expect(geometry.contentWidth).toBeGreaterThan(700);expect(geometry.drawerWidth).toBeGreaterThanOrEqual(340);expect(geometry.navWidth).toBeGreaterThanOrEqual(360);}
   else expect(geometry.drawerWidth).toBeGreaterThanOrEqual(width-3);
+  const actionView=await page.evaluate(()=>{
+    const drawer=document.querySelector('.home-drawer'),button=drawer.querySelector(':scope > button.sub'),nav=document.querySelector('.home-navigation');
+    const r=drawer.getBoundingClientRect(),b=button.getBoundingClientRect(),n=nav.getBoundingClientRect();
+    return {overflow:drawer.scrollHeight-drawer.clientHeight,actionInside:b.top>=r.top&&b.bottom<=r.bottom-3,actionAboveNav:b.bottom<n.top-3};
+  });
+  expect(actionView.overflow).toBeLessThanOrEqual(1);
+  expect(actionView.actionInside).toBe(true);
+  expect(actionView.actionAboveNav).toBe(true);
   await capture('10-home-crew');expect(captured.size).toBe(expectedScreens);
   await page.reload();
   await expect(page.locator('#app')).toHaveAttribute('data-step','10');
