@@ -147,8 +147,8 @@
   "gates": {
     "source_and_asset": "PASS_22_ORIGINALS_LEDGER_AND_BEHAVIOR_AT_F8D0252",
     "captures_48": "HISTORIC_PASS_AT_HEAD_47ae7be",
-    "visual_1to1": "OPEN_NO_MOCKUP_APPROVAL_BY_ASSET_HASH",
-    "device": "OPEN",
+    "visual_1to1": "OPEN_REAL_APPROVED_SCREEN_REFERENCES",
+    "device": "OPEN_REAL_IPHONE_SAFARI",
     "merge": false,
     "deploy": false,
     "http_browser": "PASS_4_VIEWPORTS_GEOMETRY_AND_FULL_JOURNEY",
@@ -161,7 +161,9 @@
     "captures_52": "PASS_52_13_STATES_X_4_VIEWPORTS_AT_F8D0252",
     "visual_id_production": "SINGLE_BINDING_REGISTRY_STATIC_CORE6_SIX_REACTION_AND_THREE_INDEPENDENT_LAYERS_OPEN",
     "automatic_promotion": "BLOCKED_NEW_ID_AND_ROOT_RELEASE_MUST_PASS_PER_MEMBER_ASSET_HASH_SCENE_PARITY_AND_DEVICE",
-    "visual_id_work_method": "MACHINE_CONTRACT_PLAN_STAGE_AUDIT_REPORT_CI_PENDING"
+    "visual_id_work_method": "PASS_PLAN_REGISTER_AUDIT_REPORT_EXACT_IMPLEMENTATION_HEAD_BDFF5FB",
+    "visual_id_work_orders": "PASS_ARTIFACT_CURRENT_SIX_STATIC_18_ROLE_36_REACTION_OPEN",
+    "current_52_render": "PASS_EXACT_IMPLEMENTATION_HEAD_BDFF5FB_NOT_PIXEL_APPROVAL"
   },
   "source_provenance": {
     "approved_asset_identity": "onboarding/asset-and-release-gate.json required_assets 22 exact SHA256",
