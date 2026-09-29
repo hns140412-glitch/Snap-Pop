@@ -1,0 +1,99 @@
+{
+  "schema_version": "COMPANION_CREW_SCOPE_CONTRACT_V1",
+  "status": "P0_BOUNDARY_CODED_NOT_PRODUCT_RELEASED",
+  "source_refs": [
+    "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md (Snap development branch d9f48f9; recovered lineage)",
+    "data/exploration-crew-rules.json (Snap development branch d9f48f9; shared-ownership and count proposals)",
+    "onboarding/asset-and-release-gate.json (this PR; immutable byte-hash evidence)",
+    "TAKY:MASTER/SYSTEM_LAYER_OWNERSHIP_MAP.json (main 8e78af8)"
+  ],
+  "authority": {
+    "governance": "TAKY",
+    "learning_family_handoff": "LEARNING_APP_FAMILY",
+    "original_exploration_crew_rule_source": "SNAP_POP_ORIGIN",
+    "family_wide_semantic_owner": "P0_RECONCILIATION_HOLD_DO_NOT_SILENTLY_TRANSFER",
+    "reason": "Snap development rules refer to a TAKY shared canonical path not verified in TAKY main. Keep inherited Snap-origin rules and app-scoped projections without claiming a new global owner.",
+    "snap_product_expression": "SNAP_POP",
+    "ready_execution_planner": "READY_SET_UI_PLUS_INDEPENDENT_PLANNER_ENGINE",
+    "hide_memory": "HIDE_SEEK",
+    "family_identity_authorization": "LEARNING_OS",
+    "app_location_never_grants_semantic_authority": true
+  },
+  "roster": {
+    "active_originals": 6,
+    "original_ids": [
+      "dubi",
+      "lori",
+      "ink",
+      "nova",
+      "take",
+      "zero"
+    ],
+    "historical_20_ceiling": "PRESERVE_LINEAGE_NOT_CURRENT_IMPLEMENTED_COUNT",
+    "later_18_plus_special": "PROPOSAL_CONFLICT_DO_NOT_AUTO_PROMOTE",
+    "expansion_12": "NOT_APPROVED_AS_REALIZED_ASSETS",
+    "special_guest": "SEPARATE_CLASS_EXACT_COUNT_OPEN",
+    "release_claim_max_verified_unique_originals": 6
+  },
+  "identity": {
+    "immutable_visual_ids": true,
+    "onboarding_id_namespace": "LOCAL_CANONICAL_ID_ONBOARDING",
+    "cross_system_mapping_requires_explicit_approval": true,
+    "legacy_aliases_read_only": {
+      "dubi": [
+        "dooby"
+      ],
+      "lori": [
+        "Lori",
+        "Tori"
+      ]
+    },
+    "original_assets": {
+      "dubi": "characters/originals/dubi_source.jpeg",
+      "lori": "characters/originals/lori_source.jpeg",
+      "ink": "characters/originals/ink_source.jpeg",
+      "nova": "characters/originals/nova_source.jpeg",
+      "take": "characters/originals/take_source.jpeg",
+      "zero": "characters/originals/zero_source.jpeg"
+    },
+    "ui_cutouts": {
+      "dubi": "characters/ui_cutouts/dubi.png",
+      "lori": "characters/ui_cutouts/lori.png",
+      "ink": "characters/ui_cutouts/ink.png",
+      "nova": "characters/ui_cutouts/nova.png",
+      "take": "characters/ui_cutouts/take.png",
+      "zero": "characters/ui_cutouts/zero.png"
+    },
+    "first_meeting_scene": "ui/approved/first_meeting_selection_source.png"
+  },
+  "interaction": {
+    "first_meeting_all_six": true,
+    "selected_crew": {
+      "type": "ARRAY_OF_APPROVED_IDS",
+      "min": 5,
+      "max": 6,
+      "meaning": "CHOSEN_TO_TRAVEL_NOT_OWNED_OR_UNLOCKED"
+    },
+    "primary_companion": {
+      "type": "ONE_APPROVED_MEMBER_ID",
+      "implementation_state": "OPEN_NO_USER_VISIBLE_APPROVED_SELECTION_UI",
+      "must_not_default_from_array": true
+    },
+    "unselected_core6_state": "KNOWN_FRIEND_NOT_LOCKED",
+    "renaming_preserves_id_and_memories": true,
+    "switching_primary_preserves_crew_and_history": true,
+    "app_switch_is_not_ready_session_end": true
+  },
+  "approval_scopes": {
+    "onboarding_original_assets": "REGISTERED_BYTE_HASH_VERIFIED",
+    "onboarding_runtime_use": "IN_PR_ISOLATED_CANDIDATE",
+    "snap_root_crew_runtime_use": "SEPARATE_OWNER_SCOPED_VISUAL_REGISTRY_APPROVAL_REQUIRED",
+    "ready_hide_visual_import": "NOT_AUTHORIZED_BY_ONBOARDING_ASSET_REGISTRATION",
+    "automatic_runtime_promotion": false,
+    "automatic_active_roster_promotion": false,
+    "root_home_replacement": false,
+    "visual_pixel_match": "OPEN",
+    "physical_device": "OPEN",
+    "merge_or_deploy": false
+  }
+}
