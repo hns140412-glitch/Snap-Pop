@@ -30,7 +30,7 @@ def run(source, spec_path, output):
     rgba=Image.new('RGBA',im.size); report={}
     for key in ROLES:
         part=im.copy();part.putalpha(ImageChops.multiply(im.getchannel('A'),masks[key]));name=key.lower()+'.png';p=output/name;part.save(p,optimize=True)
-        count=sum(v>0 for v in part.getchannel('A').get_flattened_data());assert count>1000,'EMPTY_SEMANTIC_ASSET:'+key
+        count=sum(v>0 for v in part.getchannel('A').tobytes());assert count>1000,'EMPTY_SEMANTIC_ASSET:'+key
         report[key]={'file':name,'sha256':sha(p.read_bytes()),'nontransparent_pixels':count}
         rgba.alpha_composite(part)
     assert ImageChops.difference(rgba,im).getbbox() is None,'ORIGINAL_PIXEL_FIDELITY_REGRESSION'
