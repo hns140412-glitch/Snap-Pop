@@ -1,5 +1,11 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 all six ACTUAL primary user journeys SOURCE + BROWSER CI VERIFIED
+
+- Exact implementation tested on HEAD `96c51cdce66f61136e34aa80ed13ecb17b21a9c2`, [source/art/immutable 22 files CI SUCCESS](https://github.com/hns140412-glitch/Snap-Pop/actions/runs/36564524712) and [real browser/HTTPS/full 74 screenshot CI SUCCESS](https://github.com/hns140412-glitch/Snap-Pop/actions/runs/36564524745). [All 74 actual captured browser PNGs](https://github.com/hns140412-glitch/Snap-Pop/actions/runs/36564524745/artifacts/11031755137). All six static PNGs loaded from their own correct Visual ID; actual user-selected, persisted/reloaded, HOME text and original reaction with one optional hint verified, not merely a mocked renderPlan. Source 22 originals unchanged. Test included original 5-member path, 6-member path, actual repeated UI primary changes for ALL six × 375/390/1024 and first-meeting 11-step navigation. Six unique image sources and 6 distinct contextual responses asserted. Total 56 baseline + 18 separate six-ID scenes = 74.
+- 390px candidate image QA: all six separate full UI screenshots extracted and provenance SHA-recorded. These are BROWSER functional evidence only, not approval of cream radio overlay or mockup pixel parity. This still does NOT establish 18 independent articulated source layers or 36 separately authored expressions. All six technical source-visible masks were refined on earlier e0d4d8c HEAD and remain ARTIST_QA_HOLD.
+- No Codex invocation; Plus 5-hour budget preserved. No ROOT/main merge/Netlify. Assistant owns remaining actual art restoration and approved UI 1:1 QA. USER != DEBUGGER.
+
 ## CURRENT OVERRIDE — 2026-09-29 ALL SIX primary selections exercised in real UI, no Codex
 
 - Core6 six member source-specific visible outline revisions inherited from exact implementation HEAD e0d4d8c3e861253b43669a8f4f44012190972933; that HEAD's source/asset and 56 baseline browser CI both SUCCESS. Six independent 3-role source-pixel draft packs are available, still not motion art.
