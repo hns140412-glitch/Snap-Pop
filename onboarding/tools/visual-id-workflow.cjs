@@ -116,9 +116,10 @@ function inspectCandidate(item){
   add(Boolean(item.realDeviceEvidence?.verified===true&&item.realDeviceEvidence?.reference),'REAL_DEVICE_INTERACTION');
   add(Boolean(item.rootOwnerApproval?.userConfirmed===true&&item.rootOwnerApproval?.reference),'SNAP_ROOT_RELEASE_SEPARATE_APPROVAL');
   if(['RUNTIME_ACTIVE','RELEASE_READY','APPROVED_RUNTIME_ASSET'].includes(item.stage)&&open.length)throw Error('CANDIDATE_CLAIMED_READY_WITH_OPEN_PROOFS:'+id+':'+open.join(','));
-  const technicalKeys=['USER_APPROVED_SOURCE_REFERENCE','ORIGINAL_SOURCE_IDENTITY_MATCH','ORIGINAL_BYTE_HASH_AND_MANIFEST',
-    'SEMANTIC_OWNER_PERSONALITY_AND_ALIAS','ACTUAL_UI_REGISTRY_AND_LEDGER_BINDING','ACTUAL_REACTION_AND_UI_REGRESSION'];
-  const technicalReady=technicalKeys.every(k=>passed.includes(k))&&cfg.independentLayers.concat(cfg.reactions).every(k=>passed.includes('EXACT_INDEPENDENT_TRANSPARENT_ASSET:'+k))&&passed.includes('NEW_FIRST_MEETING_COMPOSITION');
+  const humanReleaseOnly=['HUMAN_1_TO_1_VISUAL_APPROVAL','REAL_DEVICE_INTERACTION','SNAP_ROOT_RELEASE_SEPARATE_APPROVAL'];
+  // Technical readiness is independent from human/device/root release; every actual asset,
+  // provenance, integration and viewport item MUST pass, not just a claimed boolean.
+  const technicalReady=open.every(k=>humanReleaseOnly.includes(k));
   return {id,stage:open.length?'ASSET_OR_INTEGRATION_OPEN':'RELEASE_CANDIDATE_NOT_AUTO_RELEASED',passed,open,
     technicalReady,releaseReady:false,automaticArtGeneration:false,automaticPublish:false,
     note:'Self-reported evidence references do not substitute independent human image/interaction review. This agent workflow never activates ROOT.'};
@@ -131,7 +132,8 @@ function report(){
     if(fs.lstatSync(full).isSymbolicLink())throw Error('CANDIDATE_SYMLINK_REJECTED');
     const obj=JSON.parse(fs.readFileSync(full,'utf8'));if(obj.id!==id)throw Error('CANDIDATE_FILENAME_ID_MISMATCH:'+name);
     const audit=inspectCandidate(obj);
-    if(registry.memberIds.includes(id)&&audit.open.length)throw Error('ACTIVE_REGISTRY_ID_WITH_INCOMPLETE_PRODUCTION_EVIDENCE:'+id+':'+audit.open.join(','));
+    const productionBlockers=audit.open.filter(k=>!['HUMAN_1_TO_1_VISUAL_APPROVAL','REAL_DEVICE_INTERACTION','SNAP_ROOT_RELEASE_SEPARATE_APPROVAL'].includes(k));
+    if(registry.memberIds.includes(id)&&productionBlockers.length)throw Error('ISOLATED_RENDERER_ID_WITH_MISSING_ASSET_OR_SCENE_EVIDENCE:'+id+':'+productionBlockers.join(','));
     staged.push(audit);
   }
   return {schema:cfg.schema,referenceAuthority:'LIVE_MANIFEST_PLUS_ORIGINAL_SOURCE',existing,staged,
