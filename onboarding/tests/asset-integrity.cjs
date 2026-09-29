@@ -17,9 +17,14 @@ for(const [relative,expected] of Object.entries(contract.required_assets)){
   if(!fs.existsSync(file))errors.push('ASSET_MISSING:'+relative);
   else if(sha(file)!==expected)errors.push('ASSET_HASH_MISMATCH:'+relative);
 }
+for(const [relative,expected] of Object.entries(contract.required_runtime_scripts||{})){
+  const file=path.join(root,relative);
+  if(!fs.existsSync(file))errors.push('RUNTIME_MISSING:'+relative);
+  else if(sha(file)!==expected)errors.push('RUNTIME_HASH_MISMATCH:'+relative);
+}
 const report={
   gate:'COMPANION_ONBOARDING_SOURCE_ASSET_GATE',
-  files_expected:1+Object.keys(contract.required_assets).length,
+  files_expected:1+Object.keys(contract.required_assets).length+Object.keys(contract.required_runtime_scripts||{}).length,
   errors,
   technical_asset_pass:errors.length===0,
   visual_release_pass:false,

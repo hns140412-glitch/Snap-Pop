@@ -10,8 +10,8 @@
 - Approval for use of originals in **this standalone onboarding** does not grant automatic approval to the Snap ROOT Crew runtime registry or a Ready/Hide UI. That separate owner-scoped reviewed-binding gate remains authoritative and no cross-app lookalikes are substituted.
 
 ## Current verification
-- Run `node onboarding/tests/asset-integrity.cjs` for source + exact bytes of 22 originals.
-- Run `node onboarding/tests/crew-contract.cjs` for Core 6 names/IDs, 13 image references, original-scene hotspot/selection contract, separate primary state and non-promotion/ownership/roster gates. Run `node onboarding/tests/primary-selection.cjs` for actual chosen-member → primary → persistence/reload → invalid-draft/reselection regression.
+- Run `node onboarding/tests/asset-integrity.cjs` for source + exact bytes of 22 originals and the isolated Crew-state runtime script.
+- Run `node onboarding/tests/crew-contract.cjs` for Core 6 names/IDs, 13 image references, original-scene hotspot/selection contract, separate primary state and non-promotion/ownership/roster gates. Run `node onboarding/tests/crew-state-runtime.cjs` for immutable Core 6 ID, first-meeting idempotence, name/history preservation, evidence deduplication, no automatic affinity and no cross-app authority. Run `node onboarding/tests/primary-selection.cjs` for chosen-member → primary → local rename → persistence/reload → invalid-draft/reselection regression.
 - Earlier isolated Chromium page-content simulations covered 375×667, 390×844, 430×932 and 1024×768, 11 steps, 5-member gate, HOME navigation, edit-return and local image loads. Those historical tests are not a real served HTTPS origin or physical iPhone/Safari proof.
 - Approved first-meeting scene is currently a composite with hit areas. Other screens, especially HOME/profile/packing/naming, have **OPEN** 1:1 comparison and must reuse approved originals/layers rather than become generic cards.
 - Actual child-photo source registration in IndexedDB is not a photo-derived Visual ID/avatar generation pipeline.
@@ -20,4 +20,6 @@
 ## Source-priority correction
 Current exact evidence > older handoff statement. Never reactivate the previous binary-upload failure, copy the old 0d4136... source into this PR, equate the full 22 asset registration with Snap ROOT Crew approval, or quietly choose 18/20 as current implemented character count.
 
-Status: **CODE/ASSET CI CANDIDATE; VISUAL/RUNTIME/DEVICE/INTEGRATION OPEN; DRAFT / DO NOT MERGE / NO DEPLOY**.
+Core 6 local-first ledger is now attached to isolated onboarding only. It preserves immutable IDs, first/current names, rename history, first meeting and primary transition history. It does NOT award affinity, alter rewards, invent shared experiences or send child data across apps; Snap-local task-result candidates require explicit provenance and a separate owner verification before shared promotion. Profile editing in HOME Crew tab is functionally coded; its approved pixel match and Safari/HTTPS persistence remain OPEN.
+
+Status: **CODE/ASSET CI CANDIDATE; VISUAL/SERVED-ORIGIN/DEVICE/CROSS-APP INTEGRATION OPEN; DRAFT / DO NOT MERGE / NO DEPLOY**.

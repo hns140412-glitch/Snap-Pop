@@ -55,7 +55,7 @@ main[data-step="1"] .content,main[data-step="2"] .content{max-width:none;width:1
 .approved-tap.primary-cta{display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,#fff2d1,#dfc08c);color:#44311d;border:2px solid #f8eacb;font-weight:900;font-size:clamp(14px,4vw,19px);box-shadow:0 7px 18px #24190c7a}
 .approved-tap.primary-cta:disabled{background:#a28a69d9;color:#4d3d2c;opacity:.84}
 .crew-primary{display:flex;align-items:center;gap:10px;margin:8px 0 10px;padding:8px 9px;background:#f8e8c8b8;border-radius:15px}
-.crew-primary img{width:56px;height:65px;object-fit:contain}.crew-primary div{flex:1}.crew-primary small,.crew-primary strong{display:block}.crew-primary button{min-width:76px}
+.crew-primary img{width:56px;height:65px;object-fit:contain}.crew-primary div{flex:1}.crew-primary small,.crew-primary strong{display:block}.crew-primary button{min-width:76px}.crewlist .sub{font-size:11px;padding:5px 7px;margin-top:5px}.crew-rename-input{width:100%;min-width:0;padding:7px;font-size:13px;border:1px solid #a28b69;border-radius:9px;background:#fff5d8}.crew-rename-status{display:block;font-size:11px;color:#6b3d24}
 
 .visually-hidden{position:absolute!important;width:1px!important;height:1px!important;clip:rect(0,0,0,0)!important;clip-path:inset(50%)!important;overflow:hidden!important;white-space:nowrap!important}
 @media(min-width:700px){main[data-step="1"],main[data-step="2"]{max-width:none;width:100%;height:100dvh;min-height:100dvh;background-image:url('world/canonical/island_tablet.png');background-size:cover;background-position:center}main[data-step="1"] .content,main[data-step="2"] .content{max-width:none;min-height:0}.approved-stage{box-shadow:0 18px 60px #21140dcc;border-left:2px solid #ffffff55;border-right:2px solid #ffffff55}}
@@ -210,19 +210,20 @@ main[data-step="8"] .world-location{margin-left:3%;border-radius:10px 15px 10px 
 main[data-step="6"][data-travel="sea"] .land{background-position:50% 87%;background-size:auto 111%}
 main[data-step="6"][data-travel="cloud"] .land{background-position:50% 12%;background-size:auto 111%}
 @media(min-width:700px){main[data-step="6"][data-travel="sea"] .land,main[data-step="6"][data-travel="cloud"] .land{background-size:cover;background-position:center}}
-</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script>
+</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script>
 const people=[['zero','제로'],['take','테이크'],['nova','노바'],['ink','잉크'],['lori','로리'],['dubi','두비']];
 const palette=['#a46d59','#668a65','#b38a47','#9d7293','#617f84'];
 const itemKeys=['map','lamp','water','camera','cap','compass'];
 const tabKeys=['오늘','지도','기록','탐험대','나'];
-const initial={step:0,crew:[],primaryCompanionId:'',selectionPhase:'crew',name:'',color:'#a46d59',items:[],travel:'',island:'',camp:'',tab:'오늘',photoSourceId:'',photoSha256:''};
+const crewLogic=window.CompanionCrewState;if(!crewLogic)throw new Error('CREW_LOCAL_STATE_RUNTIME_MISSING');
+const initial={step:0,crew:[],primaryCompanionId:'',selectionPhase:'crew',crewLedger:crewLogic.initial(),name:'',color:'#a46d59',items:[],travel:'',island:'',camp:'',tab:'오늘',photoSourceId:'',photoSha256:''};
 function cleanText(v,max){return typeof v==='string'?v.slice(0,max):''}
 function validPhotoRef(s){return typeof s==='string' && /^CHILD_VISUAL_SOURCE_SHA256_[a-f0-9]{64}$/.test(s)}
 function sanitizeDraft(raw){
   if(!raw || typeof raw!=='object' || Array.isArray(raw))return {...initial};
   const validCrew=people.map(x=>x[0]);
   const pick=(v,whitelist,max)=>Array.isArray(v)?[...new Set(v.filter(x=>typeof x==='string'&&whitelist.includes(x)))].slice(0,max):[];
-  const o={...initial,crew:pick(raw.crew,validCrew,6),selectionPhase:raw.selectionPhase==='primary'?'primary':'crew',items:pick(raw.items,itemKeys,6),name:cleanText(raw.name,18),island:cleanText(raw.island,24),camp:cleanText(raw.camp,24),color:palette.includes(raw.color)?raw.color:initial.color,travel:['cloud','sea'].includes(raw.travel)?raw.travel:'',tab:tabKeys.includes(raw.tab)?raw.tab:'오늘',step:Number.isInteger(raw.step)?Math.max(0,Math.min(10,raw.step)):0};
+  const o={...initial,crew:pick(raw.crew,validCrew,6),crewLedger:crewLogic.restore(raw.crewLedger),selectionPhase:raw.selectionPhase==='primary'?'primary':'crew',items:pick(raw.items,itemKeys,6),name:cleanText(raw.name,18),island:cleanText(raw.island,24),camp:cleanText(raw.camp,24),color:palette.includes(raw.color)?raw.color:initial.color,travel:['cloud','sea'].includes(raw.travel)?raw.travel:'',tab:tabKeys.includes(raw.tab)?raw.tab:'오늘',step:Number.isInteger(raw.step)?Math.max(0,Math.min(10,raw.step)):0};
   // A primary is valid only when explicitly chosen from the currently selected Core 6.
   if(typeof raw.primaryCompanionId==='string'&&o.crew.includes(raw.primaryCompanionId))o.primaryCompanionId=raw.primaryCompanionId;
   if(validPhotoRef(raw.photoSourceId) && typeof raw.photoSha256==='string'){
@@ -240,7 +241,7 @@ function sanitizeDraft(raw){
   return o;
 }
 let state={...initial};try{const prior=JSON.parse(localStorage.getItem('expedition_ui_draft')||'null');state=sanitizeDraft(prior)}catch{}state.returnToHome=false;
-const el=document.getElementById('screen');const img=id=>'characters/ui_cutouts/'+id+'.png';const save=()=>{try{const {returnToHome,...persisted}=state;localStorage.setItem('expedition_ui_draft',JSON.stringify(persisted))}catch(e){/* in-memory fallback for offline preview */}};function go(step){state.step=step;save();render()}function next(){if(state.step===2){if(state.selectionPhase==='crew'){if(state.crew.length<5)return;state.selectionPhase='primary';save();render();return;}if(!state.primaryCompanionId||!state.crew.includes(state.primaryCompanionId))return;const returnHome=state.returnToHome;state.returnToHome=false;go(returnHome?10:3);return;}if(state.returnToHome&&state.step===3){state.returnToHome=false;go(10)}else go(state.step+1)}function back(){if(state.step===2&&state.selectionPhase==='primary'){state.selectionPhase='crew';save();render();return;}if(state.returnToHome){state.returnToHome=false;go(10)}else if(state.step>0)go(state.step-1)}function shell(k,title,desc,body,foot=''){el.innerHTML=(k==='탐험 홈'?'':'<div class="eyebrow">'+k+'</div>')+'<h1 class="title">'+title+'</h1><p class="desc">'+desc+'</p>'+body+'<div class="grow"></div>'+foot;if(el.querySelector('[data-child-preview]'))void refreshChildPhoto()}function btn(t,fn,disabled=false){return '<button class="action" '+(disabled?'disabled':'')+' onclick="'+fn+'">'+t+'</button>'}
+const el=document.getElementById('screen');const img=id=>'characters/ui_cutouts/'+id+'.png';const save=()=>{try{const {returnToHome,renameEditingId,...persisted}=state;localStorage.setItem('expedition_ui_draft',JSON.stringify(persisted))}catch(e){/* in-memory fallback for offline preview */}};function go(step){state.step=step;save();render()}function next(){if(state.step===1){state.crewLedger=crewLogic.firstMeeting(state.crewLedger);go(2);return;}if(state.step===2){if(state.selectionPhase==='crew'){if(state.crew.length<5)return;state.selectionPhase='primary';save();render();return;}if(!state.primaryCompanionId||!state.crew.includes(state.primaryCompanionId))return;const returnHome=state.returnToHome;state.returnToHome=false;go(returnHome?10:3);return;}if(state.returnToHome&&state.step===3){state.returnToHome=false;go(10)}else go(state.step+1)}function back(){if(state.step===2&&state.selectionPhase==='primary'){state.selectionPhase='crew';save();render();return;}if(state.returnToHome){state.returnToHome=false;go(10)}else if(state.step>0)go(state.step-1)}function shell(k,title,desc,body,foot=''){el.innerHTML=(k==='탐험 홈'?'':'<div class="eyebrow">'+k+'</div>')+'<h1 class="title">'+title+'</h1><p class="desc">'+desc+'</p>'+body+'<div class="grow"></div>'+foot;if(el.querySelector('[data-child-preview]'))void refreshChildPhoto()}function btn(t,fn,disabled=false){return '<button class="action" '+(disabled?'disabled':'')+' onclick="'+fn+'">'+t+'</button>'}
 const approvedCrewLocations={
   dubi:{hero:[3.8,47.4,29.5,16],portrait:[6.4,76.7,12.5,7.0],slot:[10.25,85.9]},
   lori:{hero:[5.6,31.0,29.8,19.9],portrait:[20.6,76.7,12.5,7.0],slot:[24.5,85.9]},
@@ -257,7 +258,7 @@ function renderApprovedCrewScene(choose){
   const primary=state.primaryCompanionId;
   const scene='<img alt="베이스캠프에서 여섯 친구와 만나는 확정 첫 만남 원화" draggable="false" src="ui/approved/first_meeting_selection_source.png">';
   const hit=(id,kind)=>{
-    const n=people.find(person=>person[0]===id)[1];
+    const n=crewLogic.displayName(state.crewLedger,id)||people.find(person=>person[0]===id)[1];
     const member=picked.includes(id),active=!primaryMode||member,chosen=primaryMode&&primary===id;
     const action=primaryMode?'pickPrimaryCompanion':'toggleCrew';
     const aria=primaryMode?(n+' '+(chosen?'주 동행 선택됨':'주 동행으로 선택')):(n+' '+(member?'선택 해제':'선택'));
@@ -271,7 +272,7 @@ function renderApprovedCrewScene(choose){
   }).join(''):'';
   const action=!choose?'친구 선택하기':primaryMode?(state.returnToHome?'동행을 정하고 캠프로':'이 친구와 출발하기'):(state.returnToHome?'다음: 주 동행 선택':'다음: 주 동행 정하기');
   const canGo=!choose||(primaryMode?Boolean(primary&&picked.includes(primary)):picked.length>=5);
-  const primaryName=primary?people.find(x=>x[0]===primary)?.[1]:'';
+  const primaryName=primary?crewLogic.displayName(state.crewLedger,primary):'';
   el.innerHTML='<section class="approved-stage" data-selection-phase="'+(primaryMode?'primary':'crew')+'" aria-label="동행탐험대원 첫 만남 원화">'+scene+hero+portraits+slots+
     (choose?'<span class="approved-count" role="status" aria-live="polite">'+picked.length+'/6</span>':'')+
     (primaryMode?'<button type="button" class="approved-primary-back" onclick="back()" aria-label="동행할 친구 목록 수정">‹ 친구 목록</button><span class="approved-primary-guide" role="status" aria-live="polite">'+(primaryName?'주 동행: '+primaryName+' · 다른 친구도 바꿔 고를 수 있어요.':'함께할 '+picked.length+'명 중 주 동행 한 명을 직접 골라 주세요.')+'</span>':'')+
@@ -281,7 +282,7 @@ function renderApprovedCrewScene(choose){
 }
 function pickPrimaryCompanion(id){
   if(state.step!==2||state.selectionPhase!=='primary'||!state.crew.includes(id))return;
-  state.primaryCompanionId=id;save();render();
+  state.crewLedger=crewLogic.choosePrimary(state.crewLedger,state.crew,id,state.primaryCompanionId);state.primaryCompanionId=id;save();render();
 }
 
 function render(){if(state.step!==3&&(state.step!==10||state.tab!=='나'))releasePhotoPreview();document.getElementById('app').style.setProperty('--accent',state.color);document.getElementById('app').dataset.step=String(state.step);document.getElementById('app').dataset.travel=state.travel||'';switch(state.step){
@@ -311,7 +312,7 @@ case 10:{
     '나':'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>'};
   let drawer='';
   if(state.tab==='오늘'){
-    drawer='<h2>'+escapeHTML(state.camp)+'</h2><p>오늘의 동행 '+escapeHTML(people.find(x=>x[0]===state.primaryCompanionId)?.[1]||'선택 필요')+'와 함께 출발해요. 지도에서 가고 싶은 곳을 직접 눌러 보세요.</p>';
+    drawer='<h2>'+escapeHTML(state.camp)+'</h2><p>오늘의 동행 '+escapeHTML(crewLogic.displayName(state.crewLedger,state.primaryCompanionId)||'선택 필요')+'와 함께 출발해요. 지도에서 가고 싶은 곳을 직접 눌러 보세요.</p>';
   }else if(state.tab==='지도'){
     const places={camp:['베이스캠프','출발을 준비하고 쉬어 가는 곳'],jungle:['정글 · 폭포','새로운 단서와 기억을 만나는 곳'],beach:['해변','생각을 이야기로 펼치는 곳'],harbor:['항구','다음 탐험으로 이어지는 길']};
     const selected=places[state.spot]||null;
@@ -319,7 +320,12 @@ case 10:{
   }else if(state.tab==='기록'){
     drawer='<h2>탐험 기록</h2><p>우리의 첫 출발이 기록되었어요.</p><div class="home-mini-record"><span>동행 친구 '+state.crew.length+'명</span><span>가방 속 물건 '+state.items.length+'개</span></div>';
   }else if(state.tab==='탐험대'){
-    drawer='<h2>함께하는 친구 '+state.crew.length+'명</h2><div class="crew-primary"><img src="'+img(state.primaryCompanionId)+'" alt=""><div><small>주 동행</small><strong>'+escapeHTML(people.find(x=>x[0]===state.primaryCompanionId)?.[1]||'선택 필요')+'</strong></div><button class="sub" onclick="editFromHome(2,\'primary\')">동행 변경</button></div><div class="crewlist">'+state.crew.map(id=>'<div><img src="'+img(id)+'" alt=""><span>'+escapeHTML(people.find(x=>x[0]===id)[1])+(id===state.primaryCompanionId?' · 주 동행':'')+'</span></div>').join('')+'</div><button class="sub" onclick="editFromHome(2)">친구 선택 변경</button>';
+    drawer='<h2>함께하는 친구 '+state.crew.length+'명</h2><div class="crew-primary"><img src="'+img(state.primaryCompanionId)+'" alt=""><div><small>주 동행</small><strong>'+escapeHTML(crewLogic.displayName(state.crewLedger,state.primaryCompanionId)||'선택 필요')+'</strong></div><button class="sub" onclick="editFromHome(2,\'primary\')">동행 변경</button></div><div class="crewlist">'+state.crew.map(id=>{
+       const name=escapeHTML(crewLogic.displayName(state.crewLedger,id)),editing=state.renameEditingId===id;
+       return '<div><img src="'+img(id)+'" alt=""><span>'+name+(id===state.primaryCompanionId?' · 주 동행':'')+'</span>'+(editing?
+         '<label class="visually-hidden" for="rename-'+id+'">친구 새 이름</label><input id="rename-'+id+'" data-crew-rename="'+id+'" maxlength="18" class="crew-rename-input" value="'+name+'"><button type="button" class="sub" onclick="commitCrewRename(\''+id+'\')">저장</button><button type="button" class="sub" onclick="cancelCrewRename()">취소</button><span class="crew-rename-status" role="status"></span>':
+         '<button type="button" class="sub" onclick="beginCrewRename(\''+id+'\')">이름 바꾸기</button>')+'</div>';
+     }).join('')+'</div><button class="sub" onclick="editFromHome(2)">친구 선택 변경</button>';
   }else{
     drawer='<h2>'+escapeHTML(state.name)+'</h2><p>'+escapeHTML(state.island)+' · '+escapeHTML(state.camp)+'</p>'+childPhotoPanel(false)+'<button class="sub" onclick="editFromHome(3)">프로필 수정</button>';
   }
@@ -384,5 +390,16 @@ async function clearChildSources(){
   catch(e){photoStatus('삭제 실패: 사진 저장소를 열지 못했어요.')}
   finally{photoOperationActive=false}
 }
-function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function visitSpot(id){if(!['camp','jungle','beach','harbor'].includes(id))return;state.spot=id;state.tab='지도';save();render()}function editFromHome(step,phase='crew'){state.returnToHome=true;if(step===2)state.selectionPhase=phase==='primary'&&state.crew.length>=5?'primary':'crew';go(step)}function toggleCrew(id){if(state.step!==2||state.selectionPhase!=='crew'||!people.some(x=>x[0]===id))return;if(state.crew.includes(id))state.crew=state.crew.filter(x=>x!==id);else if(state.crew.length<6)state.crew.push(id);if(!state.crew.includes(state.primaryCompanionId))state.primaryCompanionId='';save();render()}let picked=null;function pickItem(id){picked=id;document.querySelectorAll('.object').forEach(e=>e.classList.toggle('picked',e.dataset.item===id));document.getElementById('packhint').textContent='선택한 물건을 가방으로 옮겨주세요.'}function packPicked(){if(picked)packItem(picked)}function packItem(id){if(!['map','lamp','water','camera','cap','compass'].includes(id))return;if(!state.items.includes(id))state.items.push(id);picked=null;save();render()}render();
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function visitSpot(id){if(!['camp','jungle','beach','harbor'].includes(id))return;state.spot=id;state.tab='지도';save();render()}function editFromHome(step,phase='crew'){state.returnToHome=true;state.renameEditingId='';if(step===2)state.selectionPhase=phase==='primary'&&state.crew.length>=5?'primary':'crew';go(step)}
+function beginCrewRename(id){if(!state.crew.includes(id)||state.step!==10)return;state.renameEditingId=id;render()}
+function cancelCrewRename(){state.renameEditingId='';render()}
+function commitCrewRename(id){if(!state.crew.includes(id)||state.renameEditingId!==id)return;const field=el.querySelector('[data-crew-rename="'+id+'"]');if(!field)return;
+  try{state.crewLedger=crewLogic.rename(state.crewLedger,id,field.value);state.renameEditingId='';save();render()}
+  catch(e){const status=el.querySelector('.crew-rename-status');if(status)status.textContent='이름을 입력해 주세요.'}
+}
+function toggleCrew(id){if(state.step!==2||state.selectionPhase!=='crew'||!people.some(x=>x[0]===id))return;
+  if(state.crew.includes(id))state.crew=state.crew.filter(x=>x!==id);else if(state.crew.length<6)state.crew.push(id);
+  if(state.primaryCompanionId&&!state.crew.includes(state.primaryCompanionId)){state.crewLedger=crewLogic.clearPrimary(state.crewLedger,state.primaryCompanionId);state.primaryCompanionId='';}
+  save();render()
+}let picked=null;function pickItem(id){picked=id;document.querySelectorAll('.object').forEach(e=>e.classList.toggle('picked',e.dataset.item===id));document.getElementById('packhint').textContent='선택한 물건을 가방으로 옮겨주세요.'}function packPicked(){if(picked)packItem(picked)}function packItem(id){if(!['map','lamp','water','camera','cap','compass'].includes(id))return;if(!state.items.includes(id))state.items.push(id);picked=null;save();render()}render();
 </script></body></html>

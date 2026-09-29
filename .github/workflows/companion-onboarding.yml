@@ -22,5 +22,7 @@ jobs:
         run: node onboarding/tests/asset-integrity.cjs
       - name: Verify Core 6 identity, onboarding scope and non-promotion boundaries
         run: node onboarding/tests/crew-contract.cjs
-      - name: Verify explicit primary selection and reload recovery
+      - name: Verify immutable crew identity, history and evidence boundaries
+        run: node onboarding/tests/crew-state-runtime.cjs
+      - name: Verify explicit primary selection, rename and reload recovery
         run: node onboarding/tests/primary-selection.cjs

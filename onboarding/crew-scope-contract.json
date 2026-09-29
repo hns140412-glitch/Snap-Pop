@@ -1,6 +1,6 @@
 {
   "schema_version": "COMPANION_CREW_SCOPE_CONTRACT_V1",
-  "status": "P0_BOUNDARY_AND_PRIMARY_SELECTION_CODED_IN_ISOLATED_CANDIDATE_NOT_RELEASED",
+  "status": "P0_CORE6_LOCAL_STATE_AND_PRIMARY_UI_CODED_RELEASE_HOLD",
   "source_refs": [
     "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md (Snap development branch d9f48f9; recovered lineage)",
     "data/exploration-crew-rules.json (Snap development branch d9f48f9; shared-ownership and count proposals)",
@@ -35,7 +35,7 @@
     "special_guest": "SEPARATE_CLASS_EXACT_COUNT_OPEN",
     "release_claim_max_verified_unique_originals": 6,
     "additional_members_creation_gate": "AFTER_CORE6_RULES_AND_FUNCTIONS_IMPLEMENTED_AND_VALIDATED",
-    "additional_members_now": "NO_NEW_ART_NO_NEW_ROSTER_ENTRIES"
+    "additional_members_now": "DEFERRED_NO_NEW_CHARACTER_ART_OR_ROSTER"
   },
   "identity": {
     "immutable_visual_ids": true,
@@ -95,7 +95,14 @@
     "member_selection_phase": "crew",
     "primary_selection_phase": "primary",
     "saved_draft_contract": "localStorage expedition_ui_draft",
-    "cross_app_sync": "NOT_IMPLEMENTED"
+    "cross_app_sync": "NOT_IMPLEMENTED",
+    "first_meeting_record": "ON_ACTUAL_STEP_1_TO_STEP_2_ADVANCE_IDEMPOTENT",
+    "member_name_contract": "IMMUTABLE_ID_AND_CANONICAL_FIRST_NAME_PLUS_EDITABLE_CURRENT_NAME_AND_HISTORY",
+    "member_name_ui": "HOME_CREW_TAB_INLINE_EDIT_LOCAL_CANDIDATE",
+    "primary_switch_preserves_names_memories": true,
+    "local_experience_candidate": "SNAP_POP_LOCAL_TASK_RESULT_EVENT_ID_SESSION_TASK_EVIDENCE_ONLY_NO_AUTO_AFFINITY",
+    "reunion_voice_events_cannot_gain_affinity": true,
+    "cross_app_snapshot_authority": "NONE_NOT_INTEGRATED"
   },
   "approval_scopes": {
     "onboarding_original_assets": "REGISTERED_BYTE_HASH_VERIFIED",
@@ -107,6 +114,8 @@
     "root_home_replacement": false,
     "visual_pixel_match": "OPEN_INCLUDING_NEW_PRIMARY_FUNCTIONAL_OVERLAY",
     "physical_device": "OPEN",
-    "merge_or_deploy": false
+    "merge_or_deploy": false,
+    "crew_state_local_runtime": "CODED_IN_PR_ISOLATED",
+    "crew_state_ui_visual": "OPEN_HOMEPAGE_RENAME_OVERLAY_NOT_APPROVED"
   }
 }
