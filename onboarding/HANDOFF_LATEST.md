@@ -1,5 +1,16 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 Visual ID → layered asset → UI gate correction
+
+This newer section supersedes all earlier completion language. At code HEAD before the following documentation/CI commit: `7c4c9420434e4d41b844c20767b2e843edd68832`, MAIN `3de97be0d12dd6244a942b0c137c2efe578a43b6` — refresh exact refs. User correction: a Visual ID registration is NOT complete until its independent art layers, scene mapping, interaction effects, matching actual rendered screen, regression and approval exist. Static portraits/cutouts and personality text are not equivalent to functional Crew visual production.
+
+- New `visual-id-runtime.js`: isolated single Visual ID → original image/cutout/first-meeting scene/hotspot runtime, with strictly identical original six positions. Actual onboarding HTML uses its renderer binding; browser and VM tests fail if roster, local ledger and personality IDs drift. Approved 22 originals unchanged, no image regeneration/crops.
+- `renderPlan` per member reports precise OPEN independent role assets `IDENTITY_BODY/PERSONALITY_PROP/THEME_GEAR` (3×6) and action-state assets `OBSERVE/LISTEN/IDEA/REACT/WAIT/COMPLETE` (6×6). Original integrated cutout is STATIC only. New `auditNewIdentity` rejects registrations without approved visual source/hash, all 9 independent assets, five screen bindings including an approved actual first meeting, same layout/interaction tests, actual device and Owner gate. The current approved six-member composite cannot be silently extended by merely adding a seventh click zone.
+- `tests/visual-id-production.cjs` runs under source CI and verifies no silent ROOT/Ready/Hide promotion, missing-layer reports, identity correspondence, same original hotspot geometry and absent external ID fail closed. Every future ID addition must amend this registry, roster, source hash manifest, original screen composition and visual/behavior tests coherently before it can be activated.
+- This change enforces standards and wires static ID→art→scene, but DOES NOT supply independent 6×9 role/reaction originals (flattened static image cannot be claimed independently animated), final screen approval or ROOT runtime. Release remains blocked. Existing previous success run for 52 candidate screenshots stays historical; check fresh HEAD workflow result after this code change.
+
+NO MAIN MERGE/NETLIFY, DRAFT PR #10, Think Again Keep Your Key / You're The Key, USER != DEBUGGER.
+
 ## CURRENT OVERRIDE — 2026-09-29 Core6 behavior binding and 52-render evidence
 
 This latest override supersedes outdated status statements below, which remain only as historical evidence. ALWAYS refresh exact live PR/main HEAD. Current verified Snap main: `3de97be0d12dd6244a942b0c137c2efe578a43b6`; implemented PR #10 HEAD BEFORE THIS DOC-ONLY UPDATE: `f8d0252304424b5461613ccefa05b68ef3e20e2a`. PR is DRAFT and unmerged.

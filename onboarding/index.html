@@ -241,13 +241,15 @@ main[data-step="10"] .home-drawer .photo-copy p,main[data-step="10"] .home-drawe
 
 /* Tablet HOME needs 9px more than the previous 45dvh to show all controls without inner scrolling. */
 @media(min-width:700px){main[data-step="10"] .home-drawer{max-height:48dvh}}
-</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script src="crew-behavior-runtime.js"></script><script>
+</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script src="crew-behavior-runtime.js"></script><script src="visual-id-runtime.js"></script><script>
 const people=[['zero','제로'],['take','테이크'],['nova','노바'],['ink','잉크'],['lori','로리'],['dubi','두비']];
 const palette=['#a46d59','#668a65','#b38a47','#9d7293','#617f84'];
 const itemKeys=['map','lamp','water','camera','cap','compass'];
 const tabKeys=['오늘','지도','기록','탐험대','나'];
 const crewLogic=window.CompanionCrewState;if(!crewLogic)throw new Error('CREW_LOCAL_STATE_RUNTIME_MISSING');
 const crewBehavior=window.CompanionCrewBehavior;if(!crewBehavior)throw new Error('CREW_BEHAVIOR_PROJECTION_MISSING');
+const visualID=window.CompanionVisualAssets;if(!visualID)throw new Error('VISUAL_ID_RUNTIME_MISSING');
+if(JSON.stringify(visualID.memberIds)!==JSON.stringify(crewLogic.ids))throw new Error('VISUAL_ID_CREW_LEDGER_MISMATCH');
 const initial={step:0,crew:[],primaryCompanionId:'',selectionPhase:'crew',crewLedger:crewLogic.initial(),name:'',color:'#a46d59',items:[],travel:'',island:'',camp:'',tab:'오늘',photoSourceId:'',photoSha256:''};
 function cleanText(v,max){return typeof v==='string'?v.slice(0,max):''}
 function validPhotoRef(s){return typeof s==='string' && /^CHILD_VISUAL_SOURCE_SHA256_[a-f0-9]{64}$/.test(s)}
@@ -276,33 +278,26 @@ function sanitizeDraft(raw){
   return o;
 }
 let state={...initial};try{const prior=JSON.parse(localStorage.getItem('expedition_ui_draft')||'null');state=sanitizeDraft(prior)}catch{}state.returnToHome=false;
-const el=document.getElementById('screen');const img=id=>'characters/ui_cutouts/'+id+'.png';const save=()=>{try{const {returnToHome,renameEditingId,...persisted}=state;localStorage.setItem('expedition_ui_draft',JSON.stringify(persisted))}catch(e){/* in-memory fallback for offline preview */}};function go(step){state.step=step;save();render()}function next(){if(state.step===1){state.crewLedger=crewLogic.firstMeeting(state.crewLedger);go(2);return;}if(state.step===2){if(state.selectionPhase==='crew'){if(state.crew.length<5)return;state.selectionPhase='primary';save();render();return;}if(!state.primaryCompanionId||!state.crew.includes(state.primaryCompanionId))return;const returnHome=state.returnToHome;state.returnToHome=false;go(returnHome?10:3);return;}if(state.returnToHome&&state.step===3){state.returnToHome=false;go(10)}else go(state.step+1)}function back(){if(state.step===2&&state.selectionPhase==='primary'){state.selectionPhase='crew';save();render();return;}if(state.returnToHome){state.returnToHome=false;go(10)}else if(state.step>0)go(state.step-1)}function shell(k,title,desc,body,foot=''){el.innerHTML=(k==='탐험 홈'?'':'<div class="eyebrow">'+k+'</div>')+'<h1 class="title">'+title+'</h1><p class="desc">'+desc+'</p>'+body+'<div class="grow"></div>'+foot;if(el.querySelector('[data-child-preview]'))void refreshChildPhoto()}function btn(t,fn,disabled=false){return '<button class="action" '+(disabled?'disabled':'')+' onclick="'+fn+'">'+t+'</button>'}
-const approvedCrewLocations={
-  dubi:{hero:[3.8,47.4,29.5,16],portrait:[6.4,76.7,12.5,7.0],slot:[10.25,85.9]},
-  lori:{hero:[5.6,31.0,29.8,19.9],portrait:[20.6,76.7,12.5,7.0],slot:[24.5,85.9]},
-  ink:{hero:[34.0,32.1,30.0,18.0],portrait:[35.0,76.7,12.5,7.0],slot:[38.9,85.9]},
-  nova:{hero:[60.5,35.0,27.0,15.7],portrait:[49.1,76.7,12.5,7.0],slot:[53.4,85.9]},
-  take:{hero:[63.5,48.0,30.8,14.0],portrait:[63.4,76.7,12.5,7.0],slot:[67.7,85.9]},
-  zero:{hero:[30.0,47.9,32.0,17.0],portrait:[77.4,76.7,12.5,7.0],slot:[82.0,85.9]}
-};
+const el=document.getElementById('screen');const img=id=>visualID.asset(id,'cutout');const save=()=>{try{const {returnToHome,renameEditingId,...persisted}=state;localStorage.setItem('expedition_ui_draft',JSON.stringify(persisted))}catch(e){/* in-memory fallback for offline preview */}};function go(step){state.step=step;save();render()}function next(){if(state.step===1){state.crewLedger=crewLogic.firstMeeting(state.crewLedger);go(2);return;}if(state.step===2){if(state.selectionPhase==='crew'){if(state.crew.length<5)return;state.selectionPhase='primary';save();render();return;}if(!state.primaryCompanionId||!state.crew.includes(state.primaryCompanionId))return;const returnHome=state.returnToHome;state.returnToHome=false;go(returnHome?10:3);return;}if(state.returnToHome&&state.step===3){state.returnToHome=false;go(10)}else go(state.step+1)}function back(){if(state.step===2&&state.selectionPhase==='primary'){state.selectionPhase='crew';save();render();return;}if(state.returnToHome){state.returnToHome=false;go(10)}else if(state.step>0)go(state.step-1)}function shell(k,title,desc,body,foot=''){el.innerHTML=(k==='탐험 홈'?'':'<div class="eyebrow">'+k+'</div>')+'<h1 class="title">'+title+'</h1><p class="desc">'+desc+'</p>'+body+'<div class="grow"></div>'+foot;if(el.querySelector('[data-child-preview]'))void refreshChildPhoto()}function btn(t,fn,disabled=false){return '<button class="action" '+(disabled?'disabled':'')+' onclick="'+fn+'">'+t+'</button>'}
 const referenceOrder=['dubi','lori','ink','nova','take','zero'];
+if(JSON.stringify(referenceOrder)!==JSON.stringify(visualID.memberIds))throw new Error('VISUAL_ID_FIRST_MEETING_SCENE_MISMATCH');
 function hotspotRect(rect){return 'left:'+rect[0]+'%;top:'+rect[1]+'%;width:'+rect[2]+'%;height:'+rect[3]+'%;'}
 function renderApprovedCrewScene(choose){
   const picked=state.crew;
   const primaryMode=choose&&state.selectionPhase==='primary';
   const primary=state.primaryCompanionId;
-  const scene='<img alt="베이스캠프에서 여섯 친구와 만나는 확정 첫 만남 원화" draggable="false" src="ui/approved/first_meeting_selection_source.png">';
+  const scene='<img alt="베이스캠프에서 여섯 친구와 만나는 확정 첫 만남 원화" draggable="false" src="'+visualID.firstMeetingSource+'">';
   const hit=(id,kind)=>{
     const n=crewLogic.displayName(state.crewLedger,id)||people.find(person=>person[0]===id)[1];
     const member=picked.includes(id),active=!primaryMode||member,chosen=primaryMode&&primary===id;
     const action=primaryMode?'pickPrimaryCompanion':'toggleCrew';
     const aria=primaryMode?(n+' '+(chosen?'주 동행 선택됨':'주 동행으로 선택')):(n+' '+(member?'선택 해제':'선택'));
-    return '<button type="button" data-name="'+n+'" class="approved-tap '+kind+' '+(member?'selected ':'')+(chosen?'primary':'')+'" aria-label="'+aria+'" aria-pressed="'+(primaryMode?chosen:member)+'" style="'+hotspotRect(approvedCrewLocations[id][kind])+'" '+(!active?'disabled ':'')+'onclick="'+action+'(\''+id+'\')"></button>';
+    return '<button type="button" data-name="'+n+'" data-visual-id="'+id+'" class="approved-tap '+kind+' '+(member?'selected ':'')+(chosen?'primary':'')+'" aria-label="'+aria+'" aria-pressed="'+(primaryMode?chosen:member)+'" style="'+hotspotRect(visualID.hotspot(id,kind))+'" '+(!active?'disabled ':'')+'onclick="'+action+'(\''+id+'\')"></button>';
   };
   const hero=choose?referenceOrder.map(id=>hit(id,'hero')).join(''):'';
   const portraits=choose?referenceOrder.map(id=>hit(id,'portrait')).join(''):'';
   const slots=choose?referenceOrder.filter(id=>picked.includes(id)).map(id=>{
-    const r=approvedCrewLocations[id].slot;
+    const r=visualID.hotspot(id,'slot');
     return '<span class="approved-slot-check" aria-hidden="true" style="left:'+r[0]+'%;top:'+r[1]+'%">✓</span>';
   }).join(''):'';
   const action=!choose?'친구 선택하기':primaryMode?(state.returnToHome?'동행을 정하고 캠프로':'이 친구와 출발하기'):(state.returnToHome?'다음: 주 동행 선택':'다음: 주 동행 정하기');

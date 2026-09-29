@@ -26,5 +26,7 @@ jobs:
         run: node onboarding/tests/crew-state-runtime.cjs
       - name: Verify sourced Core 6 behavior projection and no silent authority transfer
         run: node onboarding/tests/crew-behavior-runtime.cjs
+      - name: Verify Visual ID to asset/scene/interaction production gate (fail closed)
+        run: node onboarding/tests/visual-id-production.cjs
       - name: Verify explicit primary selection, rename and reload recovery
         run: node onboarding/tests/primary-selection.cjs

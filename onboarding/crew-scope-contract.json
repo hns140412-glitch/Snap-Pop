@@ -105,7 +105,8 @@
     "cross_app_snapshot_authority": "NONE_NOT_INTEGRATED",
     "home_primary_behavior": "EXPLICIT_PRIMARY_ONLY_SOURCED_SIGNATURE_ON_EXISTING_HOME_CAPTION",
     "behavior_scene_previews": "PURE_READ_ONLY_SIX_SCENES_NO_TASK_AUTOMATION",
-    "voice_playback": "NOT_CONNECTED"
+    "voice_playback": "NOT_CONNECTED",
+    "visual_binding_contract": "SINGLE_SOURCED_REGISTRY_FOR_SIX_STATIC_CUTOUTS_AND_APPROVED_FIRST_MEETING_HOTSPOTS"
   },
   "approval_scopes": {
     "onboarding_original_assets": "REGISTERED_BYTE_HASH_VERIFIED",
@@ -120,6 +121,8 @@
     "merge_or_deploy": false,
     "crew_state_local_runtime": "CODED_IN_PR_ISOLATED",
     "crew_state_ui_visual": "OPEN_HOMEPAGE_RENAME_OVERLAY_NOT_APPROVED",
-    "behavior_projection": "ISOLATED_ONBOARDING_ONLY_NOT_SNAP_ROOT_OR_READY_HIDE"
+    "behavior_projection": "ISOLATED_ONBOARDING_ONLY_NOT_SNAP_ROOT_OR_READY_HIDE",
+    "visual_id_asset_production": "BLOCKED_CORE6_INDEPENDENT_BODY_PROP_GEAR_AND_SIX_REACTION_STATES_MISSING",
+    "new_id_stage_gate": "AUDIT_NEW_ID_SOURCE_HASH_LAYERS_ALL_SCENE_BINDINGS_AND_TESTS_BEFORE_RUNTIME_ADDITION"
   }
 }

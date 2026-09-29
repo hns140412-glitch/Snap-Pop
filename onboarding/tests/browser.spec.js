@@ -11,8 +11,12 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   await expect(page.locator('#app')).toHaveAttribute('data-step','0');
   await expect(page.locator('.welcome-cta')).toBeVisible();await capture('00-welcome');
   expect(await page.evaluate(()=>!!globalThis.CompanionCrewState)).toBe(true);
+  const visualGate=await page.evaluate(()=>({ids:globalThis.CompanionVisualAssets.memberIds,states:globalThis.CompanionVisualAssets.memberIds.map(id=>globalThis.CompanionVisualAssets.renderPlan(id))}));
+  expect(visualGate.ids).toEqual(['dubi','lori','ink','nova','take','zero']);
+  expect(visualGate.states.every(x=>x.staticPreviewReady&&!x.actionReady&&!x.releaseReady)).toBe(true);
   await page.locator('.welcome-cta').click();
   await expect(page.locator('.approved-stage>img')).toHaveAttribute('src','ui/approved/first_meeting_selection_source.png');
+  expect(await page.locator('.approved-stage').evaluate(()=>globalThis.CompanionVisualAssets.memberIds.every(id=>!!globalThis.CompanionVisualAssets.hotspot(id,'hero')))).toBe(true);
   await expect.poll(()=>page.locator('.approved-stage>img').evaluate(img=>img.complete&&img.naturalWidth>0),{timeout:10000}).toBe(true);await capture('01-first-meeting');
   await page.locator('button.approved-tap.cta').click();
   await expect(page.locator('#app')).toHaveAttribute('data-step','2');
