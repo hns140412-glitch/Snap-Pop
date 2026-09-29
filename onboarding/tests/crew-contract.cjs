@@ -62,7 +62,7 @@ console.log(JSON.stringify({
   crew_selection:'PASS_5_TO_6',
   primary_companion:'OPEN_NOT_SILENTLY_DEFAULTED',
   shared_owner:'RECONCILIATION_HOLD',
-  18_vs_20_roster:'CONFLICT_PRESERVED_NOT_AUTO_PROMOTED',
+  '18_vs_20_roster':'CONFLICT_PRESERVED_NOT_AUTO_PROMOTED',
   visual_and_device_release:'OPEN',
   merge_or_deploy_allowed:false
 },null,2));
