@@ -13,84 +13,84 @@
       "capture": "00-welcome",
       "step": 0,
       "reference_status": "ISLAND_ORIGINAL_ONLY",
-      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "01-first-meeting",
       "step": 1,
       "reference_status": "APPROVED_FIRST_MEETING_SOURCE",
-      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "02-crew-selection",
       "step": 2,
       "reference_status": "FIRST_MEETING_COMPOSITE_PLUS_HOTSPOTS",
-      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "02-primary-choice",
       "step": 2,
       "reference_status": "UNAPPROVED_FUNCTIONAL_OVERLAY_SAME_ORIGINAL",
-      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "03-profile",
       "step": 3,
       "reference_status": "SCREEN_REFERENCE_OPEN",
-      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "04-packing",
       "step": 4,
       "reference_status": "APPROVED_OBJECT_ASSETS_SCREEN_REFERENCE_OPEN",
-      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "05-voyage-choice",
       "step": 5,
       "reference_status": "SCREEN_REFERENCE_OPEN",
-      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "06-island-arrival",
       "step": 6,
       "reference_status": "SCREEN_REFERENCE_OPEN",
-      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "07-island-naming",
       "step": 7,
       "reference_status": "SCREEN_REFERENCE_OPEN",
-      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "08-camp-discovery",
       "step": 8,
       "reference_status": "SCREEN_REFERENCE_OPEN",
-      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "09-camp-naming",
       "step": 9,
       "reference_status": "SCREEN_REFERENCE_OPEN",
-      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "10-home-crew",
       "step": 10,
       "reference_status": "NEW_CANDIDATE_RESPONSIVE_CORRECTION_VISUAL_APPROVAL_OPEN",
-      "render_evidence": "PENDING_CURRENT_HEAD_CI",
+      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
       "pixel_match": "NOT_CLAIMED"
     }
   ],
@@ -122,11 +122,17 @@
     }
   ],
   "gates": {
-    "source_and_asset": "PENDING_EXACT_HEAD_RECHECK",
-    "captures_48": "PENDING_EXACT_HEAD_RECHECK",
+    "source_and_asset": "PASS_SOURCE_22_ORIGINALS_AND_CORE6_AT_HEAD_47ae7be",
+    "captures_48": "PASS_48_STATES_4_VIEWPORTS_AT_HEAD_47ae7be",
     "visual_1to1": "OPEN",
     "device": "OPEN",
     "merge": false,
-    "deploy": false
+    "deploy": false,
+    "http_browser": "PASS_4_VIEWPORTS_GEOMETRY_AND_FULL_JOURNEY",
+    "local_https_photo_source": "PASS_SECURE_ORIGIN_SYNTHETIC_FIXTURE_IDB_RELOAD_SHA256_DELETE",
+    "iphone_safari": "OPEN",
+    "public_https": "OPEN",
+    "root_runtime_integration": "HOLD_SEPARATE_OWNER_APPROVAL",
+    "expansion_character_generation": "DEFERRED_AFTER_CORE6"
   }
 }

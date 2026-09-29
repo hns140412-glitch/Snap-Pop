@@ -33,3 +33,8 @@ Status: **CORE6 CODED / CI CHECKS; LOCAL HTTP CHROMIUM BROWSER JOURNEY AND EIGHT
 
 ## CI-only genuine HTTPS origin probe
 - The temporary `127.0.0.1:4174` self-signed TLS server exercises secure-context WebCrypto, IndexedDB image-blob SHA-256, reload/persistent original preview, explicit clearing and zero outbound requests using a **non-child JPEG fixture**. It is not Netlify/deployment, physical iPhone/Safari verification or child-photo-to-avatar generation. Never treat the self-signed loopback as a public trusted origin.
+
+## Latest exact-head QA outcome (2026-09-29)
+- `47ae7be` asset/Core6 gate and full Snap/browser gate SUCCESS: 12 state renders × 4 viewports = 48. All HOME controls were verified to fit, with no inner drawer scroll at all four tested viewport sizes.
+- Temporary localhost HTTPS CI test SUCCESS using a non-child JPEG fixture: WebCrypto and stored IndexedDB blob digest, reload, preview, clearing, zero outbound network requests. This is a secure-origin technical check only; Safari/iPhone, public trusted TLS, approved avatar generation, family-scoped integration and 11-screen 1:1 visual parity remain OPEN.
+- The exact served-browser and secure-origin run links are in `HANDOFF_LATEST.md`; never label all-product release complete from these checks.
