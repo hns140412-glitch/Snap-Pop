@@ -1,0 +1,69 @@
+{
+  "schema": "tky.asset.consumer-pointer.v1",
+  "rule_id": "TKY-ASSET-001",
+  "consumer": "snap-pop",
+  "central": {
+    "repository": "hns140412-glitch/TAKY-ASSETS",
+    "commit_sha": "d4702471db5fa6c437647671131359f559be9639",
+    "pr": 2,
+    "review_state": "DRAFT_NOT_MAIN",
+    "manifest_path": "assets/snap-pop/onboarding/packing_objects/manifest.v1.json"
+  },
+  "approved_source": {
+    "repository": "hns140412-glitch/Snap-Pop",
+    "revision": "1854a6b3a12597a69ff5672895ad555bea5d19bf",
+    "manifest_path": "onboarding/asset-and-release-gate.json"
+  },
+  "release_boundary": {
+    "local_pwa_assets_are": "PINNED_DERIVED_BUILDCOPIES_NOT_SECOND_AUTHORITATIVE_ORIGINAL",
+    "remote_runtime_fetch": "FORBIDDEN",
+    "visual_1_to_1": "OPEN",
+    "central_main_promotion": "HOLD",
+    "snap_main_merge": "HOLD",
+    "netlify": "HOLD"
+  },
+  "assets": [
+    {
+      "asset_id": "snap-pop.onboarding.packing.backpack",
+      "canonical_path": "assets/snap-pop/onboarding/packing_objects/backpack.svg",
+      "local_build_path": "onboarding/ui/packing_objects/backpack.svg",
+      "source_sha256": "0ccda9ca4b8045fdef8bac330975d8c6b6f44543ae47b8102dba4b134d9fb801"
+    },
+    {
+      "asset_id": "snap-pop.onboarding.packing.camera",
+      "canonical_path": "assets/snap-pop/onboarding/packing_objects/camera.svg",
+      "local_build_path": "onboarding/ui/packing_objects/camera.svg",
+      "source_sha256": "83ef6e231e7d83de50cfb9a05c470a628ae843cb4f39688b1112560935cca12a"
+    },
+    {
+      "asset_id": "snap-pop.onboarding.packing.cap",
+      "canonical_path": "assets/snap-pop/onboarding/packing_objects/cap.svg",
+      "local_build_path": "onboarding/ui/packing_objects/cap.svg",
+      "source_sha256": "275e9b69c648005bb1effffdf2a1f9e388617369f70e9ff3fa8e161c123425ce"
+    },
+    {
+      "asset_id": "snap-pop.onboarding.packing.compass",
+      "canonical_path": "assets/snap-pop/onboarding/packing_objects/compass.svg",
+      "local_build_path": "onboarding/ui/packing_objects/compass.svg",
+      "source_sha256": "7e2f505c0d41a5e4ef0286e9b1317aed2bf477992fc9330cf7d78738ebc3b3a4"
+    },
+    {
+      "asset_id": "snap-pop.onboarding.packing.lamp",
+      "canonical_path": "assets/snap-pop/onboarding/packing_objects/lamp.svg",
+      "local_build_path": "onboarding/ui/packing_objects/lamp.svg",
+      "source_sha256": "1546b2e1002ccec8cbc8d07e07a3965d157fb1e89d4cb046f127c19e323303b8"
+    },
+    {
+      "asset_id": "snap-pop.onboarding.packing.map",
+      "canonical_path": "assets/snap-pop/onboarding/packing_objects/map.svg",
+      "local_build_path": "onboarding/ui/packing_objects/map.svg",
+      "source_sha256": "99b2bf7dc7431046ab479825d00f9e613efdabe77387c3fcc5ff6f3794c7ffc7"
+    },
+    {
+      "asset_id": "snap-pop.onboarding.packing.water",
+      "canonical_path": "assets/snap-pop/onboarding/packing_objects/water.svg",
+      "local_build_path": "onboarding/ui/packing_objects/water.svg",
+      "source_sha256": "4dfc225ad387064d8c289a11889958c78bac99b3bda44bcd6a5c1c5495cfe511"
+    }
+  ]
+}
