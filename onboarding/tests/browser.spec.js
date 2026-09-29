@@ -1,6 +1,6 @@
 const {test,expect}=require('@playwright/test');
 const sizes=[[375,667],[390,844],[430,932],[1024,768]];
-const expectedScreens=12;
+const expectedScreens=13;
 for(const [width,height] of sizes){
 test('isolated companion onboarding complete path, assets, restore and rename '+width+'x'+height,async({page})=>{
   test.setTimeout(60000);
@@ -50,7 +50,7 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   await page.locator('#campName').fill('테스트캠프');await capture('09-camp-naming');
   await page.locator('#campNext').click();
   await expect(page.locator('#app')).toHaveAttribute('data-step','10');
-  await expect(page.locator('.home-crew-line')).toHaveText('괜찮아, 천천히 해도 돼!');
+  await expect(page.locator('.home-crew-line')).toHaveText('괜찮아, 천천히 해도 돼!');await capture('10-home-today');
   await page.locator('.home-navigation button').filter({hasText:'탐험대'}).click();
   await expect(page.locator('.crew-primary')).toContainText('로리');
   const lori=page.locator('.crewlist>div').nth(1);

@@ -1,6 +1,6 @@
 {
   "schema": "COMPANION_VISUAL_REVIEW_MATRIX_20260929",
-  "status": "RENDER_CORRECTION_NOT_USER_APPROVED",
+  "status": "CORE6_SOURCED_HOME_BEHAVIOR_VISUAL_RENDER_PENDING_APPROVAL",
   "approved_original_assets_immutable": 22,
   "viewports": [
     "375x667",
@@ -87,6 +87,13 @@
       "pixel_match": "NOT_CLAIMED"
     },
     {
+      "capture": "10-home-today",
+      "step": 10,
+      "reference_status": "CURRENT_APPROVED_ISLAND_ASSET_WITH_SOURCED_PRIMARY_HOME_COPY_VISUAL_APPROVAL_OPEN",
+      "render_evidence": "PENDING_NEW_HEAD_CI_52",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
       "capture": "10-home-crew",
       "step": 10,
       "reference_status": "NEW_CANDIDATE_RESPONSIVE_CORRECTION_VISUAL_APPROVAL_OPEN",
@@ -128,7 +135,7 @@
   ],
   "gates": {
     "source_and_asset": "PASS_SOURCE_22_ORIGINALS_AND_CORE6_AT_HEAD_47ae7be",
-    "captures_48": "PASS_48_STATES_4_VIEWPORTS_AT_HEAD_47ae7be",
+    "captures_48": "HISTORIC_PASS_AT_HEAD_47ae7be",
     "visual_1to1": "OPEN",
     "device": "OPEN",
     "merge": false,
@@ -139,6 +146,7 @@
     "public_https": "OPEN",
     "root_runtime_integration": "HOLD_SEPARATE_OWNER_APPROVAL",
     "expansion_character_generation": "DEFERRED_AFTER_CORE6",
-    "sourced_crew_behavior": "IMPLEMENTATION_CANDIDATE_PENDING_HEAD_CI"
+    "sourced_crew_behavior": "PURE_TEST_PASS_AT_B1D5BD_BROWSER_RUN_CHECK_CURRENT",
+    "captures_52": "PENDING_EXACT_HEAD_CI"
   }
 }
