@@ -167,6 +167,11 @@
       "id": "CORE6-ALL-PER-ID-SOURCE-PARTITION-DRAFT",
       "evidence": "Four remaining approved flattened original cutouts require per-member source-pixel splitting, not reused Dubi coordinates",
       "correction": "Add source-locked unique visible prop/gear mask specs for Lori/Nova/Take/Zero and regenerate six per-ID three-role packs through common CI, while explicitly marking four new masks artistic QA HOLD; zero new runtime activation."
+    },
+    {
+      "id": "CLEAN_ALPHA_VISUAL_ID_BUG",
+      "evidence": "Previously each nominally transparent split PNG inherited entire approved source RGB under alpha=0, causing nominal roles to carry nonrole hidden RGB despite visually identical composite",
+      "correction": "Exact visual-ID filename/source SHA verification; mask RGB and alpha together; require all alpha-zero RGB exactly black in all 18 derived PNGs and compare visible original pixels byte-exact after canonicalizing only derived transparent pixels; keep originals immutable and artistic masks unapproved."
     }
   ],
   "gates": {
@@ -199,7 +204,8 @@
     "motion_ready_core6": "OPEN_18_INDEPENDENT_ROLE_ASSETS_36_REACTION_SPRITES",
     "core6_pixel_prototype_count": "SIX_OF_SIX_SOURCE_PARTITION_SPECS_CREATED_CI_PENDING_4_NEW_MASKS_ARTIST_QA_HOLD",
     "core6_motion_ready": "ZERO_APPROVED_18_MOTION_SAFE_ROLE_ASSETS_OPEN",
-    "core6_reaction_art": "ZERO_APPROVED_36_INDEPENDENT_REACTION_FRAMES_OPEN"
+    "core6_reaction_art": "ZERO_APPROVED_36_INDEPENDENT_REACTION_FRAMES_OPEN",
+    "visual_id_clean_alpha_export": "CODED_ALL_SIX_VISUAL_IDS_CLEAN_RGBA_OUTPUTS_AND_EXACT_VISIBLE_PIXEL_ROUNDTRIP_CI_PENDING_18_MOTION_ASSET_SLOTS_STILL_OPEN"
   },
   "source_provenance": {
     "approved_asset_identity": "onboarding/asset-and-release-gate.json required_assets 22 exact SHA256",

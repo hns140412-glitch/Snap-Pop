@@ -1,5 +1,11 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
 
+## CURRENT OVERRIDE — 2026-09-29 Visual ID six-member true alpha-payload isolation correction (NOT motion-art approval)
+
+- Existing 6×3 mask outputs kept full source RGB beneath alpha=0 in each derived role PNG. That is not a clean physically isolated layer even if a flattened composite looked identical. Root cause corrected in generic generator: bind source file name AND spec name to exact visual_id; verify approved original source SHA before any work; mask role visible pixels only; zero ALL alpha-zero RGB in every derived PNG; compare final composite byte-for-byte against a visually identical canonical-transparent copy of the original (original 22 source assets NEVER edited, only derived zero-alpha payload cleared).
+- Six distinct Visual IDs each regenerated as exactly three independently isolated full 1122×1402 transparent PNG role drafts, no duplicate masked full original; self test checks 18 files, distinct hashes, zero alpha RGB contamination, restored approved visible color/alpha, reject altered source and mismatched ID filenames. This is technical preparation, not edge QA or original user-approved independent motion-art. Existing 4 newer masks remain DRAFT_MASK_VISUAL_QA_HOLD; hidden anatomy and 36 actual expression sprites remain OPEN. No runtime activation, original redrawing, main merge or Netlify.
+- Exact branch HEAD and both CI runs MUST be checked after commit. USER != DEBUGGER.
+
 ## CURRENT OVERRIDE — 2026-09-29 6/6 original-pixel partition preparation; ZERO motion-art approvals
 
 - User directive: **make actual assets according to TAKY, do not substitute work-order prose or a new arbitrary card UI**. Existing approved six original JPEGs, six cutouts, first meeting composite, island backdrops and all other 22 assets stay immutable.
