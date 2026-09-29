@@ -1,4 +1,10 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
+## 2026-09-30 RESTART AUTHORITY POINTER — CORE6 ACTUAL APPROVED ART ONLY
+
+- New chat must read **`onboarding/CORE6_RECOVERY_NEW_CHAT_START_LATEST.md`** first, then this full HANDOFF and exact live main/PR HEAD/CI. This reentry is solely a handoff, not claiming new art. User explicitly prioritizes finishing original six approved Visual IDs (dubi/lori/ink/nova/take/zero); discard unrelated imagined anime woman contact sheet, never use as production input.
+- As of pre-handoff exact PR HEAD `280cec59fc4634810d752a67c21ec8a876d721cf`, source+real Core6 interactive 30 PNG viewer CI PASS and original 74-screen regression PASS (see first overrides and restart file). New doc-only HEAD requires fresh CI. Artistic motion-ready Core6 **0/6**, final independent 18 role artworks **0/18**, 36 distinct illustrated reactions **0/36**; original 18 source-pixel role drafts and six partial interpolations MUST NOT be counted as final. 11-screen approved reference parity and real device stay OPEN. Draft/No Merge/No Netlify, no Codex unless truly necessary, USER != DEBUGGER.
+
+
 
 ## CURRENT OVERRIDE — 2026-09-30 browser QA regression caught a test-parenthesis syntax error; corrected at source
 - Previous exact HEAD 61168eb successfully built all six SHA locked original-motion QA bundles, but separate Playwright test parser rejected one missing closing parenthesis in test source; NO claim of browser pass. Corrected actual test expression and added `node --check` before browser install to stop repeat; rerun new exact HEAD CI. Source originals, derived art and real UI unchanged. Prior local build/manifest source exact already PASS.
