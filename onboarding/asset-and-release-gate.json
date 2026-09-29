@@ -2,7 +2,7 @@
   "task_id": "COMPANION_ONBOARDING_INTEGRATION_20260927",
   "source_authority": "Existing user-approved standalone source; additive Snap-Pop route only",
   "source_file": "onboarding/index.html",
-  "source_sha256": "2f274a41271defbbb5550831abbfba8564b29d95d6802f71004422fa60410455",
+  "source_sha256": "af3909b1b2ef25754fcbf61cead4167e83ad20c4670551adf69b776998c9389e",
   "base_head": "3de97be0d12dd6244a942b0c137c2efe578a43b6",
   "status": "INTEGRATION_CANDIDATE_CORE6_STATE_CODED_NOT_RELEASED",
   "main_integration": false,
@@ -54,6 +54,6 @@
     "exact main head/CI green and explicit human approval"
   ],
   "required_runtime_scripts": {
-    "crew-state-runtime.js": "5d7a06848566567157fdcfd7baaddd8dff9c2dc00f2a4fc75b41765e55f12abd"
+    "crew-state-runtime.js": "09243339e1e3eddb0d2933612973bbd7fad574b16755ef0cbf2b709610cbb435"
   }
 }

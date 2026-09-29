@@ -27,5 +27,11 @@ const rebuilt=logic.restore(JSON.parse(JSON.stringify(s)));assert.equal(rebuilt.
 const tampered=JSON.parse(JSON.stringify(s));tampered.members.unapproved={id:'unapproved',currentName:'Fake'};tampered.members.lori.id='zero';tampered.members.lori.firstName='가짜';tampered.members.lori.experienceCandidates.push({eventId:'fake',memberId:'lori',type:'REUNION'});
 const safe=logic.restore(tampered);assert.equal(Object.keys(safe.members).length,6);assert.equal(safe.members.lori.id,'lori');assert.equal(safe.members.lori.firstName,'로리');assert.equal(safe.members.lori.experienceCandidates.length,1);
 const roles=logic.view(s,chosen,'lori');assert.equal(roles.find(x=>x.id==='lori').role,'MAIN_COMPANION');assert.equal(roles.find(x=>x.id==='zero').role,'KNOWN_FRIEND');assert.ok(roles.every(x=>x.functionalAbility==='EQUAL'&&x.affinityAutoAward===false&&x.powerBoost===false));
+let legacy=logic.migrateLegacyReachedMeeting(logic.initial());
+assert.equal(legacy.members.lori.firstMetAt,null,'Never invent a legacy encounter date');
+assert.equal(legacy.members.lori.meetingEvidence,'LEGACY_DRAFT_STEP_REACHED_TIME_UNKNOWN');
+legacy=logic.rename(legacy,'lori','기억로리',tick2);
+assert.equal(legacy.members.lori.currentName,'기억로리');
+assert.equal(logic.restore(JSON.parse(JSON.stringify(legacy))).members.lori.firstMetAt,null);
 assert.equal(logic.automaticAffinity,false);assert.equal(logic.automaticReward,false);assert.match(logic.crossAppAuthority,/^NONE_/);
-console.log(JSON.stringify({gate:'CORE6_CREW_LOCAL_STATE',originals:6,first_meeting:'PASS',rename_history:'PASS',primary_continuity:'PASS',local_evidence_dedup:'PASS',no_fake_reunion:'PASS',tamper_repair:'PASS',no_power_or_affinity:'PASS',cross_app_authority:'NONE'},null,2));
+console.log(JSON.stringify({gate:'CORE6_CREW_LOCAL_STATE',originals:6,first_meeting:'PASS',rename_history:'PASS',primary_continuity:'PASS',local_evidence_dedup:'PASS',no_fake_reunion:'PASS',tamper_repair:'PASS',no_power_or_affinity:'PASS',legacy_draft_without_fake_timestamp:'PASS',cross_app_authority:'NONE'},null,2));

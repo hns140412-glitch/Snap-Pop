@@ -226,6 +226,9 @@ function sanitizeDraft(raw){
   const o={...initial,crew:pick(raw.crew,validCrew,6),crewLedger:crewLogic.restore(raw.crewLedger),selectionPhase:raw.selectionPhase==='primary'?'primary':'crew',items:pick(raw.items,itemKeys,6),name:cleanText(raw.name,18),island:cleanText(raw.island,24),camp:cleanText(raw.camp,24),color:palette.includes(raw.color)?raw.color:initial.color,travel:['cloud','sea'].includes(raw.travel)?raw.travel:'',tab:tabKeys.includes(raw.tab)?raw.tab:'오늘',step:Number.isInteger(raw.step)?Math.max(0,Math.min(10,raw.step)):0};
   // A primary is valid only when explicitly chosen from the currently selected Core 6.
   if(typeof raw.primaryCompanionId==='string'&&o.crew.includes(raw.primaryCompanionId))o.primaryCompanionId=raw.primaryCompanionId;
+  // Legacy pre-ledger drafts may have reached the approved first meeting. Keep that
+  // progression without fabricating a past timestamp or shared-experience evidence.
+  if(!raw.crewLedger&&o.step>=2&&o.crew.length>=5)o.crewLedger=crewLogic.migrateLegacyReachedMeeting(o.crewLedger);
   if(validPhotoRef(raw.photoSourceId) && typeof raw.photoSha256==='string'){
     const h=raw.photoSourceId.slice('CHILD_VISUAL_SOURCE_SHA256_'.length);
     if(h===raw.photoSha256){o.photoSourceId=raw.photoSourceId;o.photoSha256=h}

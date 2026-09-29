@@ -17,7 +17,7 @@
   const candidateEntry=x=>x&&typeof x==='object'&&clean(x.eventId,100)&&validId(x.memberId)&&['EXPLORATION_COMPLETE','SHARED_EPISODE'].includes(x.type)&&clean(x.sessionId,100)&&clean(x.taskId,100)&&clean(x.evidenceRef,180)&&iso(x.at)&&x.source==='SNAP_POP_LOCAL_TASK_RESULT'&&x.childAuthored===true?{
     eventId:clean(x.eventId,100),memberId:x.memberId,type:x.type,sessionId:clean(x.sessionId,100),taskId:clean(x.taskId,100),evidenceRef:clean(x.evidenceRef,180),source:'SNAP_POP_LOCAL_TASK_RESULT',childAuthored:true,at:iso(x.at),authority:'LOCAL_CANDIDATE_NOT_CROSS_APP_VERIFIED'
   }:null;
-  function initial(){return {version:VERSION,members:Object.fromEntries(CORE6.map(([id,name])=>[id,{id,firstName:name,currentName:name,nameHistory:[],firstMetAt:null,experienceCandidates:[]}])),primaryHistory:[]};}
+  function initial(){return {version:VERSION,members:Object.fromEntries(CORE6.map(([id,name])=>[id,{id,firstName:name,currentName:name,nameHistory:[],firstMetAt:null,meetingEvidence:'NOT_RECORDED',experienceCandidates:[]}])),primaryHistory:[]};}
   function restore(raw){
     const out=initial();
     if(!raw||typeof raw!=='object'||Array.isArray(raw))return out;
@@ -26,6 +26,7 @@
       const member=out.members[id];member.currentName=clean(x.currentName)||member.firstName;
       member.nameHistory=Array.isArray(x.nameHistory)?x.nameHistory.map(nameEntry).filter(Boolean):[];
       member.firstMetAt=iso(x.firstMetAt);
+      member.meetingEvidence=member.firstMetAt?'ACTUAL_UI_TRANSITION':x.meetingEvidence==='LEGACY_DRAFT_STEP_REACHED_TIME_UNKNOWN'?'LEGACY_DRAFT_STEP_REACHED_TIME_UNKNOWN':'NOT_RECORDED';
       const seen=new Set();
       member.experienceCandidates=Array.isArray(x.experienceCandidates)?x.experienceCandidates.map(candidateEntry).filter(e=>{
         if(!e||e.memberId!==id||seen.has(e.eventId))return false;seen.add(e.eventId);return true;
@@ -34,19 +35,26 @@
     out.primaryHistory=Array.isArray(raw.primaryHistory)?raw.primaryHistory.map(primaryEntry).filter(Boolean):[];
     return out;
   }
+  function migrateLegacyReachedMeeting(ledger){
+    // Old local onboarding state can prove that the first-meeting step was reached,
+    // but has NO recorded timestamp. Do not manufacture a historical date or affinity.
+    const result=restore(ledger);
+    for(const id of ids)if(!result.members[id].firstMetAt)result.members[id].meetingEvidence='LEGACY_DRAFT_STEP_REACHED_TIME_UNKNOWN';
+    return result;
+  }
   const member=(ledger,id)=>{if(!validId(id))throw Error('CREW_UNKNOWN_MEMBER');return restore(ledger).members[id];};
   const displayName=(ledger,id)=>validId(id)?member(ledger,id).currentName:'';
   function firstMeeting(ledger,at=now()){
     const tick=iso(at);if(!tick)throw Error('CREW_DATE_REQUIRED');
     const result=restore(ledger);
-    for(const id of ids)if(!result.members[id].firstMetAt)result.members[id].firstMetAt=tick;
+    for(const id of ids)if(!result.members[id].firstMetAt){result.members[id].firstMetAt=tick;result.members[id].meetingEvidence='ACTUAL_UI_TRANSITION';}
     return result;
   }
   function rename(ledger,id,requested,at=now()){
     if(!validId(id))throw Error('CREW_UNKNOWN_MEMBER');
     const next=clean(requested),tick=iso(at);if(!next||!tick)throw Error('CREW_VALID_NAME_AND_DATE_REQUIRED');
     const result=restore(ledger),m=result.members[id];
-    if(!m.firstMetAt)throw Error('CREW_FIRST_MEETING_REQUIRED');
+    if(!m.firstMetAt&&m.meetingEvidence!=='LEGACY_DRAFT_STEP_REACHED_TIME_UNKNOWN')throw Error('CREW_FIRST_MEETING_REQUIRED');
     if(m.currentName===next)return result;
     m.nameHistory.push({from:m.currentName,to:next,at:tick});
     m.currentName=next;return result;
@@ -78,13 +86,13 @@
     const state=restore(ledger);
     return ids.map(id=>({
       id,originalName:state.members[id].firstName,currentName:state.members[id].currentName,
-      firstMetAt:state.members[id].firstMetAt,
+      firstMetAt:state.members[id].firstMetAt,meetingEvidence:state.members[id].meetingEvidence,
       role:primary===id&&selected.includes(id)?'MAIN_COMPANION':selected.includes(id)?'CHOSEN_CREW':'KNOWN_FRIEND',
       nameHistoryCount:state.members[id].nameHistory.length,
       localExperienceCandidateCount:state.members[id].experienceCandidates.length,
       functionalAbility:'EQUAL',powerBoost:false,affinityAutoAward:false
     }));
   }
-  return Object.freeze({VERSION,CORE6,ids,initial,restore,displayName,firstMeeting,rename,choosePrimary,clearPrimary,appendLocalExperienceCandidate,view,
+  return Object.freeze({VERSION,CORE6,ids,initial,restore,migrateLegacyReachedMeeting,displayName,firstMeeting,rename,choosePrimary,clearPrimary,appendLocalExperienceCandidate,view,
     crossAppAuthority:'NONE_LOCAL_CANDIDATE',automaticAffinity:false,automaticReward:false});
 });

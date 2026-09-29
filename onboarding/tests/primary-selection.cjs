@@ -34,4 +34,15 @@ edit('next()');assert.equal(state().selectionPhase,'crew','Four selected cannot 
 edit("toggleCrew('zero')");edit('next()');assert.equal(state().selectionPhase,'primary');edit('next()');assert.equal(state().step,2,'Must explicitly select a new primary');
 const changed=JSON.parse(draft.get('expedition_ui_draft'));changed.step=10;changed.primaryCompanionId='ink';draft.set('expedition_ui_draft',JSON.stringify(changed));
 const invalid=context();const repaired=JSON.parse(vm.runInContext('JSON.stringify(state)',invalid));assert.equal(repaired.crewLedger.members.lori.currentName,'새로리');assert.equal(repaired.primaryCompanionId,'');assert.equal(repaired.step,2);assert.equal(repaired.selectionPhase,'primary','Invalid primary must not bypass selection');
-console.log(JSON.stringify({gate:'PRIMARY_COMPANION_STATE',five_member_gate:'PASS',explicit_choice:'PASS',nonmember_rejection:'PASS',draft_reload:'PASS',home_reselection:'PASS',removal_recovery:'PASS',corrupt_draft:'PASS',crew_name_and_history:'PASS',first_meeting_record:'PASS',new_art_created:false},null,2));
+const legacyDraft={step:10,crew:['dubi','lori','ink','nova','take'],primaryCompanionId:'lori',selectionPhase:'crew',name:'기존아이',items:['map'],travel:'cloud',island:'기존섬',camp:'기존캠프',tab:'탐험대'};
+draft.set('expedition_ui_draft',JSON.stringify(legacyDraft));
+const legacyCtx=context(),legacyEval=x=>vm.runInContext(x,legacyCtx,{timeout:2000});
+let migrated=JSON.parse(legacyEval('JSON.stringify(state)'));
+assert.equal(migrated.step,10);assert.equal(migrated.primaryCompanionId,'lori');
+assert.equal(migrated.crewLedger.members.lori.firstMetAt,null,'Legacy date must be unknown, not generated');
+assert.equal(migrated.crewLedger.members.lori.meetingEvidence,'LEGACY_DRAFT_STEP_REACHED_TIME_UNKNOWN');
+legacyEval('go(10)');legacyEval("beginCrewRename('lori')");
+view.querySelector=()=>({value:'이어로리'});legacyEval("commitCrewRename('lori')");view.querySelector=()=>null;
+migrated=JSON.parse(legacyEval('JSON.stringify(state)'));assert.equal(migrated.crewLedger.members.lori.currentName,'이어로리');
+assert.equal(migrated.crewLedger.members.lori.firstMetAt,null);
+console.log(JSON.stringify({gate:'PRIMARY_COMPANION_STATE',five_member_gate:'PASS',explicit_choice:'PASS',nonmember_rejection:'PASS',draft_reload:'PASS',home_reselection:'PASS',removal_recovery:'PASS',corrupt_draft:'PASS',crew_name_and_history:'PASS',first_meeting_record:'PASS',legacy_draft_rename_without_fake_date:'PASS',new_art_created:false},null,2));
