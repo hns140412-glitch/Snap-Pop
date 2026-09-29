@@ -66,6 +66,17 @@ jobs:
         run: |
           python onboarding/tools/visual-id-occlusion-qa.py --source-root onboarding/characters/ui_cutouts --layer-root onboarding/visual-prototypes --spec-root onboarding/characters/layer_specs --out onboarding/occlusion-qa
           python onboarding/tests/visual-id-occlusion-qa.py
+      - name: Install pinned local-inpainting trial (no Codex and no external image calls)
+        run: python -m pip install opencv-python-headless==4.13.0.92
+      - name: Build source-local per-Visual-ID six partial underpaint QA drawings and 12 actual shifted before/after PNG pairs
+        run: |
+          python onboarding/tools/visual-id-partial-underpaint-qa.py --source-root onboarding/characters/ui_cutouts --layer-root onboarding/visual-prototypes --exposure-root onboarding/occlusion-qa --out onboarding/underpaint-qa
+          python onboarding/tests/visual-id-partial-underpaint-qa.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: core6-six-partial-source-local-underpaint-drafts-12-poses-artistic-hold
+          path: onboarding/underpaint-qa/
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:
           name: core6-six-visual-id-twelve-exposure-masks-qa-not-restored-art
