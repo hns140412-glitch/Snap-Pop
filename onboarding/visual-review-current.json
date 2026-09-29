@@ -13,91 +13,92 @@
       "capture": "00-welcome",
       "step": 0,
       "reference_status": "ISLAND_ORIGINAL_ONLY",
-      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "01-first-meeting",
       "step": 1,
       "reference_status": "APPROVED_FIRST_MEETING_SOURCE",
-      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "02-crew-selection",
       "step": 2,
       "reference_status": "FIRST_MEETING_COMPOSITE_PLUS_HOTSPOTS",
-      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "02-primary-choice",
       "step": 2,
       "reference_status": "UNAPPROVED_FUNCTIONAL_OVERLAY_SAME_ORIGINAL",
-      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "03-profile",
       "step": 3,
       "reference_status": "SCREEN_REFERENCE_OPEN",
-      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "04-packing",
       "step": 4,
       "reference_status": "APPROVED_OBJECT_ASSETS_SCREEN_REFERENCE_OPEN",
-      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "05-voyage-choice",
       "step": 5,
       "reference_status": "SCREEN_REFERENCE_OPEN",
-      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "06-island-arrival",
       "step": 6,
       "reference_status": "SCREEN_REFERENCE_OPEN",
-      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "07-island-naming",
       "step": 7,
       "reference_status": "SCREEN_REFERENCE_OPEN",
-      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "08-camp-discovery",
       "step": 8,
       "reference_status": "SCREEN_REFERENCE_OPEN",
-      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "09-camp-naming",
       "step": 9,
       "reference_status": "SCREEN_REFERENCE_OPEN",
-      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
       "pixel_match": "NOT_CLAIMED"
     },
     {
       "capture": "10-home-today",
       "step": 10,
       "reference_status": "CURRENT_APPROVED_ISLAND_ASSET_WITH_SOURCED_PRIMARY_HOME_COPY_VISUAL_APPROVAL_OPEN",
-      "render_evidence": "PENDING_NEW_HEAD_CI_52",
-      "pixel_match": "NOT_CLAIMED"
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED",
+      "manual_inspection": "RENDER_INSPECTED_375X667_AND_1024X768_SIGNATURE_VISIBLE_NOT_SIGNED_OFF"
     },
     {
       "capture": "10-home-crew",
       "step": 10,
       "reference_status": "NEW_CANDIDATE_RESPONSIVE_CORRECTION_VISUAL_APPROVAL_OPEN",
-      "render_evidence": "48_SCREENSHOT_ARTIFACT_CONFIRMED_AT_IMPLEMENTATION_HEAD_47ae7be",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
       "pixel_match": "NOT_CLAIMED"
     }
   ],
@@ -134,9 +135,9 @@
     }
   ],
   "gates": {
-    "source_and_asset": "PASS_SOURCE_22_ORIGINALS_AND_CORE6_AT_HEAD_47ae7be",
+    "source_and_asset": "PASS_22_ORIGINALS_LEDGER_AND_BEHAVIOR_AT_F8D0252",
     "captures_48": "HISTORIC_PASS_AT_HEAD_47ae7be",
-    "visual_1to1": "OPEN",
+    "visual_1to1": "OPEN_NO_MOCKUP_APPROVAL_BY_ASSET_HASH",
     "device": "OPEN",
     "merge": false,
     "deploy": false,
@@ -144,9 +145,19 @@
     "local_https_photo_source": "PASS_SECURE_ORIGIN_SYNTHETIC_FIXTURE_IDB_RELOAD_SHA256_DELETE",
     "iphone_safari": "OPEN",
     "public_https": "OPEN",
-    "root_runtime_integration": "HOLD_SEPARATE_OWNER_APPROVAL",
+    "root_runtime_integration": "OPEN_OWNER_SCOPED_SEPARATE_ROOT_AND_CROSS_APP",
     "expansion_character_generation": "DEFERRED_AFTER_CORE6",
-    "sourced_crew_behavior": "PURE_TEST_PASS_AT_B1D5BD_BROWSER_RUN_CHECK_CURRENT",
-    "captures_52": "PENDING_EXACT_HEAD_CI"
+    "sourced_crew_behavior": "PASS_6_SIGNATURES_6_SCENE_PROJECTIONS_EXPLICIT_PRIMARY_HOME_BINDING",
+    "captures_52": "PASS_52_13_STATES_X_4_VIEWPORTS_AT_F8D0252"
+  },
+  "source_provenance": {
+    "approved_asset_identity": "onboarding/asset-and-release-gate.json required_assets 22 exact SHA256",
+    "original_first_meeting": "onboarding/ui/approved/first_meeting_selection_source.png",
+    "original_island_mobile": "onboarding/world/canonical/island_mobile.png",
+    "original_island_tablet": "onboarding/world/canonical/island_tablet.png",
+    "original_core6": "onboarding/characters/originals/* + ui_cutouts/* (6 each)",
+    "original_packing_items": "onboarding/ui/packing_objects/* (seven)",
+    "historical_qa_zip": "2026-09-27_LATEST.zip/onboarding/qa/acceptance_latest/* are HISTORICAL RENDERS NOT APPROVED MOCKUPS",
+    "missing_approval": "APPROVED_11_SCREEN_REFERENCE_BUNDLE_NOT_VERIFIED_DO_NOT_INFER"
   }
 }
