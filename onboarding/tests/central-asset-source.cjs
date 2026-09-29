@@ -25,6 +25,23 @@ assert.equal(pointer.release_boundary.central_main_promotion,'HOLD');
 assert.equal(pointer.release_boundary.snap_main_merge,'HOLD');
 assert.equal(pointer.release_boundary.netlify,'HOLD');
 assert.equal(pointer.assets.length,names.length);
+const verifyEnvironment=env=>{
+  const prefix='assets/snap-pop/environments/coast/TAKY-LAF-SNAP-HOME-COAST-20260927-A/';
+  assert.equal(env.asset_id,'TAKY-LAF-SNAP-HOME-COAST-20260927-A');
+  assert.equal(env.central_path,prefix+'snap_pop_beach_asset.png');
+  assert.equal(env.central_manifest_path,prefix+'manifest.v1.json');
+  assert.equal(env.original_sha256,'f15af01680e2db44ef8af1dff749169f1082ddd15b3760a96da7ff2211eb8259');
+  assert.equal(env.original_git_blob_sha,'7c2b83ae566ebc5468d42e0720f9092e096360ae');
+  assert.deepEqual(env.dimensions_px,[941,1672]);
+  assert.equal(env.scope,'APPROVED_ENVIRONMENT_ONLY');
+  assert.equal(env.reference_board_runtime_reuse,'FORBIDDEN');
+  assert.equal(env.local_pwa_copy,'NOT_INSTALLED');
+  assert.equal(env.runtime_binding,'HOLD_PENDING_DESIGN_TO_UI_AND_USER_APPROVAL');
+  assert.equal(env.root_world_replacement,'FORBIDDEN');
+};
+verifyEnvironment(pointer.environment);
+assert.throws(()=>verifyEnvironment({...pointer.environment,original_sha256:'0'.repeat(64)}));
+assert.throws(()=>verifyEnvironment({...pointer.environment,root_world_replacement:'ALLOWED'}));
 const seen=new Set();
 const check=(asset,bytes)=>{
   const n=asset.asset_id.replace('snap-pop.onboarding.packing.','');
@@ -48,4 +65,4 @@ for(const asset of pointer.assets){
 assert.deepEqual([...seen].sort(),[...names].sort());
 assert.throws(()=>check({...pointer.assets[0],asset_id:'snap-pop.onboarding.packing.unknown'},Buffer.alloc(0)),/UNKNOWN_ASSET_ID/);
 assert.throws(()=>{const altered={...pointer.assets[0],asset_id:'snap-pop.onboarding.packing.backpack',source_sha256:'0'.repeat(64)};const s=new Set(seen);seen.delete('backpack');try{check(altered,fs.readFileSync(path.join(root,'ui/packing_objects/backpack.svg')))}finally{seen.clear();for(const n of s)seen.add(n)}},/ORIGINAL_MANIFEST_MISMATCH/);
-console.log(JSON.stringify({gate:'SNAP_CENTRAL_PACKING_ASSET_CONSUMER_POINTER',central_revision:pointer.central.commit_sha,source_revision:pointer.approved_source.revision,local_integrity:'PASS',assets_verified:names.length,central_remote_readback:'INDEPENDENTLY_VERIFIED_IN_TAKY_ASSETS_PR_2_NOT_NETWORK_POLLED',visual_release_pass:false,main_merge_allowed:false,netlify:'HOLD'},null,2));
+console.log(JSON.stringify({gate:'SNAP_CENTRAL_PACKING_ASSET_CONSUMER_POINTER',central_revision:pointer.central.commit_sha,source_revision:pointer.approved_source.revision,local_integrity:'PASS',assets_verified:names.length,coast_original_registered_in_central_draft:true,coast_runtime_bound:false,central_remote_readback:'INDEPENDENTLY_VERIFIED_IN_TAKY_ASSETS_PR_2_NOT_NETWORK_POLLED',visual_release_pass:false,main_merge_allowed:false,netlify:'HOLD'},null,2));
