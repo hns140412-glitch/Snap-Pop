@@ -187,6 +187,11 @@
       "id": "ALL-SIX-PRIMARY-REAL-BROWSER-COVERAGE",
       "evidence": "Previous Playwright branch verified the source behavior matrix in Node and rendered only Lori selected end-to-end; did not exercise actual child primary-change UI / art/ledger/reload for five others",
       "correction": "Add 3-viewport six-member real primary-change browser loop for six IDs with real approved image source loaded, actual conversation/reaction, exact one hint, persistence and layout checks; keep source art static and six animation/reaction-art completion OPEN"
+    },
+    {
+      "id": "VISUAL_ID_ACTUAL_OCCLUSION_PREPARATION",
+      "evidence": "Six individual source-visible role cutouts reconstruct exactly but cannot display unseen original body behind props/gear when independently moved",
+      "correction": "Produce per-ID source-SHA-locked 12 source-pixel exposure masks and 6 real motion QA panels with explicit NOT_RESTORED_ART flags, pin full pipeline in CI and retain 18 motion art/36 expression gates OPEN"
     }
   ],
   "gates": {
@@ -225,7 +230,8 @@
     "nova_goggle_boundary": "SOURCE_TRACED_84073_GOGGLE_PLUS_FUR_TO_52390_VISIBLE_GOGGLES_ARTISTIC_QA_HOLD",
     "four_remaining_visible_boundary": "DUBI_INK_TAKE_ZERO_PER_VISUAL_ID_SOURCE_MASKS_REFINED_LOCAL_FULL_RGBA_AND_SEMANTIC_PROBES_PASS_CI_PENDING_ART_QA_HOLD",
     "all6_source_visible_drafts": "6_OF_6_ID_SPECIFIC_SOURCE_ONLY_MASKS_WITH_18_DERIVED_CLEAN_ALPHA_PNG_DRAFTS_NOT_18_APPROVED_MOTION_ASSETS",
-    "all_six_real_primary_journeys": "PASS_6_IDS_X_3_VIEWPORT_REAL_PRIMARY_SELECT_LEDGER_RELOAD_STATIC_APPROVED_IMAGE_SOURCED_REPLY_ONE_HINT_HEAD_96c51cd"
+    "all_six_real_primary_journeys": "PASS_6_IDS_X_3_VIEWPORT_REAL_PRIMARY_SELECT_LEDGER_RELOAD_STATIC_APPROVED_IMAGE_SOURCED_REPLY_ONE_HINT_HEAD_96c51cd",
+    "core6_original_exposure_guides": "CODED_6_VISUAL_IDS_X_2_MOVED_SOURCE_ROLES_12_FULL_CANVAS_EXPOSED_PIXEL_MASKS_6_INDIVIDUAL_QA_PANELS_CI_PENDING_NO_AUTHORED_UNSEEN_BODY"
   },
   "source_provenance": {
     "approved_asset_identity": "onboarding/asset-and-release-gate.json required_assets 22 exact SHA256",

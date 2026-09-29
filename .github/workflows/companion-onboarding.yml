@@ -62,6 +62,15 @@ jobs:
             python onboarding/tools/extract-source-layers.py --source "onboarding/characters/ui_cutouts/$id.png" --spec "onboarding/characters/layer_specs/$id.json" --out "onboarding/visual-prototypes/$id" > "onboarding/visual-prototypes-$id-report.json"
             cat "onboarding/visual-prototypes-$id-report.json" >> "$GITHUB_STEP_SUMMARY"
           done
+      - name: Build original-source-bound individual restoration exposure guides; NOT painted underlays
+        run: |
+          python onboarding/tools/visual-id-occlusion-qa.py --source-root onboarding/characters/ui_cutouts --layer-root onboarding/visual-prototypes --spec-root onboarding/characters/layer_specs --out onboarding/occlusion-qa
+          python onboarding/tests/visual-id-occlusion-qa.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: core6-six-visual-id-twelve-exposure-masks-qa-not-restored-art
+          path: onboarding/occlusion-qa/
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:
           name: core6-six-source-pixel-partition-prototypes-not-release-art
