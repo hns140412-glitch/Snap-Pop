@@ -37,3 +37,6 @@
 
 ## 복사용 NEW CHAT START
 최신 TAKY 기준으로 Snap-Pop 동행탐험 **기존 승인 Core 6 최종 원화 제작**을 이어서 진행해. 먼저 `onboarding/CORE6_RECOVERY_NEW_CHAT_START_LATEST.md`와 `onboarding/HANDOFF_LATEST.md`를 모두 읽고, CURRENT/중앙 소스 → Snap-Pop live main EXACT HEAD → Draft PR #10 최신 HEAD·CI → 승인 원본 22개와 Core 6 Visual ID 원본·SHA → 최신 인터랙티브 원본 레이어 QA 산출물 순서로 복원해. 기록한 SHA를 현재 HEAD로 오인하지 마. CLOSED는 상속하고 신규 증거가 있는 OPEN만 진행해. 가짜 애니 여성 캐릭터 이미지는 전면 무효; 기존 dubi/lori/ink/nova/take/zero 승인 2.5D 원화를 절대 재생성·대체하지 마. 6명 최종 움직임용 원화와 36개 실제 독립 반응 원화 제작을 우선하고, 기존 분리 18개/부분 복원 6개는 시제품으로만 간주해. 원본 레이어 분리·반응 원화·UI 구현은 개별 파일과 실제 실행/미술 QA로 확인하며 사용자에게 디버깅을 넘기지 마. 20명 확장·임의 생산·진척 부풀리기·계획서로 제작 대체 금지. Codex는 Plus 5시간 사용량 고려해 최소 투입. 승인 전 main·Netlify·ROOT 활성화 금지.
+
+## 2026-09-30 nine-pose source QA update
+- Check `onboarding/qa-nine-pose/MANIFEST.json` produced by `onboarding/tools/core6-nine-pose-qa.py`; previous fixed extreme shifts hid intermediate-source alpha gaps. Six individual approved-art WebP nine-frame motion technical QA and six extended source-local underpaint PNGs cover the original visible pixel silhouette across 54 sampled frames. Still 0/18 final motion artist-approved assets and 0/36 hand-illustrated reactions, grip/semantic geometry remains OPEN. Do not load QA animation as production. Keep original six exact Visual IDs and 22 SHA.

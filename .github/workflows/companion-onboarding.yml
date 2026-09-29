@@ -88,6 +88,15 @@ jobs:
           mkdir -p onboarding/qa-original-rig/render-evidence
           python3 -m http.server 4197 --bind 127.0.0.1 --directory onboarding/qa-original-rig > /tmp/core6-rig.log 2>&1 &
           npx playwright test onboarding/tests/core6-motion-preview.spec.js --reporter=line --workers=1
+      - name: Check six real original layer trajectories at all nine interpolated positions (QA only)
+        run: |
+          python onboarding/tools/core6-nine-pose-qa.py
+          python onboarding/tests/core6-nine-pose-qa.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: core6-six-real-original-nine-pose-webp-and-extended-inferred-underpaint-QA-HOLD
+          path: onboarding/qa-nine-pose/
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:
           name: core6-six-actual-approved-originals-18-visible-layers-6-partial-underpaint-interactive-QA-HOLD

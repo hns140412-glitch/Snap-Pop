@@ -1,4 +1,9 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
+## CURRENT OVERRIDE — 2026-09-30 first nine-pose REAL Core6 source-art continuity correction, not approval
+
+- Six SHA-locked approved originals and the existing interactive 30-PNG QA viewer are the inputs; no invented character drawings. The previous fixed two extreme movements correctly had no source-visible transparent holes, but **actual intermediate movement showed NEW gaps** in DUBI/LORI/INK/NOVA/ZERO (TAKE zero). Added separate actual source-local inferred underpaint extension for the missing 9-step pathway, one independent PNG per approved ID, plus one real animated 9-frame WebP per member. Additional patch fill is restricted to originally invisible, originally fully opaque-covered spots; static visible original reconstructions remain byte-exact. 6 x 9 = 54 known QA frames have zero old-source-visible fully transparent holes after this extension. This is a narrower technical source-alpha fact, NOT true hand-to-prop coupling, hidden anatomy, 18 final motion rigs or 36 authored reactions. Hard flat-texture/artistic seams remain HUMAN ART QA OPEN, no auto activation.
+- Code and CI separately inspect all six original file SHA/individual WebP frame count/reproduced underpaint SHA and retain all artistic/release flags as HOLD. Re-check exact HEAD and CI after commit. No Codex, no main/Netlify. USER != DEBUGGER.
+
 ## 2026-09-30 RESTART AUTHORITY POINTER — CORE6 ACTUAL APPROVED ART ONLY
 
 - New chat must read **`onboarding/CORE6_RECOVERY_NEW_CHAT_START_LATEST.md`** first, then this full HANDOFF and exact live main/PR HEAD/CI. This reentry is solely a handoff, not claiming new art. User explicitly prioritizes finishing original six approved Visual IDs (dubi/lori/ink/nova/take/zero); discard unrelated imagined anime woman contact sheet, never use as production input.
