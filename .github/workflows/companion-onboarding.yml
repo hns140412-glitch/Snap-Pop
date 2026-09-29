@@ -20,6 +20,8 @@ jobs:
           node-version: '20'
       - name: Verify exact original assets (fail closed)
         run: node onboarding/tests/asset-integrity.cjs
+      - name: Verify pinned TAKY-ASSETS source pointer and local PWA asset copies
+        run: node onboarding/tests/central-asset-source.cjs
       - name: Verify Core 6 identity, onboarding scope and non-promotion boundaries
         run: node onboarding/tests/crew-contract.cjs
       - name: Verify immutable crew identity, history and evidence boundaries
