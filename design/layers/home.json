@@ -1,0 +1,34 @@
+{
+  "schema": "TAKY_LAYER_CONTRACT_V1",
+  "screen_id": "home",
+  "layers": [
+    {
+      "role": "BACKGROUND",
+      "status": "ASSET_IMPORT_OPEN",
+      "sha256": "f15af01680e2db44ef8af1dff749169f1082ddd15b3760a96da7ff2211eb8259",
+      "source_receipt": "TAKY-LAF-SNAP-HOME-COAST-20260927-A",
+      "target_path": "assets/world/snap_pop_beach_asset.png",
+      "owner": "SNAP_VISUAL"
+    },
+    {
+      "role": "FOREGROUND",
+      "status": "NOT_APPLICABLE",
+      "note": "No separate foreground art is authorized by the current approved coastal background binding."
+    },
+    {
+      "role": "OBJECT",
+      "status": "IMPLEMENTATION_OPEN",
+      "issue": "Current landmark map objects have not passed current Home Golden parity."
+    },
+    {
+      "role": "CHARACTER_SLOT",
+      "status": "IMPLEMENTATION_OPEN",
+      "issue": "Current #15 Home lacks a verified primary approved Visual-ID character slot matching the approved Home composition; #homeRadio is not a substitute."
+    },
+    {
+      "role": "FUNCTION_UI",
+      "status": "IMPLEMENTATION_OPEN",
+      "issue": "Current map layout has not passed current approved Home composition parity."
+    }
+  ]
+}
