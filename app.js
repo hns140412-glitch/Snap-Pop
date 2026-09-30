@@ -10,7 +10,7 @@ function get(k){return new Promise(ok=>{const r=db.transaction("state").objectSt
 function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>{if(k==="active"){snapActiveExploration=!!v;if(!snapActiveExploration)window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}ok()};r.onerror=()=>no(r.error)})}
 function toast(t){$("#toast").textContent=t;$("#toast").classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>$("#toast").classList.remove("show"),1800)}
 function show(id){$(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");const sub=["settings","shop"].includes(id);$("#nav").hidden=sub;if(!sub)lastMain=id;$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.view===id));scrollTo(0,0);if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth()}
-function snapCrewCharacterId(){return 'LEGACY_SNAP_POP:moka'}
+function snapCrewCharacterId(){const localId='moka';return globalThis.TakyCrewIdentityBridge?.resolve?.(localId)?.character_id||'LEGACY_SNAP_POP:'+String(localId)}
 function appendSnapCrewEvidence(eventId,type,evidenceRef,context={}){
  const ev=globalThis.TakyCrewEvidenceRuntime;
  if(!ev?.append)return {ok:false,reason:'CREW_EVIDENCE_RUNTIME_UNAVAILABLE'};
