@@ -24,7 +24,7 @@ jobs:
           node --check snap-pwa-update-v01.js
           node --check vendor/taky/release-contract.js
           node --check vendor/taky/pwa-update-state.js
-      - name: Validate shared runtime contract
+      - name: Validate source-locked V5 living background\n        run: node tests/snap-living-background-v5.test.js\n      - name: Validate shared runtime contract
         run: node tests/shared-runtime-contract.test.js
       - name: Validate Snap human-rubric verification adapter
         run: node tests/snap-rubric-verifier.test.js
@@ -37,7 +37,7 @@ jobs:
           python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/snap-http.log 2>&1 &
           echo $! > /tmp/snap-http.pid
       - name: Run shared runtime browser regression
-        run: npx playwright test tests/shared-runtime.spec.js --reporter=line
+        run: npx playwright test tests/shared-runtime.spec.js tests/snap-living-background-v5.spec.js --reporter=line
       - name: Start temporary self-signed HTTPS loopback for secure-origin QA
         run: |
           openssl req -x509 -newkey rsa:2048 -nodes -days 1 -keyout /tmp/companion-local.key -out /tmp/companion-local.crt -subj "/CN=localhost" -addext "subjectAltName=IP:127.0.0.1,DNS:localhost" > /dev/null 2>&1
