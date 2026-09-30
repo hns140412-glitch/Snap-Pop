@@ -22,6 +22,25 @@
 - Composable 7-group approved final art: 별도 manifest 실제 등록 기준으로만 계산; 빈 manifest를 완료로 간주하지 않음.
 - main / ROOT / Netlify: HOLD.
 
+## 2026-09-30 COMPOSABLE MANIFEST CURRENT
+- 중앙 TAKY `OS/EXPLORATION_CREW_CANONICAL.md`는 main merge `55547a7c4c859a1aae700405fdba4a302a2c20d3`에서 ACTIVE.
+- 현행 Manifest: `onboarding/crew-composable-asset-manifest.v1.json`.
+- Core6 6명은 `members`에 등록됨.
+  - `MASTER_FULL`: 승인 기존 원본 JPEG만 등록.
+  - `PROFILE`: 승인 기존 static cutout만 등록.
+  - `PUPPET_BODY / FACE_STATES / ACTION_PARTS / PEEK_MASK / DEPTH_SHADOW`: OPEN.
+  - 따라서 Core6 `production_eligible=false`, `runtime_fallback_eligible=false` 유지.
+- GUIDE 07~24는 `pending_members` 18명으로만 등록됨.
+  - group SHA + reference-view SHA는 provenance로 보존.
+  - individual source SHA / cutout SHA / mask SHA는 아직 없음.
+  - 7개 composable group 전부 `OPEN_NO_APPROVED_INDIVIDUAL_ASSET`.
+  - ID24 canonical code = `VIVI`.
+- `onboarding/crew-manifest-registry.js`가 Manifest → Asset Engine registry bridge를 담당.
+  - 승인 `PUPPET_BODY:FIELD_NEUTRAL + FACE_STATES:neutral + DEPTH_SHADOW:field_default`가 모두 없으면 member는 fail-closed `null`.
+  - missing asset 때문에 새 그림을 만들거나 다른 캐릭터를 대체하지 않음.
+- 회귀 테스트: `onboarding/tests/crew-engine-pipeline.cjs`.
+- PR #10 exact HEAD는 이 문서에 고정하지 말고 재개 시 remote live HEAD를 반드시 새로 조회.
+
 ## 핵심 원칙
 1. group SHA ≠ individual cutout SHA.
 2. reference-view SHA ≠ individual cutout SHA.
