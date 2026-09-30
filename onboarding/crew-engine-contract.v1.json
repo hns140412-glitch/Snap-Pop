@@ -233,7 +233,9 @@
       "runtime_policy_does_not_mutate_semantic_meaning",
       "reaction_budget_respected",
       "scene_slot_available",
-      "recent_action_repeat_guarded"
+      "recent_action_repeat_guarded",
+      "motion_plan_requires_approved_matching_spec",
+      "reduced_motion_static_composable_fallback"
     ]
   },
   "legacy_migration": {
@@ -288,6 +290,40 @@
       "DOES_NOT_MUTATE_RELATION_OR_AFFINITY",
       "DOES_NOT_GENERATE_DIALOGUE_FINAL_ANSWER",
       "DOES_NOT_ADD_PARALLEL_BEHAVIOR_ENGINE"
+    ]
+  },
+  "motion_gate": {
+    "owner": "UI_RENDERER",
+    "schema": "CREW_MOTION_SPEC_V1",
+    "required": [
+      "approved",
+      "approval_ref",
+      "visual_id_matches_action",
+      "ambient_action_matches_action",
+      "anchors.body",
+      "anchors.action_part",
+      "anchors.equipment",
+      "transition.enter",
+      "transition.exit",
+      "transition.enter_ms",
+      "transition.exit_ms",
+      "timing.action_ms",
+      "timing.hold_ms",
+      "timing.cooldown_ms",
+      "reduced_motion.mode=STATIC_COMPOSABLE",
+      "reduced_motion.preserves_information=true"
+    ],
+    "promotion": [
+      "STATIC_APPROVED_ONLY",
+      "COMPOSABLE_ACTION_APPROVED",
+      "MOTION_RENDER_PLAN_READY"
+    ],
+    "invariants": [
+      "MOTION_SPEC_DOES_NOT_SELECT_OR_GENERATE_ASSETS",
+      "MOTION_SPEC_DOES_NOT_MUTATE_SEMANTIC_ACTION",
+      "MOTION_SPEC_DOES_NOT_MUTATE_RELATION_OR_AFFINITY",
+      "REDUCED_MOTION_RETAINS_SEMANTIC_INFORMATION",
+      "MOTION_READY_DOES_NOT_IMPLY_RELEASE_PASS"
     ]
   }
 }
