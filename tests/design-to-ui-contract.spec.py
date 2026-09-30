@@ -14,6 +14,9 @@ assert r["errors"] == [], r["errors"]
 b=r["blockers"]
 assert "home:GOLDEN_IMPORT_OPEN" in b, b
 assert "home:ASSET_IMPORT_OPEN:BACKGROUND" not in b, b
+html=(ROOT/"index.html").read_text(encoding="utf-8")
+assert 'src="assets/world/snap_pop_beach_asset.png"' in html
+assert 'src="assets/world/golden_world_scene.jpg"' not in html
 assert any(x.startswith("home:IMPLEMENTATION_OPEN:") for x in b), b
 a=json.loads((ROOT/"design/authority-open.json").read_text(encoding="utf-8"))
 assert len(a["screens"])==10
