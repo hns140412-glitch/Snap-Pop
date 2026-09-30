@@ -99,6 +99,25 @@ for(const id of core6){
  for(const g of ['PUPPET_BODY','FACE_STATES','ACTION_PARTS','PEEK_MASK','DEPTH_SHADOW']) assert.equal(m.groups[g].assets.length,0);
 }
 
+// GUIDE 07..24 stay pending: group/reference provenance may be verified, but no individual source/cutout/mask means zero production eligibility.
+assert.equal(Object.keys(manifest.pending_members).length,18);
+assert.equal(manifest.registration_summary.guide_07_24_pending_members,18);
+assert.equal(manifest.registration_summary.pending_group_instances,126);
+assert.equal(manifest.registration_summary.pending_individual_source_verified,0);
+assert.equal(manifest.registration_summary.pending_production_eligible_members,0);
+assert.equal(manifest.registration_summary.id24_canonical_code,'VIVI');
+for(let n=7;n<=24;n++){
+ const key=`guide-${String(n).padStart(2,'0')}`,m=manifest.pending_members[key];
+ assert.equal(m.numeric_visual_id,n);assert.equal(m.visual_id,key);
+ assert.equal(m.group_source_verified,true);assert.equal(m.reference_view_verified,true);
+ assert.equal(m.individual_source_sha256,null);assert.equal(m.individual_source_verified,false);
+ assert.equal(m.cutout_sha256,null);assert.equal(m.mask_spec_sha256,null);
+ assert.equal(m.production_eligible,false);assert.equal(m.runtime_fallback_eligible,false);
+ assert.deepEqual(Object.keys(m.groups),groups);
+ for(const g of groups){assert.equal(m.groups[g].state,'OPEN_NO_APPROVED_INDIVIDUAL_ASSET');assert.equal(m.groups[g].assets.length,0);}
+}
+assert.equal(manifest.pending_members['guide-24'].code,'VIVI');
+
 const fbUi=renderer.renderPlan(cmd,fb);
 const fbTrace=runtimeLog.record({command:cmd,assetPlan:fb,renderPlan:fbUi,fallback_reason:'BOOK_HAND_NOT_APPROVED'});
 assert.equal(fbTrace.fallback_reason,'BOOK_HAND_NOT_APPROVED');

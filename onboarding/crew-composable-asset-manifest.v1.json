@@ -510,6 +510,895 @@
     "open_group_instances": 30,
     "runtime_fallback_eligible_members": 0,
     "production_eligible_members": 0,
-    "registration_rule": "EXISTING_APPROVED_BYTES_ONLY_NO_NEW_ART_NO_PROTOTYPE_PROMOTION"
+    "registration_rule": "EXISTING_APPROVED_BYTES_ONLY_NO_NEW_ART_NO_PROTOTYPE_PROMOTION",
+    "guide_07_24_pending_members": 18,
+    "pending_group_instances": 126,
+    "pending_individual_source_verified": 0,
+    "pending_production_eligible_members": 0,
+    "id24_canonical_code": "VIVI"
+  },
+  "pending_members": {
+    "guide-07": {
+      "numeric_visual_id": 7,
+      "visual_id": "guide-07",
+      "code": "SOLA",
+      "source_group_id": "GUIDE-07-12",
+      "source_group_sha256": "ed84df450b7b3fafce56534fd304d2b02fa628d8c83f1d7635aeadbbd93a72ec",
+      "group_source_verified": true,
+      "reference_view_sha256": "f8c47e96a3eae8d74675164c0e0247b91cf5453faa573902cfab5a163cf8b780",
+      "reference_view_path": "reference_views/07_SOLA_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-08": {
+      "numeric_visual_id": 8,
+      "visual_id": "guide-08",
+      "code": "BELO",
+      "source_group_id": "GUIDE-07-12",
+      "source_group_sha256": "ed84df450b7b3fafce56534fd304d2b02fa628d8c83f1d7635aeadbbd93a72ec",
+      "group_source_verified": true,
+      "reference_view_sha256": "f95e1f801581e7cbad53ad23497db817b0da0ada8d2b230947fe7512e1033c6e",
+      "reference_view_path": "reference_views/08_BELO_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-09": {
+      "numeric_visual_id": 9,
+      "visual_id": "guide-09",
+      "code": "MOCA",
+      "source_group_id": "GUIDE-07-12",
+      "source_group_sha256": "ed84df450b7b3fafce56534fd304d2b02fa628d8c83f1d7635aeadbbd93a72ec",
+      "group_source_verified": true,
+      "reference_view_sha256": "f580490eae9e55b963e0259fa8ed060ad9071db4eb4f29949fcaf72f61624b15",
+      "reference_view_path": "reference_views/09_MOCA_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-10": {
+      "numeric_visual_id": 10,
+      "visual_id": "guide-10",
+      "code": "NIA",
+      "source_group_id": "GUIDE-07-12",
+      "source_group_sha256": "ed84df450b7b3fafce56534fd304d2b02fa628d8c83f1d7635aeadbbd93a72ec",
+      "group_source_verified": true,
+      "reference_view_sha256": "86e390b570e0217ce2da9db510cf85b2eba9acbd0a1c4914f0ee40fd1a9e96a9",
+      "reference_view_path": "reference_views/10_NIA_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-11": {
+      "numeric_visual_id": 11,
+      "visual_id": "guide-11",
+      "code": "KIRO",
+      "source_group_id": "GUIDE-07-12",
+      "source_group_sha256": "ed84df450b7b3fafce56534fd304d2b02fa628d8c83f1d7635aeadbbd93a72ec",
+      "group_source_verified": true,
+      "reference_view_sha256": "af3949ae3c6c2a0b10fe90558b7b83cda9bdb1e0deec66d40b9630a1bc520a89",
+      "reference_view_path": "reference_views/11_KIRO_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-12": {
+      "numeric_visual_id": 12,
+      "visual_id": "guide-12",
+      "code": "PEACH",
+      "source_group_id": "GUIDE-07-12",
+      "source_group_sha256": "ed84df450b7b3fafce56534fd304d2b02fa628d8c83f1d7635aeadbbd93a72ec",
+      "group_source_verified": true,
+      "reference_view_sha256": "eec9959ec09ac7cd50832f28e3cdda569140cc23fb92062adb6adbe5073cb005",
+      "reference_view_path": "reference_views/12_PEACH_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-13": {
+      "numeric_visual_id": 13,
+      "visual_id": "guide-13",
+      "code": "MINT",
+      "source_group_id": "GUIDE-13-18",
+      "source_group_sha256": "2f19b01b366d2a59d5b8e2494dad6edaa32428882dfbcd5daed6c61a7a8fed35",
+      "group_source_verified": true,
+      "reference_view_sha256": "a6f448229c2619a79654f326aa63bc1c05cf829ac27d67fc4312389cf01b2561",
+      "reference_view_path": "reference_views/13_MINT_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-14": {
+      "numeric_visual_id": 14,
+      "visual_id": "guide-14",
+      "code": "TOTO",
+      "source_group_id": "GUIDE-13-18",
+      "source_group_sha256": "2f19b01b366d2a59d5b8e2494dad6edaa32428882dfbcd5daed6c61a7a8fed35",
+      "group_source_verified": true,
+      "reference_view_sha256": "d6f2a287b3077ada8b9abfe730a51a696e46d4dcf147600f38edc724f8515830",
+      "reference_view_path": "reference_views/14_TOTO_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-15": {
+      "numeric_visual_id": 15,
+      "visual_id": "guide-15",
+      "code": "RUNE",
+      "source_group_id": "GUIDE-13-18",
+      "source_group_sha256": "2f19b01b366d2a59d5b8e2494dad6edaa32428882dfbcd5daed6c61a7a8fed35",
+      "group_source_verified": true,
+      "reference_view_sha256": "2c193ae293ff067eaa720c3e9adc47ef1eb9c8675ac77b31bfaed2051fe7bd22",
+      "reference_view_path": "reference_views/15_RUNE_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-16": {
+      "numeric_visual_id": 16,
+      "visual_id": "guide-16",
+      "code": "POPO",
+      "source_group_id": "GUIDE-13-18",
+      "source_group_sha256": "2f19b01b366d2a59d5b8e2494dad6edaa32428882dfbcd5daed6c61a7a8fed35",
+      "group_source_verified": true,
+      "reference_view_sha256": "318a706cfd1a8e7ad6f08bd95c11fe039e464d073ca443453ad953d5971c0dce",
+      "reference_view_path": "reference_views/16_POPO_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-17": {
+      "numeric_visual_id": 17,
+      "visual_id": "guide-17",
+      "code": "MARU",
+      "source_group_id": "GUIDE-13-18",
+      "source_group_sha256": "2f19b01b366d2a59d5b8e2494dad6edaa32428882dfbcd5daed6c61a7a8fed35",
+      "group_source_verified": true,
+      "reference_view_sha256": "a8364ad3eee14717e7acdac6c6e84029b83540d71d739db2549d85c3eede19ef",
+      "reference_view_path": "reference_views/17_MARU_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-18": {
+      "numeric_visual_id": 18,
+      "visual_id": "guide-18",
+      "code": "BORI",
+      "source_group_id": "GUIDE-13-18",
+      "source_group_sha256": "2f19b01b366d2a59d5b8e2494dad6edaa32428882dfbcd5daed6c61a7a8fed35",
+      "group_source_verified": true,
+      "reference_view_sha256": "b8d5e5fb566c327acc19fa7436531738033e1667276606239a216ec9f606bd94",
+      "reference_view_path": "reference_views/18_BORI_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-19": {
+      "numeric_visual_id": 19,
+      "visual_id": "guide-19",
+      "code": "RIN",
+      "source_group_id": "GUIDE-19-24",
+      "source_group_sha256": "ed485ede7b0653b0a9cd70b53a243240aad66429b79eb52ad44d5bdc8181ece1",
+      "group_source_verified": true,
+      "reference_view_sha256": "a7f92958c9d1aca53cd1aca99d9b30635d528ba7fec420a881f1be830d3a0652",
+      "reference_view_path": "reference_views/19_RIN_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-20": {
+      "numeric_visual_id": 20,
+      "visual_id": "guide-20",
+      "code": "LUMI",
+      "source_group_id": "GUIDE-19-24",
+      "source_group_sha256": "ed485ede7b0653b0a9cd70b53a243240aad66429b79eb52ad44d5bdc8181ece1",
+      "group_source_verified": true,
+      "reference_view_sha256": "a38774467c877d979081fc87f05b5b058ae4a8fe721a5c16d4092dd2268c7ae5",
+      "reference_view_path": "reference_views/20_LUMI_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-21": {
+      "numeric_visual_id": 21,
+      "visual_id": "guide-21",
+      "code": "TESS",
+      "source_group_id": "GUIDE-19-24",
+      "source_group_sha256": "ed485ede7b0653b0a9cd70b53a243240aad66429b79eb52ad44d5bdc8181ece1",
+      "group_source_verified": true,
+      "reference_view_sha256": "56d70dc2f3d82b4e24530818b635493147c0b67e9442625ff6cb7445207ebebd",
+      "reference_view_path": "reference_views/21_TESS_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-22": {
+      "numeric_visual_id": 22,
+      "visual_id": "guide-22",
+      "code": "SEL",
+      "source_group_id": "GUIDE-19-24",
+      "source_group_sha256": "ed485ede7b0653b0a9cd70b53a243240aad66429b79eb52ad44d5bdc8181ece1",
+      "group_source_verified": true,
+      "reference_view_sha256": "a3eaa68b303e3f5b9e1e0fd0e1277bdc97448ade161d793b20b2c426c637009a",
+      "reference_view_path": "reference_views/22_SEL_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-23": {
+      "numeric_visual_id": 23,
+      "visual_id": "guide-23",
+      "code": "ZEKE",
+      "source_group_id": "GUIDE-19-24",
+      "source_group_sha256": "ed485ede7b0653b0a9cd70b53a243240aad66429b79eb52ad44d5bdc8181ece1",
+      "group_source_verified": true,
+      "reference_view_sha256": "f1a1e8dd49b985ab1d5d23b2f0217aa602c775c4168c110a1696ccd9e0db2fb9",
+      "reference_view_path": "reference_views/23_ZEKE_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    },
+    "guide-24": {
+      "numeric_visual_id": 24,
+      "visual_id": "guide-24",
+      "code": "VIVI",
+      "source_group_id": "GUIDE-19-24",
+      "source_group_sha256": "ed485ede7b0653b0a9cd70b53a243240aad66429b79eb52ad44d5bdc8181ece1",
+      "group_source_verified": true,
+      "reference_view_sha256": "aa5ed40d63c590f79c54766c397a98083531f92c4d58c9b1f9582cd9d8483236",
+      "reference_view_path": "reference_views/24_VIVI_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_verified": true,
+      "individual_source_sha256": null,
+      "individual_source_verified": false,
+      "cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "approval_ref": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SHA_MANIFEST_V2.json",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "state": "PENDING_INDIVIDUAL_SOURCE_CUTOUT_MASK_APPROVAL",
+      "groups": {
+        "MASTER_FULL": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PROFILE": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_INDIVIDUAL_ASSET",
+          "assets": []
+        }
+      }
+    }
   }
 }
