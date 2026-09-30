@@ -1,0 +1,93 @@
+{
+  "schema": "TAKY_CREW_COMPOSABLE_ASSET_MANIFEST_V1",
+  "contract_version": "CREW_PIPELINE_V1",
+  "manifest_version": "CREW_COMPOSABLE_MANIFEST_V1",
+  "runtime_schema_version": "CREW_RUNTIME_TRACE_V1",
+  "status": "DRAFT_PR_WORKING_MANIFEST_NOT_CANONICAL_WRITE",
+  "authority": {
+    "engine_contract": "onboarding/crew-engine-contract.v1.json",
+    "runtime_trace": "onboarding/crew-runtime-log.js",
+    "central_canonical_status": "MIGRATION_OPEN",
+    "main_root_netlify": "HOLD"
+  },
+  "asset_groups": [
+    "MASTER_FULL",
+    "PROFILE",
+    "PUPPET_BODY",
+    "FACE_STATES",
+    "ACTION_PARTS",
+    "PEEK_MASK",
+    "DEPTH_SHADOW"
+  ],
+  "shared_equipment": [
+    "BOOK",
+    "MAP",
+    "NOTEBOOK",
+    "PEN",    "RADIO",
+    "MAGNIFIER",
+    "BAG",
+    "COMPASS"
+  ],
+  "required_member_provenance": [
+    "visual_id",
+    "source_sha256",
+    "source_sha_verified",
+    "approval_ref"
+  ],
+  "required_asset_fields": [
+    "group",
+    "key",
+    "path",
+    "sha256",
+    "approved",
+    "visual_id",
+    "source_sha256",
+    "approval_ref"
+  ],
+  "rules": {
+    "approved_source_only": true,
+    "name_only_generation_forbidden": true,
+    "visual_id_source_sha_mismatch": "FAIL_CLOSED",
+    "missing_part_allows_generation": false,
+    "cross_character_part_substitution": false,    "relation_or_affinity_selects_asset": false,
+    "safe_fallback": {
+      "same_character_only": true,
+      "body": "PUPPET_BODY:FIELD_NEUTRAL",
+      "face": "FACE_STATES:neutral",
+      "equipment": [],
+      "action_parts": [],
+      "depth": "DEPTH_SHADOW:field_default",
+      "generated": false
+    }
+  },
+  "ambient_actions": [
+    "READ_BOOK",
+    "READ_MAP",
+    "WRITE_NOTE",
+    "CHECK_COMPASS",
+    "ORGANIZE_BAG",
+    "USE_MAGNIFIER",
+    "USE_RADIO",
+    "REST"
+  ],
+  "legacy_3_plus_6": {
+    "state": "LEGACY_3_PLUS_6_ASSET_CONTRACT_HOLD_PENDING_COMPOSABLE_ASSET_MIGRATION",
+    "production_authority": false,    "regression_only": true,
+    "mass_production_forbidden": true,
+    "delete_before_composable_gate_proven": false,
+    "legacy_slots": [
+      "IDENTITY_BODY",
+      "PERSONALITY_PROP",
+      "THEME_GEAR",
+      "OBSERVE",
+      "LISTEN",
+      "IDEA",
+      "REACT",
+      "WAIT",
+      "COMPLETE"
+    ]
+  },
+  "members": {},
+  "shared_assets": {},
+  "note": "This manifest defines the current composable schema and authority boundary. Empty member/shared asset maps mean no new art approval is inferred."
+}

@@ -2,6 +2,9 @@
   "schema": "TAKY_SNAP_VISUAL_ID_PRODUCTION_STANDARD_V1",
   "owner": "SNAP_POP_ONBOARDING_ISOLATED_CANDIDATE",
   "scope": "PROCESS_CONTRACT_NOT_ART_OR_USER_VISUAL_APPROVAL",
+  "legacyContractState": "LEGACY_3_PLUS_6_ASSET_CONTRACT_HOLD_PENDING_COMPOSABLE_ASSET_MIGRATION",
+  "productionAuthority": false,
+  "replacementAuthority": "onboarding/crew-composable-asset-manifest.v1.json",
   "governanceCycle": [
     "HUMAN_INTENT",
     "THINK_AGAIN",

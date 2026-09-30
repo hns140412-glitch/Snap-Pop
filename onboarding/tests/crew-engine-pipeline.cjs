@@ -3,6 +3,11 @@ const assert=require('node:assert/strict');
 const behavior=require('../crew-semantic-behavior.js');
 const asset=require('../crew-asset-engine.js');
 const renderer=require('../crew-ui-renderer.js');
+const runtimeLog=require('../crew-runtime-log.js');
+const contract=require('../crew-engine-contract.v1.json');
+const manifest=require('../crew-composable-asset-manifest.v1.json');
+const legacyProduction=require('../visual-id-production-contract.json');
+const legacyBatch=require('../visual-id-batch-production.v1.json');
 const A=(visual_id,src,extra={})=>({visual_id,src,approved:true,...extra});
 const belo={
  visual_id:'belo',source_sha:'sha-belo',source_sha_verified:true,approval_ref:'APPROVED-BELO',
@@ -22,6 +27,12 @@ assert.equal(plan.body.src,'belo/body-neutral.png');assert.equal(plan.face.src,'
 assert.equal(plan.action_parts[0].src,'belo/book-hand.png');assert.equal(plan.equipment[0].src,'shared/book.png');
 const ui=renderer.renderPlan(cmd,plan);assert.equal(ui.semantic_preserved,true);assert.equal(ui.ambient_action,'READ_BOOK');
 assert.equal(ui.relation_mutation,false);assert.equal(ui.affinity_mutation,false);
+const trace=runtimeLog.record({command:cmd,assetPlan:plan,renderPlan:ui});
+assert.equal(trace.semantic_action_command.ambient_action,'READ_BOOK');
+assert.equal(trace.selected_asset_composition.fallback,false);
+assert.equal(trace.renderer_result.semantic_preserved,true);
+assert.deepEqual(trace.gate_verdicts,{behavior_gate:true,asset_gate:true,integration_gate:true});
+assert.equal(trace.invariants.relation_mutated,false);assert.equal(trace.invariants.affinity_mutated,false);
 
 // missing approved book hand => safe same-character neutral fallback, never new art
 const missing={...belo,action_parts:{}};
@@ -41,4 +52,25 @@ assert.equal(asset.resolve(cmd,{member:()=>({...belo,source_sha_verified:false})
 assert.equal(behavior.command({...cmd,asset_path:'x.png'}),null);
 assert.equal(behavior.command({character_id:'belo',role:'MAIN',relation_state:'KNOWN',behavior_state:'OBSERVE',interaction_mode:'SILENT',ambient_action:'READ_BOOK'}),null);
 
-console.log('Crew Behavior/Asset/Integration gates: PASS');
+// contract / manifest / runtime pointer agreement
+assert.equal(contract.contract_version,manifest.contract_version);
+assert.equal(contract.manifest_version,manifest.manifest_version);
+assert.equal(contract.runtime_schema_version,manifest.runtime_schema_version);
+assert.equal(runtimeLog.contractVersion,manifest.contract_version);
+assert.equal(runtimeLog.manifestVersion,manifest.manifest_version);
+assert.equal(runtimeLog.version,manifest.runtime_schema_version);
+assert.deepEqual(contract.asset_engine.groups,manifest.asset_groups);
+assert.deepEqual(contract.asset_engine.shared_equipment,manifest.shared_equipment);
+assert.deepEqual(contract.behavior_engine.ambient_actions,manifest.ambient_actions);
+assert.equal(legacyProduction.productionAuthority,false);
+assert.equal(legacyBatch.productionAuthority,false);
+assert.equal(legacyProduction.legacyContractState,manifest.legacy_3_plus_6.state);
+assert.equal(legacyBatch.legacyContractState,manifest.legacy_3_plus_6.state);
+
+const fbUi=renderer.renderPlan(cmd,fb);
+const fbTrace=runtimeLog.record({command:cmd,assetPlan:fb,renderPlan:fbUi,fallback_reason:'BOOK_HAND_NOT_APPROVED'});
+assert.equal(fbTrace.fallback_reason,'BOOK_HAND_NOT_APPROVED');
+assert.equal(fbTrace.selected_asset_composition.visual_id,'belo');
+assert.deepEqual(fbTrace.gate_verdicts,{behavior_gate:true,asset_gate:true,integration_gate:true});
+
+console.log('Crew Behavior/Asset/Integration + Manifest/Runtime version gates: PASS');

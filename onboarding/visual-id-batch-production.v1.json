@@ -1,6 +1,9 @@
 {
   "schema": "TAKY_VISUAL_ID_BATCH_PRODUCTION_V1",
   "scope": "ISOLATED_SNAP_ONBOARDING_ART_PRODUCTION_NOT_RELEASE",
+  "legacyContractState": "LEGACY_3_PLUS_6_ASSET_CONTRACT_HOLD_PENDING_COMPOSABLE_ASSET_MIGRATION",
+  "productionAuthority": false,
+  "replacementAuthority": "onboarding/crew-composable-asset-manifest.v1.json",
   "authority": [
     "CORE6_RECOVERY_NEW_CHAT_START_LATEST.md",
     "HANDOFF_LATEST.md",

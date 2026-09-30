@@ -1,6 +1,9 @@
 {
   "schema": "TAKY_CREW_ENGINE_CONTRACT_V1",
   "status": "DRAFT_PR_WORKING_CONTRACT_NOT_CANONICAL_WRITE",
+  "contract_version": "CREW_PIPELINE_V1",
+  "manifest_version": "CREW_COMPOSABLE_MANIFEST_V1",
+  "runtime_schema_version": "CREW_RUNTIME_TRACE_V1",
   "architecture": [
     "EXPLORATION_CREW_CANONICAL_LOGIC",
     "CHARACTER_BEHAVIOR_ENGINE",
