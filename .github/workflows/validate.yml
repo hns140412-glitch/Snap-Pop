@@ -47,6 +47,8 @@ jobs:
         run: node tests/crew-identity-bridge.spec.js
       - name: Validate shared Crew browser behavior
         run: node tests/shared-crew-browser-behavior.spec.js
+      - name: Validate blessing badge lock
+        run: node tests/snap-blessing-lock.spec.js
       - name: Pre-Gate JavaScript syntax check
         run: |
           node --check app.js
