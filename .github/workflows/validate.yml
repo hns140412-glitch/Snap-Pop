@@ -22,12 +22,18 @@ jobs:
           node --check snap-bridge.js
           node --check snap-release-v01.js
           node --check snap-pwa-update-v01.js
+          node --check snap-blessing-gate.js
+          node --check snap-badge-read-bridge-v01.js
           node --check vendor/taky/release-contract.js
           node --check vendor/taky/pwa-update-state.js
       - name: Validate shared runtime contract
         run: node tests/shared-runtime-contract.test.js
       - name: Validate Snap human-rubric verification adapter
         run: node tests/snap-rubric-verifier.test.js
+      - name: Validate badge-gated blessing rules
+        run: node tests/snap-blessing-gate.test.js
+      - name: Validate authenticated badge reader bridge
+        run: node tests/snap-badge-read-bridge.test.js
       - name: Install Playwright
         run: |
           npm install --no-save @playwright/test@1.55.0
