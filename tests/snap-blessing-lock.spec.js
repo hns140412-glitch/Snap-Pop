@@ -6,5 +6,9 @@ x=b.evaluate({blessing_id:'B1',required_badge_ids:['SP-BADGE-001']},['SP-BADGE-0
 assert.equal(x.use_allowed,true);
 x=b.evaluate({blessing_id:'B1'},[]);
 assert.equal(x.unlocked,true);
+let y=b.evaluateApproved({blessing_id:'B1',approved:false},['SP-BADGE-001']);
+assert.equal(y.use_allowed,false);assert.equal(y.reason,'APPROVED_BLESSING_RULE_REQUIRED');
+y=b.evaluateApproved({blessing_id:'B1',approved:true,authority_ref:'TAKY_BADGE_POLICY',required_badge_ids:['SP-BADGE-001']},['SP-BADGE-001']);
+assert.equal(y.use_allowed,true);
 assert.equal(b.automaticUnlockFromUnapprovedData,false);
 console.log(JSON.stringify({gate:'SNAP_BLESSING_LOCK',pass:true},null,2));
