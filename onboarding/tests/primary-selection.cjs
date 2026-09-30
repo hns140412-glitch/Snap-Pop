@@ -8,6 +8,8 @@ assert.ok(raw,'Inline runtime unavailable');
 const script=raw.replace(/render\(\);\s*$/,'');assert.notEqual(script,raw,'Boot render anchor missing');
 const crewSource=fs.readFileSync(path.join(root,'crew-state-runtime.js'),'utf8');
 const behaviorSource=fs.readFileSync(path.join(root,'crew-behavior-runtime.js'),'utf8');
+const semanticSource=fs.readFileSync(path.join(root,'crew-semantic-behavior.js'),'utf8');
+const policySource=fs.readFileSync(path.join(root,'crew-runtime-policy.js'),'utf8');
 const interactionSource=fs.readFileSync(path.join(root,'crew-interaction-runtime.js'),'utf8');
 const visualSource=fs.readFileSync(path.join(root,'visual-id-runtime.js'),'utf8');
 const presenterSource=fs.readFileSync(path.join(root,'crew-visual-presenter.js'),'utf8');
@@ -15,7 +17,7 @@ const draft=new Map();const view={innerHTML:'',contains(){return false},querySel
 function context(){const ctx=vm.createContext({
  console,localStorage:{getItem:k=>draft.has(k)?draft.get(k):null,setItem:(k,v)=>draft.set(k,v)},
  document:{getElementById:id=>id==='app'?app:view,querySelectorAll:()=>[]},URL:{revokeObjectURL(){}}
- });ctx.window=ctx;vm.runInContext(crewSource,ctx,{timeout:2000});vm.runInContext(behaviorSource,ctx,{timeout:2000});vm.runInContext(interactionSource,ctx,{timeout:2000});vm.runInContext(visualSource,ctx,{timeout:2000});vm.runInContext(presenterSource,ctx,{timeout:2000});vm.runInContext(script,ctx,{timeout:2000});return ctx;}
+ });ctx.window=ctx;vm.runInContext(crewSource,ctx,{timeout:2000});vm.runInContext(behaviorSource,ctx,{timeout:2000});vm.runInContext(semanticSource,ctx,{timeout:2000});vm.runInContext(policySource,ctx,{timeout:2000});vm.runInContext(interactionSource,ctx,{timeout:2000});vm.runInContext(visualSource,ctx,{timeout:2000});vm.runInContext(presenterSource,ctx,{timeout:2000});vm.runInContext(script,ctx,{timeout:2000});return ctx;}
 let ctx=context();const call=expr=>vm.runInContext(expr,ctx,{timeout:2000});
 const snap=()=>JSON.parse(call('JSON.stringify(state)'));
 call('go(1)');call('next()');assert.equal(snap().selectionPhase,'crew');assert.ok(snap().crewLedger.members.lori.firstMetAt);
