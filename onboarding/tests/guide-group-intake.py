@@ -9,7 +9,7 @@ def module(name,path):
 g=module('group_intake',root/'tools/guide-group-intake.py')
 b=module('art_batch',root/'tools/visual-id-art-batch.py')
 evidence=g.check(root)
-assert evidence['mapped_members']==18 and not evidence['group_bytes_verified_this_run']
+assert evidence['mapped_members']==18 and evidence['individual_reference_views_ready']==18 and not evidence['group_bytes_verified_this_run']
 full=b.plan(root,include_guide=True)
 assert full['scope']=='FULL_24_APPROVED_GROUP_INTAKE'
 assert len(full['members'])==24 and full['total_required']==216
@@ -17,7 +17,9 @@ assert [x['visual_id'] for x in full['members'][:6]]==['dubi','lori','ink','nova
 additional=full['members'][6:]
 assert [x['visual_id'] for x in additional]==[f'guide-{n:02d}' for n in range(7,25)]
 assert all(x['status']=='GROUP_SOURCE_LOCKED_PER_MEMBER_CUTOUT_MASK_OPEN' and
- x['source_lock'] is None and x['verified_final_art_count']==0 for x in additional)
+ x['source_lock'] is None and x['verified_final_art_count']==0 and
+ x['source_reference_view']['not_individual_original'] and x['source_reference_view']['not_final_art'] and
+ len(x['source_reference_view']['sha256'])==64 for x in additional)
 assert additional[-1]['code']=='VIVI' and additional[-1]['numeric_visual_id']==24
 assert all(x['numeric_visual_id']>=19 for x in additional[-6:])
 assert len({x['source_group_lock']['sha256'] for x in additional})==3

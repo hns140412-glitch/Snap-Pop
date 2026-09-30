@@ -57,16 +57,22 @@ def guide_pending(root,only_id=None):
     evidence=module.check(root)
     assert evidence['mapped_members']==18,'GUIDE_18_SOURCE_MAPPINGS_MISSING'
     data=module.load(root);groups={x['group_id']:x for x in data['source_groups']}
+    refs=load(root/'guide-07-24-reference-view-manifest.v1.json')
+    ref_by_id={x['visual_id']:x for x in refs['members']}
     c=config(root);result=[]
     for member in data['members']:
         id=member['pipeline_key']
         if only_id and only_id!=id:continue
         g=groups[member['source_group_id']]
+        rv=ref_by_id[member['visual_id']]
         result.append({'visual_id':id,'numeric_visual_id':member['visual_id'],
           'code':member['code'],'name_ko':member['name_ko'],
           'source_group_lock':{'sha256':g['sha256'],'zip_entry':g['library_zip_entry'],
                                'panel_position':member['panel_position_left_to_right'],
                                'scope':'GROUP_NOT_PER_MEMBER'},
+          'source_reference_view':{'sha256':rv['reference_view_sha256'],'path':rv['reference_view_path'],
+                                   'pixel_box':rv['exact_source_pixel_box'],'status':rv['status'],
+                                   'not_individual_original':True,'not_final_art':True},
           'outputs':slots(c,id),'required_art_count':9,'verified_final_art_count':0,
           'status':'GROUP_SOURCE_LOCKED_PER_MEMBER_CUTOUT_MASK_OPEN',
           'source_lock':None,'active_runtime':False,'release_approved':False})

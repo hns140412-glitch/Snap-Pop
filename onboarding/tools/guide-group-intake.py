@@ -13,7 +13,12 @@ def load(root=ROOT):
     return json.loads((root/'guide-07-24-group-intake.v1.json').read_text(encoding='utf8'))
 def check(root=ROOT,zip_path=None):
     data=load(root)
+    refs=json.loads((root/'guide-07-24-reference-view-manifest.v1.json').read_text(encoding='utf8'))
     assert data['schema']=='TAKY_SNAP_GUIDE_07_24_APPROVED_GROUP_INTAKE_V1'
+    assert refs['schema']=='TAKY_GUIDE_INDIVIDUAL_REFERENCE_VIEWS_V1'
+    assert refs['status']=='GROUP_PIXEL_CROPS_ONLY_NOT_APPROVED_INDEPENDENT_ORIGINALS_NOT_FINAL_ART'
+    assert refs['controls']['reference_crop_is_not_cutout'] and refs['controls']['reference_crop_is_not_final_art']
+    assert len(refs['members'])==18
     assert data['hard_gates']['core6_ids_immutable']==list(CORE)
     assert data['hard_gates']['special_human_numeric_ids']==list(range(19,25))
     assert data['hard_gates']['numeric_24_code']=='VIVI'
@@ -25,9 +30,15 @@ def check(root=ROOT,zip_path=None):
         g=groups[key]
         assert g['sha256']==EXPECTED[key] and g['source_scope']=='GROUP_IMAGE_EXACT_BYTES_NOT_INDIVIDUAL_ART'
         assert isinstance(g['byte_size'],int) and g['byte_size']>1000
+    ref_by_id={x['visual_id']:x for x in refs['members']}
     for i,m in enumerate(data['members']):
         number=i+7
         assert m['visual_id']==number and m['pipeline_key']==f'guide-{number:02d}'
+        r=ref_by_id[number]
+        assert r['pipeline_key']==m['pipeline_key'] and r['code']==m['code'] and r['group_id']==m['source_group_id']
+        assert r['status']=='EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART'
+        assert len(r['reference_view_sha256'])==64 and r['approved_individual_cutout_sha256'] is None
+        assert r['mask_spec_sha256'] is None and r['independent_art_sha256'] is None
         assert m['code']==CODES[i] and m['source_group_id']==GROUPS[i//6]
         assert m['source_group_sha256']==groups[m['source_group_id']]['sha256']
         assert m['panel_position_left_to_right']==i%6+1
@@ -57,8 +68,9 @@ def check(root=ROOT,zip_path=None):
                 assert hashlib.sha256(contents).hexdigest()==g['sha256'],'APPROVED_GROUP_SHA_DRIFT'
         binary_verified=True
     return {'group_manifest_valid':True,'group_bytes_verified_this_run':binary_verified,
-          'approved_group_ids':list(GROUPS),'mapped_members':18,'per_member_source_ready':0,
-          'individual_final_art_sha_ready':0,'core6_unchanged':True,'active_roster_changed':False,
+          'approved_group_ids':list(GROUPS),'mapped_members':18,'individual_reference_views_ready':18,
+          'per_member_source_ready':0,'individual_final_art_sha_ready':0,
+          'core6_unchanged':True,'active_roster_changed':False,
           'root_activation':False,'main_merge':False,'netlify':False}
 if __name__=='__main__':
     cli=argparse.ArgumentParser()
