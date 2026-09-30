@@ -45,6 +45,11 @@
   - 시작 상태는 SHA/approval ref `null`, `OPEN`; 실제 파일 바이트 SHA + 승인 참조가 일치하기 전 READY 금지.
   - 자동/이름기반 생성, 타 캐릭터 픽셀 재사용, QA preview final 승격 금지.
 - P0 gate: `onboarding/crew-p0-production-gate.js`; 현재 READY output 0/18, READY member 0/6가 정상 상태.
+- P0 등록기: `onboarding/crew-p0-register.js`.
+  - 기본 `--mode audit`; 현재 18/18 fixed-path PNG가 없으므로 모두 MISSING이 정상.
+  - 등록은 정해진 path의 1122×1402 8-bit RGBA PNG + 실제 SHA + approval ref가 있어야 proposal 가능.
+  - `--apply` 없이는 Manifest/contract를 변경하지 않으며, `--apply` 시에도 같은 Visual ID/source SHA만 등록.
+  - 파일 누락/경로 불일치/크기·PNG 형식 불일치/approval ref 누락 시 FAIL CLOSED.
 - PR #10 exact HEAD는 이 문서에 고정하지 말고 재개 시 remote live HEAD를 반드시 새로 조회.
 
 ## 핵심 원칙

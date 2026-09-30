@@ -60,6 +60,15 @@ jobs:
           name: crew-core6-p0-production-gate
           path: onboarding/qa/crew-p0-production-gate.json
           if-no-files-found: error
+      - name: Verify P0 registration tool cannot promote missing/unapproved files
+        run: |
+          node onboarding/tests/crew-p0-register.cjs
+          node onboarding/crew-p0-register.js --mode audit > onboarding/qa/crew-p0-registration-audit.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: crew-core6-p0-registration-audit
+          path: onboarding/qa/crew-p0-registration-audit.json
+          if-no-files-found: error
       - name: Verify Visual ID to asset/scene/interaction production gate (fail closed)
         run: node onboarding/tests/visual-id-production.cjs
       - name: Verify Visual ID registration-to-UI production workflow and repeatable work orders
