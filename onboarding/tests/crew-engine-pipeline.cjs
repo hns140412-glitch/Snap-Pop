@@ -7,6 +7,7 @@ const behavior=require('../crew-semantic-behavior.js');
 const asset=require('../crew-asset-engine.js');
 const renderer=require('../crew-ui-renderer.js');
 const runtimeLog=require('../crew-runtime-log.js');
+const manifestRegistry=require('../crew-manifest-registry.js');
 const contract=require('../crew-engine-contract.v1.json');
 const manifest=require('../crew-composable-asset-manifest.v1.json');
 const legacyProduction=require('../visual-id-production-contract.json');
@@ -117,6 +118,27 @@ for(let n=7;n<=24;n++){
  for(const g of groups){assert.equal(m.groups[g].state,'OPEN_NO_APPROVED_INDIVIDUAL_ASSET');assert.equal(m.groups[g].assets.length,0);}
 }
 assert.equal(manifest.pending_members['guide-24'].code,'VIVI');
+
+// Real current manifest must fail closed because Core6 lack approved PUPPET_BODY + neutral FACE + DEPTH_SHADOW.
+const currentRegistry=manifestRegistry.create(manifest);
+assert.ok(currentRegistry);
+for(const id of core6) assert.equal(currentRegistry.member(id),null);
+assert.equal(currentRegistry.member('guide-07'),null);
+
+// Synthetic fully-approved composable member proves Manifest → Registry → Asset Engine bridge.
+const full=JSON.parse(JSON.stringify(manifest));
+const sm=full.members.dubi;sm.runtime_fallback_eligible=true;sm.production_eligible=true;
+const rec=(group,key,p)=>({group,key,path:p,sha256:'a'.repeat(64),approved:true,visual_id:'dubi',source_sha256:sm.source_sha256,approval_ref:sm.approval_ref});
+sm.groups.PUPPET_BODY={state:'APPROVED',assets:[rec('PUPPET_BODY','FIELD_NEUTRAL','dubi/body.png')]};
+sm.groups.FACE_STATES={state:'APPROVED',assets:[rec('FACE_STATES','neutral','dubi/neutral.png'),rec('FACE_STATES','observe','dubi/observe.png')]};
+sm.groups.ACTION_PARTS={state:'APPROVED',assets:[rec('ACTION_PARTS','compass_hand','dubi/compass-hand.png')]};
+sm.groups.DEPTH_SHADOW={state:'APPROVED',assets:[rec('DEPTH_SHADOW','field_default','dubi/depth.png')]};
+full.shared_assets.COMPASS={group:'SHARED_EQUIPMENT',key:'COMPASS',path:'shared/compass.png',sha256:'b'.repeat(64),approved:true,shared:true,visual_id:'shared',approval_ref:'SHARED_APPROVED'};
+const mr=manifestRegistry.create(full);assert.ok(mr);assert.ok(mr.member('dubi'));
+const manifestCmd=behavior.ambient({character_id:'dubi',relation_state:'KNOWN',ambient_action:'CHECK_COMPASS'});
+const manifestPlan=asset.resolve(manifestCmd,mr);assert.ok(manifestPlan);assert.equal(manifestPlan.fallback,false);
+assert.equal(manifestPlan.body.src,'dubi/body.png');assert.equal(manifestPlan.face.src,'dubi/observe.png');
+assert.equal(manifestPlan.action_parts[0].src,'dubi/compass-hand.png');assert.equal(manifestPlan.equipment[0].src,'shared/compass.png');
 
 const fbUi=renderer.renderPlan(cmd,fb);
 const fbTrace=runtimeLog.record({command:cmd,assetPlan:fb,renderPlan:fbUi,fallback_reason:'BOOK_HAND_NOT_APPROVED'});
