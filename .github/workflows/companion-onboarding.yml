@@ -74,6 +74,8 @@ jobs:
             onboarding/qa/visual-id-art-batch-plan.json
             onboarding/qa/visual-id-art-batch-audit.json
           if-no-files-found: error
+      - name: Verify GUIDE pipeline resume state
+        run: python onboarding/tests/guide-pipeline-resume-state.py
       - name: Verify logic-only hold policy while image generation is unavailable
         run: |
           python onboarding/tests/visual-id-logic-only-mode.py
