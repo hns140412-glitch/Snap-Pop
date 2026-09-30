@@ -48,6 +48,16 @@ jobs:
           path: test-results/snap-living-coast-*.png
           if-no-files-found: error
           retention-days: 7
+      - name: Upload Snap coast living-background visual gate frames
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snap-coast-living-background-visual-gate
+          path: |
+            test-results/snap-coast-live-390x844.png
+            test-results/snap-coast-reduced-motion-390x844.png
+          if-no-files-found: error
+          retention-days: 7
       - name: Start temporary self-signed HTTPS loopback for secure-origin QA
         run: |
           openssl req -x509 -newkey rsa:2048 -nodes -days 1 -keyout /tmp/companion-local.key -out /tmp/companion-local.crt -subj "/CN=localhost" -addext "subjectAltName=IP:127.0.0.1,DNS:localhost" > /dev/null 2>&1
