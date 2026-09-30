@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+'use strict';
+const assert=require('node:assert/strict');
+const semantic=require('../crew-semantic-behavior.js');
+const policy=require('../crew-runtime-policy.js');
+assert.equal(policy.version,'CREW_RUNTIME_POLICY_V1');
+const ambient=semantic.ambient({character_id:'belo',relation_state:'KNOWN',ambient_action:'READ_BOOK'});
+let r=policy.evaluate({command:ambient,occupied_slots:['MID_LEFT'],recent_action_keys:[]});
+assert.equal(r.ok,true);assert.equal(r.scene_slot,'MID_RIGHT');assert.equal(r.interruptibility,'IMMEDIATE');
+assert.equal(r.cooldown_key,'belo:AMBIENT:READ_BOOK');
+r=policy.evaluate({command:ambient,recent_action_keys:['belo:AMBIENT:READ_BOOK']});
+assert.equal(r.ok,false);assert(r.rejected_reasons.includes('RECENT_ACTION_REPEAT'));
+r=policy.evaluate({command:ambient,usage:{ambient_active:2}});
+assert.equal(r.ok,false);assert(r.rejected_reasons.includes('AMBIENT_BUDGET_EXHAUSTED'));
+const guide=semantic.command({character_id:'belo',role:'MAIN',relation_state:'KNOWN',behavior_state:'GUIDE',interaction_mode:'TEXT_AND_VOICE',dialogue_intent:'CURIOUS_FOLLOWUP'});
+r=policy.evaluate({command:guide,child_response_state:'STUCK',recent_dialogue_intents:['CURIOUS_FOLLOWUP'],usage:{foreground_reactions:0,spoken_dialogue:0,overlay:0}});
+assert.equal(r.ok,true);assert.equal(r.dialogue_intent,'WAIT_WITHOUT_PRESSURE');assert.equal(r.interruptibility,'AFTER_SHORT_UNIT');
+assert(['FG_LEFT','FG_RIGHT'].includes(r.scene_slot));
+r=policy.evaluate({command:guide,usage:{foreground_reactions:1,spoken_dialogue:1,overlay:1}});
+assert.equal(r.ok,false);assert(r.rejected_reasons.length>=3);
+assert.equal(policy.selectDialogueIntent({child_response_state:'COMPLETE',recent_dialogue_intents:['COMPLETE_WITHOUT_OVERPRAISE']}),'ACKNOWLEDGE_EFFORT');
+console.log('Crew runtime policy reaction-budget/interrupt/repetition/scene/dialogue gates: PASS');
