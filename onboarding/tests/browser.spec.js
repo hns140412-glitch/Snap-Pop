@@ -11,6 +11,7 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   await expect(page.locator('#app')).toHaveAttribute('data-step','0');
   await expect(page.locator('.welcome-cta')).toBeVisible();await capture('00-welcome');
   expect(await page.evaluate(()=>!!globalThis.CompanionCrewState)).toBe(true);
+  expect(await page.evaluate(()=>!!globalThis.CrewRuntimePolicy && !!globalThis.CrewSemanticBehavior)).toBe(true);
   const visualGate=await page.evaluate(()=>({ids:globalThis.CompanionVisualAssets.memberIds,states:globalThis.CompanionVisualAssets.memberIds.map(id=>globalThis.CompanionVisualAssets.renderPlan(id))}));
   expect(visualGate.ids).toEqual(['dubi','lori','ink','nova','take','zero']);
   expect(visualGate.states.every(x=>x.staticPreviewReady&&!x.actionReady&&!x.releaseReady)).toBe(true);
@@ -60,6 +61,9 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-visual-id','lori');
   await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-reaction-state','WAIT_CHILD');
   await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-art-readiness','STATIC_ONLY');
+  await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-runtime-policy','CREW_RUNTIME_POLICY_V1');
+  await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-scene-slot','FG_RIGHT');
+  await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-interruptibility','PROTECTED');
   await expect(page.locator('[data-approved-crew-art] img')).toHaveAttribute('src','characters/ui_cutouts/lori.png');
   await expect.poll(()=>page.locator('[data-approved-crew-art] img').evaluate(img=>img.complete&&img.naturalWidth>0),{timeout:10000}).toBe(true);
   await page.locator('#crew-radio-scene').selectOption('description');
@@ -68,10 +72,13 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   await expect(page.locator('[data-child-authored]')).toHaveText('폭포 소리가 크게 들려요 <안전>');
   await expect(page.locator('[data-crew-reply]')).toHaveText('네가 느낀 걸 그대로 말해도 좋아.');
   await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-reaction-state','SHORT_REACTION');
+  await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-interruptibility','AFTER_SHORT_UNIT');
+  await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-dialogue-intent','CURIOUS_FOLLOWUP');
   await expect(page.locator('[data-approved-crew-art] img')).toHaveAttribute('src','characters/ui_cutouts/lori.png');
   await page.getByRole('button',{name:'힌트 하나 듣기'}).click();
   await expect(page.locator('[data-one-hint]')).toContainText('눈에 들어온 장면 하나만');
   await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-reaction-state','ONE_REQUESTED_HINT');
+  await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-dialogue-intent','RETURN_INITIATIVE');
   await expect(page.getByRole('button',{name:'힌트 하나 듣기'})).toHaveCount(0);
   const visualLayout=await page.locator('[data-approved-crew-art] img').evaluate(el=>{
     const r=el.getBoundingClientRect(),dialog=el.closest('.crew-radio-panel').getBoundingClientRect();
