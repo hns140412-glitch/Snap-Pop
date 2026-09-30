@@ -40,6 +40,16 @@ jobs:
           name: crew-composable-7-group-readiness
           path: onboarding/qa/crew-composable-readiness.json
           if-no-files-found: error
+      - name: Build current composable work queue without generating art
+        run: |
+          node onboarding/tests/crew-composable-work-queue.cjs
+          node onboarding/crew-composable-work-queue.js --out onboarding/qa/crew-composable-work-queue.json > /dev/null
+          cat onboarding/qa/crew-composable-work-queue.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: crew-composable-current-work-queue
+          path: onboarding/qa/crew-composable-work-queue.json
+          if-no-files-found: error
       - name: Verify Visual ID to asset/scene/interaction production gate (fail closed)
         run: node onboarding/tests/visual-id-production.cjs
       - name: Verify Visual ID registration-to-UI production workflow and repeatable work orders
