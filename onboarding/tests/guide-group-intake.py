@@ -16,11 +16,16 @@ assert len(full['members'])==24 and full['total_required']==216
 assert [x['visual_id'] for x in full['members'][:6]]==['dubi','lori','ink','nova','take','zero']
 additional=full['members'][6:]
 assert [x['visual_id'] for x in additional]==[f'guide-{n:02d}' for n in range(7,25)]
-assert all(x['status']=='GROUP_SOURCE_LOCKED_PER_MEMBER_CUTOUT_MASK_OPEN' and
+assert all(x['status']=='AWAITING_INDEPENDENT_CUTOUT_SHA' and
  x['source_lock'] is None and x['verified_final_art_count']==0 and
  x['source_reference_view']['not_individual_original'] and x['source_reference_view']['not_final_art'] and
  len(x['source_reference_view']['sha256'])==64 for x in additional)
 assert additional[-1]['code']=='VIVI' and additional[-1]['numeric_visual_id']==24
+registry=json.loads((root/'guide-07-24-independent-source-registry.v1.json').read_text(encoding='utf8'))
+assert registry['schema']=='TAKY_GUIDE_07_24_INDEPENDENT_SOURCE_REGISTRY_V1'
+assert len(registry['members'])==18
+assert all(x['cutout_sha256'] is None and x['mask_spec_sha256'] is None and x['approval_ref'] is None for x in registry['members'])
+assert registry['members'][-1]['code']=='VIVI'
 stage=json.loads((root/'guide-07-24-production-stage-gate.v1.json').read_text(encoding='utf8'))
 assert stage['invariant']['id24']['canonical_code']=='VIVI'
 assert stage['invariant']['id24']['derived_display_code']=='VIVI'
@@ -32,7 +37,7 @@ assert all(x['source_group_lock']['scope']=='GROUP_NOT_PER_MEMBER' for x in addi
 audited=b.audit(root,include_guide=True)
 assert audited['target']==216 and audited['machine_verified_files']==0
 assert all(x['verified_files']==0 and not x['release_ready'] for x in audited['members'])
-assert all(x['status']=='GROUP_SOURCE_LOCKED_PER_MEMBER_CUTOUT_MASK_OPEN' for x in audited['members'][6:])
+assert all(x['status']=='AWAITING_INDEPENDENT_CUTOUT_SHA' for x in audited['members'][6:])
 assert len(b.plan(root,'guide-19',include_guide=True)['members'])==1
 try:b.plan(root,'imaginary',include_guide=True)
 except AssertionError as e:assert 'UNKNOWN_OR_UNAPPROVED' in str(e)

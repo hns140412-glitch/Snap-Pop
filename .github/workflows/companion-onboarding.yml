@@ -72,16 +72,19 @@ jobs:
             onboarding/qa/visual-id-art-batch-plan.json
             onboarding/qa/visual-id-art-batch-audit.json
           if-no-files-found: error
-      - name: Verify approved GUIDE 07..24 group-source identity and full 24-member blocked-art queue
+      - name: Verify approved GUIDE 07..24 group-source identity and full 24-member source-arming queue
         run: |
           python onboarding/tools/guide-group-intake.py
           python onboarding/tests/guide-group-intake.py
+          python onboarding/tests/visual-id-source-readiness.py
+          python onboarding/tools/visual-id-source-readiness.py --out onboarding/qa/visual-id-24-source-readiness.json > /dev/null
           python onboarding/tools/visual-id-art-batch.py --mode plan --scope full24 --out onboarding/qa/guide-24-art-production-plan.json > /dev/null
           python onboarding/tools/visual-id-art-batch.py --mode audit --scope full24 --out onboarding/qa/guide-24-art-production-audit.json > /dev/null
       - uses: actions/upload-artifact@v4
         with:
           name: approved-group-evidence-and-24-id-216-art-slots-all-open-no-source-zip-in-CI
           path: |
+            onboarding/qa/visual-id-24-source-readiness.json
             onboarding/qa/guide-24-art-production-plan.json
             onboarding/qa/guide-24-art-production-audit.json
           if-no-files-found: error

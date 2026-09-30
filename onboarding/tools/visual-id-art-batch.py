@@ -58,13 +58,43 @@ def guide_pending(root,only_id=None):
     assert evidence['mapped_members']==18,'GUIDE_18_SOURCE_MAPPINGS_MISSING'
     data=module.load(root);groups={x['group_id']:x for x in data['source_groups']}
     refs=load(root/'guide-07-24-reference-view-manifest.v1.json')
+    registry=load(root/'guide-07-24-independent-source-registry.v1.json')
+    assert registry['schema']=='TAKY_GUIDE_07_24_INDEPENDENT_SOURCE_REGISTRY_V1'
     ref_by_id={x['visual_id']:x for x in refs['members']}
+    reg_by_id={x['visual_id']:x for x in registry['members']}
+    assert set(ref_by_id)==set(reg_by_id)==set(range(7,25)),'GUIDE_INDEPENDENT_REGISTRY_ID_DRIFT'
     c=config(root);result=[]
     for member in data['members']:
         id=member['pipeline_key']
         if only_id and only_id!=id:continue
         g=groups[member['source_group_id']]
         rv=ref_by_id[member['visual_id']]
+        reg=reg_by_id[member['visual_id']]
+        assert reg['pipeline_key']==id and reg['code']==member['code'],'GUIDE_REGISTRY_IDENTITY_DRIFT:'+id
+        assert reg['source_group_sha256']==g['sha256'] and reg['source_reference_view_sha256']==rv['reference_view_sha256'],'GUIDE_REGISTRY_SOURCE_DRIFT:'+id
+        expected_cut='characters/ui_cutouts/'+id+'.png'
+        expected_spec='characters/layer_specs/'+id+'.json'
+        assert reg['cutout_path']==expected_cut and reg['mask_spec_path']==expected_spec,'GUIDE_REGISTRY_PATH_DRIFT:'+id
+        cutsha=reg.get('cutout_sha256');masksha=reg.get('mask_spec_sha256');approval=reg.get('approval_ref')
+        source_lock=None
+        status='AWAITING_INDEPENDENT_CUTOUT_SHA'
+        if cutsha is not None:
+            check(root,expected_cut,cutsha)
+            if masksha is None or not str(approval or '').strip():
+                status='INDEPENDENT_CUTOUT_SHA_LOCKED_MASK_SPEC_OPEN'
+            else:
+                check(root,expected_spec,masksha)
+                specdata=load(root/expected_spec)
+                assert specdata.get('visual_id')==id,'GUIDE_MASK_ID_DRIFT:'+id
+                assert specdata.get('cutout_sha256')==cutsha,'GUIDE_MASK_CUTOUT_SHA_DRIFT:'+id
+                assert specdata.get('status')=='SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY','GUIDE_MASK_STATUS_DRIFT:'+id
+                source_lock={'original':'LIBRARY_GROUP:'+member['source_group_id'],
+                    'original_sha256':g['sha256'],'original_scope':'APPROVED_GROUP_IMAGE',
+                    'source_reference_view_sha256':rv['reference_view_sha256'],
+                    'cutout':expected_cut,'cutout_sha256':cutsha,
+                    'mask_spec':expected_spec,'mask_spec_sha256':masksha,
+                    'visual_approval_ref':approval}
+                status='ART_PRODUCTION_OPEN_NOT_AUTO_GENERATED'
         result.append({'visual_id':id,'numeric_visual_id':member['visual_id'],
           'code':member['code'],'name_ko':member['name_ko'],
           'source_group_lock':{'sha256':g['sha256'],'zip_entry':g['library_zip_entry'],
@@ -73,9 +103,9 @@ def guide_pending(root,only_id=None):
           'source_reference_view':{'sha256':rv['reference_view_sha256'],'path':rv['reference_view_path'],
                                    'pixel_box':rv['exact_source_pixel_box'],'status':rv['status'],
                                    'not_individual_original':True,'not_final_art':True},
-          'outputs':slots(c,id),'required_art_count':9,'verified_final_art_count':0,
-          'status':'GROUP_SOURCE_LOCKED_PER_MEMBER_CUTOUT_MASK_OPEN',
-          'source_lock':None,'active_runtime':False,'release_approved':False})
+          'outputs':slots(c,id),'package_manifest':c['perIdOutputs']['manifest'].replace('<id>',id),
+          'required_art_count':9,'verified_final_art_count':0,'status':status,
+          'source_lock':source_lock,'active_runtime':False,'release_approved':False})
     return result
 def plan(root=ROOT,only_id=None,include_guide=False):
     c=config(root); discovered=discover(root)
@@ -122,10 +152,13 @@ def audit_one(root,item,c):
                 'missing':list(item['outputs']),'release_ready':False}
     pkg=load(pkg_path);src=item['source_lock']
     assert pkg.get('schema')==c['packageManifest']['schema'] and pkg.get('visual_id')==id,'ART_PACKAGE_WRONG_SCHEMA_OR_VISUAL_ID'
-    for key,expected in [('source_original_sha256',src['original_sha256']),
-                         ('source_cutout_sha256',src['cutout_sha256']),
-                         ('source_mask_spec_sha256',src['mask_spec_sha256']),
-                         ('visual_approval_ref',src['visual_approval_ref'])]:
+    checks=[('source_original_sha256',src['original_sha256']),
+            ('source_cutout_sha256',src['cutout_sha256']),
+            ('source_mask_spec_sha256',src['mask_spec_sha256']),
+            ('visual_approval_ref',src['visual_approval_ref'])]
+    if src.get('source_reference_view_sha256'):
+        checks.append(('source_reference_view_sha256',src['source_reference_view_sha256']))
+    for key,expected in checks:
         assert pkg.get(key)==expected,'ART_PACKAGE_SOURCE_PROVENANCE_DRIFT:'+id+':'+key
     records=pkg.get('assets')
     assert isinstance(records,dict) and set(records)==set(item['outputs']),'NINE_DISTINCT_ASSET_RECORDS_REQUIRED'

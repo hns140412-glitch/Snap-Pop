@@ -13,6 +13,8 @@
     "existingCore6": "USE_APPROVED_SOURCE_AND_EXISTING_DERIVATIVES",
     "newVisualId": "ONLY_AFTER_EXPLICIT_APPROVED_SOURCE_REFERENCE_AND_MANIFEST_SHA_REGISTRATION",
     "stage": "STAGED_NOT_RUNTIME_ACTIVE",
+    "independentSourceRegistry": "guide-07-24-independent-source-registry.v1.json",
+    "sourceShaRegistration": "ARMS_PER_ID_MASK_STAGE_ONLY_AFTER_ACTUAL_FILE_HASH_MATCH",
     "noIdOnlyImageGeneration": true
   },
   "batch": {
@@ -21,12 +23,15 @@
     "futureStage": "APPROVED_18_GROUP_SOURCE_IDENTITIES_STAGED; INDIVIDUAL_CUTOUT_AND_MASK_SPEC_REQUIRED_BEFORE_9_FINAL_ART_ASSETS",
     "capacity": "24 TECHNICAL SLOTS NOT AUTOMATIC ACTIVE ROSTER AUTHORITY",
     "idempotency": "SAME_SOURCE_AND_SPEC_HASH_REUSES_VALID_OUTPUT; NEW_SOURCE_REQUIRES_NEW_APPROVAL",
-    "noSilentSkip": true
+    "noSilentSkip": true,
+    "full24ArmGate": "24_OF_24_SOURCE_LOCKS_REQUIRED_BEFORE_FULL_ART_BATCH",
+    "core6ReadyQueue": "6_OF_6_APPROVED_CUTOUT_AND_MASK_SHA_ALREADY_LOCKED"
   },
   "inputProof": [
     "immutable Visual ID and owner/alias evidence",
     "approved JPEG/PNG original and exact SHA256 in required_assets",
     "approved exact cutout and its own SHA256",
+    "for GUIDE 07-24: exact approved group SHA plus exact member reference-view SHA plus independent cutout SHA",
     "individually authored source mask spec and its SHA256",
     "original approved character design and own distinctive equipment",
     "existing technical partitions and partial underpaint inherited as PROTOTYPE ONLY"
@@ -66,6 +71,7 @@
   "packageManifest": {
     "schema": "TAKY_VISUAL_ID_ART_PACKAGE_V1",
     "requiredFields": ["visual_id", "source_original_sha256", "source_cutout_sha256", "source_mask_spec_sha256", "visual_approval_ref", "assets"],
+    "guideAdditionalRequiredFields": ["source_reference_view_sha256"],
     "assetFields": ["path", "sha256", "source_sha256", "method", "fidelity_review_ref"],
     "allowedMethods": ["EXTRACT_APPROVED_SOURCE", "APPROVED_ORIGINAL_LAYER", "FAITHFUL_TRACE_WITH_SOURCE_REVIEW"]
   },
@@ -77,6 +83,7 @@
   "failClosed": ["missing source approval or exact SHA", "missing per-ID spec or output file", "wrong ID or reused source/prototype as release art", "same pixels across supposed independent states", "missing proof of faithful original art/reaction drawing", "missing scene/screenshot/device evidence", "attempt to call technical preview final illustration", "source/art output hash drift"],
   "neverAutomatic": ["make character solely from ID/name", "approve original art or completed drawing", "activate Snap ROOT or share with Ready/Hide", "merge main", "deploy Netlify"],
   "qaOnlyPriorOutputs": ["visual-prototypes/", "occlusion-qa/", "underpaint-qa/", "qa-original-rig/", "qa-nine-pose/"],
-  "pipelineCommand": "python tools/visual-id-art-batch.py --mode plan|audit [--id existing-or-approved-staged-id]",
+  "readinessCommand": "python tools/visual-id-source-readiness.py [--require-full24]",
+  "pipelineCommand": "python tools/visual-id-art-batch.py --mode plan|audit --scope core6|full24 [--id existing-or-approved-staged-id]",
   "truth": "PLAN_IS_NOT_ART; PIXEL_ALPHA_QA_IS_NOT_ARTISTIC_APPROVAL; TECHNICAL_GREEN_IS_NOT_RELEASE"
 }

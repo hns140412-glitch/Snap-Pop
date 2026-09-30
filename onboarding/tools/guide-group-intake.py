@@ -14,12 +14,14 @@ def load(root=ROOT):
 def check(root=ROOT,zip_path=None):
     data=load(root)
     refs=json.loads((root/'guide-07-24-reference-view-manifest.v1.json').read_text(encoding='utf8'))
+    registry=json.loads((root/'guide-07-24-independent-source-registry.v1.json').read_text(encoding='utf8'))
     stages=json.loads((root/'guide-07-24-production-stage-gate.v1.json').read_text(encoding='utf8'))
     assert data['schema']=='TAKY_SNAP_GUIDE_07_24_APPROVED_GROUP_INTAKE_V1'
     assert refs['schema']=='TAKY_GUIDE_INDIVIDUAL_REFERENCE_VIEWS_V1'
     assert refs['status']=='GROUP_PIXEL_CROPS_ONLY_NOT_APPROVED_INDEPENDENT_ORIGINALS_NOT_FINAL_ART'
     assert refs['controls']['reference_crop_is_not_cutout'] and refs['controls']['reference_crop_is_not_final_art']
     assert len(refs['members'])==18
+    assert registry['schema']=='TAKY_GUIDE_07_24_INDEPENDENT_SOURCE_REGISTRY_V1' and len(registry['members'])==18
     assert stages['schema']=='TAKY_GUIDE_07_24_PRODUCTION_STAGE_GATE_V1'
     id24=stages['invariant']['id24']
     assert id24['canonical_code']=='VIVI' and id24['derived_display_code']=='VIVI'
@@ -38,11 +40,22 @@ def check(root=ROOT,zip_path=None):
         assert g['sha256']==EXPECTED[key] and g['source_scope']=='GROUP_IMAGE_EXACT_BYTES_NOT_INDIVIDUAL_ART'
         assert isinstance(g['byte_size'],int) and g['byte_size']>1000
     ref_by_id={x['visual_id']:x for x in refs['members']}
+    reg_by_id={x['visual_id']:x for x in registry['members']}
+    assert set(ref_by_id)==set(reg_by_id)==set(range(7,25)),'GUIDE_REGISTRY_ID_SET_DRIFT'
     for i,m in enumerate(data['members']):
         number=i+7
         assert m['visual_id']==number and m['pipeline_key']==f'guide-{number:02d}'
-        r=ref_by_id[number]
+        r=ref_by_id[number];reg=reg_by_id[number]
         assert r['pipeline_key']==m['pipeline_key'] and r['code']==m['code'] and r['group_id']==m['source_group_id']
+        assert reg['pipeline_key']==m['pipeline_key'] and reg['code']==m['code'] and reg['source_group_id']==m['source_group_id']
+        assert reg['source_group_sha256']==m['source_group_sha256'] and reg['source_reference_view_sha256']==r['reference_view_sha256']
+        assert reg['cutout_path']=='characters/ui_cutouts/'+m['pipeline_key']+'.png'
+        assert reg['mask_spec_path']=='characters/layer_specs/'+m['pipeline_key']+'.json'
+        for key in ('cutout_sha256','mask_spec_sha256'):
+            value=reg.get(key)
+            assert value is None or (isinstance(value,str) and len(value)==64 and all(c in '0123456789abcdef' for c in value)),'GUIDE_REGISTRY_BAD_SHA:'+m['pipeline_key']+':'+key
+        if reg.get('mask_spec_sha256') is not None:
+            assert reg.get('cutout_sha256') is not None and len(str(reg.get('approval_ref') or '').strip())>=6,'GUIDE_MASK_REGISTERED_WITHOUT_CUTOUT_OR_APPROVAL:'+m['pipeline_key']
         assert r['status']=='EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART'
         assert len(r['reference_view_sha256'])==64 and r['approved_individual_cutout_sha256'] is None
         assert r['mask_spec_sha256'] is None and r['independent_art_sha256'] is None
