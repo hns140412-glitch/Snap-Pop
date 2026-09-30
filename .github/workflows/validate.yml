@@ -64,13 +64,13 @@ jobs:
           python3 onboarding/tests/https-server.py /tmp/companion-local.crt /tmp/companion-local.key > /tmp/companion-https.log 2>&1 &
           echo $! > /tmp/companion-https.pid
           curl -k -fsS --retry 20 --retry-connrefused --retry-delay 1 https://127.0.0.1:4174/onboarding/ > /dev/null
-      - name: Run isolated 5-member onboarding and six real selectable Visual ID journeys
-        run: npx playwright test onboarding/tests/browser.spec.js onboarding/tests/all-six-primary.spec.js --reporter=line
+      - name: Run canonical sequential onboarding and render-plan DOM regression
+        run: npx playwright test onboarding/tests/browser.spec.js onboarding/tests/canonical-render-plan-dom-consumer.spec.js --reporter=line --workers=1
       - name: Verify isolated HTTPS IndexedDB photo-source persistence and clearing
         run: npx playwright test onboarding/tests/secure-origin.spec.js --reporter=line
-      - name: Verify 56 baseline plus all six actual primary renders at three viewport sizes
+      - name: Verify four-view canonical onboarding render evidence
         run: |
-          test "$(find onboarding/render-evidence -maxdepth 1 -type f -name '*.png' | wc -l)" -eq 74
+          test "$(find onboarding/render-evidence -maxdepth 1 -type f -name '*.png' | wc -l)" -eq 64
       - name: Upload companion candidate render evidence (not visual approval)
         if: always()
         uses: actions/upload-artifact@v4

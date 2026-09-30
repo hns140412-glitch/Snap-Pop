@@ -1,0 +1,35 @@
+{
+  "version": "EXPLORER_CREW_ASSET_GATE_V2",
+  "legacy_manifest": "asset-and-release-gate.json",
+  "approved_visual_integrity": {
+    "authority": "required_assets",
+    "hash_algorithm": "sha256",
+    "fail_closed": true,
+    "mutable_shell_excluded": true
+  },
+  "integration_shell": {
+    "files": ["index.html"],
+    "authority": "MUTABLE_APP_CODE",
+    "validation": [
+      "EXPLORER_CREW_SYSTEM_V2",
+      "APP_CONSUMER_V2",
+      "RUNTIME_REGRESSION",
+      "BROWSER_REGRESSION"
+    ]
+  },
+  "runtime": {
+    "owner": "EXPLORER_CREW_SYSTEM_V2",
+    "consumer": "EXPLORER_CREW_APP_CONSUMER_V2",
+    "legacy_runtime_owner": false,
+    "legacy_adapter_scope": "INPUT_MIGRATION_ONLY"
+  },
+  "release_boundary": {
+    "visual_release_pass": false,
+    "main_merge_allowed": false,
+    "root_activation": false,
+    "netlify": "HOLD",
+    "image_generation": "HOLD",
+    "composable": "HOLD",
+    "motion": "HOLD"
+  }
+}

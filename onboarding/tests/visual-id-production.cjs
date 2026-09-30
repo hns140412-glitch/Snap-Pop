@@ -37,7 +37,7 @@ assert.equal(rootRegistry.ACTIVE.length,0,'No silent Snap root promotion');
 assert.match(html,/const visualID=window\.CompanionVisualAssets/);
 assert.match(html,/visualID\.asset\(id,'cutout'\)/);
 assert.match(html,/visualID\.hotspot\(id,kind\)/);
-assert.match(html,/visualID\.hotspot\(id,'slot'\)/);
+assert.doesNotMatch(html,/visualID\.hotspot\(id,'slot'\)/);
 assert.match(html,/visualID\.firstMeetingSource/);
 assert.doesNotMatch(html,/const approvedCrewLocations=/);
 assert.throws(()=>api.member('new_character'),/UNREGISTERED_ONBOARDING_VISUAL_ID/);

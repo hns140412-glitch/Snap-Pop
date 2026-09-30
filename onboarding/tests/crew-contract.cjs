@@ -1,81 +1,22 @@
 #!/usr/bin/env node
 'use strict';
-const assert = require('node:assert/strict');
-const fs = require('node:fs');
-const path = require('node:path');
-
-const root = path.resolve(__dirname, '..');
-const scope = JSON.parse(fs.readFileSync(path.join(root, 'crew-scope-contract.json'), 'utf8'));
-const assets = JSON.parse(fs.readFileSync(path.join(root, 'asset-and-release-gate.json'), 'utf8'));
-const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-const approved = ['dubi','lori','ink','nova','take','zero'];
-const same = (a,b) => assert.deepEqual(a,b);
-const required = assets.required_assets;
-
-same(scope.roster.original_ids, approved);
-assert.equal(scope.roster.active_originals, 6);
-assert.equal(scope.roster.release_claim_max_verified_unique_originals, 6);
-assert.match(scope.roster.historical_20_ceiling, /NOT_CURRENT_IMPLEMENTED_COUNT/);
-assert.match(scope.roster.later_18_plus_special, /DO_NOT_AUTO_PROMOTE/);
-assert.equal(scope.authority.family_wide_semantic_owner, 'TAKY_EXPLORATION_CREW_CANONICAL');
-assert.equal(scope.authority.central_canonical_path, 'OS/EXPLORATION_CREW_CANONICAL.md');
-assert.equal(scope.authority.central_canonical_main_sha, '55547a7c4c859a1aae700405fdba4a302a2c20d3');
-assert.equal(scope.authority.original_exploration_crew_rule_source, 'SNAP_POP_ORIGIN');
-assert.equal(scope.authority.app_location_never_grants_semantic_authority, true);
-
-for (const field of ['original_assets','ui_cutouts']) {
-  same(Object.keys(scope.identity[field]).sort(), [...approved].sort());
-  for (const [id,rel] of Object.entries(scope.identity[field])) {
-    assert.match(rel, new RegExp('/'+id+'[_.]'));
-    assert.match(required[rel] || '', /^[a-f0-9]{64}$/, 'Unregistered '+rel);
-    assert.ok(fs.existsSync(path.join(root, rel)), 'Missing '+rel);
-  }
-}
-assert.match(required[scope.identity.first_meeting_scene] || '', /^[a-f0-9]{64}$/);
-assert.ok(fs.existsSync(path.join(root, scope.identity.first_meeting_scene)));
-assert.equal(Object.keys(required).length,22);
-assert.equal(scope.identity.immutable_visual_ids, true);
-assert.equal(scope.identity.cross_system_mapping_requires_explicit_approval, true);
-
-const reference = html.match(/const referenceOrder\s*=\s*\[([^\]]+)\]/);
-assert.ok(reference, 'Approved first-meeting member order missing');
-same([...reference[1].matchAll(/'([a-z]+)'/g)].map(x=>x[1]),approved);
-assert.match(html, /renderApprovedCrewScene\(true\)/);
-assert.match(html, /visualID\.asset\(id,'cutout'\)/);
-assert.match(html, /visualID\.hotspot\(id,kind\)/);
-assert.match(html, /visualID\.hotspot\(id,'slot'\)/);
-assert.doesNotMatch(html, /const approvedCrewLocations=/);
-assert.doesNotMatch(html, /characters\/ui_cutouts\/'\+id/);
-assert.match(html, /picked\.length>=5/);
-assert.match(html, /state\.crew\.length<6/);
-assert.match(html, /if\(o\.crew\.length<5\)\{o\.selectionPhase='crew';if\(o\.step>=3\)o\.step=2;\}/);
-assert.match(html, /else if\(o\.step>=3&&!o\.primaryCompanionId\)\{o\.step=2;o\.selectionPhase='primary';\}/);
-assert.equal(scope.interaction.first_meeting_all_six,true);
-assert.equal(scope.interaction.selected_crew.min,5);
-assert.equal(scope.interaction.selected_crew.max,6);
-assert.equal(scope.interaction.primary_companion.must_not_default_from_array,true);
-assert.equal(scope.interaction.primary_companion.implementation_state, 'CODED_IN_ISOLATED_ONBOARDING_CANDIDATE_VISUAL_APPROVAL_OPEN');
-assert.equal(scope.interaction.primary_companion.persisted_field, 'primaryCompanionId');
-assert.equal(scope.interaction.primary_companion.must_not_default_from_array,true);
-assert.match(html,/primaryCompanionId/);
-assert.match(html,/pickPrimaryCompanion/);
-assert.match(html,/selectionPhase/);
-assert.match(scope.roster.additional_members_creation_gate,/AFTER_CORE6_RULES/);
-assert.doesNotMatch(html,/primaryCompanionId\s*=\s*state\.crew\[0\]/);
-
-assert.equal(scope.approval_scopes.automatic_runtime_promotion,false);
-assert.equal(scope.approval_scopes.automatic_active_roster_promotion,false);
-assert.equal(scope.approval_scopes.root_home_replacement,false);
-assert.equal(scope.approval_scopes.merge_or_deploy,false);
-assert.match(scope.approval_scopes.snap_root_crew_runtime_use,/SEPARATE_OWNER_SCOPED/);
-assert.match(scope.approval_scopes.ready_hide_visual_import,/NOT_AUTHORIZED/);
-console.log(JSON.stringify({
-  gate:'COMPANION_CREW_IDENTITY_AND_SCOPE',
-  core6_identity:'PASS', asset_manifest_references: 'PASS_13_REFERENCES',
-  crew_selection:'PASS_5_TO_6',
-  primary_companion:'CODED_EXPLICIT_CHOICE_ISOLATED_NOT_PIXEL_APPROVED',
-  shared_owner:'TAKY_EXPLORATION_CREW_CANONICAL_ACTIVE',
-  '18_vs_20_roster':'CONFLICT_PRESERVED_NOT_AUTO_PROMOTED',
-  visual_and_device_release:'OPEN',
-  merge_or_deploy_allowed:false
-},null,2));
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const root=path.resolve(__dirname,'..'),repo=path.resolve(root,'..');
+const gate=JSON.parse(fs.readFileSync(path.join(root,'asset-gate-v2.json'),'utf8'));
+const legacy=JSON.parse(fs.readFileSync(path.join(root,gate.legacy_manifest),'utf8'));
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const visual=require('../visual-id-runtime.js');
+const system=require(path.join(repo,'vendor','taky','explorer-crew','system-v2.js'));
+const promotion=require(path.join(repo,'vendor','taky','explorer-crew','composable-promotion-gate-v1.js'));
+const approved=['dubi','lori','ink','nova','take','zero'];
+assert.deepEqual(visual.memberIds,approved);assert.equal(system.ALL_CREW.length,24);assert.deepEqual(system.ALL_CREW.slice(0,6),approved);
+for(const id of approved){for(const rel of [visual.asset(id,'source'),visual.asset(id,'cutout'),visual.firstMeetingSource]){assert.match(legacy.required_assets[rel]||'',/^[a-f0-9]{64}$/);assert.equal(fs.existsSync(path.join(root,rel)),true);}}
+assert.match(html,/explorer-crew\/system-v2\.js/);assert.match(html,/explorer-crew\/app-consumer-v2\.js/);assert.match(html,/render-plan-dom-consumer-v1\.js/);
+assert.doesNotMatch(html,/snap-explorer-crew-adapter-v1\.js/);assert.doesNotMatch(html,/snap-explorer-crew-ui-bridge-v1\.js/);
+assert.equal(/crew\.length\s*<\s*5/.test(html),false);assert.equal(/toggleCrew\s*\(/.test(html),false);assert.equal(html.includes('5명 이상'),false);
+const reference=html.match(/const referenceOrder\s*=\s*\[([^\]]+)\]/);assert.ok(reference);assert.deepEqual([...reference[1].matchAll(/'([a-z]+)'/g)].map(x=>x[1]),approved);
+assert.match(html,/function companionEligibleIds\(\)/);assert.match(html,/async function selectCanonicalMain\(id\)/);assert.match(html,/MAIN_CHANGED/);
+assert.match(html,/readiness='STATIC_ONLY'/);assert.match(html,/readiness='COMPOSABLE_APPROVED'/);assert.match(html,/crewRenderConsumer\.projectComposable/);
+const audit=promotion.audit();assert.equal(audit.total,24);assert.equal(audit.static_ready,6);assert.equal(audit.base_composable_ready,0);assert.equal(audit.release_pass,0);
+assert.equal(gate.runtime.owner,'EXPLORER_CREW_SYSTEM_V2');assert.equal(gate.release_boundary.root_activation,false);assert.equal(gate.release_boundary.main_merge_allowed,false);assert.equal(gate.release_boundary.netlify,'HOLD');assert.equal(gate.release_boundary.image_generation,'HOLD');
+console.log(JSON.stringify({gate:'COMPANION_CREW_IDENTITY_AND_SCOPE_V2',roster_24:'PASS',core6_identity_assets:'PASS',forced_5_to_6_removed:'PASS',canonical_main_selection:'PASS',static_composable_dual_route:'PASS',real_composable_ready:0,root_activation:false,main_merge_allowed:false,netlify:'HOLD'},null,2));

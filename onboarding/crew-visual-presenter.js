@@ -4,54 +4,23 @@
  if(root)root.CompanionCrewVisualPresenter=api;
 })(typeof globalThis!=='undefined'?globalThis:this,function(){
  'use strict';
- // Only original approved static cutout for an ID explicitly staged into the isolated visual registry.
- // A text/behavior reaction state is NOT a generated emotion sprite or owner approval.
+ const VERSION='CANONICAL_RENDER_PLAN_COMPATIBILITY_CONSUMER_V2';
  const STATES=Object.freeze(['WAIT_CHILD','SHORT_REACTION','ONE_REQUESTED_HINT']);
- function present({visualId,interactionState='WAIT_CHILD',runtimeDecision=null}={},registry){
-  if(typeof visualId!=='string'||!STATES.includes(interactionState)||!registry||
-    !Array.isArray(registry.memberIds)||!registry.memberIds.includes(visualId)||
-    typeof registry.member!=='function'||typeof registry.asset!=='function'||typeof registry.renderPlan!=='function')return null;
+ const safePath=src=>typeof src==='string'&&src.startsWith('characters/')&&src.endsWith('.png')&&!src.split('/').some(p=>!p||p==='.'||p==='..'||p.includes('\\')||p.includes(':'));
+ function present({renderPlan,interactionState='WAIT_CHILD',runtimeDecision=null}={}){
+  if(!STATES.includes(interactionState)||!renderPlan||renderPlan.kind!=='STATIC_APPROVED_COMPAT')return null;
   if(runtimeDecision!==null&&(runtimeDecision?.ok!==true||typeof runtimeDecision.scene_slot!=='string'||!runtimeDecision.scene_slot))return null;
-  let record,plan,src;
-  try{record=registry.member(visualId);plan=registry.renderPlan(visualId);src=registry.asset(visualId,'cutout');}catch{return null}
-  if(record?.id!==visualId||!plan?.staticPreviewReady||plan.id!==visualId||record.cutout!==src||
-    typeof src!=='string'||!src.startsWith('characters/')||!src.endsWith('.png')||
-    src.split('/').some(part=>!part||part==='.'||part==='..'||part.includes('\\')||part.includes(':')))return null;
-  return Object.freeze({id:visualId,src,interactionState,
-   assetStatus:'APPROVED_ORIGINAL_STATIC_CUTOUT_ONLY',scene:'ISOLATED_HOME_RADIO',
-   sceneSlot:runtimeDecision?.scene_slot||'FG_RIGHT',
-   dialogueIntent:runtimeDecision?.dialogue_intent||null,
-   interruptibility:runtimeDecision?.interruptibility||null,
-   runtimePolicyVersion:runtimeDecision?'CREW_RUNTIME_POLICY_V1':null,
+  const id=renderPlan.character_id,src=renderPlan.asset,sha=renderPlan.asset_sha;
+  if(typeof id!=='string'||!id||!safePath(src)||typeof sha!=='string'||!/^[a-f0-9]{64}$/i.test(sha)||
+    renderPlan.semantic_preserved!==true||renderPlan.relation_mutation!==false||renderPlan.affinity_mutation!==false)return null;
+  return Object.freeze({id,src,assetSha:sha,interactionState,
+   assetStatus:'CANONICAL_STATIC_RENDER_PLAN',scene:'ISOLATED_HOME_RADIO',
+   sceneSlot:runtimeDecision?.scene_slot||null,dialogueIntent:runtimeDecision?.dialogue_intent||null,
+   interruptibility:runtimeDecision?.interruptibility||null,runtimePolicyVersion:runtimeDecision?'CREW_RUNTIME_POLICY_V1':null,
    frameReady:false,independentReactionArtReady:false,motionReady:false,
-   rootRegistryActivation:false,owner:'SNAP_ONBOARDING_CANDIDATE'});
+   rootRegistryActivation:false,renderOwnership:'CANONICAL_UI_RENDER_PLAN'});
  }
- function promoteComposable({command,runtimeDecision=null}={},registry,assetEngine,renderer){
-  if(!command||command.behavior_state!=='AMBIENT'||!command.ambient_action)return null;
-  if(runtimeDecision!==null&&(runtimeDecision?.ok!==true||typeof runtimeDecision.scene_slot!=='string'||!runtimeDecision.scene_slot))return null;
-  if(!registry||typeof registry.member!=='function'||!assetEngine||typeof assetEngine.resolve!=='function'||!renderer||typeof renderer.renderPlan!=='function')return null;
-  const assets=assetEngine.resolve(command,registry);
-  if(!assets||assets.fallback===true||assets.generated!==false)return null;
-  const render=renderer.renderPlan(command,assets);
-  if(!render||render.semantic_preserved!==true||render.relation_mutation!==false||render.affinity_mutation!==false)return null;
-  return Object.freeze({
-    id:command.character_id,
-    interactionState:'AMBIENT_ACTION',
-    assetStatus:'COMPOSABLE_ACTION_APPROVED',
-    scene:'POLICY_ALLOCATED_WORLD_SCENE',
-    sceneSlot:runtimeDecision?.scene_slot||null,
-    ambientAction:command.ambient_action,
-    assets:Object.freeze([...(render.assets||[])]),
-    actionReady:true,
-    motionReady:false,
-    generated:false,
-    semanticPreserved:true,
-    relationMutation:false,
-    affinityMutation:false,
-    rootRegistryActivation:false,
-    owner:'SNAP_ONBOARDING_CANDIDATE'
-  });
- }
- return Object.freeze({version:'VISUAL_ID_APPROVED_STATIC_SCENE_PRESENTER_V3',states:STATES,present,promoteComposable,
+ return Object.freeze({version:VERSION,states:STATES,present,
+  behaviorOwner:false,assetResolver:false,semanticOwner:false,
   automaticArtGeneration:false,rootRegistryActivation:false,readyHideImport:false});
 });

@@ -18,10 +18,25 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Verify exact original assets (fail closed)
-        run: node onboarding/tests/asset-integrity.cjs
+      - name: Verify approved visual assets and V2 runtime/shell separation (fail closed)
+        run: node onboarding/tests/asset-integrity-v2.cjs
       - name: Verify pinned TAKY-ASSETS source pointer and local PWA asset copies
         run: node onboarding/tests/central-asset-source.cjs
+      - name: Verify Explorer Crew Runtime V2 single-owner integration
+        run: |
+          node onboarding/tests/explorer-crew-system-v2.cjs
+          node onboarding/tests/snap-explorer-runtime-v2-live-contract.cjs
+          node onboarding/tests/explorer-crew-approved-personality-board.cjs
+          node onboarding/tests/explorer-crew-24-companion-switch.cjs
+          node onboarding/tests/explorer-crew-role-behavior-integration.cjs
+          node onboarding/tests/explorer-crew-semantic-compat.cjs
+          node onboarding/tests/explorer-crew-runtime-policy-wired.cjs
+          node onboarding/tests/explorer-crew-story-gate-wired.cjs
+          node onboarding/tests/explorer-crew-runtime-log-wired.cjs
+          node onboarding/tests/explorer-crew-asset-render-wired.cjs
+          node onboarding/tests/explorer-crew-e2e-core-flow.cjs
+          node onboarding/tests/explorer-crew-initial-selection-removal.cjs
+          node onboarding/tests/relation-asset-separation-smoke.cjs
       - name: Verify Core 6 identity, onboarding scope and non-promotion boundaries
         run: node onboarding/tests/crew-contract.cjs
       - name: Verify immutable crew identity, history and evidence boundaries
