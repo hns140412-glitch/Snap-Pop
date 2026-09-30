@@ -21,13 +21,17 @@ NAMES=[
  "SIX_REACTION_FINAL_ART","PER_ID_PACKAGE_AUDIT","UI_BINDING_AND_RENDER",
  "VIEWPORT_DEVICE_VISUAL_QA","RELEASE"
 ]
+SOURCE_NAME_ALIASES={
+ "UI_BINDING_AND_RENDER":"UI_BINDING_AND_11_SCREEN_RENDER"
+}
 
 def build():
     src=json.loads(SRC.read_text(encoding="utf8"))
     by={x["name"]:x for x in src.get("stages",[])}
     stages=[]
     for name in NAMES:
-        original=by[name]
+        source_name=SOURCE_NAME_ALIASES.get(name,name)
+        original=by[source_name]
         status=MAP.get(original.get("status"),"FAILED")
         row={"name":name,"status":status}
         if status=="PASS":
