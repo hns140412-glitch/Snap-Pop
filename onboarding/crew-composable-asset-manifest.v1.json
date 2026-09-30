@@ -1400,5 +1400,7 @@
         }
       }
     }
-  }
+  },
+  "p0_production_contract": "onboarding/crew-p0-production-contract.v1.json",
+  "p0_gate": "onboarding/crew-p0-production-gate.js"
 }

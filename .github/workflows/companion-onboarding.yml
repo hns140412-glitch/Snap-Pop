@@ -50,6 +50,16 @@ jobs:
           name: crew-composable-current-work-queue
           path: onboarding/qa/crew-composable-work-queue.json
           if-no-files-found: error
+      - name: Verify Core6 P0 production contract remains fail-closed until real approved files exist
+        run: |
+          node onboarding/tests/crew-p0-production-gate.cjs
+          node onboarding/crew-p0-production-gate.js --out onboarding/qa/crew-p0-production-gate.json > /dev/null
+          cat onboarding/qa/crew-p0-production-gate.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: crew-core6-p0-production-gate
+          path: onboarding/qa/crew-p0-production-gate.json
+          if-no-files-found: error
       - name: Verify Visual ID to asset/scene/interaction production gate (fail closed)
         run: node onboarding/tests/visual-id-production.cjs
       - name: Verify Visual ID registration-to-UI production workflow and repeatable work orders

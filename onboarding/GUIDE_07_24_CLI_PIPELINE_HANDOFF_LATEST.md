@@ -39,6 +39,12 @@
   - 승인 `PUPPET_BODY:FIELD_NEUTRAL + FACE_STATES:neutral + DEPTH_SHADOW:field_default`가 모두 없으면 member는 fail-closed `null`.
   - missing asset 때문에 새 그림을 만들거나 다른 캐릭터를 대체하지 않음.
 - 회귀 테스트: `onboarding/tests/crew-engine-pipeline.cjs`.
+- Core6 P0 제작 계약: `onboarding/crew-p0-production-contract.v1.json`.
+  - 각 Core6마다 `PUPPET_BODY:FIELD_NEUTRAL`, `FACE_STATES:neutral`, `DEPTH_SHADOW:field_default` 3개, 총 18개.
+  - 출력은 기존 source/cutout 좌표계와 동일한 1122×1402 RGBA PNG, TOP_LEFT 0,0 anchor, resize/crop 금지.
+  - 시작 상태는 SHA/approval ref `null`, `OPEN`; 실제 파일 바이트 SHA + 승인 참조가 일치하기 전 READY 금지.
+  - 자동/이름기반 생성, 타 캐릭터 픽셀 재사용, QA preview final 승격 금지.
+- P0 gate: `onboarding/crew-p0-production-gate.js`; 현재 READY output 0/18, READY member 0/6가 정상 상태.
 - PR #10 exact HEAD는 이 문서에 고정하지 말고 재개 시 remote live HEAD를 반드시 새로 조회.
 
 ## 핵심 원칙
