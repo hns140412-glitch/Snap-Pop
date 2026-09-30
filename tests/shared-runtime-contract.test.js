@@ -111,7 +111,7 @@ assert.equal(crewRegistry.validateCandidate({
   user_confirmed:false,
   review_evidence_refs:['review-1']
 }).reason,'USER_CONFIRMATION_REQUIRED');
-const crewHold=visualBinding.resolve({world_state:'BASE_WORLD',theme_expression:'GOLDEN_WORLD',crew_visual:'STATIC_REFERENCE_LINEAGE_ONLY'});
+const crewHold=visualBinding.resolve({world_state:'BASE_WORLD',theme_expression:'SNAP_COAST',crew_visual:'STATIC_REFERENCE_LINEAGE_ONLY'});
 assert.equal(crewHold.ok,true);
 assert.equal(crewHold.crew.implementation_ready,true);
 assert.equal(crewHold.crew.content_state,'CONTENT_APPROVAL_HOLD');
