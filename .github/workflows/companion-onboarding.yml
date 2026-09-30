@@ -74,6 +74,11 @@ jobs:
             onboarding/qa/visual-id-art-batch-plan.json
             onboarding/qa/visual-id-art-batch-audit.json
           if-no-files-found: error
+      - name: Verify logic-only hold policy while image generation is unavailable
+        run: |
+          python onboarding/tests/visual-id-logic-only-mode.py
+          python onboarding/tools/visual-id-logic-only-mode.py --action VALIDATE_STATE_MACHINE
+          ! python onboarding/tools/visual-id-logic-only-mode.py --action BODY_PROP_GEAR_FINAL_ART
       - name: Verify approved GUIDE 07..24 group-source identity and full 24-member source-arming queue
         run: |
           python onboarding/tools/guide-group-intake.py
