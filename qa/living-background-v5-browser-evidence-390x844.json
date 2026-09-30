@@ -1,0 +1,42 @@
+{
+  "schema": "TAKY_LIVING_BACKGROUND_BROWSER_EVIDENCE_V1",
+  "app": "Snap & Pop",
+  "verified_head": "164daaa14b43a7ae9e224c7ae153825d119503c5",
+  "viewport": {"width":390,"height":844},
+  "browser": "local Chromium via system Chrome, service workers blocked",
+  "visual_id": "TAKY-LAF-SNAP-HOME-COAST-20260927-A",
+  "asset": {
+    "path": "assets/world/snap_pop_beach_asset.png",
+    "natural_size": [941,1672],
+    "sha256": "f15af01680e2db44ef8af1dff749169f1082ddd15b3760a96da7ff2211eb8259",
+    "loaded": true
+  },
+  "effects": {
+    "foam_animation": "coastFoamNormal",
+    "water_light_animation": "coastWaterLight",
+    "display": "block",
+    "t1_foam_transform": "matrix(0.992546,-0.121869,0.121869,0.992546,-0.117037,-1.62787)",
+    "t5_foam_transform": "matrix(0.992546,-0.121869,0.121869,0.992546,0.453301,4.22322)",
+    "t1_water_transform": "matrix(1,0,0,1,-2.69752,0.0756211)",
+    "t5_water_transform": "matrix(1,0,0,1,3.93156,1.73289)"
+  },
+  "frame_diff": {
+    "changed_pixels": 16929,
+    "changed_ratio": 0.051431,
+    "bbox_px": [93,392,328,619],
+    "mean_abs_rgb": [0.1185,0.0699,0.0549]
+  },
+  "screenshots": {
+    "t1_sha256": "f25bf27020c6d312e47ed98a1e5c72793c1fe7630c89884af83091eaba79d199",
+    "t5_sha256": "03dd3b5fefb767918eb4a709af7dbc49eb55611007bfd76553010c41c435d1b8"
+  },
+  "assessment": {
+    "source_image_identity": "PASS",
+    "runtime_effect_motion": "PASS_LOCAL_BROWSER",
+    "effect_scope": "COAST_WATER_REGION_ONLY",
+    "obvious_duplicate_raster_ghosting": "NOT_OBSERVED_IN_390x844_LOCAL_RENDER",
+    "human_visual_approval": "OPEN",
+    "physical_device_verification": "OPEN",
+    "release": "HOLD"
+  }
+}
