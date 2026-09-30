@@ -40,6 +40,14 @@ jobs:
           echo $! > /tmp/snap-http.pid
       - name: Run shared runtime and approved coast living-background browser regression
         run: npx playwright test tests/shared-runtime.spec.js tests/snap-living-background.spec.js --reporter=line
+      - name: Upload Snap living-background visual gate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snap-living-background-visual-gate
+          path: test-results/snap-living-coast-*.png
+          if-no-files-found: error
+          retention-days: 7
       - name: Start temporary self-signed HTTPS loopback for secure-origin QA
         run: |
           openssl req -x509 -newkey rsa:2048 -nodes -days 1 -keyout /tmp/companion-local.key -out /tmp/companion-local.crt -subj "/CN=localhost" -addext "subjectAltName=IP:127.0.0.1,DNS:localhost" > /dev/null 2>&1
