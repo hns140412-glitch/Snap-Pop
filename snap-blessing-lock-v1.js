@@ -18,5 +18,12 @@
       use_allowed:missing.length===0
     });
   }
-  return Object.freeze({evaluate,automaticUnlockFromUnapprovedData:false});
+  function evaluateApproved(rule={},earned=[]){
+    if(rule.approved!==true||!String(rule.authority_ref||'').trim())return Object.freeze({
+      pass:false,reason:'APPROVED_BLESSING_RULE_REQUIRED',blessing_id:rule.blessing_id||null,
+      required_badge_ids:Object.freeze([]),missing_badge_ids:Object.freeze([]),unlocked:false,use_allowed:false
+    });
+    return evaluate(rule,earned);
+  }
+  return Object.freeze({evaluate,evaluateApproved,automaticUnlockFromUnapprovedData:false});
 });
