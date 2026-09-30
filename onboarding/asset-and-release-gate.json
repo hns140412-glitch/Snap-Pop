@@ -2,7 +2,7 @@
   "task_id": "COMPANION_ONBOARDING_INTEGRATION_20260927",
   "source_authority": "Existing user-approved standalone source; additive Snap-Pop route only",
   "source_file": "onboarding/index.html",
-  "source_sha256": "de9a37821d696ea27846e55cdf89107edba47db879cbbf926cf550a54db8b62f",
+  "source_sha256": "26b5fd6ddccfa37782cd72cdfd74d2dad2c5df2fa5201758b45d10f0c14d2f28",
   "base_head": "3de97be0d12dd6244a942b0c137c2efe578a43b6",
   "status": "INTEGRATION_CANDIDATE_CORE6_STATE_CODED_NOT_RELEASED",
   "main_integration": false,
@@ -25,7 +25,8 @@
     "home_text_radio": "ACTUAL_OPT_IN_CHILD_TEXT_AND_EXPLICIT_ONE_HINT_CODED_SCREEN_VISUAL_APPROVAL_OPEN_NO_AUDIO",
     "home_radio_visual_id_static_binding": "APPROVED_CUTOUT_FOR_CURRENT_PRIMARY_WIRED_WITH_LISTEN_REACT_HINT_SEMANTIC_STATES_NO_SPRITE_OR_PX_APPROVAL",
     "visual_id_true_alpha_isolation": "ALL_6_IDS_3_ROLE_OUTPUTS_GENERATOR_CLEAN_ALPHA_ZERO_RGB_CANONICAL_VISIBLE_PIXELS_CI_PENDING_ART_QA_HOLD",
-    "core6_primary_real_journey": "PASS_ACTUAL_CHROME_6_IDS_X_3_VIEWPORT_REAL_PRIMARY_RESELECT_RELOAD_ART_REPLY_ONE_HINT_74_TOTAL_CANDIDATE_SCREENSHOTS_HEAD_96C51CD_VISUAL_APPROVAL_STILL_OPEN"
+    "core6_primary_real_journey": "PASS_ACTUAL_CHROME_6_IDS_X_3_VIEWPORT_REAL_PRIMARY_RESELECT_RELOAD_ART_REPLY_ONE_HINT_74_TOTAL_CANDIDATE_SCREENSHOTS_HEAD_96C51CD_VISUAL_APPROVAL_STILL_OPEN",
+    "runtime_policy_home_scene": "MAIN_1_PLUS_AMBIENT_2_STATIC_APPROVED_OCCUPANCY_CODED_MOTION_PROMOTION_FAIL_CLOSED"
   },
   "required_assets": {
     "ui/approved/first_meeting_selection_source.png": "9f55faf85c45d4236172a797e07a809a876f53b9afb083c9d8f8df1e799ab0f7",
@@ -66,10 +67,12 @@
   ],
   "required_runtime_scripts": {
     "crew-state-runtime.js": "09243339e1e3eddb0d2933612973bbd7fad574b16755ef0cbf2b709610cbb435",
-    "crew-behavior-runtime.js": "92bee7691da35d3ce75886b10325727f36a3605bfdbc498b61c635187fe06fdc",
+    "crew-behavior-runtime.js": "2cdea3e5d865ab3592e027ad1db873afab93e474fc5498db0af5a303fe90e705",
+    "crew-semantic-behavior.js": "1aeebb3d897b8bcbf78a9744354774443a17bda5b215855cef562189e7edbcb1",
+    "crew-runtime-policy.js": "b4b71a50d8f2c6babc36df5f9bbe80d942c9186f5406c16ca38de230332f9931",
     "visual-id-runtime.js": "1d86119ef7feb4f81d99ae92580a4b7b5ce1f53e15f71dc001f48c48a329df70",
     "crew-interaction-runtime.js": "bce13eb9f62524e14b9026f76f1e80168a14cf93453b69fe7b0c4eecdda6bbe3",
-    "crew-visual-presenter.js": "052e7ac84aab1434ea82f1c554bed665943777811aad00b64dcb9e3c5d30559f"
+    "crew-visual-presenter.js": "f35015ff6a69c880046348d170a36095091d1113ee093a4d85b7fd43dfa92b95"
   },
   "production_method_contract": "visual-id-production-contract.json",
   "production_method": "SOURCE_LOCK_PLAN_REGISTER_ASSET_PRODUCTION_SCENE_BINDING_IMPLEMENT_RENDER_CROSS_VALIDATE_HUMAN_APPROVAL"
