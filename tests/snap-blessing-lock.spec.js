@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict');
+const b=require('../snap-blessing-lock-v1.js');
+let x=b.evaluate({blessing_id:'B1',required_badge_ids:['SP-BADGE-001','SP-BADGE-002']},['SP-BADGE-001']);
+assert.equal(x.unlocked,false);assert.deepEqual(x.missing_badge_ids,['SP-BADGE-002']);
+x=b.evaluate({blessing_id:'B1',required_badge_ids:['SP-BADGE-001']},['SP-BADGE-001']);
+assert.equal(x.use_allowed,true);
+x=b.evaluate({blessing_id:'B1'},[]);
+assert.equal(x.unlocked,true);
+assert.equal(b.automaticUnlockFromUnapprovedData,false);
+console.log(JSON.stringify({gate:'SNAP_BLESSING_LOCK',pass:true},null,2));
