@@ -59,7 +59,6 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   const presence=page.locator('.home-crew-presence-item');
   await expect(presence).toHaveCount(3);
   await expect(page.locator('.home-crew-presence')).toHaveAttribute('data-crew-scene-policy','CREW_RUNTIME_POLICY_V1');
-  expect(await presence.filter({has:page.locator('[data-role="MAIN"]')}).count()).toBe(0);
   const sceneState=await page.locator('.home-crew-presence').evaluate(root=>({
     count:root.querySelectorAll('.home-crew-presence-item').length,
     main:root.querySelectorAll('.home-crew-presence-item[data-role="MAIN"]').length,
