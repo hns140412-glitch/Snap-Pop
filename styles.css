@@ -50,3 +50,27 @@ textarea{width:100%;min-height:190px;resize:vertical;border:1px solid #d9c9a8;bo
 #toast{position:fixed;z-index:80;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,9px);max-width:360px;background:#062f2bf1;color:#fff3ca;border:1px solid #c6a75c66;border-radius:13px;padding:10px 13px;font-size:11px;opacity:0;pointer-events:none;transition:.2s}#toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-height:760px){.mapWorld{min-height:535px}.treeStage{height:335px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+
+/* TAKY LIVING BACKGROUND V5 — SNAP COAST
+   Source lock: TAKY-LAF-SNAP-HOME-COAST-20260927-A
+   Approved PNG remains unchanged. Motion is a separate coast-only overlay.
+   V4 copied-raster/cloud ghosting is forbidden. */
+.mapWorld.livingCoast{background:#83c7c8}
+.mapWorld.livingCoast:before,.mapWorld.livingCoast:after{display:none}
+.mapWorld.livingCoast>.scene{inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;filter:none}
+.coastFx{position:absolute;z-index:2;inset:0;overflow:hidden;pointer-events:none;isolation:isolate}
+.coastFoam{position:absolute;left:22%;top:66%;width:58%;height:11%;opacity:.24;transform:rotate(-7deg) translate3d(0,0,0);transform-origin:50% 60%;background:
+ radial-gradient(ellipse at 22% 58%,rgba(255,255,244,.82) 0 2%,rgba(255,255,244,.34) 2.6% 4%,transparent 5%),
+ radial-gradient(ellipse at 48% 52%,rgba(255,255,246,.72) 0 2.4%,rgba(255,255,246,.24) 3% 4.6%,transparent 5.5%),
+ radial-gradient(ellipse at 73% 47%,rgba(255,255,248,.68) 0 2%,rgba(255,255,248,.22) 2.8% 4.4%,transparent 5.4%),
+ linear-gradient(180deg,transparent 38%,rgba(245,255,250,.56) 47%,rgba(255,255,247,.12) 55%,transparent 66%);
+ mask-image:linear-gradient(90deg,transparent 0 3%,#000 13% 86%,transparent 97% 100%);
+ -webkit-mask-image:linear-gradient(90deg,transparent 0 3%,#000 13% 86%,transparent 97% 100%);
+ animation:coastFoamNormal 8s ease-in-out infinite}
+.coastFoamB{top:69%;left:27%;width:48%;opacity:.16;animation-delay:-4s;animation-duration:9.5s}
+.coastWaterLight{position:absolute;left:36%;top:46%;width:46%;height:26%;opacity:.13;background:repeating-linear-gradient(104deg,transparent 0 18px,rgba(232,255,248,.58) 19px 21px,transparent 22px 42px);filter:blur(2px);mix-blend-mode:screen;animation:coastWaterLight 8s ease-in-out infinite}
+@keyframes coastFoamNormal{0%,100%{transform:rotate(-7deg) translate3d(0,-2px,0);opacity:.16}48%{transform:rotate(-7deg) translate3d(2px,7px,0);opacity:.28}72%{transform:rotate(-7deg) translate3d(-1px,3px,0);opacity:.22}}
+@keyframes coastWaterLight{0%,100%{transform:translate3d(-3px,0,0);opacity:.08}50%{transform:translate3d(5px,2px,0);opacity:.16}}
+html.reduce-motion .coastFx{display:none!important}
+@media(prefers-reduced-motion:reduce){.coastFx{display:none!important}}
