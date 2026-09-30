@@ -17,9 +17,14 @@ test('approved Snap coast and living FX render on the regional HOME',async({page
   expect(fx.display).not.toBe('none');
   expect(fx.foam).toBe('coastFoamNormal');
   expect(fx.water).toBe('coastWaterLight');
+  await page.screenshot({path:'test-results/snap-living-coast-phase-a-390.png',fullPage:true});
+  await page.waitForTimeout(3900);
+  await page.screenshot({path:'test-results/snap-living-coast-phase-b-390.png',fullPage:true});
   await page.locator('#settingsBtn').click();
   await page.locator('#reduceMotion').locator('xpath=..').click();
   await expect(page.locator('#reduceMotion')).toBeChecked();
   await expect(page.locator('html')).toHaveClass(/reduce-motion/);
   expect(await page.locator('.coastFx').evaluate(el=>getComputedStyle(el).display)).toBe('none');
+  await page.locator('#settingsBack').click();
+  await page.screenshot({path:'test-results/snap-living-coast-reduced-motion-390.png',fullPage:true});
 });
