@@ -1,0 +1,238 @@
+{
+  "schema": "TAKY_CREW_ENGINE_CONTRACT_V1",
+  "status": "DRAFT_PR_WORKING_CONTRACT_NOT_CANONICAL_WRITE",
+  "architecture": [
+    "EXPLORATION_CREW_CANONICAL_LOGIC",
+    "CHARACTER_BEHAVIOR_ENGINE",
+    "SEMANTIC_ACTION_COMMAND",
+    "ASSET_ENGINE",
+    "UI_RENDERER"
+  ],
+  "behavior_engine": {
+    "input_required": [
+      "app_id",
+      "scene_id",
+      "character_pool",
+      "current_main_character_id",
+      "recent_character_history",
+      "relation_state_by_character",
+      "affinity_by_character",
+      "child_activity_state",
+      "child_response_state",
+      "help_request_state",
+      "focus_state",
+      "session_context",
+      "cooldown_state"
+    ],
+    "input_optional": [
+      "chapter_owner_id",
+      "acting_crew_id"
+    ],
+    "output": "SEMANTIC_ACTION_COMMAND_ONLY",
+    "required_fields": [
+      "character_id",
+      "role",
+      "relation_state",
+      "behavior_state",
+      "interaction_mode"
+    ],
+    "optional_fields": [
+      "ambient_action",
+      "dialogue_intent",
+      "hint_level",
+      "target",
+      "gesture_intent",
+      "equipment_intent",
+      "enter_style",
+      "exit_style",
+      "priority",
+      "duration",
+      "cooldown_after"
+    ],
+    "roles": [
+      "MAIN",
+      "GUEST",
+      "AMBIENT",
+      "CHAPTER_OWNER",
+      "ACTING_CREW"
+    ],
+    "behavior_states": [
+      "AMBIENT",
+      "OBSERVE",
+      "THINK",
+      "LISTEN",
+      "GUIDE",
+      "REACTION",
+      "COMPLETE",
+      "PEEK",
+      "HIDE"
+    ],
+    "interaction_modes": [
+      "SILENT",
+      "TEXT",
+      "VOICE",
+      "TEXT_AND_VOICE"
+    ],
+    "ambient_actions": [
+      "READ_BOOK",
+      "READ_MAP",
+      "WRITE_NOTE",
+      "CHECK_COMPASS",
+      "ORGANIZE_BAG",
+      "USE_MAGNIFIER",
+      "USE_RADIO",
+      "REST"
+    ],
+    "forbidden": [
+      "asset_path_selection",
+      "png_selection",
+      "image_generation",
+      "visual_id_mutation",
+      "affinity_increment_from_visual_state",
+      "relationship_mutation_from_asset_availability"
+    ]
+  },
+  "asset_engine": {
+    "input": [
+      "semantic_action_command",
+      "approved_visual_registry",
+      "approved_asset_manifest"
+    ],
+    "output": "APPROVED_ASSET_COMPOSITION_PLAN_ONLY",
+    "groups": [
+      "MASTER_FULL",
+      "PROFILE",
+      "PUPPET_BODY",
+      "FACE_STATES",
+      "ACTION_PARTS",
+      "PEEK_MASK",
+      "DEPTH_SHADOW"
+    ],
+    "shared_equipment": [
+      "BOOK",
+      "MAP",
+      "NOTEBOOK",
+      "PEN",
+      "RADIO",
+      "MAGNIFIER",
+      "BAG",
+      "COMPASS"
+    ],
+    "ambient_composition": {
+      "READ_BOOK": [
+        "PUPPET_BODY:FIELD_NEUTRAL",
+        "FACE_STATES:neutral",
+        "ACTION_PARTS:book_hand",
+        "EQUIPMENT:BOOK",
+        "ANCHOR:hand",
+        "DEPTH_SHADOW:field_default"
+      ],
+      "READ_MAP": [
+        "PUPPET_BODY:FIELD_NEUTRAL",
+        "FACE_STATES:neutral",
+        "ACTION_PARTS:map_hands",
+        "EQUIPMENT:MAP",
+        "ANCHOR:hands",
+        "DEPTH_SHADOW:field_default"
+      ],
+      "WRITE_NOTE": [
+        "PUPPET_BODY:FIELD_NEUTRAL",
+        "FACE_STATES:think",
+        "ACTION_PARTS:write_hand",
+        "EQUIPMENT:NOTEBOOK",
+        "EQUIPMENT:PEN",
+        "ANCHOR:hand",
+        "DEPTH_SHADOW:field_default"
+      ],
+      "CHECK_COMPASS": [
+        "PUPPET_BODY:FIELD_NEUTRAL",
+        "FACE_STATES:observe",
+        "ACTION_PARTS:compass_hand",
+        "EQUIPMENT:COMPASS",
+        "ANCHOR:hand",
+        "DEPTH_SHADOW:field_default"
+      ],
+      "ORGANIZE_BAG": [
+        "PUPPET_BODY:FIELD_NEUTRAL",
+        "FACE_STATES:neutral",
+        "ACTION_PARTS:bag_hands",
+        "EQUIPMENT:BAG",
+        "ANCHOR:hands",
+        "DEPTH_SHADOW:field_default"
+      ],
+      "USE_MAGNIFIER": [
+        "PUPPET_BODY:FIELD_NEUTRAL",
+        "FACE_STATES:observe",
+        "ACTION_PARTS:magnifier_hand",
+        "EQUIPMENT:MAGNIFIER",
+        "ANCHOR:hand",
+        "DEPTH_SHADOW:field_default"
+      ],
+      "USE_RADIO": [
+        "PUPPET_BODY:FIELD_NEUTRAL",
+        "FACE_STATES:listen",
+        "ACTION_PARTS:radio_hand",
+        "EQUIPMENT:RADIO",
+        "ANCHOR:hand",
+        "DEPTH_SHADOW:field_default"
+      ],
+      "REST": [
+        "PUPPET_BODY:FIELD_NEUTRAL",
+        "FACE_STATES:neutral",
+        "DEPTH_SHADOW:field_default"
+      ]
+    },
+    "fail_closed_rules": [
+      "NO_ASSET_NO_GENERATION",
+      "NO_NAME_BASED_IMAGE_GENERATION",
+      "VISUAL_ID_AND_SOURCE_SHA_REQUIRED",
+      "ONLY_APPROVED_SAME_CHARACTER_ASSETS",
+      "RELATION_STATE_NEVER_SELECTS_UNAPPROVED_VISUAL",
+      "ASSET_AVAILABILITY_NEVER_MUTATES_RELATION_OR_AFFINITY"
+    ],
+    "safe_fallback": {
+      "same_character_only": true,
+      "body": "PUPPET_BODY:FIELD_NEUTRAL",
+      "face": "FACE_STATES:neutral",
+      "equipment": [],
+      "action_parts": [],
+      "mask": null,
+      "depth": "DEPTH_SHADOW:field_default",
+      "no_new_art": true
+    }
+  },
+  "gates": {
+    "behavior_gate": [
+      "valid_character_id",
+      "valid_role",
+      "valid_relation_state",
+      "valid_behavior_state",
+      "valid_interaction_mode",
+      "ambient_action_only_when_ambient",
+      "no_asset_fields_in_command"
+    ],
+    "asset_gate": [
+      "visual_id_matches_character",
+      "source_sha_verified",
+      "approval_ref_present",
+      "all_selected_parts_approved",
+      "same_character_part_binding",
+      "shared_equipment_approved",
+      "fallback_is_same_character_neutral",
+      "no_generated_asset"
+    ],
+    "integration_gate": [
+      "semantic_command_preserved",
+      "asset_plan_does_not_change_behavior_meaning",
+      "relation_affinity_unchanged",
+      "renderer_receives_no_unapproved_asset",
+      "missing_parts_fallback_without_new_art"
+    ]
+  },
+  "legacy_migration": {
+    "old_fixed_contract": "IDENTITY_BODY + PERSONALITY_PROP + THEME_GEAR + OBSERVE/LISTEN/IDEA/REACT/WAIT/COMPLETE = 9 independent full images per ID",
+    "state": "LEGACY_HOLD_DO_NOT_MASS_PRODUCE",
+    "migration_target": "COMPOSABLE_ASSET_GROUPS_PLUS_SEMANTIC_ACTION",
+    "delete_old_contract_before_new_gate_pass": false
+  }
+}
