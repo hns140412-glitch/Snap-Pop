@@ -2,7 +2,7 @@ const {test,expect}=require('@playwright/test');
 
 test('approved Snap coast and living FX render on the regional HOME',async({page})=>{
   await page.setViewportSize({width:390,height:844});
-  await page.goto('/');
+  await page.goto('http://127.0.0.1:4173/');
   const scene=page.locator('.mapWorld.livingCoast>.scene');
   await expect(scene).toHaveAttribute('src','assets/world/snap_pop_beach_asset.png');
   const visual=await page.locator('.mapWorld.livingCoast').getAttribute('data-visual-id');
