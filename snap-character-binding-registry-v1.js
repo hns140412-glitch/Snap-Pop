@@ -9,8 +9,9 @@
     app_id:'SNAP_POP',
     slots:Object.freeze([
   {
-    "slot_id": "guide-primary",
-    "surface": "#explore .guideLine/#guideLine",
+    "slot_id": "explore-primary",
+    "surface": "explore",
+    "selector": "#guideLine",
     "allowed_presence_roles": [
       "MAIN",
       "CHAPTER_OWNER"
@@ -20,20 +21,12 @@
     "allow_generation": false
   },
   {
-    "slot_id": "map-radio-companion",
-    "surface": "#map #homeRadio contextual companion slot",
+    "slot_id": "map-radio",
+    "surface": "map",
+    "selector": "#homeRadio",
     "allowed_presence_roles": [
       "GUEST",
-      "ACTING_CREW"
-    ],
-    "approved_only": true,
-    "design_gate_required": true,
-    "allow_generation": false
-  },
-  {
-    "slot_id": "ambient-scene",
-    "surface": "approved scene ambient slot",
-    "allowed_presence_roles": [
+      "ACTING_CREW",
       "AMBIENT"
     ],
     "approved_only": true,
