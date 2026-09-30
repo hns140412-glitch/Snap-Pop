@@ -1,0 +1,48 @@
+{
+  "schema": "TAKY_DESIGN_AUTHORITY_OPEN_V1",
+  "project": "Snap-Pop",
+  "authority_order": "Snap_Pop_UI_MASTER_LOGIC_REV_10 lineage",
+  "rule": "HOME is the first Golden gate. Later surfaces must freeze their own approved Golden; historical/family previews cannot substitute.",
+  "screens": [
+    {
+      "id": "landmark_selected",
+      "status": "PER_SCREEN_GOLDEN_FREEZE_OPEN"
+    },
+    {
+      "id": "three_step_exploration",
+      "status": "PER_SCREEN_GOLDEN_FREEZE_OPEN"
+    },
+    {
+      "id": "completion_gem",
+      "status": "PER_SCREEN_GOLDEN_FREEZE_OPEN"
+    },
+    {
+      "id": "gem_chest",
+      "status": "PER_SCREEN_GOLDEN_FREEZE_OPEN"
+    },
+    {
+      "id": "wish_blessing",
+      "status": "PER_SCREEN_GOLDEN_FREEZE_OPEN"
+    },
+    {
+      "id": "growth_tree",
+      "status": "PER_SCREEN_GOLDEN_FREEZE_OPEN"
+    },
+    {
+      "id": "records_calendar",
+      "status": "PER_SCREEN_GOLDEN_FREEZE_OPEN"
+    },
+    {
+      "id": "special_invitation",
+      "status": "PER_SCREEN_GOLDEN_FREEZE_OPEN"
+    },
+    {
+      "id": "guide",
+      "status": "PER_SCREEN_GOLDEN_FREEZE_OPEN"
+    },
+    {
+      "id": "settings",
+      "status": "PER_SCREEN_GOLDEN_FREEZE_OPEN"
+    }
+  ]
+}
