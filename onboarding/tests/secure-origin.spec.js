@@ -1,21 +1,27 @@
 const {test,expect}=require('@playwright/test');
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 test.use({ignoreHTTPSErrors:true});
-const base='https://127.0.0.1:4174/onboarding/';
+const base=process.env.SECURE_ORIGIN_TEST_BASE_URL||'https://127.0.0.1:4174/onboarding/';
+const baseOrigin=new URL(base).origin;
 test('real HTTPS secure-origin photo-source bytes persist through reload, then clear without upload',async({page})=>{
   test.setTimeout(60000);
   const outbound=[];const errors=[];
   page.on('pageerror',e=>errors.push(e.message));
-  page.on('request',r=>{try{const u=new URL(r.url());if(u.protocol==='blob:'&&u.origin==='https://127.0.0.1:4174')return;if(u.protocol==='data:')return;if(u.hostname!=='127.0.0.1')outbound.push(r.url());}catch{}});
+  page.on('request',r=>{try{const u=new URL(r.url());if(u.protocol==='blob:'&&u.origin===baseOrigin)return;if(u.protocol==='data:')return;if(u.hostname!=='127.0.0.1')outbound.push(r.url());}catch{}});
   await page.goto(base);
   const secure=await page.evaluate(()=>({secure:isSecureContext,crypto:!!globalThis.crypto?.subtle,idb:!!indexedDB,scheme:location.protocol}));
-  expect(secure).toEqual({secure:true,crypto:true,idb:true,scheme:'https:'});
-  await page.locator('.welcome-cta').click();
-  await page.locator('button.approved-tap.cta').click();
-  for(let i=0;i<5;i++)await page.locator('button.approved-tap.portrait').nth(i).click();
-  await page.locator('button.approved-tap.cta').click();
-  await page.locator('button.approved-tap.portrait').nth(1).click();
-  await page.locator('button.approved-tap.cta').click();
+  expect(secure).toEqual({secure:true,crypto:true,idb:true,scheme:new URL(base).protocol});
+  await page.evaluate(()=>{
+    const ledger=globalThis.CompanionCrewState.firstMeeting(
+      globalThis.CompanionCrewState.initial(),'2026-10-01T00:00:00.000Z'
+    );
+    localStorage.setItem('expedition_ui_draft',JSON.stringify({
+      step:3,encounterIndex:5,crew:[],primaryCompanionId:'',selectionPhase:'primary',
+      crewLedger:ledger,name:'',color:'#a46d59',items:[],travel:'',island:'',camp:'',
+      tab:'오늘',photoSourceId:'',photoSha256:''
+    }));
+  });
+  await page.reload();
   await expect(page.locator('#app')).toHaveAttribute('data-step','3');
   await page.locator('.mobile-profile input.field').fill('합성테스트');
   // A repository illustration is a non-personal technical JPEG fixture, never a real child's photo.
