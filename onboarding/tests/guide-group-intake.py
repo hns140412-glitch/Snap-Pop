@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """GUIDE 07..24 lineage and full24 work-order integrity without fictional art."""
-import copy,importlib.util,pathlib
+import copy,importlib.util,json,pathlib
 root=pathlib.Path(__file__).resolve().parents[1]
 def module(name,path):
     spec=importlib.util.spec_from_file_location(name,path)
@@ -21,6 +21,11 @@ assert all(x['status']=='GROUP_SOURCE_LOCKED_PER_MEMBER_CUTOUT_MASK_OPEN' and
  x['source_reference_view']['not_individual_original'] and x['source_reference_view']['not_final_art'] and
  len(x['source_reference_view']['sha256'])==64 for x in additional)
 assert additional[-1]['code']=='VIVI' and additional[-1]['numeric_visual_id']==24
+stage=json.loads((root/'guide-07-24-production-stage-gate.v1.json').read_text(encoding='utf8'))
+assert stage['invariant']['id24']['canonical_code']=='VIVI'
+assert stage['invariant']['id24']['derived_display_code']=='VIVI'
+assert stage['invariant']['id24']['forbid_derived_code']==['NOVA']
+assert stage['execution_policy']['next_stage']==3
 assert all(x['numeric_visual_id']>=19 for x in additional[-6:])
 assert len({x['source_group_lock']['sha256'] for x in additional})==3
 assert all(x['source_group_lock']['scope']=='GROUP_NOT_PER_MEMBER' for x in additional)

@@ -14,11 +14,18 @@ def load(root=ROOT):
 def check(root=ROOT,zip_path=None):
     data=load(root)
     refs=json.loads((root/'guide-07-24-reference-view-manifest.v1.json').read_text(encoding='utf8'))
+    stages=json.loads((root/'guide-07-24-production-stage-gate.v1.json').read_text(encoding='utf8'))
     assert data['schema']=='TAKY_SNAP_GUIDE_07_24_APPROVED_GROUP_INTAKE_V1'
     assert refs['schema']=='TAKY_GUIDE_INDIVIDUAL_REFERENCE_VIEWS_V1'
     assert refs['status']=='GROUP_PIXEL_CROPS_ONLY_NOT_APPROVED_INDEPENDENT_ORIGINALS_NOT_FINAL_ART'
     assert refs['controls']['reference_crop_is_not_cutout'] and refs['controls']['reference_crop_is_not_final_art']
     assert len(refs['members'])==18
+    assert stages['schema']=='TAKY_GUIDE_07_24_PRODUCTION_STAGE_GATE_V1'
+    id24=stages['invariant']['id24']
+    assert id24['canonical_code']=='VIVI' and id24['derived_display_code']=='VIVI'
+    assert id24['legacy_printed_code']=='NOVA' and id24['legacy_print_scope']=='SOURCE_PIXELS_ONLY'
+    assert id24['forbid_derived_code']==['NOVA']
+    assert stages['execution_policy']['next_stage']==3 and stages['execution_policy']['pilot_first']=='07 SOLA'
     assert data['hard_gates']['core6_ids_immutable']==list(CORE)
     assert data['hard_gates']['special_human_numeric_ids']==list(range(19,25))
     assert data['hard_gates']['numeric_24_code']=='VIVI'

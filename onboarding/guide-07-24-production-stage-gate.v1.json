@@ -1,0 +1,132 @@
+{
+  "schema": "TAKY_GUIDE_07_24_PRODUCTION_STAGE_GATE_V1",
+  "authority": "CURRENT_2026-09-30",
+  "invariant": {
+    "id24": {
+      "canonical_code": "VIVI",
+      "canonical_name_ko": "비비",
+      "legacy_printed_code": "NOVA",
+      "legacy_print_scope": "SOURCE_PIXELS_ONLY",
+      "derived_display_code": "VIVI",
+      "forbid_derived_code": [
+        "NOVA"
+      ]
+    },
+    "core6": "UNCHANGED",
+    "human_special_ids": [
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ],
+    "no_name_only_generation": true
+  },
+  "stages": [
+    {
+      "stage": 0,
+      "name": "AUTHORITY_RESTORE",
+      "status": "PASS",
+      "evidence": [
+        "Library NEW_CHAT_START_LATEST",
+        "approval ZIP",
+        "SHA manifest V2"
+      ]
+    },
+    {
+      "stage": 1,
+      "name": "GROUP_SOURCE_SHA_LOCK",
+      "status": "PASS",
+      "progress": "3/3",
+      "note": "exact group bytes verified; group SHA is not member SHA"
+    },
+    {
+      "stage": 2,
+      "name": "MEMBER_ID_REFERENCE_BINDING",
+      "status": "PASS",
+      "progress": "18/18",
+      "note": "exact panel mapping and source-pixel reference views; not final art"
+    },
+    {
+      "stage": 3,
+      "name": "INDIVIDUAL_TRANSPARENT_CUTOUT",
+      "status": "OPEN",
+      "progress": "0/18",
+      "entry": "approved group pixels + member reference",
+      "exit": "faithful standalone RGBA cutout + own SHA + visual fidelity review"
+    },
+    {
+      "stage": 4,
+      "name": "INDIVIDUAL_MASK_SPEC",
+      "status": "BLOCKED_BY_STAGE_3",
+      "progress": "0/18",
+      "exit": "per-ID source-locked mask spec SHA"
+    },
+    {
+      "stage": 5,
+      "name": "BODY_PROP_GEAR_FINAL_ART",
+      "status": "BLOCKED_BY_STAGE_4",
+      "progress": "0/54",
+      "exit": "18 x 3 independent final layers, not technical partitions"
+    },
+    {
+      "stage": 6,
+      "name": "SIX_REACTION_FINAL_ART",
+      "status": "BLOCKED_BY_STAGE_5",
+      "progress": "0/108",
+      "exit": "18 x 6 genuinely distinct original-guided reactions"
+    },
+    {
+      "stage": 7,
+      "name": "PER_ID_PACKAGE_AUDIT",
+      "status": "BLOCKED",
+      "progress": "0/18",
+      "exit": "9 real files/member + manifest + cross-ID duplicate rejection"
+    },
+    {
+      "stage": 8,
+      "name": "UI_BINDING_AND_11_SCREEN_RENDER",
+      "status": "BLOCKED",
+      "progress": "0/18",
+      "exit": "FIRST_MEETING/CHOICE/PRIMARY/HOME/ACTIVE_SCENE + 11 stages"
+    },
+    {
+      "stage": 9,
+      "name": "VIEWPORT_DEVICE_VISUAL_QA",
+      "status": "BLOCKED",
+      "progress": "0/18",
+      "exit": "4 viewports + iPhone/Safari + reduced motion + human signoff"
+    },
+    {
+      "stage": 10,
+      "name": "RELEASE",
+      "status": "HOLD",
+      "note": "no ROOT/main/Netlify without explicit approval"
+    }
+  ],
+  "full24": {
+    "final_art_target": 216,
+    "approved_final_art": 0,
+    "core6_final_layers_approved": 0,
+    "core6_final_reactions_approved": 0,
+    "expansion_final_art_approved": 0
+  },
+  "execution_policy": {
+    "next_stage": 3,
+    "pilot_first": "07 SOLA",
+    "promotion_rule": "pilot must pass identity/fidelity/transparent-edge/gear-prop completeness before batch 08-12",
+    "batch_after_pilot": [
+      "08 BELO",
+      "09 MOCA",
+      "10 NIA",
+      "11 KIRO",
+      "12 PEACH"
+    ],
+    "then": [
+      "13-18",
+      "19-24"
+    ],
+    "user_not_debugger": true
+  }
+}
