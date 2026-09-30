@@ -55,7 +55,23 @@ test('isolated companion onboarding complete path, assets, restore and rename '+
   await page.locator('#campName').fill('테스트캠프');await capture('09-camp-naming');
   await page.locator('#campNext').click();
   await expect(page.locator('#app')).toHaveAttribute('data-step','10');
-  await expect(page.locator('.home-crew-line')).toHaveText('괜찮아, 천천히 해도 돼!');await capture('10-home-today');
+  await expect(page.locator('.home-crew-line')).toHaveText('괜찮아, 천천히 해도 돼!');
+  const presence=page.locator('.home-crew-presence-item');
+  await expect(presence).toHaveCount(3);
+  await expect(page.locator('.home-crew-presence')).toHaveAttribute('data-crew-scene-policy','CREW_RUNTIME_POLICY_V1');
+  expect(await presence.filter({has:page.locator('[data-role="MAIN"]')}).count()).toBe(0);
+  const sceneState=await page.locator('.home-crew-presence').evaluate(root=>({
+    count:root.querySelectorAll('.home-crew-presence-item').length,
+    main:root.querySelectorAll('.home-crew-presence-item[data-role="MAIN"]').length,
+    ambient:root.querySelectorAll('.home-crew-presence-item[data-role="AMBIENT"]').length,
+    slots:[...root.querySelectorAll('.home-crew-presence-item')].map(x=>x.dataset.sceneSlot),
+    staticOnly:[...root.querySelectorAll('.home-crew-presence-item')].every(x=>x.dataset.artReadiness==='STATIC_APPROVED_ONLY'&&x.dataset.motionReady==='false'),
+    ambientActions:[...root.querySelectorAll('.home-crew-presence-item[data-role="AMBIENT"]')].map(x=>x.dataset.ambientAction)
+  }));
+  expect(sceneState.count).toBe(3);expect(sceneState.main).toBe(1);expect(sceneState.ambient).toBe(2);
+  expect(new Set(sceneState.slots).size).toBe(3);expect(sceneState.staticOnly).toBe(true);
+  expect(sceneState.ambientActions.every(Boolean)).toBe(true);
+  await capture('10-home-today');
   await page.locator('.home-crew-line').click();
   await expect(page.getByRole('dialog')).toBeVisible();
   await expect(page.locator('.crew-radio-cover')).toHaveAttribute('data-visual-id','lori');
