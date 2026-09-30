@@ -27,7 +27,8 @@
     "visual_id_true_alpha_isolation": "ALL_6_IDS_3_ROLE_OUTPUTS_GENERATOR_CLEAN_ALPHA_ZERO_RGB_CANONICAL_VISIBLE_PIXELS_CI_PENDING_ART_QA_HOLD",
     "core6_primary_real_journey": "PASS_ACTUAL_CHROME_6_IDS_X_3_VIEWPORT_REAL_PRIMARY_RESELECT_RELOAD_ART_REPLY_ONE_HINT_74_TOTAL_CANDIDATE_SCREENSHOTS_HEAD_96C51CD_VISUAL_APPROVAL_STILL_OPEN",
     "runtime_policy_home_scene": "MAIN_1_PLUS_AMBIENT_2_STATIC_APPROVED_OCCUPANCY_CODED_MOTION_PROMOTION_FAIL_CLOSED",
-    "composable_action_promotion_gate": "CODED_FAIL_CLOSED_CURRENT_MANIFEST_SYNTHETIC_FULLY_APPROVED_PATH_PASS_ACTION_READY_TRUE_MOTION_READY_FALSE"
+    "composable_action_promotion_gate": "CODED_FAIL_CLOSED_CURRENT_MANIFEST_SYNTHETIC_FULLY_APPROVED_PATH_PASS_ACTION_READY_TRUE_MOTION_READY_FALSE",
+    "motion_readiness_gate": "CODED_APPROVED_MATCHING_ANCHOR_TRANSITION_TIMING_REDUCED_MOTION_REQUIRED_RELEASE_STILL_HOLD"
   },
   "required_assets": {
     "ui/approved/first_meeting_selection_source.png": "9f55faf85c45d4236172a797e07a809a876f53b9afb083c9d8f8df1e799ab0f7",
@@ -73,7 +74,11 @@
     "crew-runtime-policy.js": "b4b71a50d8f2c6babc36df5f9bbe80d942c9186f5406c16ca38de230332f9931",
     "visual-id-runtime.js": "1d86119ef7feb4f81d99ae92580a4b7b5ce1f53e15f71dc001f48c48a329df70",
     "crew-interaction-runtime.js": "bce13eb9f62524e14b9026f76f1e80168a14cf93453b69fe7b0c4eecdda6bbe3",
-    "crew-visual-presenter.js": "825521527b7da517321891c2016c1c1a5f876dbfb42201d8eb812836663c6de2"
+    "crew-visual-presenter.js": "825521527b7da517321891c2016c1c1a5f876dbfb42201d8eb812836663c6de2",
+    "crew-asset-engine.js": "7e75fd25dbbede6a470c3e0791b4e4c3f97f7cbea9a88a8b50233b0d133785a7",
+    "crew-manifest-registry.js": "bdddda4bf937e1f9684992813a09076a511bff6f6bc3be0b07dbe53f4c6feb08",
+    "crew-ui-renderer.js": "6654f76355d17f7ca8be2c07a18d0efb711be7e49cd7902bf871b42d080388e7",
+    "crew-runtime-log.js": "02ba5a80bfb7977d83d8314d825464533b59ce2b51d8d264f0d4e4d2a486920a"
   },
   "production_method_contract": "visual-id-production-contract.json",
   "production_method": "SOURCE_LOCK_PLAN_REGISTER_ASSET_PRODUCTION_SCENE_BINDING_IMPLEMENT_RENDER_CROSS_VALIDATE_HUMAN_APPROVAL"
