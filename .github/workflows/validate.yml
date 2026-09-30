@@ -26,6 +26,8 @@ jobs:
           node --check vendor/taky/pwa-update-state.js
       - name: Validate shared runtime contract
         run: node tests/shared-runtime-contract.test.js
+      - name: Validate approved coast living-background source lock
+        run: node tests/snap-living-background-v5.test.js
       - name: Validate Snap human-rubric verification adapter
         run: node tests/snap-rubric-verifier.test.js
       - name: Install Playwright
@@ -36,5 +38,44 @@ jobs:
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/snap-http.log 2>&1 &
           echo $! > /tmp/snap-http.pid
-      - name: Run shared runtime browser regression
-        run: npx playwright test tests/shared-runtime.spec.js --reporter=line
+      - name: Run shared runtime and approved coast living-background browser regression
+        run: npx playwright test tests/shared-runtime.spec.js tests/snap-living-background.spec.js --reporter=line
+      - name: Upload Snap living-background visual gate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snap-living-background-visual-gate
+          path: test-results/snap-living-coast-*.png
+          if-no-files-found: error
+          retention-days: 7
+      - name: Upload Snap coast living-background visual gate frames
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snap-coast-living-background-visual-gate
+          path: |
+            test-results/snap-coast-live-390x844.png
+            test-results/snap-coast-reduced-motion-390x844.png
+          if-no-files-found: error
+          retention-days: 7
+      - name: Start temporary self-signed HTTPS loopback for secure-origin QA
+        run: |
+          openssl req -x509 -newkey rsa:2048 -nodes -days 1 -keyout /tmp/companion-local.key -out /tmp/companion-local.crt -subj "/CN=localhost" -addext "subjectAltName=IP:127.0.0.1,DNS:localhost" > /dev/null 2>&1
+          python3 onboarding/tests/https-server.py /tmp/companion-local.crt /tmp/companion-local.key > /tmp/companion-https.log 2>&1 &
+          echo $! > /tmp/companion-https.pid
+          curl -k -fsS --retry 20 --retry-connrefused --retry-delay 1 https://127.0.0.1:4174/onboarding/ > /dev/null
+      - name: Run canonical sequential onboarding and render-plan DOM regression
+        run: npx playwright test onboarding/tests/browser.spec.js onboarding/tests/canonical-render-plan-dom-consumer.spec.js --reporter=line --workers=1
+      - name: Verify isolated HTTPS IndexedDB photo-source persistence and clearing
+        run: npx playwright test onboarding/tests/secure-origin.spec.js --reporter=line
+      - name: Verify four-view canonical onboarding render evidence
+        run: |
+          test "$(find onboarding/render-evidence -maxdepth 1 -type f -name '*.png' | wc -l)" -eq 64
+      - name: Upload companion candidate render evidence (not visual approval)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: companion-render-candidate
+          path: onboarding/render-evidence/*.png
+          if-no-files-found: error
+          retention-days: 7

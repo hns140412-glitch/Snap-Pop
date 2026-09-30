@@ -1,0 +1,421 @@
+{
+  "schema": "TAKY_GUIDE_INDIVIDUAL_REFERENCE_VIEWS_V1",
+  "status": "GROUP_PIXEL_CROPS_ONLY_NOT_APPROVED_INDEPENDENT_ORIGINALS_NOT_FINAL_ART",
+  "source_package_sha256": "b998a8450fe386c6aa07860756cb5e74f1831b4cbe848c6b80af21863b7c6f4c",
+  "crop_method": "EXACT_DECODED_RGB_COLUMN_NO_REPAINT_NO_RESIZE",
+  "library_reference_zip": "/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/GUIDE_07_24_SOURCE_REFERENCE_VIEWS_NOT_FINAL_ART.zip",
+  "members": [
+    {
+      "visual_id": 7,
+      "pipeline_key": "guide-07",
+      "code": "SOLA",
+      "group_id": "GUIDE-07-12",
+      "exact_source_pixel_box": [
+        0,
+        0,
+        256,
+        1024
+      ],
+      "reference_view_path": "reference_views/07_SOLA_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "f8c47e96a3eae8d74675164c0e0247b91cf5453faa573902cfab5a163cf8b780",
+      "reference_size": [
+        256,
+        1024
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 8,
+      "pipeline_key": "guide-08",
+      "code": "BELO",
+      "group_id": "GUIDE-07-12",
+      "exact_source_pixel_box": [
+        256,
+        0,
+        512,
+        1024
+      ],
+      "reference_view_path": "reference_views/08_BELO_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "f95e1f801581e7cbad53ad23497db817b0da0ada8d2b230947fe7512e1033c6e",
+      "reference_size": [
+        256,
+        1024
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 9,
+      "pipeline_key": "guide-09",
+      "code": "MOCA",
+      "group_id": "GUIDE-07-12",
+      "exact_source_pixel_box": [
+        512,
+        0,
+        768,
+        1024
+      ],
+      "reference_view_path": "reference_views/09_MOCA_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "f580490eae9e55b963e0259fa8ed060ad9071db4eb4f29949fcaf72f61624b15",
+      "reference_size": [
+        256,
+        1024
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 10,
+      "pipeline_key": "guide-10",
+      "code": "NIA",
+      "group_id": "GUIDE-07-12",
+      "exact_source_pixel_box": [
+        768,
+        0,
+        1024,
+        1024
+      ],
+      "reference_view_path": "reference_views/10_NIA_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "86e390b570e0217ce2da9db510cf85b2eba9acbd0a1c4914f0ee40fd1a9e96a9",
+      "reference_size": [
+        256,
+        1024
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 11,
+      "pipeline_key": "guide-11",
+      "code": "KIRO",
+      "group_id": "GUIDE-07-12",
+      "exact_source_pixel_box": [
+        1024,
+        0,
+        1280,
+        1024
+      ],
+      "reference_view_path": "reference_views/11_KIRO_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "af3949ae3c6c2a0b10fe90558b7b83cda9bdb1e0deec66d40b9630a1bc520a89",
+      "reference_size": [
+        256,
+        1024
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 12,
+      "pipeline_key": "guide-12",
+      "code": "PEACH",
+      "group_id": "GUIDE-07-12",
+      "exact_source_pixel_box": [
+        1280,
+        0,
+        1536,
+        1024
+      ],
+      "reference_view_path": "reference_views/12_PEACH_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "eec9959ec09ac7cd50832f28e3cdda569140cc23fb92062adb6adbe5073cb005",
+      "reference_size": [
+        256,
+        1024
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 13,
+      "pipeline_key": "guide-13",
+      "code": "MINT",
+      "group_id": "GUIDE-13-18",
+      "exact_source_pixel_box": [
+        0,
+        0,
+        256,
+        864
+      ],
+      "reference_view_path": "reference_views/13_MINT_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "a6f448229c2619a79654f326aa63bc1c05cf829ac27d67fc4312389cf01b2561",
+      "reference_size": [
+        256,
+        864
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 14,
+      "pipeline_key": "guide-14",
+      "code": "TOTO",
+      "group_id": "GUIDE-13-18",
+      "exact_source_pixel_box": [
+        256,
+        0,
+        512,
+        864
+      ],
+      "reference_view_path": "reference_views/14_TOTO_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "d6f2a287b3077ada8b9abfe730a51a696e46d4dcf147600f38edc724f8515830",
+      "reference_size": [
+        256,
+        864
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 15,
+      "pipeline_key": "guide-15",
+      "code": "RUNE",
+      "group_id": "GUIDE-13-18",
+      "exact_source_pixel_box": [
+        512,
+        0,
+        768,
+        864
+      ],
+      "reference_view_path": "reference_views/15_RUNE_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "2c193ae293ff067eaa720c3e9adc47ef1eb9c8675ac77b31bfaed2051fe7bd22",
+      "reference_size": [
+        256,
+        864
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 16,
+      "pipeline_key": "guide-16",
+      "code": "POPO",
+      "group_id": "GUIDE-13-18",
+      "exact_source_pixel_box": [
+        768,
+        0,
+        1024,
+        864
+      ],
+      "reference_view_path": "reference_views/16_POPO_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "318a706cfd1a8e7ad6f08bd95c11fe039e464d073ca443453ad953d5971c0dce",
+      "reference_size": [
+        256,
+        864
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 17,
+      "pipeline_key": "guide-17",
+      "code": "MARU",
+      "group_id": "GUIDE-13-18",
+      "exact_source_pixel_box": [
+        1024,
+        0,
+        1280,
+        864
+      ],
+      "reference_view_path": "reference_views/17_MARU_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "a8364ad3eee14717e7acdac6c6e84029b83540d71d739db2549d85c3eede19ef",
+      "reference_size": [
+        256,
+        864
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 18,
+      "pipeline_key": "guide-18",
+      "code": "BORI",
+      "group_id": "GUIDE-13-18",
+      "exact_source_pixel_box": [
+        1280,
+        0,
+        1536,
+        864
+      ],
+      "reference_view_path": "reference_views/18_BORI_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "b8d5e5fb566c327acc19fa7436531738033e1667276606239a216ec9f606bd94",
+      "reference_size": [
+        256,
+        864
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 19,
+      "pipeline_key": "guide-19",
+      "code": "RIN",
+      "group_id": "GUIDE-19-24",
+      "exact_source_pixel_box": [
+        0,
+        0,
+        256,
+        1024
+      ],
+      "reference_view_path": "reference_views/19_RIN_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "a7f92958c9d1aca53cd1aca99d9b30635d528ba7fec420a881f1be830d3a0652",
+      "reference_size": [
+        256,
+        1024
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 20,
+      "pipeline_key": "guide-20",
+      "code": "LUMI",
+      "group_id": "GUIDE-19-24",
+      "exact_source_pixel_box": [
+        256,
+        0,
+        512,
+        1024
+      ],
+      "reference_view_path": "reference_views/20_LUMI_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "a38774467c877d979081fc87f05b5b058ae4a8fe721a5c16d4092dd2268c7ae5",
+      "reference_size": [
+        256,
+        1024
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 21,
+      "pipeline_key": "guide-21",
+      "code": "TESS",
+      "group_id": "GUIDE-19-24",
+      "exact_source_pixel_box": [
+        512,
+        0,
+        768,
+        1024
+      ],
+      "reference_view_path": "reference_views/21_TESS_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "56d70dc2f3d82b4e24530818b635493147c0b67e9442625ff6cb7445207ebebd",
+      "reference_size": [
+        256,
+        1024
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 22,
+      "pipeline_key": "guide-22",
+      "code": "SEL",
+      "group_id": "GUIDE-19-24",
+      "exact_source_pixel_box": [
+        768,
+        0,
+        1024,
+        1024
+      ],
+      "reference_view_path": "reference_views/22_SEL_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "a3eaa68b303e3f5b9e1e0fd0e1277bdc97448ade161d793b20b2c426c637009a",
+      "reference_size": [
+        256,
+        1024
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 23,
+      "pipeline_key": "guide-23",
+      "code": "ZEKE",
+      "group_id": "GUIDE-19-24",
+      "exact_source_pixel_box": [
+        1024,
+        0,
+        1280,
+        1024
+      ],
+      "reference_view_path": "reference_views/23_ZEKE_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "f1a1e8dd49b985ab1d5d23b2f0217aa602c775c4168c110a1696ccd9e0db2fb9",
+      "reference_size": [
+        256,
+        1024
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    },
+    {
+      "visual_id": 24,
+      "pipeline_key": "guide-24",
+      "code": "VIVI",
+      "group_id": "GUIDE-19-24",
+      "exact_source_pixel_box": [
+        1280,
+        0,
+        1536,
+        1024
+      ],
+      "reference_view_path": "reference_views/24_VIVI_EXACT_COLUMN_REFERENCE_NOT_ART.png",
+      "reference_view_sha256": "aa5ed40d63c590f79c54766c397a98083531f92c4d58c9b1f9582cd9d8483236",
+      "reference_size": [
+        256,
+        1024
+      ],
+      "approved_individual_cutout_sha256": null,
+      "mask_spec_sha256": null,
+      "independent_art_sha256": null,
+      "status": "EXACT_GROUP_PIXEL_REFERENCE_ONLY_NOT_FINAL_ART"
+    }
+  ],
+  "controls": {
+    "full_group_remains_authority": true,
+    "column_crop_may_clip_at_seam": true,
+    "name_only_generation": "DENY",
+    "reference_crop_is_not_cutout": true,
+    "reference_crop_is_not_final_art": true,
+    "reference_crop_sha_is_not_individual_original_sha": true,
+    "id24_canonical_code": "VIVI",
+    "id24_legacy_printed_code": "NOVA_SOURCE_PIXELS_ONLY",
+    "derived_id24_code_must_be": "VIVI",
+    "derived_id24_code_forbidden": ["NOVA"],
+    "core6_unchanged": true,
+    "runtime_activation": false,
+    "main_merge": false,
+    "netlify": false
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "schema": "TAKY_SNAP_VISUAL_ID_PRODUCTION_STANDARD_V1",
+  "owner": "SNAP_POP_ONBOARDING_ISOLATED_CANDIDATE",
+  "scope": "PROCESS_CONTRACT_NOT_ART_OR_USER_VISUAL_APPROVAL",
+  "legacyContractState": "LEGACY_3_PLUS_6_ASSET_CONTRACT_HOLD_PENDING_COMPOSABLE_ASSET_MIGRATION",
+  "productionAuthority": false,
+  "replacementAuthority": "onboarding/crew-composable-asset-manifest.v1.json",
+  "governanceCycle": [
+    "HUMAN_INTENT",
+    "THINK_AGAIN",
+    "KEEP_YOUR_KEY",
+    "FIND_A_WAY_SOLVE",
+    "YOURE_THE_KEY",
+    "VERIFY_CORRECT_CONTINUE"
+  ],
+  "stages": [
+    {
+      "id": "SOURCE_LOCK",
+      "requires": [
+        "user-approved original source",
+        "immutable local Visual ID",
+        "approval evidence",
+        "exact byte hash",
+        "approved visual lineage; superseded visuals excluded"
+      ],
+      "output": "STAGED_ID_ONLY",
+      "gate": "NO_SOURCE_NO_PRODUCTION"
+    },
+    {
+      "id": "ASSET_PRODUCTION",
+      "requires": [
+        "IDENTITY_BODY",
+        "PERSONALITY_PROP",
+        "THEME_GEAR",
+        "OBSERVE",
+        "LISTEN",
+        "IDEA",
+        "REACT",
+        "WAIT",
+        "COMPLETE"
+      ],
+      "output": "INDEPENDENT_TRANSPARENT_ASSETS_FROM_APPROVED_ORIGINAL",
+      "gate": "NO_FLATTENED_CUTOUT_AS_FAKE_INDEPENDENT_LAYERS"
+    },
+    {
+      "id": "BEHAVIOR_AND_SCENES",
+      "requires": [
+        "owner-verified name/personality/alias",
+        "FIRST_MEETING",
+        "CHOICE",
+        "PRIMARY",
+        "HOME",
+        "ACTIVE_SCENE",
+        "revised approved group composition for expansion",
+        "interaction, optional voice, reduced motion, accessibility"
+      ],
+      "output": "APPROVED_SCREEN_CONTRACTS_AND_EXPLICIT_BINDINGS",
+      "gate": "NO_SILENT_APPEND_TO_CORE6_COMPOSITE"
+    },
+    {
+      "id": "IMPLEMENT_AND_RENDER",
+      "requires": [
+        "single Visual ID registry",
+        "immutable ledger mapping",
+        "semantic owner gate",
+        "all five render surfaces",
+        "four viewport actual screenshot tests",
+        "six reaction playback state tests",
+        "no missing network art / browser exception"
+      ],
+      "output": "ACTUAL_UI_NOT_STATIC_IMAGE",
+      "gate": "USER_NOT_DEBUGGER"
+    },
+    {
+      "id": "CROSS_VALIDATE",
+      "requires": [
+        "22 original bytes unchanged",
+        "all derivatives separately hashed/provenanced",
+        "approved screen reference vs actual render 1:1",
+        "full regression + real device + accessible reduced motion",
+        "approve/correct mismatches"
+      ],
+      "output": "EVIDENCE_AND_HUMAN_APPROVAL",
+      "gate": "TECHNICAL_CI_SUCCESS_NOT_VISUAL_APPROVAL"
+    },
+    {
+      "id": "PUBLISH_IF_AUTHORIZED",
+      "requires": [
+        "separate Snap root owner approval",
+        "user final explicit release approval",
+        "live HEAD and all current checks green"
+      ],
+      "output": "SEPARATE_RELEASE_DECISION",
+      "gate": "NO_AUTOMATIC_MERGE_NETLIFY_READY_HIDE_PROMOTION"
+    }
+  ],
+  "independentLayers": [
+    "IDENTITY_BODY",
+    "PERSONALITY_PROP",
+    "THEME_GEAR"
+  ],
+  "reactions": [
+    "OBSERVE",
+    "LISTEN",
+    "IDEA",
+    "REACT",
+    "WAIT",
+    "COMPLETE"
+  ],
+  "sceneKeys": [
+    "FIRST_MEETING",
+    "CHOICE",
+    "PRIMARY",
+    "HOME",
+    "ACTIVE_SCENE"
+  ],
+  "viewportSizes": [
+    "375x667",
+    "390x844",
+    "430x932",
+    "1024x768"
+  ],
+  "assetProvenanceMethods": [
+    "EXTRACT_APPROVED_SOURCE",
+    "APPROVED_ORIGINAL_LAYER",
+    "FAITHFUL_TRACE_WITH_SOURCE_REVIEW"
+  ],
+  "newAssetNamespace": "characters/produced/<id>/",
+  "illustrationRules": {
+    "immutableOriginal": true,
+    "newIllustrationFromApprovalNotNewInventedDesign": true,
+    "transparentIndependentAssets": true,
+    "sourceHashRequired": true,
+    "derivativeHashRequired": true,
+    "flatCutoutIsPreviewOnly": true,
+    "doNotInferMissingExpression": true,
+    "noCropAsFakeAsset": true
+  },
+  "hardStops": [
+    "missing or superseded source approval",
+    "missing independent layers/reactions",
+    "source/derivative hash mismatch",
+    "new character appended to existing six-member first meeting image",
+    "identity or alias collision",
+    "missing real screen binding or screenshot proof",
+    "only CI approval without user design signoff",
+    "silent Snap ROOT or other app promotion",
+    "merge or Netlify before approval"
+  ],
+  "core6Baseline": {
+    "ids": [
+      "dubi",
+      "lori",
+      "ink",
+      "nova",
+      "take",
+      "zero"
+    ],
+    "staticAssets": 22,
+    "perMemberIndependentLayerDeficit": 3,
+    "perMemberReactionAssetDeficit": 6,
+    "currentOnboardingRenderStates": 13
+  },
+  "outputStatusVocabulary": [
+    "SOURCE_MISSING",
+    "STAGED_SOURCE_LOCKED",
+    "ASSET_PRODUCTION_OPEN",
+    "SCENE_BINDING_OPEN",
+    "RENDER_QA_OPEN",
+    "HUMAN_APPROVAL_OPEN",
+    "ROOT_RELEASE_HOLD",
+    "RELEASE_CANDIDATE_NOT_AUTO_RELEASED"
+  ],
+  "executionMode": {
+    "mode": "LOGIC_ONLY_HOLD",
+    "reason": "IMAGE_GENERATION_UNAVAILABLE_CURRENTLY",
+    "generation_allowed": false,
+    "art_binary_creation_allowed": false,
+    "art_stage_evidence_advance_allowed": false,
+    "logic_and_function_implementation_allowed": true,
+    "allowed_now": [
+      "state_machine",
+      "authority_validation",
+      "Visual ID mapping",
+      "Behavior Engine contract",
+      "Composition contract",
+      "runtime eligibility",
+      "fallback rules",
+      "consumer pointer contract",
+      "unit/integration/CI tests"
+    ],
+    "resume_art_rule": "Resume only when real approved binaries can be created and independently SHA-verified."
+  },
+  "assetOwnership": {
+    "specialist_pipeline": "Owns production state, work queue, cutout/mask/art/QA progression.",
+    "taky": "Owns shared contracts, orchestration and gates.",
+    "taky_assets": "Owns approved results, immutable hashes, provenance and consumer pointers only.",
+    "app_runtime": "Consumes verified approved pointers; does not manufacture missing art."
+  }
+}

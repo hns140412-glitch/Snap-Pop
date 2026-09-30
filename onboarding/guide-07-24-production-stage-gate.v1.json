@@ -1,0 +1,163 @@
+{
+  "schema": "TAKY_GUIDE_07_24_PRODUCTION_STAGE_GATE_V1",
+  "authority": "CURRENT_2026-09-30",
+  "invariant": {
+    "id24": {
+      "canonical_code": "VIVI",
+      "canonical_name_ko": "비비",
+      "legacy_printed_code": "NOVA",
+      "legacy_print_scope": "SOURCE_PIXELS_ONLY",
+      "derived_display_code": "VIVI",
+      "forbid_derived_code": [
+        "NOVA"
+      ]
+    },
+    "core6": "UNCHANGED_AND_SOURCE_LOCK_READY_6_OF_6",
+    "human_special_ids": [
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ],
+    "no_name_only_generation": true
+  },
+  "stages": [
+    {
+      "stage": 0,
+      "name": "AUTHORITY_RESTORE",
+      "status": "PASS",
+      "evidence": [
+        "Library NEW_CHAT_START_LATEST",
+        "approval ZIP",
+        "SHA manifest V2"
+      ]
+    },
+    {
+      "stage": 1,
+      "name": "GROUP_SOURCE_SHA_LOCK",
+      "status": "PASS",
+      "progress": "3/3",
+      "note": "exact group bytes verified; group SHA is not member SHA"
+    },
+    {
+      "stage": 2,
+      "name": "MEMBER_ID_REFERENCE_BINDING",
+      "status": "PASS",
+      "progress": "18/18",
+      "note": "exact panel mapping and source-pixel reference views; not final art"
+    },
+    {
+      "stage": 3,
+      "name": "INDIVIDUAL_TRANSPARENT_CUTOUT",
+      "status": "CORE6_PASS_EXPANSION_OPEN",
+      "progress": "6/24",
+      "core6": "6/6 exact approved cutout SHA locked",
+      "expansion": "0/18 independent cutout SHA",
+      "entry": "approved source + exact Visual ID lineage",
+      "exit": "24/24 faithful standalone RGBA cutout + own SHA + visual fidelity review"
+    },
+    {
+      "stage": 4,
+      "name": "INDIVIDUAL_MASK_SPEC",
+      "status": "CORE6_PASS_EXPANSION_BLOCKED_BY_STAGE_3",
+      "progress": "6/24",
+      "core6": "6/6 source-locked mask spec SHA ready",
+      "expansion": "0/18 mask spec SHA",
+      "exit": "24/24 per-ID source-locked mask spec SHA"
+    },
+    {
+      "stage": 5,
+      "name": "BODY_PROP_GEAR_FINAL_ART",
+      "status": "BLOCKED_UNTIL_FULL24_SOURCE_LOCK",
+      "progress": "0/72",
+      "exit": "24 x 3 independent final layers, not technical partitions"
+    },
+    {
+      "stage": 6,
+      "name": "SIX_REACTION_FINAL_ART",
+      "status": "BLOCKED_BY_STAGE_5",
+      "progress": "0/144",
+      "exit": "24 x 6 genuinely distinct original-guided reactions"
+    },
+    {
+      "stage": 7,
+      "name": "PER_ID_PACKAGE_AUDIT",
+      "status": "BLOCKED",
+      "progress": "0/24",
+      "exit": "9 real files/member + manifest + cross-ID duplicate rejection"
+    },
+    {
+      "stage": 8,
+      "name": "UI_BINDING_AND_11_SCREEN_RENDER",
+      "status": "BLOCKED",
+      "progress": "0/24",
+      "exit": "FIRST_MEETING/CHOICE/PRIMARY/HOME/ACTIVE_SCENE + 11 stages"
+    },
+    {
+      "stage": 9,
+      "name": "VIEWPORT_DEVICE_VISUAL_QA",
+      "status": "BLOCKED",
+      "progress": "0/24",
+      "exit": "4 viewports + iPhone/Safari + reduced motion + human signoff"
+    },
+    {
+      "stage": 10,
+      "name": "RELEASE",
+      "status": "HOLD",
+      "note": "no ROOT/main/Netlify without explicit approval"
+    }
+  ],
+  "full24": {
+    "final_art_target": 216,
+    "approved_final_art": 0,
+    "core6_final_layers_approved": 0,
+    "core6_final_reactions_approved": 0,
+    "expansion_final_art_approved": 0
+  },
+  "execution_policy": {
+    "next_stage": 3,
+    "source_sha_registration_arms_next_stage_per_id": true,
+    "full24_art_batch_requires_source_lock_ready": "24/24",
+    "core6_waits_in_ready_queue": true,
+    "do_not_recreate_core6_source_assets": true,
+    "pipeline_start_command": "python onboarding/tools/visual-id-source-readiness.py --require-full24 && python onboarding/tools/visual-id-art-batch.py --mode plan --scope full24",
+    "pilot_first": "07 SOLA",
+    "promotion_rule": "pilot must pass identity/fidelity/transparent-edge/gear-prop completeness before batch 08-12",
+    "batch_after_pilot": [
+      "08 BELO",
+      "09 MOCA",
+      "10 NIA",
+      "11 KIRO",
+      "12 PEACH"
+    ],
+    "then": [
+      "13-18",
+      "19-24"
+    ],
+    "mixed_core6_cohort_style_gate": {
+      "required": true,
+      "when": "AFTER_EACH_EXPANSION_CUTOUT_BATCH_BEFORE_MASK_PROMOTION",
+      "anchors": ["dubi", "lori", "ink", "nova", "take", "zero"],
+      "board": "NEUTRAL_24_SLOT_COMPARISON_NOT_FINAL_ART",
+      "compare": [
+        "character_scale",
+        "head_to_body_ratio",
+        "render_depth_and_material",
+        "outline_softness",
+        "lighting_direction_and_contrast",
+        "saturation_and_palette_density",
+        "gear_prop_density",
+        "foot_ground_alignment",
+        "animal_vs_human_special_cohesion"
+      ],
+      "fail_closed_on_obvious_style_drift": true
+    },
+    "known_visual_review_flags": {
+      "guide-21_TESS": "LEFT_HAND_MISSING_OR_NOT_VISIBLE_IN_SOURCE/DERIVATIVE; DO_NOT INVENT DURING CUTOUT. IF LATER POSE EXPOSES IT, RECONSTRUCT FAITHFULLY AND REVIEW AGAINST APPROVED TESS DESIGN.",
+      "guide-23_ZEKE": "LOWER_LEG/FOOT PROPORTION OR CONNECTION LOOKS ABNORMAL IN DERIVED WORK; DO NOT PROPAGATE DERIVATIVE DISTORTION. USE APPROVED SOURCE BODY PROPORTION AS AUTHORITY AND FLAG FOR BODY/POSE QA."
+    },
+    "user_not_debugger": true
+  }
+}

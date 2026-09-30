@@ -1,0 +1,12 @@
+'use strict';
+const assert=require('node:assert/strict');
+const reg=require('../crew-p0-register.js');
+const a=reg.audit();
+assert.equal(a.schema,'TAKY_CREW_P0_REGISTRATION_AUDIT_V1');
+assert.equal(a.total,18);
+assert.equal(a.present,0);
+assert.equal(a.missing,18);
+assert.ok(a.rows.every(x=>x.state==='MISSING'&&x.ready===false));
+assert.throws(()=>reg.register({id:'dubi',group:'PUPPET_BODY',key:'FIELD_NEUTRAL',approvalRef:'TEST',apply:false}),/P0_FILE_NOT_READY_FOR_REGISTRATION/);
+assert.throws(()=>reg.register({id:'dubi',group:'PUPPET_BODY',key:'FIELD_NEUTRAL',approvalRef:null,apply:false}),/APPROVAL_REF_REQUIRED/);
+console.log('CREW_P0_REGISTER_PASS: 18/18 missing is fail-closed; no proposal/apply possible without real fixed-path PNG + approval');

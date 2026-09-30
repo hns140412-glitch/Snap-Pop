@@ -1,2 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Exact-byte SHA256 guard: retain LF in checked-out onboarding source on Windows.
+onboarding/index.html text eol=lf
+onboarding/crew-state-runtime.js text eol=lf
+onboarding/crew-behavior-runtime.js text eol=lf
+onboarding/visual-id-runtime.js text eol=lf
+onboarding/crew-interaction-runtime.js text eol=lf
+onboarding/crew-visual-presenter.js text eol=lf

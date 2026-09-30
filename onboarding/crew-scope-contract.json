@@ -1,0 +1,133 @@
+{
+  "schema_version": "COMPANION_CREW_SCOPE_CONTRACT_V1",
+  "status": "P0_CORE6_LOCAL_STATE_AND_PRIMARY_UI_CODED_RELEASE_HOLD",
+  "source_refs": [
+    "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md (Snap development branch d9f48f9; recovered lineage)",
+    "data/exploration-crew-rules.json (Snap development branch d9f48f9; shared-ownership and count proposals)",
+    "onboarding/asset-and-release-gate.json (this PR; immutable byte-hash evidence)",
+    "TAKY:OS/EXPLORATION_CREW_CANONICAL.md (main 55547a7c4c859a1aae700405fdba4a302a2c20d3)",
+    "TAKY:MASTER/SYSTEM_LAYER_OWNERSHIP_MAP.json (main 55547a7c4c859a1aae700405fdba4a302a2c20d3)"
+  ],
+  "authority": {
+    "governance": "TAKY",
+    "learning_family_handoff": "LEARNING_APP_FAMILY",
+    "original_exploration_crew_rule_source": "SNAP_POP_ORIGIN",
+    "family_wide_semantic_owner": "TAKY_EXPLORATION_CREW_CANONICAL",
+    "central_canonical_path": "OS/EXPLORATION_CREW_CANONICAL.md",
+    "central_canonical_main_sha": "55547a7c4c859a1aae700405fdba4a302a2c20d3",
+    "reason": "TAKY main now contains the verified shared Exploration Crew semantic/runtime contract. Snap remains owner of project-specific presentation, dialogue, onboarding and release behavior.",
+    "snap_product_expression": "SNAP_POP",
+    "ready_execution_planner": "READY_SET_UI_PLUS_INDEPENDENT_PLANNER_ENGINE",
+    "hide_memory": "HIDE_SEEK",
+    "family_identity_authorization": "LEARNING_OS",
+    "app_location_never_grants_semantic_authority": true
+  },
+  "roster": {
+    "active_originals": 6,
+    "original_ids": [
+      "dubi",
+      "lori",
+      "ink",
+      "nova",
+      "take",
+      "zero"
+    ],
+    "historical_20_ceiling": "PRESERVE_LINEAGE_NOT_CURRENT_IMPLEMENTED_COUNT",
+    "later_18_plus_special": "PROPOSAL_CONFLICT_DO_NOT_AUTO_PROMOTE",
+    "expansion_12": "NOT_APPROVED_AS_REALIZED_ASSETS",
+    "special_guest": "SEPARATE_CLASS_EXACT_COUNT_OPEN",
+    "release_claim_max_verified_unique_originals": 6,
+    "additional_members_creation_gate": "AFTER_CORE6_RULES_AND_FUNCTIONS_IMPLEMENTED_AND_VALIDATED",
+    "additional_members_now": "DEFERRED_NO_NEW_CHARACTER_ART_OR_ROSTER"
+  },
+  "identity": {
+    "immutable_visual_ids": true,
+    "onboarding_id_namespace": "LOCAL_CANONICAL_ID_ONBOARDING",
+    "cross_system_mapping_requires_explicit_approval": true,
+    "legacy_aliases_read_only": {
+      "dubi": [
+        "dooby"
+      ],
+      "lori": [
+        "Lori",
+        "Tori"
+      ]
+    },
+    "original_assets": {
+      "dubi": "characters/originals/dubi_source.jpeg",
+      "lori": "characters/originals/lori_source.jpeg",
+      "ink": "characters/originals/ink_source.jpeg",
+      "nova": "characters/originals/nova_source.jpeg",
+      "take": "characters/originals/take_source.jpeg",
+      "zero": "characters/originals/zero_source.jpeg"
+    },
+    "ui_cutouts": {
+      "dubi": "characters/ui_cutouts/dubi.png",
+      "lori": "characters/ui_cutouts/lori.png",
+      "ink": "characters/ui_cutouts/ink.png",
+      "nova": "characters/ui_cutouts/nova.png",
+      "take": "characters/ui_cutouts/take.png",
+      "zero": "characters/ui_cutouts/zero.png"
+    },
+    "first_meeting_scene": "ui/approved/first_meeting_selection_source.png"
+  },
+  "interaction": {
+    "first_meeting_all_six": true,
+    "selected_crew": {
+      "type": "ARRAY_OF_APPROVED_IDS",
+      "min": 5,
+      "max": 6,
+      "meaning": "CHOSEN_TO_TRAVEL_NOT_OWNED_OR_UNLOCKED"
+    },
+    "primary_companion": {
+      "type": "ONE_APPROVED_MEMBER_ID",
+      "implementation_state": "CODED_IN_ISOLATED_ONBOARDING_CANDIDATE_VISUAL_APPROVAL_OPEN",
+      "must_not_default_from_array": true,
+      "selection_flow": "ON_EXISTING_STEP_2_APPROVED_COMPOSITE_AFTER_5_TO_6_MEMBERS",
+      "persisted_field": "primaryCompanionId",
+      "valid_only_if_member": true,
+      "reselect_on_member_removal": true,
+      "does_not_create_new_visual_id": true,
+      "uses_existing_six_assets_only": true,
+      "approval_state": "IMPLEMENTATION_CHOICE_NOT_USER_APPROVED_PIXEL_MATCH"
+    },
+    "unselected_core6_state": "KNOWN_FRIEND_NOT_LOCKED",
+    "renaming_preserves_id_and_memories": true,
+    "switching_primary_preserves_crew_and_history": true,
+    "app_switch_is_not_ready_session_end": true,
+    "member_selection_phase": "crew",
+    "primary_selection_phase": "primary",
+    "saved_draft_contract": "localStorage expedition_ui_draft",
+    "cross_app_sync": "NOT_IMPLEMENTED",
+    "first_meeting_record": "ON_ACTUAL_STEP_1_TO_STEP_2_ADVANCE_IDEMPOTENT",
+    "member_name_contract": "IMMUTABLE_ID_AND_CANONICAL_FIRST_NAME_PLUS_EDITABLE_CURRENT_NAME_AND_HISTORY",
+    "member_name_ui": "HOME_CREW_TAB_INLINE_EDIT_LOCAL_CANDIDATE",
+    "primary_switch_preserves_names_memories": true,
+    "local_experience_candidate": "SNAP_POP_LOCAL_TASK_RESULT_EVENT_ID_SESSION_TASK_EVIDENCE_ONLY_NO_AUTO_AFFINITY",
+    "reunion_voice_events_cannot_gain_affinity": true,
+    "cross_app_snapshot_authority": "NONE_NOT_INTEGRATED",
+    "home_primary_behavior": "EXPLICIT_PRIMARY_ONLY_SOURCED_SIGNATURE_ON_EXISTING_HOME_CAPTION",
+    "behavior_scene_previews": "PURE_READ_ONLY_SIX_SCENES_NO_TASK_AUTOMATION",
+    "voice_playback": "NOT_CONNECTED",
+    "visual_binding_contract": "SINGLE_SOURCED_REGISTRY_FOR_SIX_STATIC_CUTOUTS_AND_APPROVED_FIRST_MEETING_HOTSPOTS",
+    "visual_id_work_method": "SIX_PHASE_MACHINE_EXECUTION_STANDARD_SOURCE_LOCK_THROUGH_HUMAN_RELEASE"
+  },
+  "approval_scopes": {
+    "onboarding_original_assets": "REGISTERED_BYTE_HASH_VERIFIED",
+    "onboarding_runtime_use": "IN_PR_ISOLATED_CANDIDATE",
+    "snap_root_crew_runtime_use": "SEPARATE_OWNER_SCOPED_VISUAL_REGISTRY_APPROVAL_REQUIRED",
+    "ready_hide_visual_import": "NOT_AUTHORIZED_BY_ONBOARDING_ASSET_REGISTRATION",
+    "automatic_runtime_promotion": false,
+    "automatic_active_roster_promotion": false,
+    "root_home_replacement": false,
+    "visual_pixel_match": "OPEN_INCLUDING_NEW_PRIMARY_FUNCTIONAL_OVERLAY",
+    "physical_device": "OPEN",
+    "merge_or_deploy": false,
+    "crew_state_local_runtime": "CODED_IN_PR_ISOLATED",
+    "crew_state_ui_visual": "OPEN_HOMEPAGE_RENAME_OVERLAY_NOT_APPROVED",
+    "behavior_projection": "ISOLATED_ONBOARDING_ONLY_NOT_SNAP_ROOT_OR_READY_HIDE",
+    "visual_id_asset_production": "BLOCKED_CORE6_INDEPENDENT_BODY_PROP_GEAR_AND_SIX_REACTION_STATES_MISSING",
+    "new_id_stage_gate": "AUDIT_NEW_ID_SOURCE_HASH_LAYERS_ALL_SCENE_BINDINGS_AND_TESTS_BEFORE_RUNTIME_ADDITION",
+    "future_member_registration": "STAGING_ONLY_SOURCE_SHA_USER_VISUAL_APPROVAL_REQUIRED"
+  }
+}

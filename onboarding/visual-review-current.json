@@ -1,0 +1,264 @@
+{
+  "schema": "COMPANION_VISUAL_REVIEW_MATRIX_20260929",
+  "status": "CORE6_SOURCED_HOME_BEHAVIOR_VISUAL_RENDER_PENDING_APPROVAL",
+  "approved_original_assets_immutable": 22,
+  "viewports": [
+    "375x667",
+    "390x844",
+    "430x932",
+    "1024x768"
+  ],
+  "capture_states": [
+    {
+      "capture": "00-welcome",
+      "step": 0,
+      "reference_status": "ISLAND_ORIGINAL_ONLY",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "01-first-meeting",
+      "step": 1,
+      "reference_status": "APPROVED_FIRST_MEETING_SOURCE",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "02-crew-selection",
+      "step": 2,
+      "reference_status": "FIRST_MEETING_COMPOSITE_PLUS_HOTSPOTS",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "02-primary-choice",
+      "step": 2,
+      "reference_status": "UNAPPROVED_FUNCTIONAL_OVERLAY_SAME_ORIGINAL",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "03-profile",
+      "step": 3,
+      "reference_status": "SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "04-packing",
+      "step": 4,
+      "reference_status": "APPROVED_OBJECT_ASSETS_SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "05-voyage-choice",
+      "step": 5,
+      "reference_status": "SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "06-island-arrival",
+      "step": 6,
+      "reference_status": "SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "07-island-naming",
+      "step": 7,
+      "reference_status": "SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "08-camp-discovery",
+      "step": 8,
+      "reference_status": "SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "09-camp-naming",
+      "step": 9,
+      "reference_status": "SCREEN_REFERENCE_OPEN",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED"
+    },
+    {
+      "capture": "10-home-today",
+      "step": 10,
+      "reference_status": "CURRENT_APPROVED_ISLAND_ASSET_WITH_SOURCED_PRIMARY_HOME_COPY_VISUAL_APPROVAL_OPEN",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED",
+      "manual_inspection": "RENDER_INSPECTED_375X667_AND_1024X768_SIGNATURE_VISIBLE_NOT_SIGNED_OFF"
+    },
+    {
+      "capture": "10-home-crew",
+      "step": 10,
+      "reference_status": "NEW_CANDIDATE_RESPONSIVE_CORRECTION_VISUAL_APPROVAL_OPEN",
+      "render_evidence": "PASS_52_CAPTURE_ARTIFACT_AT_IMPLEMENTATION_HEAD_F8D0252_NOT_PIXEL_APPROVED",
+      "pixel_match": "NOT_CLAIMED"
+    }
+  ],
+  "findings": [
+    {
+      "id": "V-HOME-TABLET-01",
+      "evidence": "Prior 1024x768 HOME screenshot: parent .content max-width 480 then .home-drawer width41% generated unreadable ~170px panel",
+      "correction": "HOME parent full viewport; tablet drawer minimum 340px; numeric browser assertion"
+    },
+    {
+      "id": "V-HOME-MOBILE-02",
+      "evidence": "Prior 375x667 HOME screenshot: large cream floating card occluded environment",
+      "correction": "same original island, scene-colored lower overlay replacing white rounded container; user-approved parity still OPEN"
+    },
+    {
+      "id": "V-REF-03",
+      "evidence": "Approved originals are assets, not eleven individually confirmed screen-level mockup screenshots",
+      "correction": "Capture all candidate states and require source-vs-render visual review before visual release"
+    },
+    {
+      "id": "V-HOME-MOBILE-03",
+      "evidence": "Prior 375x667 candidate screenshot has return-to-friend-selection CTA clipped at bottom of crew drawer",
+      "correction": "Short-phone compact crew row and 50dvh max; browser asserts no internal scroll and CTA above nav"
+    },
+    {
+      "id": "V-HOME-TABLET-02",
+      "evidence": "CI at c039bb87: 1024x768 drawer scrollHeight-clientHeight 9px after short-phone correction; all mobile sizes passed",
+      "correction": "48dvh tablet drawer max-height only; no new art or semantic logic"
+    },
+    {
+      "id": "V-CREW-HOME-LINEAGE-01",
+      "evidence": "Existing HOME '오늘' copy previously generic regardless of selected Core6 identity",
+      "correction": "Bind recovered exact six signatures to explicit primary using same existing caption; no new card, bubble, art; 11-screen 1:1 approval remains open"
+    },
+    {
+      "id": "V-ID-TO-ASSET-GATE-01",
+      "evidence": "Approved Visual ID registration was not connected to one fail-closed renderer/independent action asset and scene contract; static cutout plus signature falsely risked DONE labeling",
+      "correction": "Single browser/server registry now owns six image paths and first-meeting hotspots; production plan enumerates absent independent body/prop/gear and OBSERVE/LISTEN/IDEA/REACT/WAIT/COMPLETE per member. New ID audit requires source hashes, every layer/state, five scene contracts, viewport/pixel and owner approval. No synthetic image/art assumed"
+    },
+    {
+      "id": "V-ID-PRODUCTION-WORKFLOW-02",
+      "evidence": "Previous audit listed missing assets but had no actual registration/staging/production work-order runner",
+      "correction": "Source-lock-only stage register, deterministic per-ID work order, actual bytes+SHA+transparent image/provenance audit and per-PR action artifact. Distinct source vs output vs scene vs release gates; no auto art or silent root activation"
+    },
+    {
+      "id": "V-SOURCE-PIXEL-DUBI-PROTOTYPE",
+      "evidence": "Current approved source is flattened transparent 1122x1402 PNG, independent source layers absent in 2026-09-27 ZIP",
+      "correction": "Implement manually authored source-specific semantic full-canvas masks for Dubi map/cap, split source without pixel invention or crop. Pixel-equality reassembly and unique-role hashes tested. Remains prototype: occlusion holes, expressive frames, motion-ready body and actual render binding OPEN"
+    },
+    {
+      "id": "V-SOURCE-PIXEL-INK-PROTOTYPE",
+      "evidence": "Second member Ink approved flat cutout has independent tablet and goggles shapes, not a retained layered original",
+      "correction": "Use Ink-specific visible tablet/goggle semantic masks with same generic source SHA guard and exact source pixel reconstruction; preserve motion occlusion and reaction state as OPEN, make CI require both unique sets"
+    },
+    {
+      "id": "CORE6-ACTUAL-HOME-TURN",
+      "evidence": "Earlier HOME had a fixed primary signature and pure scene previews but no actual user input to current Crew",
+      "correction": "Actual opt-in text only in existing HOME, source-member reaction after real child input, explicit one hint and ephemeral close. 30 pure paths + 4-size browser actual events. No fictional child memory/grade/voice or original art re-generation."
+    },
+    {
+      "id": "HOME-VISUAL-ID-RENDER-BINDING",
+      "evidence": "Functional HOME radio presented companion text/name but no primary's Visual ID art",
+      "correction": "Pure per-Visual-ID static approved cutout presenter plus actual rendered image and semantic states in HOME. No fake emotion sprite; future authorized ID same renderer; test six originals x three states and real four-size browser load"
+    },
+    {
+      "id": "CORE6-ALL-PER-ID-SOURCE-PARTITION-DRAFT",
+      "evidence": "Four remaining approved flattened original cutouts require per-member source-pixel splitting, not reused Dubi coordinates",
+      "correction": "Add source-locked unique visible prop/gear mask specs for Lori/Nova/Take/Zero and regenerate six per-ID three-role packs through common CI, while explicitly marking four new masks artistic QA HOLD; zero new runtime activation."
+    },
+    {
+      "id": "CLEAN_ALPHA_VISUAL_ID_BUG",
+      "evidence": "Previously each nominally transparent split PNG inherited entire approved source RGB under alpha=0, causing nominal roles to carry nonrole hidden RGB despite visually identical composite",
+      "correction": "Exact visual-ID filename/source SHA verification; mask RGB and alpha together; require all alpha-zero RGB exactly black in all 18 derived PNGs and compare visible original pixels byte-exact after canonicalizing only derived transparent pixels; keep originals immutable and artistic masks unapproved."
+    },
+    {
+      "id": "LORI-NOVA-SOURCE-ART-SILHOUETTE-CORRECTION",
+      "evidence": "Previous original-byte pixel reconstruction did not detect semantically wrong masks. Enlarged approved originals showed pink hair included in Lori's star-clip asset and brown head fur included in Nova's goggle asset.",
+      "correction": "Directly reauthor separate approved-source-traced polygon contours for each immutable Visual ID, preserve full source-visible composite, add per-member source-visible coverage regression checks, leave occluded anatomy and independent animation art OPEN."
+    },
+    {
+      "id": "DUBI-INK-TAKE-ZERO-SOURCE-CONTOUR-AUDIT",
+      "evidence": "Separate own-approved-source zoom comparison showed sleeve/strap fragments wrongly assigned to Dubi/Ink/Take props, blue scarf included in Take rolled-mat gear and Zero hair assigned to cap gear",
+      "correction": "Four separately source-traced visible polygon corrections, exact member-SHA, pixel-probe and member silhouette count anti-regressions. Source-visible technical drafts only; zero independent motion-safe underlays or reaction frames approved."
+    },
+    {
+      "id": "ALL-SIX-PRIMARY-REAL-BROWSER-COVERAGE",
+      "evidence": "Previous Playwright branch verified the source behavior matrix in Node and rendered only Lori selected end-to-end; did not exercise actual child primary-change UI / art/ledger/reload for five others",
+      "correction": "Add 3-viewport six-member real primary-change browser loop for six IDs with real approved image source loaded, actual conversation/reaction, exact one hint, persistence and layout checks; keep source art static and six animation/reaction-art completion OPEN"
+    },
+    {
+      "id": "VISUAL_ID_ACTUAL_OCCLUSION_PREPARATION",
+      "evidence": "Six individual source-visible role cutouts reconstruct exactly but cannot display unseen original body behind props/gear when independently moved",
+      "correction": "Produce per-ID source-SHA-locked 12 source-pixel exposure masks and 6 real motion QA panels with explicit NOT_RESTORED_ART flags, pin full pipeline in CI and retain 18 motion art/36 expression gates OPEN"
+    },
+    {
+      "id": "ACTUAL_ALL_SIX_PARTIAL_SOURCE_LOCAL_UNDERPAINT",
+      "evidence": "Previous all-six exposure-masks gave coordinates for missing body textures but did not produce any physical fill pixels",
+      "correction": "Generate real 6 original-coordinate BODY underpaint patch PNGs using only same-ID visible BODY donor pixels in safe fully-opaque exposed regions, compare static source exact and before/after 12 fixed translated poses; separate QA artifact; retain full unseen artwork/36 expression/user-approved UI parity OPEN"
+    },
+    {
+      "id": "VISUAL_ID_SIX_HARDCODED_CI_SCALABILITY",
+      "evidence": "Source draft CI and both follow-up motion-exposure/partial underpaint loops named six IDs literally, making up-to-20 technical source validation require repeated code edits",
+      "correction": "New source-locked batch discovery from baseline/staged candidate+individual mask specs, no hidden or new art invented; one manifest drives extractor, source-exposure and partial underpaint; reject missing approval, unsafe path, duplicates or >20 technical IDs; no runtime roster activation."
+    },
+    {
+      "id": "UNTESTED_STAGED_SEVENTH_E2E",
+      "evidence": "Prior 20 technical slot validation only called validate_ids with 20 strings, no actual seventh-source stage to source-pixel split and downstream restoration test",
+      "correction": "Add fully temporary fixture with six distinctly keyed dummy baseline sources plus separately dummy-staged seventh, negative source/spec tamper tests, run seven full pipelines, check 20 real source/spec preflight and reject #21 without publishing artwork"
+    }
+  ],
+  "gates": {
+    "source_and_asset": "PASS_22_ORIGINALS_LEDGER_AND_BEHAVIOR_AT_F8D0252",
+    "captures_48": "HISTORIC_PASS_AT_HEAD_47ae7be",
+    "visual_1to1": "OPEN_REAL_APPROVED_SCREEN_REFERENCES",
+    "device": "OPEN_REAL_IPHONE_SAFARI",
+    "merge": false,
+    "deploy": false,
+    "http_browser": "PASS_4_VIEWPORTS_GEOMETRY_AND_FULL_JOURNEY",
+    "local_https_photo_source": "PASS_SECURE_ORIGIN_SYNTHETIC_FIXTURE_IDB_RELOAD_SHA256_DELETE",
+    "iphone_safari": "OPEN",
+    "public_https": "OPEN",
+    "root_runtime_integration": "OPEN_OWNER_SCOPED_SEPARATE_ROOT_AND_CROSS_APP",
+    "expansion_character_generation": "DEFERRED_AFTER_CORE6",
+    "sourced_crew_behavior": "PASS_6_SIGNATURES_6_SCENE_PROJECTIONS_EXPLICIT_PRIMARY_HOME_BINDING",
+    "captures_52": "PASS_52_13_STATES_X_4_VIEWPORTS_AT_F8D0252",
+    "visual_id_production": "SINGLE_BINDING_REGISTRY_STATIC_CORE6_SIX_REACTION_AND_THREE_INDEPENDENT_LAYERS_OPEN",
+    "automatic_promotion": "BLOCKED_NEW_ID_AND_ROOT_RELEASE_MUST_PASS_PER_MEMBER_ASSET_HASH_SCENE_PARITY_AND_DEVICE",
+    "visual_id_work_method": "PASS_PLAN_REGISTER_AUDIT_REPORT_EXACT_IMPLEMENTATION_HEAD_BDFF5FB",
+    "visual_id_work_orders": "PASS_ARTIFACT_CURRENT_SIX_STATIC_18_ROLE_36_REACTION_OPEN",
+    "current_52_render": "SUPERSEDED_PASS_74_REAL_SCREENSHOT_CANDIDATES_HEAD_96c51cd_NOT_APPROVED_1TO1",
+    "dubi_source_partition": "PASS_CI_THREE_DIFFERENT_SOURCE_PIXEL_PNG_EXACT_RGBA_AT_HEAD_8F06D50_NOT_MOTION_READY",
+    "core6_independent_motion_assets": "STILL_OPEN_18_BODY_PROP_GEAR_AND_36_REACTIONS",
+    "original_22": "PASS_HEAD_47246485_IMMUTABLE_APPROVED_ORIGINALS",
+    "visual_id_work_order_report": "PASS_TWO_PER_ID_SHA_LOCKED_SOURCE_PARTITION_PROTOTYPES_ALL_18_PLUS_36_RELEASE_SLOTS_OPEN",
+    "source_pixel_partition_prototypes": "PASS_CI_DUBI_INK_2_X_3_DIFFERENT_FULL_CANVAS_PNG_EXACT_SOURCE_RGBA_HEAD_C8F3DF5_NOT_MOTION_READY",
+    "actual_home_crew_text_interaction": "CODED_REAL_CHILD_TEXT_6_ID_5_SCENE_ONE_OPTIONAL_HINT_CI_PENDING_VISUAL_APPROVAL_OPEN",
+    "home_radio_visual_id_binding": "PASS_REAL_APPROVED_PER_ID_CUTOUT_6_X_3_UNIT_AND_REAL_LORI_4_VIEWPORT_HEAD_47246485_STATIC_ONLY",
+    "motion_ready_core6": "OPEN_18_INDEPENDENT_ROLE_ASSETS_36_REACTION_SPRITES",
+    "core6_pixel_prototype_count": "SIX_OF_SIX_SOURCE_PARTITION_SPECS_CREATED_CI_PENDING_4_NEW_MASKS_ARTIST_QA_HOLD",
+    "core6_motion_ready": "OPEN_18_TRUE_INDEPENDENT_ART_SLOTS_NO_FALSE_SPRITE_PROMOTION",
+    "core6_reaction_art": "OPEN_36_REAL_ORIGINAL_REACTION_ILLUSTRATIONS",
+    "visual_id_clean_alpha_export": "CODED_ALL_SIX_VISUAL_IDS_CLEAN_RGBA_OUTPUTS_AND_EXACT_VISIBLE_PIXEL_ROUNDTRIP_CI_PENDING_18_MOTION_ASSET_SLOTS_STILL_OPEN",
+    "lori_star_clip_boundary": "SOURCE_TRACED_9859_HAIR_PATCH_TO_5865_REAL_VISIBLE_CLIP_ARTISTIC_QA_HOLD",
+    "nova_goggle_boundary": "SOURCE_TRACED_84073_GOGGLE_PLUS_FUR_TO_52390_VISIBLE_GOGGLES_ARTISTIC_QA_HOLD",
+    "four_remaining_visible_boundary": "DUBI_INK_TAKE_ZERO_PER_VISUAL_ID_SOURCE_MASKS_REFINED_LOCAL_FULL_RGBA_AND_SEMANTIC_PROBES_PASS_CI_PENDING_ART_QA_HOLD",
+    "all6_source_visible_drafts": "6_OF_6_ID_SPECIFIC_SOURCE_ONLY_MASKS_WITH_18_DERIVED_CLEAN_ALPHA_PNG_DRAFTS_NOT_18_APPROVED_MOTION_ASSETS",
+    "all_six_real_primary_journeys": "PASS_6_IDS_X_3_VIEWPORT_REAL_PRIMARY_SELECT_LEDGER_RELOAD_STATIC_APPROVED_IMAGE_SOURCED_REPLY_ONE_HINT_HEAD_96c51cd",
+    "core6_original_exposure_guides": "CODED_6_VISUAL_IDS_X_2_MOVED_SOURCE_ROLES_12_FULL_CANVAS_EXPOSED_PIXEL_MASKS_6_INDIVIDUAL_QA_PANELS_CI_PENDING_NO_AUTHORED_UNSEEN_BODY",
+    "core6_partial_inferred_underpaint": "CODED_6_REAL_SOURCE_LOCAL_BODY_PATCH_DRAFT_PNG_12_BEFORE_AFTER_FIXED_POSES_ZERO_SHIFT_ORIGINAL_PIXEL_EXACT_CI_PENDING_ARTISTIC_QA_HOLD_NOT_TRUE_ANATOMY",
+    "scalable_visual_id_batch": "CODED_APPROVED_SHA_LOCKED_BATCH_SOURCE_PIXEL_PIPELINE_20_TECHNICAL_CAPACITY_DOWNSTREAM_MASK_AND_PARTIAL_UNDERPAINT_USE_SHARED_ID_MANIFEST_CI_PENDING_ART_STILL_PER_ID",
+    "staged_seventh_real_end_to_end_fixture": "CODED_TEMP_CI_GEOMETRIC_FIXTURE_7_SOURCE_PIXEL_TRIPLETS_14_EXPOSURE_MOVES_7_UNDERPAINT_20_SOURCE_SPEC_PREFLIGHT_21_REJECT_CI_PENDING_NOT_NEW_REAL_ART"
+  },
+  "source_provenance": {
+    "approved_asset_identity": "onboarding/asset-and-release-gate.json required_assets 22 exact SHA256",
+    "original_first_meeting": "onboarding/ui/approved/first_meeting_selection_source.png",
+    "original_island_mobile": "onboarding/world/canonical/island_mobile.png",
+    "original_island_tablet": "onboarding/world/canonical/island_tablet.png",
+    "original_core6": "onboarding/characters/originals/* + ui_cutouts/* (6 each)",
+    "original_packing_items": "onboarding/ui/packing_objects/* (seven)",
+    "historical_qa_zip": "2026-09-27_LATEST.zip/onboarding/qa/acceptance_latest/* are HISTORICAL RENDERS NOT APPROVED MOCKUPS",
+    "missing_approval": "APPROVED_11_SCREEN_REFERENCE_BUNDLE_NOT_VERIFIED_DO_NOT_INFER"
+  }
+}

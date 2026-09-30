@@ -1,0 +1,302 @@
+{
+  "schema": "TAKY_CREW_P0_PRODUCTION_CONTRACT_V1",
+  "contract_version": "CREW_PIPELINE_V1",
+  "manifest_version": "CREW_COMPOSABLE_MANIFEST_V1",
+  "status": "SPEC_LOCKED_ART_NOT_CREATED",
+  "purpose": "Unlock same-character safe fallback only after three approved P0 outputs per Core6 member.",
+  "authority": {
+    "central": "TAKY:OS/EXPLORATION_CREW_CANONICAL.md",
+    "manifest": "onboarding/crew-composable-asset-manifest.v1.json",
+    "work_queue": "onboarding/crew-composable-work-queue.js"
+  },
+  "rules": {
+    "automatic_image_generation": false,
+    "name_based_generation": false,
+    "cross_character_pixels": false,
+    "prototype_promotion_without_review": false,
+    "source_fidelity_required": true,
+    "same_visual_id_only": true,
+    "missing_output_is_open_not_generated": true,
+    "output_sha_required_for_ready": true,
+    "approval_ref_required_for_ready": true,
+    "all_three_required_for_runtime_fallback": true,
+    "do_not_mutate_relation_or_affinity": true
+  },
+  "allowed_methods": [
+    "SOURCE_FAITHFUL_EXTRACTION",
+    "APPROVED_ORIGINAL_LAYER",
+    "HUMAN_REVIEWED_SOURCE_FAITHFUL_RECONSTRUCTION"
+  ],
+  "forbidden_methods": [
+    "NAME_ONLY_GENERATION",
+    "CROSS_CHARACTER_PART_REUSE",
+    "UNREVIEWED_INPAINT_PROMOTION",
+    "QA_PREVIEW_AS_FINAL_ART",
+    "GROUP_REFERENCE_CROP_AS_FINAL_ART"
+  ],
+  "ready_rule": "FILE_EXISTS_AND_SHA_MATCH_AND_APPROVAL_REF_AND_SAME_VISUAL_ID_FOR_ALL_3_OUTPUTS",
+  "members": [
+    {
+      "visual_id": "dubi",
+      "source_master_sha256": "bbfc57e9b4e8d8d132452b802826e5fd7c9ef400f5d454d9150a2b7e38d33820",
+      "source_master_path": "characters/originals/dubi_source.jpeg",
+      "approved_static_cutout_sha256": "611f460174a09e0ed186e909812464e8a991cc24a9891e21c087050e78d6109b",
+      "approved_static_cutout_path": "characters/ui_cutouts/dubi.png",
+      "source_partition_evidence": [
+        "characters/layer_specs/dubi.json"
+      ],
+      "outputs": [
+        {
+          "group": "PUPPET_BODY",
+          "key": "FIELD_NEUTRAL",
+          "path": "characters/composable/dubi/puppet_body/field_neutral.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        },
+        {
+          "group": "FACE_STATES",
+          "key": "neutral",
+          "path": "characters/composable/dubi/face_states/neutral.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        },
+        {
+          "group": "DEPTH_SHADOW",
+          "key": "field_default",
+          "path": "characters/composable/dubi/depth_shadow/field_default.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        }
+      ],
+      "canvas_size": [
+        1122,
+        1402
+      ]
+    },
+    {
+      "visual_id": "lori",
+      "source_master_sha256": "fa5e10a042f86354cfabafc1e09be5a0250e8942bf467eca5ed462b9405771fb",
+      "source_master_path": "characters/originals/lori_source.jpeg",
+      "approved_static_cutout_sha256": "1642e080034e48cf7a11cd3bea12be8db44e10468b20b231f5f714360f27fcac",
+      "approved_static_cutout_path": "characters/ui_cutouts/lori.png",
+      "source_partition_evidence": [
+        "characters/layer_specs/lori.json"
+      ],
+      "outputs": [
+        {
+          "group": "PUPPET_BODY",
+          "key": "FIELD_NEUTRAL",
+          "path": "characters/composable/lori/puppet_body/field_neutral.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        },
+        {
+          "group": "FACE_STATES",
+          "key": "neutral",
+          "path": "characters/composable/lori/face_states/neutral.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        },
+        {
+          "group": "DEPTH_SHADOW",
+          "key": "field_default",
+          "path": "characters/composable/lori/depth_shadow/field_default.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        }
+      ],
+      "canvas_size": [
+        1122,
+        1402
+      ]
+    },
+    {
+      "visual_id": "ink",
+      "source_master_sha256": "a03261f0dbf1e2a60158ceba32948b31c5372595ca73d39c400b1330c446b7e7",
+      "source_master_path": "characters/originals/ink_source.jpeg",
+      "approved_static_cutout_sha256": "5108c5d31437afda09eebd414ac3fd7000dabeca7504b469e630f2368160ef30",
+      "approved_static_cutout_path": "characters/ui_cutouts/ink.png",
+      "source_partition_evidence": [
+        "characters/layer_specs/ink.json"
+      ],
+      "outputs": [
+        {
+          "group": "PUPPET_BODY",
+          "key": "FIELD_NEUTRAL",
+          "path": "characters/composable/ink/puppet_body/field_neutral.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        },
+        {
+          "group": "FACE_STATES",
+          "key": "neutral",
+          "path": "characters/composable/ink/face_states/neutral.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        },
+        {
+          "group": "DEPTH_SHADOW",
+          "key": "field_default",
+          "path": "characters/composable/ink/depth_shadow/field_default.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        }
+      ],
+      "canvas_size": [
+        1122,
+        1402
+      ]
+    },
+    {
+      "visual_id": "nova",
+      "source_master_sha256": "f627926282be3d0dc95f6cd94461e041c39c30f8a5843f4a42a995790348a1db",
+      "source_master_path": "characters/originals/nova_source.jpeg",
+      "approved_static_cutout_sha256": "11aea6f91f0197a0c2ab70a203550530ebe2e2aad39136198851ca97092a0d34",
+      "approved_static_cutout_path": "characters/ui_cutouts/nova.png",
+      "source_partition_evidence": [
+        "characters/layer_specs/nova.json"
+      ],
+      "outputs": [
+        {
+          "group": "PUPPET_BODY",
+          "key": "FIELD_NEUTRAL",
+          "path": "characters/composable/nova/puppet_body/field_neutral.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        },
+        {
+          "group": "FACE_STATES",
+          "key": "neutral",
+          "path": "characters/composable/nova/face_states/neutral.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        },
+        {
+          "group": "DEPTH_SHADOW",
+          "key": "field_default",
+          "path": "characters/composable/nova/depth_shadow/field_default.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        }
+      ],
+      "canvas_size": [
+        1122,
+        1402
+      ]
+    },
+    {
+      "visual_id": "take",
+      "source_master_sha256": "1bd65ebb545efa0c06132d4d6cac153171bc3b6cef3c7547915c9c8acecc88b2",
+      "source_master_path": "characters/originals/take_source.jpeg",
+      "approved_static_cutout_sha256": "3cd6720c13473f20f4b23f64fa3d42c7491ea9277ba204f80f096e3f0d57d88a",
+      "approved_static_cutout_path": "characters/ui_cutouts/take.png",
+      "source_partition_evidence": [
+        "characters/layer_specs/take.json"
+      ],
+      "outputs": [
+        {
+          "group": "PUPPET_BODY",
+          "key": "FIELD_NEUTRAL",
+          "path": "characters/composable/take/puppet_body/field_neutral.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        },
+        {
+          "group": "FACE_STATES",
+          "key": "neutral",
+          "path": "characters/composable/take/face_states/neutral.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        },
+        {
+          "group": "DEPTH_SHADOW",
+          "key": "field_default",
+          "path": "characters/composable/take/depth_shadow/field_default.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        }
+      ],
+      "canvas_size": [
+        1122,
+        1402
+      ]
+    },
+    {
+      "visual_id": "zero",
+      "source_master_sha256": "84dd276b4099f3f73348cd69f8c5117c52f3ab4d587e5f80363c7cf43350572e",
+      "source_master_path": "characters/originals/zero_source.jpeg",
+      "approved_static_cutout_sha256": "7eb9ad58b94349eb8367236a3058a7feb0c9e994b981915c6ef82f74dd88b233",
+      "approved_static_cutout_path": "characters/ui_cutouts/zero.png",
+      "source_partition_evidence": [
+        "characters/layer_specs/zero.json"
+      ],
+      "outputs": [
+        {
+          "group": "PUPPET_BODY",
+          "key": "FIELD_NEUTRAL",
+          "path": "characters/composable/zero/puppet_body/field_neutral.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        },
+        {
+          "group": "FACE_STATES",
+          "key": "neutral",
+          "path": "characters/composable/zero/face_states/neutral.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        },
+        {
+          "group": "DEPTH_SHADOW",
+          "key": "field_default",
+          "path": "characters/composable/zero/depth_shadow/field_default.png",
+          "sha256": null,
+          "approval_ref": null,
+          "status": "OPEN"
+        }
+      ],
+      "canvas_size": [
+        1122,
+        1402
+      ]
+    }
+  ],
+  "summary": {
+    "members": 6,
+    "outputs_per_member": 3,
+    "total_p0_outputs": 18,
+    "ready_outputs": 0,
+    "ready_members": 0
+  },
+  "output_format": {
+    "file_type": "PNG",
+    "color_mode": "RGBA",
+    "transparent_background": true,
+    "coordinate_space": "MATCH_APPROVED_STATIC_CUTOUT",
+    "canvas_policy": "USE_LAYER_SPEC_SIZE_NO_RESIZE_NO_CROP",
+    "anchor": "TOP_LEFT_0_0",
+    "alpha_rule": "NO_RGB_PAYLOAD_OUTSIDE_VISIBLE_ALPHA",
+    "no_ui_scale_bake_in": true
+  },
+  "group_semantics": {
+    "PUPPET_BODY:FIELD_NEUTRAL": "Neutral source-faithful body/base layer in source coordinate space. No action-specific pose or unrelated equipment may be baked in.",
+    "FACE_STATES:neutral": "Neutral face-state overlay aligned to the same source coordinate space; transparent elsewhere; identity/hair/head silhouette may not be redesigned.",
+    "DEPTH_SHADOW:field_default": "Default depth/shadow layer only; transparent elsewhere; must not contain substitute character pixels or mutate identity."
+  }
+}
