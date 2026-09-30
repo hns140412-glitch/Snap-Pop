@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict');
+const listeners=new Map();
+globalThis.addEventListener=(name,fn)=>{const arr=listeners.get(name)||[];arr.push(fn);listeners.set(name,arr)};
+globalThis.dispatchEvent=(evt)=>{for(const fn of listeners.get(evt.type)||[])fn(evt);return true};
+globalThis.CustomEvent=class{constructor(type,opt={}){this.type=type;this.detail=opt.detail}};
+const target={textContent:'before'};
+globalThis.document={querySelector(sel){return sel==='#guideLine'?target:null}};
+require('../snap-character-scene-bridge-v1.js');
+require('../snap-crew-dialogue-consumer-v1.js');
+const runtime=require('../snap-crew-live-runtime-v1.js');
+const ch=runtime.legacyCharacter('guide',{role:'MAIN',action:'IDLE',dialogue:'SHORT',utterance:'탐험대 실제 연결 확인',evidenceRef:'TEST'});
+const plan=runtime.emit({sceneId:'explore',surface:'explore',characters:[ch],foregroundId:ch.character_id,speakingOrder:[ch.character_id],visibleOrder:[ch.character_id]});
+assert.equal(plan.semantic_only,true);
+assert.equal(target.textContent,'탐험대 실제 연결 확인');
+console.log(JSON.stringify({gate:'LIVE_CREW_EVENT_CHAIN',app:'SNAP_POP',surface:'explore',pass:true},null,2));
