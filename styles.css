@@ -50,3 +50,14 @@ textarea{width:100%;min-height:190px;resize:vertical;border:1px solid #d9c9a8;bo
 #toast{position:fixed;z-index:80;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,9px);max-width:360px;background:#062f2bf1;color:#fff3ca;border:1px solid #c6a75c66;border-radius:13px;padding:10px 13px;font-size:11px;opacity:0;pointer-events:none;transition:.2s}#toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-height:760px){.mapWorld{min-height:535px}.treeStage{height:335px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* TAKY Living Background V5 — source-locked coast binding. The exact approved
+   PNG remains the effect-OFF fallback; motion video is the reviewed V5 layer. */
+#map .mapWorld .sceneStatic,#map .mapWorld .sceneMotion{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;filter:none;pointer-events:none}
+#map .mapWorld .sceneStatic{z-index:0;opacity:1}
+#map .mapWorld .sceneMotion{z-index:1;opacity:0;transition:opacity .18s ease}
+#map .mapWorld .sceneMotion.is-ready{opacity:1}
+#map .mapWorld:before,#map .mapWorld:after{display:none}
+#map .mapWorld .atmo{z-index:3;background:linear-gradient(180deg,rgba(255,255,255,.04) 0 33%,rgba(9,50,51,.05) 54%,rgba(6,43,37,.58) 100%)}
+html[data-snap-living-motion="off"] #snapLivingMotion{display:none!important}
+@media(prefers-reduced-motion:reduce){#snapLivingMotion{display:none!important}}
