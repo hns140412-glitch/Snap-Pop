@@ -28,8 +28,18 @@ jobs:
         run: node onboarding/tests/crew-state-runtime.cjs
       - name: Verify sourced Core 6 behavior projection and no silent authority transfer
         run: node onboarding/tests/crew-behavior-runtime.cjs
-      - name: Verify Behavior Gate, Asset Gate and Integration Gate
+      - name: Verify Behavior / Asset / Integration gates and composable Manifest bridge
         run: node onboarding/tests/crew-engine-pipeline.cjs
+      - name: Verify composable 7-group readiness and emit fail-closed report
+        run: |
+          node onboarding/tests/crew-composable-readiness.cjs
+          node onboarding/crew-composable-readiness.js --out onboarding/qa/crew-composable-readiness.json > /dev/null
+          cat onboarding/qa/crew-composable-readiness.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: crew-composable-7-group-readiness
+          path: onboarding/qa/crew-composable-readiness.json
+          if-no-files-found: error
       - name: Verify Visual ID to asset/scene/interaction production gate (fail closed)
         run: node onboarding/tests/visual-id-production.cjs
       - name: Verify Visual ID registration-to-UI production workflow and repeatable work orders
@@ -62,14 +72,14 @@ jobs:
         run: python onboarding/tests/source-layer-extraction.py
       - name: Preflight batch Visual ID provenance, duplicate rejection and 24 technical slots
         run: python onboarding/tests/visual-id-batch.py
-      - name: Verify repeatable approved Visual ID nine-asset artwork production batch (no fake copied art)
+      - name: Verify LEGACY 3+6 nine-slot source/provenance regression only (production authority disabled)
         run: |
           python onboarding/tests/visual-id-art-batch.py
           python onboarding/tools/visual-id-art-batch.py --mode plan --out onboarding/qa/visual-id-art-batch-plan.json > /dev/null
           python onboarding/tools/visual-id-art-batch.py --mode audit --out onboarding/qa/visual-id-art-batch-audit.json > /dev/null
       - uses: actions/upload-artifact@v4
         with:
-          name: core6-visual-id-batch-nine-asset-work-orders-and-fail-closed-audit
+          name: legacy-core6-3-plus-6-regression-work-orders-no-production-authority
           path: |
             onboarding/qa/visual-id-art-batch-plan.json
             onboarding/qa/visual-id-art-batch-audit.json
@@ -81,21 +91,21 @@ jobs:
           python onboarding/tests/visual-id-logic-only-mode.py
           python onboarding/tools/visual-id-logic-only-mode.py --action VALIDATE_STATE_MACHINE
           ! python onboarding/tools/visual-id-logic-only-mode.py --action BODY_PROP_GEAR_FINAL_ART
-      - name: Verify approved GUIDE 07..24 group-source identity and full 24-member source-arming queue
+      - name: Verify GUIDE 07..24 source provenance only; legacy full24 production remains disabled
         run: |
           python onboarding/tools/guide-group-intake.py
           python onboarding/tests/guide-group-intake.py
           python onboarding/tests/visual-id-source-readiness.py
           python onboarding/tools/visual-id-source-readiness.py --out onboarding/qa/visual-id-24-source-readiness.json > /dev/null
-          python onboarding/tools/visual-id-art-batch.py --mode plan --scope full24 --out onboarding/qa/guide-24-art-production-plan.json > /dev/null
-          python onboarding/tools/visual-id-art-batch.py --mode audit --scope full24 --out onboarding/qa/guide-24-art-production-audit.json > /dev/null
+          python onboarding/tools/visual-id-art-batch.py --mode plan --scope full24 --out onboarding/qa/guide-24-legacy-regression-plan.json > /dev/null
+          python onboarding/tools/visual-id-art-batch.py --mode audit --scope full24 --out onboarding/qa/guide-24-legacy-regression-audit.json > /dev/null
       - uses: actions/upload-artifact@v4
         with:
-          name: approved-group-evidence-and-24-id-216-art-slots-all-open-no-source-zip-in-CI
+          name: guide-07-24-provenance-and-legacy-216-regression-evidence-production-disabled
           path: |
             onboarding/qa/visual-id-24-source-readiness.json
-            onboarding/qa/guide-24-art-production-plan.json
-            onboarding/qa/guide-24-art-production-audit.json
+            onboarding/qa/guide-24-legacy-regression-plan.json
+            onboarding/qa/guide-24-legacy-regression-audit.json
           if-no-files-found: error
       - name: Batch build per-Visual-ID approved-source partition drafts (never activate)
         run: |
