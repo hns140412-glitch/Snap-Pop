@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+'use strict';
+const assert=require('node:assert/strict');
+const consumer=require('../snap-explorer-crew-authority-consumer-v2.js');
+function storage(){const m=new Map();return {getItem:k=>m.has(k)?m.get(k):null,setItem:(k,v)=>m.set(k,String(v)),removeItem:k=>m.delete(k)}}
+assert.equal(consumer.VERSION,'SNAP_EXPLORER_CREW_AUTHORITY_CONSUMER_V2');
+assert.equal(consumer.SYSTEM_BOUND,true);
+assert.equal(consumer.ownership.runtimeOwner,false);
+assert.equal(consumer.ownership.relationWrite,false);
+assert.equal(consumer.ownership.memoryWrite,false);
+assert.equal(consumer.ownership.behaviorOwner,false);
+assert.equal(consumer.ownership.assetResolver,false);
+const s=storage();
+const canonical=JSON.stringify({version:'EXPLORER_CREW_STATE_STORE_V1',updated_at:'2026-10-01T00:00:00.000Z',state:{relation:{main_character_id:'lori',members:{lori:{character_id:'lori',relation_state:'MAIN_COMPANION'}}},memory:{}}});
+s.setItem(consumer.CANONICAL_STATE_KEY,canonical);
+const out=consumer.consumeCanonicalStore(s);
+assert.equal(out.ok,true);assert.equal(out.consumed,true);
+assert.equal(consumer.snapshot(s).character_id,'lori');
+assert.equal(s.getItem(consumer.CANONICAL_STATE_KEY),canonical,'CANONICAL_STORE_MUST_REMAIN_UNCHANGED');
+const radio={dataset:{},attrs:{'aria-label':'무전'},getAttribute(k){return this.attrs[k]||null},setAttribute(k,v){this.attrs[k]=String(v)}};
+const host={dataset:{}};
+consumer.syncDom({storage:s,host,radio});
+assert.equal(host.dataset.explorerCrewRuntime,'CANONICAL_ONLY');
+assert.equal(host.dataset.explorerCrewRuntimeOwner,'false');
+assert.equal(radio.dataset.explorerCrewCharacter,'lori');
+assert.match(radio.attrs['aria-label'],/주 동행 무전$/);
+s.removeItem(consumer.PROJECTION_KEY);
+consumer.syncDom({storage:s,host,radio});
+assert.equal(radio.attrs['aria-label'],'무전');
+console.log('PASS: Snap main consumes Explorer Crew Runtime V2 as read-only authority projection');
