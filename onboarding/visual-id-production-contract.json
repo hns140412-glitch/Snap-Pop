@@ -167,5 +167,31 @@
     "HUMAN_APPROVAL_OPEN",
     "ROOT_RELEASE_HOLD",
     "RELEASE_CANDIDATE_NOT_AUTO_RELEASED"
-  ]
+  ],
+  "executionMode": {
+    "mode": "LOGIC_ONLY_HOLD",
+    "reason": "IMAGE_GENERATION_UNAVAILABLE_CURRENTLY",
+    "generation_allowed": false,
+    "art_binary_creation_allowed": false,
+    "art_stage_evidence_advance_allowed": false,
+    "logic_and_function_implementation_allowed": true,
+    "allowed_now": [
+      "state_machine",
+      "authority_validation",
+      "Visual ID mapping",
+      "Behavior Engine contract",
+      "Composition contract",
+      "runtime eligibility",
+      "fallback rules",
+      "consumer pointer contract",
+      "unit/integration/CI tests"
+    ],
+    "resume_art_rule": "Resume only when real approved binaries can be created and independently SHA-verified."
+  },
+  "assetOwnership": {
+    "specialist_pipeline": "Owns production state, work queue, cutout/mask/art/QA progression.",
+    "taky": "Owns shared contracts, orchestration and gates.",
+    "taky_assets": "Owns approved results, immutable hashes, provenance and consumer pointers only.",
+    "app_runtime": "Consumes verified approved pointers; does not manufacture missing art."
+  }
 }
