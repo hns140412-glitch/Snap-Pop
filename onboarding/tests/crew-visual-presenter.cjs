@@ -52,6 +52,24 @@ assert.equal(promoted.sceneSlot,'MID_LEFT');assert.equal(promoted.ambientAction,
 assert.equal(promoted.actionReady,true);assert.equal(promoted.motionReady,false);assert.equal(promoted.generated,false);
 assert.equal(promoted.semanticPreserved,true);assert.equal(promoted.relationMutation,false);assert.equal(promoted.affinityMutation,false);
 assert.equal(presenter.promoteComposable({command:ambient,runtimeDecision:{ok:false,scene_slot:'MID_LEFT'}},fullRegistry,assetEngine,renderer),null);
+const motionSpec={
+ schema:'CREW_MOTION_SPEC_V1',approved:true,approval_ref:'MOTION_APPROVED_DUBI_READ_BOOK',
+ visual_id:'dubi',ambient_action:'READ_BOOK',
+ anchors:{body:'body_center',action_part:'hand',equipment:'hand'},
+ transition:{enter:'FADE_SLIDE',exit:'FADE',enter_ms:220,exit_ms:180},
+ timing:{action_ms:2400,hold_ms:800,cooldown_ms:2200},
+ reduced_motion:{mode:'STATIC_COMPOSABLE',preserves_information:true}
+};
+const motion=renderer.motionPlan(promoted,motionSpec,{prefersReducedMotion:false});
+assert.ok(motion);assert.equal(motion.motionReady,true);assert.equal(motion.motion_active,true);
+assert.equal(motion.semantic_preserved,true);assert.equal(motion.relation_mutation,false);assert.equal(motion.affinity_mutation,false);
+const reducedMotion=renderer.motionPlan(promoted,motionSpec,{prefersReducedMotion:true});
+assert.ok(reducedMotion);assert.equal(reducedMotion.motionReady,true);assert.equal(reducedMotion.motion_active,false);
+assert.equal(reducedMotion.reduced_motion_mode,'STATIC_COMPOSABLE');
+assert.equal(renderer.motionPlan(promoted,{...motionSpec,visual_id:'lori'}),null);
+assert.equal(renderer.motionPlan(promoted,{...motionSpec,ambient_action:'REST'}),null);
+assert.equal(renderer.motionPlan(promoted,{...motionSpec,reduced_motion:{mode:'NONE',preserves_information:false}}),null);
+assert.equal(renderer.motionPlan({...promoted,actionReady:false},motionSpec),null);
 const fakeId='future_approved',future={
  memberIds:[fakeId],
  member:id=>({id,cutout:'characters/produced/'+id+'/static-cutout.png'}),
@@ -70,4 +88,4 @@ assert.doesNotMatch(html,/characters\/ui_cutouts\/'\+state\.primaryCompanionId/)
 console.log(JSON.stringify({gate:'VISUAL_ID_REAL_HOME_RADIO_STATIC_ART_BINDING',
  canonical_members:6,states_per_member:3,verified_bindings:passed,real_approved_cutouts:true,
  future_approved_id_same_code:'PASS',unknown_or_unapproved_id:'FAIL_CLOSED',
- independent_expression_art_ready:false,composable_action_promotion_gate:'PASS_FAIL_CLOSED_CURRENT_MANIFEST',motion_promotion:false,root_promotion:false},null,2));
+ independent_expression_art_ready:false,composable_action_promotion_gate:'PASS_FAIL_CLOSED_CURRENT_MANIFEST',motion_gate:'PASS_APPROVED_SPEC_AND_REDUCED_MOTION',root_promotion:false},null,2));
