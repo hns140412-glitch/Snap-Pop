@@ -60,6 +60,18 @@ jobs:
         run: python onboarding/tests/source-layer-extraction.py
       - name: Preflight batch Visual ID provenance, duplicate rejection and 20 technical slots
         run: python onboarding/tests/visual-id-batch.py
+      - name: Verify repeatable approved Visual ID nine-asset artwork production batch (no fake copied art)
+        run: |
+          python onboarding/tests/visual-id-art-batch.py
+          python onboarding/tools/visual-id-art-batch.py --mode plan --out onboarding/qa/visual-id-art-batch-plan.json > /dev/null
+          python onboarding/tools/visual-id-art-batch.py --mode audit --out onboarding/qa/visual-id-art-batch-audit.json > /dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: core6-visual-id-batch-nine-asset-work-orders-and-fail-closed-audit
+          path: |
+            onboarding/qa/visual-id-art-batch-plan.json
+            onboarding/qa/visual-id-art-batch-audit.json
+          if-no-files-found: error
       - name: Batch build per-Visual-ID approved-source partition drafts (never activate)
         run: |
           python onboarding/tools/visual-id-batch.py --root onboarding --out onboarding/visual-prototypes > onboarding/visual-id-batch-summary.json

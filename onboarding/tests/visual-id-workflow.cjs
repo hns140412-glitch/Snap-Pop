@@ -7,6 +7,10 @@ assert.deepEqual(cfg.independentLayers,visual.roleKeys);assert.deepEqual(cfg.rea
 assert.deepEqual(cfg.sceneKeys,visual.viewKeys);
 const order={id:'new_explorer'},plan=p.plan(order.id),paths=p.pathsFor(order.id);
 assert.equal(plan.registered,false);assert.equal(plan.independentAssetSlots.length,9);
+assert.equal(plan.batchProduction.realArtRequired,9);
+assert.equal(plan.batchProduction.automaticallyDrawn,false);
+assert.equal(plan.batchProduction.spec,'visual-id-batch-production.v1.json');
+assert.ok(plan.batchProduction.command.endsWith(' --id new_explorer'));
 assert.equal(plan.sceneWorkOrder.FIRST_MEETING.approvedState,'OPEN');
 assert.equal(paths.scene,'ui/approved/new_explorer_first_meeting_scene.png');
 assert.equal(p.inside('../unsafe'),null);assert.equal(p.inside('/etc/passwd'),null);assert.equal(p.inside('characters/../unsafe'),null);

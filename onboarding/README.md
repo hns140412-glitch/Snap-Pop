@@ -1,5 +1,7 @@
 # Companion Onboarding — isolated integration candidate (DRAFT / HOLD)
 
+**Visual ID registration-to-art batch authority:** `VISUAL_ID_BATCH_PRODUCTION_SPEC.md` (human-readable), `visual-id-batch-production.v1.json` (machine contract), and `tools/visual-id-art-batch.py` (`--mode plan|audit`). 6 original IDs × nine independently authored artwork slots = 54; existing derived prototypes do not count as final art. Source-locked registration queues production but never invents art or triggers ROOT/main/Netlify. CI exports separate real plan/audit evidence.
+
 ## Exact scope and approval boundary
 - The existing Snap & Pop root home, learning session, runtime crew registry and release state are unchanged. This is an additive `onboarding/` route candidate, **not integrated into the production navigation**.
 - The exact source in this candidate is `onboarding/index.html`; the SHA-256 authority is `asset-and-release-gate.json` (`af3909b1b2ef25754fcbf61cead4167e83ad20c4670551adf69b776998c9389e`). Earlier 0d4136..., 8a645... and 5402... hashes and the old missing-binary handoff are historical, not current.

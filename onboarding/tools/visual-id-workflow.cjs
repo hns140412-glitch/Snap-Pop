@@ -44,6 +44,10 @@ function plan(id){
     inputRequired:['user confirmed Visual ID','exact approved original file and SHA256','visual approval reference','owner/alias evidence'],
     assetWorkOrder:p,
     independentAssetSlots:[...cfg.independentLayers,...cfg.reactions],
+    batchProduction:{spec:'visual-id-batch-production.v1.json',
+      command:'python onboarding/tools/visual-id-art-batch.py --mode plan --id '+id,
+      auditCommand:'python onboarding/tools/visual-id-art-batch.py --mode audit --id '+id,
+      realArtRequired:9,automaticallyDrawn:false,missingCutoutOrMask:'BLOCKED_NOT_FABRICATED'},
     sceneWorkOrder:Object.fromEntries(cfg.sceneKeys.map(k=>[k,{referenceId:null,renderBinding:null,approvedState:'OPEN',fourViewportEvidence:[]} ])),
     additionalTasks:['original visual fidelity/provenance check per derived asset','recompose group first-meeting scene; do NOT overlay old Core6 original','add name/behavior/ledger to reconciled semantic owner','bind every scene and six reaction states to real UI','run full browser/visual/device regression','record human signoff before ROOT release'],
     warning:'PLAN IS NOT ART GENERATION NOR REGISTRATION NOR APPROVAL'
