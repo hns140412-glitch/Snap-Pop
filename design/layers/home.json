@@ -4,11 +4,10 @@
   "layers": [
     {
       "role": "BACKGROUND",
-      "status": "ASSET_IMPORT_OPEN",
+      "status": "BOUND",
       "sha256": "f15af01680e2db44ef8af1dff749169f1082ddd15b3760a96da7ff2211eb8259",
-      "source_receipt": "TAKY-LAF-SNAP-HOME-COAST-20260927-A",
-      "target_path": "assets/world/snap_pop_beach_asset.png",
-      "owner": "SNAP_VISUAL"
+      "owner": "SNAP_VISUAL",
+      "path": "assets/world/snap_pop_beach_asset.png"
     },
     {
       "role": "FOREGROUND",
