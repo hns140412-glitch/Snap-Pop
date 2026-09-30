@@ -9,7 +9,9 @@
   const WORLD_BINDING=Object.freeze({
     world_state:'BASE_WORLD',
     theme_expression:'SNAP_COAST',
-    runtime_asset:'assets/world/snap_pop_beach_asset.png',\n    visual_id:'TAKY-LAF-SNAP-HOME-COAST-20260927-A',\n    source_sha256:'f15af01680e2db44ef8af1dff749169f1082ddd15b3760a96da7ff2211eb8259',
+    runtime_asset:'assets/world/snap_pop_beach_asset.png',
+    visual_id:'TAKY-LAF-SNAP-HOME-COAST-20260927-A',
+    source_sha256:'f15af01680e2db44ef8af1dff749169f1082ddd15b3760a96da7ff2211eb8259',
     review_source:'TAKY-ASSETS/assets/snap-pop/environments/coast/TAKY-LAF-SNAP-HOME-COAST-20260927-A/manifest.v1.json',
     lineage_source:'assets/reference/approved_visual_source.png',
     review_status:'APPROVED_SOURCE_RUNTIME_BOUND_DRAFT',
