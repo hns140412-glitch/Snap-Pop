@@ -24,6 +24,15 @@ function emitSnapCrewLine(utterance,{action="IDLE",dialogue="SHORT",reason="SNAP
  return true;
 }
 function html(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function currentWishRule(){
+ const external=globalThis.TAKY_BLESSING_RULES?.WEEKEND_MOVIE;
+ return external&&external.approved===true&&external.authority_ref
+   ?{blessing_id:"WEEKEND_MOVIE",required_badge_ids:external.required_badge_ids||[],authority_ref:external.authority_ref}
+   :{blessing_id:"WEEKEND_MOVIE",required_badge_ids:[]};
+}
+function earnedBadgeIds(){return globalThis.TAKY_BADGE_RUNTIME?.earnedBadgeIds?.()||[]}
+function wishUnlockState(){return globalThis.SnapBlessingLockV1?.evaluate?.(currentWishRule(),earnedBadgeIds())||{unlocked:true,use_allowed:true,missing_badge_ids:[]}}
+
 async function init(){await openDB();marks=await fetch("data/landmarks.json").then(r=>r.json());renderLandmarks();await updateStatus();renderRecords();renderGems();renderGrowth();const active=await get("active");snapActiveExploration=!!active;if(active)renderExplore(active);else window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}
 function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;$$(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await get("active"),g=await get("gems")||{};$("#selTitle").textContent=m.title;$("#selDesc").textContent=m.desc;$("#selProgress").textContent="진행 "+(a?.landmark===m.id?(a.step||0):0)+" / 3";$("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";$("#selection").hidden=false};host.appendChild(b)})}
 $("#startBtn").onclick=async()=>{if(!selected)return;appendSnapCrewEvidence('SNAP_FIRST_MEETING:moka','FIRST_MEETING','SNAP_ROOT_FIRST_EXPLORATION',{landmark:selected.id});let s=await get("active");if(!s||s.landmark!==selected.id)s={landmark:selected.id,step:0,answers:["","",""]};await set("active",s);renderExplore(s);show("explore");if($("#autoRead").checked)speak(STEPS[s.step][1]+" "+STEPS[s.step][2])}
@@ -36,8 +45,8 @@ async function renderRecords(){if(!db)return;const r=await get("records")||[];$(
 async function renderGems(){if(!db)return;const g=await get("gems")||{};$("#gemRows").innerHTML=marks.map(m=>{const n=g[m.id]||0;return `<article class="gemRow"><div><b>${m.title}</b><span>보석 조각 ${n%6}/6</span></div><strong>완성 ${Math.floor(n/6)}</strong></article>`}).join("")}
 async function renderGrowth(){if(!db)return;const cfg=await fetch("data/growth.json").then(r=>r.json()),exp=await get("exp")||0,lv=Math.floor(exp/120)+1;let s=cfg[0];cfg.forEach(x=>{if(lv>=x.min)s=x});$("#growthLv").textContent="Lv."+lv;$("#growthName").textContent=s.name;$("#treeImage").src="assets/growth/"+s.image;$("#expBar").style.width=((exp%120)/120*100)+"%";$("#expText").textContent="EXP "+exp+" · 다음 성장까지 "+(120-exp%120)+" EXP"}
 async function updateStatus(){const exp=await get("exp")||0,g=await get("gems")||{},lv=Math.floor(exp/120)+1,complete=Object.values(g).reduce((a,n)=>a+Math.floor(n/6),0);$("#levelChip").textContent="Lv."+lv;$("#gemChip").textContent="보석 "+complete}
-$("#shopBtn").onclick=()=>show("shop");$("#useWish").onclick=()=>$("#blessing").hidden=false;
-$("#confirmBlessing").onclick=async()=>{const g=await get("gems")||{};let need=12;for(const k of Object.keys(g)){const use=Math.min(Math.floor(g[k]/6)*6,need);g[k]-=use;need-=use;if(!need)break}if(need)return toast("완성 보석 2개가 필요해요.");await set("gems",g);await updateStatus();renderGems();$("#blessing").hidden=true;toast("축복을 사용했어요. 소원이 기록됐어요.")}
+$("#shopBtn").onclick=()=>show("shop");$("#useWish").onclick=()=>{const gate=wishUnlockState();if(!gate.use_allowed)return toast("아직 필요한 행동 뱃지가 있어요: "+gate.missing_badge_ids.join(", "));$("#blessing").hidden=false;};
+$("#confirmBlessing").onclick=async()=>{const badgeGate=wishUnlockState();if(!badgeGate.use_allowed)return toast("필요한 행동 뱃지를 먼저 얻어야 해요.");const g=await get("gems")||{};let need=12;for(const k of Object.keys(g)){const use=Math.min(Math.floor(g[k]/6)*6,need);g[k]-=use;need-=use;if(!need)break}if(need)return toast("완성 보석 2개가 필요해요.");await set("gems",g);await updateStatus();renderGems();$("#blessing").hidden=true;toast("축복을 사용했어요. 소원이 기록됐어요.")}
 $("#historyBtn").onclick=()=>toast("성장 기록 타임라인은 기능 검토 후 연결하는 HOLD 항목이에요.");
 $("#settingsBtn").onclick=()=>show("settings");$("#settingsBack").onclick=()=>show(lastMain);$$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
 $("#characterBtn").onclick=()=>toast("사진 기반 Character Master 재생성은 원본 파이프라인 연결 전 HOLD예요.");
