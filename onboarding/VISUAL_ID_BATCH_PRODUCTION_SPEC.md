@@ -41,3 +41,13 @@ ID별 `characters/produced/<id>/manifest.json`에 `schema=TAKY_VISUAL_ID_ART_PAC
 기존 22개 승인 바이너리와 6개의 Visual ID는 보존한다. 18개 SOURCE-PARTITION 초안, 6개 부분 복원, 기존 인터랙티브 QA 및 54개 9-pose 검사 프레임은 모두 승계하지만 **54개 최종 제작물에 중복 가산하지 않는다**. 현재 6명×9 = 54개가 제작 목표이며, 미술 최종 승인 0/18 레이어·0/36 반응 원화를 그대로 OPEN으로 보고한다.
 
 새로운 승인 Visual ID는 동일한 명세·명령·검증을 재사용하지만 Core 6 완성 전 20명 확장은 보류한다. 20은 코드의 처리 가능 상한일 뿐 탐험대원 수나 신규 제작 허가는 아니다. 사용자 명시 승인 전 PR Draft/HOLD, main 병합·ROOT 활성화·Netlify·Ready/Hide 자동 배포 금지.
+
+## Latest approved GUIDE☆ group intake — staged 24 plan
+
+The Library ZIP `/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_APPROVAL_SOURCE_PACKAGE.zip` is the three *source group image* authority for 07..24. The exact bytes of all three were checked against approval manifest V2 in a separate source-validation run; the ZIP-internal manifest was also byte-identical to the standalone Library manifest. The images are not yet individual transparent character masters. Never reinterpret one group SHA as six individual SHA values.
+
+The draft source staging pointer `guide-07-24-group-intake.v1.json` records all 18 numeric Visual IDs, names, group SHA and each left-to-right panel position. New technical keys `guide-07` through `guide-24` are paths only; the numeric user-approved Visual IDs remain 07..24. 19..24 are special human characters, ID24 = VIVI logical name; the legacy print still says NOVA and must not be silently edited. The existing 01..06 retain their exact approvals, original graphics, IDs and active six-only runtime.
+
+Run `python onboarding/tools/visual-id-art-batch.py --mode plan --scope full24` for an authoritative 24 x 9 = 216-slot work order; `--mode audit --scope full24` checks the entire group, retaining `GROUP_SOURCE_LOCKED_PER_MEMBER_CUTOUT_MASK_OPEN` for each new member whose distinct approved individual source/cutout/mask and SHA are absent. `tools/guide-group-intake.py` checks the literal group mapping; with `--zip <materialized Library archive>` it also hashes the actual ZIP image bytes. CI does not mount private Library ZIP and must report `group_bytes_verified_this_run=false` rather than assert a cloud-byte recheck it did not perform.
+
+Individual art production begins only after exact standalone reference extraction, separately computed derivative hash and an independently authored member mask/approval lineage. Source board cropping is reference preparation, NOT a complete cutout, BODY/PROP/GEAR, distinct reaction, or human art approval. Each eventual member inherits precisely the same nine-slot illustration/asset and UI production criteria as Core6. Under no circumstance use the previously generated unapproved 07..18 candidate images as masters.

@@ -1,0 +1,21 @@
+{
+ "schema":"TAKY_GUIDE_SOURCE_BYTE_VERIFICATION_2026_09_30_V1",
+ "source_scope":"ZIP_ORIGINAL_GROUP_IMAGE_BYTES_NOT_INDIVIDUAL_ART",
+ "library_folder":"/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/",
+ "package_zip_sha256":"b998a8450fe386c6aa07860756cb5e74f1831b4cbe848c6b80af21863b7c6f4c",
+ "standalone_manifest_sha256":"1b67ae1666a0440fe1c3a036ca0f22ef57900845e9fef388c487026755113c73",
+ "zip_internal_manifest_byte_exact":true,
+ "group_records":[
+  {"id":"GUIDE-07-12","zip_entry":"sources/GUIDE_07-12_approved_group.jpeg",
+   "byte_size":892958,"sha256":"ed84df450b7b3fafce56534fd304d2b02fa628d8c83f1d7635aeadbbd93a72ec","matches_approved_group_manifest":true},
+  {"id":"GUIDE-13-18","zip_entry":"sources/GUIDE_13-18_approved_group.jpeg",
+   "byte_size":711291,"sha256":"2f19b01b366d2a59d5b8e2494dad6edaa32428882dfbcd5daed6c61a7a8fed35","matches_approved_group_manifest":true},
+  {"id":"GUIDE-19-24","zip_entry":"sources/GUIDE_19-24_approved_group_legacy_print.jpeg",
+   "byte_size":896585,"sha256":"ed485ede7b0653b0a9cd70b53a243240aad66429b79eb52ad44d5bdc8181ece1","matches_approved_group_manifest":true}
+ ],
+ "verified_in":"THIS_CHAT_CONTAINER_AGAINST_LIBRARY_RAW_PACKAGE_NOT_IN_GITHUB_ACTIONS",
+ "per_member_original_sha_verified":0,
+ "independently_authored_art_approved":0,
+ "source_image_or_active_roster_changed":false,
+ "release_authority":false
+}

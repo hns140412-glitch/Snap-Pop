@@ -17,9 +17,9 @@
   },
   "batch": {
     "discovery": "tools/visual-id-batch.py discover; never hard-code roster in new generator",
-    "currentScope": "CURRENT_SIX_ONLY",
-    "futureStage": "EXPLICITLY_APPROVED_STAGED_IDS_WITH_INDIVIDUAL_CUTOUT_AND_MASK_SPEC_ONLY",
-    "capacity": "20 TECHNICAL SLOTS NOT ROSTER AUTHORITY",
+    "currentScope": "CORE6_DEFAULT_AND_EXPLICIT_FULL24_APPROVED_GROUP_INTAKE",
+    "futureStage": "APPROVED_18_GROUP_SOURCE_IDENTITIES_STAGED; INDIVIDUAL_CUTOUT_AND_MASK_SPEC_REQUIRED_BEFORE_9_FINAL_ART_ASSETS",
+    "capacity": "24 TECHNICAL SLOTS NOT AUTOMATIC ACTIVE ROSTER AUTHORITY",
     "idempotency": "SAME_SOURCE_AND_SPEC_HASH_REUSES_VALID_OUTPUT; NEW_SOURCE_REQUIRES_NEW_APPROVAL",
     "noSilentSkip": true
   },
@@ -50,7 +50,7 @@
       "characters/produced/<id>/static-cutout.png",
       "ui/approved/<id>_first_meeting_scene.png"
     ],
-    "counts": {"independentRolesPerId": 3, "independentReactionsPerId": 6, "core6IndividualArtTargets": 54}
+    "counts": {"independentRolesPerId": 3, "independentReactionsPerId": 6, "core6IndividualArtTargets": 54, "approvedGroupNewIds": 18, "full24IndividualArtTargets": 216}
   },
   "imageContract": {
     "format": "independent RGBA PNG files",

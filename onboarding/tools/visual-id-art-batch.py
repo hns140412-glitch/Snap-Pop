@@ -50,7 +50,28 @@ def source_lock(root,row,gate):
     return {'original':original,'original_sha256':expected,'cutout':cut,
             'cutout_sha256':row['source_sha256'],'mask_spec':spec,
             'mask_spec_sha256':row['mask_spec_sha256'],'visual_approval_ref':approval}
-def plan(root=ROOT,only_id=None):
+def guide_pending(root,only_id=None):
+    module_path=root/'tools/guide-group-intake.py'
+    spec=importlib.util.spec_from_file_location('guide_group',module_path)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    evidence=module.check(root)
+    assert evidence['mapped_members']==18,'GUIDE_18_SOURCE_MAPPINGS_MISSING'
+    data=module.load(root);groups={x['group_id']:x for x in data['source_groups']}
+    c=config(root);result=[]
+    for member in data['members']:
+        id=member['pipeline_key']
+        if only_id and only_id!=id:continue
+        g=groups[member['source_group_id']]
+        result.append({'visual_id':id,'numeric_visual_id':member['visual_id'],
+          'code':member['code'],'name_ko':member['name_ko'],
+          'source_group_lock':{'sha256':g['sha256'],'zip_entry':g['library_zip_entry'],
+                               'panel_position':member['panel_position_left_to_right'],
+                               'scope':'GROUP_NOT_PER_MEMBER'},
+          'outputs':slots(c,id),'required_art_count':9,'verified_final_art_count':0,
+          'status':'GROUP_SOURCE_LOCKED_PER_MEMBER_CUTOUT_MASK_OPEN',
+          'source_lock':None,'active_runtime':False,'release_approved':False})
+    return result
+def plan(root=ROOT,only_id=None,include_guide=False):
     c=config(root); discovered=discover(root)
     gate=load(root/'asset-and-release-gate.json')['required_assets']
     work=[]
@@ -69,8 +90,14 @@ def plan(root=ROOT,only_id=None):
         if only_id and id!=only_id: continue
         work.append({'visual_id':id,'outputs':slots(c,id),'status':'BLOCKED_INDIVIDUAL_CUTOUT_OR_MASK_SPEC',
                      'required_art_count':9,'verified_final_art_count':0,'release_approved':False})
+    if include_guide:
+        additional=guide_pending(root,only_id)
+        assert set(x['visual_id'] for x in work).isdisjoint(x['visual_id'] for x in additional),'CORE6_GUIDE_ID_COLLISION'
+        work.extend(additional)
     assert not only_id or any(w['visual_id']==only_id for w in work),'UNKNOWN_OR_UNAPPROVED_VISUAL_ID'
-    return {'schema':c['schema'],'members':work,'per_member':9,
+    assert len(work)<=24,'GUIDE_BATCH_CAPACITY_24_EXCEEDED'
+    return {'schema':c['schema'],'scope':'FULL_24_APPROVED_GROUP_INTAKE' if include_guide else 'CORE6_EXISTING',
+        'members':work,'per_member':9,
         'total_required':len(work)*9,'all_assets_auto_generated':False,
         'human_art_review_required':True,'root_activation':False,'main_merge':False,'netlify':False}
 def canonical(im):
@@ -140,8 +167,8 @@ def reject_cross_visual_duplicates(results):
             row.update(verified_files=0,status='FAIL_CLOSED_CROSS_VISUAL_ID_DUPLICATE',
                        error='CROSS_ID_REUSED_ART_PIXELS',release_ready=False)
     return results
-def audit(root=ROOT,only_id=None):
-    c=config(root);queue=plan(root,only_id)
+def audit(root=ROOT,only_id=None,include_guide=False):
+    c=config(root);queue=plan(root,only_id,include_guide=include_guide)
     results=[]
     for member in queue['members']:
         try: results.append(audit_one(root,member,c))
@@ -156,10 +183,11 @@ def audit(root=ROOT,only_id=None):
 def cli():
     arg=argparse.ArgumentParser()
     arg.add_argument('--mode',choices=['plan','audit'],required=True)
+    arg.add_argument('--scope',choices=['core6','full24'],default='core6')
     arg.add_argument('--id')
     arg.add_argument('--out')
     a=arg.parse_args()
-    result=plan(ROOT,a.id) if a.mode=='plan' else audit(ROOT,a.id)
+    result=plan(ROOT,a.id,include_guide=a.scope=='full24') if a.mode=='plan' else audit(ROOT,a.id,include_guide=a.scope=='full24')
     serial=json.dumps(result,ensure_ascii=False,indent=2)+'\n'
     if a.out:
         dest=pathlib.Path(a.out).resolve()

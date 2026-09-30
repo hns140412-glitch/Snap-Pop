@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One authorized Visual-ID batch for source-pixel drafts. NEVER auto-approves art/roster."""
 import argparse,hashlib,importlib.util,json,pathlib,re
-MAX_TECHNICAL_ID_CAPACITY=20
+MAX_TECHNICAL_ID_CAPACITY=24
 ID_RE=re.compile(r'[a-z][a-z0-9_-]{1,40}\Z')
 def sha(p):return hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
 def inside(root,rel):

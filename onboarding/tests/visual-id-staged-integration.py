@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Temporary, wholly synthetic 7th Visual ID E2E fixture, then 20/21 capacity checks.
+"""Temporary, wholly synthetic 7th Visual ID E2E fixture, then 24/25 capacity checks.
 
 NEVER check these fixture pictures into the art folder or claim real user approval.
 The six approved Core6 source originals and production registry are read-only.
@@ -140,18 +140,18 @@ with tempfile.TemporaryDirectory(prefix='visual_id_seventh_CI_ONLY_') as td:
         assert set(item['poses'])=={'PERSONALITY_PROP','THEME_GEAR'}
         assert all(x['remaining_after']==0 for x in item['poses'].values()),sid
 
-    # Now test 20 actually source-validated IDs with individual CI-only source/
+    # Now test 24 actually source-validated IDs with individual CI-only source/
     # polygon metadata. This is DISCOVERY/CAPACITY, not 20 painted game sprites.
-    for i in range(7,20):
+    for i in range(7,24):
         sid=f'fixture_{i+1:02d}'
         fixture(root,sid,i,True)
     write_manifest()
     full=batch.run(root,root/'unused_check_only',check_only=True)
-    assert len(full['ids'])==20 and len(full['rows'])==20 and full['totalNamed']==20
+    assert len(full['ids'])==24 and len(full['rows'])==24 and full['totalNamed']==24
     assert not full['autoRuntimeActivation'] and not full['autoArtApproval']
     assert all(r['stage']=='STAGED_APPROVED_SOURCE_NOT_ACTIVE' for r in full['rows'][6:])
     assert not (root/'unused_check_only').exists(),'CHECK_ONLY_MUTATED_ASSETS'
-    fixture(root,'fixture_21',20,True,has_spec=False)
+    fixture(root,'fixture_25',24,True,has_spec=False)
     write_manifest()
     denied(lambda:batch.discover(root),'BATCH_TECHNICAL_CAPACITY_EXCEEDED')
     assert not (HERE/'visual-id-candidates'/f'{seventh}.json').exists(),'CI_FIXTURE_LEAKED_INTO_REAL_ROSTER'
@@ -161,8 +161,8 @@ print(json.dumps({
   'new_real_character_authored':False,
   'seven_person_end_to_end':'7 independent SHA-locked source-role triplets + 14 shifted exposure checks + 7 partial underpaint drafts',
   'staged_seventh_without_spec':'OPEN_NOT_PRODUCED',
-  '20_real_source_spec_preflight':'PASS_TEST_FIXTURE_ONLY',
-  '21st':'REJECTED',
+  '24_real_source_spec_preflight':'PASS_TEST_FIXTURE_ONLY',
+  '25th':'REJECTED',
   'source_tamper_mask_id_cutout_sha':'ALL_REJECTED',
   'runtime_roster_activation':False,'art_or_36_reaction_completion':False
 },indent=2))
