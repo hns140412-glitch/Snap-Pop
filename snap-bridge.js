@@ -206,10 +206,20 @@
       const resolved = await adapter.resolve(memberId);
       const p = resolved?.projection;
       if (!p) return { state:'NO_PROFILE' };
-      try { await set('familyCharacterProfile', p); } catch {}
-      window.SnapFamilyCharacterProfile = Object.freeze({ ...p });
-      try { window.dispatchEvent(new CustomEvent('taky-family-character-profile', { detail:{ ...p } })); } catch {}
-      return { state:'BOUND', source:resolved.source, character_id:p.character_id };
+      let runtimeRef = null, assetSource = 'POINTER_ONLY';
+      const assetAdapter = window.SnapCharacterAssetReadAdapterV1;
+      if (assetAdapter?.status?.().available) {
+        try {
+          const read = await assetAdapter.resolveRead({ member_id:p.member_id, character_id:p.character_id, asset_ref:p.master_asset_ref });
+          runtimeRef = read?.read_url || null;
+          if (runtimeRef) assetSource = 'SIGNED_READ';
+        } catch {}
+      }
+      const runtimeProjection = { ...p, master_private_ref:p.master_asset_ref, master_asset_ref:runtimeRef, asset_resolution:assetSource };
+      try { await set('familyCharacterProfile', runtimeProjection); } catch {}
+      window.SnapFamilyCharacterProfile = Object.freeze(runtimeProjection);
+      try { window.dispatchEvent(new CustomEvent('taky-family-character-profile', { detail:{ ...runtimeProjection } })); } catch {}
+      return { state:runtimeRef?'BOUND':'BOUND_POINTER_ONLY', source:resolved.source, character_id:p.character_id };
     } catch (error) {
       return { state:'FAILED', error:String(error?.message || error) };
     }
