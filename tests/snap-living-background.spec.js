@@ -18,7 +18,8 @@ test('approved Snap coast and living FX render on the regional HOME',async({page
   expect(fx.foam).toBe('coastFoamNormal');
   expect(fx.water).toBe('coastWaterLight');
   await page.locator('#settingsBtn').click();
-  await page.locator('#reduceMotion').check();
+  await page.locator('#reduceMotion').locator('xpath=..').click();
+  await expect(page.locator('#reduceMotion')).toBeChecked();
   await expect(page.locator('html')).toHaveClass(/reduce-motion/);
   expect(await page.locator('.coastFx').evaluate(el=>getComputedStyle(el).display)).toBe('none');
 });
