@@ -24,6 +24,7 @@ jobs:
         run: node onboarding/tests/central-asset-source.cjs
       - name: Verify Explorer Crew Runtime V2 single-owner integration
         run: |
+          node onboarding/tests/explorer-crew-v2-source-lock.cjs
           node onboarding/tests/explorer-crew-system-v2.cjs
           node onboarding/tests/snap-explorer-runtime-v2-live-contract.cjs
           node onboarding/tests/explorer-crew-approved-personality-board.cjs
