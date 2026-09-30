@@ -263,17 +263,19 @@ main[data-step="10"] .home-drawer .photo-copy p,main[data-step="10"] .home-drawe
 .crew-radio-head h2{min-width:0;overflow-wrap:anywhere}
 @media(max-height:710px){.crew-radio-panel{padding:12px}.crew-radio-art{width:45px;height:56px}.crew-radio-head{grid-template-columns:45px minmax(0,1fr) auto;gap:7px}}
 
-</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script src="crew-behavior-runtime.js"></script><script src="visual-id-runtime.js"></script><script src="crew-interaction-runtime.js"></script><script src="crew-visual-presenter.js"></script><script>
+</style></head><body><main id="app" data-step="0"><div class="land" aria-hidden="true"></div><div class="content" id="screen"><section class="welcome" aria-label="탐험 첫 화면"><div class="welcome-copy"><div class="welcome-index">01 / 11</div><h1>우리의 첫 탐험</h1><p>먼저, 함께할 친구들을 만나러 가요.</p></div><div class="welcome-bottom"><button type="button" class="welcome-cta" onclick="next()">친구들 만나기 <span class="arrow" aria-hidden="true">›</span></button></div></section></div></main><script src="crew-state-runtime.js"></script><script src="crew-behavior-runtime.js"></script><script src="crew-semantic-behavior.js"></script><script src="crew-runtime-policy.js"></script><script src="visual-id-runtime.js"></script><script src="crew-interaction-runtime.js"></script><script src="crew-visual-presenter.js"></script><script>
 const people=[['zero','제로'],['take','테이크'],['nova','노바'],['ink','잉크'],['lori','로리'],['dubi','두비']];
 const palette=['#a46d59','#668a65','#b38a47','#9d7293','#617f84'];
 const itemKeys=['map','lamp','water','camera','cap','compass'];
 const tabKeys=['오늘','지도','기록','탐험대','나'];
 const crewLogic=window.CompanionCrewState;if(!crewLogic)throw new Error('CREW_LOCAL_STATE_RUNTIME_MISSING');
 const crewBehavior=window.CompanionCrewBehavior;if(!crewBehavior)throw new Error('CREW_BEHAVIOR_PROJECTION_MISSING');
+const crewSemantic=window.CrewSemanticBehavior;if(!crewSemantic)throw new Error('CREW_SEMANTIC_BEHAVIOR_MISSING');
+const crewRuntimePolicy=window.CrewRuntimePolicy;if(!crewRuntimePolicy)throw new Error('CREW_RUNTIME_POLICY_MISSING');
 const visualID=window.CompanionVisualAssets;if(!visualID)throw new Error('VISUAL_ID_RUNTIME_MISSING');
 const crewInteract=window.CompanionCrewInteraction;if(!crewInteract)throw new Error('CREW_INTERACTION_RUNTIME_MISSING');
 const crewVisual=window.CompanionCrewVisualPresenter;if(!crewVisual)throw new Error('CREW_VISUAL_PRESENTER_MISSING');
-let radioOpen=false,radioScene='description',radioResult=null;
+let radioOpen=false,radioScene='description',radioResult=null,radioPolicyDecision=null;
 if(JSON.stringify(visualID.memberIds)!==JSON.stringify(crewLogic.ids))throw new Error('VISUAL_ID_CREW_LEDGER_MISMATCH');
 const initial={step:0,crew:[],primaryCompanionId:'',selectionPhase:'crew',crewLedger:crewLogic.initial(),name:'',color:'#a46d59',items:[],travel:'',island:'',camp:'',tab:'오늘',photoSourceId:'',photoSha256:''};
 function cleanText(v,max){return typeof v==='string'?v.slice(0,max):''}
@@ -340,19 +342,31 @@ function pickPrimaryCompanion(id){
   state.crewLedger=crewLogic.choosePrimary(state.crewLedger,state.crew,id,state.primaryCompanionId);state.primaryCompanionId=id;save();render();
 }
 
+function radioSemanticCommand(){
+ if(!state.primaryCompanionId)return null;
+ if(!radioResult)return crewSemantic.command({character_id:state.primaryCompanionId,role:'MAIN',relation_state:'KNOWN',behavior_state:'LISTEN',interaction_mode:'TEXT'});
+ if(radioResult.kind==='SHORT_REACTION')return crewSemantic.command({character_id:state.primaryCompanionId,role:'MAIN',relation_state:'KNOWN',behavior_state:'REACTION',interaction_mode:'TEXT',dialogue_intent:'CURIOUS_FOLLOWUP'});
+ if(radioResult.kind==='ONE_REQUESTED_HINT')return crewSemantic.command({character_id:state.primaryCompanionId,role:'MAIN',relation_state:'KNOWN',behavior_state:'GUIDE',interaction_mode:'TEXT',dialogue_intent:'RETURN_INITIATIVE'});
+ return null;
+}
+function evaluateRadioRuntimePolicy(){
+ const command=radioSemanticCommand();if(!command)return null;
+ return crewRuntimePolicy.evaluate({command,usage:{foreground_reactions:0,ambient_active:0,spoken_dialogue:0,overlay:0},occupied_slots:[],preferred_slot:'FG_RIGHT',recent_action_keys:[],recent_dialogue_intents:[],child_response_state:radioResult?'DETAIL_ADDED':'SILENT',help_request_state:radioResult?.kind==='ONE_REQUESTED_HINT'?'REQUESTED':'NONE'});
+}
 function crewRadioMarkup(){
  if(!radioOpen||state.step!==10||state.tab!=='오늘')return '';
  const name=escapeHTML(crewLogic.displayName(state.crewLedger,state.primaryCompanionId)||'동행 친구');
- const visual=crewVisual.present({visualId:state.primaryCompanionId,interactionState:radioResult?radioResult.kind:'WAIT_CHILD'},visualID);
+ radioPolicyDecision=evaluateRadioRuntimePolicy();
+ const visual=crewVisual.present({visualId:state.primaryCompanionId,interactionState:radioResult?radioResult.kind:'WAIT_CHILD',runtimeDecision:radioPolicyDecision},visualID);
  if(!visual)return '';
  const art='<div class="crew-radio-art" data-approved-crew-art data-art-status="'+visual.assetStatus+'"><img src="'+escapeHTML(visual.src)+'" alt="'+name+'의 승인 원화" draggable="false"></div>';
- const head='<section class="crew-radio-cover" data-visual-id="'+visual.id+'" data-reaction-state="'+visual.interactionState+'" data-art-readiness="STATIC_ONLY"><div class="crew-radio-panel" role="dialog" aria-modal="true" aria-labelledby="crew-radio-title"><div class="crew-radio-head">'+art+'<h2 id="crew-radio-title">'+name+'에게 말 걸기</h2><button type="button" class="crew-radio-close" onclick="closeCrewRadio()" aria-label="대화 닫기">닫기</button></div>';
+ const head='<section class="crew-radio-cover" data-visual-id="'+visual.id+'" data-reaction-state="'+visual.interactionState+'" data-art-readiness="STATIC_ONLY" data-scene-slot="'+escapeHTML(visual.sceneSlot)+'" data-interruptibility="'+escapeHTML(visual.interruptibility||'')+'" data-dialogue-intent="'+escapeHTML(visual.dialogueIntent||'')+'" data-runtime-policy="'+escapeHTML(visual.runtimePolicyVersion||'')+'"><div class="crew-radio-panel" role="dialog" aria-modal="true" aria-labelledby="crew-radio-title"><div class="crew-radio-head">'+art+'<h2 id="crew-radio-title">'+name+'에게 말 걸기</h2><button type="button" class="crew-radio-close" onclick="closeCrewRadio()" aria-label="대화 닫기">닫기</button></div>';
  if(!radioResult)return head+'<p>내 이야기를 직접 적어 주세요. 이 화면에서만 표시하고 저장하지 않아요.</p><label for="crew-radio-scene">이야기 방향</label><select id="crew-radio-scene" onchange="radioScene=this.value"><option value="description">장면 이야기</option><option value="idea">생각 이야기</option><option value="emotion">마음 이야기</option><option value="viewpoint">다른 시선</option><option value="final">마무리</option></select><label for="crew-radio-text">내가 전할 말</label><textarea id="crew-radio-text" maxlength="180" placeholder="내가 보고 느낀 것을 직접 적어요."></textarea><div class="crew-radio-actions"><button type="button" onclick="sendCrewRadio()">무전 보내기</button></div><p id="crew-radio-status" role="status" aria-live="polite"></p></div></section>';
  return head+'<p>내가 전한 말</p><p class="child-authored" data-child-authored>'+escapeHTML(radioResult.childText)+'</p><p class="crew-reply" data-crew-reply>'+escapeHTML(radioResult.reply)+'</p>'+(radioResult.hintUsed?'<p data-one-hint>한 가지 힌트: '+escapeHTML(radioResult.hint)+'</p>':'<div class="crew-radio-actions"><button type="button" onclick="oneCrewHint()">힌트 하나 듣기</button></div>')+'<div class="crew-radio-actions"><button type="button" onclick="resetCrewRadio()">다른 이야기 보내기</button></div></div></section>';
 }
 function showCrewRadio(){if(state.step!==10||state.tab!=='오늘'||!state.primaryCompanionId||!state.crew.includes(state.primaryCompanionId))return;radioOpen=true;radioResult=null;radioScene='description';render();el.querySelector('#crew-radio-text')?.focus()}
-function closeCrewRadio(){radioOpen=false;radioResult=null;render()}
-function resetCrewRadio(){radioResult=null;render();el.querySelector('#crew-radio-text')?.focus()}
+function closeCrewRadio(){radioOpen=false;radioResult=null;radioPolicyDecision=null;render()}
+function resetCrewRadio(){radioResult=null;radioPolicyDecision=null;render();el.querySelector('#crew-radio-text')?.focus()}
 function sendCrewRadio(){
  if(!radioOpen||radioResult)return;
  const message=el.querySelector('#crew-radio-text')?.value,scene=el.querySelector('#crew-radio-scene')?.value||radioScene;
