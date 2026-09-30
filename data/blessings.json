@@ -1,0 +1,62 @@
+{
+  "version": "2026-09-30.1",
+  "status": "BADGE_GATED_BLESSING_POLICY_RUNTIME_SAFE_FAIL_CLOSED",
+  "authority": {
+    "badge_source": "hns140412-glitch/TAKY:BADGE/badge-60-story-20-history-working.json",
+    "award_source": "SIGNED_AWARD_LEDGER_ONLY",
+    "note": "Draft badge meaning may nominate a gate candidate, but only an explicitly approved runtime binding plus a signed award receipt may unlock a blessing."
+  },
+  "blessings": [
+    {
+      "blessing_id": "BLESSING_FAMILY_WEEKEND_MOVIE",
+      "title": "가족과 주말 영화 보기",
+      "completed_gem_cost": 2,
+      "gate": {
+        "type": "NONE"
+      }
+    },
+    {
+      "blessing_id": "BLESSING_ROOM_TIDY_HELP",
+      "title": "방 정리 해주기",
+      "completed_gem_cost": 2,
+      "gate": {
+        "type": "ANY_OF_APPROVED_AWARDED_BADGES",
+        "behavior_intent": "SELF_INITIATED_HOME_ROUTINE",
+        "candidate_badges": [
+          {
+            "badge_id": "BDG-DRAFT-047",
+            "stable_name": "밀린짐 정리",
+            "source_meaning": "밀린 짐에도 작은 칸부터 자리가 생겼다.",
+            "motif": "정돈된 배낭 속 체크리스트",
+            "relation": "DIRECT_ORGANIZING_BEHAVIOR",
+            "binding_status": "CANDIDATE_NOT_RUNTIME_ACTIVE"
+          },
+          {
+            "badge_id": "BDG-DRAFT-009",
+            "stable_name": "몰래 시작",
+            "source_meaning": "누가 시키기도 전에 슬쩍 출발했다.",
+            "motif": "발자국 뒤에 숨은 작은 깃발",
+            "relation": "SELF_INITIATED_START",
+            "binding_status": "CANDIDATE_NOT_RUNTIME_ACTIVE"
+          },
+          {
+            "badge_id": "BDG-DRAFT-010",
+            "stable_name": "말하기 전에 GO",
+            "source_meaning": "말하기 전에 손이 먼저 움직인 날.",
+            "motif": "출발선 위의 가벼운 운동화",
+            "relation": "SELF_INITIATED_ACTION",
+            "binding_status": "CANDIDATE_NOT_RUNTIME_ACTIVE"
+          },
+          {
+            "badge_id": "BDG-DRAFT-005",
+            "stable_name": "출발 준비 끝",
+            "source_meaning": "신발끈부터 마음까지 출발 준비 완료.",
+            "motif": "묶인 신발끈과 작은 나침반",
+            "relation": "INDEPENDENT_PREPARATION",
+            "binding_status": "CANDIDATE_NOT_RUNTIME_ACTIVE"
+          }
+        ]
+      }
+    }
+  ]
+}

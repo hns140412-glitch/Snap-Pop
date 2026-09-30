@@ -2,16 +2,16 @@
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
 const RELEASE=globalThis.SnapPopReleaseDescriptor;
 if(!globalThis.TakyReleaseContract?.validateDescriptor?.(RELEASE)?.ok)throw new Error('INVALID_SNAP_RELEASE_DESCRIPTOR');
-let db, marks=[], selected=null, lastMain="map", snapActiveExploration=false;
+let db, marks=[], blessingPolicies=[], selected=null, selectedBlessing=null, lastMain="map", snapActiveExploration=false;
 globalThis.SnapPopPwaSafePoint=()=>!snapActiveExploration;
 const STEPS=[["생각 꺼내기","무엇이 먼저 떠올랐어?","완벽한 문장이 아니어도 좋아. 작은 조각 하나만 잡아보자."],["생각 넓히기","그 생각 옆에는 뭐가 더 있을까?","이유, 느낌, 장면 중 하나를 더 붙여보자."],["표현 완성하기","이제 네 문장으로 마무리해볼까?","앞의 생각을 이어서 네 말로 정리해보자."]];
 function openDB(){return new Promise((ok,no)=>{const r=indexedDB.open("snap_pop_rev10",1);r.onupgradeneeded=()=>r.result.createObjectStore("state");r.onsuccess=()=>{db=r.result;ok()};r.onerror=()=>no(r.error)})}
 function get(k){return new Promise(ok=>{const r=db.transaction("state").objectStore("state").get(k);r.onsuccess=()=>ok(r.result)})}
 function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>{if(k==="active"){snapActiveExploration=!!v;if(!snapActiveExploration)window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}ok()};r.onerror=()=>no(r.error)})}
 function toast(t){$("#toast").textContent=t;$("#toast").classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>$("#toast").classList.remove("show"),1800)}
-function show(id){$$(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");const sub=["settings","shop"].includes(id);$("#nav").hidden=sub;if(!sub)lastMain=id;$$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.view===id));scrollTo(0,0);if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth()}
+function show(id){$(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");const sub=["settings","shop"].includes(id);$("#nav").hidden=sub;if(!sub)lastMain=id;$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.view===id));scrollTo(0,0);if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="shop")renderBlessingShop()}
 function html(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-async function init(){await openDB();marks=await fetch("data/landmarks.json").then(r=>r.json());renderLandmarks();await updateStatus();renderRecords();renderGems();renderGrowth();const active=await get("active");snapActiveExploration=!!active;if(active)renderExplore(active);else window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}
+async function init(){await openDB();[marks,blessingPolicies]=await Promise.all([fetch("data/landmarks.json").then(r=>r.json()),fetch("data/blessings.json").then(r=>r.json()).then(x=>x.blessings||[])]);renderLandmarks();await updateStatus();renderRecords();renderGems();renderGrowth();const active=await get("active");snapActiveExploration=!!active;if(active)renderExplore(active);else window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}
 function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;$$(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await get("active"),g=await get("gems")||{};$("#selTitle").textContent=m.title;$("#selDesc").textContent=m.desc;$("#selProgress").textContent="진행 "+(a?.landmark===m.id?(a.step||0):0)+" / 3";$("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";$("#selection").hidden=false};host.appendChild(b)})}
 $("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active");if(!s||s.landmark!==selected.id)s={landmark:selected.id,step:0,answers:["","",""]};await set("active",s);renderExplore(s);show("explore");if($("#autoRead").checked)speak(STEPS[s.step][1]+" "+STEPS[s.step][2])}
 function renderExplore(s){const m=marks.find(x=>x.id===s.landmark)||marks[0],i=Math.min(2,s.step||0);$("#exploreTitle").textContent="탐험 진행 · "+m.title;$("#question").textContent=STEPS[i][1];$("#hint").textContent=STEPS[i][2];$("#answer").value=s.answers[i]||"";$("#guideLine").textContent=["처음엔 작은 조각 하나면 충분해.","오, 그 생각 옆에 뭐가 더 숨어 있을까?","이제 네 문장으로 딱 묶어보자."][i];$("#nextBtn").textContent=i===2?"탐험 완료":"다음 단계";$("#steps").innerHTML=STEPS.map((x,n)=>`<span class="${n===i?"on":n<i?"done":""}">${n+1}. ${x[0]}</span>`).join("")}
@@ -23,8 +23,50 @@ async function renderRecords(){if(!db)return;const r=await get("records")||[];$(
 async function renderGems(){if(!db)return;const g=await get("gems")||{};$("#gemRows").innerHTML=marks.map(m=>{const n=g[m.id]||0;return `<article class="gemRow"><div><b>${m.title}</b><span>보석 조각 ${n%6}/6</span></div><strong>완성 ${Math.floor(n/6)}</strong></article>`}).join("")}
 async function renderGrowth(){if(!db)return;const cfg=await fetch("data/growth.json").then(r=>r.json()),exp=await get("exp")||0,lv=Math.floor(exp/120)+1;let s=cfg[0];cfg.forEach(x=>{if(lv>=x.min)s=x});$("#growthLv").textContent="Lv."+lv;$("#growthName").textContent=s.name;$("#treeImage").src="assets/growth/"+s.image;$("#expBar").style.width=((exp%120)/120*100)+"%";$("#expText").textContent="EXP "+exp+" · 다음 성장까지 "+(120-exp%120)+" EXP"}
 async function updateStatus(){const exp=await get("exp")||0,g=await get("gems")||{},lv=Math.floor(exp/120)+1,complete=Object.values(g).reduce((a,n)=>a+Math.floor(n/6),0);$("#levelChip").textContent="Lv."+lv;$("#gemChip").textContent="보석 "+complete}
-$("#shopBtn").onclick=()=>show("shop");$("#useWish").onclick=()=>$("#blessing").hidden=false;
-$("#confirmBlessing").onclick=async()=>{const g=await get("gems")||{};let need=12;for(const k of Object.keys(g)){const use=Math.min(Math.floor(g[k]/6)*6,need);g[k]-=use;need-=use;if(!need)break}if(need)return toast("완성 보석 2개가 필요해요.");await set("gems",g);await updateStatus();renderGems();$("#blessing").hidden=true;toast("축복을 사용했어요. 소원이 기록됐어요.")}
+async function badgeGateContext(){
+  const provider=globalThis.SnapPopBadgeGateContextProvider;
+  if(typeof provider!=="function")return {award_snapshot:{verified:false,badge_ids:[],authority:"UNAVAILABLE"},approved_badge_bindings:[]};
+  const candidate_badge_ids=[...new Set(blessingPolicies.flatMap(b=>(b.gate?.candidate_badges||[]).map(x=>x.badge_id)).filter(Boolean))];
+  try{
+    const ctx=await provider({candidate_badge_ids});
+    return ctx&&typeof ctx==="object"?ctx:{award_snapshot:{verified:false,badge_ids:[],authority:"INVALID_PROVIDER"},approved_badge_bindings:[]};
+  }catch(e){
+    console.warn("badge gate context unavailable",e);
+    return {award_snapshot:{verified:false,badge_ids:[],authority:"PROVIDER_ERROR"},approved_badge_bindings:[]};
+  }
+}
+async function renderBlessingShop(){
+  if(!$("#wishList")||!globalThis.SnapBlessingGate)return;
+  const ctx=await badgeGateContext();
+  $("#wishList").innerHTML=blessingPolicies.map(b=>{
+    const result=SnapBlessingGate.evaluate(b,ctx),locked=!result.ok;
+    const msg=SnapBlessingGate.lockMessage(b,result);
+    return `<article class="wish ${locked?"locked":""}" data-blessing-card="${html(b.blessing_id)}"><div><b>${html(b.title)}</b><span>완성 보석 ${Number(b.completed_gem_cost)||0}개</span>${b.gate?.type!=="NONE"?`<small class="gateNote">${html(msg)}</small>`:""}</div><button class="soft" data-use-blessing="${html(b.blessing_id)}" ${locked?"disabled":""}>${locked?"잠금":"축복 사용하기"}</button></article>`;
+  }).join("");
+}
+$("#shopBtn").onclick=()=>show("shop");
+$("#wishList").onclick=async e=>{
+  const button=e.target.closest("[data-use-blessing]");
+  if(!button)return;
+  const blessing=blessingPolicies.find(x=>x.blessing_id===button.dataset.useBlessing);
+  if(!blessing)return;
+  const result=SnapBlessingGate.evaluate(blessing,await badgeGateContext());
+  if(!result.ok)return toast(SnapBlessingGate.lockMessage(blessing,result));
+  selectedBlessing=blessing;
+  $("#blessingTitle").textContent=blessing.title;
+  $("#blessingConfirmText").textContent=`완성 보석 ${blessing.completed_gem_cost}개를 사용해 이 축복을 확정할까요?`;
+  $("#blessing").hidden=false;
+}
+$("#confirmBlessing").onclick=async()=>{
+  if(!selectedBlessing)return;
+  const latest=SnapBlessingGate.evaluate(selectedBlessing,await badgeGateContext());
+  if(!latest.ok){$("#blessing").hidden=true;selectedBlessing=null;await renderBlessingShop();return toast("해금 조건을 다시 확인해 주세요.");}
+  const g=await get("gems")||{};let need=(Number(selectedBlessing.completed_gem_cost)||0)*6;
+  for(const k of Object.keys(g)){const use=Math.min(Math.floor(g[k]/6)*6,need);g[k]-=use;need-=use;if(!need)break}
+  if(need)return toast(`완성 보석 ${selectedBlessing.completed_gem_cost}개가 필요해요.`);
+  const title=selectedBlessing.title;
+  await set("gems",g);await updateStatus();renderGems();$("#blessing").hidden=true;selectedBlessing=null;await renderBlessingShop();toast(title+" 축복을 사용했어요.");
+}
 $("#historyBtn").onclick=()=>toast("성장 기록 타임라인은 기능 검토 후 연결하는 HOLD 항목이에요.");
 $("#settingsBtn").onclick=()=>show("settings");$("#settingsBack").onclick=()=>show(lastMain);$$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
 $("#characterBtn").onclick=()=>toast("사진 기반 Character Master 재생성은 원본 파이프라인 연결 전 HOLD예요.");

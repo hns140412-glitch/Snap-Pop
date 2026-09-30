@@ -59,8 +59,8 @@
 <section id="shop" class="view parchment subflow">
  <button class="back" data-back="gems">← 보석함으로</button>
  <header class="pageTitle"><span>나의 바람</span><h1>탐험가의 소원 상점</h1></header>
- <article class="wish"><div><b>가족과 주말 영화 보기</b><span>완성 보석 2개</span></div><button id="useWish" class="soft">소원 사용하기</button></article>
- <article id="blessing" class="paper" hidden><span class="kicker">마지막 확인</span><h2>축복 사용하기</h2><p>완성 보석 2개를 사용해 이 소원을 확정할까요?</p><button class="primary wide" id="confirmBlessing">축복 사용하기</button></article>
+ <div id="wishList"></div>
+ <article id="blessing" class="paper" hidden><span class="kicker">마지막 확인</span><h2 id="blessingTitle">축복 사용하기</h2><p id="blessingConfirmText"></p><button class="primary wide" id="confirmBlessing">축복 사용하기</button></article>
 </section>
 <section id="settings" class="view parchment subflow">
  <button class="back" id="settingsBack">← 돌아가기</button>
@@ -79,4 +79,4 @@
  <button data-view="growth"><img src="assets/icons/growth.svg" alt=""><span>성장</span></button>
 </nav>
 <div id="toast" role="status" aria-live="polite"></div>
-</div><script src="vendor/taky/release-contract.js"></script><script src="vendor/taky/pwa-update-state.js"></script><script src="vendor/taky/event-envelope.js"></script><script src="snap-release-v01.js"></script><script src="app.js"></script><script src="snap-crew-asset-registry-v1.js"></script><script src="snap-reviewed-visual-binding-v1.js"></script><script src="snap-rubric-verifier.js"></script><script src="snap-bridge.js"></script><script src="snap-pwa-update-v01.js"></script></body></html>
+</div><script src="vendor/taky/release-contract.js"></script><script src="vendor/taky/pwa-update-state.js"></script><script src="vendor/taky/event-envelope.js"></script><script src="snap-release-v01.js"></script><script src="snap-blessing-gate.js"></script><script src="app.js"></script><script src="snap-crew-asset-registry-v1.js"></script><script src="snap-reviewed-visual-binding-v1.js"></script><script src="snap-rubric-verifier.js"></script><script src="snap-bridge.js"></script><script src="snap-badge-read-bridge-v01.js"></script><script src="snap-pwa-update-v01.js"></script></body></html>

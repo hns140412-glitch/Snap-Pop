@@ -17,6 +17,8 @@ test('Snap active exploration blocks safe update and completion reopens it',asyn
   await page.locator('.landmark').first().click();
   await page.locator('#startBtn').click();
   await expect.poll(()=>page.evaluate(()=>globalThis.SnapPopPwaSafePoint())).toBe(false);
+  await expect(page.locator('#explore')).toHaveClass(/active/);
+  await expect(page.locator('#answer')).toBeVisible();
   await page.locator('#answer').fill('첫 생각');
   await page.locator('#nextBtn').click();
   await expect(page.locator('#question')).toHaveText('그 생각 옆에는 뭐가 더 있을까?');
