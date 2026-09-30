@@ -19,6 +19,30 @@
   });
   const scenes=Object.freeze(['home','idea','emotion','description','viewpoint','final']);
   const ids=Object.freeze(Object.keys(LINEAGE));
+  const AMBIENT_BY_SCENE=Object.freeze({
+    home:Object.freeze(['REST','READ_BOOK','ORGANIZE_BAG']),
+    idea:Object.freeze(['READ_MAP','WRITE_NOTE','REST']),
+    emotion:Object.freeze(['READ_BOOK','REST','WRITE_NOTE']),
+    description:Object.freeze(['USE_MAGNIFIER','WRITE_NOTE','REST']),
+    viewpoint:Object.freeze(['CHECK_COMPASS','READ_MAP','REST']),
+    final:Object.freeze(['WRITE_NOTE','ORGANIZE_BAG','REST'])
+  });
+  function chooseAmbientAction(scene,id,recent=[]){
+    const pool=AMBIENT_BY_SCENE[scene]||AMBIENT_BY_SCENE.home;
+    const used=new Set(Array.isArray(recent)?recent:[]);
+    const offset=Math.max(0,ids.indexOf(id))%pool.length;
+    const ordered=[...pool.slice(offset),...pool.slice(0,offset)];
+    return ordered.find(x=>!used.has(id+':'+x))||ordered[0];
+  }
+  function sceneCommands({primaryId,selectedIds,scene='home',recentAmbient=[]}={},semantic){
+    if(!semantic?.command||!semantic?.ambient)return null;
+    if(!Array.isArray(selectedIds)||new Set(selectedIds).size!==selectedIds.length||selectedIds.length<5||selectedIds.length>6||selectedIds.some(id=>!ids.includes(id)))return null;
+    if(!ids.includes(primaryId)||!selectedIds.includes(primaryId)||!scenes.includes(scene))return null;
+    const main=semantic.command({character_id:primaryId,role:'MAIN',relation_state:'KNOWN',behavior_state:'OBSERVE',interaction_mode:'SILENT',target:'child_task'});
+    if(!main)return null;
+    const ambient=selectedIds.filter(id=>id!==primaryId).map(id=>semantic.ambient({character_id:id,relation_state:'KNOWN',ambient_action:chooseAmbientAction(scene,id,recentAmbient)})).filter(Boolean);
+    return Object.freeze([main,...ambient]);
+  }
   function preview({primaryId,selectedIds,scene='home'}={}){
     if(!Array.isArray(selectedIds)||new Set(selectedIds).size!==selectedIds.length||selectedIds.length<5||selectedIds.length>6||selectedIds.some(id=>!ids.includes(id)))return null;
     if(!ids.includes(primaryId)||!selectedIds.includes(primaryId)||!scenes.includes(scene))return null;
@@ -27,7 +51,7 @@
   }
   // Adaptation interface is intentionally pure: no session, transcript, grade, reward,
   // or external app events are synthesized from presence or the reaction preview.
-  return Object.freeze({version:'COMPANION_CORE6_BEHAVIOR_PROJECTION_V1',memberIds:ids,scenes,preview,
+  return Object.freeze({version:'COMPANION_CORE6_BEHAVIOR_PROJECTION_V2',memberIds:ids,scenes,ambientByScene:AMBIENT_BY_SCENE,chooseAmbientAction,sceneCommands,preview,
     owner:'ISOLATED_SNAP_ONBOARDING_PROJECTION_PENDING_SHARED_OWNER_RECONCILIATION',
     rootRegistryActivation:false,readyHideAuthority:false,autoWrite:false,autoReward:false,autoAffinity:false});
 });
