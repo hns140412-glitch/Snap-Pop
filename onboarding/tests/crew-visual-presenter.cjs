@@ -61,7 +61,7 @@ const motionSpec={
  reduced_motion:{mode:'STATIC_COMPOSABLE',preserves_information:true}
 };
 const motion=renderer.motionPlan(promoted,motionSpec,{prefersReducedMotion:false});
-assert.ok(motion);assert.equal(motion.motionReady,true);assert.equal(motion.motion_active,true);
+assert.ok(motion);assert.equal(motion.motionReady,true);assert.equal(motion.motion_active,true);assert.equal(motion.releasePass,false);assert.equal(motion.rootRegistryActivation,false);
 assert.equal(motion.semantic_preserved,true);assert.equal(motion.relation_mutation,false);assert.equal(motion.affinity_mutation,false);
 const reducedMotion=renderer.motionPlan(promoted,motionSpec,{prefersReducedMotion:true});
 assert.ok(reducedMotion);assert.equal(reducedMotion.motionReady,true);assert.equal(reducedMotion.motion_active,false);
