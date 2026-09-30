@@ -1,8 +1,8 @@
 # GUIDE☆ Visual ID 07~24 — CLI PIPELINE HANDOFF LATEST
 
 ## 목적
-다른 대화창에서 CLI로 실제 개별 Cutout/SHA/Mask/최종 원화 제작을 진행하기 위한 실행 기준이다.
-이 문서는 제작물을 대체하지 않으며, 이름만으로 캐릭터를 생성하지 않는다.
+다른 대화창에서 CLI로 개별 Cutout/SHA/Mask 출처 잠금과 composable 7-group 제작 파이프라인을 이어가기 위한 실행 기준이다.
+이 문서는 제작물을 대체하지 않으며, 이름만으로 캐릭터를 생성하지 않는다. 과거 3+6/216 구조는 회귀검증 전용이다.
 
 ## Authority / 고정값
 - Core 6: dubi / lori / ink / nova / take / zero — 기존 승인 원본·Cutout·Mask SHA 보존, 재생성 금지.
@@ -18,8 +18,8 @@
 - Expansion exact member reference-view SHA: 18/18 READY.
 - Expansion independent transparent cutout SHA: 0/18.
 - Expansion per-ID mask spec SHA: 0/18.
-- Final art approved: 0/216.
-- Full24 batch: NOT ARMED (현재 source lock 6/24).
+- Legacy 3+6 source/provenance coverage: 6/24 source lock, production authority 없음.
+- Composable 7-group approved final art: 별도 manifest 실제 등록 기준으로만 계산; 빈 manifest를 완료로 간주하지 않음.
 - main / ROOT / Netlify: HOLD.
 
 ## 핵심 원칙
@@ -28,7 +28,7 @@
 3. 독립 Cutout은 승인 원본에서 캐릭터 정체성을 유지한 투명 RGBA 파일이어야 한다.
 4. 독립 Cutout SHA가 실제 파일 바이트와 일치해야 다음 단계로 이동한다.
 5. Mask Spec은 반드시 같은 Visual ID와 같은 Cutout SHA를 바인딩한다.
-6. Cutout SHA + Mask SHA + approval ref가 모두 맞아야 ART_PRODUCTION_OPEN.
+6. Cutout SHA + Mask SHA + approval ref가 모두 맞으면 레거시 source/provenance 회귀 준비 상태가 된다. 현재 제작 권위는 7-group composable manifest이며 3+6 ART_PRODUCTION_OPEN은 폐기됐다.
 7. 이름/코드만 보고 새 캐릭터를 생성하면 FAIL.
 8. 기존 QA prototype / crop / underpaint / 9-pose preview는 final art로 승격 금지.
 ## per-ID 상태 머신
@@ -36,28 +36,25 @@ AWAITING_INDEPENDENT_CUTOUT_SHA
 → [실제 characters/ui_cutouts/guide-XX.png 생성 + SHA256 등록/대조]
 INDEPENDENT_CUTOUT_SHA_LOCKED_MASK_SPEC_OPEN
 → [characters/layer_specs/guide-XX.json 작성 + SHA256 + approval_ref + cutout_sha bind]
-ART_PRODUCTION_OPEN_NOT_AUTO_GENERATED
-→ [BODY / PROP / GEAR + 6 reactions 실제 개별 PNG 제작]
-NINE_REAL_ART_FILES_SUBMITTED
-→ [manifest + SHA + pixel/alpha/source provenance audit]
-NINE_ART_FILES_MACHINE_CHECKED_ARTISTIC_AND_UI_QA_OPEN
-→ [미술 검수 + 11 screen binding + 4 viewport + iPhone/Safari]
+LEGACY_REGRESSION_SOURCE_READY_DO_NOT_PRODUCE
+→ [과거 3+6/9-slot source/provenance 회귀 검사만 유지]
+COMPOSABLE_7_GROUP_GATE
+→ [MASTER_FULL / PROFILE / PUPPET_BODY / FACE_STATES / ACTION_PARTS / PEEK_MASK / DEPTH_SHADOW]
+COMPOSABLE_ASSET_MACHINE_CHECKED_ARTISTIC_AND_UI_QA_OPEN
+→ [미술 검수 + 승인 UI binding + viewport + iPhone/Safari]
 HUMAN_APPROVED
 → [별도 release authorization 후에만 ROOT/main/Netlify]
-## 최종 제작 슬롯 — 24명 공통
-각 ID마다 정확히 9개:
-- layers/identity_body.png
-- layers/personality_prop.png
-- layers/theme_gear.png
-- reactions/observe.png
-- reactions/listen.png
-- reactions/idea.png
-- reactions/react.png
-- reactions/wait.png
-- reactions/complete.png
+## 현행 제작 슬롯 — composable 7-group
+각 Visual ID의 현행 제작 권위는 다음 7개 그룹이다:
+- MASTER_FULL
+- PROFILE
+- PUPPET_BODY
+- FACE_STATES
+- ACTION_PARTS
+- PEEK_MASK
+- DEPTH_SHADOW
 
-총 24 × 9 = 216.
-Core6도 최종 54개 슬롯 대상이지만 기존 source cutout/mask는 재생성하지 않는다.
+과거 3+6 / 24×9=216 모델은 LEGACY REGRESSION ONLY이며 제작 목표나 진척률로 사용하지 않는다. Core6 기존 source/cutout/mask는 그대로 보존한다.
 
 ## CLI 실행 순서
 1. CURRENT → live main → Draft PR #10 HEAD/CI 확인.
@@ -66,17 +63,14 @@ Core6도 최종 54개 슬롯 대상이지만 기존 source cutout/mask는 재생
 4. 07~24 각 ID에 대해 독립 Cutout 생성 → SHA256 계산 → `guide-07-24-independent-source-registry.v1.json` 등록.
 5. 등록 후 readiness 재실행; 잘못된 SHA는 즉시 FAIL CLOSED여야 한다.
 6. 각 ID Mask Spec 생성 → SHA256 계산 → registry에 mask SHA + approval_ref 등록.
-7. per-ID `ART_PRODUCTION_OPEN_NOT_AUTO_GENERATED` 확인.
-8. 24/24 source lock이 되기 전에는 full art batch 시작 금지.
-9. 24/24 후:
-   `python onboarding/tools/visual-id-source-readiness.py --require-full24`
-   `python onboarding/tools/visual-id-art-batch.py --mode plan --scope full24`
-10. 실제 216개 제작 후:
-   `python onboarding/tools/visual-id-art-batch.py --mode audit --scope full24`
+7. per-ID `LEGACY_REGRESSION_SOURCE_READY_DO_NOT_PRODUCE` 확인.
+8. source lock은 provenance gate일 뿐 레거시 full art batch를 시작하지 않는다.
+9. `python onboarding/tools/visual-id-source-readiness.py --require-full24`는 의도적으로 FAIL CLOSED여야 한다.
+10. 현행 제작은 `crew-composable-asset-manifest.v1.json`의 7-group 요건과 Behavior/Asset/Integration gate를 따른다.
 11. machine PASS 이후에도 artistic/UI/device/human gate는 별도 수행.
 
 ## 배치 전략
-- 07 SOLA 1개 파일럿 → fidelity/edge/identity/prop/gear 확인.
+- 07 SOLA 1개 파일럿 → source fidelity + MASTER_FULL/PROFILE/PUPPET_BODY/FACE_STATES/ACTION_PARTS/PEEK_MASK/DEPTH_SHADOW 확인.
 - PASS 시 08~12.
 - 그 다음 13~18.
 - 마지막 19~24 Special Human.

@@ -5,14 +5,17 @@
     "SNAP_EXPLORATION_CREW_MASTER_2026-09-20.md (Snap development branch d9f48f9; recovered lineage)",
     "data/exploration-crew-rules.json (Snap development branch d9f48f9; shared-ownership and count proposals)",
     "onboarding/asset-and-release-gate.json (this PR; immutable byte-hash evidence)",
-    "TAKY:MASTER/SYSTEM_LAYER_OWNERSHIP_MAP.json (main 8e78af8)"
+    "TAKY:OS/EXPLORATION_CREW_CANONICAL.md (main 55547a7c4c859a1aae700405fdba4a302a2c20d3)",
+    "TAKY:MASTER/SYSTEM_LAYER_OWNERSHIP_MAP.json (main 55547a7c4c859a1aae700405fdba4a302a2c20d3)"
   ],
   "authority": {
     "governance": "TAKY",
     "learning_family_handoff": "LEARNING_APP_FAMILY",
     "original_exploration_crew_rule_source": "SNAP_POP_ORIGIN",
-    "family_wide_semantic_owner": "P0_RECONCILIATION_HOLD_DO_NOT_SILENTLY_TRANSFER",
-    "reason": "Snap development rules refer to a TAKY shared canonical path not verified in TAKY main. Keep inherited Snap-origin rules and app-scoped projections without claiming a new global owner.",
+    "family_wide_semantic_owner": "TAKY_EXPLORATION_CREW_CANONICAL",
+    "central_canonical_path": "OS/EXPLORATION_CREW_CANONICAL.md",
+    "central_canonical_main_sha": "55547a7c4c859a1aae700405fdba4a302a2c20d3",
+    "reason": "TAKY main now contains the verified shared Exploration Crew semantic/runtime contract. Snap remains owner of project-specific presentation, dialogue, onboarding and release behavior.",
     "snap_product_expression": "SNAP_POP",
     "ready_execution_planner": "READY_SET_UI_PLUS_INDEPENDENT_PLANNER_ENGINE",
     "hide_memory": "HIDE_SEEK",

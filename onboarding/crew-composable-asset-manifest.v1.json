@@ -3,11 +3,13 @@
   "contract_version": "CREW_PIPELINE_V1",
   "manifest_version": "CREW_COMPOSABLE_MANIFEST_V1",
   "runtime_schema_version": "CREW_RUNTIME_TRACE_V1",
-  "status": "DRAFT_PR_WORKING_MANIFEST_NOT_CANONICAL_WRITE",
+  "status": "DRAFT_PR_CONSUMER_MANIFEST_CENTRAL_CANONICAL_ACTIVE",
   "authority": {
     "engine_contract": "onboarding/crew-engine-contract.v1.json",
     "runtime_trace": "onboarding/crew-runtime-log.js",
-    "central_canonical_status": "MIGRATION_OPEN",
+    "central_canonical_status": "ACTIVE_IN_TAKY_MAIN",
+    "central_canonical_path": "OS/EXPLORATION_CREW_CANONICAL.md",
+    "central_canonical_main_sha": "55547a7c4c859a1aae700405fdba4a302a2c20d3",
     "main_root_netlify": "HOLD"
   },
   "asset_groups": [

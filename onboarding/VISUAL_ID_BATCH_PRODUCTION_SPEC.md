@@ -1,6 +1,6 @@
 # Visual ID 등록 → 공통 일괄 제작 명세 (Core 6 우선)
 
-**권위:** `VISUAL_ID_WORK_METHOD.md` + `visual-id-production-contract.json` + 이 문서와 실행형 `visual-id-batch-production.v1.json`. 승인 원화 자체와 22개 바이너리 SHA는 `asset-and-release-gate.json`에서만 판정한다. 새 명세는 기존 승인 규칙을 대체하거나 기존 결과를 무효화하지 않는다.
+**상태:** LEGACY 3+6 REGRESSION ONLY / PRODUCTION AUTHORITY = FALSE. 이 문서와 `visual-id-batch-production.v1.json`, `tools/visual-id-art-batch.py`는 과거 3+6/9-slot 구조의 출처·SHA·회귀 검증만 보존한다. 현재 제작 권위는 `crew-composable-asset-manifest.v1.json` + TAKY `OS/EXPLORATION_CREW_CANONICAL.md`의 7-group 계약이다. 승인 원화 자체와 22개 바이너리 SHA는 `asset-and-release-gate.json`에서 판정하며, 이 레거시 명세는 24×9/216을 현행 제작 목표로 다시 활성화할 수 없다.
 
 ## 입력 잠금과 자동 작업 생성
 
@@ -38,7 +38,7 @@ ID별 `characters/produced/<id>/manifest.json`에 `schema=TAKY_VISUAL_ID_ART_PAC
 
 ## 진척 계산과 작업 범위
 
-기존 22개 승인 바이너리와 6개의 Visual ID는 보존한다. 18개 SOURCE-PARTITION 초안, 6개 부분 복원, 기존 인터랙티브 QA 및 54개 9-pose 검사 프레임은 모두 승계하지만 **54개 최종 제작물에 중복 가산하지 않는다**. 현재 6명×9 = 54개가 제작 목표이며, 미술 최종 승인 0/18 레이어·0/36 반응 원화를 그대로 OPEN으로 보고한다.
+기존 22개 승인 바이너리와 6개의 Visual ID는 보존한다. 18개 SOURCE-PARTITION 초안, 6개 부분 복원, 기존 인터랙티브 QA 및 54개 9-pose 검사 프레임은 레거시 회귀 증거로만 승계한다. 과거 6명×9 = 54개 수치는 현재 제작 목표가 아니며, 현행 제작 진행률은 composable 7-group manifest의 실제 승인 에셋과 증거로만 계산한다.
 
 새로운 승인 Visual ID는 동일한 명세·명령·검증을 재사용하지만 Core 6 완성 전 20명 확장은 보류한다. 20은 코드의 처리 가능 상한일 뿐 탐험대원 수나 신규 제작 허가는 아니다. 사용자 명시 승인 전 PR Draft/HOLD, main 병합·ROOT 활성화·Netlify·Ready/Hide 자동 배포 금지.
 
@@ -48,17 +48,17 @@ The Library ZIP `/TAKY/HANDOFF/GUIDE_VISUAL_ID_07_24/TAKY_GUIDE_VISUAL_ID_07-24_
 
 The draft source staging pointer `guide-07-24-group-intake.v1.json` records all 18 numeric Visual IDs, names, group SHA and each left-to-right panel position. New technical keys `guide-07` through `guide-24` are paths only; the numeric user-approved Visual IDs remain 07..24. 19..24 are special human characters, ID24 = VIVI logical name; the legacy print still says NOVA and must not be silently edited. The existing 01..06 retain their exact approvals, original graphics, IDs and active six-only runtime.
 
-Run `python onboarding/tools/visual-id-art-batch.py --mode plan --scope full24` for an authoritative 24 x 9 = 216-slot work order; `--mode audit --scope full24` checks the entire group, retaining `GROUP_SOURCE_LOCKED_PER_MEMBER_CUTOUT_MASK_OPEN` for each new member whose distinct approved individual source/cutout/mask and SHA are absent. `tools/guide-group-intake.py` checks the literal group mapping; with `--zip <materialized Library archive>` it also hashes the actual ZIP image bytes. CI does not mount private Library ZIP and must report `group_bytes_verified_this_run=false` rather than assert a cloud-byte recheck it did not perform.
+Run `python onboarding/tools/visual-id-art-batch.py --mode plan --scope full24` only for a legacy regression 24 x 9 = 216-slot coverage report; it is not an authoritative production work order; `--mode audit --scope full24` checks the entire group, retaining `GROUP_SOURCE_LOCKED_PER_MEMBER_CUTOUT_MASK_OPEN` for each new member whose distinct approved individual source/cutout/mask and SHA are absent. `tools/guide-group-intake.py` checks the literal group mapping; with `--zip <materialized Library archive>` it also hashes the actual ZIP image bytes. CI does not mount private Library ZIP and must report `group_bytes_verified_this_run=false` rather than assert a cloud-byte recheck it did not perform.
 
-Individual art production begins only after exact standalone reference extraction, separately computed derivative hash and an independently authored member mask/approval lineage. Source board cropping is reference preparation, NOT a complete cutout, BODY/PROP/GEAR, distinct reaction, or human art approval. Each eventual member inherits precisely the same nine-slot illustration/asset and UI production criteria as Core6. Under no circumstance use the previously generated unapproved 07..18 candidate images as masters.
+Legacy nine-slot regression eligibility is evaluated only after exact standalone reference extraction, derivative hash and independently authored member mask/approval lineage. Source board cropping is reference preparation, NOT a complete cutout or human art approval. Current production does not inherit the old nine-slot target; each eventual member must satisfy the composable 7-group contract and its UI/runtime gates. Under no circumstance use previously generated unapproved 07..18 candidate images as masters.
 
 ## Unified 24-member source arming before art batch
 
-The existing Core6 is part of the same final 216-art target. Its six approved cutout SHA values and six source-specific mask-spec SHA values are already verified; do not regenerate or replace those source assets. Core6 therefore contributes 6 ready source locks and waits for the GUIDE expansion source gate. Final Core6 art is still 0/18 final BODY/PROP/GEAR and 0/36 genuine reactions.
+The existing Core6 remains part of the same source/provenance regression universe, but there is no current final 216-art target. Its six approved cutout SHA values and six source-specific mask-spec SHA values remain verified and must not be regenerated or replaced. Core6 therefore contributes six preserved source locks; current art completeness is evaluated only against the composable 7-group manifest.
 
-For 07..24, register an independent transparent cutout only in `guide-07-24-independent-source-registry.v1.json`. The fixed path is `characters/ui_cutouts/guide-XX.png`; a claimed SHA must match actual bytes. Matching independent cutout SHA changes that member from `AWAITING_INDEPENDENT_CUTOUT_SHA` to `INDEPENDENT_CUTOUT_SHA_LOCKED_MASK_SPEC_OPEN`. It does **not** by itself authorize art production. Add the independently authored `characters/layer_specs/guide-XX.json`, its exact SHA and an approval reference; the spec must bind the same Visual ID and cutout SHA. Only then does that member become `ART_PRODUCTION_OPEN_NOT_AUTO_GENERATED`.
+For 07..24, register an independent transparent cutout only in `guide-07-24-independent-source-registry.v1.json`. The fixed path is `characters/ui_cutouts/guide-XX.png`; a claimed SHA must match actual bytes. Matching independent cutout SHA changes that member from `AWAITING_INDEPENDENT_CUTOUT_SHA` to `INDEPENDENT_CUTOUT_SHA_LOCKED_MASK_SPEC_OPEN`. It does **not** by itself authorize art production. Add the independently authored `characters/layer_specs/guide-XX.json`, its exact SHA and an approval reference; the spec must bind the same Visual ID and cutout SHA. Only then does that member become `LEGACY_REGRESSION_SOURCE_READY_DO_NOT_PRODUCE`; actual current production eligibility is evaluated by the composable 7-group manifest.
 
-`python onboarding/tools/visual-id-source-readiness.py` is the read-only arming report. The guarded full run uses `--require-full24`; it must fail until all 24 members have real source locks. Only after 24/24 pass should the 216-slot `visual-id-art-batch.py --mode plan --scope full24` work queue be started. The work queue still does not count a file as finished art until the existing nine-file package audit passes.
+`python onboarding/tools/visual-id-source-readiness.py` is now a read-only legacy source/provenance report. `--require-full24` always fails closed because legacy full24 production is disabled. Even when 24/24 source locks exist, the next gate is the current composable 7-group manifest; the 216-slot path remains regression evidence only.
 
 ## Mixed Core6 + Expansion visual parity gate
 

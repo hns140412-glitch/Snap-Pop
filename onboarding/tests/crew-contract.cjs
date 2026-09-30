@@ -17,7 +17,9 @@ assert.equal(scope.roster.active_originals, 6);
 assert.equal(scope.roster.release_claim_max_verified_unique_originals, 6);
 assert.match(scope.roster.historical_20_ceiling, /NOT_CURRENT_IMPLEMENTED_COUNT/);
 assert.match(scope.roster.later_18_plus_special, /DO_NOT_AUTO_PROMOTE/);
-assert.equal(scope.authority.family_wide_semantic_owner, 'P0_RECONCILIATION_HOLD_DO_NOT_SILENTLY_TRANSFER');
+assert.equal(scope.authority.family_wide_semantic_owner, 'TAKY_EXPLORATION_CREW_CANONICAL');
+assert.equal(scope.authority.central_canonical_path, 'OS/EXPLORATION_CREW_CANONICAL.md');
+assert.equal(scope.authority.central_canonical_main_sha, '55547a7c4c859a1aae700405fdba4a302a2c20d3');
 assert.equal(scope.authority.original_exploration_crew_rule_source, 'SNAP_POP_ORIGIN');
 assert.equal(scope.authority.app_location_never_grants_semantic_authority, true);
 
@@ -72,7 +74,7 @@ console.log(JSON.stringify({
   core6_identity:'PASS', asset_manifest_references: 'PASS_13_REFERENCES',
   crew_selection:'PASS_5_TO_6',
   primary_companion:'CODED_EXPLICIT_CHOICE_ISOLATED_NOT_PIXEL_APPROVED',
-  shared_owner:'RECONCILIATION_HOLD',
+  shared_owner:'TAKY_EXPLORATION_CREW_CANONICAL_ACTIVE',
   '18_vs_20_roster':'CONFLICT_PRESERVED_NOT_AUTO_PROMOTED',
   visual_and_device_release:'OPEN',
   merge_or_deploy_allowed:false

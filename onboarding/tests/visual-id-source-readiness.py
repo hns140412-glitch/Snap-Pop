@@ -10,7 +10,8 @@ m=module('readiness',root/'tools/visual-id-source-readiness.py')
 art=module('art_batch_test',root/'tools/visual-id-art-batch.py')
 r=m.status(root)
 assert r['core6_source_lock_ready']==6 and r['source_lock_ready_total']==6
-assert r['core6_art_slots']==54 and r['final_art_slots_total']==216
+assert r['core6_art_slots']==54 and r['legacy_final_art_slots_total']==216
+assert r['production_authority'] is False and r['replacement_authority']=='onboarding/crew-composable-asset-manifest.v1.json'
 assert r['expansion_group_identity_ready']==18
 assert r['expansion_independent_cutout_sha_locked']==0
 assert r['expansion_cutout_plus_mask_source_lock_ready']==0
@@ -38,7 +39,7 @@ with tempfile.TemporaryDirectory(prefix='guide_sha_arm_') as td:
     row.update(cutout_sha256=cutsha,mask_spec_sha256=specsha,approval_ref='CI_SYNTHETIC_INDEPENDENT_SHA_ARM_ONLY',status='SOURCE_LOCK_INPUT_READY')
     (t/'guide-07-24-independent-source-registry.v1.json').write_text(json.dumps(reg),encoding='utf8')
     ready=art.guide_pending(t,'guide-07')[0]
-    assert ready['status']=='ART_PRODUCTION_OPEN_NOT_AUTO_GENERATED'
+    assert ready['status']=='LEGACY_REGRESSION_SOURCE_READY_DO_NOT_PRODUCE'
     assert ready['source_lock']['cutout_sha256']==cutsha and ready['source_lock']['mask_spec_sha256']==specsha
     assert ready['source_lock']['source_reference_view_sha256']==ready['source_reference_view']['sha256']
     assert ready['release_approved'] is False and ready['active_runtime'] is False
@@ -47,4 +48,4 @@ with tempfile.TemporaryDirectory(prefix='guide_sha_arm_') as td:
     try:art.guide_pending(t,'guide-07')
     except AssertionError as e:assert 'SOURCE_OR_OUTPUT_SHA_DRIFT' in str(e)
     else:raise AssertionError('WRONG_INDEPENDENT_SHA_ARMED_PIPELINE')
-print('VISUAL_ID_24_READINESS_PASS: Core6 6/6 source locks queued; real matching independent SHA+mask arms a GUIDE member; wrong SHA rejected; full24 216-art batch remains gated')
+print('VISUAL_ID_24_READINESS_PASS: source/provenance regression preserved; real matching independent SHA+mask is accepted; wrong SHA rejected; legacy 216 production is permanently disabled in favor of composable 7-group manifest')

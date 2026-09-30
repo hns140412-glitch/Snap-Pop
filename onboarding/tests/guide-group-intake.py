@@ -12,6 +12,8 @@ evidence=g.check(root)
 assert evidence['mapped_members']==18 and evidence['individual_reference_views_ready']==18 and not evidence['group_bytes_verified_this_run']
 full=b.plan(root,include_guide=True)
 assert full['scope']=='FULL_24_APPROVED_GROUP_INTAKE'
+legacy=json.loads((root/'visual-id-batch-production.v1.json').read_text(encoding='utf8'))
+assert legacy['productionAuthority'] is False and legacy['replacementAuthority']=='onboarding/crew-composable-asset-manifest.v1.json'
 assert len(full['members'])==24 and full['total_required']==216
 assert [x['visual_id'] for x in full['members'][:6]]==['dubi','lori','ink','nova','take','zero']
 additional=full['members'][6:]
@@ -58,4 +60,4 @@ try:g.check(root)
 except AssertionError:pass
 else:raise AssertionError('LEGACY_24_NOVA_NAME_ACCEPTED')
 g.load=original
-print('GUIDE_GROUP_FULL24_PASS: 3 immutable group SHA records, 18 unique source-bound IDs, 24 plan members / 216 slots, 19..24 special + VIVI, no individual art or activation')
+print('GUIDE_GROUP_FULL24_PASS: immutable group/source lineage preserved for 24-member regression coverage; legacy 216 slots have no production authority; 19..24 special + VIVI preserved; no individual art or activation')

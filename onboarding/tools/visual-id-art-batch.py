@@ -19,6 +19,8 @@ def check(root,rel,expected):
 def config(root=ROOT):
     c=load(root/'visual-id-batch-production.v1.json')
     assert c['schema']=='TAKY_VISUAL_ID_BATCH_PRODUCTION_V1'
+    assert c.get('productionAuthority') is False,'LEGACY_3_PLUS_6_MUST_NOT_HAVE_PRODUCTION_AUTHORITY'
+    assert c.get('replacementAuthority')=='onboarding/crew-composable-asset-manifest.v1.json','COMPOSABLE_REPLACEMENT_AUTHORITY_MISSING'
     assert set(c['perIdOutputs']['layers'])=={'IDENTITY_BODY','PERSONALITY_PROP','THEME_GEAR'}
     assert set(c['perIdOutputs']['reactions'])=={'OBSERVE','LISTEN','IDEA','REACT','WAIT','COMPLETE'}
     return c
@@ -94,7 +96,7 @@ def guide_pending(root,only_id=None):
                     'cutout':expected_cut,'cutout_sha256':cutsha,
                     'mask_spec':expected_spec,'mask_spec_sha256':masksha,
                     'visual_approval_ref':approval}
-                status='ART_PRODUCTION_OPEN_NOT_AUTO_GENERATED'
+                status='LEGACY_REGRESSION_SOURCE_READY_DO_NOT_PRODUCE'
         result.append({'visual_id':id,'numeric_visual_id':member['visual_id'],
           'code':member['code'],'name_ko':member['name_ko'],
           'source_group_lock':{'sha256':g['sha256'],'zip_entry':g['library_zip_entry'],
@@ -118,7 +120,7 @@ def plan(root=ROOT,only_id=None,include_guide=False):
         work.append({'visual_id':id,'source_lock':proof,'outputs':slots(c,id),
           'package_manifest':c['perIdOutputs']['manifest'].replace('<id>',id),
           'restore_existing_prototypes':id in discovered['existingOriginalIds'],
-          'status':'ART_PRODUCTION_OPEN_NOT_AUTO_GENERATED',
+          'status':'LEGACY_REGRESSION_SOURCE_READY_DO_NOT_PRODUCE',
           'required_art_count':9,'verified_final_art_count':0,
           'scene_surfaces':c['sceneSurfaces'],'screen_stages':c['screenStages'],
           'release_approved':False})

@@ -1,6 +1,6 @@
 # TAKY Exploration Crew Canonical Migration Matrix
 Date: 2026-09-30
-Status: PROPOSED / CENTRAL CANONICAL NOT WRITTEN
+Status: MIGRATED / CENTRAL CANONICAL ACTIVE
 Source implementation: Snap-Pop Draft PR #10
 Exact verified HEAD: 8ea7b985eaf792e866e4d21d174eaac824a23567
 CI: Validate Snap & Pop = SUCCESS / Companion Onboarding Source/Asset Gate = SUCCESS
@@ -115,6 +115,6 @@ Do NOT centralize:
 
 ## 13. Current verdict
 PR working implementation: PASS at exact HEAD 8ea7b985eaf792e866e4d21d174eaac824a23567.
-Central Canonical write: NOT YET AUTHORIZED.
-Main / ROOT / Netlify: HOLD.
+Central Canonical write: MERGED TO TAKY MAIN at 55547a7c4c859a1aae700405fdba4a302a2c20d3 via PR #192; TAKY Enforcement Replay SUCCESS.
+Snap main / ROOT / Netlify: HOLD.
 Image generation: NOT PERFORMED.
