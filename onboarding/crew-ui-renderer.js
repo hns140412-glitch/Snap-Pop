@@ -43,6 +43,8 @@ function motionPlan(actionPresentation,spec,{prefersReducedMotion=false}={}){
    motion_active:prefersReducedMotion!==true,
    reduced_motion_mode:prefersReducedMotion===true?'STATIC_COMPOSABLE':null,
    motionReady:true,
+   releasePass:false,
+   rootRegistryActivation:false,
    semantic_preserved:true,
    relation_mutation:false,
    affinity_mutation:false
