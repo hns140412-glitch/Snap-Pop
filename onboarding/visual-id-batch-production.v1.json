@@ -55,13 +55,27 @@
       "characters/produced/<id>/static-cutout.png",
       "ui/approved/<id>_first_meeting_scene.png"
     ],
-    "counts": {"independentRolesPerId": 3, "independentReactionsPerId": 6, "core6IndividualArtTargets": 54, "approvedGroupNewIds": 18, "full24IndividualArtTargets": 216}
+    "counts": {
+      "independentRolesPerId": 3,
+      "independentReactionsPerId": 6,
+      "core6IndividualArtTargets": 54,
+      "approvedGroupNewIds": 18,
+      "full24IndividualArtTargets": 216
+    }
   },
   "imageContract": {
     "format": "independent RGBA PNG files",
-    "canvasPixels": [1122, 1402],
+    "canvasPixels": [
+      1122,
+      1402
+    ],
     "coordinateSpace": "approved cutout canvas",
-    "transparentPixelsRGBA": [0, 0, 0, 0],
+    "transparentPixelsRGBA": [
+      0,
+      0,
+      0,
+      0
+    ],
     "restComposition": "visible RGBA identical to approved source",
     "reactions": "six separately illustrated recognizable states; no renaming, cropping or copying",
     "hiddenArea": "individual faithful artistic restoration, not only interpolation",
@@ -70,20 +84,112 @@
   },
   "packageManifest": {
     "schema": "TAKY_VISUAL_ID_ART_PACKAGE_V1",
-    "requiredFields": ["visual_id", "source_original_sha256", "source_cutout_sha256", "source_mask_spec_sha256", "visual_approval_ref", "assets"],
-    "guideAdditionalRequiredFields": ["source_reference_view_sha256"],
-    "assetFields": ["path", "sha256", "source_sha256", "method", "fidelity_review_ref"],
-    "allowedMethods": ["EXTRACT_APPROVED_SOURCE", "APPROVED_ORIGINAL_LAYER", "FAITHFUL_TRACE_WITH_SOURCE_REVIEW"]
+    "requiredFields": [
+      "visual_id",
+      "source_original_sha256",
+      "source_cutout_sha256",
+      "source_mask_spec_sha256",
+      "visual_approval_ref",
+      "assets"
+    ],
+    "guideAdditionalRequiredFields": [
+      "source_reference_view_sha256"
+    ],
+    "assetFields": [
+      "path",
+      "sha256",
+      "source_sha256",
+      "method",
+      "fidelity_review_ref"
+    ],
+    "allowedMethods": [
+      "EXTRACT_APPROVED_SOURCE",
+      "APPROVED_ORIGINAL_LAYER",
+      "FAITHFUL_TRACE_WITH_SOURCE_REVIEW"
+    ]
   },
-  "phases": ["DISCOVER_AND_SOURCE_LOCK", "RESTORE_PRIOR_WORK", "PER_ID_ART_PRODUCTION_3_PLUS_6", "HASH_AND_RGBA_AUDIT", "STILL_COMPOSITE_PARITY_AND_MOTION_ART_REVIEW", "BIND_FIVE_SCENE_SURFACES_AND_ELEVEN_ONBOARDING_STAGES", "FOUR_VIEWPORT_RENDER_AND_INTERACTION_REGRESSION", "REAL_IPHONE_SAFARI_AND_REDUCED_MOTION", "HUMAN_VISUAL_APPROVAL", "SEPARATE_ROOT_RELEASE_AUTHORIZATION"],
-  "sceneSurfaces": ["FIRST_MEETING", "CHOICE", "PRIMARY", "HOME", "ACTIVE_SCENE"],
-  "screenStages": ["00-welcome", "01-first-meeting", "02-crew-selection/primary-choice", "03-profile", "04-packing", "05-voyage-choice", "06-island-arrival", "07-island-naming", "08-camp-discovery", "09-camp-naming", "10-home"],
-  "viewports": ["375x667", "390x844", "430x932", "1024x768"],
-  "separatePasses": ["SOURCE_HASH", "INDEPENDENT_FILE_AND_VISIBLE_RGBA", "ARTISTIC_CONTOUR_HIDDEN_ANATOMY_AND_EXPRESSIONS", "ACTUAL_SCENE_AND_REACTION_BINDINGS", "REFERENCE_TO_RENDER_1_TO_1", "FUNCTIONAL_REGRESSION", "REAL_DEVICE", "HUMAN_APPROVAL", "ROOT_OWNER"],
-  "failClosed": ["missing source approval or exact SHA", "missing per-ID spec or output file", "wrong ID or reused source/prototype as release art", "same pixels across supposed independent states", "missing proof of faithful original art/reaction drawing", "missing scene/screenshot/device evidence", "attempt to call technical preview final illustration", "source/art output hash drift"],
-  "neverAutomatic": ["make character solely from ID/name", "approve original art or completed drawing", "activate Snap ROOT or share with Ready/Hide", "merge main", "deploy Netlify"],
-  "qaOnlyPriorOutputs": ["visual-prototypes/", "occlusion-qa/", "underpaint-qa/", "qa-original-rig/", "qa-nine-pose/"],
+  "phases": [
+    "DISCOVER_AND_SOURCE_LOCK",
+    "RESTORE_PRIOR_WORK",
+    "PER_ID_ART_PRODUCTION_3_PLUS_6",
+    "HASH_AND_RGBA_AUDIT",
+    "STILL_COMPOSITE_PARITY_AND_MOTION_ART_REVIEW",
+    "BIND_FIVE_SCENE_SURFACES_AND_ELEVEN_ONBOARDING_STAGES",
+    "FOUR_VIEWPORT_RENDER_AND_INTERACTION_REGRESSION",
+    "REAL_IPHONE_SAFARI_AND_REDUCED_MOTION",
+    "HUMAN_VISUAL_APPROVAL",
+    "SEPARATE_ROOT_RELEASE_AUTHORIZATION"
+  ],
+  "sceneSurfaces": [
+    "FIRST_MEETING",
+    "CHOICE",
+    "PRIMARY",
+    "HOME",
+    "ACTIVE_SCENE"
+  ],
+  "screenStages": [
+    "00-welcome",
+    "01-first-meeting",
+    "02-crew-selection/primary-choice",
+    "03-profile",
+    "04-packing",
+    "05-voyage-choice",
+    "06-island-arrival",
+    "07-island-naming",
+    "08-camp-discovery",
+    "09-camp-naming",
+    "10-home"
+  ],
+  "viewports": [
+    "375x667",
+    "390x844",
+    "430x932",
+    "1024x768"
+  ],
+  "separatePasses": [
+    "SOURCE_HASH",
+    "INDEPENDENT_FILE_AND_VISIBLE_RGBA",
+    "ARTISTIC_CONTOUR_HIDDEN_ANATOMY_AND_EXPRESSIONS",
+    "ACTUAL_SCENE_AND_REACTION_BINDINGS",
+    "REFERENCE_TO_RENDER_1_TO_1",
+    "FUNCTIONAL_REGRESSION",
+    "REAL_DEVICE",
+    "HUMAN_APPROVAL",
+    "ROOT_OWNER"
+  ],
+  "failClosed": [
+    "missing source approval or exact SHA",
+    "missing per-ID spec or output file",
+    "wrong ID or reused source/prototype as release art",
+    "same pixels across supposed independent states",
+    "missing proof of faithful original art/reaction drawing",
+    "missing scene/screenshot/device evidence",
+    "attempt to call technical preview final illustration",
+    "source/art output hash drift"
+  ],
+  "neverAutomatic": [
+    "make character solely from ID/name",
+    "approve original art or completed drawing",
+    "activate Snap ROOT or share with Ready/Hide",
+    "merge main",
+    "deploy Netlify"
+  ],
+  "qaOnlyPriorOutputs": [
+    "visual-prototypes/",
+    "occlusion-qa/",
+    "underpaint-qa/",
+    "qa-original-rig/",
+    "qa-nine-pose/"
+  ],
   "readinessCommand": "python tools/visual-id-source-readiness.py [--require-full24]",
   "pipelineCommand": "python tools/visual-id-art-batch.py --mode plan|audit --scope core6|full24 [--id existing-or-approved-staged-id]",
-  "truth": "PLAN_IS_NOT_ART; PIXEL_ALPHA_QA_IS_NOT_ARTISTIC_APPROVAL; TECHNICAL_GREEN_IS_NOT_RELEASE"
+  "truth": "PLAN_IS_NOT_ART; PIXEL_ALPHA_QA_IS_NOT_ARTISTIC_APPROVAL; TECHNICAL_GREEN_IS_NOT_RELEASE",
+  "status": "LEGACY_3_PLUS_6_ASSET_CONTRACT_HOLD_PENDING_COMPOSABLE_ASSET_MIGRATION",
+  "migration": {
+    "mass_production_allowed": false,
+    "reason": "Superseded working direction: crew-engine-contract.v1.json separates Semantic Action Command from approved composable asset selection.",
+    "preserve_for_regression": true,
+    "target_contract": "onboarding/crew-engine-contract.v1.json",
+    "do_not_delete_until_new_asset_gate_pass": true
+  }
 }
