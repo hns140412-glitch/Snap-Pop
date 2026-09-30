@@ -1,0 +1,44 @@
+{
+  "schema": "tky.living-background.binding.v5",
+  "rule_id": "TKY-ASSET-001",
+  "app": "Snap & Pop",
+  "visual_id": "TAKY-LAF-SNAP-HOME-COAST-20260927-A",
+  "master": {
+    "path": "assets/world/snap_pop_beach_asset.png",
+    "sha256": "f15af01680e2db44ef8af1dff749169f1082ddd15b3760a96da7ff2211eb8259",
+    "git_blob_sha": "7c2b83ae566ebc5468d42e0720f9092e096360ae",
+    "width": 941,
+    "height": 1672,
+    "immutable": true
+  },
+  "motion": {
+    "path": "assets/world/snap_pop_beach_motion_v5.mp4",
+    "sha256": "81449c71334d8e0bd42c79184307994f84a4b3c4d93af54bcb8e637fd5bb8035",
+    "git_blob_sha": "7bbe18976af46f7f53fa0d208977d4c2e39d07e1",
+    "source_review": "TAKY Living Background V5",
+    "loop_seconds": 8,
+    "enabled": [
+      "procedural coast-normal foam approach/recede",
+      "source-derived upper-left canopy rigid pivot over sky repair"
+    ],
+    "hold": [
+      "independent cloud object translation"
+    ]
+  },
+  "runtime": {
+    "surface": "root map/home",
+    "static_fallback": "EXACT_APPROVED_MASTER",
+    "reduced_motion": "STATIC_MASTER",
+    "video_failure": "STATIC_MASTER",
+    "offline_cache": "REQUIRED",
+    "remote_fetch": false
+  },
+  "gates": {
+    "app_binding": "DRAFT_BOUND",
+    "technical_ci": "PENDING",
+    "visual_signoff": "OPEN",
+    "physical_iphone_safari": "OPEN",
+    "main_merge": "HOLD",
+    "netlify": "HOLD"
+  }
+}
