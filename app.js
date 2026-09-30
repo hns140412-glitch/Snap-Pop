@@ -16,11 +16,11 @@ function appendSnapCrewEvidence(eventId,type,evidenceRef,context={}){
  if(!ev?.append)return {ok:false,reason:'CREW_EVIDENCE_RUNTIME_UNAVAILABLE'};
  return ev.append(globalThis.localStorage,{event_id:eventId,type,verified:true,evidence_ref:evidenceRef,character_id:snapCrewCharacterId(),occurred_at:new Date().toISOString(),context});
 }
-function emitSnapCrewLine(utterance,{action="IDLE",dialogue="SHORT",reason="SNAP_EXPLORE_CONTEXT"}={}){
+function emitSnapCrewLine(utterance,{action="IDLE",dialogue="SHORT",reason="SNAP_EXPLORE_CONTEXT",behaviorState={silence_by_default:true,child_working_well:true}}={}){
  const rt=globalThis.TakyCrewLiveRuntime;
  if(!rt?.legacyCharacter||!rt?.emit)return false;
  const ch=rt.legacyCharacter("moka",{role:"MAIN",action,dialogue,utterance,evidenceRef:"SNAP_ROOT_EXPLORATION",reason});
- rt.emit({sceneId:"explore",surface:"explore",characters:[ch],foregroundId:ch.character_id,speakingOrder:[ch.character_id],visibleOrder:[ch.character_id]});
+ rt.emit({sceneId:"explore",surface:"explore",characters:[ch],foregroundId:ch.character_id,speakingOrder:[ch.character_id],visibleOrder:[ch.character_id],behaviorState});
  return true;
 }
 function html(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
