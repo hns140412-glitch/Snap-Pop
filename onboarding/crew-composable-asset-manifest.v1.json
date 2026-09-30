@@ -25,7 +25,8 @@
     "BOOK",
     "MAP",
     "NOTEBOOK",
-    "PEN",    "RADIO",
+    "PEN",
+    "RADIO",
     "MAGNIFIER",
     "BAG",
     "COMPASS"
@@ -51,7 +52,8 @@
     "name_only_generation_forbidden": true,
     "visual_id_source_sha_mismatch": "FAIL_CLOSED",
     "missing_part_allows_generation": false,
-    "cross_character_part_substitution": false,    "relation_or_affinity_selects_asset": false,
+    "cross_character_part_substitution": false,
+    "relation_or_affinity_selects_asset": false,
     "safe_fallback": {
       "same_character_only": true,
       "body": "PUPPET_BODY:FIELD_NEUTRAL",
@@ -74,7 +76,8 @@
   ],
   "legacy_3_plus_6": {
     "state": "LEGACY_3_PLUS_6_ASSET_CONTRACT_HOLD_PENDING_COMPOSABLE_ASSET_MIGRATION",
-    "production_authority": false,    "regression_only": true,
+    "production_authority": false,
+    "regression_only": true,
     "mass_production_forbidden": true,
     "delete_before_composable_gate_proven": false,
     "legacy_slots": [
@@ -89,7 +92,424 @@
       "COMPLETE"
     ]
   },
-  "members": {},
+  "members": {
+    "dubi": {
+      "visual_id": "dubi",
+      "source_sha256": "bbfc57e9b4e8d8d132452b802826e5fd7c9ef400f5d454d9150a2b7e38d33820",
+      "source_sha_verified": true,
+      "approval_ref": "onboarding/asset-and-release-gate.json#required_assets",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "approved_group_count": 2,
+      "open_group_count": 5,
+      "groups": {
+        "MASTER_FULL": {
+          "state": "APPROVED_EXISTING_SOURCE",
+          "assets": [
+            {
+              "group": "MASTER_FULL",
+              "key": "approved_source",
+              "path": "characters/originals/dubi_source.jpeg",
+              "sha256": "bbfc57e9b4e8d8d132452b802826e5fd7c9ef400f5d454d9150a2b7e38d33820",
+              "approved": true,
+              "visual_id": "dubi",
+              "source_sha256": "bbfc57e9b4e8d8d132452b802826e5fd7c9ef400f5d454d9150a2b7e38d33820",
+              "approval_ref": "onboarding/asset-and-release-gate.json#required_assets"
+            }
+          ]
+        },
+        "PROFILE": {
+          "state": "APPROVED_EXISTING_STATIC_CUTOUT",
+          "assets": [
+            {
+              "group": "PROFILE",
+              "key": "static_cutout",
+              "path": "characters/ui_cutouts/dubi.png",
+              "sha256": "611f460174a09e0ed186e909812464e8a991cc24a9891e21c087050e78d6109b",
+              "approved": true,
+              "visual_id": "dubi",
+              "source_sha256": "bbfc57e9b4e8d8d132452b802826e5fd7c9ef400f5d454d9150a2b7e38d33820",
+              "approval_ref": "onboarding/asset-and-release-gate.json#required_assets"
+            }
+          ]
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+          "assets": [],
+          "evidence": [
+            "characters/layer_specs/dubi.json"
+          ]
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_FACE_STATE_SET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+          "assets": [],
+          "evidence": [
+            "characters/layer_specs/dubi.json"
+          ]
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_PEEK_MASK",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_DEPTH_SHADOW",
+          "assets": []
+        }
+      }
+    },
+    "lori": {
+      "visual_id": "lori",
+      "source_sha256": "fa5e10a042f86354cfabafc1e09be5a0250e8942bf467eca5ed462b9405771fb",
+      "source_sha_verified": true,
+      "approval_ref": "onboarding/asset-and-release-gate.json#required_assets",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "approved_group_count": 2,
+      "open_group_count": 5,
+      "groups": {
+        "MASTER_FULL": {
+          "state": "APPROVED_EXISTING_SOURCE",
+          "assets": [
+            {
+              "group": "MASTER_FULL",
+              "key": "approved_source",
+              "path": "characters/originals/lori_source.jpeg",
+              "sha256": "fa5e10a042f86354cfabafc1e09be5a0250e8942bf467eca5ed462b9405771fb",
+              "approved": true,
+              "visual_id": "lori",
+              "source_sha256": "fa5e10a042f86354cfabafc1e09be5a0250e8942bf467eca5ed462b9405771fb",
+              "approval_ref": "onboarding/asset-and-release-gate.json#required_assets"
+            }
+          ]
+        },
+        "PROFILE": {
+          "state": "APPROVED_EXISTING_STATIC_CUTOUT",
+          "assets": [
+            {
+              "group": "PROFILE",
+              "key": "static_cutout",
+              "path": "characters/ui_cutouts/lori.png",
+              "sha256": "1642e080034e48cf7a11cd3bea12be8db44e10468b20b231f5f714360f27fcac",
+              "approved": true,
+              "visual_id": "lori",
+              "source_sha256": "fa5e10a042f86354cfabafc1e09be5a0250e8942bf467eca5ed462b9405771fb",
+              "approval_ref": "onboarding/asset-and-release-gate.json#required_assets"
+            }
+          ]
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+          "assets": [],
+          "evidence": [
+            "characters/layer_specs/lori.json"
+          ]
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_FACE_STATE_SET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+          "assets": [],
+          "evidence": [
+            "characters/layer_specs/lori.json"
+          ]
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_PEEK_MASK",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_DEPTH_SHADOW",
+          "assets": []
+        }
+      }
+    },
+    "ink": {
+      "visual_id": "ink",
+      "source_sha256": "a03261f0dbf1e2a60158ceba32948b31c5372595ca73d39c400b1330c446b7e7",
+      "source_sha_verified": true,
+      "approval_ref": "onboarding/asset-and-release-gate.json#required_assets",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "approved_group_count": 2,
+      "open_group_count": 5,
+      "groups": {
+        "MASTER_FULL": {
+          "state": "APPROVED_EXISTING_SOURCE",
+          "assets": [
+            {
+              "group": "MASTER_FULL",
+              "key": "approved_source",
+              "path": "characters/originals/ink_source.jpeg",
+              "sha256": "a03261f0dbf1e2a60158ceba32948b31c5372595ca73d39c400b1330c446b7e7",
+              "approved": true,
+              "visual_id": "ink",
+              "source_sha256": "a03261f0dbf1e2a60158ceba32948b31c5372595ca73d39c400b1330c446b7e7",
+              "approval_ref": "onboarding/asset-and-release-gate.json#required_assets"
+            }
+          ]
+        },
+        "PROFILE": {
+          "state": "APPROVED_EXISTING_STATIC_CUTOUT",
+          "assets": [
+            {
+              "group": "PROFILE",
+              "key": "static_cutout",
+              "path": "characters/ui_cutouts/ink.png",
+              "sha256": "5108c5d31437afda09eebd414ac3fd7000dabeca7504b469e630f2368160ef30",
+              "approved": true,
+              "visual_id": "ink",
+              "source_sha256": "a03261f0dbf1e2a60158ceba32948b31c5372595ca73d39c400b1330c446b7e7",
+              "approval_ref": "onboarding/asset-and-release-gate.json#required_assets"
+            }
+          ]
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+          "assets": [],
+          "evidence": [
+            "characters/layer_specs/ink.json"
+          ]
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_FACE_STATE_SET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+          "assets": [],
+          "evidence": [
+            "characters/layer_specs/ink.json"
+          ]
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_PEEK_MASK",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_DEPTH_SHADOW",
+          "assets": []
+        }
+      }
+    },
+    "nova": {
+      "visual_id": "nova",
+      "source_sha256": "f627926282be3d0dc95f6cd94461e041c39c30f8a5843f4a42a995790348a1db",
+      "source_sha_verified": true,
+      "approval_ref": "onboarding/asset-and-release-gate.json#required_assets",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "approved_group_count": 2,
+      "open_group_count": 5,
+      "groups": {
+        "MASTER_FULL": {
+          "state": "APPROVED_EXISTING_SOURCE",
+          "assets": [
+            {
+              "group": "MASTER_FULL",
+              "key": "approved_source",
+              "path": "characters/originals/nova_source.jpeg",
+              "sha256": "f627926282be3d0dc95f6cd94461e041c39c30f8a5843f4a42a995790348a1db",
+              "approved": true,
+              "visual_id": "nova",
+              "source_sha256": "f627926282be3d0dc95f6cd94461e041c39c30f8a5843f4a42a995790348a1db",
+              "approval_ref": "onboarding/asset-and-release-gate.json#required_assets"
+            }
+          ]
+        },
+        "PROFILE": {
+          "state": "APPROVED_EXISTING_STATIC_CUTOUT",
+          "assets": [
+            {
+              "group": "PROFILE",
+              "key": "static_cutout",
+              "path": "characters/ui_cutouts/nova.png",
+              "sha256": "11aea6f91f0197a0c2ab70a203550530ebe2e2aad39136198851ca97092a0d34",
+              "approved": true,
+              "visual_id": "nova",
+              "source_sha256": "f627926282be3d0dc95f6cd94461e041c39c30f8a5843f4a42a995790348a1db",
+              "approval_ref": "onboarding/asset-and-release-gate.json#required_assets"
+            }
+          ]
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+          "assets": [],
+          "evidence": [
+            "characters/layer_specs/nova.json"
+          ]
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_FACE_STATE_SET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+          "assets": [],
+          "evidence": [
+            "characters/layer_specs/nova.json"
+          ]
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_PEEK_MASK",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_DEPTH_SHADOW",
+          "assets": []
+        }
+      }
+    },
+    "take": {
+      "visual_id": "take",
+      "source_sha256": "1bd65ebb545efa0c06132d4d6cac153171bc3b6cef3c7547915c9c8acecc88b2",
+      "source_sha_verified": true,
+      "approval_ref": "onboarding/asset-and-release-gate.json#required_assets",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "approved_group_count": 2,
+      "open_group_count": 5,
+      "groups": {
+        "MASTER_FULL": {
+          "state": "APPROVED_EXISTING_SOURCE",
+          "assets": [
+            {
+              "group": "MASTER_FULL",
+              "key": "approved_source",
+              "path": "characters/originals/take_source.jpeg",
+              "sha256": "1bd65ebb545efa0c06132d4d6cac153171bc3b6cef3c7547915c9c8acecc88b2",
+              "approved": true,
+              "visual_id": "take",
+              "source_sha256": "1bd65ebb545efa0c06132d4d6cac153171bc3b6cef3c7547915c9c8acecc88b2",
+              "approval_ref": "onboarding/asset-and-release-gate.json#required_assets"
+            }
+          ]
+        },
+        "PROFILE": {
+          "state": "APPROVED_EXISTING_STATIC_CUTOUT",
+          "assets": [
+            {
+              "group": "PROFILE",
+              "key": "static_cutout",
+              "path": "characters/ui_cutouts/take.png",
+              "sha256": "3cd6720c13473f20f4b23f64fa3d42c7491ea9277ba204f80f096e3f0d57d88a",
+              "approved": true,
+              "visual_id": "take",
+              "source_sha256": "1bd65ebb545efa0c06132d4d6cac153171bc3b6cef3c7547915c9c8acecc88b2",
+              "approval_ref": "onboarding/asset-and-release-gate.json#required_assets"
+            }
+          ]
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+          "assets": [],
+          "evidence": [
+            "characters/layer_specs/take.json"
+          ]
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_FACE_STATE_SET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+          "assets": [],
+          "evidence": [
+            "characters/layer_specs/take.json"
+          ]
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_PEEK_MASK",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_DEPTH_SHADOW",
+          "assets": []
+        }
+      }
+    },
+    "zero": {
+      "visual_id": "zero",
+      "source_sha256": "84dd276b4099f3f73348cd69f8c5117c52f3ab4d587e5f80363c7cf43350572e",
+      "source_sha_verified": true,
+      "approval_ref": "onboarding/asset-and-release-gate.json#required_assets",
+      "production_eligible": false,
+      "runtime_fallback_eligible": false,
+      "approved_group_count": 2,
+      "open_group_count": 5,
+      "groups": {
+        "MASTER_FULL": {
+          "state": "APPROVED_EXISTING_SOURCE",
+          "assets": [
+            {
+              "group": "MASTER_FULL",
+              "key": "approved_source",
+              "path": "characters/originals/zero_source.jpeg",
+              "sha256": "84dd276b4099f3f73348cd69f8c5117c52f3ab4d587e5f80363c7cf43350572e",
+              "approved": true,
+              "visual_id": "zero",
+              "source_sha256": "84dd276b4099f3f73348cd69f8c5117c52f3ab4d587e5f80363c7cf43350572e",
+              "approval_ref": "onboarding/asset-and-release-gate.json#required_assets"
+            }
+          ]
+        },
+        "PROFILE": {
+          "state": "APPROVED_EXISTING_STATIC_CUTOUT",
+          "assets": [
+            {
+              "group": "PROFILE",
+              "key": "static_cutout",
+              "path": "characters/ui_cutouts/zero.png",
+              "sha256": "7eb9ad58b94349eb8367236a3058a7feb0c9e994b981915c6ef82f74dd88b233",
+              "approved": true,
+              "visual_id": "zero",
+              "source_sha256": "84dd276b4099f3f73348cd69f8c5117c52f3ab4d587e5f80363c7cf43350572e",
+              "approval_ref": "onboarding/asset-and-release-gate.json#required_assets"
+            }
+          ]
+        },
+        "PUPPET_BODY": {
+          "state": "OPEN_SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+          "assets": [],
+          "evidence": [
+            "characters/layer_specs/zero.json"
+          ]
+        },
+        "FACE_STATES": {
+          "state": "OPEN_NO_APPROVED_FACE_STATE_SET",
+          "assets": []
+        },
+        "ACTION_PARTS": {
+          "state": "OPEN_SOURCE_PARTITION_PROTOTYPE_NOT_ANIMATION_READY",
+          "assets": [],
+          "evidence": [
+            "characters/layer_specs/zero.json"
+          ]
+        },
+        "PEEK_MASK": {
+          "state": "OPEN_NO_APPROVED_PEEK_MASK",
+          "assets": []
+        },
+        "DEPTH_SHADOW": {
+          "state": "OPEN_NO_APPROVED_DEPTH_SHADOW",
+          "assets": []
+        }
+      }
+    }
+  },
   "shared_assets": {},
-  "note": "This manifest defines the current composable schema and authority boundary. Empty member/shared asset maps mean no new art approval is inferred."
+  "note": "This manifest defines the current composable schema and authority boundary. Empty member/shared asset maps mean no new art approval is inferred.",
+  "registration_summary": {
+    "core6_members_registered": 6,
+    "approved_group_instances": 12,
+    "open_group_instances": 30,
+    "runtime_fallback_eligible_members": 0,
+    "production_eligible_members": 0,
+    "registration_rule": "EXISTING_APPROVED_BYTES_ONLY_NO_NEW_ART_NO_PROTOTYPE_PROMOTION"
+  }
 }

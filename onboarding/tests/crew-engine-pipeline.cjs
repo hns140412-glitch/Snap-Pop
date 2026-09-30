@@ -1,5 +1,8 @@
 'use strict';
 const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const crypto=require('node:crypto');
 const behavior=require('../crew-semantic-behavior.js');
 const asset=require('../crew-asset-engine.js');
 const renderer=require('../crew-ui-renderer.js');
@@ -69,6 +72,32 @@ assert.equal(legacyProduction.productionAuthority,false);
 assert.equal(legacyBatch.productionAuthority,false);
 assert.equal(legacyProduction.legacyContractState,manifest.legacy_3_plus_6.state);
 assert.equal(legacyBatch.legacyContractState,manifest.legacy_3_plus_6.state);
+
+// Core6 composable registration is evidence-only: 2 approved groups, 5 OPEN, no runtime promotion.
+const core6=['dubi','lori','ink','nova','take','zero'];
+const groups=['MASTER_FULL','PROFILE','PUPPET_BODY','FACE_STATES','ACTION_PARTS','PEEK_MASK','DEPTH_SHADOW'];
+const root=path.resolve(__dirname,'..');
+assert.deepEqual(Object.keys(manifest.members).sort(),[...core6].sort());
+assert.equal(manifest.registration_summary.core6_members_registered,6);
+assert.equal(manifest.registration_summary.approved_group_instances,12);
+assert.equal(manifest.registration_summary.open_group_instances,30);
+assert.equal(manifest.registration_summary.runtime_fallback_eligible_members,0);
+for(const id of core6){
+ const m=manifest.members[id];
+ assert.equal(m.visual_id,id);assert.equal(m.source_sha_verified,true);
+ assert.equal(m.production_eligible,false);assert.equal(m.runtime_fallback_eligible,false);
+ assert.equal(m.approved_group_count,2);assert.equal(m.open_group_count,5);
+ assert.deepEqual(Object.keys(m.groups),groups);
+ for(const g of ['MASTER_FULL','PROFILE']){
+  assert.equal(m.groups[g].assets.length,1);
+  const rec=m.groups[g].assets[0];
+  assert.equal(rec.approved,true);assert.equal(rec.visual_id,id);assert.equal(rec.group,g);
+  const bytes=fs.readFileSync(path.join(root,rec.path));
+  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),rec.sha256);
+  assert.equal(rec.source_sha256,m.source_sha256);
+ }
+ for(const g of ['PUPPET_BODY','FACE_STATES','ACTION_PARTS','PEEK_MASK','DEPTH_SHADOW']) assert.equal(m.groups[g].assets.length,0);
+}
 
 const fbUi=renderer.renderPlan(cmd,fb);
 const fbTrace=runtimeLog.record({command:cmd,assetPlan:fb,renderPlan:fbUi,fallback_reason:'BOOK_HAND_NOT_APPROVED'});
