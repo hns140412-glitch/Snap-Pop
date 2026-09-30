@@ -50,3 +50,5 @@ textarea{width:100%;min-height:190px;resize:vertical;border:1px solid #d9c9a8;bo
 #toast{position:fixed;z-index:80;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,9px);max-width:360px;background:#062f2bf1;color:#fff3ca;border:1px solid #c6a75c66;border-radius:13px;padding:10px 13px;font-size:11px;opacity:0;pointer-events:none;transition:.2s}#toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-height:760px){.mapWorld{min-height:535px}.treeStage{height:335px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.wish.locked{filter:saturate(.58);opacity:.78}.wish button:disabled{cursor:not-allowed;background:#d8d0bd;color:#777;border-color:#c9c0ad;box-shadow:none}.gateNote{font-size:10px;line-height:1.35;color:#7a644b}.wish.locked .gateNote:before{content:"잠금 · ";font-weight:900}.wish:not(.locked) .gateNote:before{content:"해금 · ";font-weight:900}
