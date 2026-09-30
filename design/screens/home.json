@@ -1,0 +1,62 @@
+{
+  "schema": "TAKY_SCREEN_CONTRACT_V2",
+  "screen_id": "home",
+  "authority_ref": "APPROVED_SNAP_HOME_MOCKUP",
+  "regions": [
+    {
+      "id": "coast-world",
+      "role": "environment"
+    },
+    {
+      "id": "experience-map",
+      "role": "primary-navigation"
+    },
+    {
+      "id": "crew-presence",
+      "role": "character"
+    }
+  ],
+  "typography": {
+    "mode": "LIVE_DOM",
+    "hierarchy": [
+      "brand",
+      "experience-name",
+      "experience-description",
+      "navigation"
+    ]
+  },
+  "components": [
+    {
+      "id": "map-view",
+      "selector": "#map",
+      "owner": "SNAP_POP_UI"
+    },
+    {
+      "id": "landmarks",
+      "selector": "#landmarks",
+      "owner": "SNAP_EXPLORATION_UI"
+    }
+  ],
+  "responsive": {
+    "primary": "phone390",
+    "safe_area": "required",
+    "tablet": "AUTHORITY_REVIEW_OPEN"
+  },
+  "interactions": [
+    {
+      "id": "LANDMARK_SELECT",
+      "target_authority": "PER_SCREEN_GOLDEN_FREEZE_OPEN"
+    },
+    {
+      "id": "RADIO",
+      "selector": "#homeRadio"
+    }
+  ],
+  "states": [
+    "BASE_REVIEW",
+    "LANDMARK_SELECTED",
+    "EMPTY_PROGRESS",
+    "OFFLINE"
+  ],
+  "implementation_note": "Current map uses historical golden_world_scene.jpg and does not yet prove parity with the current approved coastal Home. Do not promote current render to Golden."
+}

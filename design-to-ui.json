@@ -1,0 +1,68 @@
+{
+  "schema": "TAKY_DESIGN_TO_UI_PIPELINE_V1",
+  "project": "Snap-Pop",
+  "source_commit": "56eb0e8470ec0a869f0189ff56ffc84215d5bd8f",
+  "pipeline_contract_source": "TAKY_PR_194_DRAFT",
+  "scope_note": "HOME first, following REV10 Golden-first order. Remaining ten review surfaces stay PER_SCREEN_GOLDEN_FREEZE_OPEN.",
+  "policy": {
+    "runtime_must_not_auto_become_golden": true,
+    "flattened_mockup_runtime_forbidden": true,
+    "evidence_files_required": true,
+    "image_generation_optional": true
+  },
+  "screens": [
+    {
+      "id": "home",
+      "authority_ref": "APPROVED_SNAP_HOME_MOCKUP",
+      "golden": {
+        "status": "IMPORT_OPEN",
+        "source_receipt": "SNAP_HOME_BOARD_CROP_VERIFIED",
+        "path": "design/golden/home.png",
+        "sha256": "30e037c896cb4eaa85a2291d89ee847dfc774d510e2eae4f0713020a2afb7d2b",
+        "use": "REFERENCE_ONLY"
+      },
+      "screen_contract": {
+        "path": "design/screens/home.json",
+        "sha256": "88e61e4f38d8cef162aa155d0401cc1f1d6ed255e8f09dba0be84b8fc15d04e2"
+      },
+      "layer_contract": {
+        "path": "design/layers/home.json",
+        "sha256": "f37188778e129c20e9786e3ccd36c320a70de6c03dfacdf10a712c6491abb17b"
+      },
+      "viewports": [
+        {
+          "id": "phone390",
+          "width": 390,
+          "height": 844,
+          "dpr": 2
+        }
+      ],
+      "states": [
+        {
+          "id": "BASE_REVIEW",
+          "fixture_path": "design/fixtures/home.json",
+          "fixture_sha256": "e113b4aacc7d53c1152f5fab3f95bcf2b111c480ff2818d76dfb36398c3475f1",
+          "visual_policy": "GOLDEN_PARITY"
+        },
+        {
+          "id": "LANDMARK_SELECTED",
+          "fixture_path": "design/fixtures/home.json",
+          "fixture_sha256": "e113b4aacc7d53c1152f5fab3f95bcf2b111c480ff2818d76dfb36398c3475f1",
+          "visual_policy": "LAYOUT_GUARD"
+        },
+        {
+          "id": "EMPTY_PROGRESS",
+          "fixture_path": "design/fixtures/home.json",
+          "fixture_sha256": "e113b4aacc7d53c1152f5fab3f95bcf2b111c480ff2818d76dfb36398c3475f1",
+          "visual_policy": "LAYOUT_GUARD"
+        },
+        {
+          "id": "OFFLINE",
+          "fixture_path": "design/fixtures/home.json",
+          "fixture_sha256": "e113b4aacc7d53c1152f5fab3f95bcf2b111c480ff2818d76dfb36398c3475f1",
+          "visual_policy": "LAYOUT_GUARD"
+        }
+      ]
+    }
+  ]
+}
