@@ -32,4 +32,11 @@ $("#guideBtn").onclick=()=>toast("현재 길잡이 디자인 계보는 유지하
 $("#homeRadio").onclick=()=>toast("탐험 안에서 말해서 쓰기를 사용할 수 있어요.");
 $("#autoRead").onchange=$("#reduceMotion").onchange=async()=>{await set("settings",{autoRead:$("#autoRead").checked,reduceMotion:$("#reduceMotion").checked})}
 $("#nav").onclick=e=>{const b=e.target.closest("button[data-view]");if(b)show(b.dataset.view)}
+globalThis.SnapExplorerCrewAuthorityConsumer?.boot?.({
+  storage:localStorage,
+  locationHref:location.href,
+  replaceUrl:u=>history.replaceState(null,'',u),
+  host:document.getElementById('app'),
+  radio:document.getElementById('homeRadio')
+});
 init().catch(e=>{console.error(e);toast("앱 데이터를 준비하지 못했어요.")});
