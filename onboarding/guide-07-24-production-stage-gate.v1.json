@@ -136,6 +136,28 @@
       "13-18",
       "19-24"
     ],
+    "mixed_core6_cohort_style_gate": {
+      "required": true,
+      "when": "AFTER_EACH_EXPANSION_CUTOUT_BATCH_BEFORE_MASK_PROMOTION",
+      "anchors": ["dubi", "lori", "ink", "nova", "take", "zero"],
+      "board": "NEUTRAL_24_SLOT_COMPARISON_NOT_FINAL_ART",
+      "compare": [
+        "character_scale",
+        "head_to_body_ratio",
+        "render_depth_and_material",
+        "outline_softness",
+        "lighting_direction_and_contrast",
+        "saturation_and_palette_density",
+        "gear_prop_density",
+        "foot_ground_alignment",
+        "animal_vs_human_special_cohesion"
+      ],
+      "fail_closed_on_obvious_style_drift": true
+    },
+    "known_visual_review_flags": {
+      "guide-21_TESS": "LEFT_HAND_MISSING_OR_NOT_VISIBLE_IN_SOURCE/DERIVATIVE; DO_NOT INVENT DURING CUTOUT. IF LATER POSE EXPOSES IT, RECONSTRUCT FAITHFULLY AND REVIEW AGAINST APPROVED TESS DESIGN.",
+      "guide-23_ZEKE": "LOWER_LEG/FOOT PROPORTION OR CONNECTION LOOKS ABNORMAL IN DERIVED WORK; DO NOT PROPAGATE DERIVATIVE DISTORTION. USE APPROVED SOURCE BODY PROPORTION AS AUTHORITY AND FLAG FOR BODY/POSE QA."
+    },
     "user_not_debugger": true
   }
 }

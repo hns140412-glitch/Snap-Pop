@@ -1,4 +1,10 @@
 # COMPANION ONBOARDING — NEW CHAT START / CURRENT — 2026-09-27 LATEST
+## CURRENT OVERRIDE — 2026-09-30 mixed Core6 cohort QA + TESS/ZEKE correction flags
+- Before any 07..24 Cutout batch is promoted to Mask Spec, place the new Cutouts on a neutral QA board **together with immutable Core6** and compare scale, head/body ratio, 2.5D material depth, edge softness, lighting/contrast, saturation, prop density, foot-ground alignment and animal/human-Special cohesion. The board is QA only, not final art, and Core6 is never regenerated.
+- guide-21 TESS: a derivative showed the left hand missing/non-visible. Do not invent a hand during Cutout. If a later BODY/reaction pose exposes that hand, reconstruct it only from approved TESS identity/proportion/style and require separate art QA.
+- guide-23 ZEKE: a derivative showed abnormal lower-leg/foot proportion/connection. Reject that derivative distortion; approved ZEKE source body proportion is authority. BODY/pose QA must catch knee/ankle/foot alignment before package acceptance.
+- Any prior generated sheet carrying these defects is INVALID evidence and cannot supply source SHA, final-art manifest, or UI binding proof.
+
 ## CURRENT OVERRIDE — 2026-09-30 unified Core6 + GUIDE 07..24 source-arming gate
 - Full 24 production now treats the existing Core6 and approved 18 expansion identities as one 216-final-art work queue, without changing the active runtime roster. Core6 exact approved individual cutout SHA + source-specific mask-spec SHA are already locked **6/6** and wait in the ready queue; their 18 final BODY/PROP/GEAR and 36 genuine reaction drawings remain 0 approved.
 - New `guide-07-24-independent-source-registry.v1.json` is the only stage-3 registration surface for 07..24: exact group SHA + member reference-view SHA are prefilled; `cutout_sha256`, `mask_spec_sha256`, and approval reference start NULL. A matching real `characters/ui_cutouts/guide-XX.png` SHA advances that ID only to MASK_SPEC_OPEN. A matching per-ID mask spec SHA + approval reference advances it to ART_PRODUCTION_OPEN. Wrong/missing SHA fails closed.

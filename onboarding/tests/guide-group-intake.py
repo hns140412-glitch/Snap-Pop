@@ -31,6 +31,12 @@ assert stage['invariant']['id24']['canonical_code']=='VIVI'
 assert stage['invariant']['id24']['derived_display_code']=='VIVI'
 assert stage['invariant']['id24']['forbid_derived_code']==['NOVA']
 assert stage['execution_policy']['next_stage']==3
+cohort=stage['execution_policy']['mixed_core6_cohort_style_gate']
+assert cohort['required'] is True and cohort['fail_closed_on_obvious_style_drift'] is True
+assert cohort['anchors']==['dubi','lori','ink','nova','take','zero']
+flags=stage['execution_policy']['known_visual_review_flags']
+assert 'guide-21_TESS' in flags and 'LEFT_HAND' in flags['guide-21_TESS']
+assert 'guide-23_ZEKE' in flags and 'LOWER_LEG' in flags['guide-23_ZEKE']
 assert all(x['numeric_visual_id']>=19 for x in additional[-6:])
 assert len({x['source_group_lock']['sha256'] for x in additional})==3
 assert all(x['source_group_lock']['scope']=='GROUP_NOT_PER_MEMBER' for x in additional)
