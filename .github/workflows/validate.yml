@@ -39,6 +39,14 @@ jobs:
         run: node tests/surface-scene-policy.spec.js
       - name: Validate live Crew semantic runtime
         run: node tests/live-crew-semantic-runtime.spec.js
+      - name: Pre-Gate JavaScript syntax check
+        run: |
+          node --check app.js
+          node --check snap-crew-live-runtime-v1.js
+          node --check snap-crew-dialogue-consumer-v1.js
+          node --check snap-character-runtime-adapter-v1.js
+          node --check snap-character-scene-bridge-v1.js
+          node --check snap-character-ui-binding-bridge-v1.js
       - name: Validate TAKY Design Gate authority
         run: node tools/validate-design-gate.mjs
       - uses: actions/setup-node@v4
