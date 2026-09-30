@@ -27,11 +27,11 @@ function html(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;","
 function currentWishRule(){
  const external=globalThis.TAKY_BLESSING_RULES?.WEEKEND_MOVIE;
  return external&&external.approved===true&&external.authority_ref
-   ?{blessing_id:"WEEKEND_MOVIE",required_badge_ids:external.required_badge_ids||[],authority_ref:external.authority_ref}
-   :{blessing_id:"WEEKEND_MOVIE",required_badge_ids:[]};
+   ?{blessing_id:"WEEKEND_MOVIE",required_badge_ids:external.required_badge_ids||[],authority_ref:external.authority_ref,approved:true}
+   :{blessing_id:"WEEKEND_MOVIE",required_badge_ids:[],authority_ref:null,approved:false};
 }
 function earnedBadgeIds(){return globalThis.TAKY_BADGE_RUNTIME?.earnedBadgeIds?.()||[]}
-function wishUnlockState(){return globalThis.SnapBlessingLockV1?.evaluate?.(currentWishRule(),earnedBadgeIds())||{unlocked:true,use_allowed:true,missing_badge_ids:[]}}
+function wishUnlockState(){return globalThis.SnapBlessingLockV1?.evaluateApproved?.(currentWishRule(),earnedBadgeIds())||{pass:false,reason:"APPROVED_BLESSING_RULE_REQUIRED",unlocked:false,use_allowed:false,missing_badge_ids:[]}}
 
 async function init(){await openDB();marks=await fetch("data/landmarks.json").then(r=>r.json());renderLandmarks();await updateStatus();renderRecords();renderGems();renderGrowth();const active=await get("active");snapActiveExploration=!!active;if(active)renderExplore(active);else window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}
 function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;$$(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await get("active"),g=await get("gems")||{};$("#selTitle").textContent=m.title;$("#selDesc").textContent=m.desc;$("#selProgress").textContent="진행 "+(a?.landmark===m.id?(a.step||0):0)+" / 3";$("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";$("#selection").hidden=false};host.appendChild(b)})}
