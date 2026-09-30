@@ -32,6 +32,21 @@ function selectSlot({role='AMBIENT',occupied_slots=[],preferred_slot=null}={}){
 function cooldownKey(command={}){
  return [clean(command.character_id),clean(command.behavior_state),clean(command.ambient_action||command.dialogue_intent||'NONE')].join(':');
 }
+function allocateScene({commands=[],budget=DEFAULT_BUDGET,recent_action_keys=[],recent_dialogue_intents=[],child_response_state='UNKNOWN',help_request_state='NONE'}={}){
+ const accepted=[],rejected=[],occupied_slots=[],usage={foreground_reactions:0,ambient_active:0,spoken_dialogue:0,overlay:0};
+ for(const command of Array.isArray(commands)?commands:[]){
+   const decision=evaluate({command,budget,usage,occupied_slots,recent_action_keys,recent_dialogue_intents,child_response_state,help_request_state});
+   if(decision.ok){
+     accepted.push(Object.freeze({command,decision}));
+     occupied_slots.push(decision.scene_slot);
+     if(['MAIN','CHAPTER_OWNER','ACTING_CREW'].includes(command.role)||['GUIDE','REACTION','COMPLETE'].includes(command.behavior_state))usage.foreground_reactions++;
+     if(command.role==='AMBIENT')usage.ambient_active++;
+     if(['VOICE','TEXT_AND_VOICE'].includes(command.interaction_mode))usage.spoken_dialogue++;
+     if(command.dialogue_intent)usage.overlay++;
+   }else rejected.push(Object.freeze({command,decision}));
+ }
+ return Object.freeze({accepted:Object.freeze(accepted),rejected:Object.freeze(rejected),usage:Object.freeze({...usage}),occupied_slots:Object.freeze([...occupied_slots])});
+}
 function evaluate(input={}){
  const command=input.command||null;if(!command)return {ok:false,reason:'SEMANTIC_COMMAND_REQUIRED'};
  const budget={foreground_reactions:boundedInt(input.budget?.foreground_reactions,1,0,4),ambient_active:boundedInt(input.budget?.ambient_active,2,0,6),spoken_dialogue:boundedInt(input.budget?.spoken_dialogue,1,0,2),overlay:boundedInt(input.budget?.overlay,1,0,2)};
@@ -63,5 +78,5 @@ function evaluate(input={}){
    selection_reason:rejects.length?'BLOCKED_BY_RUNTIME_POLICY':'WITHIN_BUDGET_SLOT_AND_COOLDOWN'
  });
 }
-return Object.freeze({version:VERSION,dialogueIntents:DIALOGUE_INTENTS,slots:SLOTS,defaultBudget:DEFAULT_BUDGET,interruptibility:INTERRUPTIBILITY,selectDialogueIntent,selectSlot,cooldownKey,evaluate});
+return Object.freeze({version:VERSION,dialogueIntents:DIALOGUE_INTENTS,slots:SLOTS,defaultBudget:DEFAULT_BUDGET,interruptibility:INTERRUPTIBILITY,selectDialogueIntent,selectSlot,cooldownKey,evaluate,allocateScene});
 });
