@@ -26,8 +26,9 @@ async function updateStatus(){const exp=await get("exp")||0,g=await get("gems")|
 async function badgeGateContext(){
   const provider=globalThis.SnapPopBadgeGateContextProvider;
   if(typeof provider!=="function")return {award_snapshot:{verified:false,badge_ids:[],authority:"UNAVAILABLE"},approved_badge_bindings:[]};
+  const candidate_badge_ids=[...new Set(blessingPolicies.flatMap(b=>(b.gate?.candidate_badges||[]).map(x=>x.badge_id)).filter(Boolean))];
   try{
-    const ctx=await provider();
+    const ctx=await provider({candidate_badge_ids});
     return ctx&&typeof ctx==="object"?ctx:{award_snapshot:{verified:false,badge_ids:[],authority:"INVALID_PROVIDER"},approved_badge_bindings:[]};
   }catch(e){
     console.warn("badge gate context unavailable",e);
