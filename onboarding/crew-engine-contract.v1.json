@@ -229,7 +229,11 @@
       "asset_plan_does_not_change_behavior_meaning",
       "relation_affinity_unchanged",
       "renderer_receives_no_unapproved_asset",
-      "missing_parts_fallback_without_new_art"
+      "missing_parts_fallback_without_new_art",
+      "runtime_policy_does_not_mutate_semantic_meaning",
+      "reaction_budget_respected",
+      "scene_slot_available",
+      "recent_action_repeat_guarded"
     ]
   },
   "legacy_migration": {
@@ -237,5 +241,53 @@
     "state": "LEGACY_HOLD_DO_NOT_MASS_PRODUCE",
     "migration_target": "COMPOSABLE_ASSET_GROUPS_PLUS_SEMANTIC_ACTION",
     "delete_old_contract_before_new_gate_pass": false
+  },
+  "runtime_policy": {
+    "role": "THIN_ARBITRATION_POLICY_NOT_SEMANTIC_OWNER",
+    "version": "CREW_RUNTIME_POLICY_V1",
+    "preserves_architecture": true,
+    "responsibilities": [
+      "reaction_budget",
+      "interruptibility",
+      "recent_action_repetition_guard",
+      "dialogue_intent_rotation",
+      "scene_slot_occupancy",
+      "selection_reason_trace"
+    ],
+    "reaction_budget_default": {
+      "foreground_reactions": 1,
+      "ambient_active": 2,
+      "spoken_dialogue": 1,
+      "overlay": 1
+    },
+    "recent_history_limits": {
+      "action_keys": 5,
+      "dialogue_intents": 8
+    },
+    "scene_slots": [
+      "FG_LEFT",
+      "FG_RIGHT",
+      "MID_LEFT",
+      "MID_RIGHT",
+      "BG_WORLD",
+      "PEEK_LEFT",
+      "PEEK_RIGHT"
+    ],
+    "dialogue_intents": [
+      "NOTICE_DETAIL",
+      "CURIOUS_FOLLOWUP",
+      "WAIT_WITHOUT_PRESSURE",
+      "PLAYFUL_SURPRISE",
+      "ACKNOWLEDGE_EFFORT",
+      "ASK_FOR_EXAMPLE",
+      "RETURN_INITIATIVE",
+      "COMPLETE_WITHOUT_OVERPRAISE"
+    ],
+    "invariants": [
+      "DOES_NOT_SELECT_ASSET_PATHS",
+      "DOES_NOT_MUTATE_RELATION_OR_AFFINITY",
+      "DOES_NOT_GENERATE_DIALOGUE_FINAL_ANSWER",
+      "DOES_NOT_ADD_PARALLEL_BEHAVIOR_ENGINE"
+    ]
   }
 }
