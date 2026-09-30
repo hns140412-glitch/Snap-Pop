@@ -198,9 +198,27 @@
     return { ok:Object.values(checks).every(Boolean), checks };
   }
 
+  async function syncFamilyCharacterProfile() {
+    const memberId = context.child_id || null;
+    const adapter = window.SnapFamilyCharacterProfileAdapterV1;
+    if (!memberId || !adapter) return { state:'NO_BINDING' };
+    try {
+      const resolved = await adapter.resolve(memberId);
+      const p = resolved?.projection;
+      if (!p) return { state:'NO_PROFILE' };
+      try { await set('familyCharacterProfile', p); } catch {}
+      window.SnapFamilyCharacterProfile = Object.freeze({ ...p });
+      try { window.dispatchEvent(new CustomEvent('taky-family-character-profile', { detail:{ ...p } })); } catch {}
+      return { state:'BOUND', source:resolved.source, character_id:p.character_id };
+    } catch (error) {
+      return { state:'FAILED', error:String(error?.message || error) };
+    }
+  }
+
   function boot() {
     document.documentElement.dataset.snapBridge = BRIDGE_VERSION;
     bootContext();
+    void syncFamilyCharacterProfile();
     injectStyles();
     ensureBaseCampChip();
     ensureWordChip();
@@ -212,6 +230,7 @@
       context: () => ({ ...context }),
       emit,
       returnToBase,
+      syncFamilyCharacterProfile,
       validate
     });
   }
