@@ -30,6 +30,8 @@ jobs:
         run: node onboarding/tests/crew-behavior-runtime.cjs
       - name: Verify Behavior / Asset / Integration gates and composable Manifest bridge
         run: node onboarding/tests/crew-engine-pipeline.cjs
+      - name: Verify reaction budget, interruptibility, repetition guard, dialogue intent and scene slots
+        run: node onboarding/tests/crew-runtime-policy.cjs
       - name: Verify composable 7-group readiness and emit fail-closed report
         run: |
           node onboarding/tests/crew-composable-readiness.cjs
