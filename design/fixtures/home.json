@@ -1,0 +1,24 @@
+{
+  "schema": "TAKY_STATE_FIXTURE_V1",
+  "screen_id": "home",
+  "synthetic": true,
+  "states": {
+    "BASE_REVIEW": {
+      "selected_landmark": null,
+      "progress": 0
+    },
+    "LANDMARK_SELECTED": {
+      "selected_landmark": "SYNTHETIC_LANDMARK",
+      "progress": 1
+    },
+    "EMPTY_PROGRESS": {
+      "selected_landmark": null,
+      "progress": 0,
+      "gems": 0
+    },
+    "OFFLINE": {
+      "selected_landmark": null,
+      "offline": true
+    }
+  }
+}
