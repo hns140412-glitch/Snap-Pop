@@ -18,6 +18,15 @@
       if(ids.has(item.badge_id)||slots.has(item.asset_slot_id)) throw new Error("BADGE_CATALOG_UI_IDENTITY_DUPLICATE");
       ids.add(item.badge_id); slots.add(item.asset_slot_id);
     }
+    if(!window.SnapPopBadgeArtPack)throw new Error("BADGE_ART_PACK_RUNTIME_MISSING");
+    const art=await window.SnapPopBadgeArtPack.load();
+    if(!art?.ok||art.count!==60)throw new Error("BADGE_ART_PACK_NOT_READY");
+    raw.items=raw.items.map(item=>({
+      ...item,
+      asset_runtime_url:window.SnapPopBadgeArtPack.resolve(item.asset_slot_id),
+      art_available:!!window.SnapPopBadgeArtPack.resolve(item.asset_slot_id)
+    }));
+    if(raw.items.some(item=>!item.asset_runtime_url))throw new Error("BADGE_ART_RUNTIME_URL_MISSING");
     viewModel=Object.freeze(raw);
     return viewModel;
   }
