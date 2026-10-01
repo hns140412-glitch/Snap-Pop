@@ -1,6 +1,6 @@
 {
   "schema": "SNAP_POP_BADGE_CATALOG_UI_CURRENT_V2_NATURE",
-  "version": "2026-10-02.2",
+  "version": "2026-10-02.3",
   "total": 60,
   "counts_by_category": {
     "POCKET": 20,
@@ -24,14 +24,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_001.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_001.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "SELF_DIRECTED",
       "nature_label_ko": "스스로",
       "nature_tags": [
         "EARLY_START",
         "SELF_START"
-      ]
+      ],
+      "source_art_sha256": "e32639182a688ef2a6dfc070ec86e7c75e6f25d2da34e3926016125e8618367f",
+      "runtime_sha256": "38a56509518ab8c3e82fd6dd89a5f37fe9a318139418302f30f670c224dec711"
     },
     {
       "slot": 2,
@@ -48,14 +50,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_002.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_002.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "SELF_DIRECTED",
       "nature_label_ko": "스스로",
       "nature_tags": [
         "ALARM_RESPONSE",
         "SELF_START"
-      ]
+      ],
+      "source_art_sha256": "49b8b70d941cdadfb3bf4f01c2117ccd2aa517454b3da1dbe0333cc3c20015ce",
+      "runtime_sha256": "ebeeedc9138d553c437a1ec6afd8c934afaf0f30290cd715ef17958386479ebb"
     },
     {
       "slot": 3,
@@ -72,13 +76,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_003.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_003.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "SELF_DIRECTED",
       "nature_label_ko": "스스로",
       "nature_tags": [
         "MICRO_START"
-      ]
+      ],
+      "source_art_sha256": "164fc2fdd1235b79a83cd0272c1ae955a7c5f500ada5c651aeb0a0b8626eb3d4",
+      "runtime_sha256": "50bc69bdccb0c640d0ec75da77defbe021f33ed8f0f17780c4ed43a740e08900"
     },
     {
       "slot": 4,
@@ -95,13 +101,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_004.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_004.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "RECOVERY_RESILIENCE",
       "nature_label_ko": "복귀·재도전",
       "nature_tags": [
         "RESTART_AFTER_BREAK"
-      ]
+      ],
+      "source_art_sha256": "7c922643925dc0ba6880a37c29e1629b704a2d8147d88badd8728ae6374fbcf3",
+      "runtime_sha256": "41f867301ba3a7f15c0c223891754ffd1032b1aad13589fa4b429f361a26ab8b"
     },
     {
       "slot": 5,
@@ -118,13 +126,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_005.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_005.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "GOAL_ACHIEVEMENT",
       "nature_label_ko": "목표도달",
       "nature_tags": [
         "PREPARATION_COMPLETE"
-      ]
+      ],
+      "source_art_sha256": "6b16d35170f3673af85c0ebd0a25ebc8178c391102631ff7d917cd0048aaca39",
+      "runtime_sha256": "ac86fa7fc3f5153520f4dd0baf18fe6156647207cf9808543e5ebbf1a2a39242"
     },
     {
       "slot": 6,
@@ -141,14 +151,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_006.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_006.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PLANNING_SELF_REGULATION",
       "nature_label_ko": "계획·조절",
       "nature_tags": [
         "TIME_CREATION",
         "SELF_START"
-      ]
+      ],
+      "source_art_sha256": "3937f2c3dc68bf992ec4ee085707c49c4ee635d1c195870c3eeb0e5b89219c77",
+      "runtime_sha256": "a1820fa5313369255ab8303c1f8517e20af3ffc6d5ef5e02819ca436601ddac3"
     },
     {
       "slot": 7,
@@ -165,14 +177,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_007.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_007.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PLANNING_SELF_REGULATION",
       "nature_label_ko": "계획·조절",
       "nature_tags": [
         "TIME_CREATION",
         "EXTRA_TASK"
-      ]
+      ],
+      "source_art_sha256": "a6224bbbbfa6027262141f4c22a83a94115f7eee27994dca128713a70d8f4fc2",
+      "runtime_sha256": "c0f3a844b85c7fbb7b031b03b291f841781bf7b63e45f5de60a6cc040ff16e2a"
     },
     {
       "slot": 8,
@@ -189,14 +203,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_008.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_008.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "EXTRA_GROWTH",
       "nature_label_ko": "추가도전·성장",
       "nature_tags": [
         "EXTRA_TASK",
         "SELF_CHOICE"
-      ]
+      ],
+      "source_art_sha256": "4185ae7a6110be42a5ddad7982031def56e47ade5a708242a58411c5eb4ca58c",
+      "runtime_sha256": "78fde23e8a2bb380b25677de2627d7471779962670402ac72f0b91a95d00fed1"
     },
     {
       "slot": 9,
@@ -213,14 +229,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_009.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_009.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "SELF_DIRECTED",
       "nature_label_ko": "스스로",
       "nature_tags": [
         "SELF_START",
         "BEFORE_PROMPT"
-      ]
+      ],
+      "source_art_sha256": "a88db4027a5047076803e4f7f374af384211b7754c314d3c354f83388e58b294",
+      "runtime_sha256": "f1e5a1a9328efe83ae4660a032dd5961eea9e9b7981d266b887a6c9f2d324c9a"
     },
     {
       "slot": 10,
@@ -237,13 +255,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_010.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_010.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "SELF_DIRECTED",
       "nature_label_ko": "스스로",
       "nature_tags": [
         "RESPONSIVE_START"
-      ]
+      ],
+      "source_art_sha256": "46237f3e2231417826d2caab64e7637f47b23c89c1c8826fac7a55937e0c281f",
+      "runtime_sha256": "f3c1f2a37238f989e351d30ff9267756f27360ecb920fc9ec23d29fa30e70da2"
     },
     {
       "slot": 11,
@@ -260,13 +280,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_011.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_011.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "SELF_DIRECTED",
       "nature_label_ko": "스스로",
       "nature_tags": [
         "SELF_CHOICE"
-      ]
+      ],
+      "source_art_sha256": "a999a51459117a62dde4b60db657bdaf3be450e486da9da40e1a3f6855d0609e",
+      "runtime_sha256": "828ce06cb4e6a7ea4b5864a387a27338396b4c61872210a88e0cba13723f28b2"
     },
     {
       "slot": 12,
@@ -283,14 +305,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_012.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_012.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PLANNING_SELF_REGULATION",
       "nature_label_ko": "계획·조절",
       "nature_tags": [
         "SELF_PLANNING",
         "SEQUENCE"
-      ]
+      ],
+      "source_art_sha256": "1c70a22cf912378aa0cae498714a628e7dd135b77b7c3995c88d7d4f3435db5b",
+      "runtime_sha256": "979f009a56601529592c94ebb05e478399777fe41e3edd9f0206cd1c7f1705a2"
     },
     {
       "slot": 13,
@@ -307,13 +331,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_013.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_013.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "FOCUS_IMMERSION",
       "nature_label_ko": "집중·몰입",
       "nature_tags": [
         "SINGLE_TASK_FOCUS"
-      ]
+      ],
+      "source_art_sha256": "8e2ecf0a5a2bf70a8f8d707b4ac2aba78a13a118e7d6e3d6e9669ce908c58837",
+      "runtime_sha256": "474eed1496dfea35106cff42c75df1ac0edf1a57a3fd75678fa58dd2c71547ba"
     },
     {
       "slot": 14,
@@ -330,14 +356,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_014.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_014.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "GOAL_ACHIEVEMENT",
       "nature_label_ko": "목표도달",
       "nature_tags": [
         "FAST_COMPLETE",
         "CHECK"
-      ]
+      ],
+      "source_art_sha256": "8d2ba7d3564428eabbd58c01e56dea5f605d474b3137d284092235ed6fdc54b2",
+      "runtime_sha256": "70828a8ba809fcc7aeb68a44e805d229764a3db77afcd5740981f7ba1d8660ba"
     },
     {
       "slot": 15,
@@ -354,14 +382,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_015.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_015.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "GOAL_ACHIEVEMENT",
       "nature_label_ko": "목표도달",
       "nature_tags": [
         "ACCURACY",
         "COMPLETE"
-      ]
+      ],
+      "source_art_sha256": "7d39074955a326af33d0ef1d4f66413505d057eb2b796be449f60280ee187acf",
+      "runtime_sha256": "5148616551104ddf02c72e2c6bb219b0bfec96f5be58f5c884c41c059ee259a7"
     },
     {
       "slot": 16,
@@ -378,14 +408,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_016.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_016.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "GOAL_ACHIEVEMENT",
       "nature_label_ko": "목표도달",
       "nature_tags": [
         "CHUNKING",
         "COMPLETE"
-      ]
+      ],
+      "source_art_sha256": "cbe7b7d8f7dac44764fed3657804ebbf8115095f486ad1d5a0262539d7f0d777",
+      "runtime_sha256": "72acd38c42de28f173d7798fd12dd2680662022bb7402228fc59808062d2dfce"
     },
     {
       "slot": 17,
@@ -402,13 +434,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_017.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_017.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "GOAL_ACHIEVEMENT",
       "nature_label_ko": "목표도달",
       "nature_tags": [
         "PERSIST_TO_COMPLETE"
-      ]
+      ],
+      "source_art_sha256": "cef2a11139384390ebacf7217050bf74812da993b4c50b1de5ec602673e94e6f",
+      "runtime_sha256": "96427f5f0620f455e10cd347533115fe70eaff7fc2e0be92fb2b4dc034ebe034"
     },
     {
       "slot": 18,
@@ -425,13 +459,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_018.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_018.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "FOCUS_IMMERSION",
       "nature_label_ko": "집중·몰입",
       "nature_tags": [
         "LONG_FOCUS"
-      ]
+      ],
+      "source_art_sha256": "f26a3dcb81270405593ae1f7f7cc10a78fe40b81ecdf9cbcf56e293e25f3e424",
+      "runtime_sha256": "cc1e9af1d49c69a38259d7d8b0c005667487c5471afad3eda4f500b5420a59c4"
     },
     {
       "slot": 19,
@@ -448,13 +484,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_019.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_019.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "FOCUS_IMMERSION",
       "nature_label_ko": "집중·몰입",
       "nature_tags": [
         "QUIET_IMMERSION"
-      ]
+      ],
+      "source_art_sha256": "ad54827b7fe2d9295c8d88a26aa1de0d79dc0713837c5c2a82c12f2c1ba0d310",
+      "runtime_sha256": "a5202b36e6f9927e231a96e4c51020688c043a859c996ae40ed9e302c8c0f0db"
     },
     {
       "slot": 20,
@@ -471,13 +509,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_020.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_020.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "FOCUS_IMMERSION",
       "nature_label_ko": "집중·몰입",
       "nature_tags": [
         "FLOW_CONTINUATION"
-      ]
+      ],
+      "source_art_sha256": "ee09dc19ae75b421d1797ed55533825ed98db393e64fb5d38a202b7bc1e6b5e5",
+      "runtime_sha256": "941e2e77de1800497600613ce86e04f28aa196b101c719a4f4f5a51ff7916c3f"
     },
     {
       "slot": 21,
@@ -494,13 +534,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_021.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_021.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "RECOVERY_RESILIENCE",
       "nature_label_ko": "복귀·재도전",
       "nature_tags": [
         "SELF_RETURN"
-      ]
+      ],
+      "source_art_sha256": "b8851bd974487e8eb3982af3933da6a2debc8f4a7d7983c35dc31ffa775e6ac7",
+      "runtime_sha256": "555cc8d74dd8cb40a90c1f301ca64384b07f89d82f5313d9a75ed5198f926603"
     },
     {
       "slot": 22,
@@ -517,13 +559,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_022.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_022.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "RECOVERY_RESILIENCE",
       "nature_label_ko": "복귀·재도전",
       "nature_tags": [
         "FOCUS_RETURN"
-      ]
+      ],
+      "source_art_sha256": "a4954bd5f99a35cea940d294f77a1f6fe6220ea55821ea878fd3bac37b0301a7",
+      "runtime_sha256": "5667c96d6fcd12fd3b2890327571fdfc3922dbee828ffbe51ec3c61979deabc3"
     },
     {
       "slot": 23,
@@ -540,13 +584,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_023.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_023.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "RECOVERY_RESILIENCE",
       "nature_label_ko": "복귀·재도전",
       "nature_tags": [
         "SELF_NOTICE_RETURN"
-      ]
+      ],
+      "source_art_sha256": "6e2aff1d90afe1883c645bd73d31748dbddce854a77d0ef8181f2351814c2df5",
+      "runtime_sha256": "a6d9974759b6fca83d870e12ee7e440391a5ff0dc2ae6073ef646160f968ef30"
     },
     {
       "slot": 24,
@@ -563,14 +609,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_024.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_024.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PROBLEM_SOLVING",
       "nature_label_ko": "문제해결",
       "nature_tags": [
         "HELP_USE",
         "RECOVERY"
-      ]
+      ],
+      "source_art_sha256": "2aa4e68f548d90662eaaf6a0f24b8d6b4eec495d047a2acdc4bda135078c092b",
+      "runtime_sha256": "eb3d2d771e53d927f190384c011c3082cd42cdf43751f2d3dbb409c9f999eba2"
     },
     {
       "slot": 25,
@@ -587,13 +635,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_025.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_025.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PROBLEM_SOLVING",
       "nature_label_ko": "문제해결",
       "nature_tags": [
         "HELP_REQUEST"
-      ]
+      ],
+      "source_art_sha256": "41477aec3282d2a091dfb49faee758f5e5a8622c9134d33f5dfaa299d208247d",
+      "runtime_sha256": "128cb80c773972815ab14018fe40b121041b9f9d5cc923ca9eb354ef8cc8c566"
     },
     {
       "slot": 26,
@@ -610,13 +660,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_026.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_026.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "ERROR_LEARNING",
       "nature_label_ko": "실수·교정",
       "nature_tags": [
         "ERROR_DISCOVERY"
-      ]
+      ],
+      "source_art_sha256": "1da984ba52e837e5a439cef9827f7af9a3d2b09e76f75fd6aa08acc85bb63713",
+      "runtime_sha256": "e98d3505a94ac11a0f5dca48abff3c6314be3c612c8e7283f6a006ad2c9a5c43"
     },
     {
       "slot": 27,
@@ -633,13 +685,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_027.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_027.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "ERROR_LEARNING",
       "nature_label_ko": "실수·교정",
       "nature_tags": [
         "ERROR_REVIEW"
-      ]
+      ],
+      "source_art_sha256": "a035766c8f21895b9366ef01471d47925baf8db49efd65469911c4bed3ac86a6",
+      "runtime_sha256": "ca7b649319645c4083fa0ee85723624fe3080f806f6dfa5705a8882bec7dd2ed"
     },
     {
       "slot": 28,
@@ -656,14 +710,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_028.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_028.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "ERROR_LEARNING",
       "nature_label_ko": "실수·교정",
       "nature_tags": [
         "ERROR_CORRECTION",
         "COMPLETE"
-      ]
+      ],
+      "source_art_sha256": "a5a43d3b46487052813dbfb585103f6f88c6cedd0bc49977be7698d183f5d7f8",
+      "runtime_sha256": "691f4c3cccd2544db0a23d423af10f581a5cb8d70f0d4886f0fe415acc157065"
     },
     {
       "slot": 29,
@@ -680,13 +736,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_029.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_029.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "RECOVERY_RESILIENCE",
       "nature_label_ko": "복귀·재도전",
       "nature_tags": [
         "RETRY"
-      ]
+      ],
+      "source_art_sha256": "2a268388d1f35f3adee3e97a2150eca0350073d2f66189d1649c25b8307a9329",
+      "runtime_sha256": "cf234edd4f4c7f9d6aefc038bbcca4968f92cecd766763316a37ae53b549cb0d"
     },
     {
       "slot": 30,
@@ -703,13 +761,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_030.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_030.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "ERROR_LEARNING",
       "nature_label_ko": "실수·교정",
       "nature_tags": [
         "ROOT_CAUSE"
-      ]
+      ],
+      "source_art_sha256": "759f690cf15bf617ac677d9b2ab6bfde1130ac1a3af88f84c0e19760ed85b2f5",
+      "runtime_sha256": "95ef4edc8db0ca7e68354ce3712c8205455ac9dacf8f47377fd823e752bd654c"
     },
     {
       "slot": 31,
@@ -726,14 +786,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_031.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_031.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PROBLEM_SOLVING",
       "nature_label_ko": "문제해결",
       "nature_tags": [
         "BREAKTHROUGH",
         "PERSISTENCE"
-      ]
+      ],
+      "source_art_sha256": "15717f7bb9e7fcd18d669ba9dfde8d2e16385bf3152084d7287a7e756a15b9a6",
+      "runtime_sha256": "2858289bd120aff2b6b053302540b34303c7e0e6e7de18404c80c7c3068c6993"
     },
     {
       "slot": 32,
@@ -750,13 +812,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_032.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_032.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "EXTRA_GROWTH",
       "nature_label_ko": "추가도전·성장",
       "nature_tags": [
         "CONCEPT_UNDERSTANDING"
-      ]
+      ],
+      "source_art_sha256": "0e34063b186fe764550a861c18c30731eef28cc31c0388fcbb59c8bf3b3ef1cc",
+      "runtime_sha256": "216fb2352aa13f63ecd996bb9ac7fc8299b430d6a90da1bf8aade1c98c34f26e"
     },
     {
       "slot": 33,
@@ -773,14 +837,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_033.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_033.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "ERROR_LEARNING",
       "nature_label_ko": "실수·교정",
       "nature_tags": [
         "REFLECTION",
         "SLOW_DOWN"
-      ]
+      ],
+      "source_art_sha256": "c9e741b5d2c69c77f0be59a89a1075e0db45f254c4aef7ff120c46963b8e4e95",
+      "runtime_sha256": "1559294cd5690de320bff207a04f1692feafb2aa2eb542a0968280df0d83c5b8"
     },
     {
       "slot": 34,
@@ -797,13 +863,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_034.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_034.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "ERROR_LEARNING",
       "nature_label_ko": "실수·교정",
       "nature_tags": [
         "REREAD_CHECK"
-      ]
+      ],
+      "source_art_sha256": "a7bc1bd4f2a1c8dfe43211bd1274c21543f7b8367fffeeae4d962600f79ddb03",
+      "runtime_sha256": "6656dd3093eed602dc98be4b460d5fd816c2df048eb82fb88edd2a04b46688dc"
     },
     {
       "slot": 35,
@@ -820,13 +888,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_035.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_035.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "ERROR_LEARNING",
       "nature_label_ko": "실수·교정",
       "nature_tags": [
         "CALCULATION_CHECK"
-      ]
+      ],
+      "source_art_sha256": "698fe9307c1be2484a45a6d94323fcf67acce06b4552ad7b2c33ae2153628b8d",
+      "runtime_sha256": "1e2741e36ad66e6fef44c31034c8c7a12141fdee87620b9a41ddbcfd6f3f46ae"
     },
     {
       "slot": 36,
@@ -843,13 +913,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_036.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_036.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "ERROR_LEARNING",
       "nature_label_ko": "실수·교정",
       "nature_tags": [
         "CORRECTION_COURAGE"
-      ]
+      ],
+      "source_art_sha256": "5bc92f42963a68f01a46e564d520316ace014ca7309c5006d67aafa1dc453a6c",
+      "runtime_sha256": "6d816519d38fcfdec35a222ebb3c27776cf28c38d47a1ae5053dd460b5646685"
     },
     {
       "slot": 37,
@@ -866,13 +938,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_037.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_037.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "FOCUS_IMMERSION",
       "nature_label_ko": "집중·몰입",
       "nature_tags": [
         "DEEP_THINKING"
-      ]
+      ],
+      "source_art_sha256": "a03acfabf264bede4b698270f6de51913ad28b91006edb51c5b3e43df71fe2b2",
+      "runtime_sha256": "dba1c5c34964f14beb6787c21d43ffa796f761f8cbb24fc9acfbc236a8fc6692"
     },
     {
       "slot": 38,
@@ -889,14 +963,16 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_038.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_038.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "FOCUS_IMMERSION",
       "nature_label_ko": "집중·몰입",
       "nature_tags": [
         "DEEP_THINKING",
         "PERSISTENCE"
-      ]
+      ],
+      "source_art_sha256": "a3ae3995861afd4a4f2f428db6163edf80aeedb8a375dd6be7f4e7f7f0c6bfe0",
+      "runtime_sha256": "b398d00fb925ad2dab2bfbf44d37e775dc7c02c18c57d5a34fe79feb636eea2e"
     },
     {
       "slot": 39,
@@ -913,13 +989,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_039.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_039.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PROBLEM_SOLVING",
       "nature_label_ko": "문제해결",
       "nature_tags": [
         "BREAKTHROUGH"
-      ]
+      ],
+      "source_art_sha256": "f3c5a48f9bb011bcefe9cb87df9f30b836f09f65b622d2a977e7913b83b59b19",
+      "runtime_sha256": "f4c0925c7b516cdefb9406bf363714fa633f8767831c16eb093208894413bb59"
     },
     {
       "slot": 40,
@@ -936,13 +1014,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_040.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_040.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PLANNING_SELF_REGULATION",
       "nature_label_ko": "계획·조절",
       "nature_tags": [
         "STOP_AT_RIGHT_TIME"
-      ]
+      ],
+      "source_art_sha256": "3e8b11a2fe87906e60fd87d78ca47e368ea139237699929f8bc5541689f889bb",
+      "runtime_sha256": "6c5c86f47078a577ce28ab23dd1df6d03f6bf9d73ce5dc249148f440f5400d7a"
     },
     {
       "slot": 41,
@@ -959,13 +1039,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_041.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_041.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "FOCUS_IMMERSION",
       "nature_label_ko": "집중·몰입",
       "nature_tags": [
         "MEANINGFUL_OVERRUN"
-      ]
+      ],
+      "source_art_sha256": "443c013710ded632377fec96c474821b4113c102ff933d8a79ef91e9dc4156e3",
+      "runtime_sha256": "fbec031029234009db344b1353b57b2745abd8cb21f6ff9a8929f30e2c07e967"
     },
     {
       "slot": 42,
@@ -982,13 +1064,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_042.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_042.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "FOCUS_IMMERSION",
       "nature_label_ko": "집중·몰입",
       "nature_tags": [
         "FLOW_IMMERSION"
-      ]
+      ],
+      "source_art_sha256": "f542f0ff3ac8ed850ff38a3294516b9d795ba6acb0108eaa5a30909b0ea389b1",
+      "runtime_sha256": "a93c3ab87f5d855aec92c67d550e3c4197411cf27e66a77a914dfc528f0fb4d2"
     },
     {
       "slot": 43,
@@ -1005,13 +1089,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_043.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_043.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "RECOVERY_RESILIENCE",
       "nature_label_ko": "복귀·재도전",
       "nature_tags": [
         "BREAK_RETURN"
-      ]
+      ],
+      "source_art_sha256": "45a5fd013e4912dad0211aa75a51d0f3ba001c00092b7043e88524f60f347004",
+      "runtime_sha256": "7fb9bc652f6a620b1b4407aad0cf36322cb6d0eae1dccf0c0594df6f271bfd2e"
     },
     {
       "slot": 44,
@@ -1028,13 +1114,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_044.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_044.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "RECOVERY_RESILIENCE",
       "nature_label_ko": "복귀·재도전",
       "nature_tags": [
         "TIMER_RETURN"
-      ]
+      ],
+      "source_art_sha256": "4ac5f9bc77b6b32df3cdace36528e7bf44e4261ea1ef2c5162f0ddd043b029d1",
+      "runtime_sha256": "47d721ae716d678e19ff47fd203c5931595b87d388c8878881e9e626ede74dfa"
     },
     {
       "slot": 45,
@@ -1051,13 +1139,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_045.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_045.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PLANNING_SELF_REGULATION",
       "nature_label_ko": "계획·조절",
       "nature_tags": [
         "DISTRACTION_RESISTANCE"
-      ]
+      ],
+      "source_art_sha256": "d0c2f7db00545302db4711bbdd4b9fe288180ce9d745aeb447f8dbfa45e9596c",
+      "runtime_sha256": "90b674cce3340b71e92dcb8fd475b4fe8a418819acfe3f4282bfe72b9ce36799"
     },
     {
       "slot": 46,
@@ -1074,13 +1164,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_046.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_046.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "RECOVERY_RESILIENCE",
       "nature_label_ko": "복귀·재도전",
       "nature_tags": [
         "TASK_RESTART"
-      ]
+      ],
+      "source_art_sha256": "363f0dad27c9e3a1098ecaa26139967737c5ffd57750cf6c42e54bb79f0a5a0b",
+      "runtime_sha256": "c1bc9119eeec0d8c823638974eb80c05a45160069b2a7321932bb51989c946d1"
     },
     {
       "slot": 47,
@@ -1097,13 +1189,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_047.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_047.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "GOAL_ACHIEVEMENT",
       "nature_label_ko": "목표도달",
       "nature_tags": [
         "CARRY_OVER_COMPLETE"
-      ]
+      ],
+      "source_art_sha256": "d6f07d913fac2b8c6abb7efc038db54d629a198bf87ef362f7507046c21ee56b",
+      "runtime_sha256": "81349e35d6199751ff53b39ae7dcb0b7503bcfc07dbf60b7f71acc3e08673d6f"
     },
     {
       "slot": 48,
@@ -1120,13 +1214,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_048.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_048.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "GOAL_ACHIEVEMENT",
       "nature_label_ko": "목표도달",
       "nature_tags": [
         "SELF_CHECK_COMPLETE"
-      ]
+      ],
+      "source_art_sha256": "535af848bf5db3a9c0c59aeb18a90594b67b7acc411d09e093806f79f344b4df",
+      "runtime_sha256": "0897916130c667d2ccfd3f49b63e9f963f844cd06a68dffc3f168195b04e2ee2"
     },
     {
       "slot": 49,
@@ -1143,13 +1239,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_049.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_049.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "GOAL_ACHIEVEMENT",
       "nature_label_ko": "목표도달",
       "nature_tags": [
         "MICRO_TASK_COMPLETE"
-      ]
+      ],
+      "source_art_sha256": "9850f9b8bd008ea164aa7970d73c57e926c961f92689db86fe3b20ef450b41f9",
+      "runtime_sha256": "486a218646e1432461ee9d9d170220e1676b3410a29a094427de5900b4605a55"
     },
     {
       "slot": 50,
@@ -1166,13 +1264,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_050.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_050.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PLANNING_SELF_REGULATION",
       "nature_label_ko": "계획·조절",
       "nature_tags": [
         "PRIORITIZE_HARD"
-      ]
+      ],
+      "source_art_sha256": "766c450a2ebc4778a0b5f2951a382c69df2e7461e22ef8f6567a975711bcad8f",
+      "runtime_sha256": "f4fc2871c476c175128daf3268bca06e0cf43c95320377465b79b50f8adb7ddf"
     },
     {
       "slot": 51,
@@ -1189,13 +1289,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_051.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_051.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PLANNING_SELF_REGULATION",
       "nature_label_ko": "계획·조절",
       "nature_tags": [
         "WARM_START"
-      ]
+      ],
+      "source_art_sha256": "850cfa14b5776bc1a9d7f3cb8204eec12f270d68d2296dde3fcf985271c69b85",
+      "runtime_sha256": "93d41655a2d05fca8ff3a7d699404aa7d812cad161d52773c0e21ad3f9fd9089"
     },
     {
       "slot": 52,
@@ -1212,13 +1314,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_052.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_052.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PROBLEM_SOLVING",
       "nature_label_ko": "문제해결",
       "nature_tags": [
         "STRATEGY_SWITCH"
-      ]
+      ],
+      "source_art_sha256": "6f539fd2f23dbd1654811b6f226aac37546de154e7af64de7c251a9f61dac262",
+      "runtime_sha256": "a5b37787696027d99504adaf0510b38a4e38a289c8d3b304c3ebce2f3fcaa26e"
     },
     {
       "slot": 53,
@@ -1235,13 +1339,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_053.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_053.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "EXTRA_GROWTH",
       "nature_label_ko": "추가도전·성장",
       "nature_tags": [
         "SELF_EXPLANATION"
-      ]
+      ],
+      "source_art_sha256": "18fa74f753c520018d1acd25f143ab42ce8f96c4a8763bfece0b4473b07d739d",
+      "runtime_sha256": "6eef082287f59399f2578b4497266422c8c65c9069a72622d309cfa87fa31394"
     },
     {
       "slot": 54,
@@ -1258,13 +1364,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_054.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_054.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "EXTRA_GROWTH",
       "nature_label_ko": "추가도전·성장",
       "nature_tags": [
         "IMPROVEMENT"
-      ]
+      ],
+      "source_art_sha256": "3ba5759d8981f4642fe2b3b7c610f9af54af231c7b049016af1623d99603124f",
+      "runtime_sha256": "0eefefb4fce433243700c742eb49cd6a471bee860b64c0bc53c167b81cc3c457"
     },
     {
       "slot": 55,
@@ -1281,13 +1389,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_055.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_055.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "EXTRA_GROWTH",
       "nature_label_ko": "추가도전·성장",
       "nature_tags": [
         "VOLUNTARY_EXTRA"
-      ]
+      ],
+      "source_art_sha256": "834aaa7a4938646ac2dc8b4dd7c3fa37a5764f9b583990afbfd3d7057c54d6e1",
+      "runtime_sha256": "9ed351c336284ebb9c92a6c9433fbf31ba4051f59d7bb21b6dc3b12e9a33267c"
     },
     {
       "slot": 56,
@@ -1304,13 +1414,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_056.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_056.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PLANNING_SELF_REGULATION",
       "nature_label_ko": "계획·조절",
       "nature_tags": [
         "PLAN_ADAPTATION"
-      ]
+      ],
+      "source_art_sha256": "8ad0d5d101dd829262c22f0dfdb8ba88abe679fd2b3785efe4229a169e02f48c",
+      "runtime_sha256": "82dc4ddf55495b6b31f1f0063f329ac53203bfcc412d8811f7919ed8bfff7558"
     },
     {
       "slot": 57,
@@ -1327,13 +1439,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_057.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_057.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "RECOVERY_RESILIENCE",
       "nature_label_ko": "복귀·재도전",
       "nature_tags": [
         "START_DESPITE_CONDITION"
-      ]
+      ],
+      "source_art_sha256": "774b8c07f59c14d46d8d002ed1c37da3f8db9128e0e245ed203a30f5a458f366",
+      "runtime_sha256": "39ded3e7d4cbc7ea262174eca2bdcdfe4af41bfe761006511dc6850a70bb0c36"
     },
     {
       "slot": 58,
@@ -1350,13 +1464,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_058.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_058.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "RECOVERY_RESILIENCE",
       "nature_label_ko": "복귀·재도전",
       "nature_tags": [
         "REST_AND_RETURN"
-      ]
+      ],
+      "source_art_sha256": "31bc4c3e624a65f29a179434ecfec8d9f79577fde23dd6b3624825d4856e54ee",
+      "runtime_sha256": "33f3cbe74dc821c96e874d05fdb1eba4a9fbf41c258c78cc68b36cf68a8160cd"
     },
     {
       "slot": 59,
@@ -1373,13 +1489,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_059.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_059.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "PROBLEM_SOLVING",
       "nature_label_ko": "문제해결",
       "nature_tags": [
         "MINIMAL_HINT_SOLVE"
-      ]
+      ],
+      "source_art_sha256": "3570686fdd79abb8e6c361c3ef804fe75d2961a4066707c1fbc46826c7f57b42",
+      "runtime_sha256": "0e93e9320c2dafc1f1e809c26ce2e9b0a5f457bfe35f78a0f0b868bf96efabfb"
     },
     {
       "slot": 60,
@@ -1396,13 +1514,15 @@
       "ownership_state_source": "BADGE_RUNTIME_LEDGER",
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
-      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_060.png",
+      "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_060.webp",
       "asset_delivery_state": "BINARY_SYNC_PENDING",
       "primary_nature": "EXTRA_GROWTH",
       "nature_label_ko": "추가도전·성장",
       "nature_tags": [
         "SPECIAL_BEHAVIOR"
-      ]
+      ],
+      "source_art_sha256": "1a518c9c4cc9dff9016d1b53a7ed184a26782930e5d3cbae55cae98b42e1d879",
+      "runtime_sha256": "43176e8ca5d968bdae5bf35b70cf19e5ba59798c4fb49bc9f448627282638b54"
     }
   ],
   "source_authority": {
@@ -1414,7 +1534,9 @@
     "repo_target": "hns140412-glitch/Snap-Pop",
     "root": "assets/badges/current",
     "state": "BINARY_SYNC_PENDING",
-    "rule": "UI resolves by stable asset_slot_id; later art replacement keeps the same repo path and changes bytes+SHA only"
+    "rule": "UI resolves by stable asset_slot_id; later art replacement keeps the same repo path and changes bytes+SHA only",
+    "profile": "512x512_WEBP_Q82",
+    "source_authority": "TAKY/BADGE/assets/TAKY_BADGE_RUNTIME_DERIVATIVE_CONTRACT_V1.json"
   },
   "nature_taxonomy": {
     "SELF_DIRECTED": {
