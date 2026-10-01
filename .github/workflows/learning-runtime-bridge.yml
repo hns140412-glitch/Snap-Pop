@@ -4,11 +4,16 @@ on:
   push:
     branches:
       - taky/current-learning-runtime-bridge-2026-09-26
+      - taky/snap-growth-engine-handoff-2026-10-02
   pull_request:
     paths:
       - 'ready-integration-v1.js'
       - 'hide-bridge.js'
       - 'snap-bridge.js'
+      - 'app.js'
+      - 'snap-ready-scope-guard-v01.js'
+      - 'tests/central-evidence.spec.js'
+      - 'tests/snap-ready-scope-guard.test.js'
       - 'scripts/validate-learning-runtime-bridge.mjs'
       - '.github/workflows/learning-runtime-bridge.yml'
 
