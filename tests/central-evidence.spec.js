@@ -29,6 +29,29 @@ test('Snap scoped outcome -> durable browser outbox -> exact central observation
    sessionProvider:async()=>({authenticated:true,family_id:'F',selected_member_id:'A'}),
    tokenProvider:async()=> 'fixture-bearer-token-1234567890',
    fetchImpl:async(url,opts)=>{
+    if(String(url).includes('/decision')){
+      window.__decisionRequest={url,body:JSON.parse(opts.body),credentials:opts.credentials};
+      return {status:200,json:async()=>({
+        ok:true,authenticated_server_response:true,
+        receipt_scope:{family_id:'F',member_id:'A'},
+        runtime_result:{growth_next_step:{
+          ok:true,version:'TAKY_GROWTH_NEXT_STEP_POLICY_V1',
+          authority:'LEARNING_ENGINE_GROWTH_INTENT_ONLY',
+          support_phase:'ELICIT_PULL',
+          question_depth:{level:3},
+          language_support:{
+            easy_english_definitions:['to put an idea into words'],
+            expression_chunks:['I think ... because ...'],
+            grammar_patterns:['I think + clause']
+          },
+          hide_to_snap_handoff:{
+            final_answer_generation_forbidden:true,
+            child_authorship_required:true
+          },
+          guards:{engine_guides_growth_not_answers:true}
+        }}
+      })};
+    }
     const packet=JSON.parse(opts.body);window.__central.push({url,packet,credentials:opts.credentials});
     return {status:200,json:async()=>({ok:true,storage_confirmed:true,
      acknowledgement_kind:'OBSERVATION_INGEST_RECEIPT',
@@ -46,7 +69,13 @@ test('Snap scoped outcome -> durable browser outbox -> exact central observation
  expect(event.payload).toMatchObject({member_id:'A',subject:'english',
   concept_skill_target:'writing',learning_target_id:'writing:1',
   contextual_evidence_only:true,global_mastery_claim:false});
+ await expect.poll(()=>page.evaluate(()=>SnapPopBridge.growthDecisionStatus().status)).toBe('READY');
  expect(await page.evaluate(()=>window.__central.length)).toBe(0);
+ const growth=await page.evaluate(()=>({prompt:SnapPopBridge.growthPrompt(1),request:window.__decisionRequest}));
+ expect(growth.request.credentials).toBe('omit');
+ expect(growth.request.body).toMatchObject({family_id:'F',member_id:'A',subject:'english',concept_skill_target:'writing'});
+ expect(growth.prompt.question).toContain('your own short idea');
+ expect(growth.prompt.hint).toContain('I think');
  const flushed=await page.evaluate(()=>SnapPopBridge.flushCentralEvidenceOnce('snap-browser-fixture'));
  expect(flushed).toMatchObject({processed:true,settled:true,status:'ACKED',
   reason:'CENTRAL_ACK_VALIDATED'});
@@ -80,4 +109,63 @@ test('Snap member mismatch cannot reach central HTTP',async({page})=>{
   .toBe('SPECIALIST_EVENT_MEMBER_SCOPE_MISMATCH');
  expect(await page.evaluate(()=>window.__calls)).toBe(0);
  await page.evaluate(()=>SnapPopBridge.closeCentralEvidence());
+});
+
+
+test('Hide -> Snap continuity re-resolves growth centrally instead of trusting URL policy',async({page})=>{
+ await page.addInitScript(()=>{globalThis.SnapPopTrustedReadyTargets=['https://ready.example.test/'];});
+ const p=new URLSearchParams({
+  session_id:'S-HIDE',task_id:'T-HIDE',lap_id:'L-HIDE',goal_id:'G-HIDE',
+  from_app:'hide-seek',return_target:READY,child_id:'A',subject:'english',
+  concept_skill_target:'vocabulary',learning_target_id:'word:accept',
+  word:'accept',word_context:'new context'
+ });
+ await page.goto(BASE+'?'+p.toString());
+ const result=await page.evaluate(async()=>{
+  window.__decisionCalls=[];
+  SnapPopBridge.configureCentralEvidence({
+    dbName:'snap-hide-growth-v1',
+    endpointUrl:'https://central.example.test/api/learning/evidence',
+    decisionEndpointUrl:'https://central.example.test/api/learning/decision',
+    sessionProvider:async()=>({authenticated:true,family_id:'F',selected_member_id:'A'}),
+    tokenProvider:async()=> 'fixture-bearer-token-1234567890',
+    fetchImpl:async(url,opts)=>{
+      if(!String(url).includes('/decision'))throw Error('NO_EVIDENCE_SEND_EXPECTED');
+      window.__decisionCalls.push({url,body:JSON.parse(opts.body),credentials:opts.credentials});
+      return {status:200,json:async()=>({
+        ok:true,authenticated_server_response:true,
+        receipt_scope:{family_id:'F',member_id:'A'},
+        runtime_result:{growth_next_step:{
+          ok:true,version:'TAKY_GROWTH_NEXT_STEP_POLICY_V1',
+          authority:'LEARNING_ENGINE_GROWTH_INTENT_ONLY',
+          support_phase:'TRANSFER_PUSH',
+          question_depth:{level:4},
+          language_support:{
+            easy_english_definitions:['to say yes to something or receive it'],
+            expression_chunks:['accept an idea'],
+            grammar_patterns:['accept + noun']
+          },
+          hide_to_snap_handoff:{final_answer_generation_forbidden:true,child_authorship_required:true},
+          guards:{engine_guides_growth_not_answers:true}
+        }}
+      })};
+    }
+  });
+  for(let i=0;i<50&&SnapPopBridge.growthDecisionStatus().status!=='READY';i++)
+    await new Promise(r=>setTimeout(r,10));
+  return {
+    handoff:SnapPopBridge.handoffStatus(),
+    context:SnapPopBridge.context(),
+    growth:SnapPopBridge.getLearningGrowthDecision(),
+    prompt:SnapPopBridge.growthPrompt(2),
+    calls:window.__decisionCalls
+  };
+ });
+ expect(result.handoff.ok).toBe(true);
+ expect(result.context.handoff_via_hide_seek).toBe(true);
+ expect(result.context.continuity_source_authoritative).toBe(false);
+ expect(result.calls).toHaveLength(1);
+ expect(result.growth.authority).toBe('LEARNING_ENGINE_GROWTH_INTENT_ONLY');
+ expect(result.prompt.question).toContain('new situation');
+ expect(result.prompt.hint).toContain('without translating every word');
 });
