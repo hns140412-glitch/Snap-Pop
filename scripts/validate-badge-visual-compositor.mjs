@@ -21,8 +21,9 @@ const a=visual.model({title:"탐험",theme:"A",tier:"BLUE",stars:3,identity});
 const b=visual.model({title:"탐험",theme:"B",tier:"GOLD",stars:5,identity});
 
 assert("five-tier-model",visual.tiers.join(",")==="GREEN,BLUE,RED,GOLD,PLATINUM");
-assert("stars-clamped-one-to-five",
-  visual.starSlots(0).filter(x=>x.active).length===1&&
+assert("reacquire-stars-clamped-zero-to-five",
+  visual.starSlots(0).filter(x=>x.active).length===0&&
+  visual.starSlots(3).filter(x=>x.active).length===3&&
   visual.starSlots(7).filter(x=>x.active).length===5
 );
 assert("identity-stable-across-theme",
