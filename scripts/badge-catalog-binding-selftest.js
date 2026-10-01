@@ -26,6 +26,10 @@ async function run(){
     assert("game-codex-progress-present",!!document.querySelector("#badgeCatalogProgressBar")&&!!document.querySelector("#badgeCatalogPercent"));
     assert("game-codex-category-progress-present",document.querySelectorAll(".badgeCategoryProgress [data-badge-category-progress]").length===4);
     assert("game-codex-sort-present",!!document.querySelector("#badgeCatalogSort"));
+    assert("nature-taxonomy-present",!!vm.nature_taxonomy&&Object.keys(vm.nature_taxonomy).length===8);
+    assert("nature-primary-complete",vm.items.every(x=>typeof x.primary_nature==="string"&&x.primary_nature.length>0));
+    assert("nature-filter-present",document.querySelectorAll("#badgeNatureFilters [data-badge-nature]").length===9);
+    assert("nature-sort-option-present",[...document.querySelectorAll("#badgeCatalogSort option")].some(x=>x.value==="NATURE"));
     assert("game-codex-detail-sheet-present",!!document.querySelector("#badgeDetailLayer")&&!!document.querySelector("#badgeDetailPrev")&&!!document.querySelector("#badgeDetailNext"));
     host.dataset.status="PASS";
   }catch(e){
