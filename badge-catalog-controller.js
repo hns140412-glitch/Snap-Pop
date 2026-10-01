@@ -4,7 +4,7 @@ let singleton=null;
 
 function create(deps){
   const q=deps.query, qa=deps.queryAll, store=window.SnapPopStorage, esc=window.SnapPopUIShell.escapeHtml;
-  let filter="ALL", category="ALL", nature="ALL", sort="NUMBER_ASC", cache=[], selectedId=null;
+  let filter="ALL", category="ALL", nature="ALL", viewMode="GRID", sort="NUMBER_ASC", cache=[], selectedId=null;
 
   function artMarkup(item,cls=""){
     const path=esc(item.asset_runtime_url||item.asset_repo_path||"");
@@ -35,6 +35,14 @@ function create(deps){
       PROBLEM_SOLVING:"문제해결",
       EXTRA_GROWTH:"추가도전·성장"
     })[id]||"기타";
+  }
+
+  function categoryLabel(id){
+    return ({POCKET:"POCKET",FIELD:"FIELD",EXPEDITION:"EXPEDITION",SECRET:"SECRET"})[id]||"기타";
+  }
+
+  function ownershipLabel(id){
+    return ({EARNED:"획득",IN_PROGRESS:"진행 중",UNEARNED:"미획득"})[id]||"기타";
   }
 
   function isRecent(item){
@@ -77,6 +85,7 @@ function create(deps){
       if(el)el.textContent=`${done}/${items.length}`;
     }
     if(q("#badgeCatalogSort"))q("#badgeCatalogSort").value=sort;
+    if(q("#badgeCatalogView"))q("#badgeCatalogView").value=viewMode;
   }
 
   function renderFilters(){
@@ -106,12 +115,33 @@ function create(deps){
     if(!host)return;
     if(!selected.length){
       host.innerHTML=`<div class="badgeCatalogEmpty">해당 조건의 배지가 아직 없어요.</div>`;
-    }else if(sort==="NATURE"&&nature==="ALL"){
-      const groups=[...new Set(selected.map(x=>x.primary_nature))];
+    }else if(viewMode==="NATURE"){
+      const order=["SELF_DIRECTED","GOAL_ACHIEVEMENT","FOCUS_IMMERSION","RECOVERY_RESILIENCE","ERROR_LEARNING","PLANNING_SELF_REGULATION","PROBLEM_SOLVING","EXTRA_GROWTH"];
+      const groups=order.filter(group=>selected.some(x=>x.primary_nature===group));
       host.innerHTML=groups.map(group=>{
         const items=selected.filter(x=>x.primary_nature===group);
         return `<section class="badgeNatureGroup">
           <header><b>${esc(natureLabel(group))}</b><span>${items.length}</span></header>
+          <div class="badgeNatureGroupGrid">${items.map(tileHtml).join("")}</div>
+        </section>`;
+      }).join("");
+    }else if(viewMode==="CATEGORY"){
+      const order=["POCKET","FIELD","EXPEDITION","SECRET"];
+      const groups=order.filter(group=>selected.some(x=>x.category===group));
+      host.innerHTML=groups.map(group=>{
+        const items=selected.filter(x=>x.category===group);
+        return `<section class="badgeNatureGroup badgeCategoryGroup">
+          <header><b>${esc(categoryLabel(group))}</b><span>${items.length}</span></header>
+          <div class="badgeNatureGroupGrid">${items.map(tileHtml).join("")}</div>
+        </section>`;
+      }).join("");
+    }else if(viewMode==="OWNERSHIP"){
+      const order=["EARNED","IN_PROGRESS","UNEARNED"];
+      const groups=order.filter(group=>selected.some(x=>x.ownership_state===group));
+      host.innerHTML=groups.map(group=>{
+        const items=selected.filter(x=>x.ownership_state===group);
+        return `<section class="badgeNatureGroup badgeOwnershipGroup">
+          <header><b>${esc(ownershipLabel(group))}</b><span>${items.length}</span></header>
           <div class="badgeNatureGroupGrid">${items.map(tileHtml).join("")}</div>
         </section>`;
       }).join("");
@@ -183,11 +213,13 @@ function create(deps){
     qa("#badgeCatalogFilters [data-badge-filter]").forEach(b=>b.onclick=()=>{filter=b.dataset.badgeFilter;renderFilters();renderGrid()});
     qa("#badgeCategoryFilters [data-badge-category], .badgeCategoryProgress [data-badge-category]").forEach(b=>b.onclick=()=>{category=b.dataset.badgeCategory;renderFilters();renderGrid()});
     qa("#badgeNatureFilters [data-badge-nature]").forEach(b=>b.onclick=()=>{nature=b.dataset.badgeNature;renderFilters();renderGrid()});
+    const viewSelect=q("#badgeCatalogView");
+    if(viewSelect)viewSelect.onchange=()=>{viewMode=viewSelect.value;renderHeader();renderGrid()};
     const sortSelect=q("#badgeCatalogSort");
     if(sortSelect)sortSelect.onchange=()=>{sort=sortSelect.value;renderGrid()};
   }
 
-  return Object.freeze({contract:"SNAP_POP_BADGE_CATALOG_CONTROLLER_V3_NATURE",render,install,openDetail,closeDetail});
+  return Object.freeze({contract:"SNAP_POP_BADGE_CATALOG_CONTROLLER_V4_CODEX_VIEW",render,install,openDetail,closeDetail});
 }
 
 window.SnapPopBadgeCatalogController=Object.freeze({instance(deps){if(!singleton)singleton=create(deps);return singleton}});
