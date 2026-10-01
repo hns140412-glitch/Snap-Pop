@@ -452,3 +452,5 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 @media(prefers-reduced-motion:reduce){
   .badgeAcquisitionReplay .badgeAcquisitionCard,.badgeAcquisitionReplay .badgeAcquisitionArt,.badgeAcquisitionReplay .badgeAcquisitionHalo,.badgeAcquisitionReplay .badgeAcquisitionTierChange,.badgeAcquisitionReplay .badgeAcquisitionStars i.on{animation:none}
 }
+
+.badgeAcquisitionTierChange[hidden]{display:none!important}
