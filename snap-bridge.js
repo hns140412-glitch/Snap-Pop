@@ -174,6 +174,28 @@
         String(error?.message || 'CENTRAL_ENQUEUE_UNAVAILABLE')));
   }
 
+  function learningReferenceRefs(){
+    const d=getLearningGrowthDecision();
+    const out={curriculum_refs:[],lexical_refs:[],usage_refs:[],pedagogical_refs:[]};
+    const add=(key,ref)=>{
+      const v=String(ref||'').trim();
+      if(v&&!out[key].includes(v))out[key].push(v);
+    };
+    for(const ref of (d?.curriculum_grounding?.source_refs||[]))
+      add('curriculum_refs',ref);
+    const prov=d?.language_resource_provenance||{};
+    for(const rows of Object.values(prov)){
+      for(const row of (Array.isArray(rows)?rows:[])){
+        const role=String(row?.source_role||'').toUpperCase();
+        if(role==='LEXICAL_SEMANTICS')add('lexical_refs',row.source_ref);
+        else if(role==='LANGUAGE_USAGE')add('usage_refs',row.source_ref);
+        else if(role==='PEDAGOGICAL_USAGE')add('pedagogical_refs',row.source_ref);
+        else if(role==='CURRICULUM_ALIGNMENT')add('curriculum_refs',row.source_ref);
+      }
+    }
+    return out;
+  }
+
   function growthDecisionStatus() {
     return {
       status:growthDecisionState.status,
@@ -437,6 +459,8 @@
           const handoffUsed=!!handoff&&tokens.includes(handoff);
           const growthOutcome=emitLearningOutcome({
             completed:true,
+            child_authored:true,
+            used_handoff_word:context.word||null,
             production_ref:'snap-production:'+String(Date.now()),
             production_texts:texts,
             vocabulary_used:handoffUsed?[context.word]:[],
@@ -496,6 +520,7 @@
     const binding=ScopeGuard.boundScope(context,input,{targetRequired:true});
     if(!binding.ok)return binding;
     const scope=binding.scope;
+    const referenceRefs=learningReferenceRefs();
     const payload = {
       skill_id: scope.concept_skill_target,
       concept_skill_target: scope.concept_skill_target,
@@ -505,6 +530,14 @@
       lap_id: context.lap_id || null,
       subject: scope.subject,
       learning_target_id: scope.learning_target_id,
+      instrumentVersion:input.instrumentVersion||'SNAP_PRODUCTION_EVIDENCE_V1',
+      interactionMode:input.interactionMode||'CHILD_PRODUCTION',
+      child_authored:input.child_authored===true,
+      used_handoff_word:input.used_handoff_word||context.word||null,
+      curriculum_refs:referenceRefs.curriculum_refs,
+      lexical_refs:referenceRefs.lexical_refs,
+      usage_refs:referenceRefs.usage_refs,
+      pedagogical_refs:referenceRefs.pedagogical_refs,
       completed: !!input.completed,
       evidence_of_improvement: !!input.evidence_of_improvement,
       needed_assistance: !!(input.needed_assistance || input.help_used),
