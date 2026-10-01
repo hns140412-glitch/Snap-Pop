@@ -144,8 +144,39 @@
   <div class="treeStage"><img id="treeImage" src="assets/growth/stage_01.png" alt="현재 성장나무"><div id="growthCompanion" class="growthCompanion"></div></div>
   <div class="exp"><i id="expBar"></i></div><p id="expText">EXP 0</p>
  </div>
+ <button class="primary wide" id="badgeCatalogBtn" type="button">배지 도감 보기</button>
  <button class="soft wide" id="historyBtn">성장 기록 보기</button>
  <div id="growthTimeline" class="timeline" hidden></div>
+</section>
+<section id="badgeCatalog" class="view parchment subflow">
+ <button class="back" id="badgeCatalogBack" type="button">← 성장</button>
+ <header class="pageTitle badgeCatalogPageTitle"><span>탐험의 기록</span><h1>배지 도감</h1><p>내가 만난 배지와 아직 숨은 배지를 한곳에서 확인해요.</p></header>
+ <article class="badgeCatalogSummary">
+  <div><span>획득한 배지</span><strong id="badgeCatalogCount">0 / 60</strong></div>
+ </article>
+ <div id="badgeCatalogFilters" class="badgeCatalogFilters" role="group" aria-label="획득 상태">
+  <button class="on" data-badge-filter="ALL" type="button">전체</button>
+  <button data-badge-filter="EARNED" type="button">획득</button>
+  <button data-badge-filter="IN_PROGRESS" type="button">진행 중</button>
+  <button data-badge-filter="UNEARNED" type="button">미획득</button>
+ </div>
+ <div id="badgeCategoryFilters" class="badgeCatalogFilters category" role="group" aria-label="배지 분류">
+  <button class="on" data-badge-category="ALL" type="button">전체</button>
+  <button data-badge-category="POCKET" type="button">POCKET</button>
+  <button data-badge-category="FIELD" type="button">FIELD</button>
+  <button data-badge-category="EXPEDITION" type="button">EXPEDITION</button>
+  <button data-badge-category="SECRET" type="button">SECRET</button>
+ </div>
+ <div id="badgeCatalogGrid" class="badgeCatalogGrid"></div>
+ <article id="badgeDetailPanel" class="badgeDetailPanel" hidden>
+  <button id="badgeDetailClose" class="soft badgeDetailClose" type="button">닫기</button>
+  <div id="badgeDetailArt"></div>
+  <span id="badgeDetailCategory" class="kicker"></span>
+  <h2 id="badgeDetailTitle"></h2>
+  <p id="badgeDetailStory"></p>
+  <div id="badgeDetailStars"></div>
+  <strong id="badgeDetailState"></strong>
+ </article>
 </section>
 <section id="special" class="view parchment subflow">
  <button class="back" id="specialBack">← 지도</button>
@@ -310,6 +341,7 @@ window.addEventListener("unhandledrejection",event=>{
 <script src="badge-shared-contract-runtime.js"></script>
 <script src="badge-theme-expression-runtime.js"></script>
 <script src="badge-visual-runtime.js"></script>
+<script src="badge-catalog-ui-runtime.js"></script>
 <script src="learning-context-runtime.js"></script>
 <script src="vocabulary-material-runtime.js"></script>
 <script src="openai-semantic-provider.js"></script>
@@ -343,6 +375,7 @@ window.addEventListener("unhandledrejection",event=>{
 <script src="special-controller.js"></script>
 <script src="imagination-controller.js"></script>
 <script src="settings-profile-controller.js"></script>
+<script src="badge-catalog-controller.js"></script>
 <script src="badge-controller.js"></script>
 <script src="bridge-context-controller.js"></script>
 <script src="interaction-support-controller.js"></script>
