@@ -21,7 +21,7 @@ test('Snap scoped outcome -> durable browser outbox -> exact central observation
  expect(initial).toEqual({bundle:'TAKY_PWA_SCOPED_EVIDENCE_PIPELINE_V1',
   missing:'EXPLICIT_TRUSTED_CENTRAL_SESSION_REQUIRED',status:'UNBOUND'});
 
- const event=await page.evaluate(()=>{
+ const event=await page.evaluate(async()=>{
   window.__central=[];
   SnapPopBridge.configureCentralEvidence({
    dbName:'snap-central-evidence-v1',
@@ -35,10 +35,20 @@ test('Snap scoped outcome -> durable browser outbox -> exact central observation
         ok:true,authenticated_server_response:true,
         receipt_scope:{family_id:'F',member_id:'A'},
         runtime_result:{growth_next_step:{
-          ok:true,version:'TAKY_GROWTH_NEXT_STEP_POLICY_V1',
+          ok:true,version:'TAKY_GROWTH_NEXT_STEP_POLICY_V2',
           authority:'LEARNING_ENGINE_GROWTH_INTENT_ONLY',
           support_phase:'ELICIT_PULL',
           question_depth:{level:3},
+          growth_control:{
+            evidence_confidence:'MEDIUM',
+            learning_intensity:'BUILD_CONNECT',
+            expression_level:'L3_EXPANDED_SENTENCE',
+            easy_english_level:'EASY_ENGLISH',
+            question_depth:3,
+            hint_strength:'PARTIAL_FRAME',
+            hint_fade:'FADE_ONE_STEP_WHEN_SUCCESSFUL',
+            challenge_direction:'EXTEND'
+          },
           language_support:{
             easy_english_definitions:['to put an idea into words'],
             expression_chunks:['I think ... because ...'],
@@ -61,6 +71,8 @@ test('Snap scoped outcome -> durable browser outbox -> exact central observation
      duplicate:false})};
    }
   });
+  for(let i=0;i<50&&SnapPopBridge.growthDecisionStatus().status!=='READY';i++)
+    await new Promise(r=>setTimeout(r,10));
   return SnapPopBridge.emitLearningOutcome({completed:true,evidence_of_improvement:true,
    production_ref:'prod-1',rubric_ref:'rubric-1'});
  });
@@ -68,7 +80,16 @@ test('Snap scoped outcome -> durable browser outbox -> exact central observation
   .toBe('PENDING_CENTRAL_OUTBOX');
  expect(event.payload).toMatchObject({member_id:'A',subject:'english',
   concept_skill_target:'writing',learning_target_id:'writing:1',
-  contextual_evidence_only:true,global_mastery_claim:false});
+  contextual_evidence_only:true,global_mastery_claim:false,
+  growth_intent_ref:'TAKY_GROWTH_NEXT_STEP_POLICY_V2',
+  growth_control_applied:{
+    evidence_confidence:'MEDIUM',
+    learning_intensity:'BUILD_CONNECT',
+    expression_level:'L3_EXPANDED_SENTENCE',
+    question_depth:3,
+    hint_strength:'PARTIAL_FRAME',
+    challenge_direction:'EXTEND'
+  }});
  await expect.poll(()=>page.evaluate(()=>SnapPopBridge.growthDecisionStatus().status)).toBe('READY');
  expect(await page.evaluate(()=>window.__central.length)).toBe(0);
  const growth=await page.evaluate(()=>({prompt:SnapPopBridge.growthPrompt(1),request:window.__decisionRequest}));
@@ -76,6 +97,9 @@ test('Snap scoped outcome -> durable browser outbox -> exact central observation
  expect(growth.request.body).toMatchObject({family_id:'F',member_id:'A',subject:'english',concept_skill_target:'writing'});
  expect(growth.prompt.question).toContain('your own English');
  expect(growth.prompt.hint).toContain('I think');
+ expect(growth.prompt.expression_level).toBe('L3_EXPANDED_SENTENCE');
+ expect(growth.prompt.learning_intensity).toBe('BUILD_CONNECT');
+ expect(growth.prompt.hint_strength).toBe('PARTIAL_FRAME');
  const flushed=await page.evaluate(()=>SnapPopBridge.flushCentralEvidenceOnce('snap-browser-fixture'));
  expect(flushed).toMatchObject({processed:true,settled:true,status:'ACKED',
   reason:'CENTRAL_ACK_VALIDATED'});
@@ -136,10 +160,20 @@ test('Hide -> Snap continuity re-resolves growth centrally instead of trusting U
         ok:true,authenticated_server_response:true,
         receipt_scope:{family_id:'F',member_id:'A'},
         runtime_result:{growth_next_step:{
-          ok:true,version:'TAKY_GROWTH_NEXT_STEP_POLICY_V1',
+          ok:true,version:'TAKY_GROWTH_NEXT_STEP_POLICY_V2',
           authority:'LEARNING_ENGINE_GROWTH_INTENT_ONLY',
           support_phase:'TRANSFER_PUSH',
-          question_depth:{level:4},
+          question_depth:{level:5},
+          growth_control:{
+            evidence_confidence:'HIGH',
+            learning_intensity:'STRETCH_TRANSFER',
+            expression_level:'L5_TRANSFER_CREATION',
+            easy_english_level:'CONTEXTUAL_EASY_ENGLISH',
+            question_depth:5,
+            hint_strength:'MINIMAL_CUE',
+            hint_fade:'MINIMAL_CUE',
+            challenge_direction:'TRANSFER'
+          },
           language_support:{
             easy_english_definitions:['to say yes to something or receive it'],
             expression_chunks:['accept an idea'],
@@ -166,6 +200,8 @@ test('Hide -> Snap continuity re-resolves growth centrally instead of trusting U
  expect(result.context.continuity_source_authoritative).toBe(false);
  expect(result.calls).toHaveLength(1);
  expect(result.growth.authority).toBe('LEARNING_ENGINE_GROWTH_INTENT_ONLY');
- expect(result.prompt.question).toContain('new situation');
+ expect(result.prompt.question).toContain('Create a new situation');
  expect(result.prompt.hint).toContain('without translating every word');
+ expect(result.prompt.expression_level).toBe('L5_TRANSFER_CREATION');
+ expect(result.prompt.learning_intensity).toBe('STRETCH_TRANSFER');
 });
