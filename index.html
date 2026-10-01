@@ -168,7 +168,7 @@
    <button data-badge-filter="IN_PROGRESS" type="button">진행</button>
    <button data-badge-filter="UNEARNED" type="button">미획득</button>
   </div>
-  <label class="badgeSortLabel"><span>정렬</span><select id="badgeCatalogSort"><option value="NUMBER_ASC">번호</option><option value="RECENT">최근 획득</option><option value="TIER">성급</option></select></label>
+  <label class="badgeSortLabel"><span>정렬</span><select id="badgeCatalogSort"><option value="NUMBER_ASC">번호</option><option value="NATURE">성격별</option><option value="RECENT">최근 획득</option><option value="TIER">성급</option></select></label>
  </div>
  <div id="badgeCategoryFilters" class="badgeCatalogFilters category" role="group" aria-label="배지 분류">
   <button class="on" data-badge-category="ALL" type="button">ALL</button>
@@ -176,6 +176,20 @@
   <button data-badge-category="FIELD" type="button">FIELD</button>
   <button data-badge-category="EXPEDITION" type="button">EXPEDITION</button>
   <button data-badge-category="SECRET" type="button">SECRET</button>
+ </div>
+ <div class="badgeNatureFilterWrap">
+  <span class="badgeNatureFilterLabel">성격</span>
+  <div id="badgeNatureFilters" class="badgeCatalogFilters nature" role="group" aria-label="배지 성격">
+   <button class="on" data-badge-nature="ALL" type="button">전체</button>
+   <button data-badge-nature="SELF_DIRECTED" type="button">스스로</button>
+   <button data-badge-nature="GOAL_ACHIEVEMENT" type="button">목표도달</button>
+   <button data-badge-nature="FOCUS_IMMERSION" type="button">집중·몰입</button>
+   <button data-badge-nature="RECOVERY_RESILIENCE" type="button">복귀·재도전</button>
+   <button data-badge-nature="ERROR_LEARNING" type="button">실수·교정</button>
+   <button data-badge-nature="PLANNING_SELF_REGULATION" type="button">계획·조절</button>
+   <button data-badge-nature="PROBLEM_SOLVING" type="button">문제해결</button>
+   <button data-badge-nature="EXTRA_GROWTH" type="button">추가도전·성장</button>
+  </div>
  </div>
  <div id="badgeCatalogGrid" class="badgeCatalogGrid"></div>
 </section>
@@ -189,7 +203,7 @@
    <button id="badgeDetailClose" class="round" type="button" aria-label="닫기">×</button>
   </div>
   <div id="badgeDetailArt"></div>
-  <span id="badgeDetailCategory" class="kicker"></span>
+  <div class="badgeDetailChips"><span id="badgeDetailCategory" class="kicker"></span><span id="badgeDetailNature" class="kicker badgeNatureChip"></span></div>
   <h2 id="badgeDetailTitle"></h2>
   <p id="badgeDetailStory"></p>
   <div id="badgeDetailStars"></div>
