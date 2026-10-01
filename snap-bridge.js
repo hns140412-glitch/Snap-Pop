@@ -529,6 +529,28 @@
     });
   }
 
+  function requestGrowthRubricReview(input = {}) {
+    const verifier = globalThis.SnapRubricVerifier;
+    if (!verifier?.createGrowthReviewRequest)
+      return { ok:false, reason:'SNAP_GROWTH_RUBRIC_VERIFIER_UNAVAILABLE' };
+    const linked=!!(context.session_id||context.task_id);
+    const bound=linked?ScopeGuard.boundScope(context,input,{targetRequired:false}):null;
+    if(linked&&!bound?.ok)return bound;
+    const scope=bound?.scope||{};
+    return verifier.createGrowthReviewRequest({
+      event_id: input.event_id,
+      member_id: linked?scope.member_id:(input.member_id||''),
+      subject: linked?scope.subject:(input.subject||''),
+      concept_skill_target: linked?scope.concept_skill_target:(input.concept_skill_target||''),
+      rubric_ref: input.rubric_ref,
+      reviewer_role: input.reviewer_role,
+      rubric_version: input.rubric_version || 'SNAP_GROWTH_RUBRIC_V1',
+      dimensions: Array.isArray(input.dimensions)
+        ?input.dimensions:['GRAMMAR','EXPRESSION','THINKING','ENGLISH_THINKING'],
+      production_summary: input.production_summary || null
+    });
+  }
+
   function validate() {
     const checks = {
       noLocalTimer: true,
@@ -563,6 +585,7 @@
       emit,
       returnToBase,
       requestRubricReview,
+      requestGrowthRubricReview,
       emitLearningOutcome,
       requestLearningGrowthDecision,
       getLearningGrowthDecision,
