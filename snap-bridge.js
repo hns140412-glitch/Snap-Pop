@@ -265,33 +265,56 @@
     const chunk=String(d.language_support?.expression_chunks?.[0]||'').trim();
     const grammar=String(d.language_support?.grammar_patterns?.[0]||'').trim();
     const easy=String(d.language_support?.easy_english_definitions?.[0]||'').trim();
-    const depth=Number(d.question_depth?.level||1);
+    const control=d.growth_control||d.hide_to_snap_handoff?.growth_control||{};
+    const depth=Number(control.question_depth||d.question_depth?.level||1);
     const phase=String(d.support_phase||'ELICIT_PULL');
+    const expressionLevel=String(control.expression_level||'L2_SIMPLE_SENTENCE');
+    const intensity=String(control.learning_intensity||'BUILD_CONNECT');
+    const hintStrength=String(control.hint_strength||d.hint_policy?.level||'PARTIAL_FRAME');
+    const confidence=String(control.evidence_confidence||'LOW');
+
+    let question='';
+    let hint='';
     if(step<=0){
-      return {
-        question:word?('What does "'+word+'" mean here?'):'What is the key idea?',
-        hint:easy?('Easy English: '+easy):(chunk?('Useful chunk: '+chunk):'Think of the meaning before translating word by word.'),
-        language:'ENGLISH_FIRST_KOREAN_FALLBACK',
-        support_phase:phase
-      };
-    }
-    if(step===1){
-      return {
-        question:word?('Can you use "'+word+'" in your own short idea?'):'Can you say the idea in your own English?',
-        hint:chunk?('Useful chunk: '+chunk):(grammar?('Pattern: '+grammar):'Build a short English chunk first.'),
-        language:'ENGLISH_FIRST_KOREAN_FALLBACK',
-        support_phase:phase
-      };
+      question=word?('What does "'+word+'" mean here?'):'What is the key idea?';
+      hint=easy?('Easy English: '+easy):(chunk?('Useful chunk: '+chunk):
+        'Think of the meaning before translating word by word.');
+    }else if(step===1){
+      if(expressionLevel==='L1_CHUNK_OR_PHRASE'){
+        question=word?('Can you make a short phrase with "'+word+'"?'):'Can you make a short English phrase?';
+      }else if(/^L[45]_/.test(expressionLevel)){
+        question=word?('Can you use "'+word+'" and add one reason?'):'Can you say the idea and add one reason?';
+      }else{
+        question=word?('Can you use "'+word+'" in your own short idea?'):'Can you say the idea in your own English?';
+      }
+      hint=hintStrength==='MINIMAL_CUE'
+        ?'Try your own idea first.'
+        :(chunk?('Useful chunk: '+chunk):(grammar?('Pattern: '+grammar):'Build a short English chunk first.'));
+    }else{
+      if(expressionLevel==='L5_TRANSFER_CREATION'){
+        question=word?('Create a new situation with "'+word+'" and explain why it fits.')
+          :'Create a new situation and explain why your idea fits.';
+      }else if(expressionLevel==='L4_REASONED_RESPONSE'||depth>=4){
+        question=word?('Use "'+word+'" in a new situation. Why does it fit?')
+          :'Use your idea in a new situation and explain why.';
+      }else if(expressionLevel==='L1_CHUNK_OR_PHRASE'){
+        question=word?('Finish one useful phrase with "'+word+'".'):'Finish one useful English phrase.';
+      }else{
+        question=word?('Make your own sentence with "'+word+'".'):'Make your own sentence.';
+      }
+      hint=hintStrength==='MINIMAL_CUE'
+        ?'Try it without translating every word first.'
+        :(grammar?('Pattern: '+grammar):'Say the idea first, then make the sentence smoother.');
     }
     return {
-      question:depth>=4
-        ?(word?('Use "'+word+'" in a new situation. Why does it fit?'):'Use your idea in a new situation and explain why.')
-        :(word?('Make your own sentence with "'+word+'".'):'Make your own sentence.'),
-      hint:phase==='TRANSFER_PUSH'
-        ?'Try it without translating every word first.'
-        :(grammar?('Pattern: '+grammar):'Say the idea first, then make the sentence smoother.'),
+      question,hint,
       language:'ENGLISH_FIRST_KOREAN_FALLBACK',
-      support_phase:phase
+      support_phase:phase,
+      learning_intensity:intensity,
+      expression_level:expressionLevel,
+      question_depth:depth,
+      hint_strength:hintStrength,
+      evidence_confidence:confidence
     };
   }
 
@@ -462,6 +485,19 @@
           depth:Number.isFinite(Number(x?.depth))?Math.max(0,Math.min(5,Number(x.depth))):null
         })):[],
       growth_intent_ref: getLearningGrowthDecision()?.version || null,
+      growth_control_applied:(()=>{
+        const d=getLearningGrowthDecision();
+        const x=d?.growth_control||d?.hide_to_snap_handoff?.growth_control;
+        return x?{
+          evidence_confidence:x.evidence_confidence||null,
+          learning_intensity:x.learning_intensity||null,
+          expression_level:x.expression_level||null,
+          question_depth:Number.isFinite(Number(x.question_depth))?Number(x.question_depth):null,
+          hint_strength:x.hint_strength||null,
+          hint_fade:x.hint_fade||null,
+          challenge_direction:x.challenge_direction||null
+        }:null;
+      })(),
       evidence_source_refs: Array.isArray(input.source_refs) ? [...input.source_refs] : [],
       evidence_provenance: Array.isArray(input.provenance) ? [...input.provenance] : [],
       contextual_evidence_only: true,
