@@ -403,3 +403,52 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
   border-color:var(--tier,#d2b863);
   box-shadow:inset 0 0 0 5px #fff8ddaa,0 0 0 3px color-mix(in srgb,var(--tier,#d2b863) 78%,#fff 22%),0 12px 34px #2b322839
 }
+
+
+/* BADGE ACQUISITION PRESENTATION V1 */
+.badgeAcquisitionLayer{position:fixed;z-index:110;inset:0;display:grid;place-items:center;padding:18px}
+.badgeAcquisitionLayer[hidden]{display:none}
+.badgeAcquisitionBackdrop{position:absolute;inset:0;background:#031916d9;backdrop-filter:blur(8px)}
+.badgeAcquisitionCard{position:relative;width:min(100%,390px);max-height:92svh;overflow:auto;border-radius:28px;background:
+  radial-gradient(circle at 50% 25%,#fff8d9 0 16%,transparent 43%),
+  linear-gradient(180deg,#123d35 0 28%,#f7efda 28% 100%);
+  border:2px solid #d0b75f;padding:20px 18px 18px;text-align:center;box-shadow:0 28px 70px #03151288,0 0 0 1px #fff1be33}
+.badgeAcquisitionClose{position:absolute;top:12px;right:12px;z-index:3;background:#f8f0d7;color:#173d35;border-color:#cfb970}
+.badgeAcquisitionKicker{display:block;color:#ead58b;font-size:10px;font-weight:1000;letter-spacing:.18em;margin-top:3px}
+.badgeAcquisitionCard>h2{margin:5px 0 2px;color:#fff2c4;font-family:"Noto Serif CJK KR","Batang",serif;font-size:25px}
+.badgeAcquisitionNo{display:block;color:#cfbf92;font-size:9px;font-weight:900;letter-spacing:.08em;margin-bottom:8px}
+.badgeAcquisitionArt{position:relative;width:min(58vw,224px);aspect-ratio:1;margin:10px auto 12px;border-radius:50%;isolation:isolate}
+.badgeAcquisitionArt img{position:relative;z-index:2;width:100%;height:100%;display:block;object-fit:cover;border-radius:50%;border:4px solid #fff5d3;box-shadow:0 0 0 3px #d1b65d,0 14px 34px #1a2b253b}
+.badgeAcquisitionHalo{position:absolute;z-index:1;inset:-14px;border-radius:50%;border:2px solid #d9be61;box-shadow:0 0 22px #ead47788,0 0 54px #ead47755}
+.badgeAcquisitionMeta{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.badgeAcquisitionMeta span{border:1px solid #c5b88d;background:#fff8e8;color:#2e5044;border-radius:999px;padding:5px 9px;font-size:9px;font-weight:900}
+.badgeAcquisitionCard>h3{font-family:"Noto Serif CJK KR","Batang",serif;font-size:22px;color:#173f35;margin:9px 0 5px}
+.badgeAcquisitionCard>p{margin:0 auto 10px;max-width:28em;font-size:11px;line-height:1.55;color:#617067}
+.badgeAcquisitionTierChange{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:#183f39;color:#fff1bf;padding:7px 12px;font-size:11px;font-weight:1000;letter-spacing:.03em;margin:2px auto 8px}
+.badgeAcquisitionStars{display:flex;justify-content:center;gap:3px;margin:7px 0 11px}
+.badgeAcquisitionStars i{width:15px;height:15px;display:inline-block;clip-path:polygon(50% 0,61% 35%,98% 38%,69% 59%,79% 96%,50% 75%,21% 96%,31% 59%,2% 38%,39% 35%);background:#d5d1c2}
+.badgeAcquisitionStars i.on{background:#d1ae4e;filter:drop-shadow(0 2px 2px #6f572744)}
+.badgeAcquisitionActions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.badgeAcquisitionLayer[data-kind="FIRST_EARN"] .badgeAcquisitionCard{border-color:#d3ba63}
+.badgeAcquisitionLayer[data-kind="TIER_UP"] .badgeAcquisitionCard{border-color:#e0c45f}
+.badgeAcquisitionLayer[data-kind="MASTER_COMPLETE"] .badgeAcquisitionCard{border-color:#bcc8c5}
+.badgeAcquisitionLayer[data-tier="green"] .badgeAcquisitionHalo{border-color:#7fa271;box-shadow:0 0 26px #7fa27188,0 0 58px #7fa27155}
+.badgeAcquisitionLayer[data-tier="blue"] .badgeAcquisitionHalo{border-color:#738fa8;box-shadow:0 0 26px #738fa888,0 0 58px #738fa855}
+.badgeAcquisitionLayer[data-tier="red"] .badgeAcquisitionHalo{border-color:#b86e63;box-shadow:0 0 26px #b86e6388,0 0 58px #b86e6355}
+.badgeAcquisitionLayer[data-tier="gold"] .badgeAcquisitionHalo{border-color:#c6a34f;box-shadow:0 0 30px #c6a34f99,0 0 66px #c6a34f66}
+.badgeAcquisitionLayer[data-tier="platinum"] .badgeAcquisitionHalo{border-color:#a7b2b1;box-shadow:0 0 30px #d8e5e5aa,0 0 66px #d8e5e566}
+.badgeAcquisitionReplay .badgeAcquisitionCard{animation:badgeAcqCardIn .36s cubic-bezier(.2,.85,.25,1)}
+.badgeAcquisitionReplay .badgeAcquisitionArt{animation:badgeAcqArtIn .52s cubic-bezier(.18,.86,.2,1)}
+.badgeAcquisitionReplay .badgeAcquisitionHalo{animation:badgeAcqHalo 1.15s ease-out both}
+.badgeAcquisitionReplay[data-kind="TIER_UP"] .badgeAcquisitionTierChange{animation:badgeTierUpPop .55s .2s cubic-bezier(.2,.9,.25,1) both}
+.badgeAcquisitionReplay .badgeAcquisitionStars i.on{animation:badgeStarFill .36s cubic-bezier(.2,.9,.25,1) both}
+.badgeAcquisitionReplay .badgeAcquisitionStars i.on:nth-child(2){animation-delay:.05s}.badgeAcquisitionReplay .badgeAcquisitionStars i.on:nth-child(3){animation-delay:.1s}.badgeAcquisitionReplay .badgeAcquisitionStars i.on:nth-child(4){animation-delay:.15s}.badgeAcquisitionReplay .badgeAcquisitionStars i.on:nth-child(5){animation-delay:.2s}
+@keyframes badgeAcqCardIn{0%{opacity:0;transform:translateY(18px) scale(.96)}100%{opacity:1;transform:none}}
+@keyframes badgeAcqArtIn{0%{opacity:0;transform:scale(.58) rotate(-5deg)}70%{opacity:1;transform:scale(1.05) rotate(1deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes badgeAcqHalo{0%{opacity:0;transform:scale(.68)}45%{opacity:1}100%{opacity:.9;transform:scale(1)}}
+@keyframes badgeTierUpPop{0%{opacity:0;transform:scale(.72)}100%{opacity:1;transform:scale(1)}}
+@keyframes badgeStarFill{0%{opacity:.25;transform:scale(.55)}100%{opacity:1;transform:scale(1)}}
+@media(max-width:360px){.badgeAcquisitionCard{padding-left:14px;padding-right:14px}.badgeAcquisitionActions{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){
+  .badgeAcquisitionReplay .badgeAcquisitionCard,.badgeAcquisitionReplay .badgeAcquisitionArt,.badgeAcquisitionReplay .badgeAcquisitionHalo,.badgeAcquisitionReplay .badgeAcquisitionTierChange,.badgeAcquisitionReplay .badgeAcquisitionStars i.on{animation:none}
+}
