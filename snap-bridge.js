@@ -86,6 +86,76 @@
     return event;
   }
 
+  // Optional central Learning evidence path. Snap owns the outcome observation;
+  // authenticated host/session and durable ACK remain external authority.
+  let centralEvidencePipeline = null;
+  let centralEvidenceState = { status:'UNBOUND', event_id:null, reason:'TRUSTED_CENTRAL_SESSION_NOT_CONFIGURED' };
+
+  function centralEvidenceStatus() { return { ...centralEvidenceState }; }
+  function reportCentralEvidence(status,event_id,reason) {
+    centralEvidenceState = { status, event_id:event_id || null, reason:reason || null };
+    try {
+      window.dispatchEvent(new CustomEvent('snap-central-evidence-status',
+        { detail:centralEvidenceStatus() }));
+    } catch {}
+  }
+
+  function configureCentralEvidence({ endpointUrl, sessionProvider, tokenProvider,
+    fetchImpl, indexedDB:database, dbName } = {}) {
+    if (centralEvidencePipeline) throw new Error('CENTRAL_EVIDENCE_ALREADY_CONFIGURED');
+    if (typeof sessionProvider !== 'function' || typeof tokenProvider !== 'function')
+      throw new Error('EXPLICIT_TRUSTED_CENTRAL_SESSION_REQUIRED');
+    const factory = globalThis.TakyCentralEvidence?.pipeline;
+    if (factory?.VERSION !== 'TAKY_PWA_SCOPED_EVIDENCE_PIPELINE_V1' ||
+        typeof factory.create !== 'function')
+      throw new Error('PINNED_CENTRAL_BROWSER_PIPELINE_UNAVAILABLE');
+    centralEvidencePipeline = factory.create({
+      endpointUrl, sessionProvider, tokenProvider,
+      fetchImpl:fetchImpl || globalThis.fetch.bind(globalThis),
+      indexedDB:database || globalThis.indexedDB, dbName,
+      cryptoProvider:globalThis.crypto
+    });
+    reportCentralEvidence('READY',null,null);
+    return Object.freeze({ configured:true, version:centralEvidencePipeline.version });
+  }
+
+  async function flushCentralEvidenceOnce(owner) {
+    if (!centralEvidencePipeline) throw new Error('CENTRAL_EVIDENCE_NOT_CONFIGURED');
+    const result = await centralEvidencePipeline.flushOne('snap-pop',owner);
+    if (result.processed) reportCentralEvidence(
+      result.status === 'ACKED' ? 'CENTRAL_OBSERVATION_ACKED' :
+      result.status === 'BLOCKED' ? 'HOLD' : 'PENDING',
+      null,result.reason);
+    return result;
+  }
+
+  async function closeCentralEvidence() {
+    if (!centralEvidencePipeline) return;
+    const pipeline=centralEvidencePipeline;
+    centralEvidencePipeline=null;
+    await pipeline.close();
+    reportCentralEvidence('UNBOUND',null,'CENTRAL_EVIDENCE_CLOSED');
+  }
+
+  function queueCentralLearningOutcome(event) {
+    if (!centralEvidencePipeline) {
+      reportCentralEvidence('UNBOUND',event.event_id,'TRUSTED_CENTRAL_SESSION_NOT_CONFIGURED');
+      return;
+    }
+    const p=event.payload || {};
+    if (!p.member_id || !p.subject || !p.concept_skill_target || !p.learning_target_id) {
+      reportCentralEvidence('HOLD',event.event_id,'EXPLICIT_LEARNING_SCOPE_REQUIRED');
+      return;
+    }
+    Promise.resolve().then(()=>centralEvidencePipeline.enqueueBridge('snap-pop',event))
+      .then(result=>{
+        if (result?.queued === true || result?.duplicate === true)
+          reportCentralEvidence('PENDING_CENTRAL_OUTBOX',event.event_id,null);
+        else reportCentralEvidence('HOLD',event.event_id,'DURABLE_ENQUEUE_NOT_CONFIRMED');
+      }).catch(error=>reportCentralEvidence('HOLD',event.event_id,
+        String(error?.message || 'CENTRAL_ENQUEUE_UNAVAILABLE')));
+  }
+
   function safeReturnUrl(taskState = 'PARTIAL') {
     const ready=trustedReturnTarget();
     if (!ready || !context.session_id || !context.task_id || !context.lap_id) return null;
@@ -233,7 +303,9 @@
       contextual_evidence_only: true,
       global_mastery_claim: false
     };
-    return emit('LEARNING_OUTCOME', payload);
+    const event=emit('LEARNING_OUTCOME', payload);
+    queueCentralLearningOutcome(event);
+    return event;
   }
 
   function requestRubricReview(input = {}) {
@@ -292,6 +364,10 @@
       returnToBase,
       requestRubricReview,
       emitLearningOutcome,
+      configureCentralEvidence,
+      flushCentralEvidenceOnce,
+      closeCentralEvidence,
+      centralEvidenceStatus,
       validate
     });
   }
