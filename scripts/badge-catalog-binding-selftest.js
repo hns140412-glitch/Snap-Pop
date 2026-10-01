@@ -23,6 +23,10 @@ async function run(){
     assert("five-reawards-promote-blue",p(6).tier==="BLUE"&&p(6).reacquireStars===0);
     assert("platinum-can-reach-five-stars",p(26).tier==="PLATINUM"&&p(26).reacquireStars===5&&p(26).complete===true);
     assert("catalog-screen-present",!!document.querySelector("#badgeCatalog")&&!!document.querySelector("#badgeCatalogGrid"));
+    assert("game-codex-progress-present",!!document.querySelector("#badgeCatalogProgressBar")&&!!document.querySelector("#badgeCatalogPercent"));
+    assert("game-codex-category-progress-present",document.querySelectorAll(".badgeCategoryProgress [data-badge-category-progress]").length===4);
+    assert("game-codex-sort-present",!!document.querySelector("#badgeCatalogSort"));
+    assert("game-codex-detail-sheet-present",!!document.querySelector("#badgeDetailLayer")&&!!document.querySelector("#badgeDetailPrev")&&!!document.querySelector("#badgeDetailNext"));
     host.dataset.status="PASS";
   }catch(e){
     host.dataset.status="FAIL";
