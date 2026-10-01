@@ -13,6 +13,10 @@ async function run(){
   try{
     assert("badge-catalog-runtime-present",await waitFor(()=>!!window.SnapPopBadgeCatalogUI));
     const vm=await window.SnapPopBadgeCatalogUI.load();
+    const artStatus=window.SnapPopBadgeArtPack?.status?.();
+    assert("badge-art-pack-loaded",artStatus?.loaded===true&&artStatus?.count===60);
+    assert("badge-art-runtime-urls-complete",vm.items.every(x=>typeof x.asset_runtime_url==="string"&&x.asset_runtime_url.startsWith("blob:")));
+    assert("badge-art-shard-entry-meta-complete",vm.items.every(x=>window.SnapPopBadgeArtPack.inspect(x.asset_slot_id)?.sha256===x.runtime_sha256));
     assert("badge-catalog-has-60",vm.total===60&&vm.items.length===60);
     assert("badge-id-unique",new Set(vm.items.map(x=>x.badge_id)).size===60);
     assert("visual-id-unique",new Set(vm.items.map(x=>x.visual_id)).size===60);
