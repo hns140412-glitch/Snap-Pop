@@ -62,7 +62,7 @@ function create(deps){
 
   function renderFilters(){
     qa("#badgeCatalogFilters [data-badge-filter]").forEach(b=>b.classList.toggle("on",b.dataset.badgeFilter===filter));
-    qa("#badgeCategoryFilters [data-badge-category]").forEach(b=>b.classList.toggle("on",b.dataset.badgeCategory===category));
+    qa("#badgeCategoryFilters [data-badge-category], .badgeCategoryProgress [data-badge-category]").forEach(b=>b.classList.toggle("on",b.dataset.badgeCategory===category));
   }
 
   function renderGrid(){
@@ -136,7 +136,7 @@ function create(deps){
     const prev=q("#badgeDetailPrev"),next=q("#badgeDetailNext");
     if(prev)prev.onclick=()=>stepDetail(-1); if(next)next.onclick=()=>stepDetail(1);
     qa("#badgeCatalogFilters [data-badge-filter]").forEach(b=>b.onclick=()=>{filter=b.dataset.badgeFilter;renderFilters();renderGrid()});
-    qa("#badgeCategoryFilters [data-badge-category]").forEach(b=>b.onclick=()=>{category=b.dataset.badgeCategory;renderFilters();renderGrid()});
+    qa("#badgeCategoryFilters [data-badge-category], .badgeCategoryProgress [data-badge-category]").forEach(b=>b.onclick=()=>{category=b.dataset.badgeCategory;renderFilters();renderGrid()});
     const sortSelect=q("#badgeCatalogSort"); if(sortSelect)sortSelect.onchange=()=>{sort=sortSelect.value;renderGrid()};
   }
 
