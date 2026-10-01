@@ -84,6 +84,13 @@ function create(deps){
       const el=q(`[data-badge-category-progress="${key}"]`);
       if(el)el.textContent=`${done}/${items.length}`;
     }
+    const natureKeys=["SELF_DIRECTED","GOAL_ACHIEVEMENT","FOCUS_IMMERSION","RECOVERY_RESILIENCE","ERROR_LEARNING","PLANNING_SELF_REGULATION","PROBLEM_SOLVING","EXTRA_GROWTH"];
+    for(const key of ["ALL",...natureKeys]){
+      const items=key==="ALL"?cache:cache.filter(x=>x.primary_nature===key);
+      const done=items.filter(x=>x.ownership_state==="EARNED").length;
+      const el=q(`[data-badge-nature-progress="${key}"]`);
+      if(el)el.textContent=`${done}/${items.length}`;
+    }
     if(q("#badgeCatalogSort"))q("#badgeCatalogSort").value=sort;
     if(q("#badgeCatalogView"))q("#badgeCatalogView").value=viewMode;
   }
@@ -155,7 +162,10 @@ function create(deps){
     if(!window.SnapPopStorage.isOpen())return;
     const vm=await window.SnapPopBadgeCatalogUI.load();
     const progress=await store.get("badgeProgress")||{};
-    cache=vm.items.map(item=>window.SnapPopBadgeCatalogUI.composeItem(item,progress[item.badge_id]||progress[item.badgeId]||{}));
+    cache=vm.items.map(item=>{
+      const entry=progress[item.badge_id]||progress[item.badgeId]||{};
+      return Object.freeze({...window.SnapPopBadgeCatalogUI.composeItem(item,entry),progress_count:Math.max(0,Number(entry.count)||0)});
+    });
     renderHeader();
     renderFilters();
     renderGrid();
@@ -185,6 +195,12 @@ function create(deps){
       ? `${tierLabel(item.tier)} · 재획득 별 ${item.reacquire_stars}/5`
       : item.ownership_state==="IN_PROGRESS"?"발견 중":"아직 만나지 못한 배지";
     q("#badgeDetailStars").innerHTML=item.ownership_state==="EARNED"?starsMarkup(item.reacquire_stars):"";
+    const progressCount=Math.max(0,Number(item.progress_count||item.count||0)||0);
+    q("#badgeDetailCount").textContent=item.ownership_state==="EARNED"?`${progressCount}회`:"0회";
+    const last=item.last_at?new Date(item.last_at):null;
+    q("#badgeDetailLast").textContent=last&&!Number.isNaN(last.getTime())
+      ?new Intl.DateTimeFormat("ko-KR",{year:"numeric",month:"short",day:"numeric"}).format(last)
+      :"-";
     const sheet=q("#badgeDetailLayer");
     sheet.hidden=false;
     sheet.setAttribute("aria-hidden","false");
