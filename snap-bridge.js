@@ -429,9 +429,12 @@
           child_authored: true
         });
         if(context.learning_target_id){
-          emitLearningOutcome({
+          const growthOutcome=emitLearningOutcome({
             completed:true,
             production_ref:'snap-production:'+String(Date.now()),
+            growth_verification_status:'PENDING_DIMENSION_REVIEW',
+            growth_review_required:true,
+            requested_growth_dimensions:['GRAMMAR','EXPRESSION','THINKING','ENGLISH_THINKING'],
             growth_signals:[
               {dimension:'EXPRESSION',outcome:'UNKNOWN',assisted:false,
                kind:'CHILD_PRODUCTION_CREATED',target_id:context.learning_target_id},
@@ -439,6 +442,13 @@
                kind:'CHILD_PRODUCTION_CREATED',target_id:context.learning_target_id,
                depth:Number(getLearningGrowthDecision()?.question_depth?.level||0)||null}
             ]
+          });
+          emit('GROWTH_REVIEW_REQUIRED',{
+            target_event_id:growthOutcome?.event_id||null,
+            learning_target_id:context.learning_target_id,
+            requested_dimensions:['GRAMMAR','EXPRESSION','THINKING','ENGLISH_THINKING'],
+            auto_verification:false,
+            child_completion_is_not_growth_verification:true
           });
         }
         ensureBaseCampChip();
@@ -473,6 +483,13 @@
       production_ref: input.production_ref || input.event_id || null,
       rubric_ref: input.rubric_ref || null,
       rubric_result: input.rubric_result || null,
+      growth_verification_status: input.growth_verification_status ||
+        (input.growth_review_required===true?'PENDING_DIMENSION_REVIEW':'UNVERIFIED_OBSERVATION'),
+      growth_review_required: input.growth_review_required===true,
+      requested_growth_dimensions:Array.isArray(input.requested_growth_dimensions)
+        ?[...new Set(input.requested_growth_dimensions.map(x=>String(x||'').toUpperCase())
+          .filter(x=>['VOCABULARY','GRAMMAR','EXPRESSION','THINKING','ENGLISH_THINKING'].includes(x)))].slice(0,5)
+        :[],
       growth_signals: Array.isArray(input.growth_signals)
         ?input.growth_signals.slice(0,16).map(x=>({
           dimension:String(x?.dimension||'').toUpperCase(),
