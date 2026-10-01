@@ -103,7 +103,7 @@ async function renameCurrentCrewMember(nextName){return settingsProfileControlle
 async function loadSettings(){return settingsProfileController().loadSettings()}
 async function renderCrewRoster(){return settingsProfileController().renderCrewRoster()}
 async function renderIdentityPresence(){return settingsProfileController().renderIdentityPresence()}
-function badgeCatalogController(){return window.SnapPopBadgeCatalogController.instance({query:$,queryAll:$,show})}
+function badgeCatalogController(){return window.SnapPopBadgeCatalogController.instance({query:$,queryAll:$$,show})}
 async function renderBadgeCatalog(){return badgeCatalogController().render()}
 function badgeController(){return window.SnapPopBadgeController.instance({query:$,uid,resolvedIdentity})}
 async function proposeBadgeCandidateFromObservations(args={}){return badgeController().proposeBadgeCandidateFromObservations(args)}
