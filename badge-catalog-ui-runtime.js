@@ -30,6 +30,11 @@
     const v=String(value||"ALL").toUpperCase();
     return ["ALL","POCKET","FIELD","EXPEDITION","SECRET"].includes(v)?v:"ALL";
   }
+  function normalizeNature(value="ALL"){
+    const v=String(value||"ALL").toUpperCase();
+    const allowed=["ALL","SELF_DIRECTED","GOAL_ACHIEVEMENT","FOCUS_IMMERSION","RECOVERY_RESILIENCE","ERROR_LEARNING","PLANNING_SELF_REGULATION","PROBLEM_SOLVING","EXTRA_GROWTH"];
+    return allowed.includes(v)?v:"ALL";
+  }
   function ownershipFor(progressEntry){
     if(!progressEntry||!Number(progressEntry.count)) return "UNEARNED";
     return "EARNED";
@@ -65,10 +70,11 @@
       art_available:true
     });
   }
-  function select(items,{filter="ALL",category="ALL"}={}){
-    const f=normalizeFilter(filter), c=normalizeCategory(category);
+  function select(items,{filter="ALL",category="ALL",nature="ALL"}={}){
+    const f=normalizeFilter(filter), c=normalizeCategory(category), n=normalizeNature(nature);
     return items.filter(item=>{
       if(c!=="ALL"&&item.category!==c)return false;
+      if(n!=="ALL"&&item.primary_nature!==n)return false;
       if(f==="ALL")return true;
       if(f==="EARNED")return item.ownership_state==="EARNED";
       if(f==="UNEARNED")return item.ownership_state==="UNEARNED";
@@ -84,6 +90,7 @@
     progressForEntry,
     select,
     normalizeFilter,
-    normalizeCategory
+    normalizeCategory,
+    normalizeNature
   });
 })();
