@@ -7,7 +7,7 @@ function create(deps){
   let filter="ALL", category="ALL", nature="ALL", sort="NUMBER_ASC", cache=[], selectedId=null;
 
   function artMarkup(item,cls=""){
-    const path=esc(item.asset_repo_path||"");
+    const path=esc(item.asset_runtime_url||item.asset_repo_path||"");
     const secretLocked=item.category==="SECRET"&&item.ownership_state!=="EARNED";
     return `<div class="badgeCatalogArt ${cls} ${secretLocked?"secretLocked":""}">
       <img src="${path}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
