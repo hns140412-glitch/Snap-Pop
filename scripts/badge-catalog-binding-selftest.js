@@ -1,0 +1,34 @@
+(() => {
+"use strict";
+if(!new URLSearchParams(location.search).has("runtime-smoke"))return;
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+async function waitFor(check,timeout=12000){const s=Date.now();while(Date.now()-s<timeout){try{if(check())return true}catch{}await wait(80)}return false}
+async function run(){
+  const host=document.createElement("pre");
+  host.id="badgeCatalogBindingSelfTest";
+  host.hidden=true;
+  document.body.appendChild(host);
+  const pass=n=>{host.textContent+="\nPASS "+n};
+  const assert=(n,v)=>{if(!v)throw new Error("FAIL "+n);pass(n)};
+  try{
+    assert("badge-catalog-runtime-present",await waitFor(()=>!!window.SnapPopBadgeCatalogUI));
+    const vm=await window.SnapPopBadgeCatalogUI.load();
+    assert("badge-catalog-has-60",vm.total===60&&vm.items.length===60);
+    assert("badge-id-unique",new Set(vm.items.map(x=>x.badge_id)).size===60);
+    assert("visual-id-unique",new Set(vm.items.map(x=>x.visual_id)).size===60);
+    assert("asset-slot-id-unique",new Set(vm.items.map(x=>x.asset_slot_id)).size===60);
+    assert("category-counts",vm.counts_by_category.POCKET===20&&vm.counts_by_category.FIELD===20&&vm.counts_by_category.EXPEDITION===14&&vm.counts_by_category.SECRET===6);
+    const p=window.SnapPopBadgeCatalogUI.progressForCount;
+    assert("first-award-zero-stars",p(1).tier==="GREEN"&&p(1).reacquireStars===0);
+    assert("five-reawards-promote-blue",p(6).tier==="BLUE"&&p(6).reacquireStars===0);
+    assert("platinum-can-reach-five-stars",p(26).tier==="PLATINUM"&&p(26).reacquireStars===5&&p(26).complete===true);
+    assert("catalog-screen-present",!!document.querySelector("#badgeCatalog")&&!!document.querySelector("#badgeCatalogGrid"));
+    host.dataset.status="PASS";
+  }catch(e){
+    host.dataset.status="FAIL";
+    host.textContent+="\n"+String(e?.message||e);
+    throw e;
+  }
+}
+run();
+})();
