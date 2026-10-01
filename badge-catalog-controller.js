@@ -103,7 +103,7 @@ function create(deps){
 
   function tileHtml(item){
     const locked=item.ownership_state!=="EARNED";
-    return `<button class="badgeCatalogTile ${locked?"locked":"earned"} ${selectedId===item.badge_id?"selected":""}" data-badge-id="${esc(item.badge_id)}" type="button">
+    return `<button class="badgeCatalogTile ${locked?"locked":"earned"} ${selectedId===item.badge_id?"selected":""} ${isRecent(item)&&!locked?"recentEarned":""}" data-badge-id="${esc(item.badge_id)}" data-tier="${esc(item.tier||"NONE")}" data-ownership="${esc(item.ownership_state)}" type="button">
       <span class="badgeCatalogNo">No.${String(item.slot).padStart(3,"0")}</span>
       <div class="badgeCatalogArtWrap">
         ${artMarkup(item)}
@@ -112,7 +112,9 @@ function create(deps){
       </div>
       <b>${esc(displayTitle(item))}</b>
       <span class="badgeNatureMini">${esc(natureLabel(item.primary_nature))}</span>
-      ${item.ownership_state==="EARNED"?starsMarkup(item.reacquire_stars):'<small>미획득</small>'}
+      ${item.ownership_state==="EARNED"
+        ?`<span class="badgeTierMini">${esc(tierLabel(item.tier))}</span>${starsMarkup(item.reacquire_stars)}`
+        :'<small class="badgeLockedText">미획득</small>'}
     </button>`;
   }
 
