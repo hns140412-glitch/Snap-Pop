@@ -38,8 +38,14 @@ async function run(){
     assert("group-view-modes-present",["GRID","NATURE","CATEGORY","OWNERSHIP"].every(v=>[...document.querySelectorAll("#badgeCatalogView option")].some(x=>x.value===v)));
     assert("nature-progress-counts-present",document.querySelectorAll("[data-badge-nature-progress]").length===9);
     assert("detail-acquisition-record-present",!!document.querySelector("#badgeDetailCount")&&!!document.querySelector("#badgeDetailLast"));
-    const cssText=[...document.styleSheets].flatMap(sheet=>{try{return [...sheet.cssRules].map(rule=>rule.cssText)}catch{return []}}).join("\n");
-    assert("codex-visual-state-contract-present",cssText.includes(".badgeTierHalo")&&cssText.includes(".badgeCatalogTile.earned")&&cssText.includes("[data-tier=\"GREEN\"]")&&cssText.includes(".badgeCatalogTile.locked"));
+    const codexCss=await fetch("styles.css").then(r=>r.text());
+    assert("codex-visual-state-contract-present",
+      codexCss.includes(".badgeTierHalo")&&
+      codexCss.includes(".badgeCatalogTile.recentEarned")&&
+      codexCss.includes(".badgeCatalogTile.inProgress")&&
+      codexCss.includes('[data-tier="GREEN"]')&&
+      codexCss.includes(".badgeCatalogTile.locked")
+    );
     assert("game-codex-detail-sheet-present",!!document.querySelector("#badgeDetailLayer")&&!!document.querySelector("#badgeDetailPrev")&&!!document.querySelector("#badgeDetailNext"));
     host.dataset.status="PASS";
   }catch(e){
