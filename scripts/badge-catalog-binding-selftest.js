@@ -34,6 +34,8 @@ async function run(){
     assert("nature-primary-complete",vm.items.every(x=>typeof x.primary_nature==="string"&&x.primary_nature.length>0));
     assert("nature-filter-present",document.querySelectorAll("#badgeNatureFilters [data-badge-nature]").length===9);
     assert("nature-sort-option-present",[...document.querySelectorAll("#badgeCatalogSort option")].some(x=>x.value==="NATURE"));
+    assert("group-view-selector-present",!!document.querySelector("#badgeCatalogView"));
+    assert("group-view-modes-present",["GRID","NATURE","CATEGORY","OWNERSHIP"].every(v=>[...document.querySelectorAll("#badgeCatalogView option")].some(x=>x.value===v)));
     assert("game-codex-detail-sheet-present",!!document.querySelector("#badgeDetailLayer")&&!!document.querySelector("#badgeDetailPrev")&&!!document.querySelector("#badgeDetailNext"));
     host.dataset.status="PASS";
   }catch(e){
