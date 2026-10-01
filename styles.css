@@ -273,3 +273,14 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
   .badgeCodexToolbarV2{grid-template-columns:1fr}
   .badgeCodexSelectors{justify-content:flex-start;overflow:auto;padding-bottom:2px}
 }
+
+
+/* BADGE CODEX PROGRESS + RECORD V5 */
+.badgeCatalogFilters.nature button{display:grid;grid-template-columns:auto auto;align-items:center;gap:4px}
+.badgeCatalogFilters.nature button b{font-size:inherit}
+.badgeCatalogFilters.nature button span{font-size:7px;opacity:.72;font-weight:800}
+.badgeCatalogFilters.nature button.on span{opacity:.92}
+.badgeDetailRecord{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.badgeDetailRecord>div{border:1px solid #cbbd91;border-radius:13px;background:#fff8e6;padding:9px 10px;text-align:left}
+.badgeDetailRecord span{display:block;font-size:8px;color:#7b8178;margin-bottom:3px}
+.badgeDetailRecord b{display:block;font-size:11px;color:#29483d}
