@@ -148,36 +148,54 @@
  <button class="soft wide" id="historyBtn">성장 기록 보기</button>
  <div id="growthTimeline" class="timeline" hidden></div>
 </section>
-<section id="badgeCatalog" class="view parchment subflow">
+<section id="badgeCatalog" class="view parchment subflow badgeCodex">
  <button class="back" id="badgeCatalogBack" type="button">← 성장</button>
- <header class="pageTitle badgeCatalogPageTitle"><span>탐험의 기록</span><h1>배지 도감</h1><p>내가 만난 배지와 아직 숨은 배지를 한곳에서 확인해요.</p></header>
- <article class="badgeCatalogSummary">
-  <div><span>획득한 배지</span><strong id="badgeCatalogCount">0 / 60</strong></div>
- </article>
- <div id="badgeCatalogFilters" class="badgeCatalogFilters" role="group" aria-label="획득 상태">
-  <button class="on" data-badge-filter="ALL" type="button">전체</button>
-  <button data-badge-filter="EARNED" type="button">획득</button>
-  <button data-badge-filter="IN_PROGRESS" type="button">진행 중</button>
-  <button data-badge-filter="UNEARNED" type="button">미획득</button>
+ <header class="badgeCodexHead">
+  <div><span class="kicker">COLLECTION</span><h1>배지 도감</h1></div>
+  <div class="badgeCodexProgressText"><strong id="badgeCatalogCount">0 / 60</strong><span id="badgeCatalogPercent">0%</span></div>
+ </header>
+ <div class="badgeCodexProgress"><i id="badgeCatalogProgressBar"></i></div>
+ <div class="badgeCategoryProgress" aria-label="분류별 획득 현황">
+  <button data-badge-category="POCKET" type="button"><b>POCKET</b><span data-badge-category-progress="POCKET">0/20</span></button>
+  <button data-badge-category="FIELD" type="button"><b>FIELD</b><span data-badge-category-progress="FIELD">0/20</span></button>
+  <button data-badge-category="EXPEDITION" type="button"><b>EXPEDITION</b><span data-badge-category-progress="EXPEDITION">0/14</span></button>
+  <button data-badge-category="SECRET" type="button"><b>SECRET</b><span data-badge-category-progress="SECRET">0/6</span></button>
+ </div>
+ <div class="badgeCodexToolbar">
+  <div id="badgeCatalogFilters" class="badgeCatalogFilters" role="group" aria-label="획득 상태">
+   <button class="on" data-badge-filter="ALL" type="button">전체</button>
+   <button data-badge-filter="EARNED" type="button">획득</button>
+   <button data-badge-filter="IN_PROGRESS" type="button">진행</button>
+   <button data-badge-filter="UNEARNED" type="button">미획득</button>
+  </div>
+  <label class="badgeSortLabel"><span>정렬</span><select id="badgeCatalogSort"><option value="NUMBER_ASC">번호</option><option value="RECENT">최근 획득</option><option value="TIER">성급</option></select></label>
  </div>
  <div id="badgeCategoryFilters" class="badgeCatalogFilters category" role="group" aria-label="배지 분류">
-  <button class="on" data-badge-category="ALL" type="button">전체</button>
+  <button class="on" data-badge-category="ALL" type="button">ALL</button>
   <button data-badge-category="POCKET" type="button">POCKET</button>
   <button data-badge-category="FIELD" type="button">FIELD</button>
   <button data-badge-category="EXPEDITION" type="button">EXPEDITION</button>
   <button data-badge-category="SECRET" type="button">SECRET</button>
  </div>
  <div id="badgeCatalogGrid" class="badgeCatalogGrid"></div>
- <article id="badgeDetailPanel" class="badgeDetailPanel" hidden>
-  <button id="badgeDetailClose" class="soft badgeDetailClose" type="button">닫기</button>
+</section>
+<div id="badgeDetailLayer" class="badgeDetailLayer" hidden aria-hidden="true">
+ <div id="badgeDetailBackdrop" class="badgeDetailBackdrop"></div>
+ <section class="badgeDetailSheet" role="dialog" aria-modal="true" aria-labelledby="badgeDetailTitle">
+  <div class="badgeDetailTopbar">
+   <button id="badgeDetailPrev" class="soft" type="button" aria-label="이전 배지">←</button>
+   <span id="badgeDetailNo">No.000</span>
+   <button id="badgeDetailNext" class="soft" type="button" aria-label="다음 배지">→</button>
+   <button id="badgeDetailClose" class="round" type="button" aria-label="닫기">×</button>
+  </div>
   <div id="badgeDetailArt"></div>
   <span id="badgeDetailCategory" class="kicker"></span>
   <h2 id="badgeDetailTitle"></h2>
   <p id="badgeDetailStory"></p>
   <div id="badgeDetailStars"></div>
   <strong id="badgeDetailState"></strong>
- </article>
-</section>
+ </section>
+</div>
 <section id="special" class="view parchment subflow">
  <button class="back" id="specialBack">← 지도</button>
  <header class="pageTitle specialPageTitle"><span>원할 때만 여는 초대</span><h1>특별 탐험</h1><p>지금 하고 싶을 때만 해도 돼. 지나가도 아무 손해가 없어.</p></header>
