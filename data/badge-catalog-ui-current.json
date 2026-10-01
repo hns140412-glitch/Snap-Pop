@@ -1,6 +1,6 @@
 {
-  "schema": "SNAP_POP_BADGE_CATALOG_UI_CURRENT_V1",
-  "version": "2026-10-01.1",
+  "schema": "SNAP_POP_BADGE_CATALOG_UI_CURRENT_V2_NATURE",
+  "version": "2026-10-02.2",
   "total": 60,
   "counts_by_category": {
     "POCKET": 20,
@@ -25,7 +25,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_001.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "SELF_DIRECTED",
+      "nature_label_ko": "스스로",
+      "nature_tags": [
+        "EARLY_START",
+        "SELF_START"
+      ]
     },
     {
       "slot": 2,
@@ -43,7 +49,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_002.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "SELF_DIRECTED",
+      "nature_label_ko": "스스로",
+      "nature_tags": [
+        "ALARM_RESPONSE",
+        "SELF_START"
+      ]
     },
     {
       "slot": 3,
@@ -61,7 +73,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_003.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "SELF_DIRECTED",
+      "nature_label_ko": "스스로",
+      "nature_tags": [
+        "MICRO_START"
+      ]
     },
     {
       "slot": 4,
@@ -79,7 +96,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_004.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "RECOVERY_RESILIENCE",
+      "nature_label_ko": "복귀·재도전",
+      "nature_tags": [
+        "RESTART_AFTER_BREAK"
+      ]
     },
     {
       "slot": 5,
@@ -97,7 +119,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_005.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "GOAL_ACHIEVEMENT",
+      "nature_label_ko": "목표도달",
+      "nature_tags": [
+        "PREPARATION_COMPLETE"
+      ]
     },
     {
       "slot": 6,
@@ -115,7 +142,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_006.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PLANNING_SELF_REGULATION",
+      "nature_label_ko": "계획·조절",
+      "nature_tags": [
+        "TIME_CREATION",
+        "SELF_START"
+      ]
     },
     {
       "slot": 7,
@@ -133,7 +166,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_007.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PLANNING_SELF_REGULATION",
+      "nature_label_ko": "계획·조절",
+      "nature_tags": [
+        "TIME_CREATION",
+        "EXTRA_TASK"
+      ]
     },
     {
       "slot": 8,
@@ -151,7 +190,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_008.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "EXTRA_GROWTH",
+      "nature_label_ko": "추가도전·성장",
+      "nature_tags": [
+        "EXTRA_TASK",
+        "SELF_CHOICE"
+      ]
     },
     {
       "slot": 9,
@@ -169,7 +214,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_009.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "SELF_DIRECTED",
+      "nature_label_ko": "스스로",
+      "nature_tags": [
+        "SELF_START",
+        "BEFORE_PROMPT"
+      ]
     },
     {
       "slot": 10,
@@ -187,7 +238,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_010.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "SELF_DIRECTED",
+      "nature_label_ko": "스스로",
+      "nature_tags": [
+        "RESPONSIVE_START"
+      ]
     },
     {
       "slot": 11,
@@ -205,7 +261,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_011.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "SELF_DIRECTED",
+      "nature_label_ko": "스스로",
+      "nature_tags": [
+        "SELF_CHOICE"
+      ]
     },
     {
       "slot": 12,
@@ -223,7 +284,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_012.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PLANNING_SELF_REGULATION",
+      "nature_label_ko": "계획·조절",
+      "nature_tags": [
+        "SELF_PLANNING",
+        "SEQUENCE"
+      ]
     },
     {
       "slot": 13,
@@ -241,7 +308,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_013.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "FOCUS_IMMERSION",
+      "nature_label_ko": "집중·몰입",
+      "nature_tags": [
+        "SINGLE_TASK_FOCUS"
+      ]
     },
     {
       "slot": 14,
@@ -259,7 +331,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_014.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "GOAL_ACHIEVEMENT",
+      "nature_label_ko": "목표도달",
+      "nature_tags": [
+        "FAST_COMPLETE",
+        "CHECK"
+      ]
     },
     {
       "slot": 15,
@@ -277,7 +355,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_015.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "GOAL_ACHIEVEMENT",
+      "nature_label_ko": "목표도달",
+      "nature_tags": [
+        "ACCURACY",
+        "COMPLETE"
+      ]
     },
     {
       "slot": 16,
@@ -295,7 +379,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_016.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "GOAL_ACHIEVEMENT",
+      "nature_label_ko": "목표도달",
+      "nature_tags": [
+        "CHUNKING",
+        "COMPLETE"
+      ]
     },
     {
       "slot": 17,
@@ -313,7 +403,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_017.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "GOAL_ACHIEVEMENT",
+      "nature_label_ko": "목표도달",
+      "nature_tags": [
+        "PERSIST_TO_COMPLETE"
+      ]
     },
     {
       "slot": 18,
@@ -331,7 +426,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_018.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "FOCUS_IMMERSION",
+      "nature_label_ko": "집중·몰입",
+      "nature_tags": [
+        "LONG_FOCUS"
+      ]
     },
     {
       "slot": 19,
@@ -349,7 +449,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_019.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "FOCUS_IMMERSION",
+      "nature_label_ko": "집중·몰입",
+      "nature_tags": [
+        "QUIET_IMMERSION"
+      ]
     },
     {
       "slot": 20,
@@ -367,7 +472,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_020.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "FOCUS_IMMERSION",
+      "nature_label_ko": "집중·몰입",
+      "nature_tags": [
+        "FLOW_CONTINUATION"
+      ]
     },
     {
       "slot": 21,
@@ -385,7 +495,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_021.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "RECOVERY_RESILIENCE",
+      "nature_label_ko": "복귀·재도전",
+      "nature_tags": [
+        "SELF_RETURN"
+      ]
     },
     {
       "slot": 22,
@@ -403,7 +518,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_022.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "RECOVERY_RESILIENCE",
+      "nature_label_ko": "복귀·재도전",
+      "nature_tags": [
+        "FOCUS_RETURN"
+      ]
     },
     {
       "slot": 23,
@@ -421,7 +541,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_023.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "RECOVERY_RESILIENCE",
+      "nature_label_ko": "복귀·재도전",
+      "nature_tags": [
+        "SELF_NOTICE_RETURN"
+      ]
     },
     {
       "slot": 24,
@@ -439,7 +564,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_024.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PROBLEM_SOLVING",
+      "nature_label_ko": "문제해결",
+      "nature_tags": [
+        "HELP_USE",
+        "RECOVERY"
+      ]
     },
     {
       "slot": 25,
@@ -457,7 +588,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_025.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PROBLEM_SOLVING",
+      "nature_label_ko": "문제해결",
+      "nature_tags": [
+        "HELP_REQUEST"
+      ]
     },
     {
       "slot": 26,
@@ -475,7 +611,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_026.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "ERROR_LEARNING",
+      "nature_label_ko": "실수·교정",
+      "nature_tags": [
+        "ERROR_DISCOVERY"
+      ]
     },
     {
       "slot": 27,
@@ -493,7 +634,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_027.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "ERROR_LEARNING",
+      "nature_label_ko": "실수·교정",
+      "nature_tags": [
+        "ERROR_REVIEW"
+      ]
     },
     {
       "slot": 28,
@@ -511,7 +657,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_028.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "ERROR_LEARNING",
+      "nature_label_ko": "실수·교정",
+      "nature_tags": [
+        "ERROR_CORRECTION",
+        "COMPLETE"
+      ]
     },
     {
       "slot": 29,
@@ -529,7 +681,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_029.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "RECOVERY_RESILIENCE",
+      "nature_label_ko": "복귀·재도전",
+      "nature_tags": [
+        "RETRY"
+      ]
     },
     {
       "slot": 30,
@@ -547,7 +704,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_030.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "ERROR_LEARNING",
+      "nature_label_ko": "실수·교정",
+      "nature_tags": [
+        "ROOT_CAUSE"
+      ]
     },
     {
       "slot": 31,
@@ -565,7 +727,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_031.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PROBLEM_SOLVING",
+      "nature_label_ko": "문제해결",
+      "nature_tags": [
+        "BREAKTHROUGH",
+        "PERSISTENCE"
+      ]
     },
     {
       "slot": 32,
@@ -583,7 +751,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_032.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "EXTRA_GROWTH",
+      "nature_label_ko": "추가도전·성장",
+      "nature_tags": [
+        "CONCEPT_UNDERSTANDING"
+      ]
     },
     {
       "slot": 33,
@@ -601,7 +774,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_033.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "ERROR_LEARNING",
+      "nature_label_ko": "실수·교정",
+      "nature_tags": [
+        "REFLECTION",
+        "SLOW_DOWN"
+      ]
     },
     {
       "slot": 34,
@@ -619,7 +798,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_034.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "ERROR_LEARNING",
+      "nature_label_ko": "실수·교정",
+      "nature_tags": [
+        "REREAD_CHECK"
+      ]
     },
     {
       "slot": 35,
@@ -637,7 +821,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_035.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "ERROR_LEARNING",
+      "nature_label_ko": "실수·교정",
+      "nature_tags": [
+        "CALCULATION_CHECK"
+      ]
     },
     {
       "slot": 36,
@@ -655,7 +844,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_036.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "ERROR_LEARNING",
+      "nature_label_ko": "실수·교정",
+      "nature_tags": [
+        "CORRECTION_COURAGE"
+      ]
     },
     {
       "slot": 37,
@@ -673,7 +867,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_037.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "FOCUS_IMMERSION",
+      "nature_label_ko": "집중·몰입",
+      "nature_tags": [
+        "DEEP_THINKING"
+      ]
     },
     {
       "slot": 38,
@@ -691,7 +890,13 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_038.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "FOCUS_IMMERSION",
+      "nature_label_ko": "집중·몰입",
+      "nature_tags": [
+        "DEEP_THINKING",
+        "PERSISTENCE"
+      ]
     },
     {
       "slot": 39,
@@ -709,7 +914,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_039.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PROBLEM_SOLVING",
+      "nature_label_ko": "문제해결",
+      "nature_tags": [
+        "BREAKTHROUGH"
+      ]
     },
     {
       "slot": 40,
@@ -727,7 +937,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_040.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PLANNING_SELF_REGULATION",
+      "nature_label_ko": "계획·조절",
+      "nature_tags": [
+        "STOP_AT_RIGHT_TIME"
+      ]
     },
     {
       "slot": 41,
@@ -745,7 +960,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_041.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "FOCUS_IMMERSION",
+      "nature_label_ko": "집중·몰입",
+      "nature_tags": [
+        "MEANINGFUL_OVERRUN"
+      ]
     },
     {
       "slot": 42,
@@ -763,7 +983,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_042.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "FOCUS_IMMERSION",
+      "nature_label_ko": "집중·몰입",
+      "nature_tags": [
+        "FLOW_IMMERSION"
+      ]
     },
     {
       "slot": 43,
@@ -781,7 +1006,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_043.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "RECOVERY_RESILIENCE",
+      "nature_label_ko": "복귀·재도전",
+      "nature_tags": [
+        "BREAK_RETURN"
+      ]
     },
     {
       "slot": 44,
@@ -799,7 +1029,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_044.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "RECOVERY_RESILIENCE",
+      "nature_label_ko": "복귀·재도전",
+      "nature_tags": [
+        "TIMER_RETURN"
+      ]
     },
     {
       "slot": 45,
@@ -817,7 +1052,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_045.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PLANNING_SELF_REGULATION",
+      "nature_label_ko": "계획·조절",
+      "nature_tags": [
+        "DISTRACTION_RESISTANCE"
+      ]
     },
     {
       "slot": 46,
@@ -835,7 +1075,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_046.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "RECOVERY_RESILIENCE",
+      "nature_label_ko": "복귀·재도전",
+      "nature_tags": [
+        "TASK_RESTART"
+      ]
     },
     {
       "slot": 47,
@@ -853,7 +1098,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_047.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "GOAL_ACHIEVEMENT",
+      "nature_label_ko": "목표도달",
+      "nature_tags": [
+        "CARRY_OVER_COMPLETE"
+      ]
     },
     {
       "slot": 48,
@@ -871,7 +1121,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_048.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "GOAL_ACHIEVEMENT",
+      "nature_label_ko": "목표도달",
+      "nature_tags": [
+        "SELF_CHECK_COMPLETE"
+      ]
     },
     {
       "slot": 49,
@@ -889,7 +1144,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_049.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "GOAL_ACHIEVEMENT",
+      "nature_label_ko": "목표도달",
+      "nature_tags": [
+        "MICRO_TASK_COMPLETE"
+      ]
     },
     {
       "slot": 50,
@@ -907,7 +1167,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_050.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PLANNING_SELF_REGULATION",
+      "nature_label_ko": "계획·조절",
+      "nature_tags": [
+        "PRIORITIZE_HARD"
+      ]
     },
     {
       "slot": 51,
@@ -925,7 +1190,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_051.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PLANNING_SELF_REGULATION",
+      "nature_label_ko": "계획·조절",
+      "nature_tags": [
+        "WARM_START"
+      ]
     },
     {
       "slot": 52,
@@ -943,7 +1213,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_052.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PROBLEM_SOLVING",
+      "nature_label_ko": "문제해결",
+      "nature_tags": [
+        "STRATEGY_SWITCH"
+      ]
     },
     {
       "slot": 53,
@@ -961,7 +1236,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_053.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "EXTRA_GROWTH",
+      "nature_label_ko": "추가도전·성장",
+      "nature_tags": [
+        "SELF_EXPLANATION"
+      ]
     },
     {
       "slot": 54,
@@ -979,7 +1259,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_054.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "EXTRA_GROWTH",
+      "nature_label_ko": "추가도전·성장",
+      "nature_tags": [
+        "IMPROVEMENT"
+      ]
     },
     {
       "slot": 55,
@@ -997,7 +1282,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_055.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "EXTRA_GROWTH",
+      "nature_label_ko": "추가도전·성장",
+      "nature_tags": [
+        "VOLUNTARY_EXTRA"
+      ]
     },
     {
       "slot": 56,
@@ -1015,7 +1305,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_056.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PLANNING_SELF_REGULATION",
+      "nature_label_ko": "계획·조절",
+      "nature_tags": [
+        "PLAN_ADAPTATION"
+      ]
     },
     {
       "slot": 57,
@@ -1033,7 +1328,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_057.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "RECOVERY_RESILIENCE",
+      "nature_label_ko": "복귀·재도전",
+      "nature_tags": [
+        "START_DESPITE_CONDITION"
+      ]
     },
     {
       "slot": 58,
@@ -1051,7 +1351,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_058.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "RECOVERY_RESILIENCE",
+      "nature_label_ko": "복귀·재도전",
+      "nature_tags": [
+        "REST_AND_RETURN"
+      ]
     },
     {
       "slot": 59,
@@ -1069,7 +1374,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_059.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "PROBLEM_SOLVING",
+      "nature_label_ko": "문제해결",
+      "nature_tags": [
+        "MINIMAL_HINT_SOLVE"
+      ]
     },
     {
       "slot": 60,
@@ -1087,7 +1397,12 @@
       "tier_source": "BADGE_RUNTIME_LEDGER",
       "reacquire_stars_source": "BADGE_RUNTIME_LEDGER",
       "asset_repo_path": "assets/badges/current/TAKY_BADGE_ART_060.png",
-      "asset_delivery_state": "BINARY_SYNC_PENDING"
+      "asset_delivery_state": "BINARY_SYNC_PENDING",
+      "primary_nature": "EXTRA_GROWTH",
+      "nature_label_ko": "추가도전·성장",
+      "nature_tags": [
+        "SPECIAL_BEHAVIOR"
+      ]
     }
   ],
   "source_authority": {
@@ -1100,5 +1415,57 @@
     "root": "assets/badges/current",
     "state": "BINARY_SYNC_PENDING",
     "rule": "UI resolves by stable asset_slot_id; later art replacement keeps the same repo path and changes bytes+SHA only"
+  },
+  "nature_taxonomy": {
+    "SELF_DIRECTED": {
+      "label_ko": "스스로",
+      "order": 1,
+      "description": "먼저 시작·선택·행동한 경험"
+    },
+    "GOAL_ACHIEVEMENT": {
+      "label_ko": "목표도달",
+      "order": 2,
+      "description": "끝까지 완료하거나 목표 지점에 도달한 경험"
+    },
+    "FOCUS_IMMERSION": {
+      "label_ko": "집중·몰입",
+      "order": 3,
+      "description": "집중을 유지하거나 흐름에 깊게 들어간 경험"
+    },
+    "RECOVERY_RESILIENCE": {
+      "label_ko": "복귀·재도전",
+      "order": 4,
+      "description": "흐트러짐·실패·피로 뒤 다시 돌아온 경험"
+    },
+    "ERROR_LEARNING": {
+      "label_ko": "실수·교정",
+      "order": 5,
+      "description": "실수를 발견하고 다시 보고 고친 경험"
+    },
+    "PLANNING_SELF_REGULATION": {
+      "label_ko": "계획·조절",
+      "order": 6,
+      "description": "시간·순서·난이도·휴식·유혹을 스스로 조절한 경험"
+    },
+    "PROBLEM_SOLVING": {
+      "label_ko": "문제해결",
+      "order": 7,
+      "description": "막힘을 풀거나 도움·전략을 활용해 해결한 경험"
+    },
+    "EXTRA_GROWTH": {
+      "label_ko": "추가도전·성장",
+      "order": 8,
+      "description": "요구 이상으로 확장하거나 이해·설명·성장을 보여준 경험"
+    }
+  },
+  "counts_by_nature": {
+    "SELF_DIRECTED": 6,
+    "RECOVERY_RESILIENCE": 10,
+    "GOAL_ACHIEVEMENT": 8,
+    "PLANNING_SELF_REGULATION": 8,
+    "EXTRA_GROWTH": 6,
+    "FOCUS_IMMERSION": 8,
+    "PROBLEM_SOLVING": 6,
+    "ERROR_LEARNING": 8
   }
 }
