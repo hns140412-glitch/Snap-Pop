@@ -187,7 +187,12 @@ function create(deps){
     selectedId=badgeId;
     renderGrid();
     const secretLocked=item.category==="SECRET"&&item.ownership_state!=="EARNED";
-    q("#badgeDetailArt").innerHTML=artMarkup(item,"large");
+    const detailArt=q("#badgeDetailArt");
+    detailArt.innerHTML=artMarkup(item,"large");
+    detailArt.dataset.tier=item.tier||"NONE";
+    detailArt.classList.remove("badgeDetailReveal");
+    void detailArt.offsetWidth;
+    detailArt.classList.add("badgeDetailReveal");
     q("#badgeDetailNo").textContent=`No.${String(item.slot).padStart(3,"0")}`;
     q("#badgeDetailTitle").textContent=displayTitle(item);
     q("#badgeDetailCategory").textContent=item.category;
