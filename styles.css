@@ -364,3 +364,42 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
   .badgeTierHalo,.badgeCatalogTile .badgeCatalogArtWrap{transition:none}
   .badgeCatalogNew,.badgeDetailReveal{animation:none}
 }
+
+
+/* BADGE CODEX DISCOVERY STATE V7 */
+.badgeCatalogArt[data-tier="GREEN"]{--tier:#7fa271}
+.badgeCatalogArt[data-tier="BLUE"]{--tier:#738fa8}
+.badgeCatalogArt[data-tier="RED"]{--tier:#b86e63}
+.badgeCatalogArt[data-tier="GOLD"]{--tier:#c6a34f}
+.badgeCatalogArt[data-tier="PLATINUM"]{--tier:#9aa0a8}
+.badgeCatalogArt[data-tier="NONE"]{--tier:#9ba099}
+.badgeCatalogArt.state-earned{border-color:var(--tier)}
+.badgeCatalogTile.inProgress .badgeCatalogArt{
+  filter:saturate(.48) brightness(.9);
+  opacity:.9;
+  border-style:solid;
+  border-color:#9da97c;
+  box-shadow:inset 0 0 0 2px #fff8df88,0 0 0 2px #9da97c55,0 4px 11px #30453b24
+}
+.badgeCatalogTile.inProgress b{color:#4d6257}
+.badgeCatalogProgressMark{
+  position:absolute;right:3px;bottom:3px;width:24px;height:24px;border-radius:50%;
+  background:conic-gradient(#9da97c 0 64%,#293f3833 64% 100%);
+  border:2px solid #fff8df;box-shadow:0 2px 7px #3c4e4530;z-index:2
+}
+.badgeCatalogProgressMark:after{
+  content:"";position:absolute;inset:5px;border-radius:50%;background:#f3ecd9
+}
+.badgeProgressText{color:#76845f!important;font-weight:900;letter-spacing:.03em}
+.badgeCatalogTile[data-ownership="EARNED"] .badgeCatalogNo{color:var(--tier);opacity:.95}
+.badgeCatalogTile[data-ownership="IN_PROGRESS"] .badgeCatalogNo{color:#76845f}
+.badgeCatalogTile[data-ownership="UNEARNED"] .badgeCatalogNo{opacity:.62}
+.badgeDetailSheet .badgeCatalogArt.large[data-tier="GREEN"]{--tier:#7fa271}
+.badgeDetailSheet .badgeCatalogArt.large[data-tier="BLUE"]{--tier:#738fa8}
+.badgeDetailSheet .badgeCatalogArt.large[data-tier="RED"]{--tier:#b86e63}
+.badgeDetailSheet .badgeCatalogArt.large[data-tier="GOLD"]{--tier:#c6a34f}
+.badgeDetailSheet .badgeCatalogArt.large[data-tier="PLATINUM"]{--tier:#9aa0a8}
+.badgeDetailSheet .badgeCatalogArt.large{
+  border-color:var(--tier,#d2b863);
+  box-shadow:inset 0 0 0 5px #fff8ddaa,0 0 0 3px color-mix(in srgb,var(--tier,#d2b863) 78%,#fff 22%),0 12px 34px #2b322839
+}
