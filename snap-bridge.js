@@ -89,6 +89,8 @@
   // Optional central Learning evidence path. Snap owns the outcome observation;
   // authenticated host/session and durable ACK remain external authority.
   let centralEvidencePipeline = null;
+  let centralDecisionConfig = null;
+  let growthDecisionState = { status:'UNBOUND', received_at:null, decision:null, reason:'CENTRAL_DECISION_NOT_CONFIGURED' };
   let centralEvidenceState = { status:'UNBOUND', event_id:null, reason:'TRUSTED_CENTRAL_SESSION_NOT_CONFIGURED' };
 
   function centralEvidenceStatus() { return { ...centralEvidenceState }; }
@@ -100,7 +102,7 @@
     } catch {}
   }
 
-  function configureCentralEvidence({ endpointUrl, sessionProvider, tokenProvider,
+  function configureCentralEvidence({ endpointUrl, decisionEndpointUrl, sessionProvider, tokenProvider,
     fetchImpl, indexedDB:database, dbName } = {}) {
     if (centralEvidencePipeline) throw new Error('CENTRAL_EVIDENCE_ALREADY_CONFIGURED');
     if (typeof sessionProvider !== 'function' || typeof tokenProvider !== 'function')
@@ -109,14 +111,28 @@
     if (factory?.VERSION !== 'TAKY_PWA_SCOPED_EVIDENCE_PIPELINE_V1' ||
         typeof factory.create !== 'function')
       throw new Error('PINNED_CENTRAL_BROWSER_PIPELINE_UNAVAILABLE');
+    const fetcher=fetchImpl || globalThis.fetch.bind(globalThis);
     centralEvidencePipeline = factory.create({
       endpointUrl, sessionProvider, tokenProvider,
-      fetchImpl:fetchImpl || globalThis.fetch.bind(globalThis),
+      fetchImpl:fetcher,
       indexedDB:database || globalThis.indexedDB, dbName,
       cryptoProvider:globalThis.crypto
     });
+    const evidenceUrl=new URL(endpointUrl,location.href);
+    const decisionUrl=decisionEndpointUrl
+      ?new URL(decisionEndpointUrl,location.href)
+      :new URL('/api/learning/decision',evidenceUrl.origin);
+    centralDecisionConfig={
+      endpointUrl:decisionUrl.href,
+      sessionProvider,
+      tokenProvider,
+      fetchImpl:fetcher
+    };
+    growthDecisionState={status:'READY',received_at:null,decision:null,reason:null};
     reportCentralEvidence('READY',null,null);
-    return Object.freeze({ configured:true, version:centralEvidencePipeline.version });
+    Promise.resolve().then(()=>requestLearningGrowthDecision()).catch(()=>{});
+    return Object.freeze({ configured:true, version:centralEvidencePipeline.version,
+      decision_endpoint_configured:true });
   }
 
   async function flushCentralEvidenceOnce(owner) {
@@ -133,6 +149,8 @@
     if (!centralEvidencePipeline) return;
     const pipeline=centralEvidencePipeline;
     centralEvidencePipeline=null;
+    centralDecisionConfig=null;
+    growthDecisionState={status:'UNBOUND',received_at:null,decision:null,reason:'CENTRAL_DECISION_CLOSED'};
     await pipeline.close();
     reportCentralEvidence('UNBOUND',null,'CENTRAL_EVIDENCE_CLOSED');
   }
@@ -154,6 +172,127 @@
         else reportCentralEvidence('HOLD',event.event_id,'DURABLE_ENQUEUE_NOT_CONFIRMED');
       }).catch(error=>reportCentralEvidence('HOLD',event.event_id,
         String(error?.message || 'CENTRAL_ENQUEUE_UNAVAILABLE')));
+  }
+
+  function growthDecisionStatus() {
+    return {
+      status:growthDecisionState.status,
+      received_at:growthDecisionState.received_at,
+      reason:growthDecisionState.reason,
+      decision:growthDecisionState.decision
+        ?JSON.parse(JSON.stringify(growthDecisionState.decision)):null
+    };
+  }
+
+  function getLearningGrowthDecision() {
+    return growthDecisionState.decision
+      ?JSON.parse(JSON.stringify(growthDecisionState.decision)):null;
+  }
+
+  async function requestLearningGrowthDecision() {
+    if(!centralDecisionConfig){
+      growthDecisionState={status:'UNBOUND',received_at:null,decision:null,
+        reason:'CENTRAL_DECISION_NOT_CONFIGURED'};
+      return {ok:false,reason:growthDecisionState.reason};
+    }
+    if(!context.linked_context_valid||!context.child_id||!context.subject||
+       !context.concept_skill_target){
+      growthDecisionState={status:'HOLD',received_at:null,decision:null,
+        reason:'LINKED_LEARNING_SCOPE_REQUIRED'};
+      return {ok:false,reason:growthDecisionState.reason};
+    }
+    const session=await centralDecisionConfig.sessionProvider();
+    const memberId=String(session?.selected_member_id||'').trim();
+    const familyId=String(session?.family_id||'').trim();
+    if(session?.authenticated!==true||!familyId||!memberId||memberId!==context.child_id){
+      growthDecisionState={status:'HOLD',received_at:null,decision:null,
+        reason:'TRUSTED_CENTRAL_MEMBER_SCOPE_REQUIRED'};
+      return {ok:false,reason:growthDecisionState.reason};
+    }
+    let token;
+    try{token=await centralDecisionConfig.tokenProvider();}
+    catch{
+      growthDecisionState={status:'HOLD',received_at:null,decision:null,
+        reason:'CENTRAL_DECISION_TOKEN_UNAVAILABLE'};
+      return {ok:false,reason:growthDecisionState.reason};
+    }
+    if(!String(token||'').trim()){
+      growthDecisionState={status:'HOLD',received_at:null,decision:null,
+        reason:'CENTRAL_DECISION_TOKEN_UNAVAILABLE'};
+      return {ok:false,reason:growthDecisionState.reason};
+    }
+    let response;
+    try{
+      response=await centralDecisionConfig.fetchImpl(centralDecisionConfig.endpointUrl,{
+        method:'POST',credentials:'omit',
+        headers:{'Authorization':'Bearer '+String(token).trim(),'Content-Type':'application/json'},
+        body:JSON.stringify({
+          family_id:familyId,member_id:memberId,
+          subject:String(context.subject).toLowerCase(),
+          concept_skill_target:String(context.concept_skill_target).toLowerCase()
+        })
+      });
+    }catch{
+      growthDecisionState={status:'HOLD',received_at:null,decision:null,
+        reason:'CENTRAL_DECISION_REQUEST_FAILED'};
+      return {ok:false,reason:growthDecisionState.reason};
+    }
+    let body=null;
+    try{body=await response.json();}catch{}
+    const decision=body?.runtime_result?.growth_next_step;
+    const valid=response.status===200&&body?.ok===true&&
+      body?.authenticated_server_response===true&&
+      body?.receipt_scope?.member_id===memberId&&
+      decision?.authority==='LEARNING_ENGINE_GROWTH_INTENT_ONLY'&&
+      decision?.guards?.engine_guides_growth_not_answers===true&&
+      decision?.hide_to_snap_handoff?.final_answer_generation_forbidden===true;
+    if(!valid){
+      growthDecisionState={status:'HOLD',received_at:null,decision:null,
+        reason:'CENTRAL_GROWTH_DECISION_INVALID'};
+      return {ok:false,reason:growthDecisionState.reason};
+    }
+    growthDecisionState={status:'READY',received_at:iso(),
+      decision:JSON.parse(JSON.stringify(decision)),reason:null};
+    try{window.dispatchEvent(new CustomEvent('snap-learning-growth-updated',
+      {detail:growthDecisionStatus()}));}catch{}
+    return {ok:true,decision:getLearningGrowthDecision()};
+  }
+
+  function growthPrompt(step=0) {
+    const d=getLearningGrowthDecision();
+    if(!d)return null;
+    const word=String(context.word||'').trim();
+    const chunk=String(d.language_support?.expression_chunks?.[0]||'').trim();
+    const grammar=String(d.language_support?.grammar_patterns?.[0]||'').trim();
+    const easy=String(d.language_support?.easy_english_definitions?.[0]||'').trim();
+    const depth=Number(d.question_depth?.level||1);
+    const phase=String(d.support_phase||'ELICIT_PULL');
+    if(step<=0){
+      return {
+        question:word?('What does "'+word+'" mean here?'):'What is the key idea?',
+        hint:easy?('Easy English: '+easy):(chunk?('Useful chunk: '+chunk):'Think of the meaning before translating word by word.'),
+        language:'ENGLISH_FIRST_KOREAN_FALLBACK',
+        support_phase:phase
+      };
+    }
+    if(step===1){
+      return {
+        question:word?('Can you use "'+word+'" in your own short idea?'):'Can you say the idea in your own English?',
+        hint:chunk?('Useful chunk: '+chunk):(grammar?('Pattern: '+grammar):'Build a short English chunk first.'),
+        language:'ENGLISH_FIRST_KOREAN_FALLBACK',
+        support_phase:phase
+      };
+    }
+    return {
+      question:depth>=4
+        ?(word?('Use "'+word+'" in a new situation. Why does it fit?'):'Use your idea in a new situation and explain why.')
+        :(word?('Make your own sentence with "'+word+'".'):'Make your own sentence.'),
+      hint:phase==='TRANSFER_PUSH'
+        ?'Try it without translating every word first.'
+        :(grammar?('Pattern: '+grammar):'Say the idea first, then make the sentence smoother.'),
+      language:'ENGLISH_FIRST_KOREAN_FALLBACK',
+      support_phase:phase
+    };
   }
 
   function safeReturnUrl(taskState = 'PARTIAL') {
@@ -266,6 +405,19 @@
           used_handoff_word: context.word || null,
           child_authored: true
         });
+        if(context.learning_target_id){
+          emitLearningOutcome({
+            completed:true,
+            production_ref:'snap-production:'+String(Date.now()),
+            growth_signals:[
+              {dimension:'EXPRESSION',outcome:'UNKNOWN',assisted:false,
+               kind:'CHILD_PRODUCTION_CREATED',target_id:context.learning_target_id},
+              {dimension:'THINKING',outcome:'UNKNOWN',assisted:false,
+               kind:'CHILD_PRODUCTION_CREATED',target_id:context.learning_target_id,
+               depth:Number(getLearningGrowthDecision()?.question_depth?.level||0)||null}
+            ]
+          });
+        }
         ensureBaseCampChip();
       }
     };
@@ -298,6 +450,18 @@
       production_ref: input.production_ref || input.event_id || null,
       rubric_ref: input.rubric_ref || null,
       rubric_result: input.rubric_result || null,
+      growth_signals: Array.isArray(input.growth_signals)
+        ?input.growth_signals.slice(0,16).map(x=>({
+          dimension:String(x?.dimension||'').toUpperCase(),
+          outcome:String(x?.outcome||'UNKNOWN').toUpperCase(),
+          assisted:x?.assisted===true,
+          transfer:x?.transfer===true,
+          direct_english:x?.direct_english===true?true:x?.direct_english===false?false:null,
+          kind:x?.kind||null,
+          target_id:x?.target_id||scope.learning_target_id||null,
+          depth:Number.isFinite(Number(x?.depth))?Math.max(0,Math.min(5,Number(x.depth))):null
+        })):[],
+      growth_intent_ref: getLearningGrowthDecision()?.version || null,
       evidence_source_refs: Array.isArray(input.source_refs) ? [...input.source_refs] : [],
       evidence_provenance: Array.isArray(input.provenance) ? [...input.provenance] : [],
       contextual_evidence_only: true,
@@ -364,6 +528,10 @@
       returnToBase,
       requestRubricReview,
       emitLearningOutcome,
+      requestLearningGrowthDecision,
+      getLearningGrowthDecision,
+      growthDecisionStatus,
+      growthPrompt,
       configureCentralEvidence,
       flushCentralEvidenceOnce,
       closeCentralEvidence,
