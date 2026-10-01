@@ -12,6 +12,7 @@
   const LOOPBACK=new Set(['localhost','127.0.0.1','[::1]']);
   const FIELDS=['session_id','goal_id','task_id','lap_id','return_target','from_app',
     'word','word_context','child_id','subject','concept_skill_target','learning_target_id'];
+  const ALLOWED_CONTINUITY_SOURCES=new Set(['ready-set','hide-seek']);
   function safeBaseUrl(raw){
     try{
       const u=new URL(clean(raw));
@@ -46,13 +47,15 @@
       candidate.lap_id||candidate.return_target||candidate.from_app);
     if(attempted){
       if(!candidate.session_id||!candidate.task_id||!candidate.lap_id||
-         !candidate.return_target||candidate.from_app!=='ready-set')
+         !candidate.return_target||!ALLOWED_CONTINUITY_SOURCES.has(candidate.from_app))
         return {ok:false,linked:false,context:{},reason:'LINKED_RUN_FIELDS_REQUIRED'};
       const ready=trustedTarget(candidate.return_target,allowed);
       if(!ready)return {ok:false,linked:false,context:{},reason:'UNTRUSTED_READY_TARGET'};
       return {ok:true,linked:true,context:{
         ...candidate,return_target:ready.href,linked_context_valid:true,
         scope_is_continuity_only:true,
+        handoff_via_hide_seek:candidate.from_app==='hide-seek',
+        continuity_source_authoritative:false,
         received_at:incoming?(now||new Date().toISOString()):clean(previous?.received_at)||null,
         task_completed:incoming?false:previous?.task_completed===true
       }};
