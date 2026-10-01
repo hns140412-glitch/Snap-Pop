@@ -612,9 +612,15 @@
       });
       assert("badge-candidate-is-review-only",badgeCandidate.status==="REVIEW_REQUIRED"&&badgeCandidate.active===false&&badgeCandidate.awardAuthorized===false&&badgeCandidate.autoCatalogInsertAllowed===false&&badgeCandidate.autoTriggerActivationAllowed===false);
 
-      const p1=window.SnapPopBadges.progressFromCount(1),p5=window.SnapPopBadges.progressFromCount(5),p6=window.SnapPopBadges.progressFromCount(6),p25=window.SnapPopBadges.progressFromCount(25);
-      assert("badge-five-tier-progression-runtime",p1.tier==="GREEN"&&p5.tier==="GREEN"&&p6.tier==="BLUE"&&p25.tier==="PLATINUM");
-      assert("badge-stars-clamped-one-to-five-runtime",p1.stars===1&&p5.stars===5&&window.SnapPopBadgeVisual.starSlots(3).filter(x=>x.active).length===3);
+      const p1=window.SnapPopBadges.progressFromCount(1),p5=window.SnapPopBadges.progressFromCount(5),p6=window.SnapPopBadges.progressFromCount(6),p25=window.SnapPopBadges.progressFromCount(25),p26=window.SnapPopBadges.progressFromCount(26);
+      assert("badge-five-tier-progression-runtime",p1.tier==="GREEN"&&p5.tier==="GREEN"&&p6.tier==="BLUE"&&p25.tier==="PLATINUM"&&p26.tier==="PLATINUM");
+      assert("badge-first-award-has-zero-reacquire-stars-runtime",p1.stars===0&&p5.stars===4&&p6.stars===0);
+      assert("badge-reacquire-stars-zero-to-five-runtime",
+        window.SnapPopBadgeVisual.starSlots(0).filter(x=>x.active).length===0&&
+        window.SnapPopBadgeVisual.starSlots(3).filter(x=>x.active).length===3&&
+        window.SnapPopBadgeVisual.starSlots(7).filter(x=>x.active).length===5&&
+        p26.stars===5&&p26.complete===true
+      );
 
       const runtimeIdentity={profile:{name:"런타임 탐험가",photo:""}};
       const theme=window.SnapPopBadgeThemeExpression.normalize({themeId:"EXPLORATION",assetState:"UNRESOLVED"});
