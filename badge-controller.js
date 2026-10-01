@@ -72,12 +72,21 @@ async function recordBadgeEvent(family,payload={},source="SNAP_POP"){
     const matches=window.SnapPopBadges.matchEvent(event);
     if(matches.length){
       const owned=await store.get("badgeProgress")||{};
+      const presentation=[];
       for(const item of matches){
         const key=item.id||item.draftId;
         const prev=owned[key]||{count:0};
-        owned[key]={count:(prev.count||0)+1,...window.SnapPopBadges.nextProgress(prev.count||0),lastAt:event.at};
+        const previousCount=Math.max(0,Number(prev.count)||0);
+        const nextCount=previousCount+1;
+        owned[key]={count:nextCount,...window.SnapPopBadges.nextProgress(previousCount),lastAt:event.at};
+        presentation.push({badgeId:key,previousCount,nextCount,at:event.at});
       }
       await store.set("badgeProgress",owned);
+      if(window.SnapPopBadgeAcquisition){
+        for(const entry of presentation){
+          try{window.SnapPopBadgeAcquisition.present(entry)}catch{}
+        }
+      }
     }
     return event;
   }catch{return null}
