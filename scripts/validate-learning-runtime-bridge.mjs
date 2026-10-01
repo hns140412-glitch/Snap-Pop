@@ -1,6 +1,12 @@
 import fs from 'node:fs';
 const s=fs.readFileSync('snap-bridge.js','utf8');
 const required=[
+  "child_authored:input.child_authored===true",
+  "pedagogical_refs:referenceRefs.pedagogical_refs",
+  "usage_refs:referenceRefs.usage_refs",
+  "lexical_refs:referenceRefs.lexical_refs",
+  "curriculum_refs:referenceRefs.curriculum_refs",
+  "function learningReferenceRefs()",
   'expression_reuse:',
   'story_structure:',
   'reasoning_evidence:',
