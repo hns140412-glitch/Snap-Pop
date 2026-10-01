@@ -284,3 +284,48 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 .badgeDetailRecord>div{border:1px solid #cbbd91;border-radius:13px;background:#fff8e6;padding:9px 10px;text-align:left}
 .badgeDetailRecord span{display:block;font-size:8px;color:#7b8178;margin-bottom:3px}
 .badgeDetailRecord b{display:block;font-size:11px;color:#29483d}
+
+
+/* BADGE CODEX VISUAL STATE V6 */
+.badgeCatalogTile{--tier:#c8b77f}
+.badgeCatalogTile[data-tier="GREEN"]{--tier:#7fa271}
+.badgeCatalogTile[data-tier="BLUE"]{--tier:#738fa8}
+.badgeCatalogTile[data-tier="RED"]{--tier:#b86e63}
+.badgeCatalogTile[data-tier="GOLD"]{--tier:#c6a34f}
+.badgeCatalogTile[data-tier="PLATINUM"]{--tier:#9aa0a8}
+.badgeCatalogTile.earned .badgeCatalogArt{
+  border-color:var(--tier);
+  box-shadow:inset 0 0 0 2px #fff8e6cc,0 0 0 2px color-mix(in srgb,var(--tier) 72%,#fff 28%),0 5px 14px #483a221e
+}
+.badgeCatalogTile.earned .badgeCatalogArtWrap:after{
+  content:"";position:absolute;inset:4px;border-radius:50%;pointer-events:none;
+  box-shadow:inset 0 0 0 1px #ffffff88
+}
+.badgeCatalogTile.selected{transform:translateY(-2px)}
+.badgeCatalogTile.selected .badgeCatalogArtWrap:before{
+  content:"";position:absolute;inset:-5px;border-radius:50%;z-index:2;pointer-events:none;
+  border:2px solid #f4d66f;box-shadow:0 0 0 2px #173d35,0 0 16px #e4c75d77
+}
+.badgeCatalogTile.locked{opacity:.86}
+.badgeCatalogTile.locked .badgeCatalogArt{
+  filter:grayscale(1) contrast(.84) brightness(.72);
+  opacity:.78;border-style:dashed;border-color:#8f948d;
+  box-shadow:inset 0 0 0 3px #ffffff22,0 4px 9px #28352f1f
+}
+.badgeCatalogTile.locked b{color:#777c75}
+.badgeLockedText{letter-spacing:.04em}
+.badgeTierMini{
+  display:block;margin-top:2px;font-size:6.5px;font-weight:900;letter-spacing:.04em;color:var(--tier)
+}
+.badgeCatalogTile.recentEarned .badgeCatalogArtWrap:before{
+  content:"";position:absolute;inset:-4px;border-radius:50%;pointer-events:none;
+  border:1px solid #e5c75a;box-shadow:0 0 12px #e5c75a55
+}
+.badgeCatalogTile.recentEarned .badgeCatalogNew{animation:badgeNewPulse 1.8s ease-in-out infinite}
+@keyframes badgeNewPulse{0%,100%{transform:scale(1);box-shadow:0 2px 6px #57352633}50%{transform:scale(1.07);box-shadow:0 0 10px #d55f4970}}
+.badgeDetailSheet .badgeCatalogArt.large{
+  border-color:var(--tier,#d2b863)
+}
+@media(prefers-reduced-motion:reduce){
+  .badgeCatalogTile,.badgeCatalogTile.recentEarned .badgeCatalogNew{transition:none;animation:none}
+}
