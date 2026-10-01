@@ -1,6 +1,12 @@
 import fs from 'node:fs';
 const s=fs.readFileSync('snap-bridge.js','utf8');
 const required=[
+  'expression_reuse:',
+  'story_structure:',
+  'reasoning_evidence:',
+  'expression_expansion:',
+  'vocabulary_used:',
+  'production_texts:',
   "'child_id','subject','concept_skill_target','learning_target_id'",
   'function emitLearningOutcome',
   'function requestLearningGrowthDecision',
