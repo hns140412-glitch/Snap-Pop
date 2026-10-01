@@ -128,7 +128,7 @@
       tokenProvider,
       fetchImpl:fetcher
     };
-    growthDecisionState={status:'READY',received_at:null,decision:null,reason:null};
+    growthDecisionState={status:'PENDING',received_at:null,decision:null,reason:'CENTRAL_DECISION_REQUEST_PENDING'};
     reportCentralEvidence('READY',null,null);
     Promise.resolve().then(()=>requestLearningGrowthDecision()).catch(()=>{});
     return Object.freeze({ configured:true, version:centralEvidencePipeline.version,
