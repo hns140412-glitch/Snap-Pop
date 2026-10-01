@@ -249,6 +249,12 @@ function create(deps){
     if(viewSelect)viewSelect.onchange=()=>{viewMode=viewSelect.value;renderHeader();renderGrid()};
     const sortSelect=q("#badgeCatalogSort");
     if(sortSelect)sortSelect.onchange=()=>{sort=sortSelect.value;renderGrid()};
+    window.addEventListener("snap-pop:badge-open-catalog",async(event)=>{
+      const badgeId=String(event?.detail?.badgeId||"");
+      await render();
+      deps.show("badgeCatalog");
+      if(badgeId)openDetail(badgeId);
+    });
   }
 
   return Object.freeze({contract:"SNAP_POP_BADGE_CATALOG_CONTROLLER_V5_GAME_CODEX_STATE",render,install,openDetail,closeDetail});
