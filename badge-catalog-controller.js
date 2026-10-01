@@ -8,13 +8,14 @@ function create(deps){
 
   function artMarkup(item,cls=""){
     const path=esc(item.asset_runtime_url||item.asset_repo_path||"");
-    const secretLocked=item.category==="SECRET"&&item.ownership_state!=="EARNED";
-    return `<div class="badgeCatalogArt ${cls} ${secretLocked?"secretLocked":""}">
+    const state=item.ownership_state||"UNEARNED";
+    const secretLocked=item.category==="SECRET"&&state!=="EARNED";
+    const tier=state==="EARNED"?(item.tier||"GREEN"):"NONE";
+    return `<div class="badgeCatalogArt ${cls} state-${String(state).toLowerCase()} ${secretLocked?"secretLocked":""}" data-tier="${esc(tier)}">
       <img src="${path}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
       <span class="badgeCatalogArtFallback" hidden aria-hidden="true"></span>
     </div>`;
   }
-
   function starsMarkup(count=0){
     const n=Math.max(0,Math.min(5,Number(count)||0));
     return `<span class="badgeCatalogStars" aria-label="재획득 별 ${n}개">${[0,1,2,3,4].map(i=>`<i class="${i<n?"on":""}"></i>`).join("")}</span>`;
@@ -102,23 +103,27 @@ function create(deps){
   }
 
   function tileHtml(item){
-    const locked=item.ownership_state!=="EARNED";
-    return `<button class="badgeCatalogTile ${locked?"locked":"earned"} ${selectedId===item.badge_id?"selected":""} ${isRecent(item)&&!locked?"recentEarned":""}" data-badge-id="${esc(item.badge_id)}" data-tier="${esc(item.tier||"NONE")}" data-ownership="${esc(item.ownership_state)}" type="button">
+    const state=item.ownership_state||"UNEARNED";
+    const locked=state==="UNEARNED";
+    const inProgress=state==="IN_PROGRESS";
+    const earned=state==="EARNED";
+    const tier=earned?(item.tier||"GREEN"):"NONE";
+    const statusLabel=earned?tierLabel(tier):(inProgress?"진행 중":"미획득");
+    return `<button class="badgeCatalogTile ${locked?"locked":earned?"earned":"inProgress"} ${selectedId===item.badge_id?"selected":""} ${isRecent(item)&&earned?"recentEarned":""}" data-badge-id="${esc(item.badge_id)}" data-tier="${esc(tier)}" data-ownership="${esc(state)}" aria-label="No.${String(item.slot).padStart(3,"0")} ${esc(displayTitle(item))}, ${esc(statusLabel)}" type="button">
       <span class="badgeCatalogNo">No.${String(item.slot).padStart(3,"0")}</span>
       <div class="badgeCatalogArtWrap">
         ${artMarkup(item)}
         ${locked?'<span class="badgeCatalogLock" aria-hidden="true"></span>':""}
-        ${recent?'<span class="badgeCatalogNew">NEW</span>':""}
-        ${!locked?'<span class="badgeCatalogOwnedMark" aria-hidden="true"></span>':""}
+        ${inProgress?'<span class="badgeCatalogProgressMark" aria-hidden="true"></span>':""}
+        ${isRecent(item)?'<span class="badgeCatalogNew">NEW</span>':""}
       </div>
       <b>${esc(displayTitle(item))}</b>
       <span class="badgeNatureMini">${esc(natureLabel(item.primary_nature))}</span>
-      ${item.ownership_state==="EARNED"
-        ?`<span class="badgeTierMini">${esc(tierLabel(item.tier))}</span>${starsMarkup(item.reacquire_stars)}`
-        :'<small class="badgeLockedText">미획득</small>'}
+      ${earned
+        ?`<span class="badgeTierMini">${esc(tierLabel(tier))}</span>${starsMarkup(item.reacquire_stars)}`
+        :`<small class="${inProgress?"badgeProgressText":"badgeLockedText"}">${inProgress?"진행 중":"미획득"}</small>`}
     </button>`;
   }
-
   function renderGrid(){
     const selected=sorted(window.SnapPopBadgeCatalogUI.select(cache,{filter,category,nature}));
     const host=q("#badgeCatalogGrid");
@@ -246,7 +251,7 @@ function create(deps){
     if(sortSelect)sortSelect.onchange=()=>{sort=sortSelect.value;renderGrid()};
   }
 
-  return Object.freeze({contract:"SNAP_POP_BADGE_CATALOG_CONTROLLER_V4_CODEX_VIEW",render,install,openDetail,closeDetail});
+  return Object.freeze({contract:"SNAP_POP_BADGE_CATALOG_CONTROLLER_V5_GAME_CODEX_STATE",render,install,openDetail,closeDetail});
 }
 
 window.SnapPopBadgeCatalogController=Object.freeze({instance(deps){if(!singleton)singleton=create(deps);return singleton}});
