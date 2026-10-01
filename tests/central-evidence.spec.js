@@ -74,7 +74,7 @@ test('Snap scoped outcome -> durable browser outbox -> exact central observation
  const growth=await page.evaluate(()=>({prompt:SnapPopBridge.growthPrompt(1),request:window.__decisionRequest}));
  expect(growth.request.credentials).toBe('omit');
  expect(growth.request.body).toMatchObject({family_id:'F',member_id:'A',subject:'english',concept_skill_target:'writing'});
- expect(growth.prompt.question).toContain('your own short idea');
+ expect(growth.prompt.question).toContain('your own English');
  expect(growth.prompt.hint).toContain('I think');
  const flushed=await page.evaluate(()=>SnapPopBridge.flushCentralEvidenceOnce('snap-browser-fixture'));
  expect(flushed).toMatchObject({processed:true,settled:true,status:'ACKED',
