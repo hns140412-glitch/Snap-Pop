@@ -32,7 +32,7 @@ const uid=p=>`${p}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
 
 
 function toast(t){return window.SnapPopUIShell.toast(t)}
-function show(id){const view=window.SnapPopUIShell.activateView(id);if(view.isMain)lastMain=id;if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="result")renderLastResult()}
+function show(id){const view=window.SnapPopUIShell.activateView(id);if(view.isMain)lastMain=id;if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="badgeCatalog")renderBadgeCatalog();if(id==="result")renderLastResult()}
 
 
 
@@ -103,6 +103,8 @@ async function renameCurrentCrewMember(nextName){return settingsProfileControlle
 async function loadSettings(){return settingsProfileController().loadSettings()}
 async function renderCrewRoster(){return settingsProfileController().renderCrewRoster()}
 async function renderIdentityPresence(){return settingsProfileController().renderIdentityPresence()}
+function badgeCatalogController(){return window.SnapPopBadgeCatalogController.instance({query:$,queryAll:$,show})}
+async function renderBadgeCatalog(){return badgeCatalogController().render()}
 function badgeController(){return window.SnapPopBadgeController.instance({query:$,uid,resolvedIdentity})}
 async function proposeBadgeCandidateFromObservations(args={}){return badgeController().proposeBadgeCandidateFromObservations(args)}
 async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP"){return badgeController().recordBadgeBehaviorObservation(family,payload,source)}
@@ -200,6 +202,7 @@ bridgeContextController().install();
 $$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
 interactionSupportController().install();
 settingsProfileController().install();
+badgeCatalogController().install();
 $("#nav").onclick=async e=>{const b=e.target.closest("button[data-view]");if(!b)return;const view=b.dataset.view;if(view==="explore"){const active=await window.SnapPopStorage.get("active");if(active){renderExplore(active);show("explore")}else{show("map");toast("글쓰기 탐험지를 하나 골라 시작해봐.")}}else show(view)}
 if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
 init().then(()=>{if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.init="PASS"}).catch(e=>{if(window.__SNAP_RUNTIME_STATUS){window.__SNAP_RUNTIME_STATUS.init="FAIL";window.__SNAP_RUNTIME_STATUS.errors.push({type:"init",message:String(e?.message||e)})}console.error(e);toast("앱 데이터를 준비하지 못했어요.")});
