@@ -183,15 +183,15 @@
  <div class="badgeNatureFilterWrap">
   <span class="badgeNatureFilterLabel">성격</span>
   <div id="badgeNatureFilters" class="badgeCatalogFilters nature" role="group" aria-label="배지 성격">
-   <button class="on" data-badge-nature="ALL" type="button">전체</button>
-   <button data-badge-nature="SELF_DIRECTED" type="button">스스로</button>
-   <button data-badge-nature="GOAL_ACHIEVEMENT" type="button">목표도달</button>
-   <button data-badge-nature="FOCUS_IMMERSION" type="button">집중·몰입</button>
-   <button data-badge-nature="RECOVERY_RESILIENCE" type="button">복귀·재도전</button>
-   <button data-badge-nature="ERROR_LEARNING" type="button">실수·교정</button>
-   <button data-badge-nature="PLANNING_SELF_REGULATION" type="button">계획·조절</button>
-   <button data-badge-nature="PROBLEM_SOLVING" type="button">문제해결</button>
-   <button data-badge-nature="EXTRA_GROWTH" type="button">추가도전·성장</button>
+   <button class="on" data-badge-nature="ALL" data-label="전체" type="button"><b>전체</b><span data-badge-nature-progress="ALL">0/60</span></button>
+   <button data-badge-nature="SELF_DIRECTED" data-label="스스로" type="button"><b>스스로</b><span data-badge-nature-progress="SELF_DIRECTED">0/0</span></button>
+   <button data-badge-nature="GOAL_ACHIEVEMENT" data-label="목표도달" type="button"><b>목표도달</b><span data-badge-nature-progress="GOAL_ACHIEVEMENT">0/0</span></button>
+   <button data-badge-nature="FOCUS_IMMERSION" data-label="집중·몰입" type="button"><b>집중·몰입</b><span data-badge-nature-progress="FOCUS_IMMERSION">0/0</span></button>
+   <button data-badge-nature="RECOVERY_RESILIENCE" data-label="복귀·재도전" type="button"><b>복귀·재도전</b><span data-badge-nature-progress="RECOVERY_RESILIENCE">0/0</span></button>
+   <button data-badge-nature="ERROR_LEARNING" data-label="실수·교정" type="button"><b>실수·교정</b><span data-badge-nature-progress="ERROR_LEARNING">0/0</span></button>
+   <button data-badge-nature="PLANNING_SELF_REGULATION" data-label="계획·조절" type="button"><b>계획·조절</b><span data-badge-nature-progress="PLANNING_SELF_REGULATION">0/0</span></button>
+   <button data-badge-nature="PROBLEM_SOLVING" data-label="문제해결" type="button"><b>문제해결</b><span data-badge-nature-progress="PROBLEM_SOLVING">0/0</span></button>
+   <button data-badge-nature="EXTRA_GROWTH" data-label="추가도전·성장" type="button"><b>추가도전·성장</b><span data-badge-nature-progress="EXTRA_GROWTH">0/0</span></button>
   </div>
  </div>
  <div id="badgeCatalogGrid" class="badgeCatalogGrid"></div>
@@ -211,6 +211,10 @@
   <p id="badgeDetailStory"></p>
   <div id="badgeDetailStars"></div>
   <strong id="badgeDetailState"></strong>
+  <div class="badgeDetailRecord" aria-label="획득 기록">
+   <div><span>획득 횟수</span><b id="badgeDetailCount">0회</b></div>
+   <div><span>마지막 획득</span><b id="badgeDetailLast">-</b></div>
+  </div>
  </section>
 </div>
 <section id="special" class="view parchment subflow">
