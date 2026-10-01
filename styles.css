@@ -262,3 +262,14 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 .badgeDetailChips{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}
 .badgeDetailSheet .badgeNatureChip{background:#e7efdf;border-color:#a6b795;color:#315047}
 @media(max-width:370px){.badgeNatureGroupGrid{gap:10px 5px}.badgeCatalogFilters.nature button{font-size:8px;padding:6px 8px}}
+
+
+/* BADGE CODEX VIEW MODE V4 */
+.badgeCodexToolbarV2{grid-template-columns:minmax(0,1fr) auto}
+.badgeCodexSelectors{display:flex;gap:6px;align-items:center;justify-content:flex-end}
+.badgeCodexSelectors .badgeSortLabel{padding-left:7px}
+.badgeCodexSelectors select{max-width:92px}
+@media(max-width:390px){
+  .badgeCodexToolbarV2{grid-template-columns:1fr}
+  .badgeCodexSelectors{justify-content:flex-start;overflow:auto;padding-bottom:2px}
+}
