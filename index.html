@@ -161,14 +161,17 @@
   <button data-badge-category="EXPEDITION" type="button"><b>EXPEDITION</b><span data-badge-category-progress="EXPEDITION">0/14</span></button>
   <button data-badge-category="SECRET" type="button"><b>SECRET</b><span data-badge-category-progress="SECRET">0/6</span></button>
  </div>
- <div class="badgeCodexToolbar">
+ <div class="badgeCodexToolbar badgeCodexToolbarV2">
   <div id="badgeCatalogFilters" class="badgeCatalogFilters" role="group" aria-label="획득 상태">
    <button class="on" data-badge-filter="ALL" type="button">전체</button>
    <button data-badge-filter="EARNED" type="button">획득</button>
    <button data-badge-filter="IN_PROGRESS" type="button">진행</button>
    <button data-badge-filter="UNEARNED" type="button">미획득</button>
   </div>
-  <label class="badgeSortLabel"><span>정렬</span><select id="badgeCatalogSort"><option value="NUMBER_ASC">번호</option><option value="NATURE">성격별</option><option value="RECENT">최근 획득</option><option value="TIER">성급</option></select></label>
+  <div class="badgeCodexSelectors">
+   <label class="badgeSortLabel"><span>보기</span><select id="badgeCatalogView"><option value="GRID">전체</option><option value="NATURE">성격별</option><option value="CATEGORY">종류별</option><option value="OWNERSHIP">획득상태별</option></select></label>
+   <label class="badgeSortLabel"><span>정렬</span><select id="badgeCatalogSort"><option value="NUMBER_ASC">번호</option><option value="RECENT">최근 획득</option><option value="TIER">성급</option><option value="NATURE">성격순</option></select></label>
+  </div>
  </div>
  <div id="badgeCategoryFilters" class="badgeCatalogFilters category" role="group" aria-label="배지 분류">
   <button class="on" data-badge-category="ALL" type="button">ALL</button>
