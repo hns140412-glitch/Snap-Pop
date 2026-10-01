@@ -429,9 +429,35 @@
           child_authored: true
         });
         if(context.learning_target_id){
+          const texts=(Array.isArray(before.answers)?before.answers:[])
+            .map(x=>String(x||'').trim()).slice(0,3);
+          const joined=texts.join(' ');
+          const handoff=String(context.word||'').trim().toLowerCase();
+          const tokens=(joined.toLowerCase().match(/[a-z]+(?:'[a-z]+)?/g)||[]);
+          const handoffUsed=!!handoff&&tokens.includes(handoff);
           const growthOutcome=emitLearningOutcome({
             completed:true,
             production_ref:'snap-production:'+String(Date.now()),
+            production_texts:texts,
+            vocabulary_used:handoffUsed?[context.word]:[],
+            expression_expansion:{
+              step_lengths:texts.map(x=>x.length),
+              quality_judgment:'UNVERIFIED'
+            },
+            reasoning_evidence:{
+              raw_response_present:texts.some(Boolean),
+              quality_judgment:'UNVERIFIED'
+            },
+            perspective_shift:null,
+            story_structure:{
+              completed_steps:texts.filter(Boolean).length,
+              expected_steps:3,
+              quality_judgment:'UNVERIFIED'
+            },
+            direct_english:null,
+            expression_reuse:{handoff_word_reused:handoffUsed},
+            self_correction:null,
+            assistance_strength:null,
             growth_verification_status:'PENDING_DIMENSION_REVIEW',
             growth_review_required:true,
             requested_growth_dimensions:['GRAMMAR','EXPRESSION','THINKING','ENGLISH_THINKING'],
@@ -474,6 +500,9 @@
       skill_id: scope.concept_skill_target,
       concept_skill_target: scope.concept_skill_target,
       member_id: scope.member_id,
+      session_id: context.session_id || null,
+      task_id: context.task_id || null,
+      lap_id: context.lap_id || null,
       subject: scope.subject,
       learning_target_id: scope.learning_target_id,
       completed: !!input.completed,
@@ -481,6 +510,19 @@
       needed_assistance: !!(input.needed_assistance || input.help_used),
       error_persisted: !!input.error_persisted,
       production_ref: input.production_ref || input.event_id || null,
+      production_texts:Array.isArray(input.production_texts)
+        ?input.production_texts.map(x=>String(x||'')).slice(0,8):[],
+      vocabulary_used:Array.isArray(input.vocabulary_used)
+        ?[...new Set(input.vocabulary_used.map(x=>String(x||'').trim()).filter(Boolean))].slice(0,32):[],
+      grammar_stability:input.grammar_stability??null,
+      expression_expansion:input.expression_expansion??null,
+      reasoning_evidence:input.reasoning_evidence??null,
+      perspective_shift:input.perspective_shift??null,
+      story_structure:input.story_structure??null,
+      direct_english:input.direct_english??null,
+      expression_reuse:input.expression_reuse??null,
+      self_correction:input.self_correction??null,
+      assistance_strength:input.assistance_strength??null,
       rubric_ref: input.rubric_ref || null,
       rubric_result: input.rubric_result || null,
       growth_verification_status: input.growth_verification_status ||
