@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-b";
+  const VERSION="2026.10.01-a";
   const TIER_ORDER=["GREEN","BLUE","RED","GOLD","PLATINUM"];
 
   let config=null, catalog=null;
@@ -51,8 +51,11 @@
   function progressFromCount(count=0){
     const n=Math.max(0,Math.floor(Number(count)||0));
     if(n===0)return {tier:null,stars:0,complete:false};
-    const index=Math.min(TIER_ORDER.length-1,Math.floor((n-1)/5));
-    const stars=Math.min(5,((n-1)%5)+1);
+    const reawards=Math.max(0,n-1);
+    const index=Math.min(TIER_ORDER.length-1,Math.floor(reawards/5));
+    const stars=index<TIER_ORDER.length-1
+      ? reawards%5
+      : Math.min(5,reawards-(TIER_ORDER.length-1)*5);
     return {tier:TIER_ORDER[index],stars,complete:index===TIER_ORDER.length-1&&stars===5};
   }
 
