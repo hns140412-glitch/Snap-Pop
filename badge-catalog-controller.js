@@ -108,7 +108,8 @@ function create(deps){
       <div class="badgeCatalogArtWrap">
         ${artMarkup(item)}
         ${locked?'<span class="badgeCatalogLock" aria-hidden="true"></span>':""}
-        ${isRecent(item)?'<span class="badgeCatalogNew">NEW</span>':""}
+        ${recent?'<span class="badgeCatalogNew">NEW</span>':""}
+        ${!locked?'<span class="badgeCatalogOwnedMark" aria-hidden="true"></span>':""}
       </div>
       <b>${esc(displayTitle(item))}</b>
       <span class="badgeNatureMini">${esc(natureLabel(item.primary_nature))}</span>
@@ -209,6 +210,9 @@ function create(deps){
       ?new Intl.DateTimeFormat("ko-KR",{year:"numeric",month:"short",day:"numeric"}).format(last)
       :"-";
     const sheet=q("#badgeDetailLayer");
+    sheet.dataset.tier=String(item.tier||"NONE").toLowerCase();
+    sheet.dataset.owned=item.ownership_state==="EARNED"?"true":"false";
+    sheet.classList.toggle("recent",item.ownership_state==="EARNED"&&isRecent(item));
     sheet.hidden=false;
     sheet.setAttribute("aria-hidden","false");
   }
