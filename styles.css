@@ -329,3 +329,38 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 @media(prefers-reduced-motion:reduce){
   .badgeCatalogTile,.badgeCatalogTile.recentEarned .badgeCatalogNew{transition:none;animation:none}
 }
+
+
+/* BADGE CODEX VISUAL POLISH V6 */
+.badgeCatalogArtWrap{position:relative;isolation:isolate}
+.badgeTierHalo{position:absolute;inset:-4px;border-radius:50%;z-index:0;opacity:0;transform:scale(.94);transition:opacity .18s ease,transform .18s ease,box-shadow .18s ease}
+.badgeCatalogArt{position:relative;z-index:1}
+.badgeCatalogTile.earned .badgeTierHalo{opacity:.72;transform:scale(1)}
+.badgeCatalogTile[data-tier="GREEN"] .badgeTierHalo{box-shadow:0 0 0 2px #87a66f,0 0 14px #87a66f55}
+.badgeCatalogTile[data-tier="BLUE"] .badgeTierHalo{box-shadow:0 0 0 2px #7398ad,0 0 15px #7398ad55}
+.badgeCatalogTile[data-tier="RED"] .badgeTierHalo{box-shadow:0 0 0 2px #b86f68,0 0 15px #b86f6855}
+.badgeCatalogTile[data-tier="GOLD"] .badgeTierHalo{box-shadow:0 0 0 2px #c9a64d,0 0 17px #c9a64d66}
+.badgeCatalogTile[data-tier="PLATINUM"] .badgeTierHalo{box-shadow:0 0 0 2px #a9b7b7,0 0 18px #d6e5e577}
+.badgeCatalogTile.locked .badgeTierHalo{display:none}
+.badgeCatalogTile.selected .badgeCatalogArtWrap{transform:translateY(-2px)}
+.badgeCatalogTile.selected .badgeTierHalo{opacity:1;transform:scale(1.06);box-shadow:0 0 0 3px #f6e7a5,0 0 22px #dfc65a88}
+.badgeCatalogTile:active .badgeCatalogArtWrap{transform:scale(.96)}
+.badgeCatalogTile.locked .badgeCatalogArt{filter:grayscale(1) brightness(.56) contrast(.82);opacity:.7}
+.badgeCatalogTile.locked:not(.selected) b,.badgeCatalogTile.locked:not(.selected) .badgeNatureMini{opacity:.72}
+.badgeCatalogTile.earned .badgeCatalogNo{color:#3b6254}
+.badgeCatalogTile.earned b{color:#173f35}
+.badgeCatalogNew{animation:badgeNewPulse 1.6s ease-in-out infinite}
+@keyframes badgeNewPulse{0%,100%{transform:translateZ(0) scale(1);box-shadow:0 2px 6px #57352633}50%{transform:translateZ(0) scale(1.08);box-shadow:0 0 0 3px #fff4d066,0 2px 8px #57352644}}
+#badgeDetailArt{position:relative}
+#badgeDetailArt:before{content:"";position:absolute;inset:-8px;border-radius:50%;pointer-events:none;opacity:.9}
+#badgeDetailArt[data-tier="GREEN"]:before{box-shadow:0 0 0 3px #87a66f66,0 0 30px #87a66f33}
+#badgeDetailArt[data-tier="BLUE"]:before{box-shadow:0 0 0 3px #7398ad66,0 0 30px #7398ad33}
+#badgeDetailArt[data-tier="RED"]:before{box-shadow:0 0 0 3px #b86f6866,0 0 30px #b86f6833}
+#badgeDetailArt[data-tier="GOLD"]:before{box-shadow:0 0 0 3px #c9a64d77,0 0 34px #c9a64d44}
+#badgeDetailArt[data-tier="PLATINUM"]:before{box-shadow:0 0 0 3px #c7d3d388,0 0 36px #dce8e866}
+.badgeDetailReveal{animation:badgeDetailReveal .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes badgeDetailReveal{0%{opacity:.15;transform:scale(.9) rotate(-1deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@media(prefers-reduced-motion:reduce){
+  .badgeTierHalo,.badgeCatalogTile .badgeCatalogArtWrap{transition:none}
+  .badgeCatalogNew,.badgeDetailReveal{animation:none}
+}
