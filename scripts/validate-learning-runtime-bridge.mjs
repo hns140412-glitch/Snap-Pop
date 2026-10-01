@@ -3,6 +3,10 @@ const s=fs.readFileSync('snap-bridge.js','utf8');
 const required=[
   "'child_id','subject','concept_skill_target','learning_target_id'",
   'function emitLearningOutcome',
+  'function requestLearningGrowthDecision',
+  "'LEARNING_ENGINE_GROWTH_INTENT_ONLY'",
+  'function growthPrompt',
+  'growth_signals:',
   'evidence_source_refs',
   'evidence_provenance',
   'contextual_evidence_only: true',
