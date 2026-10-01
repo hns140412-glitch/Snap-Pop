@@ -45,16 +45,24 @@
       : Math.min(5,reawards-(tiers.length-1)*5);
     return {ownership:"EARNED",tier:tiers[tierIndex],reacquireStars:stars,complete:tierIndex===4&&stars===5};
   }
+  function progressForEntry(progressEntry={}){
+    const count=Math.max(0,Math.floor(Number(progressEntry?.count)||0));
+    if(count>0)return progressForCount(count);
+    const partial=Math.max(0,Number(progressEntry?.progressValue??progressEntry?.progress_value??progressEntry?.progress??0)||0);
+    if(partial>0)return {ownership:"IN_PROGRESS",tier:null,reacquireStars:0,complete:false,progressValue:partial};
+    return {ownership:"UNEARNED",tier:null,reacquireStars:0,complete:false,progressValue:0};
+  }
   function composeItem(item,progressEntry){
-    const p=progressForCount(progressEntry?.count||0);
+    const p=progressForEntry(progressEntry||{});
     return Object.freeze({
       ...item,
       ownership_state:p.ownership,
       tier:p.tier,
       reacquire_stars:p.reacquireStars,
       complete:p.complete,
+      progress_value:p.progressValue||0,
       last_at:progressEntry?.lastAt||null,
-      art_available:item.asset_delivery_state==="SYNCED"
+      art_available:true
     });
   }
   function select(items,{filter="ALL",category="ALL"}={}){
@@ -73,6 +81,7 @@
     load,
     composeItem,
     progressForCount,
+    progressForEntry,
     select,
     normalizeFilter,
     normalizeCategory
