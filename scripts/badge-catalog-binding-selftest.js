@@ -47,6 +47,15 @@ async function run(){
       codexCss.includes(".badgeCatalogTile.locked")
     );
     assert("game-codex-detail-sheet-present",!!document.querySelector("#badgeDetailLayer")&&!!document.querySelector("#badgeDetailPrev")&&!!document.querySelector("#badgeDetailNext"));
+    assert("badge-acquisition-runtime-present",!!window.SnapPopBadgeAcquisition&&window.SnapPopBadgeAcquisition.presentationOnly===true&&window.SnapPopBadgeAcquisition.awardAuthority===false);
+    assert("badge-acquisition-layer-present",!!document.querySelector("#badgeAcquisitionLayer")&&!!document.querySelector("#badgeAcquisitionArt")&&!!document.querySelector("#badgeAcquisitionCatalog"));
+    const classify=window.SnapPopBadgeAcquisition.classifyTransition;
+    const first=classify(0,1),tierUp=classify(5,6),reacquire=classify(6,7),complete=classify(25,26);
+    assert("badge-acquisition-first-earned-kind",first.kind==="FIRST_EARN"&&first.after.tier==="GREEN"&&first.after.stars===0);
+    assert("badge-acquisition-tier-up-kind",tierUp.kind==="TIER_UP"&&tierUp.before.tier==="GREEN"&&tierUp.after.tier==="BLUE"&&tierUp.after.stars===0);
+    assert("badge-acquisition-reacquire-kind",reacquire.kind==="REACQUIRE"&&reacquire.after.tier==="BLUE"&&reacquire.after.stars===1);
+    assert("badge-acquisition-master-complete-kind",complete.kind==="MASTER_COMPLETE"&&complete.after.tier==="PLATINUM"&&complete.after.stars===5&&complete.after.complete===true);
+    assert("badge-acquisition-presentation-has-no-authority",first.presentationOnly===true&&first.awardAuthority===false&&first.economyAuthority===false);
     host.dataset.status="PASS";
   }catch(e){
     host.dataset.status="FAIL";
