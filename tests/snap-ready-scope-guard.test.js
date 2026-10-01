@@ -30,6 +30,15 @@ assert.equal(Guard.boundScope(one.context,{learning_target_id:'word:2'}).reason,
  'BOUND_LEARNING_TARGET_ID_MISMATCH');
 assert.equal(Guard.boundScope(one.context,{subject:'ENGLISH'}).ok,true);
 
+const viaHide=Guard.prepareContext({
+ ...incoming,from_app:'hide-seek',word:'accept',learning_target_id:'word:1'
+},one.context,trusted,{incoming:true,now:'2026-10-02T00:00:00Z'});
+assert.equal(viaHide.ok,true);
+assert.equal(viaHide.context.handoff_via_hide_seek,true);
+assert.equal(viaHide.context.continuity_source_authoritative,false);
+assert.equal(viaHide.context.linked_context_valid,true);
+assert.equal(Guard.boundScope(viaHide.context,{member_id:'CHILD_A'}).ok,true);
+
 const two=Guard.prepareContext({
  session_id:'SESSION_2',task_id:'TASK_2',lap_id:'LAP_2',from_app:'ready-set',
  return_target:'https://ready.example.test/',word:'banana'
