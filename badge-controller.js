@@ -95,7 +95,7 @@ async function renderBadgePreview(){
     theme:"EXPLORATION",
     themeExpression,
     tier:progress.tier||"GREEN",
-    stars:progress.stars||1,
+    stars:progress.stars??0,
     identity
   });
   const slots=window.SnapPopBadgeVisual.starSlots(model.stars);
