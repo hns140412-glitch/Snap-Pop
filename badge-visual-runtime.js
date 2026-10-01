@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-a";
+  const VERSION="2026.10.01-a";
   const TIERS=["GREEN","BLUE","RED","GOLD","PLATINUM"];
 
   function clean(value,max=120){
@@ -13,16 +13,16 @@
     return TIERS.includes(key)?key:"GREEN";
   }
 
-  function normalizeStars(stars=1){
+  function normalizeStars(stars=0){
     const n=Math.floor(Number(stars)||0);
-    return Math.min(5,Math.max(1,n||1));
+    return Math.min(5,Math.max(0,n));
   }
 
   function model({
     title="경험 배지 미리보기",
     theme="EXPLORATION",
     tier="GREEN",
-    stars=1,
+    stars=0,
     identity={},
     themeExpression=null
   }={}){
@@ -57,7 +57,7 @@
     });
   }
 
-  function starSlots(stars=1){
+  function starSlots(stars=0){
     const count=normalizeStars(stars);
     return [0,1,2,3,4].map((index)=>({
       index,
