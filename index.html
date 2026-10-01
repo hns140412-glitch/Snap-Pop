@@ -217,6 +217,25 @@
   </div>
  </section>
 </div>
+<div id="badgeAcquisitionLayer" class="badgeAcquisitionLayer" hidden aria-hidden="true">
+ <div id="badgeAcquisitionBackdrop" class="badgeAcquisitionBackdrop"></div>
+ <section class="badgeAcquisitionCard" role="dialog" aria-modal="true" aria-labelledby="badgeAcquisitionHeading">
+  <button id="badgeAcquisitionClose" class="round badgeAcquisitionClose" type="button" aria-label="닫기">×</button>
+  <span id="badgeAcquisitionKicker" class="badgeAcquisitionKicker">NEW BADGE</span>
+  <h2 id="badgeAcquisitionHeading">새 배지 발견</h2>
+  <span id="badgeAcquisitionNo" class="badgeAcquisitionNo">No.000</span>
+  <div id="badgeAcquisitionArt" class="badgeAcquisitionArt"></div>
+  <div class="badgeAcquisitionMeta"><span id="badgeAcquisitionNature"></span><span id="badgeAcquisitionTier"></span></div>
+  <h3 id="badgeAcquisitionTitle"></h3>
+  <p id="badgeAcquisitionBody"></p>
+  <div id="badgeAcquisitionTierChange" class="badgeAcquisitionTierChange" hidden></div>
+  <div id="badgeAcquisitionStars"></div>
+  <div class="badgeAcquisitionActions">
+   <button id="badgeAcquisitionContinue" class="primary wide" type="button">확인</button>
+   <button id="badgeAcquisitionCatalog" class="soft wide" type="button">도감에서 보기</button>
+  </div>
+ </section>
+</div>
 <section id="special" class="view parchment subflow">
  <button class="back" id="specialBack">← 지도</button>
  <header class="pageTitle specialPageTitle"><span>원할 때만 여는 초대</span><h1>특별 탐험</h1><p>지금 하고 싶을 때만 해도 돼. 지나가도 아무 손해가 없어.</p></header>
@@ -382,6 +401,7 @@ window.addEventListener("unhandledrejection",event=>{
 <script src="badge-visual-runtime.js"></script>
 <script src="badge-art-pack-runtime.js"></script>
 <script src="badge-catalog-ui-runtime.js"></script>
+<script src="badge-acquisition-presentation.js"></script>
 <script src="learning-context-runtime.js"></script>
 <script src="vocabulary-material-runtime.js"></script>
 <script src="openai-semantic-provider.js"></script>
