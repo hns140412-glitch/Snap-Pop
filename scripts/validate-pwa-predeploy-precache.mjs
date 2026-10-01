@@ -21,19 +21,27 @@ assert("active-service-worker-is-sw-js",
   app.includes('navigator.serviceWorker.register("sw.js")')&&
   !app.includes('navigator.serviceWorker.register("service-worker.js")')
 );
+const cacheKeyMatch=sw.match(/const C=['"]([^'"]+)['"]/);
 assert("precache-version-is-current-predeploy",
-  sw.includes("snap-pop-2026-09-22-predeploy-")
+  cacheKeyMatch?.[1]==="snap-pop-2026-10-02-badge-shards-v1"
 );
 assert("all-production-runtime-scripts-are-precached",
   scriptSrc.every(src=>precache.includes(src))
 );
-assert("runtime-selftest-not-loaded-in-normal-user-path",
+assert("runtime-selftests-not-loaded-in-normal-user-path",
   !index.includes('<script src="scripts/browser-runtime-selftest.js"></script>')&&
+  !index.includes('<script src="scripts/badge-catalog-binding-selftest.js"></script>')&&
   index.includes('has("runtime-smoke")')&&
-  index.includes('s.src="scripts/browser-runtime-selftest.js"')
+  index.includes('"scripts/browser-runtime-selftest.js"')&&
+  index.includes('"scripts/badge-catalog-binding-selftest.js"')
 );
-assert("runtime-selftest-is-available-offline-when-requested",
-  precache.includes("scripts/browser-runtime-selftest.js")
+assert("runtime-selftests-are-available-offline-when-requested",
+  ["scripts/browser-runtime-selftest.js","scripts/badge-catalog-binding-selftest.js"].every(x=>precache.includes(x))
+);
+assert("badge-shard-runtime-is-precached",
+  precache.includes("badge-art-pack-runtime.js")&&
+  precache.includes("data/badge-art-shard-manifest.json")&&
+  Array.from({length:10},(_,i)=>`assets/badges/current/shards/taky-badge-art-shard-${String(i+1).padStart(2,"0")}.bin`).every(x=>precache.includes(x))
 );
 assert("core-shell-is-precached",
   ["./","index.html","styles.css","manifest.json","app.js","snap-bridge.js"].every(x=>precache.includes(x))
