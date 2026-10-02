@@ -37,10 +37,13 @@ ws.onmessage=event=>{
     if(msg.error)p.reject(new Error(msg.error.message||"CDP_ERROR"));else p.resolve(msg.result);
   }
 };
-await new Promise((resolve,reject)=>{
-  ws.onopen=resolve;
-  ws.onerror=()=>reject(new Error("CDP_SOCKET_ERROR"));
-});
+await Promise.race([
+  new Promise((resolve,reject)=>{
+    ws.onopen=resolve;
+    ws.onerror=()=>reject(new Error("CDP_SOCKET_ERROR"));
+  }),
+  new Promise((_,reject)=>setTimeout(()=>reject(new Error("CDP_SOCKET_OPEN_TIMEOUT target="+target.webSocketDebuggerUrl)),5000))
+]);
 
 function send(method,params={}){
   return new Promise((resolve,reject)=>{
