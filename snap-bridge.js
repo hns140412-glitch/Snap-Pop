@@ -71,17 +71,23 @@
   }
 
   function emit(type, payload = {}) {
+    const envelope=EventEnvelope.create({
+      source:'snap-pop',
+      event_type:type,
+      occurred_at:iso(),
+      correlation_id:context.session_id || context.task_id || null,
+      payload
+    });
     const event = {
-      event_id: eventId(),
+      ...envelope,
       type,
-      app: 'snap-pop',
-      at: iso(),
+      app:'snap-pop',
+      at:envelope.occurred_at,
       session_id: context.session_id || null,
       goal_id: context.goal_id || null,
       task_id: context.task_id || null,
       lap_id: context.lap_id || null,
-      child_id: context.child_id || null,
-      payload
+      child_id: context.child_id || null
     };
     let outbox = [];
     try { outbox = JSON.parse(sessionStorage.getItem(OUTBOX_KEY) || '[]') || []; } catch {}
