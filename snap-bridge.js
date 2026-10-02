@@ -6,8 +6,9 @@
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
   const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','target_time_ms','session_start_at','paused_at','issue_ms','learning_context'];
 
+  const EventEnvelope=globalThis.TakyEventEnvelope;
+  if(!EventEnvelope?.create) throw new Error('SNAP_SHARED_EVENT_ENVELOPE_UNAVAILABLE');
   const iso = () => new Date().toISOString();
-  const eventId = () => `snap_event_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   function decodeLearningContext(raw) {
