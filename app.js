@@ -1,4 +1,7 @@
 if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.appScript="STARTED";
+const SNAP_RELEASE=globalThis.SnapPopReleaseDescriptor;
+if(!globalThis.TakyReleaseContract?.validateDescriptor?.(SNAP_RELEASE)?.ok)throw new Error("INVALID_SNAP_RELEASE_DESCRIPTOR");
+globalThis.SnapPopPwaSafePoint=()=>window.__SNAP_ACTIVE_EXPLORATION!==true;
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
 let marks=[], lastMain="map", SNAP_RULES=null;
 const uid=p=>`${p}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
