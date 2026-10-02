@@ -91,11 +91,11 @@ for(let i=0;i<240;i++){
     let recoveryTransientTimeouts=0;
     for(let j=0;j<240;j++){
       try{
-        const recoveryTarget=await getTarget();
-        if(recoveryTarget.webSocketDebuggerUrl!==target.webSocketDebuggerUrl){
-          console.error("CDP_STAGE RECOVERY_TARGET_REPLACED");
+        recovery=await evalValue(`({readyState:document.readyState,init:window.__SNAP_RUNTIME_STATUS?.init||null,db:window.__SNAP_RUNTIME_STATUS?.db||null,storageReady:typeof window.SnapPopStorage?.get==="function"})`);
+        if(recovery?.readyState==="complete"&&recovery?.init==="PASS"&&recovery?.db==="OPEN"&&recovery?.storageReady){
+          const recoveredProbe=await evalValue(`window.SnapPopStorage.get("${recoveryKey}")`);
+          recovery={...recovery,probe:recoveredProbe};
         }
-        recovery=await evalValue(`(async()=>({readyState:document.readyState,init:window.__SNAP_RUNTIME_STATUS?.init||null,db:window.__SNAP_RUNTIME_STATUS?.db||null,probe:await window.SnapPopStorage?.get?.("${recoveryKey}")}))()`);
         if(recovery?.readyState==="complete"&&recovery?.init==="PASS"&&recovery?.db==="OPEN"&&recovery?.probe?.token==="snap-pop-runtime-recovery-v1"){
           const pwa=await evalValue(`(async()=>{
             if(!("serviceWorker" in navigator)) return {ok:false,reason:"NO_SERVICE_WORKER"};
