@@ -577,13 +577,21 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "snap-bridge.js",
         "scripts/validate-ready-snap-bridge-context.mjs"
       ],
-      "gap": "actual cross-app transition/return runtime and physical-device idempotency verification remain open"
+      "gap": "cross-app browser runtime verified on 2026-10-02; physical-device verification remains open",
+      "runtimeEvidence": [
+        "Ready-Set:taky/snap-cross-app-runtime-2026-10-02 tests/ready-snap-bound-outbound.spec.js 3/3 PASS",
+        "Ready-Set:taky/snap-cross-app-runtime-2026-10-02 tests/snap-return-isolation.spec.js 3/3 PASS",
+        "Hide-Seek:taky/snap-cross-app-runtime-2026-10-02 tests/hide-snap-handoff.spec.js 1/1 PASS",
+        "Snap-Pop:taky/snap-pop-implementation-2026-09-20 tests/cross-app-bridge.spec.js 3/3 PASS",
+        "Snap-Pop Branch Closure #510 SUCCESS",
+        "Snap-Pop Rewrite Closure #330 SUCCESS"
+      ]
     },
     {
       "id": "SP-BRIDGE-002",
@@ -596,7 +604,7 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "vocabulary-material-runtime.js",
@@ -608,7 +616,15 @@
         "app.js:vocabularyRef/vocabulary_material",
         "scripts/validate-vocabulary-material-ownership.mjs"
       ],
-      "gap": "ownership-safe expression-material contract implemented and isolated verified; live cross-app runtime/device transition remains NOT_RUN"
+      "gap": "cross-app browser runtime verified on 2026-10-02; physical-device verification remains open",
+      "runtimeEvidence": [
+        "Ready-Set:taky/snap-cross-app-runtime-2026-10-02 tests/ready-snap-bound-outbound.spec.js 3/3 PASS",
+        "Ready-Set:taky/snap-cross-app-runtime-2026-10-02 tests/snap-return-isolation.spec.js 3/3 PASS",
+        "Hide-Seek:taky/snap-cross-app-runtime-2026-10-02 tests/hide-snap-handoff.spec.js 1/1 PASS",
+        "Snap-Pop:taky/snap-pop-implementation-2026-09-20 tests/cross-app-bridge.spec.js 3/3 PASS",
+        "Snap-Pop Branch Closure #510 SUCCESS",
+        "Snap-Pop Rewrite Closure #330 SUCCESS"
+      ]
     },
     {
       "id": "SP-PWA-001",
@@ -1746,7 +1762,7 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "Ready-Set:ready-runtime-v07.js buildSpecialistLearningContext",
@@ -1754,7 +1770,15 @@
         "learning-context-runtime.js",
         "app.js:learnerContext"
       ],
-      "gap": "cross-app runtime/device verification pending"
+      "gap": "cross-app browser runtime verified on 2026-10-02; physical-device verification remains open",
+      "runtimeEvidence": [
+        "Ready-Set:taky/snap-cross-app-runtime-2026-10-02 tests/ready-snap-bound-outbound.spec.js 3/3 PASS",
+        "Ready-Set:taky/snap-cross-app-runtime-2026-10-02 tests/snap-return-isolation.spec.js 3/3 PASS",
+        "Hide-Seek:taky/snap-cross-app-runtime-2026-10-02 tests/hide-snap-handoff.spec.js 1/1 PASS",
+        "Snap-Pop:taky/snap-pop-implementation-2026-09-20 tests/cross-app-bridge.spec.js 3/3 PASS",
+        "Snap-Pop Branch Closure #510 SUCCESS",
+        "Snap-Pop Rewrite Closure #330 SUCCESS"
+      ]
     },
     {
       "id": "SP-WRITE-008",
@@ -1795,14 +1819,22 @@
       "classification": "CONFIRMED",
       "coded": true,
       "staticVerified": true,
-      "runtimeVerified": false,
+      "runtimeVerified": true,
       "deviceVerified": false,
       "codeEvidence": [
         "app.js:snap-pop:task-completed",
         "snap-bridge.js:TASK_COMPLETED",
         "Ready-Set:ready-runtime-v07.js specialist_result"
       ],
-      "gap": "cross-app runtime/device verification pending"
+      "gap": "cross-app browser runtime verified on 2026-10-02; physical-device verification remains open",
+      "runtimeEvidence": [
+        "Ready-Set:taky/snap-cross-app-runtime-2026-10-02 tests/ready-snap-bound-outbound.spec.js 3/3 PASS",
+        "Ready-Set:taky/snap-cross-app-runtime-2026-10-02 tests/snap-return-isolation.spec.js 3/3 PASS",
+        "Hide-Seek:taky/snap-cross-app-runtime-2026-10-02 tests/hide-snap-handoff.spec.js 1/1 PASS",
+        "Snap-Pop:taky/snap-pop-implementation-2026-09-20 tests/cross-app-bridge.spec.js 3/3 PASS",
+        "Snap-Pop Branch Closure #510 SUCCESS",
+        "Snap-Pop Rewrite Closure #330 SUCCESS"
+      ]
     },
     {
       "id": "SP-WRITE-010",
