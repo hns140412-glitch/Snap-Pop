@@ -1,5 +1,5 @@
-validation_sha=986002079cf9b8f8cf5b7ff58cbd19844f3c7df3
-checkout_sha=986002079cf9b8f8cf5b7ff58cbd19844f3c7df3
+validation_sha=f3b8618c27ca4d54835d5f3f488cdb3160b53da0
+checkout_sha=f3b8618c27ca4d54835d5f3f488cdb3160b53da0
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 73/73
 browser_status=1
@@ -909,7 +909,7 @@ CDP_STAGE DOM_SELFTEST_WAIT
 CDP_STAGE DOM_SELFTEST_PASS
 CDP_STAGE RECOVERY_NAVIGATE
 CDP_STAGE RECOVERY_LOAD_EVENT
-CDP_STAGE RECOVERY_TARGET {"id":"AC19293387CFDEB2D30D2282425D1F60","url":"http://127.0.0.1:4173/index.html?runtime-recovery=1","title":"Snap &amp; Pop · 아이디어를 Snap! 이야기로 Pop!"}
+CDP_STAGE RECOVERY_TARGET {"id":"04B1278A2CB230573FA4F5FD4FBC88C8","url":"http://127.0.0.1:4173/index.html?runtime-recovery=1","title":"Snap &amp; Pop · 아이디어를 Snap! 이야기로 Pop!"}
 CDP_STAGE RECOVERY_CONTEXT_READY 2
 CDP_STAGE RECOVERY_RECONNECTED
 CDP_STAGE RECOVERY_NAVIGATION_QUIESCENT
@@ -918,12 +918,11 @@ CDP_STAGE RECOVERY_DOM_COMMAND_PASS #document
 CDP_STAGE RECOVERY_DIALOG_STATE CLOSED
 PWA_RELOAD_RECOVERY_PASS
 {"db":"snap_pop_rev10","store":"state","probe":{"status":"PERSISTED","token":"snap-pop-runtime-recovery-v1"}}
-file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:214
-      if(!shell) throw new Error("CACHE_STORAGE_SHELL_NOT_FOUND "+JSON.stringify((names?.caches||[]).map(x=>({id:x.cacheId,name:x.cacheName}))));
-                       ^
+file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:219
+    if(!shell) throw new Error("CACHE_STORAGE_SHELL_NOT_FOUND "+JSON.stringify(lastCaches.map(x=>({id:x.cacheId,name:x.cacheName}))));
+                     ^
 
 Error: CACHE_STORAGE_SHELL_NOT_FOUND []
-    at file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:214:24
-    at async file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:203:5
+    at file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:219:22
 
 Node.js v22.23.3
