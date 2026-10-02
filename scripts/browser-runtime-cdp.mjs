@@ -8,11 +8,12 @@ function directGet(pathname){
     timeout:1500
   });
 }
-async function getTarget(){
+async function getTarget(expectedUrlPattern=null){
   for(let i=0;i<80;i++){
     try{
       const targets=JSON.parse(await directGet("/json"));
-      const page=targets.find(x=>x.type==="page"&&/index\\.html/.test(x.url))||targets.find(x=>x.type==="page");
+      const pages=targets.filter(x=>x.type==="page");
+      const page=(expectedUrlPattern?pages.find(x=>expectedUrlPattern.test(x.url)):null)||pages.find(x=>/index\\.html/.test(x.url))||pages[0];
       if(page?.webSocketDebuggerUrl)return page;
     }catch{}
     await sleep(100);
@@ -29,6 +30,7 @@ async function openCdp(target){
   let loading=false;
   let lastNavigationAt=Date.now();
   let defaultContextId=null;
+  let dialogOpen=false;
   socket.onmessage=event=>{
     const msg=JSON.parse(String(event.data));
     if(msg.method==="Page.frameStartedLoading"){ loading=true; lastNavigationAt=Date.now(); }
@@ -39,6 +41,8 @@ async function openCdp(target){
       defaultContextId=msg.params.context.id;
     }
     if(msg.method==="Runtime.executionContextsCleared") defaultContextId=null;
+    if(msg.method==="Page.javascriptDialogOpening") dialogOpen=true;
+    if(msg.method==="Page.javascriptDialogClosed") dialogOpen=false;
     if(msg.id&&pending.has(msg.id)){
       const p=pending.get(msg.id);pending.delete(msg.id);
       if(msg.error)p.reject(new Error(msg.error.message||"CDP_ERROR"));else p.resolve(msg.result);
@@ -78,7 +82,7 @@ async function openCdp(target){
     if(out.exceptionDetails) throw new Error(out.exceptionDetails.text||"RUNTIME_EVAL_EXCEPTION");
     return out.result?.value;
   }
-  return {socket,send,evalValue,loadFired:()=>loadFired,contextId:()=>defaultContextId,loading:()=>loading,lastNavigationAt:()=>lastNavigationAt};
+  return {socket,send,evalValue,loadFired:()=>loadFired,contextId:()=>defaultContextId,loading:()=>loading,lastNavigationAt:()=>lastNavigationAt,dialogOpen:()=>dialogOpen};
 }
 
 const target=await getTarget();
@@ -116,7 +120,8 @@ for(let i=0;i<240;i++){
     console.error("CDP_STAGE RECOVERY_LOAD_EVENT");
     await sleep(500);
     ws.close();
-    const recoveryTarget=await getTarget();
+    const recoveryTarget=await getTarget(/(?:[?&])runtime-recovery=1(?:&|$)/);
+    console.error("CDP_STAGE RECOVERY_TARGET "+JSON.stringify({id:recoveryTarget.id,url:recoveryTarget.url,title:recoveryTarget.title||null}));
     session=await openCdp(recoveryTarget);
     ws=session.socket;
     send=session.send;
@@ -146,6 +151,10 @@ for(let i=0;i<240;i++){
     try{
       await send("Runtime.getIsolateId");
       console.error("CDP_STAGE RECOVERY_RUNTIME_COMMAND_PASS");
+      await send("DOM.enable");
+      const doc=await send("DOM.getDocument",{depth:1});
+      console.error("CDP_STAGE RECOVERY_DOM_COMMAND_PASS "+String(doc?.root?.nodeName||"NO_ROOT"));
+      console.error("CDP_STAGE RECOVERY_DIALOG_STATE "+(session.dialogOpen()?"OPEN":"CLOSED"));
     }catch(error){
       console.error("CDP_STAGE RECOVERY_RUNTIME_COMMAND_FAIL");
       console.error(String(error?.message||error));
