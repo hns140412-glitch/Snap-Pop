@@ -81,7 +81,7 @@ jobs:
               } > /tmp/browser.log
               BROWSER_STATUS=2
             else
-              node scripts/browser-runtime-cdp.mjs > /tmp/browser.log 2>&1
+              timeout 90s node scripts/browser-runtime-cdp.mjs > /tmp/browser.log 2>&1
               BROWSER_STATUS=$?
             fi
             kill "$BROWSER_PID" 2>/dev/null || true
