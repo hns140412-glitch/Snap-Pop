@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-22.1",
+  "version": "2026-10-02.1",
   "basis": "Derived directly from data/snap-pop-requirement-matrix.json; no subjective weighted completion score.",
   "sourceMatrixVersion": "2026-09-21.17",
   "statusModel": "EVIDENCE_INDEX",
@@ -16,9 +16,9 @@
       "percent": 100
     },
     "runtimeVerified": {
-      "count": 69,
+      "count": 73,
       "total": 80,
-      "percent": 86.25
+      "percent": 91.25
     },
     "deviceVerified": {
       "count": 0,
@@ -100,7 +100,7 @@
       "total": 3,
       "coded": 3,
       "staticVerified": 3,
-      "runtimeVerified": 0,
+      "runtimeVerified": 3,
       "deviceVerified": 0
     },
     "PWA_DATA": {
@@ -142,7 +142,7 @@
       "total": 10,
       "coded": 10,
       "staticVerified": 10,
-      "runtimeVerified": 8,
+      "runtimeVerified": 9,
       "deviceVerified": 0
     },
     "BADGE_SYSTEM": {
@@ -160,20 +160,8 @@
       "deviceVerified": 0
     }
   },
-  "runtimeOpenCount": 11,
+  "runtimeOpenCount": 7,
   "runtimeOpenRequirements": [
-    {
-      "id": "SP-BRIDGE-001",
-      "domain": "CONNECTED_APP",
-      "title": "Ready & Set session/task/lap/return context 보존",
-      "gap": "actual cross-app transition/return runtime and physical-device idempotency verification remain open"
-    },
-    {
-      "id": "SP-BRIDGE-002",
-      "domain": "CONNECTED_APP",
-      "title": "Hide & Seek 단어를 표현 재료로 사용",
-      "gap": "ownership-safe expression-material contract implemented and isolated verified; live cross-app runtime/device transition remains NOT_RUN"
-    },
     {
       "id": "SP-UNIV-003",
       "domain": "UNIVERSAL_CORE",
@@ -209,18 +197,6 @@
       "domain": "WRITING_CORE",
       "title": "Semantic Writing Provider는 현재 초안 의미를 분석해 한 가지 next move만 반환",
       "gap": "secure same-origin OpenAI-backed provider boundary is implemented; OPENAI_RUNTIME_CONNECTED remains false until server env/model and live execution are verified"
-    },
-    {
-      "id": "SP-WRITE-007",
-      "domain": "WRITING_CORE",
-      "title": "Ready Learning Master의 confirmed Learning Unit context를 Snap & Pop 글쓰기 분석에 전달",
-      "gap": "cross-app runtime/device verification pending"
-    },
-    {
-      "id": "SP-WRITE-009",
-      "domain": "CONNECTED_APP",
-      "title": "Snap & Pop 완료 시 Learning Unit/글쓰기 분석 provenance를 Ready & Set task로 반환",
-      "gap": "cross-app runtime/device verification pending"
     },
     {
       "id": "SP-BADGE-003",
