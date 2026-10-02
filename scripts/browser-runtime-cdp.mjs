@@ -63,10 +63,13 @@ for(let i=0;i<240;i++){
         if(recovery?.readyState==="complete"&&recovery?.init==="PASS"&&recovery?.db==="OPEN"&&recovery?.probe?.token==="snap-pop-runtime-recovery-v1"){
           const pwa=await evalValue(`(async()=>{
             if(!("serviceWorker" in navigator)) return {ok:false,reason:"NO_SERVICE_WORKER"};
-            const reg=await Promise.race([
-              navigator.serviceWorker.ready,
-              new Promise((_,reject)=>setTimeout(()=>reject(new Error("SERVICE_WORKER_READY_TIMEOUT")),8000))
-            ]);
+            let reg=null;
+            const started=Date.now();
+            while(Date.now()-started<8000 && !reg){
+              reg=await navigator.serviceWorker.getRegistration();
+              if(!reg) await new Promise(resolve=>setTimeout(resolve,100));
+            }
+            if(!reg) throw new Error("SERVICE_WORKER_REGISTRATION_TIMEOUT");
             const scriptURL=reg?.active?.scriptURL||reg?.waiting?.scriptURL||reg?.installing?.scriptURL||"";
             const cacheNames=await caches.keys();
             const shellChecks=[];
