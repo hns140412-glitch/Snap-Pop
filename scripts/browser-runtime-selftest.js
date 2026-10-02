@@ -336,6 +336,10 @@
       assert("empty-second-attempt-offers-hint",interventionState?.crewState?.interventionStage==="HINT_OFFER");
       assert("hint-is-not-auto-revealed",document.querySelector("#hint")?.hidden===true);
       assert("empty-second-attempt-does-not-write",answer.value==="");
+      click(document.querySelector("#hintBtn"),"explicit-writing-hint");
+      await wait(120);
+      const hintedState=await window.SnapPopStorage.get("active");
+      assert("badge-help-evidence-persists-on-session",Array.isArray(hintedState?.badgeEvidence?.helpRequests)&&hintedState.badgeEvidence.helpRequests.length===1);
 
       const originalSemanticProvider=window.SnapPopSemanticWritingProvider;
       const staleProbeCalls=[];
@@ -536,6 +540,9 @@
       const completedRecord=(await window.SnapPopStorage.get("lastResult"))||null;
       assert("writing-completion-preserves-final-draft",completedRecord?.finalDraft===draft3);
       assert("writing-completion-has-three-snapshots",Array.isArray(completedRecord?.snapshots)&&completedRecord.snapshots.length===3);
+      const badgeSourceAfterCompletion=await window.SnapPopStorage.get("badgeSourceObservations")||[];
+      const helpUseSource=badgeSourceAfterCompletion.find(x=>x.event_family==="HELP_USE"&&x.behavior_code==="HELP_USED_AND_RESUMED"&&x.source_contract_id==="SNAP_POP_HINT_TO_COMPLETION_V1");
+      assert("badge-help-use-source-produced-after-explicit-hint-and-completion",!!helpUseSource&&helpUseSource.badge_award_authorized===false&&helpUseSource.explicit_child_action===true);
 
       click(document.querySelector("#resultRecords"),"result-records");
       assert("records-view-active",await waitFor(()=>document.querySelector("#records")?.classList.contains("active")===true,1500,25));
