@@ -32,6 +32,12 @@ ws.onmessage=event=>{
     if(msg.error)p.reject(new Error(msg.error.message||"CDP_ERROR"));else p.resolve(msg.result);
   }
 };
+ws.onclose=()=>{
+  for(const [id,p] of pending){
+    pending.delete(id);
+    p.reject(new Error("CDP_SOCKET_CLOSED"));
+  }
+};
 await Promise.race([
   new Promise((resolve,reject)=>{
     ws.onopen=resolve;
@@ -60,22 +66,27 @@ async function evalValue(expression){
   return out.result?.value;
 }
 
+console.error("CDP_STAGE CONNECTED");
 await send("Runtime.enable");
 await send("Page.enable");
+console.error("CDP_STAGE DOM_SELFTEST_WAIT");
 
 const snapshotExpr='({readyState:document.readyState,smoke:document.body?.dataset?.runtimeSmoke||null,runtime:window.__SNAP_RUNTIME_STATUS||null,result:document.querySelector("#browserRuntimeSelfTest")?.textContent||null,landmarks:document.querySelectorAll("#landmarks .landmark").length})';
 let last=null;
 for(let i=0;i<240;i++){
   last=await evalValue(snapshotExpr);
   if(last?.smoke==="PASS"){
+    console.error("CDP_STAGE DOM_SELFTEST_PASS");
     const recoveryKey="__runtime_recovery_probe__";
     const probe=await evalValue(`(async()=>{const value={status:"PERSISTED",token:"snap-pop-runtime-recovery-v1"};await window.SnapPopStorage.set("${recoveryKey}",value);return await window.SnapPopStorage.get("${recoveryKey}")})()`);
     if(probe?.status!=="PERSISTED") throw new Error("PWA_RECOVERY_PROBE_WRITE_FAILED");
     const recoveryUrl=new URL(target.url);
     recoveryUrl.searchParams.delete("runtime-smoke");
     recoveryUrl.searchParams.set("runtime-recovery","1");
+    console.error("CDP_STAGE RECOVERY_NAVIGATE");
     await send("Page.navigate",{url:recoveryUrl.href});
     let recovery=null;
+    let recoveryLastError=null;
     for(let j=0;j<240;j++){
       try{
         recovery=await evalValue(`(async()=>({readyState:document.readyState,init:window.__SNAP_RUNTIME_STATUS?.init||null,db:window.__SNAP_RUNTIME_STATUS?.db||null,probe:await window.SnapPopStorage?.get?.("${recoveryKey}")}))()`);
@@ -117,10 +128,20 @@ for(let i=0;i<240;i++){
           ws.close();
           process.exit(0);
         }
-      }catch{}
+      }catch(error){
+        recoveryLastError=error;
+        const message=String(error?.message||error);
+        if(/CDP_COMMAND_TIMEOUT|CDP_SOCKET_CLOSED|CDP_SOCKET_ERROR/.test(message)){
+          console.error("CDP_STAGE RECOVERY_FATAL");
+          console.error(message);
+          ws.close();
+          process.exit(5);
+        }
+      }
       await sleep(100);
     }
     console.error("PWA_RELOAD_RECOVERY_FAIL");
+    if(recoveryLastError) console.error(String(recoveryLastError?.message||recoveryLastError));
     console.error(JSON.stringify(recovery));
     ws.close();
     process.exit(3);
