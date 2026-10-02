@@ -1,8 +1,8 @@
-validation_sha=89ada8f227feb0321580f9045e74fdc49eefeff0
-checkout_sha=89ada8f227feb0321580f9045e74fdc49eefeff0
+validation_sha=c2bc6f547854c3a22909020788a250bb326066e6
+checkout_sha=c2bc6f547854c3a22909020788a250bb326066e6
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 73/73
-browser_status=124
+browser_status=5
 browser_marker=
 viewport=390x844
 generated_by=github-actions-branch-only
@@ -904,3 +904,9 @@ DOM_BINDING_INTEGRITY_PASS
 
 BRANCH_CLOSURE_VALIDATOR_PASS 73/73
 --- BROWSER ---
+CDP_STAGE CONNECTED
+CDP_STAGE DOM_SELFTEST_WAIT
+CDP_STAGE DOM_SELFTEST_PASS
+CDP_STAGE RECOVERY_NAVIGATE
+CDP_STAGE RECOVERY_FATAL
+CDP_COMMAND_TIMEOUT Runtime.evaluate
