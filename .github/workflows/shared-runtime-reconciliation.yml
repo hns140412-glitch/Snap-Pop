@@ -1,0 +1,33 @@
+name: Snap Shared Runtime Reconciliation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - taky/snap-pop-shared-runtime-reconcile-20261002
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check reconciled JavaScript syntax
+        run: |
+          node --check app.js
+          node --check app-storage-runtime.js
+          node --check snap-bridge.js
+          node --check snap-release-v01.js
+          node --check snap-pwa-update-v01.js
+          node --check vendor/taky/release-contract.js
+          node --check vendor/taky/pwa-update-state.js
+          node --check vendor/taky/event-envelope.js
+      - name: Validate shared runtime reconciliation
+        run: node tests/shared-runtime-reconciliation.test.js
+      - name: Preserve existing Ready-Snap bridge contract
+        run: node scripts/validate-ready-snap-bridge-context.mjs

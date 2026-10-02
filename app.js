@@ -1,4 +1,7 @@
 if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.appScript="STARTED";
+const SNAP_RELEASE=globalThis.SnapPopReleaseDescriptor;
+if(!globalThis.TakyReleaseContract?.validateDescriptor?.(SNAP_RELEASE)?.ok)throw new Error("INVALID_SNAP_RELEASE_DESCRIPTOR");
+globalThis.SnapPopPwaSafePoint=()=>window.__SNAP_ACTIVE_EXPLORATION!==true;
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
 let marks=[], lastMain="map", SNAP_RULES=null;
 const uid=p=>`${p}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
@@ -201,5 +204,4 @@ $$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
 interactionSupportController().install();
 settingsProfileController().install();
 $("#nav").onclick=async e=>{const b=e.target.closest("button[data-view]");if(!b)return;const view=b.dataset.view;if(view==="explore"){const active=await window.SnapPopStorage.get("active");if(active){renderExplore(active);show("explore")}else{show("map");toast("글쓰기 탐험지를 하나 골라 시작해봐.")}}else show(view)}
-if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
 init().then(()=>{if(window.__SNAP_RUNTIME_STATUS)window.__SNAP_RUNTIME_STATUS.init="PASS"}).catch(e=>{if(window.__SNAP_RUNTIME_STATUS){window.__SNAP_RUNTIME_STATUS.init="FAIL";window.__SNAP_RUNTIME_STATUS.errors.push({type:"init",message:String(e?.message||e)})}console.error(e);toast("앱 데이터를 준비하지 못했어요.")});
