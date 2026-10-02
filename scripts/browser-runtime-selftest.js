@@ -670,6 +670,28 @@
         window.SnapPopBadges.sourceMatchesItem(sourceMatchItem,sourceObservation)===true);
       assert("badge-source-contract-mismatch-blocked",
         window.SnapPopBadges.sourceMatchesItem({...sourceMatchItem,sourceContractId:"OTHER"},sourceObservation)===false);
+      const multiSourceActive={
+        id:"qa-multi-source",status:"APPROVED",active:true,activationApproved:true,
+        activationEvidenceRef:"qa://multi-source-approval",
+        sourceMatchers:[
+          {appId:"SNAP_POP",eventFamily:"HELP_REQUEST",behaviorCode:"SELF_HELP_REQUEST",sourceContractId:"SNAP_POP_HINT_REQUEST_V1"},
+          {appId:"HIDE_SEEK",eventFamily:"HELP_REQUEST",behaviorCode:"SELF_HELP_REQUEST",sourceContractId:"HIDE_HINT_REQUEST_V2"}
+        ],
+        dedupePolicy:"SOURCE_EVENT_ID",reawardPolicy:"DISTINCT_SOURCE_EVENT"
+      };
+      assert("badge-multi-source-contract-is-activation-complete",
+        window.SnapPopBadgeCatalogGuard.canActivate(multiSourceActive,{status:"CURRENT"})===true);
+      assert("badge-multi-source-snap-match",
+        window.SnapPopBadges.sourceMatchesItem(multiSourceActive,sourceObservation)===true);
+      const hideSourceObservation=sourceContract.normalize({
+        event_id:"qa-source-hide-1",app_id:"HIDE_SEEK",event_family:"HELP_REQUEST",
+        behavior_code:"SELF_HELP_REQUEST",source_contract_id:"HIDE_HINT_REQUEST_V2",
+        evidence_ref:"qa://hide-hint",explicit_child_action:true
+      });
+      assert("badge-multi-source-hide-match",
+        window.SnapPopBadges.sourceMatchesItem(multiSourceActive,hideSourceObservation)===true);
+      assert("badge-multi-source-wrong-contract-blocked",
+        window.SnapPopBadges.sourceMatchesItem(multiSourceActive,{...hideSourceObservation,source_contract_id:"OTHER"})===false);
       const progressBeforeLegacy=JSON.stringify(await window.SnapPopStorage.get("badgeProgress")||{});
       const legacyEvent=await recordBadgeEvent("WRITING_EXPLORATION",{behaviorCode:"SHOULD_NOT_AWARD"},"SNAP_POP");
       const progressAfterLegacy=JSON.stringify(await window.SnapPopStorage.get("badgeProgress")||{});
