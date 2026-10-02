@@ -653,6 +653,21 @@
       let sourceWeakBlocked=false;
       try{sourceContract.normalize({event_id:"qa-source-weak",app_id:"SNAP_POP",event_family:"FOCUS",behavior_code:"LONG_FOCUS",source_contract_id:"QA",evidence_ref:"qa://weak",explicit_child_action:true,payload:{elapsedMs:99999}})}catch{sourceWeakBlocked=true}
       assert("badge-source-observation-blocks-weak-proxy-only-input",sourceWeakBlocked===true);
+      const sourceMatchItem={
+        id:"qa-source-match",status:"APPROVED",active:true,activationApproved:true,
+        activationEvidenceRef:"qa://approval",eventFamilies:["HELP_REQUEST"],
+        matcher:{behaviorCode:"SELF_HELP_REQUEST"},sourceContractId:"SNAP_POP_HINT_REQUEST_V1",
+        dedupePolicy:"SOURCE_EVENT_ID",reawardPolicy:"DISTINCT_SOURCE_EVENT"
+      };
+      assert("badge-source-contract-exact-match",
+        window.SnapPopBadges.sourceMatchesItem(sourceMatchItem,sourceObservation)===true);
+      assert("badge-source-contract-mismatch-blocked",
+        window.SnapPopBadges.sourceMatchesItem({...sourceMatchItem,sourceContractId:"OTHER"},sourceObservation)===false);
+      const progressBeforeLegacy=JSON.stringify(await window.SnapPopStorage.get("badgeProgress")||{});
+      const legacyEvent=await recordBadgeEvent("WRITING_EXPLORATION",{behaviorCode:"SHOULD_NOT_AWARD"},"SNAP_POP");
+      const progressAfterLegacy=JSON.stringify(await window.SnapPopStorage.get("badgeProgress")||{});
+      const legacyLedger=await window.SnapPopStorage.get("badgeEvents")||[];
+      assert("badge-legacy-event-is-non-awarding",progressBeforeLegacy===progressAfterLegacy&&legacyEvent&&legacyLedger.some(x=>x.eventId===legacyEvent.eventId&&x.disposition==="LEGACY_EVENT_ONLY"&&x.badgeAwardAuthorized===false));
 
       const evidenceContract=window.SnapPopBadgeEvidenceContract;
       const errorEvidence=evidenceContract.verify("ERROR_DISCOVERY",{explicitChildAction:true,evidenceRef:"runtime_error",sourceContractId:"SNAP_POP_CHILD_SELF_CORRECTION_V1",errorMarkedByChild:true,beforeArtifactRef:"before",afterArtifactRef:"after"});
