@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.10.01-a";
+  const VERSION="2026.10.02-b";
   const TIER_ORDER=["GREEN","BLUE","RED","GOLD","PLATINUM"];
 
   let config=null, catalog=null;
@@ -38,6 +38,20 @@
     });
   }
 
+  function sourceMatchesItem(item={},observation={}){
+    if(!item||typeof item!=="object"||!observation||typeof observation!=="object")return false;
+    if(observation.contract_version!=="TAKY_BADGE_SOURCE_OBSERVATION_V1")return false;
+    if(!Array.isArray(item.eventFamilies)||!item.eventFamilies.includes(observation.event_family))return false;
+    if(!item.matcher||typeof item.matcher!=="object"||Array.isArray(item.matcher))return false;
+    if(String(item.matcher.behaviorCode||"")!==String(observation.behavior_code||""))return false;
+    if(String(item.sourceContractId||"")!==String(observation.source_contract_id||""))return false;
+    return observation.explicit_child_action===true;
+  }
+
+  function matchSourceObservation(observation={}){
+    return activeItems().filter(item=>sourceMatchesItem(item,observation));
+  }
+
   function matchEvent(event){
     const e=normalizeEvent(event);
     if(!e.eventId||!e.family)return [];
@@ -69,6 +83,8 @@
     normalizeEvent,
     activeItems,
     matchEvent,
+    sourceMatchesItem,
+    matchSourceObservation,
     progressFromCount,
     nextProgress
   });
