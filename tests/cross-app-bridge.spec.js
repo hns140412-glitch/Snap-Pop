@@ -30,7 +30,7 @@ test('Snap receives and decodes confirmed Ready learning context',async({page})=
   await page.goto(linkedUrl().href,{waitUntil:'load'});
   const result=await page.evaluate(()=>({
     bridge:window.SnapPopBridge.learningContext(),
-    provider:window.SnapPopLearningContextProvider?.current?.()||null
+    provider:window.SnapPopLearningContextProvider?.context?.()||null
   }));
   expect(result.bridge.contract_version).toBe('READY_LEARNING_CONTEXT_V1');
   expect(result.bridge.learning_unit_id).toBe('LU1');
@@ -47,7 +47,7 @@ test('Snap receives Hide word and context as expression material',async({page})=
   await expect(page.locator('#snapWordChip')).toContainText('focus');
   const material=await page.evaluate(()=>window.SnapPopBridge.vocabularyMaterial());
   expect(material.word).toBe('focus');
-  expect(material.word_context).toBe('문맥');
+  expect(material.context).toBe('문맥');
 });
 
 test('Snap same-tab return preserves run ids and minimal provenance',async({page})=>{
