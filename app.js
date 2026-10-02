@@ -54,7 +54,7 @@ function writingFlowController(){return window.SnapPopWritingFlowController.inst
   getSelected:()=>interactionSupportController().getSelected(),
   uid,ensureWritingState,renderExplore,show,analyzeWritingMove,recordExpressionTrace,renderPendingExpressionIntent,promptFor,speak,toast,
   resolvedIdentity,crewMemberName,showCrewReaction,learnerContext,vocabularyMaterial,updateStatus,recordCrewExperience,crewSnippet,
-  recordBadgeBehaviorObservation,recordBadgeEvent,setExpressionBridgeButton,refreshWritingMove,stepSpecificReaction,
+  recordBadgeBehaviorObservation,recordBadgeSourceObservation,recordBadgeEvent,setExpressionBridgeButton,refreshWritingMove,stepSpecificReaction,
   bumpWritingAnalysisSeq:()=>interactionSupportController().bumpWritingAnalysisSeq()
 })}
 function crewController(){return window.SnapPopCrewController.instance({query:$,getRules:()=>SNAP_RULES,resolvedIdentity,isWeekend})}
