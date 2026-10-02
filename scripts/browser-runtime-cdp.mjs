@@ -205,12 +205,13 @@ for(let i=0;i<240;i++){
       let shell=false;
       for(const cache of caches){
         const entries=await send("CacheStorage.requestEntries",{cacheId:cache.cacheId,skipCount:0,pageSize:500});
-        const urls=(entries?.cacheDataEntries||[]).map(x=>x.requestURL||"");
-        if(urls.some(u=>/\/index\.html(?:$|\?)/.test(u))&&urls.some(u=>/\/styles\.css(?:$|\?)/.test(u))&&urls.some(u=>/\/app\.js(?:$|\?)/.test(u))){
+        const urls=(entries?.cacheDataEntries||[]).map(x=>x.requestURL||x.requestUrl||x.request?.url||"");
+        const paths=urls.map(u=>{try{return new URL(u,securityOrigin).pathname}catch{return String(u)}});
+        if(paths.some(p=>p==="/index.html"||p==="/")&&paths.some(p=>p==="/styles.css")&&paths.some(p=>p==="/app.js")){
           shell=true; break;
         }
       }
-      if(!shell) throw new Error("CACHE_STORAGE_SHELL_NOT_FOUND");
+      if(!shell) throw new Error("CACHE_STORAGE_SHELL_NOT_FOUND "+JSON.stringify((names?.caches||[]).map(x=>({id:x.cacheId,name:x.cacheName}))));
     });
     if(!swOk) throw new Error("SERVICE_WORKER_NOT_AVAILABLE");
     console.log("PWA_OFFLINE_SHELL_PASS");
