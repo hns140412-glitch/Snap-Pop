@@ -21,52 +21,60 @@ async function getTarget(){
   throw new Error("CDP_TARGET_NOT_FOUND_AFTER_BOUNDED_CURL version="+String(version||"UNAVAILABLE"));
 }
 
-const target=await getTarget();
-const ws=new WebSocket(target.webSocketDebuggerUrl);
-const pending=new Map();
-let seq=0;
-let pageLoadFired=false;
-ws.onmessage=event=>{
-  const msg=JSON.parse(String(event.data));
-  if(msg.method==="Page.loadEventFired") pageLoadFired=true;
-  if(msg.id&&pending.has(msg.id)){
-    const p=pending.get(msg.id);pending.delete(msg.id);
-    if(msg.error)p.reject(new Error(msg.error.message||"CDP_ERROR"));else p.resolve(msg.result);
-  }
-};
-ws.onclose=()=>{
-  for(const [id,p] of pending){
-    pending.delete(id);
-    p.reject(new Error("CDP_SOCKET_CLOSED"));
-  }
-};
-await Promise.race([
-  new Promise((resolve,reject)=>{
-    ws.onopen=resolve;
-    ws.onerror=()=>reject(new Error("CDP_SOCKET_ERROR"));
-  }),
-  new Promise((_,reject)=>setTimeout(()=>reject(new Error("CDP_SOCKET_OPEN_TIMEOUT target="+target.webSocketDebuggerUrl)),5000))
-]);
-
-function send(method,params={}){
-  return new Promise((resolve,reject)=>{
-    const id=++seq;
-    const timer=setTimeout(()=>{
+async function openCdp(target){
+  const socket=new WebSocket(target.webSocketDebuggerUrl);
+  const pending=new Map();
+  let seq=0;
+  let loadFired=false;
+  socket.onmessage=event=>{
+    const msg=JSON.parse(String(event.data));
+    if(msg.method==="Page.loadEventFired") loadFired=true;
+    if(msg.id&&pending.has(msg.id)){
+      const p=pending.get(msg.id);pending.delete(msg.id);
+      if(msg.error)p.reject(new Error(msg.error.message||"CDP_ERROR"));else p.resolve(msg.result);
+    }
+  };
+  socket.onclose=()=>{
+    for(const [id,p] of pending){
       pending.delete(id);
-      reject(new Error("CDP_COMMAND_TIMEOUT "+method));
-    },5000);
-    pending.set(id,{
-      resolve:value=>{clearTimeout(timer);resolve(value)},
-      reject:error=>{clearTimeout(timer);reject(error)}
+      p.reject(new Error("CDP_SOCKET_CLOSED"));
+    }
+  };
+  await Promise.race([
+    new Promise((resolve,reject)=>{
+      socket.onopen=resolve;
+      socket.onerror=()=>reject(new Error("CDP_SOCKET_ERROR"));
+    }),
+    new Promise((_,reject)=>setTimeout(()=>reject(new Error("CDP_SOCKET_OPEN_TIMEOUT target="+target.webSocketDebuggerUrl)),5000))
+  ]);
+  function send(method,params={}){
+    return new Promise((resolve,reject)=>{
+      const id=++seq;
+      const timer=setTimeout(()=>{
+        pending.delete(id);
+        reject(new Error("CDP_COMMAND_TIMEOUT "+method));
+      },5000);
+      pending.set(id,{
+        resolve:value=>{clearTimeout(timer);resolve(value)},
+        reject:error=>{clearTimeout(timer);reject(error)}
+      });
+      socket.send(JSON.stringify({id,method,params}));
     });
-    ws.send(JSON.stringify({id,method,params}));
-  });
+  }
+  async function evalValue(expression){
+    const out=await send("Runtime.evaluate",{expression,returnByValue:true,awaitPromise:true});
+    if(out.exceptionDetails) throw new Error(out.exceptionDetails.text||"RUNTIME_EVAL_EXCEPTION");
+    return out.result?.value;
+  }
+  return {socket,send,evalValue,loadFired:()=>loadFired};
 }
-async function evalValue(expression){
-  const out=await send("Runtime.evaluate",{expression,returnByValue:true,awaitPromise:true});
-  if(out.exceptionDetails) throw new Error(out.exceptionDetails.text||"RUNTIME_EVAL_EXCEPTION");
-  return out.result?.value;
-}
+
+const target=await getTarget();
+let session=await openCdp(target);
+let ws=session.socket;
+let send=session.send;
+let evalValue=session.evalValue;
+let pageLoadFired=()=>session.loadFired();
 
 console.error("CDP_STAGE CONNECTED");
 await send("Runtime.enable");
@@ -86,16 +94,25 @@ for(let i=0;i<240;i++){
     recoveryUrl.searchParams.delete("runtime-smoke");
     recoveryUrl.searchParams.set("runtime-recovery","1");
     console.error("CDP_STAGE RECOVERY_NAVIGATE");
-    pageLoadFired=false;
     await send("Page.navigate",{url:recoveryUrl.href});
-    for(let k=0;k<300&&!pageLoadFired;k++) await sleep(100);
-    if(!pageLoadFired){
+    for(let k=0;k<300&&!pageLoadFired();k++) await sleep(100);
+    if(!pageLoadFired()){
       console.error("CDP_STAGE RECOVERY_LOAD_TIMEOUT");
       ws.close();
       process.exit(5);
     }
     console.error("CDP_STAGE RECOVERY_LOAD_EVENT");
     await sleep(500);
+    ws.close();
+    const recoveryTarget=await getTarget();
+    session=await openCdp(recoveryTarget);
+    ws=session.socket;
+    send=session.send;
+    evalValue=session.evalValue;
+    pageLoadFired=()=>session.loadFired();
+    await send("Runtime.enable");
+    await send("Page.enable");
+    console.error("CDP_STAGE RECOVERY_RECONNECTED");
     let recovery=null;
     let recoveryLastError=null;
     let recoveryTransientTimeouts=0;
