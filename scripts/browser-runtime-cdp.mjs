@@ -25,8 +25,10 @@ const target=await getTarget();
 const ws=new WebSocket(target.webSocketDebuggerUrl);
 const pending=new Map();
 let seq=0;
+let pageLoadFired=false;
 ws.onmessage=event=>{
   const msg=JSON.parse(String(event.data));
+  if(msg.method==="Page.loadEventFired") pageLoadFired=true;
   if(msg.id&&pending.has(msg.id)){
     const p=pending.get(msg.id);pending.delete(msg.id);
     if(msg.error)p.reject(new Error(msg.error.message||"CDP_ERROR"));else p.resolve(msg.result);
@@ -84,7 +86,15 @@ for(let i=0;i<240;i++){
     recoveryUrl.searchParams.delete("runtime-smoke");
     recoveryUrl.searchParams.set("runtime-recovery","1");
     console.error("CDP_STAGE RECOVERY_NAVIGATE");
+    pageLoadFired=false;
     await send("Page.navigate",{url:recoveryUrl.href});
+    for(let k=0;k<300&&!pageLoadFired;k++) await sleep(100);
+    if(!pageLoadFired){
+      console.error("CDP_STAGE RECOVERY_LOAD_TIMEOUT");
+      ws.close();
+      process.exit(5);
+    }
+    console.error("CDP_STAGE RECOVERY_LOAD_EVENT");
     await sleep(500);
     let recovery=null;
     let recoveryLastError=null;
