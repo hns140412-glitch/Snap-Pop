@@ -88,6 +88,7 @@ for(let i=0;i<240;i++){
     await sleep(500);
     let recovery=null;
     let recoveryLastError=null;
+    let recoveryTransientTimeouts=0;
     for(let j=0;j<240;j++){
       try{
         recovery=await evalValue(`(async()=>({readyState:document.readyState,init:window.__SNAP_RUNTIME_STATUS?.init||null,db:window.__SNAP_RUNTIME_STATUS?.db||null,probe:await window.SnapPopStorage?.get?.("${recoveryKey}")}))()`);
@@ -132,6 +133,14 @@ for(let i=0;i<240;i++){
       }catch(error){
         recoveryLastError=error;
         const message=String(error?.message||error);
+        if(/CDP_COMMAND_TIMEOUT Runtime\.evaluate/.test(message)){
+          recoveryTransientTimeouts+=1;
+          console.error("CDP_STAGE RECOVERY_TRANSIENT_EVAL_TIMEOUT "+recoveryTransientTimeouts);
+          if(recoveryTransientTimeouts<=3){
+            await sleep(500);
+            continue;
+          }
+        }
         if(/CDP_COMMAND_TIMEOUT|CDP_SOCKET_CLOSED|CDP_SOCKET_ERROR/.test(message)){
           console.error("CDP_STAGE RECOVERY_FATAL");
           console.error(message);
