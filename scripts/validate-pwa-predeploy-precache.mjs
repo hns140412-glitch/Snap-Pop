@@ -23,7 +23,7 @@ assert("active-service-worker-is-sw-js",
 );
 const cacheKeyMatch=sw.match(/const C=['"]([^'"]+)['"]/);
 assert("precache-version-is-current-predeploy",
-  cacheKeyMatch?.[1]==="snap-pop-2026-10-02-badge-source-award-v1"
+  cacheKeyMatch?.[1]==="snap-pop-2026-10-02-badge-multisource-v1"
 );
 assert("all-production-runtime-scripts-are-precached",
   scriptSrc.every(src=>precache.includes(src))
