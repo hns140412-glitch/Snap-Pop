@@ -66,8 +66,8 @@ async function openCdp(target){
       socket.send(JSON.stringify({id,method,params}));
     });
   }
-  async function evalValue(expression){
-    const params={expression,returnByValue:true,awaitPromise:true};
+  async function evalValue(expression,{awaitPromise=false}={}){
+    const params={expression,returnByValue:true,awaitPromise};
     if(defaultContextId!==null) params.contextId=defaultContextId;
     const out=await send("Runtime.evaluate",params);
     if(out.exceptionDetails) throw new Error(out.exceptionDetails.text||"RUNTIME_EVAL_EXCEPTION");
@@ -95,7 +95,7 @@ for(let i=0;i<240;i++){
   if(last?.smoke==="PASS"){
     console.error("CDP_STAGE DOM_SELFTEST_PASS");
     const recoveryKey="__runtime_recovery_probe__";
-    const probe=await evalValue(`(async()=>{const value={status:"PERSISTED",token:"snap-pop-runtime-recovery-v1"};await window.SnapPopStorage.set("${recoveryKey}",value);return await window.SnapPopStorage.get("${recoveryKey}")})()`);
+    const probe=await evalValue(`(async()=>{const value={status:"PERSISTED",token:"snap-pop-runtime-recovery-v1"};await window.SnapPopStorage.set("${recoveryKey}",value);return await window.SnapPopStorage.get("${recoveryKey}")})()`,{awaitPromise:true});
     if(probe?.status!=="PERSISTED") throw new Error("PWA_RECOVERY_PROBE_WRITE_FAILED");
     const recoveryUrl=new URL(target.url);
     recoveryUrl.searchParams.delete("runtime-smoke");
@@ -143,7 +143,7 @@ for(let i=0;i<240;i++){
       try{
         recovery=await evalValue(`({readyState:document.readyState,init:window.__SNAP_RUNTIME_STATUS?.init||null,db:window.__SNAP_RUNTIME_STATUS?.db||null,storageReady:typeof window.SnapPopStorage?.get==="function"})`);
         if(recovery?.readyState==="complete"&&recovery?.init==="PASS"&&recovery?.db==="OPEN"&&recovery?.storageReady){
-          const recoveredProbe=await evalValue(`window.SnapPopStorage.get("${recoveryKey}")`);
+          const recoveredProbe=await evalValue(`window.SnapPopStorage.get("${recoveryKey}")`,{awaitPromise:true});
           recovery={...recovery,probe:recoveredProbe};
         }
         if(recovery?.readyState==="complete"&&recovery?.init==="PASS"&&recovery?.db==="OPEN"&&recovery?.probe?.token==="snap-pop-runtime-recovery-v1"){
@@ -167,14 +167,14 @@ for(let i=0;i<240;i++){
               if(indexHit&&cssHit&&appHit)shellChecks.push(name);
             }
             return {ok:/\\/sw\\.js(?:$|\\?)/.test(scriptURL)&&shellChecks.length>0,scriptURL,cacheNames,shellCaches:shellChecks,controlled:!!navigator.serviceWorker.controller};
-          })()`);
+          })()`,{awaitPromise:true});
           if(!pwa?.ok){
             console.error("PWA_OFFLINE_SHELL_FAIL");
             console.error(JSON.stringify(pwa));
             ws.close();
             process.exit(4);
           }
-          await evalValue(`window.SnapPopStorage.set("${recoveryKey}",null)`);
+          await evalValue(`window.SnapPopStorage.set("${recoveryKey}",null)`,{awaitPromise:true});
           console.log("PWA_RELOAD_RECOVERY_PASS");
           console.log(JSON.stringify(recovery));
           console.log("PWA_OFFLINE_SHELL_PASS");
