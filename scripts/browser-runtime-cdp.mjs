@@ -113,6 +113,15 @@ for(let i=0;i<240;i++){
     await send("Runtime.enable");
     await send("Page.enable");
     console.error("CDP_STAGE RECOVERY_RECONNECTED");
+    try{
+      await send("Runtime.getIsolateId");
+      console.error("CDP_STAGE RECOVERY_RUNTIME_COMMAND_PASS");
+    }catch(error){
+      console.error("CDP_STAGE RECOVERY_RUNTIME_COMMAND_FAIL");
+      console.error(String(error?.message||error));
+      ws.close();
+      process.exit(5);
+    }
     let recovery=null;
     let recoveryLastError=null;
     let recoveryTransientTimeouts=0;
