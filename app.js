@@ -107,6 +107,7 @@ function badgeCatalogController(){return window.SnapPopBadgeCatalogController.in
 async function renderBadgeCatalog(){return badgeCatalogController().render()}
 function badgeController(){return window.SnapPopBadgeController.instance({query:$,uid,resolvedIdentity})}
 async function proposeBadgeCandidateFromObservations(args={}){return badgeController().proposeBadgeCandidateFromObservations(args)}
+async function recordBadgeSourceObservation(input={}){return badgeController().recordBadgeSourceObservation(input)}
 async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP"){return badgeController().recordBadgeBehaviorObservation(family,payload,source)}
 async function recordBadgeBehaviorEvidence(family,evidence={},options={}){return badgeController().recordBadgeBehaviorEvidence(family,evidence,options)}
 async function recordBadgeEvent(family,payload={},source="SNAP_POP"){return badgeController().recordBadgeEvent(family,payload,source)}
