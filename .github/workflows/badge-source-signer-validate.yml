@@ -18,3 +18,6 @@ jobs:
         run: |
           node --check taky-badge-source-signer-v01.js
           node --check taky-badge-source-identity-v01.js
+          node --check writing-flow-controller.js
+          node --check interaction-support-controller.js
+          node scripts/validate-badge-deep-thinking-persistence.mjs
