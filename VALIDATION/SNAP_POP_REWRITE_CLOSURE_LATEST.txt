@@ -1,5 +1,5 @@
-validation_sha=1913c5ba8e95c8b9a569a32d75fd985107f7193b
-checkout_sha=1913c5ba8e95c8b9a569a32d75fd985107f7193b
+validation_sha=6eb8cf6ccb47b60b2daf49503501dc56cfd6da76
+checkout_sha=6eb8cf6ccb47b60b2daf49503501dc56cfd6da76
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 73/73
 browser_status=5
