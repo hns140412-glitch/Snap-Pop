@@ -200,10 +200,16 @@ for(let i=0;i<240;i++){
       swOk=true;
     }
 
+    const frameTree=await send("Page.getFrameTree");
+    const frameId=frameTree?.frameTree?.frame?.id;
+    const storageKeyResult=frameId?await send("Storage.getStorageKeyForFrame",{frameId}):null;
+    const storageKey=storageKeyResult?.storageKey||null;
+    console.error("CDP_STAGE RECOVERY_STORAGE_KEY "+String(storageKey||"NONE"));
     let shell=false;
     let lastCaches=[];
     for(let attempt=0;attempt<80&&!shell;attempt++){
-      const names=await send("CacheStorage.requestCacheNames",{securityOrigin});
+      const cacheNameParams=storageKey?{storageKey}:{securityOrigin};
+      const names=await send("CacheStorage.requestCacheNames",cacheNameParams);
       const caches=names?.caches||[];
       lastCaches=caches;
       for(const cache of caches){
