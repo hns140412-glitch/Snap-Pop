@@ -14,6 +14,17 @@ async function proposeBadgeCandidateFromObservations({id,title,families=[],reaso
   await store.set("badgeCandidateReviews",ledger.slice(0,200));
   return candidate;
 }
+async function recordBadgeSourceObservation(input={}){
+  if(!window.TakyBadgeSourceObservation)return null;
+  try{
+    const observation=window.TakyBadgeSourceObservation.normalize(input);
+    const ledger=await store.get("badgeSourceObservations")||[];
+    if(ledger.some(x=>x.event_id===observation.event_id))return observation;
+    ledger.unshift(observation);
+    await store.set("badgeSourceObservations",ledger.slice(0,1000));
+    return observation;
+  }catch{return null}
+}
 async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP"){
   if(!window.SnapPopBadgeBehavior)return null;
   try{
@@ -37,6 +48,26 @@ async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP
       }
     }
     await store.setMany(writes);
+    if(payload?.badgeBehaviorCode&&payload?.sourceContractId&&payload?.evidenceRef&&payload?.explicitChildAction===true){
+      await recordBadgeSourceObservation({
+        event_id:event.eventId,
+        app_id:"SNAP_POP",
+        event_family:event.family,
+        behavior_code:payload.badgeBehaviorCode,
+        occurred_at:event.at,
+        source_contract_id:payload.sourceContractId,
+        evidence_ref:payload.evidenceRef,
+        explicit_child_action:true,
+        payload:{
+          source:event.source,
+          behaviorCode:payload.badgeBehaviorCode,
+          recordId:payload.recordId||"",
+          revisionId:payload.revisionId||"",
+          landmark:payload.landmark||"",
+          step:Number.isFinite(payload.step)?payload.step:null
+        }
+      });
+    }
     return event;
   }catch{return null}
 }
@@ -56,7 +87,8 @@ async function recordBadgeBehaviorEvidence(family,evidence={},options={}){
       afterArtifactRef:verifiedEvidence.afterArtifactRef||"",
       reflectionArtifactRef:verifiedEvidence.reflectionArtifactRef||"",
       featureContractId:verifiedEvidence.featureContractId||"",
-      behaviorCode:verifiedEvidence.behaviorCode||""
+      behaviorCode:options.behaviorCode||verifiedEvidence.behaviorCode||"",
+      badgeBehaviorCode:options.behaviorCode||verifiedEvidence.behaviorCode||""
     },"SNAP_POP_EXPLICIT_EVIDENCE");
   }catch{return null}
 }
@@ -114,7 +146,7 @@ async function renderBadgePreview(){
   </div>
   <div class="badgePreviewMeta"><b>${esc(model.title)}</b><span>${esc(model.tier)} · 별 ${model.stars}/5 · 획득/수여 아님</span><span>${model.themeExpression?.assetState==="UNRESOLVED"?"테마 표현 자산 검토 전":"검토된 테마 표현 자산"}</span></div>`;
 }
-return Object.freeze({contract:"SNAP_POP_BADGE_CONTROLLER_V1",proposeBadgeCandidateFromObservations,recordBadgeBehaviorObservation,recordBadgeBehaviorEvidence,recordBadgeEvent,renderBadgePreview});
+return Object.freeze({contract:"SNAP_POP_BADGE_CONTROLLER_V2_SOURCE_OBSERVATION",proposeBadgeCandidateFromObservations,recordBadgeSourceObservation,recordBadgeBehaviorObservation,recordBadgeBehaviorEvidence,recordBadgeEvent,renderBadgePreview});
 }
 window.SnapPopBadgeController=Object.freeze({instance(deps){if(!singleton)singleton=create(deps);return singleton}});
 })();
