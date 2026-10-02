@@ -1,5 +1,5 @@
-validation_sha=4dfb9265aa08133f0f7d8cd371ca021bfe74da8e
-checkout_sha=4dfb9265aa08133f0f7d8cd371ca021bfe74da8e
+validation_sha=6be77e150eba58f5e4e773876c6a348054747ab9
+checkout_sha=6be77e150eba58f5e4e773876c6a348054747ab9
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 73/73
 browser_status=3
@@ -909,7 +909,7 @@ CDP_STAGE DOM_SELFTEST_WAIT
 CDP_STAGE DOM_SELFTEST_PASS
 CDP_STAGE RECOVERY_NAVIGATE
 CDP_STAGE RECOVERY_LOAD_EVENT
-CDP_STAGE RECOVERY_TARGET {"id":"5011C86A3DA4C62F6A81329778520FE2","url":"http://127.0.0.1:4173/index.html?runtime-recovery=1","title":"Snap &amp; Pop · 아이디어를 Snap! 이야기로 Pop!"}
+CDP_STAGE RECOVERY_TARGET {"id":"BE500374DB88945CC8AFE07CDDF1B629","url":"http://127.0.0.1:4173/index.html?runtime-recovery=1","title":"Snap &amp; Pop · 아이디어를 Snap! 이야기로 Pop!"}
 CDP_STAGE RECOVERY_CONTEXT_READY 2
 CDP_STAGE RECOVERY_RECONNECTED
 CDP_STAGE RECOVERY_NAVIGATION_QUIESCENT
@@ -917,4 +917,4 @@ CDP_STAGE RECOVERY_RUNTIME_COMMAND_PASS
 CDP_STAGE RECOVERY_DOM_COMMAND_PASS #document
 CDP_STAGE RECOVERY_DIALOG_STATE CLOSED
 PWA_RELOAD_RECOVERY_FAIL
-INDEXEDDB_RECOVERY_PROBE_MISMATCH {}
+INDEXEDDB_RECOVERY_PROBE_MISMATCH {"persisted":null,"keys":["__runtime_recovery_probe__","active","activeCrewGuestTrigger","badgeBehaviorObservations","badgeEvents","badgeSharedExperienceEvents","cloudHistory","completionEvents","crewGuestAppearances","crewRegistry","exp","expLedger","expressionTrace","familyActiveChildId","familyArtifacts","familyChildren","familyExpansionEnabled","gemLedger","gems","identityFallback","lastResult","migration_20260920_state_v1","recordRevisions","records","wishTransactions"]}
