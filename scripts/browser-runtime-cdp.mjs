@@ -180,7 +180,7 @@ for(let i=0;i<240;i++){
     });
     const remoteValue=obj=>obj?.value ?? obj?.description ?? obj?.unserializableValue ?? null;
     const entries=data?.objectStoreDataEntries||[];
-    const probeEntry=entries.find(entry=>remoteValue(entry?.key)==="${recoveryKey}");
+    const probeEntry=entries.find(entry=>remoteValue(entry?.key)===recoveryKey);
     const persisted=remoteValue(probeEntry?.value);
     if(persisted!==probePayload){
       console.error("PWA_RELOAD_RECOVERY_FAIL");
