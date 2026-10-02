@@ -1,7 +1,20 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.09.21-a";
+  const VERSION="2026.10.02-a";
+
+  function activationContractComplete(item={}){
+    if(!item||typeof item!=="object") return false;
+    if(item.active!==true) return false;
+    if(item.activationApproved!==true) return false;
+    if(typeof item.activationEvidenceRef!=="string"||!item.activationEvidenceRef.trim()) return false;
+    if(!Array.isArray(item.eventFamilies)||!item.eventFamilies.length) return false;
+    if(!item.matcher||typeof item.matcher!=="object"||Array.isArray(item.matcher)||!Object.keys(item.matcher).length) return false;
+    if(typeof item.sourceContractId!=="string"||!item.sourceContractId.trim()) return false;
+    if(typeof item.dedupePolicy!=="string"||!item.dedupePolicy.trim()) return false;
+    if(typeof item.reawardPolicy!=="string"||!item.reawardPolicy.trim()) return false;
+    return true;
+  }
 
   function validateCatalog(catalog={}){
     const items=Array.isArray(catalog.items)?catalog.items:[];
@@ -11,6 +24,9 @@
       if(working&&item.active===true){
         throw new Error("BADGE_WORKING_DRAFT_ACTIVATION_FORBIDDEN");
       }
+      if(item.active===true&&!activationContractComplete(item)){
+        throw new Error("BADGE_ACTIVATION_CONTRACT_INCOMPLETE");
+      }
     }
     return true;
   }
@@ -19,12 +35,13 @@
     if(!item||typeof item!=="object") return false;
     if(catalog.status==="WORKING_DRAFT_NOT_ACTIVE") return false;
     if(item.status==="WORKING_DRAFT") return false;
-    return item.active===true;
+    return activationContractComplete(item);
   }
 
   window.SnapPopBadgeCatalogGuard=Object.freeze({
     version:VERSION,
     validateCatalog,
-    canActivate
+    canActivate,
+    activationContractComplete
   });
 })();
