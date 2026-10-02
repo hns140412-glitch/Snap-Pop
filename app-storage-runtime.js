@@ -1,6 +1,7 @@
 (() => {
   "use strict";
-  let db=null;\n  window.__SNAP_ACTIVE_EXPLORATION=window.__SNAP_ACTIVE_EXPLORATION===true;
+  let db=null;
+  window.__SNAP_ACTIVE_EXPLORATION=window.__SNAP_ACTIVE_EXPLORATION===true;
   const DB_NAME="snap_pop_rev10";
   const DB_VERSION=1;
   const STORE="state";
@@ -39,7 +40,10 @@
     return new Promise((resolve,reject)=>{
       try{
         const request=requireDb().transaction(STORE).objectStore(STORE).get(key);
-        request.onsuccess=()=>{\n          if(key==="active") window.__SNAP_ACTIVE_EXPLORATION=!!request.result;\n          resolve(request.result);\n        };
+        request.onsuccess=()=>{
+          if(key==="active") window.__SNAP_ACTIVE_EXPLORATION=!!request.result;
+          resolve(request.result);
+        };
         request.onerror=()=>reject(request.error);
       }catch(error){reject(error)}
     });
@@ -49,7 +53,13 @@
     return new Promise((resolve,reject)=>{
       try{
         const request=requireDb().transaction(STORE,"readwrite").objectStore(STORE).put(value,key);
-        request.onsuccess=()=>{\n          if(key==="active"){\n            window.__SNAP_ACTIVE_EXPLORATION=!!value;\n            if(!value) window.dispatchEvent(new CustomEvent("snap-pop-safe-point"));\n          }\n          resolve();\n        };
+        request.onsuccess=()=>{
+          if(key==="active"){
+            window.__SNAP_ACTIVE_EXPLORATION=!!value;
+            if(!value) window.dispatchEvent(new CustomEvent("snap-pop-safe-point"));
+          }
+          resolve();
+        };
         request.onerror=()=>reject(request.error);
       }catch(error){reject(error)}
     });
@@ -61,7 +71,14 @@
         const tx=requireDb().transaction(STORE,"readwrite");
         const store=tx.objectStore(STORE);
         entries.forEach(([key,value])=>store.put(value,key));
-        tx.oncomplete=()=>{\n          const activeEntry=entries.find(([key])=>key==="active");\n          if(activeEntry){\n            window.__SNAP_ACTIVE_EXPLORATION=!!activeEntry[1];\n            if(!activeEntry[1]) window.dispatchEvent(new CustomEvent("snap-pop-safe-point"));\n          }\n          resolve();\n        };
+        tx.oncomplete=()=>{
+          const activeEntry=entries.find(([key])=>key==="active");
+          if(activeEntry){
+            window.__SNAP_ACTIVE_EXPLORATION=!!activeEntry[1];
+            if(!activeEntry[1]) window.dispatchEvent(new CustomEvent("snap-pop-safe-point"));
+          }
+          resolve();
+        };
         tx.onerror=()=>reject(tx.error);
         tx.onabort=()=>reject(tx.error);
       }catch(error){reject(error)}
