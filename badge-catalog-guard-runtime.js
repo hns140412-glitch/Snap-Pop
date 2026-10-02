@@ -1,16 +1,26 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.10.02-a";
+  const VERSION="2026.10.02-b";
+
+  function validSourceMatcher(x={}){
+    return !!(x&&typeof x==="object"&&!Array.isArray(x)&&
+      typeof x.appId==="string"&&x.appId.trim()&&
+      typeof x.eventFamily==="string"&&x.eventFamily.trim()&&
+      typeof x.behaviorCode==="string"&&x.behaviorCode.trim()&&
+      typeof x.sourceContractId==="string"&&x.sourceContractId.trim());
+  }
 
   function activationContractComplete(item={}){
     if(!item||typeof item!=="object") return false;
     if(item.active!==true) return false;
     if(item.activationApproved!==true) return false;
     if(typeof item.activationEvidenceRef!=="string"||!item.activationEvidenceRef.trim()) return false;
-    if(!Array.isArray(item.eventFamilies)||!item.eventFamilies.length) return false;
-    if(!item.matcher||typeof item.matcher!=="object"||Array.isArray(item.matcher)||!Object.keys(item.matcher).length) return false;
-    if(typeof item.sourceContractId!=="string"||!item.sourceContractId.trim()) return false;
+    const multi=Array.isArray(item.sourceMatchers)&&item.sourceMatchers.length>0&&item.sourceMatchers.every(validSourceMatcher);
+    const legacy=Array.isArray(item.eventFamilies)&&item.eventFamilies.length&&
+      item.matcher&&typeof item.matcher==="object"&&!Array.isArray(item.matcher)&&Object.keys(item.matcher).length&&
+      typeof item.sourceContractId==="string"&&item.sourceContractId.trim();
+    if(!multi&&!legacy) return false;
     if(typeof item.dedupePolicy!=="string"||!item.dedupePolicy.trim()) return false;
     if(typeof item.reawardPolicy!=="string"||!item.reawardPolicy.trim()) return false;
     return true;
@@ -42,6 +52,7 @@
     version:VERSION,
     validateCatalog,
     canActivate,
-    activationContractComplete
+    activationContractComplete,
+    validSourceMatcher
   });
 })();
