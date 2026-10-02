@@ -221,10 +221,20 @@
           from_app:context.from_app||""
         })||null;
         const vocabularyMaterial=window.SnapPopVocabularyMaterial?.usageEvidence?.(material,before.draft||"")||null;
+        const learningContext=decodeLearningContext(context.learning_context);
         const resultEvent = emit('TASK_COMPLETED', {
           landmark: before.landmark || null,
           vocabulary_material: vocabularyMaterial,
-          child_authored: true
+          child_authored: true,
+          learning_provenance: learningContext ? {
+            contract_version: learningContext.contract_version,
+            learning_unit_id: learningContext.learning_unit_id,
+            analysis_id: learningContext.analysis_id,
+            assignment_id: learningContext.assignment_id,
+            subject: learningContext.subject,
+            concept_skill_target: learningContext.concept_skill_target,
+            provenance: learningContext.provenance
+          } : null
         });
         context.completion_event_id = resultEvent.event_id;
         persistContext(context);
@@ -264,9 +274,19 @@
     if (context.session_id && context.task_id) emit('APP_ENTERED', { from_app: context.from_app || null, word: context.word || null });
     window.addEventListener('snap-pop:task-completed', event => {
       if (!(context.session_id && context.task_id) || context.task_completed) return;
+      const learningContext=decodeLearningContext(context.learning_context);
       const resultEvent = emit('TASK_COMPLETED', {
         ...(event.detail || {}),
-        child_authored: true
+        child_authored: true,
+        learning_provenance: learningContext ? {
+          contract_version: learningContext.contract_version,
+          learning_unit_id: learningContext.learning_unit_id,
+          analysis_id: learningContext.analysis_id,
+          assignment_id: learningContext.assignment_id,
+          subject: learningContext.subject,
+          concept_skill_target: learningContext.concept_skill_target,
+          provenance: learningContext.provenance
+        } : null
       });
       context.task_completed = true;
       context.completed_at = iso();
