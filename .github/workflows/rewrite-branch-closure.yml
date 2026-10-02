@@ -55,7 +55,7 @@ jobs:
 
             launch_browser "--headless=new"
             BROWSER_READY=0
-            for i in $(seq 1 120); do
+            for i in $(seq 1 300); do
               if curl -fsS http://127.0.0.1:9222/json/version >/dev/null 2>&1; then BROWSER_READY=1; break; fi
               if ! kill -0 "$BROWSER_PID" 2>/dev/null; then break; fi
               sleep 0.1
@@ -66,7 +66,7 @@ jobs:
               echo "--- first chrome launch failed; retrying alternate headless mode ---" >> /tmp/snap-pop-chrome.log
               rm -rf "$PROFILE_DIR"
               launch_browser "--headless"
-              for i in $(seq 1 120); do
+              for i in $(seq 1 300); do
                 if curl -fsS http://127.0.0.1:9222/json/version >/dev/null 2>&1; then BROWSER_READY=1; break; fi
                 if ! kill -0 "$BROWSER_PID" 2>/dev/null; then break; fi
                 sleep 0.1
