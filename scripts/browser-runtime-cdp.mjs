@@ -85,6 +85,7 @@ for(let i=0;i<240;i++){
     recoveryUrl.searchParams.set("runtime-recovery","1");
     console.error("CDP_STAGE RECOVERY_NAVIGATE");
     await send("Page.navigate",{url:recoveryUrl.href});
+    await sleep(500);
     let recovery=null;
     let recoveryLastError=null;
     for(let j=0;j<240;j++){
