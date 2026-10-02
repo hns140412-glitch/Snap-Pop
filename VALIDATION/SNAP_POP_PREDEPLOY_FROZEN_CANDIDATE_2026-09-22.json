@@ -1,10 +1,10 @@
 {
-  "version": "2026-10-02.1",
+  "version": "2026-10-02.2",
   "status": "PREDEPLOY_FROZEN_CANDIDATE",
   "repository": "hns140412-glitch/Snap-Pop",
   "branch": "taky/snap-pop-implementation-2026-09-20",
-  "validatedCodeSha": "cb4b2bd139ebc0560c540b0fd44c8fa84cffb8e7",
-  "evidenceHeadSha": "53a0cfb455ff846c4acb271a192703602c344a52",
+  "validatedCodeSha": "307a3143b29213081485f4ed244b1fe272af384d",
+  "evidenceHeadSha": "f01f5b7476f1fd95224646540c5397244be371ab",
   "validation": {
     "branchClosure": "73/73 PASS",
     "browserRuntime": "BROWSER_RUNTIME_CDP_PASS",
@@ -16,13 +16,14 @@
     "mainMerge": "NOT_RUN",
     "deviceVerified": "NOT_RUN",
     "lafInt003": "CLOSED",
-    "branchClosureRun": "#501 SUCCESS",
-    "rewriteClosureRun": "#321 SUCCESS"
+    "branchClosureRun": "#513 SUCCESS",
+    "rewriteClosureRun": "#333 SUCCESS",
+    "crossAppRuntime": "4 REQUIREMENTS CLOSED"
   },
   "evidenceIndex": {
     "coded": "80/80",
     "staticVerified": "80/80",
-    "runtimeVerified": "69/80",
+    "runtimeVerified": "73/80",
     "deviceVerified": "0/80"
   },
   "architectureSurgery": "CLOSED",
@@ -30,10 +31,6 @@
   "finalVisualArtDirection": "OPEN",
   "runtimeOpen": {
     "crossApp": [
-      "SP-BRIDGE-001",
-      "SP-BRIDGE-002",
-      "SP-WRITE-007",
-      "SP-WRITE-009",
       "SP-BADGE-003"
     ],
     "liveProvider": [
@@ -57,8 +54,9 @@
     "Do not claim DEVICE_VERIFIED before physical-device evidence."
   ],
   "notes": [
-    "LAF-INT-003 durability seam is CLOSED at the validated code SHA.",
-    "Service-worker parse-breaking literal escaped newline was corrected.",
-    "Runtime recovery proof reads IndexedDB and offline shell through CDP storage domains."
+    "LAF-INT-003 durability seam remains CLOSED.",
+    "SP-BRIDGE-001, SP-BRIDGE-002, SP-WRITE-007, SP-WRITE-009 are browser-runtime verified.",
+    "SP-BADGE-003 remains OPEN pending reconciliation with current TAKY badge authority.",
+    "Live-provider/OpenAI runtime checks are intentionally not run due cost rejection."
   ]
 }
