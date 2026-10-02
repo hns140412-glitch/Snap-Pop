@@ -183,3 +183,30 @@ Root cause fixed:
 
 Evidence index remains conservative: CODED `80/80` · STATIC `80/80` · RUNTIME `69/80` · DEVICE `0/80`.
 No remaining runtime-open requirement is promoted by mock-only evidence. Deploy / Netlify / main merge remain HOLD / NOT_RUN.
+
+
+## Cross-app runtime closure — 2026-10-02
+
+Validated code SHA: `307a3143b29213081485f4ed244b1fe272af384d`
+Evidence head: `f01f5b7476f1fd95224646540c5397244be371ab`
+
+CLOSED by local browser + exact-head CI evidence:
+- `SP-BRIDGE-001` Ready session/task/lap/return continuity
+- `SP-BRIDGE-002` Hide vocabulary → Snap expression material handoff
+- `SP-WRITE-007` confirmed Ready Learning Unit → Snap learning context
+- `SP-WRITE-009` Snap completion/minimal provenance → Ready task
+
+Evidence:
+- Ready browser: outbound/scope/return/provenance `6/6 PASS`
+- Hide browser: Hide→Snap exact run-context + word handoff `1/1 PASS`
+- Snap browser: learning-context decode + vocabulary receive + same-tab provenance return `3/3 PASS`
+- Snap Branch Closure #513: SUCCESS
+- Snap Rewrite Closure #333: SUCCESS
+- `BRANCH_CLOSURE_VALIDATOR_PASS 73/73`
+- `BROWSER_RUNTIME_CDP_PASS`
+- `PWA_RELOAD_RECOVERY_PASS`
+- `PWA_OFFLINE_SHELL_PASS`
+
+Evidence index: CODED `80/80` · STATIC `80/80` · RUNTIME `73/80` (91.25%) · DEVICE `0/80`.
+Runtime OPEN = 7: six live-provider/OpenAI items + `SP-BADGE-003`.
+No live-provider call, paid API, deployment, Netlify mutation, or main merge was performed.
