@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION="2026.10.02-b";
+  const VERSION="2026.10.02-c";
   const TIER_ORDER=["GREEN","BLUE","RED","GOLD","PLATINUM"];
 
   let config=null, catalog=null;
@@ -41,11 +41,21 @@
   function sourceMatchesItem(item={},observation={}){
     if(!item||typeof item!=="object"||!observation||typeof observation!=="object")return false;
     if(observation.contract_version!=="TAKY_BADGE_SOURCE_OBSERVATION_V1")return false;
+    if(observation.explicit_child_action!==true)return false;
+    if(Array.isArray(item.sourceMatchers)&&item.sourceMatchers.length){
+      return item.sourceMatchers.some(x=>
+        x&&typeof x==="object"&&
+        String(x.appId||"").toUpperCase()===String(observation.app_id||"").toUpperCase()&&
+        String(x.eventFamily||"")===String(observation.event_family||"")&&
+        String(x.behaviorCode||"")===String(observation.behavior_code||"")&&
+        String(x.sourceContractId||"")===String(observation.source_contract_id||"")
+      );
+    }
     if(!Array.isArray(item.eventFamilies)||!item.eventFamilies.includes(observation.event_family))return false;
     if(!item.matcher||typeof item.matcher!=="object"||Array.isArray(item.matcher))return false;
     if(String(item.matcher.behaviorCode||"")!==String(observation.behavior_code||""))return false;
     if(String(item.sourceContractId||"")!==String(observation.source_contract_id||""))return false;
-    return observation.explicit_child_action===true;
+    return true;
   }
 
   function matchSourceObservation(observation={}){
