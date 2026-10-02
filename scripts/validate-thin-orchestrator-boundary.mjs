@@ -46,7 +46,6 @@ const required=[
   "SnapPopInteractionSupportController.instance",
   "SnapPopBootstrapController.instance",
   ".install();",
-  "serviceWorker.register",
   "init().then"
 ];
 
@@ -63,3 +62,14 @@ if(bytes>13000){
 }
 
 console.log("THIN_ORCHESTRATOR_BOUNDARY_PASS",{bytes,maxBytes:13000});
+
+
+const pwaAdapter=fs.readFileSync("snap-pwa-update-v01.js","utf8");
+if(app.includes("serviceWorker.register")){
+  console.error("THIN_ORCHESTRATOR_BOUNDARY_FAIL app must not own service worker registration");
+  process.exit(1);
+}
+if(!pwaAdapter.includes("navigator.serviceWorker.register('./sw.js')")){
+  console.error("THIN_ORCHESTRATOR_BOUNDARY_FAIL shared PWA adapter must own service worker registration");
+  process.exit(1);
+}
