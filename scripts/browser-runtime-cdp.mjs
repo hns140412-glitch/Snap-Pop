@@ -47,7 +47,15 @@ await Promise.race([
 
 function send(method,params={}){
   return new Promise((resolve,reject)=>{
-    const id=++seq;pending.set(id,{resolve,reject});
+    const id=++seq;
+    const timer=setTimeout(()=>{
+      pending.delete(id);
+      reject(new Error("CDP_COMMAND_TIMEOUT "+method));
+    },5000);
+    pending.set(id,{
+      resolve:value=>{clearTimeout(timer);resolve(value)},
+      reject:error=>{clearTimeout(timer);reject(error)}
+    });
     ws.send(JSON.stringify({id,method,params}));
   });
 }
