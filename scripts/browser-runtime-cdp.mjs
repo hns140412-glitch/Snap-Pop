@@ -26,9 +26,14 @@ async function openCdp(target){
   const pending=new Map();
   let seq=0;
   let loadFired=false;
+  let defaultContextId=null;
   socket.onmessage=event=>{
     const msg=JSON.parse(String(event.data));
     if(msg.method==="Page.loadEventFired") loadFired=true;
+    if(msg.method==="Runtime.executionContextCreated" && msg.params?.context?.auxData?.isDefault){
+      defaultContextId=msg.params.context.id;
+    }
+    if(msg.method==="Runtime.executionContextsCleared") defaultContextId=null;
     if(msg.id&&pending.has(msg.id)){
       const p=pending.get(msg.id);pending.delete(msg.id);
       if(msg.error)p.reject(new Error(msg.error.message||"CDP_ERROR"));else p.resolve(msg.result);
@@ -62,11 +67,13 @@ async function openCdp(target){
     });
   }
   async function evalValue(expression){
-    const out=await send("Runtime.evaluate",{expression,returnByValue:true,awaitPromise:true});
+    const params={expression,returnByValue:true,awaitPromise:true};
+    if(defaultContextId!==null) params.contextId=defaultContextId;
+    const out=await send("Runtime.evaluate",params);
     if(out.exceptionDetails) throw new Error(out.exceptionDetails.text||"RUNTIME_EVAL_EXCEPTION");
     return out.result?.value;
   }
-  return {socket,send,evalValue,loadFired:()=>loadFired};
+  return {socket,send,evalValue,loadFired:()=>loadFired,contextId:()=>defaultContextId};
 }
 
 const target=await getTarget();
@@ -112,6 +119,13 @@ for(let i=0;i<240;i++){
     pageLoadFired=()=>session.loadFired();
     await send("Runtime.enable");
     await send("Page.enable");
+    for(let k=0;k<100&&session.contextId()===null;k++) await sleep(50);
+    if(session.contextId()===null){
+      console.error("CDP_STAGE RECOVERY_CONTEXT_TIMEOUT");
+      ws.close();
+      process.exit(5);
+    }
+    console.error("CDP_STAGE RECOVERY_CONTEXT_READY "+session.contextId());
     console.error("CDP_STAGE RECOVERY_RECONNECTED");
     try{
       await send("Runtime.getIsolateId");
