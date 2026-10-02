@@ -1,15 +1,28 @@
+import http from "node:http";
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 
+function directGet(pathname){
+  return new Promise((resolve,reject)=>{
+    const req=http.get({host:"127.0.0.1",port:9222,path:pathname,headers:{Host:"127.0.0.1:9222"}},res=>{
+      let body="";
+      res.setEncoding("utf8");
+      res.on("data",chunk=>body+=chunk);
+      res.on("end",()=>res.statusCode>=200&&res.statusCode<300?resolve(body):reject(new Error("CDP_HTTP_"+res.statusCode)));
+    });
+    req.setTimeout(1500,()=>req.destroy(new Error("CDP_HTTP_TIMEOUT")));
+    req.on("error",reject);
+  });
+}
 async function getTarget(){
   for(let i=0;i<200;i++){
     try{
-      const targets=await fetch("http://127.0.0.1:9222/json").then(r=>r.json());
+      const targets=JSON.parse(await directGet("/json"));
       const page=targets.find(x=>x.type==="page"&&/index\\.html/.test(x.url))||targets.find(x=>x.type==="page");
       if(page?.webSocketDebuggerUrl)return page;
     }catch{}
     await sleep(100);
   }
-  let version=null; try{version=await fetch("http://127.0.0.1:9222/json/version").then(r=>r.text())}catch{}
+  let version=null; try{version=await directGet("/json/version")}catch{}
   throw new Error("CDP_TARGET_NOT_FOUND version="+String(version||"UNAVAILABLE"));
 }
 
