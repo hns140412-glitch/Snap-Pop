@@ -175,7 +175,6 @@ for(let i=0;i<240;i++){
       securityOrigin,
       databaseName:"snap_pop_rev10",
       objectStoreName:"state",
-      indexName:"",
       skipCount:0,
       pageSize:500
     });
