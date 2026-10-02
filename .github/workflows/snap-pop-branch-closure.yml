@@ -34,12 +34,28 @@ jobs:
             echo "BROWSER_RUNTIME_INFRA_BLOCKED no chromium browser"
             exit 2
           fi
+          PROFILE_DIR="/tmp/snap-pop-chrome-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          rm -rf "$PROFILE_DIR"
           "$BROWSER" --headless=new --disable-gpu --no-sandbox --disable-dev-shm-usage --window-size=390,844 \
+            --remote-debugging-address=127.0.0.1 \
             --remote-debugging-port=9222 \
+            --user-data-dir="$PROFILE_DIR" \
             "http://127.0.0.1:4173/index.html?runtime-smoke=1" \
             >/tmp/snap-pop-chrome.log 2>&1 &
           BROWSER_PID=$!
           trap 'kill $BROWSER_PID $SERVER_PID 2>/dev/null || true' EXIT
+          BROWSER_READY=0
+          for i in $(seq 1 120); do
+            if curl -fsS http://127.0.0.1:9222/json/version >/dev/null 2>&1; then BROWSER_READY=1; break; fi
+            if ! kill -0 "$BROWSER_PID" 2>/dev/null; then break; fi
+            sleep 0.1
+          done
+          if [ "$BROWSER_READY" -ne 1 ]; then
+            echo "BROWSER_RUNTIME_INFRA_BLOCKED chrome debugging port unavailable"
+            echo "=== CHROME LOG ==="
+            cat /tmp/snap-pop-chrome.log || true
+            exit 2
+          fi
           if ! timeout 90s node scripts/browser-runtime-cdp.mjs; then
             echo "=== CHROME LOG ==="
             cat /tmp/snap-pop-chrome.log || true
