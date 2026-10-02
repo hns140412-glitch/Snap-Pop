@@ -3,40 +3,8 @@ const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
 let marks=[], lastMain="map", SNAP_RULES=null;
 const uid=p=>`${p}_${Date.now()}_${Math.random().toString(36).slice(2,9)}`;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function toast(t){return window.SnapPopUIShell.toast(t)}
 function show(id){const view=window.SnapPopUIShell.activateView(id);if(view.isMain)lastMain=id;if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth();if(id==="badgeCatalog")renderBadgeCatalog();if(id==="result")renderLastResult()}
-
-
-
-
 
 function writingController(){return window.SnapPopWritingController.instance({query:$,getLandmarks:()=>marks,resolveIdentity:resolvedIdentity,crewMemberName,crewReaction,crewSnippet,hideCrewReaction,renderExpressionIntentNote})}
 function promptFor(landmark,step,language="ko",draft=""){return writingController().promptFor(landmark,step,language,draft)}
@@ -123,8 +91,6 @@ async function dismissPendingExpressionIntent(){return bridgeContextController()
 async function renderPendingExpressionIntent(){return bridgeContextController().renderPendingExpressionIntent()}
 function renderExpressionIntentNote(s){return bridgeContextController().renderExpressionIntentNote(s)}
 
-
-
 function interactionSupportController(){return window.SnapPopInteractionSupportController.instance({query:$,queryAll:$$,getLandmarks:()=>marks,promptFor,ensureWritingState,recordBadgeBehaviorObservation,recordBadgeBehaviorEvidence,resolvedIdentity,showCrewReaction,crewMemberName,crewReaction,learnerContext,vocabularyMaterial,renderWritingBridge,toast,recordCrewExperience,uid,renderGrowthTimeline,show,renderRecords})}
 function renderLandmarks(){return interactionSupportController().renderLandmarks()}
 async function revealHint(){return interactionSupportController().revealHint()}
@@ -145,59 +111,11 @@ async function migrateLegacyState(){return bootstrapController().migrateLegacySt
 function runtimePhase(phase){return bootstrapController().runtimePhase(phase)}
 async function init(){return bootstrapController().init()}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 writingFlowController().install();
 recordsFlowController().install();
 wishEconomyController().install();
 specialController().install();
 imaginationController().install();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 bridgeContextController().install();
 $$("[data-back]").forEach(b=>b.onclick=()=>show(b.dataset.back));
