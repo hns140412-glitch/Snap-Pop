@@ -4,423 +4,985 @@
   "items": [
     {
       "draftId": "BDG-DRAFT-001",
-      "name": "해뜰락말락",
+      "name": "이불 왕국 탈출기",
       "historicalTriggerText": "평소보다 일찍 일어나 학습 시작",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-001",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_001",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_001",
+      "primaryNature": "SELF_DIRECTED",
+      "natureTags": [
+        "EARLY_START",
+        "SELF_START"
+      ],
+      "natureLabelKo": "스스로",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-002",
-      "name": "꼬끼오 출발",
+      "name": "알람보다 한발 먼저",
       "historicalTriggerText": "아침 알람 후 바로 일어남",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-002",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_002",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_002",
+      "primaryNature": "SELF_DIRECTED",
+      "natureTags": [
+        "ALARM_RESPONSE",
+        "SELF_START"
+      ],
+      "natureLabelKo": "스스로",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-003",
-      "name": "아침 한입",
+      "name": "한 입 먹고 한 칸",
       "historicalTriggerText": "식사 전 짧은 과제 하나 수행",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-003",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_003",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_003",
+      "primaryNature": "SELF_DIRECTED",
+      "natureTags": [
+        "MICRO_START"
+      ],
+      "natureLabelKo": "스스로",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-004",
-      "name": "밥먹고 한번더",
+      "name": "밥심으로 2라운드",
       "historicalTriggerText": "아침식사 후 다시 학습으로 복귀",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-004",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_004",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_004",
+      "primaryNature": "RECOVERY_RESILIENCE",
+      "natureTags": [
+        "RESTART_AFTER_BREAK"
+      ],
+      "natureLabelKo": "복귀·재도전",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-005",
-      "name": "출발 준비 끝",
+      "name": "신발끈은 이미 출발했다",
       "historicalTriggerText": "등교 준비까지 흐트러짐 없이 완료",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-005",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_005",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_005",
+      "primaryNature": "GOAL_ACHIEVEMENT",
+      "natureTags": [
+        "PREPARATION_COMPLETE"
+      ],
+      "natureLabelKo": "목표도달",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-006",
-      "name": "시간 발견자",
+      "name": "잃어버린 분을 찾습니다",
       "historicalTriggerText": "스스로 빈 시간을 찾아 과제 시작",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-006",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_006",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_006",
+      "primaryNature": "PLANNING_SELF_REGULATION",
+      "natureTags": [
+        "TIME_CREATION",
+        "SELF_START"
+      ],
+      "natureLabelKo": "계획·조절",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-007",
-      "name": "없던시간 뿅",
+      "name": "시계의 비밀 주머니",
       "historicalTriggerText": "원래 계획에 없던 시간을 만들어 추가 수행",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-007",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_007",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_007",
+      "primaryNature": "PLANNING_SELF_REGULATION",
+      "natureTags": [
+        "TIME_CREATION",
+        "EXTRA_TASK"
+      ],
+      "natureLabelKo": "계획·조절",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-008",
-      "name": "하나 더!",
+      "name": "한 개는 덤입니다",
       "historicalTriggerText": "할 일을 끝내고 스스로 하나 더 선택",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-008",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_008",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_008",
+      "primaryNature": "EXTRA_GROWTH",
+      "natureTags": [
+        "EXTRA_TASK",
+        "SELF_CHOICE"
+      ],
+      "natureLabelKo": "추가도전·성장",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-009",
-      "name": "몰래 시작",
+      "name": "아무도 안 시켰는데요?",
       "historicalTriggerText": "부모가 말하기 전에 스스로 시작",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-009",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_009",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_009",
+      "primaryNature": "SELF_DIRECTED",
+      "natureTags": [
+        "SELF_START",
+        "BEFORE_PROMPT"
+      ],
+      "natureLabelKo": "스스로",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-010",
-      "name": "말하기 전에 GO",
+      "name": "말보다 빠른 발자국",
       "historicalTriggerText": "안내 직후 지체 없이 시작",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-010",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_010",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_010",
+      "primaryNature": "SELF_DIRECTED",
+      "natureTags": [
+        "RESPONSIVE_START"
+      ],
+      "natureLabelKo": "스스로",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-011",
-      "name": "내가 고를래",
+      "name": "내 작전, 내가 결재",
       "historicalTriggerText": "오늘 할 일을 스스로 선택",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-011",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_011",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_011",
+      "primaryNature": "SELF_DIRECTED",
+      "natureTags": [
+        "SELF_CHOICE"
+      ],
+      "natureLabelKo": "스스로",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-012",
-      "name": "작전 짜기",
+      "name": "연필 참모총장",
       "historicalTriggerText": "순서를 스스로 정해 실행",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-012",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_012",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_012",
+      "primaryNature": "PLANNING_SELF_REGULATION",
+      "natureTags": [
+        "SELF_PLANNING",
+        "SEQUENCE"
+      ],
+      "natureLabelKo": "계획·조절",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-013",
-      "name": "딱 하나 집중",
+      "name": "한 칸 집중 본부",
       "historicalTriggerText": "한 과제에 흔들리지 않고 집중",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-013",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_013",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_013",
+      "primaryNature": "FOCUS_IMMERSION",
+      "natureTags": [
+        "SINGLE_TASK_FOCUS"
+      ],
+      "natureLabelKo": "집중·몰입",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-014",
-      "name": "번개 완료",
+      "name": "번개도 검토했습니다",
       "historicalTriggerText": "예상보다 훨씬 빠르게 제대로 완료",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-014",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_014",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_014",
+      "primaryNature": "GOAL_ACHIEVEMENT",
+      "natureTags": [
+        "FAST_COMPLETE",
+        "CHECK"
+      ],
+      "natureLabelKo": "목표도달",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-015",
-      "name": "천천히 정확히",
+      "name": "거북이의 정밀 탐험",
       "historicalTriggerText": "오래 걸렸지만 꼼꼼하게 완료",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-015",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_015",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_015",
+      "primaryNature": "GOAL_ACHIEVEMENT",
+      "natureTags": [
+        "ACCURACY",
+        "COMPLETE"
+      ],
+      "natureLabelKo": "목표도달",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-016",
-      "name": "한칸씩",
+      "name": "한 칸의 반란",
       "historicalTriggerText": "큰 과제를 차근차근 나눠 완료",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-016",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_016",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_016",
+      "primaryNature": "GOAL_ACHIEVEMENT",
+      "natureTags": [
+        "CHUNKING",
+        "COMPLETE"
+      ],
+      "natureLabelKo": "목표도달",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-017",
-      "name": "결국 해냈다",
+      "name": "끝판왕은 마지막 한 칸",
       "historicalTriggerText": "예상보다 오래 걸렸어도 끝까지 완료",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-017",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_017",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_017",
+      "primaryNature": "GOAL_ACHIEVEMENT",
+      "natureTags": [
+        "PERSIST_TO_COMPLETE"
+      ],
+      "natureLabelKo": "목표도달",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-018",
-      "name": "집중 불꽃",
+      "name": "불꽃은 조용히 탄다",
       "historicalTriggerText": "평소보다 긴 집중 구간 발생",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-018",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_018",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_018",
+      "primaryNature": "FOCUS_IMMERSION",
+      "natureTags": [
+        "LONG_FOCUS"
+      ],
+      "natureLabelKo": "집중·몰입",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-019",
-      "name": "조용한 몰입",
+      "name": "머릿속은 대원정 중",
       "historicalTriggerText": "개입 없이 조용히 몰입",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-019",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_019",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_019",
+      "primaryNature": "FOCUS_IMMERSION",
+      "natureTags": [
+        "QUIET_IMMERSION"
+      ],
+      "natureLabelKo": "집중·몰입",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-020",
-      "name": "흐름 탔다!",
+      "name": "집중 급류 탑승",
       "historicalTriggerText": "자연스럽게 다음 과제로 이어감",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-020",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_020",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_020",
+      "primaryNature": "FOCUS_IMMERSION",
+      "natureTags": [
+        "FLOW_CONTINUATION"
+      ],
+      "natureLabelKo": "집중·몰입",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-021",
-      "name": "다시 왔어",
+      "name": "집중이 귀가했습니다",
       "historicalTriggerText": "쉬거나 흐트러진 뒤 스스로 복귀",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-021",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_021",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_021",
+      "primaryNature": "RECOVERY_RESILIENCE",
+      "natureTags": [
+        "SELF_RETURN"
+      ],
+      "natureLabelKo": "복귀·재도전",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-022",
-      "name": "돌아온 집중",
+      "name": "잠깐 외출한 집중 씨",
       "historicalTriggerText": "집중 이탈 후 다시 제대로 집중",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-022",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_022",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_022",
+      "primaryNature": "RECOVERY_RESILIENCE",
+      "natureTags": [
+        "FOCUS_RETURN"
+      ],
+      "natureLabelKo": "복귀·재도전",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-023",
-      "name": "집중 회수",
+      "name": "흩어진 마음 수거함",
       "historicalTriggerText": "딴짓하다 스스로 알아채고 돌아옴",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-023",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_023",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_023",
+      "primaryNature": "RECOVERY_RESILIENCE",
+      "natureTags": [
+        "SELF_NOTICE_RETURN"
+      ],
+      "natureLabelKo": "복귀·재도전",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-024",
-      "name": "구조 성공",
+      "name": "오늘 한 조각 구조 완료",
       "historicalTriggerText": "막혔지만 도움을 활용해 다시 진행",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-024",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_024",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_024",
+      "primaryNature": "PROBLEM_SOLVING",
+      "natureTags": [
+        "HELP_USE",
+        "RECOVERY"
+      ],
+      "natureLabelKo": "문제해결",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-025",
-      "name": "도움 신호",
+      "name": "SOS도 기술이다",
       "historicalTriggerText": "필요한 순간 스스로 도움 요청",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-025",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_025",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_025",
+      "primaryNature": "PROBLEM_SOLVING",
+      "natureTags": [
+        "HELP_REQUEST"
+      ],
+      "natureLabelKo": "문제해결",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-026",
-      "name": "뭔가 이상한데?",
+      "name": "이상한 건 못 지나쳐",
       "historicalTriggerText": "자기 실수를 스스로 발견",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-026",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_026",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_026",
+      "primaryNature": "ERROR_LEARNING",
+      "natureTags": [
+        "ERROR_DISCOVERY"
+      ],
+      "natureLabelKo": "실수·교정",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-027",
       "name": "실수 청소부",
       "historicalTriggerText": "틀린 문제를 찾아 정리",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-027",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_027",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_027",
+      "primaryNature": "ERROR_LEARNING",
+      "natureTags": [
+        "ERROR_REVIEW"
+      ],
+      "natureLabelKo": "실수·교정",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-028",
-      "name": "고쳐서 완성",
+      "name": "수정이 나를 키웠다",
       "historicalTriggerText": "오답을 수정해 결국 해결",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-028",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_028",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_028",
+      "primaryNature": "ERROR_LEARNING",
+      "natureTags": [
+        "ERROR_CORRECTION",
+        "COMPLETE"
+      ],
+      "natureLabelKo": "실수·교정",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-029",
-      "name": "한번 더!",
+      "name": "다시 누르는 용기",
       "historicalTriggerText": "실패 후 스스로 재도전",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-029",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_029",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_029",
+      "primaryNature": "RECOVERY_RESILIENCE",
+      "natureTags": [
+        "RETRY"
+      ],
+      "natureLabelKo": "복귀·재도전",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-030",
-      "name": "범인은 여기!",
+      "name": "범인은 3번째 줄",
       "historicalTriggerText": "왜 틀렸는지 원인을 찾아냄",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-030",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_030",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_030",
+      "primaryNature": "ERROR_LEARNING",
+      "natureTags": [
+        "ROOT_CAUSE"
+      ],
+      "natureLabelKo": "실수·교정",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-031",
-      "name": "마지막 조각",
+      "name": "퍼즐은 마지막에 웃는다",
       "historicalTriggerText": "오래 막혔던 문제를 결국 해결",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-031",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_031",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_031",
+      "primaryNature": "PROBLEM_SOLVING",
+      "natureTags": [
+        "BREAKTHROUGH",
+        "PERSISTENCE"
+      ],
+      "natureLabelKo": "문제해결",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-032",
-      "name": "아하!",
+      "name": "머릿속 전구 긴급 점등",
       "historicalTriggerText": "모르던 개념을 이해한 순간",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-032",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_032",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_032",
+      "primaryNature": "EXTRA_GROWTH",
+      "natureTags": [
+        "CONCEPT_UNDERSTANDING"
+      ],
+      "natureLabelKo": "추가도전·성장",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-033",
-      "name": "잠깐만…",
+      "name": "잠깐! 생각 검문",
       "historicalTriggerText": "성급히 답하지 않고 다시 생각",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-033",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_033",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_033",
+      "primaryNature": "ERROR_LEARNING",
+      "natureTags": [
+        "REFLECTION",
+        "SLOW_DOWN"
+      ],
+      "natureLabelKo": "실수·교정",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-034",
-      "name": "두번 봤다",
+      "name": "두 번째 눈이 찾았다",
       "historicalTriggerText": "조건/문제를 다시 읽어 실수 예방",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-034",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_034",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_034",
+      "primaryNature": "ERROR_LEARNING",
+      "natureTags": [
+        "REREAD_CHECK"
+      ],
+      "natureLabelKo": "실수·교정",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-035",
-      "name": "계산 탐정",
+      "name": "숫자의 알리바이",
       "historicalTriggerText": "계산 실수를 스스로 찾아 수정",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-035",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_035",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_035",
+      "primaryNature": "ERROR_LEARNING",
+      "natureTags": [
+        "CALCULATION_CHECK"
+      ],
+      "natureLabelKo": "실수·교정",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-036",
-      "name": "지우개 용사",
+      "name": "지우개는 퇴각하지 않는다",
       "historicalTriggerText": "틀리는 걸 두려워하지 않고 고쳐 씀",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-036",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_036",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_036",
+      "primaryNature": "ERROR_LEARNING",
+      "natureTags": [
+        "CORRECTION_COURAGE"
+      ],
+      "natureLabelKo": "실수·교정",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-037",
-      "name": "생각이 길었다",
+      "name": "장고 끝에 지도 한 장",
       "historicalTriggerText": "한 문제를 오래 깊게 고민",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-037",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_037",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_037",
+      "primaryNature": "FOCUS_IMMERSION",
+      "natureTags": [
+        "DEEP_THINKING"
+      ],
+      "natureLabelKo": "집중·몰입",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-038",
-      "name": "생각의 동굴",
+      "name": "동굴에 답이 살고 있다",
       "historicalTriggerText": "평소보다 해결 시간이 크게 길어진 문제를 끝까지 탐색",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-038",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_038",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_038",
+      "primaryNature": "FOCUS_IMMERSION",
+      "natureTags": [
+        "DEEP_THINKING",
+        "PERSISTENCE"
+      ],
+      "natureLabelKo": "집중·몰입",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-039",
-      "name": "막힘 돌파",
+      "name": "막다른 길의 뒷문",
       "historicalTriggerText": "오래 막힌 구간을 해결",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-039",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_039",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_039",
+      "primaryNature": "PROBLEM_SOLVING",
+      "natureTags": [
+        "BREAKTHROUGH"
+      ],
+      "natureLabelKo": "문제해결",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-040",
-      "name": "오늘은 여기까지",
+      "name": "멈춤도 실력입니다",
       "historicalTriggerText": "무리하지 않고 적절한 시점에 멈춤",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-040",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_040",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_040",
+      "primaryNature": "PLANNING_SELF_REGULATION",
+      "natureTags": [
+        "STOP_AT_RIGHT_TIME"
+      ],
+      "natureLabelKo": "계획·조절",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-041",
-      "name": "예상초과 탐험",
+      "name": "지도 밖으로 한 발",
       "historicalTriggerText": "예상시간을 넘겼지만 학습 의미가 있었음",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-041",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_041",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_041",
+      "primaryNature": "FOCUS_IMMERSION",
+      "natureTags": [
+        "MEANINGFUL_OVERRUN"
+      ],
+      "natureLabelKo": "집중·몰입",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-042",
-      "name": "시간 어디갔지?",
+      "name": "시계 실종 사건",
       "historicalTriggerText": "몰입해서 예상보다 오래 수행",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-042",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_042",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_042",
+      "primaryNature": "FOCUS_IMMERSION",
+      "natureTags": [
+        "FLOW_IMMERSION"
+      ],
+      "natureLabelKo": "집중·몰입",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-043",
-      "name": "쉬고 다시",
+      "name": "휴식 후 재접속",
       "historicalTriggerText": "휴식 후 제시간에 복귀",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-043",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_043",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_043",
+      "primaryNature": "RECOVERY_RESILIENCE",
+      "natureTags": [
+        "BREAK_RETURN"
+      ],
+      "natureLabelKo": "복귀·재도전",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-044",
-      "name": "5분 지킴이",
+      "name": "5분은 내가 지킨다",
       "historicalTriggerText": "휴식 타이머 후 스스로 돌아옴",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-044",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_044",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_044",
+      "primaryNature": "RECOVERY_RESILIENCE",
+      "natureTags": [
+        "TIMER_RETURN"
+      ],
+      "natureLabelKo": "복귀·재도전",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-045",
-      "name": "유혹 피하기",
+      "name": "딴길은 다음에",
       "historicalTriggerText": "놀거리/딴짓 유혹을 이기고 진행",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-045",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_045",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_045",
+      "primaryNature": "PLANNING_SELF_REGULATION",
+      "natureTags": [
+        "DISTRACTION_RESISTANCE"
+      ],
+      "natureLabelKo": "계획·조절",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-046",
-      "name": "책상 재등장",
+      "name": "책상: 돌아온 주인",
       "historicalTriggerText": "하기 싫었던 과제를 다시 꺼내 시작",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-046",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_046",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_046",
+      "primaryNature": "RECOVERY_RESILIENCE",
+      "natureTags": [
+        "TASK_RESTART"
+      ],
+      "natureLabelKo": "복귀·재도전",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-047",
-      "name": "밀린짐 정리",
+      "name": "배낭의 질서 회복",
       "historicalTriggerText": "Carry-over 과제를 스스로 처리",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-047",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_047",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_047",
+      "primaryNature": "GOAL_ACHIEVEMENT",
+      "natureTags": [
+        "CARRY_OVER_COMPLETE"
+      ],
+      "natureLabelKo": "목표도달",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-048",
-      "name": "오늘 안 넘긴다",
+      "name": "내일의 나에게 휴가를",
       "historicalTriggerText": "남은 일을 스스로 확인하고 마무리",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-048",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_048",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_048",
+      "primaryNature": "GOAL_ACHIEVEMENT",
+      "natureTags": [
+        "SELF_CHECK_COMPLETE"
+      ],
+      "natureLabelKo": "목표도달",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-049",
-      "name": "가볍게 끝!",
+      "name": "마무리의 깃털",
       "historicalTriggerText": "작은 과제를 빠르게 정리해 부담 제거",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-049",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_049",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_049",
+      "primaryNature": "GOAL_ACHIEVEMENT",
+      "natureTags": [
+        "MICRO_TASK_COMPLETE"
+      ],
+      "natureLabelKo": "목표도달",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-050",
-      "name": "어려운거 먼저",
+      "name": "큰 문부터 노크",
       "historicalTriggerText": "어려운 과제를 스스로 먼저 선택",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-050",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_050",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_050",
+      "primaryNature": "PLANNING_SELF_REGULATION",
+      "natureTags": [
+        "PRIORITIZE_HARD"
+      ],
+      "natureLabelKo": "계획·조절",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-051",
-      "name": "쉬운거부터!",
+      "name": "작은 문부터 똑똑",
       "historicalTriggerText": "쉬운 과제로 시동을 걸어 결국 전체 진행",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-051",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_051",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_051",
+      "primaryNature": "PLANNING_SELF_REGULATION",
+      "natureTags": [
+        "WARM_START"
+      ],
+      "natureLabelKo": "계획·조절",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-052",
-      "name": "방법 바꿔보기",
+      "name": "열쇠는 하나가 아니지",
       "historicalTriggerText": "안 풀리자 다른 방법으로 시도",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-052",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_052",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_052",
+      "primaryNature": "PROBLEM_SOLVING",
+      "natureTags": [
+        "STRATEGY_SWITCH"
+      ],
+      "natureLabelKo": "문제해결",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-053",
-      "name": "설명해볼게",
+      "name": "말풍선의 연금술",
       "historicalTriggerText": "배운 것을 자기 말로 설명",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-053",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_053",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_053",
+      "primaryNature": "EXTRA_GROWTH",
+      "natureTags": [
+        "SELF_EXPLANATION"
+      ],
+      "natureLabelKo": "추가도전·성장",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-054",
-      "name": "어제보다 익숙",
+      "name": "어제의 나와 재회",
       "historicalTriggerText": "이전에 어려웠던 활동이 수월해짐",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-054",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_054",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_054",
+      "primaryNature": "EXTRA_GROWTH",
+      "natureTags": [
+        "IMPROVEMENT"
+      ],
+      "natureLabelKo": "추가도전·성장",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-055",
-      "name": "깜짝 추가탐험",
+      "name": "지도에 없던 보너스 스테이지",
       "historicalTriggerText": "요구하지 않은 추가 학습을 자발적으로 함",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-055",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_055",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_055",
+      "primaryNature": "EXTRA_GROWTH",
+      "natureTags": [
+        "VOLUNTARY_EXTRA"
+      ],
+      "natureLabelKo": "추가도전·성장",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-056",
-      "name": "계획 변경 성공",
+      "name": "계획표의 유연체조",
       "historicalTriggerText": "갑작스러운 일정 변화에도 다시 계획해 수행",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-056",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_056",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_056",
+      "primaryNature": "PLANNING_SELF_REGULATION",
+      "natureTags": [
+        "PLAN_ADAPTATION"
+      ],
+      "natureLabelKo": "계획·조절",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-057",
-      "name": "그래도 출발",
+      "name": "준비 덜 됐어도 출항",
       "historicalTriggerText": "컨디션이 좋지 않은 날에도 가능한 만큼 시작",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-057",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_057",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_057",
+      "primaryNature": "RECOVERY_RESILIENCE",
+      "natureTags": [
+        "START_DESPITE_CONDITION"
+      ],
+      "natureLabelKo": "복귀·재도전",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-058",
-      "name": "충전하고 왔어",
+      "name": "잠깐 쉬고, 다시 출항",
       "historicalTriggerText": "피곤함을 인지하고 쉬었다가 다시 수행",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-058",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_058",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_058",
+      "primaryNature": "RECOVERY_RESILIENCE",
+      "natureTags": [
+        "REST_AND_RETURN"
+      ],
+      "natureLabelKo": "복귀·재도전",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-059",
-      "name": "탐험대와 해결",
+      "name": "우리끼리 미니 원정대",
       "historicalTriggerText": "탐험대의 힌트를 최소한으로 받고 스스로 해결",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-059",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_059",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_059",
+      "primaryNature": "PROBLEM_SOLVING",
+      "natureTags": [
+        "MINIMAL_HINT_SOLVE"
+      ],
+      "natureLabelKo": "문제해결",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     },
     {
       "draftId": "BDG-DRAFT-060",
-      "name": "오늘 좀 특별한데?",
+      "name": "오늘의 별자리, 나만 알아",
       "historicalTriggerText": "기존 조건에 없는 의미 있는 특별행동 발견",
       "status": "WORKING_DRAFT",
-      "active": false
+      "active": false,
+      "canonicalBadgeId": "BDG-DRAFT-060",
+      "canonicalVisualId": "BADGE_VISUAL_DRAFT_060",
+      "canonicalAssetSlotId": "TAKY_BADGE_ART_060",
+      "primaryNature": "EXTRA_GROWTH",
+      "natureTags": [
+        "SPECIAL_BEHAVIOR"
+      ],
+      "natureLabelKo": "추가도전·성장",
+      "metadataSync": "CANONICAL_CURRENT_2026-10-02"
     }
-  ]
+  ],
+  "canonicalMetadataSync": {
+    "status": "PASS",
+    "at": "2026-10-02",
+    "source": "data/badge-catalog-ui-current.json",
+    "identityRule": "badge_id/visual_id/asset_slot_id fixed; award activation unchanged",
+    "awardActivation": "HOLD"
+  }
 }

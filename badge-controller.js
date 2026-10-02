@@ -14,6 +14,61 @@ async function proposeBadgeCandidateFromObservations({id,title,families=[],reaso
   await store.set("badgeCandidateReviews",ledger.slice(0,200));
   return candidate;
 }
+async function recordBadgeSourceObservation(input={}){
+  if(!window.TakyBadgeSourceObservation||!window.SnapPopBadges)return null;
+  try{
+    const observation=window.TakyBadgeSourceObservation.normalize(input);
+    const ledger=await store.get("badgeSourceObservations")||[];
+    const existing=ledger.find(x=>x.event_id===observation.event_id);
+    if(existing)return existing;
+
+    await window.SnapPopBadges.load();
+    const matches=window.SnapPopBadges.matchSourceObservation(observation);
+    ledger.unshift(observation);
+
+    if(!matches.length){
+      await store.set("badgeSourceObservations",ledger.slice(0,1000));
+      return observation;
+    }
+
+    const applied=await store.get("badgeAwardSourceEvents")||[];
+    if(applied.some(x=>x.event_id===observation.event_id)){
+      await store.set("badgeSourceObservations",ledger.slice(0,1000));
+      return observation;
+    }
+
+    const owned=await store.get("badgeProgress")||{};
+    const presentation=[];
+    const badgeIds=[];
+    for(const item of matches){
+      const key=item.id||item.draftId;
+      if(!key)continue;
+      const prev=owned[key]||{count:0};
+      const previousCount=Math.max(0,Number(prev.count)||0);
+      const nextCount=previousCount+1;
+      owned[key]={count:nextCount,...window.SnapPopBadges.nextProgress(previousCount),lastAt:observation.occurred_at};
+      badgeIds.push(key);
+      presentation.push({badgeId:key,previousCount,nextCount,at:observation.occurred_at});
+    }
+    applied.unshift({
+      event_id:observation.event_id,
+      occurred_at:observation.occurred_at,
+      badge_ids:badgeIds,
+      source_contract_id:observation.source_contract_id
+    });
+    await store.setMany([
+      ["badgeSourceObservations",ledger.slice(0,1000)],
+      ["badgeProgress",owned],
+      ["badgeAwardSourceEvents",applied.slice(0,1000)]
+    ]);
+    if(window.SnapPopBadgeAcquisition){
+      for(const entry of presentation){
+        try{window.SnapPopBadgeAcquisition.present(entry)}catch{}
+      }
+    }
+    return observation;
+  }catch{return null}
+}
 async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP"){
   if(!window.SnapPopBadgeBehavior)return null;
   try{
@@ -37,6 +92,26 @@ async function recordBadgeBehaviorObservation(family,payload={},source="SNAP_POP
       }
     }
     await store.setMany(writes);
+    if(payload?.badgeBehaviorCode&&payload?.sourceContractId&&payload?.evidenceRef&&payload?.explicitChildAction===true){
+      await recordBadgeSourceObservation({
+        event_id:event.eventId,
+        app_id:"SNAP_POP",
+        event_family:event.family,
+        behavior_code:payload.badgeBehaviorCode,
+        occurred_at:event.at,
+        source_contract_id:payload.sourceContractId,
+        evidence_ref:payload.evidenceRef,
+        explicit_child_action:true,
+        payload:{
+          source:event.source,
+          behaviorCode:payload.badgeBehaviorCode,
+          recordId:payload.recordId||"",
+          revisionId:payload.revisionId||"",
+          landmark:payload.landmark||"",
+          step:Number.isFinite(payload.step)?payload.step:null
+        }
+      });
+    }
     return event;
   }catch{return null}
 }
@@ -56,7 +131,8 @@ async function recordBadgeBehaviorEvidence(family,evidence={},options={}){
       afterArtifactRef:verifiedEvidence.afterArtifactRef||"",
       reflectionArtifactRef:verifiedEvidence.reflectionArtifactRef||"",
       featureContractId:verifiedEvidence.featureContractId||"",
-      behaviorCode:verifiedEvidence.behaviorCode||""
+      behaviorCode:options.behaviorCode||verifiedEvidence.behaviorCode||"",
+      badgeBehaviorCode:options.behaviorCode||verifiedEvidence.behaviorCode||""
     },"SNAP_POP_EXPLICIT_EVIDENCE");
   }catch{return null}
 }
@@ -67,18 +143,8 @@ async function recordBadgeEvent(family,payload={},source="SNAP_POP"){
     const event=window.SnapPopBadges.normalizeEvent({eventId:deps.uid("badgeevt"),family,source,payload,at:new Date().toISOString()});
     const ledger=await store.get("badgeEvents")||[];
     if(ledger.some(x=>x.eventId===event.eventId))return event;
-    ledger.unshift(event);
+    ledger.unshift({...event,disposition:"LEGACY_EVENT_ONLY",badgeAwardAuthorized:false});
     await store.set("badgeEvents",ledger.slice(0,1000));
-    const matches=window.SnapPopBadges.matchEvent(event);
-    if(matches.length){
-      const owned=await store.get("badgeProgress")||{};
-      for(const item of matches){
-        const key=item.id||item.draftId;
-        const prev=owned[key]||{count:0};
-        owned[key]={count:(prev.count||0)+1,...window.SnapPopBadges.nextProgress(prev.count||0),lastAt:event.at};
-      }
-      await store.set("badgeProgress",owned);
-    }
     return event;
   }catch{return null}
 }
@@ -95,7 +161,7 @@ async function renderBadgePreview(){
     theme:"EXPLORATION",
     themeExpression,
     tier:progress.tier||"GREEN",
-    stars:progress.stars||1,
+    stars:progress.stars??0,
     identity
   });
   const slots=window.SnapPopBadgeVisual.starSlots(model.stars);
@@ -105,7 +171,7 @@ async function renderBadgePreview(){
   </div>
   <div class="badgePreviewMeta"><b>${esc(model.title)}</b><span>${esc(model.tier)} · 별 ${model.stars}/5 · 획득/수여 아님</span><span>${model.themeExpression?.assetState==="UNRESOLVED"?"테마 표현 자산 검토 전":"검토된 테마 표현 자산"}</span></div>`;
 }
-return Object.freeze({contract:"SNAP_POP_BADGE_CONTROLLER_V1",proposeBadgeCandidateFromObservations,recordBadgeBehaviorObservation,recordBadgeBehaviorEvidence,recordBadgeEvent,renderBadgePreview});
+return Object.freeze({contract:"SNAP_POP_BADGE_CONTROLLER_V3_SOURCE_ONLY_AWARD",proposeBadgeCandidateFromObservations,recordBadgeSourceObservation,recordBadgeBehaviorObservation,recordBadgeBehaviorEvidence,recordBadgeEvent,renderBadgePreview});
 }
 window.SnapPopBadgeController=Object.freeze({instance(deps){if(!singleton)singleton=create(deps);return singleton}});
 })();

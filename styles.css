@@ -191,3 +191,266 @@ html.reduceMotion *{transition:none!important;animation:none!important;scroll-be
 
 .settingsGroup{display:grid;gap:8px;margin:0 0 14px}.settingsGroupHead{padding:3px 2px}.settingsGroupHead h2{font-family:"Noto Serif CJK KR","Batang",serif;font-size:18px;margin:3px 0}.settingsGroupHead p{font-size:11px;line-height:1.45;color:#66756d;margin:3px 0 0}.settingsGroup>.setting{margin:0}.familySettingsGroup{padding-top:10px;border-top:1px solid #d8c8a5}.accessibilitySettingsGroup{padding-top:10px;border-top:1px solid #d8c8a5}
 .familyPageTitle p,.settingsPageTitle p{max-width:34em}
+
+
+/* BADGE CATALOG UI — 2026-10-01 / stable art-slot binding */
+.badgeCatalogSummary{margin:0 0 10px;padding:12px 14px;border:1px solid #cbb27a;border-radius:16px;background:#fff9ebd8;box-shadow:0 8px 24px #6b533218}
+.badgeCatalogSummary>div{display:flex;align-items:center;justify-content:space-between;gap:12px}.badgeCatalogSummary span{font-size:11px;color:#66756d}.badgeCatalogSummary strong{font-family:"Noto Serif CJK KR","Batang",serif;font-size:18px}
+.badgeCatalogFilters{display:flex;gap:6px;overflow:auto;padding:2px 0 8px;scrollbar-width:none}.badgeCatalogFilters::-webkit-scrollbar{display:none}.badgeCatalogFilters button{flex:none;border:1px solid #d3c09a;background:#fffaf0;color:#4d6157;border-radius:999px;padding:8px 11px;font-size:10px;font-weight:900}.badgeCatalogFilters button.on{background:#0c4036;color:#fff4c7;border-color:#0c4036}.badgeCatalogFilters.category button{font-size:9px}
+.badgeCatalogGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px 8px;margin:6px 0 18px}.badgeCatalogTile{border:0;background:transparent;color:#23473a;padding:0;min-width:0;text-align:center}.badgeCatalogTile b{display:block;margin-top:5px;font-size:10px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.badgeCatalogTile>span,.badgeCatalogTile small{display:block;margin-top:2px;font-size:8px;color:#768176}.badgeCatalogArtWrap{position:relative}.badgeCatalogArt{aspect-ratio:1;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 38%,#f8f2df 0 38%,#e9dec1 72%,#d6c49a 100%);border:1px solid #c9b37b;box-shadow:inset 0 0 0 4px #fff8e3aa,0 5px 14px #6b53321c}.badgeCatalogArt img{display:block;width:100%;height:100%;object-fit:cover}.badgeCatalogArtFallback{display:block;width:100%;height:100%;background:radial-gradient(circle at 50% 45%,#f2ead5 0 30%,#d8ccb0 70%,#c0b08d 100%)}.badgeCatalogTile.locked .badgeCatalogArt{filter:grayscale(1);opacity:.45}.badgeCatalogLock{position:absolute;inset:auto 6px 6px auto;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#ece7d8;color:#66706b;border:1px solid #b9b3a5;font-size:12px;font-weight:900}.badgeCatalogStars{display:flex!important;justify-content:center;gap:1px;margin-top:3px}.badgeCatalogStars i{width:9px;height:9px;display:inline-block;clip-path:polygon(50% 0,61% 35%,98% 38%,69% 59%,79% 96%,50% 75%,21% 96%,31% 59%,2% 38%,39% 35%);background:#d8d5ca}.badgeCatalogStars i.on{background:#c4a854}.badgeCatalogEmpty{grid-column:1/-1;padding:26px 12px;border:1px dashed #cbbd9b;border-radius:15px;text-align:center;font-size:11px;color:#66756d}
+.badgeDetailPanel{position:relative;margin:10px 0 18px;padding:16px;border:1px solid #cbb27a;border-radius:20px;background:#fff9eb;box-shadow:0 12px 34px #6b533226;text-align:center}.badgeDetailClose{position:absolute;right:10px;top:10px;z-index:2;padding:7px 9px}.badgeDetailPanel .badgeCatalogArt.large{width:min(62vw,230px);margin:0 auto 12px}.badgeDetailPanel h2{font-family:"Noto Serif CJK KR","Batang",serif;font-size:21px;margin:5px 0 7px}.badgeDetailPanel p{font-size:11px;line-height:1.55;color:#5f7066;margin:0 auto 10px;max-width:28em}.badgeDetailPanel>strong{display:block;margin-top:7px;font-size:10px;color:#445a50}
+@media(max-width:360px){.badgeCatalogGrid{gap:9px 6px}.badgeCatalogTile b{font-size:9px}.badgeCatalogFilters button{padding:7px 9px}}
+
+
+/* BADGE GAME CODEX V2 — collection-first, dense mobile archive */
+.badgeCodex{background:
+  radial-gradient(circle at 50% -10%,#183f39 0 22%,transparent 48%),
+  linear-gradient(180deg,#0a302c 0,#123d35 180px,#f4edda 181px,#f4edda 100%);
+  padding-top:12px}
+.badgeCodex>.back{color:#fff2c9;border-color:#d7c18a66;background:#0b2e2ab8}
+.badgeCodexHead{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;padding:8px 2px 10px;color:#fff3ce}
+.badgeCodexHead .kicker{color:#cdbd8b}.badgeCodexHead h1{margin:2px 0 0;font-family:"Noto Serif CJK KR","Batang",serif;font-size:27px;letter-spacing:.02em}
+.badgeCodexProgressText{text-align:right}.badgeCodexProgressText strong{display:block;font-size:22px;line-height:1}.badgeCodexProgressText span{display:block;margin-top:5px;font-size:10px;color:#d8ca9d}
+.badgeCodexProgress{height:8px;border-radius:999px;overflow:hidden;background:#061f1dcc;border:1px solid #dcc6883b;margin-bottom:11px}
+.badgeCodexProgress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#88b66f,#dcc36a);border-radius:inherit;box-shadow:0 0 10px #e5cc7288;transition:width .22s ease}
+.badgeCategoryProgress{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:0 0 10px}
+.badgeCategoryProgress button{border:1px solid #d1bd8460;background:#0c342fd9;color:#e7dab0;border-radius:12px;padding:8px 5px;text-align:center}
+.badgeCategoryProgress button b{display:block;font-size:8px;letter-spacing:.04em}.badgeCategoryProgress button span{display:block;margin-top:3px;font-size:11px;font-weight:900}
+.badgeCategoryProgress button.on{background:#d6bf78;color:#173b34;border-color:#f3df9d}
+.badgeCodexToolbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin:0 0 4px}
+.badgeCodexToolbar .badgeCatalogFilters{padding-bottom:4px}
+.badgeSortLabel{display:flex;align-items:center;gap:5px;background:#fffaf0;border:1px solid #d1c19a;border-radius:999px;padding:3px 4px 3px 8px}
+.badgeSortLabel span{font-size:9px;font-weight:900;color:#647068}.badgeSortLabel select{border:0;background:transparent;color:#284b3e;font-size:10px;font-weight:900;outline:0}
+.badgeCodex .badgeCatalogFilters button{background:#f6efdd}.badgeCodex .badgeCatalogFilters button.on{background:#183f39;color:#fff0c7;border-color:#183f39}
+.badgeCatalogGrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 7px;margin-top:8px}
+.badgeCatalogTile{position:relative;min-width:0;padding:0 1px}
+.badgeCatalogTile.selected .badgeCatalogArt{box-shadow:inset 0 0 0 3px #fff7d8,0 0 0 3px #d9bd68,0 5px 14px #6b53322a}
+.badgeCatalogNo{display:block;text-align:left;padding-left:2px;margin-bottom:3px;font-size:7px;font-weight:900;letter-spacing:.04em;color:#7d7b6e}
+.badgeCatalogArt{border:2px solid #bba66f;background:#d9ccb0;box-shadow:inset 0 0 0 2px #fff8e088,0 4px 10px #59472524}
+.badgeCatalogTile b{font-size:8.5px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;min-height:22px;line-height:1.25}
+.badgeCatalogTile small{font-size:7px}
+.badgeCatalogTile.locked .badgeCatalogArt{filter:grayscale(1) brightness(.68);opacity:.72}
+.badgeCatalogArt.secretLocked img{filter:blur(3px) brightness(.35);transform:scale(1.06)}
+.badgeCatalogLock{inset:50% auto auto 50%;transform:translate(-50%,-50%);width:23px;height:23px;background:#1b2826cc;border:1px solid #b8b39e;color:#f1ebd8}
+.badgeCatalogLock:before{content:"";width:8px;height:7px;border:2px solid currentColor;border-bottom:0;border-radius:7px 7px 0 0;position:absolute;left:50%;top:4px;transform:translateX(-50%)}
+.badgeCatalogLock:after{content:"";width:10px;height:8px;background:currentColor;border-radius:2px;position:absolute;left:50%;bottom:4px;transform:translateX(-50%)}
+.badgeCatalogNew{position:absolute;top:-5px;right:-3px;background:#d55f49;color:white;border:1px solid #fff8e5;border-radius:999px;padding:2px 4px;font-size:6px;font-weight:1000;letter-spacing:.04em;box-shadow:0 2px 6px #57352633}
+.badgeCatalogStars i{width:7px;height:7px}
+.badgeDetailLayer{position:fixed;z-index:95;inset:0;display:flex;align-items:flex-end;justify-content:center}
+.badgeDetailLayer[hidden]{display:none}
+.badgeDetailBackdrop{position:absolute;inset:0;background:#031a187d;backdrop-filter:blur(3px)}
+.badgeDetailSheet{position:relative;width:min(100%,430px);max-height:min(82svh,760px);overflow:auto;border-radius:24px 24px 0 0;background:linear-gradient(180deg,#133e37 0,#163d36 120px,#f6efdc 121px,#f6efdc 100%);padding:12px 16px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -18px 50px #071e1b66;border:1px solid #dcc88b55;text-align:center}
+.badgeDetailTopbar{display:grid;grid-template-columns:44px 1fr 44px 40px;gap:6px;align-items:center;color:#f4e8bd}.badgeDetailTopbar>span{font-size:11px;font-weight:1000;letter-spacing:.05em}.badgeDetailTopbar .soft,.badgeDetailTopbar .round{background:#f9f2d9e8;color:#173d35;border-color:#cfb970}
+.badgeDetailSheet #badgeDetailArt{width:min(62vw,240px);margin:10px auto 12px}.badgeDetailSheet .badgeCatalogArt.large{width:100%;box-shadow:inset 0 0 0 5px #fff8ddaa,0 0 0 3px #d2b863,0 12px 34px #2b322839}
+.badgeDetailSheet .kicker{display:inline-flex;border:1px solid #cdbb8a;border-radius:999px;padding:5px 8px;background:#fff9e9;color:#315047}
+.badgeDetailSheet h2{font-family:"Noto Serif CJK KR","Batang",serif;font-size:23px;line-height:1.25;margin:7px 0}.badgeDetailSheet p{font-size:11px;line-height:1.6;color:#5a6b62;max-width:31em;margin:0 auto 10px}.badgeDetailSheet>strong{display:block;margin-top:8px;font-size:10px;color:#375449}
+@media(max-width:370px){.badgeCatalogGrid{gap:10px 5px}.badgeCatalogTile b{font-size:8px}.badgeCategoryProgress button b{font-size:7px}.badgeCategoryProgress button span{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.badgeCodexProgress i{transition:none}}
+
+
+/* BADGE NATURE CLASSIFICATION — 2026-10-02 */
+.badgeNatureFilterWrap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px;align-items:center;margin:2px 0 8px}
+.badgeNatureFilterLabel{font-size:9px;font-weight:1000;color:#52645c;letter-spacing:.04em}
+.badgeCatalogFilters.nature{padding-bottom:0}
+.badgeCatalogFilters.nature button{font-size:8.5px;padding:7px 9px}
+.badgeNatureMini{display:block;margin-top:2px;font-size:7px;color:#6a756e;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badgeNatureGroup{grid-column:1/-1;display:grid;gap:7px;margin:2px 0 8px}
+.badgeNatureGroup>header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ccb989;padding:0 2px 5px}
+.badgeNatureGroup>header b{font-family:"Noto Serif CJK KR","Batang",serif;font-size:14px;color:#27483d}
+.badgeNatureGroup>header span{display:grid;place-items:center;min-width:24px;height:20px;border-radius:999px;background:#e5dbc0;color:#52645c;font-size:9px;font-weight:900}
+.badgeNatureGroupGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 7px}
+.badgeDetailChips{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}
+.badgeDetailSheet .badgeNatureChip{background:#e7efdf;border-color:#a6b795;color:#315047}
+@media(max-width:370px){.badgeNatureGroupGrid{gap:10px 5px}.badgeCatalogFilters.nature button{font-size:8px;padding:6px 8px}}
+
+
+/* BADGE CODEX VIEW MODE V4 */
+.badgeCodexToolbarV2{grid-template-columns:minmax(0,1fr) auto}
+.badgeCodexSelectors{display:flex;gap:6px;align-items:center;justify-content:flex-end}
+.badgeCodexSelectors .badgeSortLabel{padding-left:7px}
+.badgeCodexSelectors select{max-width:92px}
+@media(max-width:390px){
+  .badgeCodexToolbarV2{grid-template-columns:1fr}
+  .badgeCodexSelectors{justify-content:flex-start;overflow:auto;padding-bottom:2px}
+}
+
+
+/* BADGE CODEX PROGRESS + RECORD V5 */
+.badgeCatalogFilters.nature button{display:grid;grid-template-columns:auto auto;align-items:center;gap:4px}
+.badgeCatalogFilters.nature button b{font-size:inherit}
+.badgeCatalogFilters.nature button span{font-size:7px;opacity:.72;font-weight:800}
+.badgeCatalogFilters.nature button.on span{opacity:.92}
+.badgeDetailRecord{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.badgeDetailRecord>div{border:1px solid #cbbd91;border-radius:13px;background:#fff8e6;padding:9px 10px;text-align:left}
+.badgeDetailRecord span{display:block;font-size:8px;color:#7b8178;margin-bottom:3px}
+.badgeDetailRecord b{display:block;font-size:11px;color:#29483d}
+
+
+/* BADGE CODEX VISUAL STATE V6 */
+.badgeCatalogTile{--tier:#c8b77f}
+.badgeCatalogTile[data-tier="GREEN"]{--tier:#7fa271}
+.badgeCatalogTile[data-tier="BLUE"]{--tier:#738fa8}
+.badgeCatalogTile[data-tier="RED"]{--tier:#b86e63}
+.badgeCatalogTile[data-tier="GOLD"]{--tier:#c6a34f}
+.badgeCatalogTile[data-tier="PLATINUM"]{--tier:#9aa0a8}
+.badgeCatalogTile.earned .badgeCatalogArt{
+  border-color:var(--tier);
+  box-shadow:inset 0 0 0 2px #fff8e6cc,0 0 0 2px color-mix(in srgb,var(--tier) 72%,#fff 28%),0 5px 14px #483a221e
+}
+.badgeCatalogTile.earned .badgeCatalogArtWrap:after{
+  content:"";position:absolute;inset:4px;border-radius:50%;pointer-events:none;
+  box-shadow:inset 0 0 0 1px #ffffff88
+}
+.badgeCatalogTile.selected{transform:translateY(-2px)}
+.badgeCatalogTile.selected .badgeCatalogArtWrap:before{
+  content:"";position:absolute;inset:-5px;border-radius:50%;z-index:2;pointer-events:none;
+  border:2px solid #f4d66f;box-shadow:0 0 0 2px #173d35,0 0 16px #e4c75d77
+}
+.badgeCatalogTile.locked{opacity:.86}
+.badgeCatalogTile.locked .badgeCatalogArt{
+  filter:grayscale(1) contrast(.84) brightness(.72);
+  opacity:.78;border-style:dashed;border-color:#8f948d;
+  box-shadow:inset 0 0 0 3px #ffffff22,0 4px 9px #28352f1f
+}
+.badgeCatalogTile.locked b{color:#777c75}
+.badgeLockedText{letter-spacing:.04em}
+.badgeTierMini{
+  display:block;margin-top:2px;font-size:6.5px;font-weight:900;letter-spacing:.04em;color:var(--tier)
+}
+.badgeCatalogTile.recentEarned .badgeCatalogArtWrap:before{
+  content:"";position:absolute;inset:-4px;border-radius:50%;pointer-events:none;
+  border:1px solid #e5c75a;box-shadow:0 0 12px #e5c75a55
+}
+.badgeCatalogTile.recentEarned .badgeCatalogNew{animation:badgeNewPulse 1.8s ease-in-out infinite}
+@keyframes badgeNewPulse{0%,100%{transform:scale(1);box-shadow:0 2px 6px #57352633}50%{transform:scale(1.07);box-shadow:0 0 10px #d55f4970}}
+.badgeDetailSheet .badgeCatalogArt.large{
+  border-color:var(--tier,#d2b863)
+}
+@media(prefers-reduced-motion:reduce){
+  .badgeCatalogTile,.badgeCatalogTile.recentEarned .badgeCatalogNew{transition:none;animation:none}
+}
+
+
+/* BADGE CODEX VISUAL POLISH V6 */
+.badgeCatalogArtWrap{position:relative;isolation:isolate}
+.badgeTierHalo{position:absolute;inset:-4px;border-radius:50%;z-index:0;opacity:0;transform:scale(.94);transition:opacity .18s ease,transform .18s ease,box-shadow .18s ease}
+.badgeCatalogArt{position:relative;z-index:1}
+.badgeCatalogTile.earned .badgeTierHalo{opacity:.72;transform:scale(1)}
+.badgeCatalogTile[data-tier="GREEN"] .badgeTierHalo{box-shadow:0 0 0 2px #87a66f,0 0 14px #87a66f55}
+.badgeCatalogTile[data-tier="BLUE"] .badgeTierHalo{box-shadow:0 0 0 2px #7398ad,0 0 15px #7398ad55}
+.badgeCatalogTile[data-tier="RED"] .badgeTierHalo{box-shadow:0 0 0 2px #b86f68,0 0 15px #b86f6855}
+.badgeCatalogTile[data-tier="GOLD"] .badgeTierHalo{box-shadow:0 0 0 2px #c9a64d,0 0 17px #c9a64d66}
+.badgeCatalogTile[data-tier="PLATINUM"] .badgeTierHalo{box-shadow:0 0 0 2px #a9b7b7,0 0 18px #d6e5e577}
+.badgeCatalogTile.locked .badgeTierHalo{display:none}
+.badgeCatalogTile.selected .badgeCatalogArtWrap{transform:translateY(-2px)}
+.badgeCatalogTile.selected .badgeTierHalo{opacity:1;transform:scale(1.06);box-shadow:0 0 0 3px #f6e7a5,0 0 22px #dfc65a88}
+.badgeCatalogTile:active .badgeCatalogArtWrap{transform:scale(.96)}
+.badgeCatalogTile.locked .badgeCatalogArt{filter:grayscale(1) brightness(.56) contrast(.82);opacity:.7}
+.badgeCatalogTile.locked:not(.selected) b,.badgeCatalogTile.locked:not(.selected) .badgeNatureMini{opacity:.72}
+.badgeCatalogTile.earned .badgeCatalogNo{color:#3b6254}
+.badgeCatalogTile.earned b{color:#173f35}
+.badgeCatalogNew{animation:badgeNewPulse 1.6s ease-in-out infinite}
+@keyframes badgeNewPulse{0%,100%{transform:translateZ(0) scale(1);box-shadow:0 2px 6px #57352633}50%{transform:translateZ(0) scale(1.08);box-shadow:0 0 0 3px #fff4d066,0 2px 8px #57352644}}
+#badgeDetailArt{position:relative}
+#badgeDetailArt:before{content:"";position:absolute;inset:-8px;border-radius:50%;pointer-events:none;opacity:.9}
+#badgeDetailArt[data-tier="GREEN"]:before{box-shadow:0 0 0 3px #87a66f66,0 0 30px #87a66f33}
+#badgeDetailArt[data-tier="BLUE"]:before{box-shadow:0 0 0 3px #7398ad66,0 0 30px #7398ad33}
+#badgeDetailArt[data-tier="RED"]:before{box-shadow:0 0 0 3px #b86f6866,0 0 30px #b86f6833}
+#badgeDetailArt[data-tier="GOLD"]:before{box-shadow:0 0 0 3px #c9a64d77,0 0 34px #c9a64d44}
+#badgeDetailArt[data-tier="PLATINUM"]:before{box-shadow:0 0 0 3px #c7d3d388,0 0 36px #dce8e866}
+.badgeDetailReveal{animation:badgeDetailReveal .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes badgeDetailReveal{0%{opacity:.15;transform:scale(.9) rotate(-1deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@media(prefers-reduced-motion:reduce){
+  .badgeTierHalo,.badgeCatalogTile .badgeCatalogArtWrap{transition:none}
+  .badgeCatalogNew,.badgeDetailReveal{animation:none}
+}
+
+
+/* BADGE CODEX DISCOVERY STATE V7 */
+.badgeCatalogArt[data-tier="GREEN"]{--tier:#7fa271}
+.badgeCatalogArt[data-tier="BLUE"]{--tier:#738fa8}
+.badgeCatalogArt[data-tier="RED"]{--tier:#b86e63}
+.badgeCatalogArt[data-tier="GOLD"]{--tier:#c6a34f}
+.badgeCatalogArt[data-tier="PLATINUM"]{--tier:#9aa0a8}
+.badgeCatalogArt[data-tier="NONE"]{--tier:#9ba099}
+.badgeCatalogArt.state-earned{border-color:var(--tier)}
+.badgeCatalogTile.inProgress .badgeCatalogArt{
+  filter:saturate(.48) brightness(.9);
+  opacity:.9;
+  border-style:solid;
+  border-color:#9da97c;
+  box-shadow:inset 0 0 0 2px #fff8df88,0 0 0 2px #9da97c55,0 4px 11px #30453b24
+}
+.badgeCatalogTile.inProgress b{color:#4d6257}
+.badgeCatalogProgressMark{
+  position:absolute;right:3px;bottom:3px;width:24px;height:24px;border-radius:50%;
+  background:conic-gradient(#9da97c 0 64%,#293f3833 64% 100%);
+  border:2px solid #fff8df;box-shadow:0 2px 7px #3c4e4530;z-index:2
+}
+.badgeCatalogProgressMark:after{
+  content:"";position:absolute;inset:5px;border-radius:50%;background:#f3ecd9
+}
+.badgeProgressText{color:#76845f!important;font-weight:900;letter-spacing:.03em}
+.badgeCatalogTile[data-ownership="EARNED"] .badgeCatalogNo{color:var(--tier);opacity:.95}
+.badgeCatalogTile[data-ownership="IN_PROGRESS"] .badgeCatalogNo{color:#76845f}
+.badgeCatalogTile[data-ownership="UNEARNED"] .badgeCatalogNo{opacity:.62}
+.badgeDetailSheet .badgeCatalogArt.large[data-tier="GREEN"]{--tier:#7fa271}
+.badgeDetailSheet .badgeCatalogArt.large[data-tier="BLUE"]{--tier:#738fa8}
+.badgeDetailSheet .badgeCatalogArt.large[data-tier="RED"]{--tier:#b86e63}
+.badgeDetailSheet .badgeCatalogArt.large[data-tier="GOLD"]{--tier:#c6a34f}
+.badgeDetailSheet .badgeCatalogArt.large[data-tier="PLATINUM"]{--tier:#9aa0a8}
+.badgeDetailSheet .badgeCatalogArt.large{
+  border-color:var(--tier,#d2b863);
+  box-shadow:inset 0 0 0 5px #fff8ddaa,0 0 0 3px color-mix(in srgb,var(--tier,#d2b863) 78%,#fff 22%),0 12px 34px #2b322839
+}
+
+
+/* BADGE ACQUISITION PRESENTATION V1 */
+.badgeAcquisitionLayer{position:fixed;z-index:110;inset:0;display:grid;place-items:center;padding:18px}
+.badgeAcquisitionLayer[hidden]{display:none}
+.badgeAcquisitionBackdrop{position:absolute;inset:0;background:#031916d9;backdrop-filter:blur(8px)}
+.badgeAcquisitionCard{position:relative;width:min(100%,390px);max-height:92svh;overflow:auto;border-radius:28px;background:
+  radial-gradient(circle at 50% 25%,#fff8d9 0 16%,transparent 43%),
+  linear-gradient(180deg,#123d35 0 28%,#f7efda 28% 100%);
+  border:2px solid #d0b75f;padding:20px 18px 18px;text-align:center;box-shadow:0 28px 70px #03151288,0 0 0 1px #fff1be33}
+.badgeAcquisitionClose{position:absolute;top:12px;right:12px;z-index:3;background:#f8f0d7;color:#173d35;border-color:#cfb970}
+.badgeAcquisitionKicker{display:block;color:#ead58b;font-size:10px;font-weight:1000;letter-spacing:.18em;margin-top:3px}
+.badgeAcquisitionCard>h2{margin:5px 0 2px;color:#fff2c4;font-family:"Noto Serif CJK KR","Batang",serif;font-size:25px}
+.badgeAcquisitionNo{display:block;color:#cfbf92;font-size:9px;font-weight:900;letter-spacing:.08em;margin-bottom:8px}
+.badgeAcquisitionArt{position:relative;width:min(58vw,224px);aspect-ratio:1;margin:10px auto 12px;border-radius:50%;isolation:isolate}
+.badgeAcquisitionArt img{position:relative;z-index:2;width:100%;height:100%;display:block;object-fit:cover;border-radius:50%;border:4px solid #fff5d3;box-shadow:0 0 0 3px #d1b65d,0 14px 34px #1a2b253b}
+.badgeAcquisitionHalo{position:absolute;z-index:1;inset:-14px;border-radius:50%;border:2px solid #d9be61;box-shadow:0 0 22px #ead47788,0 0 54px #ead47755}
+.badgeAcquisitionMeta{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.badgeAcquisitionMeta span{border:1px solid #c5b88d;background:#fff8e8;color:#2e5044;border-radius:999px;padding:5px 9px;font-size:9px;font-weight:900}
+.badgeAcquisitionCard>h3{font-family:"Noto Serif CJK KR","Batang",serif;font-size:22px;color:#173f35;margin:9px 0 5px}
+.badgeAcquisitionCard>p{margin:0 auto 10px;max-width:28em;font-size:11px;line-height:1.55;color:#617067}
+.badgeAcquisitionTierChange{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:#183f39;color:#fff1bf;padding:7px 12px;font-size:11px;font-weight:1000;letter-spacing:.03em;margin:2px auto 8px}
+.badgeAcquisitionStars{display:flex;justify-content:center;gap:3px;margin:7px 0 11px}
+.badgeAcquisitionStars i{width:15px;height:15px;display:inline-block;clip-path:polygon(50% 0,61% 35%,98% 38%,69% 59%,79% 96%,50% 75%,21% 96%,31% 59%,2% 38%,39% 35%);background:#d5d1c2}
+.badgeAcquisitionStars i.on{background:#d1ae4e;filter:drop-shadow(0 2px 2px #6f572744)}
+.badgeAcquisitionActions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.badgeAcquisitionLayer[data-kind="FIRST_EARN"] .badgeAcquisitionCard{border-color:#d3ba63}
+.badgeAcquisitionLayer[data-kind="TIER_UP"] .badgeAcquisitionCard{border-color:#e0c45f}
+.badgeAcquisitionLayer[data-kind="MASTER_COMPLETE"] .badgeAcquisitionCard{border-color:#bcc8c5}
+.badgeAcquisitionLayer[data-tier="green"] .badgeAcquisitionHalo{border-color:#7fa271;box-shadow:0 0 26px #7fa27188,0 0 58px #7fa27155}
+.badgeAcquisitionLayer[data-tier="blue"] .badgeAcquisitionHalo{border-color:#738fa8;box-shadow:0 0 26px #738fa888,0 0 58px #738fa855}
+.badgeAcquisitionLayer[data-tier="red"] .badgeAcquisitionHalo{border-color:#b86e63;box-shadow:0 0 26px #b86e6388,0 0 58px #b86e6355}
+.badgeAcquisitionLayer[data-tier="gold"] .badgeAcquisitionHalo{border-color:#c6a34f;box-shadow:0 0 30px #c6a34f99,0 0 66px #c6a34f66}
+.badgeAcquisitionLayer[data-tier="platinum"] .badgeAcquisitionHalo{border-color:#a7b2b1;box-shadow:0 0 30px #d8e5e5aa,0 0 66px #d8e5e566}
+.badgeAcquisitionReplay .badgeAcquisitionCard{animation:badgeAcqCardIn .36s cubic-bezier(.2,.85,.25,1)}
+.badgeAcquisitionReplay .badgeAcquisitionArt{animation:badgeAcqArtIn .52s cubic-bezier(.18,.86,.2,1)}
+.badgeAcquisitionReplay .badgeAcquisitionHalo{animation:badgeAcqHalo 1.15s ease-out both}
+.badgeAcquisitionReplay[data-kind="TIER_UP"] .badgeAcquisitionTierChange{animation:badgeTierUpPop .55s .2s cubic-bezier(.2,.9,.25,1) both}
+.badgeAcquisitionReplay .badgeAcquisitionStars i.on{animation:badgeStarFill .36s cubic-bezier(.2,.9,.25,1) both}
+.badgeAcquisitionReplay .badgeAcquisitionStars i.on:nth-child(2){animation-delay:.05s}.badgeAcquisitionReplay .badgeAcquisitionStars i.on:nth-child(3){animation-delay:.1s}.badgeAcquisitionReplay .badgeAcquisitionStars i.on:nth-child(4){animation-delay:.15s}.badgeAcquisitionReplay .badgeAcquisitionStars i.on:nth-child(5){animation-delay:.2s}
+@keyframes badgeAcqCardIn{0%{opacity:0;transform:translateY(18px) scale(.96)}100%{opacity:1;transform:none}}
+@keyframes badgeAcqArtIn{0%{opacity:0;transform:scale(.58) rotate(-5deg)}70%{opacity:1;transform:scale(1.05) rotate(1deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes badgeAcqHalo{0%{opacity:0;transform:scale(.68)}45%{opacity:1}100%{opacity:.9;transform:scale(1)}}
+@keyframes badgeTierUpPop{0%{opacity:0;transform:scale(.72)}100%{opacity:1;transform:scale(1)}}
+@keyframes badgeStarFill{0%{opacity:.25;transform:scale(.55)}100%{opacity:1;transform:scale(1)}}
+@media(max-width:360px){.badgeAcquisitionCard{padding-left:14px;padding-right:14px}.badgeAcquisitionActions{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){
+  .badgeAcquisitionReplay .badgeAcquisitionCard,.badgeAcquisitionReplay .badgeAcquisitionArt,.badgeAcquisitionReplay .badgeAcquisitionHalo,.badgeAcquisitionReplay .badgeAcquisitionTierChange,.badgeAcquisitionReplay .badgeAcquisitionStars i.on{animation:none}
+}
+
+.badgeAcquisitionTierChange[hidden]{display:none!important}

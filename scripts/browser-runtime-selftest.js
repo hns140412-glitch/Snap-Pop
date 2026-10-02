@@ -336,6 +336,10 @@
       assert("empty-second-attempt-offers-hint",interventionState?.crewState?.interventionStage==="HINT_OFFER");
       assert("hint-is-not-auto-revealed",document.querySelector("#hint")?.hidden===true);
       assert("empty-second-attempt-does-not-write",answer.value==="");
+      click(document.querySelector("#hintBtn"),"explicit-writing-hint");
+      await wait(120);
+      const hintedState=await window.SnapPopStorage.get("active");
+      assert("badge-help-evidence-persists-on-session",Array.isArray(hintedState?.badgeEvidence?.helpRequests)&&hintedState.badgeEvidence.helpRequests.length===1);
 
       const originalSemanticProvider=window.SnapPopSemanticWritingProvider;
       const staleProbeCalls=[];
@@ -536,6 +540,9 @@
       const completedRecord=(await window.SnapPopStorage.get("lastResult"))||null;
       assert("writing-completion-preserves-final-draft",completedRecord?.finalDraft===draft3);
       assert("writing-completion-has-three-snapshots",Array.isArray(completedRecord?.snapshots)&&completedRecord.snapshots.length===3);
+      const badgeSourceAfterCompletion=await window.SnapPopStorage.get("badgeSourceObservations")||[];
+      const helpUseSource=badgeSourceAfterCompletion.find(x=>x.event_family==="HELP_USE"&&x.behavior_code==="MINIMAL_HINT_SOLVE"&&x.source_contract_id==="SNAP_POP_HINT_TO_COMPLETION_V1");
+      assert("badge-minimal-hint-solve-source-produced-after-one-explicit-hint-and-completion",!!helpUseSource&&helpUseSource.payload?.helpHintCount===1&&helpUseSource.badge_award_authorized===false&&helpUseSource.explicit_child_action===true);
 
       click(document.querySelector("#resultRecords"),"result-records");
       assert("records-view-active",await waitFor(()=>document.querySelector("#records")?.classList.contains("active")===true,1500,25));
@@ -612,9 +619,15 @@
       });
       assert("badge-candidate-is-review-only",badgeCandidate.status==="REVIEW_REQUIRED"&&badgeCandidate.active===false&&badgeCandidate.awardAuthorized===false&&badgeCandidate.autoCatalogInsertAllowed===false&&badgeCandidate.autoTriggerActivationAllowed===false);
 
-      const p1=window.SnapPopBadges.progressFromCount(1),p5=window.SnapPopBadges.progressFromCount(5),p6=window.SnapPopBadges.progressFromCount(6),p25=window.SnapPopBadges.progressFromCount(25);
-      assert("badge-five-tier-progression-runtime",p1.tier==="GREEN"&&p5.tier==="GREEN"&&p6.tier==="BLUE"&&p25.tier==="PLATINUM");
-      assert("badge-stars-clamped-one-to-five-runtime",p1.stars===1&&p5.stars===5&&window.SnapPopBadgeVisual.starSlots(3).filter(x=>x.active).length===3);
+      const p1=window.SnapPopBadges.progressFromCount(1),p5=window.SnapPopBadges.progressFromCount(5),p6=window.SnapPopBadges.progressFromCount(6),p25=window.SnapPopBadges.progressFromCount(25),p26=window.SnapPopBadges.progressFromCount(26);
+      assert("badge-five-tier-progression-runtime",p1.tier==="GREEN"&&p5.tier==="GREEN"&&p6.tier==="BLUE"&&p25.tier==="PLATINUM"&&p26.tier==="PLATINUM");
+      assert("badge-first-award-has-zero-reacquire-stars-runtime",p1.stars===0&&p5.stars===4&&p6.stars===0);
+      assert("badge-reacquire-stars-zero-to-five-runtime",
+        window.SnapPopBadgeVisual.starSlots(0).filter(x=>x.active).length===0&&
+        window.SnapPopBadgeVisual.starSlots(3).filter(x=>x.active).length===3&&
+        window.SnapPopBadgeVisual.starSlots(7).filter(x=>x.active).length===5&&
+        p26.stars===5&&p26.complete===true
+      );
 
       const runtimeIdentity={profile:{name:"런타임 탐험가",photo:""}};
       const theme=window.SnapPopBadgeThemeExpression.normalize({themeId:"EXPLORATION",assetState:"UNRESOLVED"});
@@ -630,6 +643,60 @@
       let workingActivationBlocked=false;
       try{window.SnapPopBadgeCatalogGuard.validateCatalog({status:"WORKING_DRAFT_NOT_ACTIVE",items:[{id:"x",status:"WORKING_DRAFT",active:true}]})}catch{workingActivationBlocked=true}
       assert("badge-working-draft-activation-fails-closed",workingActivationBlocked===true&&window.SnapPopBadgeCatalogGuard.canActivate(badgeLoaded.catalog.items[0],badgeLoaded.catalog)===false);
+      const incompleteActive={id:"qa-active",status:"APPROVED",active:true,eventFamilies:["SELF_START"],matcher:{behaviorCode:"QA"},activationApproved:true};
+      assert("badge-active-contract-incomplete-fails-closed",window.SnapPopBadgeCatalogGuard.canActivate(incompleteActive,{status:"CURRENT"})===false);
+      const completeActive={...incompleteActive,activationEvidenceRef:"qa://approval",sourceContractId:"QA_SOURCE_V1",dedupePolicy:"SOURCE_EVENT_ID",reawardPolicy:"DISTINCT_SOURCE_EVENT"};
+      assert("badge-complete-approved-contract-can-activate-in-nonworking-catalog",window.SnapPopBadgeCatalogGuard.canActivate(completeActive,{status:"CURRENT"})===true);
+
+      const sourceContract=window.TakyBadgeSourceObservation;
+      assert("badge-source-observation-runtime-present",!!sourceContract&&sourceContract.families.length===25);
+      const sourceObservation=sourceContract.normalize({
+        event_id:"qa-source-1",app_id:"SNAP_POP",event_family:"HELP_REQUEST",
+        behavior_code:"SELF_HELP_REQUEST",occurred_at:new Date().toISOString(),
+        source_contract_id:"SNAP_POP_HINT_REQUEST_V1",evidence_ref:"qa://hint",
+        explicit_child_action:true,payload:{landmark:"cave",step:1}
+      });
+      assert("badge-source-observation-is-observation-only",sourceObservation.disposition==="OBSERVATION_ONLY"&&sourceObservation.badge_award_authorized===false&&sourceObservation.economy_mutation_authorized===false&&sourceObservation.catalog_activation_allowed===false);
+      let sourceWeakBlocked=false;
+      try{sourceContract.normalize({event_id:"qa-source-weak",app_id:"SNAP_POP",event_family:"FOCUS",behavior_code:"LONG_FOCUS",source_contract_id:"QA",evidence_ref:"qa://weak",explicit_child_action:true,payload:{elapsedMs:99999}})}catch{sourceWeakBlocked=true}
+      assert("badge-source-observation-blocks-weak-proxy-only-input",sourceWeakBlocked===true);
+      const sourceMatchItem={
+        id:"qa-source-match",status:"APPROVED",active:true,activationApproved:true,
+        activationEvidenceRef:"qa://approval",eventFamilies:["HELP_REQUEST"],
+        matcher:{behaviorCode:"SELF_HELP_REQUEST"},sourceContractId:"SNAP_POP_HINT_REQUEST_V1",
+        dedupePolicy:"SOURCE_EVENT_ID",reawardPolicy:"DISTINCT_SOURCE_EVENT"
+      };
+      assert("badge-source-contract-exact-match",
+        window.SnapPopBadges.sourceMatchesItem(sourceMatchItem,sourceObservation)===true);
+      assert("badge-source-contract-mismatch-blocked",
+        window.SnapPopBadges.sourceMatchesItem({...sourceMatchItem,sourceContractId:"OTHER"},sourceObservation)===false);
+      const multiSourceActive={
+        id:"qa-multi-source",status:"APPROVED",active:true,activationApproved:true,
+        activationEvidenceRef:"qa://multi-source-approval",
+        sourceMatchers:[
+          {appId:"SNAP_POP",eventFamily:"HELP_REQUEST",behaviorCode:"SELF_HELP_REQUEST",sourceContractId:"SNAP_POP_HINT_REQUEST_V1"},
+          {appId:"HIDE_SEEK",eventFamily:"HELP_REQUEST",behaviorCode:"SELF_HELP_REQUEST",sourceContractId:"HIDE_HINT_REQUEST_V2"}
+        ],
+        dedupePolicy:"SOURCE_EVENT_ID",reawardPolicy:"DISTINCT_SOURCE_EVENT"
+      };
+      assert("badge-multi-source-contract-is-activation-complete",
+        window.SnapPopBadgeCatalogGuard.canActivate(multiSourceActive,{status:"CURRENT"})===true);
+      assert("badge-multi-source-snap-match",
+        window.SnapPopBadges.sourceMatchesItem(multiSourceActive,sourceObservation)===true);
+      const hideSourceObservation=sourceContract.normalize({
+        event_id:"qa-source-hide-1",app_id:"HIDE_SEEK",event_family:"HELP_REQUEST",
+        behavior_code:"SELF_HELP_REQUEST",source_contract_id:"HIDE_HINT_REQUEST_V2",
+        evidence_ref:"qa://hide-hint",explicit_child_action:true
+      });
+      assert("badge-multi-source-hide-match",
+        window.SnapPopBadges.sourceMatchesItem(multiSourceActive,hideSourceObservation)===true);
+      assert("badge-multi-source-wrong-contract-blocked",
+        window.SnapPopBadges.sourceMatchesItem(multiSourceActive,{...hideSourceObservation,source_contract_id:"OTHER"})===false);
+      const progressBeforeLegacy=JSON.stringify(await window.SnapPopStorage.get("badgeProgress")||{});
+      const legacyEvent=await recordBadgeEvent("WRITING_EXPLORATION",{behaviorCode:"SHOULD_NOT_AWARD"},"SNAP_POP");
+      const progressAfterLegacy=JSON.stringify(await window.SnapPopStorage.get("badgeProgress")||{});
+      const legacyLedger=await window.SnapPopStorage.get("badgeEvents")||[];
+      assert("badge-legacy-event-is-non-awarding",progressBeforeLegacy===progressAfterLegacy&&legacyEvent&&legacyLedger.some(x=>x.eventId===legacyEvent.eventId&&x.disposition==="LEGACY_EVENT_ONLY"&&x.badgeAwardAuthorized===false));
 
       const evidenceContract=window.SnapPopBadgeEvidenceContract;
       const errorEvidence=evidenceContract.verify("ERROR_DISCOVERY",{explicitChildAction:true,evidenceRef:"runtime_error",sourceContractId:"SNAP_POP_CHILD_SELF_CORRECTION_V1",errorMarkedByChild:true,beforeArtifactRef:"before",afterArtifactRef:"after"});

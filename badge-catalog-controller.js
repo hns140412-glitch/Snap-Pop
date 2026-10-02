@@ -1,0 +1,264 @@
+(() => {
+"use strict";
+let singleton=null;
+
+function create(deps){
+  const q=deps.query, qa=deps.queryAll, store=window.SnapPopStorage, esc=window.SnapPopUIShell.escapeHtml;
+  let filter="ALL", category="ALL", nature="ALL", viewMode="GRID", sort="NUMBER_ASC", cache=[], selectedId=null;
+
+  function artMarkup(item,cls=""){
+    const path=esc(item.asset_runtime_url||item.asset_repo_path||"");
+    const state=item.ownership_state||"UNEARNED";
+    const secretLocked=item.category==="SECRET"&&state!=="EARNED";
+    const tier=state==="EARNED"?(item.tier||"GREEN"):"NONE";
+    return `<div class="badgeCatalogArt ${cls} state-${String(state).toLowerCase()} ${secretLocked?"secretLocked":""}" data-tier="${esc(tier)}">
+      <img src="${path}" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+      <span class="badgeCatalogArtFallback" hidden aria-hidden="true"></span>
+    </div>`;
+  }
+  function starsMarkup(count=0){
+    const n=Math.max(0,Math.min(5,Number(count)||0));
+    return `<span class="badgeCatalogStars" aria-label="재획득 별 ${n}개">${[0,1,2,3,4].map(i=>`<i class="${i<n?"on":""}"></i>`).join("")}</span>`;
+  }
+
+  function tierLabel(tier){
+    return ({GREEN:"그린",BLUE:"블루",RED:"레드",GOLD:"골드",PLATINUM:"플래티넘"})[tier]||"미획득";
+  }
+
+  function natureLabel(id){
+    return ({
+      SELF_DIRECTED:"스스로",
+      GOAL_ACHIEVEMENT:"목표도달",
+      FOCUS_IMMERSION:"집중·몰입",
+      RECOVERY_RESILIENCE:"복귀·재도전",
+      ERROR_LEARNING:"실수·교정",
+      PLANNING_SELF_REGULATION:"계획·조절",
+      PROBLEM_SOLVING:"문제해결",
+      EXTRA_GROWTH:"추가도전·성장"
+    })[id]||"기타";
+  }
+
+  function categoryLabel(id){
+    return ({POCKET:"POCKET",FIELD:"FIELD",EXPEDITION:"EXPEDITION",SECRET:"SECRET"})[id]||"기타";
+  }
+
+  function ownershipLabel(id){
+    return ({EARNED:"획득",IN_PROGRESS:"진행 중",UNEARNED:"미획득"})[id]||"기타";
+  }
+
+  function isRecent(item){
+    if(!item.last_at)return false;
+    const t=new Date(item.last_at).getTime();
+    return Number.isFinite(t)&&Date.now()-t<=72*60*60*1000;
+  }
+
+  function displayTitle(item){
+    return item.category==="SECRET"&&item.ownership_state!=="EARNED"?"???":item.display_title;
+  }
+
+  function sorted(items){
+    const copy=[...items];
+    if(sort==="RECENT"){
+      copy.sort((a,b)=>(new Date(b.last_at||0))-(new Date(a.last_at||0))||a.slot-b.slot);
+    }else if(sort==="TIER"){
+      const order={PLATINUM:5,GOLD:4,RED:3,BLUE:2,GREEN:1};
+      copy.sort((a,b)=>(order[b.tier]||0)-(order[a.tier]||0)||b.reacquire_stars-a.reacquire_stars||a.slot-b.slot);
+    }else if(sort==="NATURE"){
+      const order={SELF_DIRECTED:1,GOAL_ACHIEVEMENT:2,FOCUS_IMMERSION:3,RECOVERY_RESILIENCE:4,ERROR_LEARNING:5,PLANNING_SELF_REGULATION:6,PROBLEM_SOLVING:7,EXTRA_GROWTH:8};
+      copy.sort((a,b)=>(order[a.primary_nature]||99)-(order[b.primary_nature]||99)||a.slot-b.slot);
+    }else{
+      copy.sort((a,b)=>a.slot-b.slot);
+    }
+    return copy;
+  }
+
+  function renderHeader(){
+    const total=cache.length;
+    const earned=cache.filter(x=>x.ownership_state==="EARNED").length;
+    q("#badgeCatalogCount").textContent=`${earned} / ${total}`;
+    const pct=total?Math.round(earned/total*100):0;
+    q("#badgeCatalogProgressBar").style.width=`${pct}%`;
+    q("#badgeCatalogPercent").textContent=`${pct}%`;
+    for(const key of ["POCKET","FIELD","EXPEDITION","SECRET"]){
+      const items=cache.filter(x=>x.category===key);
+      const done=items.filter(x=>x.ownership_state==="EARNED").length;
+      const el=q(`[data-badge-category-progress="${key}"]`);
+      if(el)el.textContent=`${done}/${items.length}`;
+    }
+    const natureKeys=["SELF_DIRECTED","GOAL_ACHIEVEMENT","FOCUS_IMMERSION","RECOVERY_RESILIENCE","ERROR_LEARNING","PLANNING_SELF_REGULATION","PROBLEM_SOLVING","EXTRA_GROWTH"];
+    for(const key of ["ALL",...natureKeys]){
+      const items=key==="ALL"?cache:cache.filter(x=>x.primary_nature===key);
+      const done=items.filter(x=>x.ownership_state==="EARNED").length;
+      const el=q(`[data-badge-nature-progress="${key}"]`);
+      if(el)el.textContent=`${done}/${items.length}`;
+    }
+    if(q("#badgeCatalogSort"))q("#badgeCatalogSort").value=sort;
+    if(q("#badgeCatalogView"))q("#badgeCatalogView").value=viewMode;
+  }
+
+  function renderFilters(){
+    qa("#badgeCatalogFilters [data-badge-filter]").forEach(b=>b.classList.toggle("on",b.dataset.badgeFilter===filter));
+    qa("#badgeCategoryFilters [data-badge-category], .badgeCategoryProgress [data-badge-category]").forEach(b=>b.classList.toggle("on",b.dataset.badgeCategory===category));
+    qa("#badgeNatureFilters [data-badge-nature]").forEach(b=>b.classList.toggle("on",b.dataset.badgeNature===nature));
+  }
+
+  function tileHtml(item){
+    const state=item.ownership_state||"UNEARNED";
+    const locked=state==="UNEARNED";
+    const inProgress=state==="IN_PROGRESS";
+    const earned=state==="EARNED";
+    const tier=earned?(item.tier||"GREEN"):"NONE";
+    const statusLabel=earned?tierLabel(tier):(inProgress?"진행 중":"미획득");
+    return `<button class="badgeCatalogTile ${locked?"locked":earned?"earned":"inProgress"} ${selectedId===item.badge_id?"selected":""} ${isRecent(item)&&earned?"recentEarned":""}" data-badge-id="${esc(item.badge_id)}" data-tier="${esc(tier)}" data-ownership="${esc(state)}" aria-label="No.${String(item.slot).padStart(3,"0")} ${esc(displayTitle(item))}, ${esc(statusLabel)}" type="button">
+      <span class="badgeCatalogNo">No.${String(item.slot).padStart(3,"0")}</span>
+      <div class="badgeCatalogArtWrap">
+        ${artMarkup(item)}
+        ${locked?'<span class="badgeCatalogLock" aria-hidden="true"></span>':""}
+        ${inProgress?'<span class="badgeCatalogProgressMark" aria-hidden="true"></span>':""}
+        ${isRecent(item)?'<span class="badgeCatalogNew">NEW</span>':""}
+      </div>
+      <b>${esc(displayTitle(item))}</b>
+      <span class="badgeNatureMini">${esc(natureLabel(item.primary_nature))}</span>
+      ${earned
+        ?`<span class="badgeTierMini">${esc(tierLabel(tier))}</span>${starsMarkup(item.reacquire_stars)}`
+        :`<small class="${inProgress?"badgeProgressText":"badgeLockedText"}">${inProgress?"진행 중":"미획득"}</small>`}
+    </button>`;
+  }
+  function renderGrid(){
+    const selected=sorted(window.SnapPopBadgeCatalogUI.select(cache,{filter,category,nature}));
+    const host=q("#badgeCatalogGrid");
+    if(!host)return;
+    if(!selected.length){
+      host.innerHTML=`<div class="badgeCatalogEmpty">해당 조건의 배지가 아직 없어요.</div>`;
+    }else if(viewMode==="NATURE"){
+      const order=["SELF_DIRECTED","GOAL_ACHIEVEMENT","FOCUS_IMMERSION","RECOVERY_RESILIENCE","ERROR_LEARNING","PLANNING_SELF_REGULATION","PROBLEM_SOLVING","EXTRA_GROWTH"];
+      const groups=order.filter(group=>selected.some(x=>x.primary_nature===group));
+      host.innerHTML=groups.map(group=>{
+        const items=selected.filter(x=>x.primary_nature===group);
+        return `<section class="badgeNatureGroup">
+          <header><b>${esc(natureLabel(group))}</b><span>${items.length}</span></header>
+          <div class="badgeNatureGroupGrid">${items.map(tileHtml).join("")}</div>
+        </section>`;
+      }).join("");
+    }else if(viewMode==="CATEGORY"){
+      const order=["POCKET","FIELD","EXPEDITION","SECRET"];
+      const groups=order.filter(group=>selected.some(x=>x.category===group));
+      host.innerHTML=groups.map(group=>{
+        const items=selected.filter(x=>x.category===group);
+        return `<section class="badgeNatureGroup badgeCategoryGroup">
+          <header><b>${esc(categoryLabel(group))}</b><span>${items.length}</span></header>
+          <div class="badgeNatureGroupGrid">${items.map(tileHtml).join("")}</div>
+        </section>`;
+      }).join("");
+    }else if(viewMode==="OWNERSHIP"){
+      const order=["EARNED","IN_PROGRESS","UNEARNED"];
+      const groups=order.filter(group=>selected.some(x=>x.ownership_state===group));
+      host.innerHTML=groups.map(group=>{
+        const items=selected.filter(x=>x.ownership_state===group);
+        return `<section class="badgeNatureGroup badgeOwnershipGroup">
+          <header><b>${esc(ownershipLabel(group))}</b><span>${items.length}</span></header>
+          <div class="badgeNatureGroupGrid">${items.map(tileHtml).join("")}</div>
+        </section>`;
+      }).join("");
+    }else{
+      host.innerHTML=selected.map(tileHtml).join("");
+    }
+    qa(".badgeCatalogTile").forEach(b=>b.onclick=()=>openDetail(b.dataset.badgeId));
+  }
+
+  async function render(){
+    if(!window.SnapPopStorage.isOpen())return;
+    const vm=await window.SnapPopBadgeCatalogUI.load();
+    const progress=await store.get("badgeProgress")||{};
+    cache=vm.items.map(item=>{
+      const entry=progress[item.badge_id]||progress[item.badgeId]||{};
+      return Object.freeze({...window.SnapPopBadgeCatalogUI.composeItem(item,entry),progress_count:Math.max(0,Number(entry.count)||0)});
+    });
+    renderHeader();
+    renderFilters();
+    renderGrid();
+  }
+
+  function stepDetail(delta){
+    const list=sorted(window.SnapPopBadgeCatalogUI.select(cache,{filter,category,nature}));
+    const idx=list.findIndex(x=>x.badge_id===selectedId);
+    if(idx<0||!list.length)return;
+    const next=list[(idx+delta+list.length)%list.length];
+    openDetail(next.badge_id);
+  }
+
+  function openDetail(badgeId){
+    const item=cache.find(x=>x.badge_id===badgeId);
+    if(!item)return;
+    selectedId=badgeId;
+    renderGrid();
+    const secretLocked=item.category==="SECRET"&&item.ownership_state!=="EARNED";
+    const detailArt=q("#badgeDetailArt");
+    detailArt.innerHTML=artMarkup(item,"large");
+    detailArt.dataset.tier=item.tier||"NONE";
+    detailArt.classList.remove("badgeDetailReveal");
+    void detailArt.offsetWidth;
+    detailArt.classList.add("badgeDetailReveal");
+    q("#badgeDetailNo").textContent=`No.${String(item.slot).padStart(3,"0")}`;
+    q("#badgeDetailTitle").textContent=displayTitle(item);
+    q("#badgeDetailCategory").textContent=item.category;
+    q("#badgeDetailNature").textContent=natureLabel(item.primary_nature);
+    q("#badgeDetailStory").textContent=secretLocked?"아직 발견되지 않은 비밀 배지입니다.":(item.core_detail||"");
+    q("#badgeDetailState").textContent=item.ownership_state==="EARNED"
+      ? `${tierLabel(item.tier)} · 재획득 별 ${item.reacquire_stars}/5`
+      : item.ownership_state==="IN_PROGRESS"?"발견 중":"아직 만나지 못한 배지";
+    q("#badgeDetailStars").innerHTML=item.ownership_state==="EARNED"?starsMarkup(item.reacquire_stars):"";
+    const progressCount=Math.max(0,Number(item.progress_count||item.count||0)||0);
+    q("#badgeDetailCount").textContent=item.ownership_state==="EARNED"?`${progressCount}회`:"0회";
+    const last=item.last_at?new Date(item.last_at):null;
+    q("#badgeDetailLast").textContent=last&&!Number.isNaN(last.getTime())
+      ?new Intl.DateTimeFormat("ko-KR",{year:"numeric",month:"short",day:"numeric"}).format(last)
+      :"-";
+    const sheet=q("#badgeDetailLayer");
+    sheet.dataset.tier=String(item.tier||"NONE").toLowerCase();
+    sheet.dataset.owned=item.ownership_state==="EARNED"?"true":"false";
+    sheet.classList.toggle("recent",item.ownership_state==="EARNED"&&isRecent(item));
+    sheet.hidden=false;
+    sheet.setAttribute("aria-hidden","false");
+  }
+
+  function closeDetail(){
+    selectedId=null;
+    renderGrid();
+    const sheet=q("#badgeDetailLayer");
+    if(sheet){
+      sheet.hidden=true;
+      sheet.setAttribute("aria-hidden","true");
+    }
+  }
+
+  function install(){
+    const open=q("#badgeCatalogBtn"), back=q("#badgeCatalogBack"), close=q("#badgeDetailClose");
+    if(open)open.onclick=async()=>{await render();deps.show("badgeCatalog")};
+    if(back)back.onclick=()=>deps.show("growth");
+    if(close)close.onclick=closeDetail;
+    const backdrop=q("#badgeDetailBackdrop");
+    if(backdrop)backdrop.onclick=closeDetail;
+    const prev=q("#badgeDetailPrev"), next=q("#badgeDetailNext");
+    if(prev)prev.onclick=()=>stepDetail(-1);
+    if(next)next.onclick=()=>stepDetail(1);
+    qa("#badgeCatalogFilters [data-badge-filter]").forEach(b=>b.onclick=()=>{filter=b.dataset.badgeFilter;renderFilters();renderGrid()});
+    qa("#badgeCategoryFilters [data-badge-category], .badgeCategoryProgress [data-badge-category]").forEach(b=>b.onclick=()=>{category=b.dataset.badgeCategory;renderFilters();renderGrid()});
+    qa("#badgeNatureFilters [data-badge-nature]").forEach(b=>b.onclick=()=>{nature=b.dataset.badgeNature;renderFilters();renderGrid()});
+    const viewSelect=q("#badgeCatalogView");
+    if(viewSelect)viewSelect.onchange=()=>{viewMode=viewSelect.value;renderHeader();renderGrid()};
+    const sortSelect=q("#badgeCatalogSort");
+    if(sortSelect)sortSelect.onchange=()=>{sort=sortSelect.value;renderGrid()};
+    window.addEventListener("snap-pop:badge-open-catalog",async(event)=>{
+      const badgeId=String(event?.detail?.badgeId||"");
+      await render();
+      deps.show("badgeCatalog");
+      if(badgeId)openDetail(badgeId);
+    });
+  }
+
+  return Object.freeze({contract:"SNAP_POP_BADGE_CATALOG_CONTROLLER_V5_GAME_CODEX_STATE",render,install,openDetail,closeDetail});
+}
+
+window.SnapPopBadgeCatalogController=Object.freeze({instance(deps){if(!singleton)singleton=create(deps);return singleton}});
+})();

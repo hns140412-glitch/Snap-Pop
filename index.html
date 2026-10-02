@@ -144,9 +144,98 @@
   <div class="treeStage"><img id="treeImage" src="assets/growth/stage_01.png" alt="현재 성장나무"><div id="growthCompanion" class="growthCompanion"></div></div>
   <div class="exp"><i id="expBar"></i></div><p id="expText">EXP 0</p>
  </div>
+ <button class="primary wide" id="badgeCatalogBtn" type="button">배지 도감 보기</button>
  <button class="soft wide" id="historyBtn">성장 기록 보기</button>
  <div id="growthTimeline" class="timeline" hidden></div>
 </section>
+<section id="badgeCatalog" class="view parchment subflow badgeCodex">
+ <button class="back" id="badgeCatalogBack" type="button">← 성장</button>
+ <header class="badgeCodexHead">
+  <div><span class="kicker">COLLECTION</span><h1>배지 도감</h1></div>
+  <div class="badgeCodexProgressText"><strong id="badgeCatalogCount">0 / 60</strong><span id="badgeCatalogPercent">0%</span></div>
+ </header>
+ <div class="badgeCodexProgress"><i id="badgeCatalogProgressBar"></i></div>
+ <div class="badgeCategoryProgress" aria-label="분류별 획득 현황">
+  <button data-badge-category="POCKET" type="button"><b>POCKET</b><span data-badge-category-progress="POCKET">0/20</span></button>
+  <button data-badge-category="FIELD" type="button"><b>FIELD</b><span data-badge-category-progress="FIELD">0/20</span></button>
+  <button data-badge-category="EXPEDITION" type="button"><b>EXPEDITION</b><span data-badge-category-progress="EXPEDITION">0/14</span></button>
+  <button data-badge-category="SECRET" type="button"><b>SECRET</b><span data-badge-category-progress="SECRET">0/6</span></button>
+ </div>
+ <div class="badgeCodexToolbar badgeCodexToolbarV2">
+  <div id="badgeCatalogFilters" class="badgeCatalogFilters" role="group" aria-label="획득 상태">
+   <button class="on" data-badge-filter="ALL" type="button">전체</button>
+   <button data-badge-filter="EARNED" type="button">획득</button>
+   <button data-badge-filter="IN_PROGRESS" type="button">진행</button>
+   <button data-badge-filter="UNEARNED" type="button">미획득</button>
+  </div>
+  <div class="badgeCodexSelectors">
+   <label class="badgeSortLabel"><span>보기</span><select id="badgeCatalogView"><option value="GRID">전체</option><option value="NATURE">성격별</option><option value="CATEGORY">종류별</option><option value="OWNERSHIP">획득상태별</option></select></label>
+   <label class="badgeSortLabel"><span>정렬</span><select id="badgeCatalogSort"><option value="NUMBER_ASC">번호</option><option value="RECENT">최근 획득</option><option value="TIER">성급</option><option value="NATURE">성격순</option></select></label>
+  </div>
+ </div>
+ <div id="badgeCategoryFilters" class="badgeCatalogFilters category" role="group" aria-label="배지 분류">
+  <button class="on" data-badge-category="ALL" type="button">ALL</button>
+  <button data-badge-category="POCKET" type="button">POCKET</button>
+  <button data-badge-category="FIELD" type="button">FIELD</button>
+  <button data-badge-category="EXPEDITION" type="button">EXPEDITION</button>
+  <button data-badge-category="SECRET" type="button">SECRET</button>
+ </div>
+ <div class="badgeNatureFilterWrap">
+  <span class="badgeNatureFilterLabel">성격</span>
+  <div id="badgeNatureFilters" class="badgeCatalogFilters nature" role="group" aria-label="배지 성격">
+   <button class="on" data-badge-nature="ALL" data-label="전체" type="button"><b>전체</b><span data-badge-nature-progress="ALL">0/60</span></button>
+   <button data-badge-nature="SELF_DIRECTED" data-label="스스로" type="button"><b>스스로</b><span data-badge-nature-progress="SELF_DIRECTED">0/0</span></button>
+   <button data-badge-nature="GOAL_ACHIEVEMENT" data-label="목표도달" type="button"><b>목표도달</b><span data-badge-nature-progress="GOAL_ACHIEVEMENT">0/0</span></button>
+   <button data-badge-nature="FOCUS_IMMERSION" data-label="집중·몰입" type="button"><b>집중·몰입</b><span data-badge-nature-progress="FOCUS_IMMERSION">0/0</span></button>
+   <button data-badge-nature="RECOVERY_RESILIENCE" data-label="복귀·재도전" type="button"><b>복귀·재도전</b><span data-badge-nature-progress="RECOVERY_RESILIENCE">0/0</span></button>
+   <button data-badge-nature="ERROR_LEARNING" data-label="실수·교정" type="button"><b>실수·교정</b><span data-badge-nature-progress="ERROR_LEARNING">0/0</span></button>
+   <button data-badge-nature="PLANNING_SELF_REGULATION" data-label="계획·조절" type="button"><b>계획·조절</b><span data-badge-nature-progress="PLANNING_SELF_REGULATION">0/0</span></button>
+   <button data-badge-nature="PROBLEM_SOLVING" data-label="문제해결" type="button"><b>문제해결</b><span data-badge-nature-progress="PROBLEM_SOLVING">0/0</span></button>
+   <button data-badge-nature="EXTRA_GROWTH" data-label="추가도전·성장" type="button"><b>추가도전·성장</b><span data-badge-nature-progress="EXTRA_GROWTH">0/0</span></button>
+  </div>
+ </div>
+ <div id="badgeCatalogGrid" class="badgeCatalogGrid"></div>
+</section>
+<div id="badgeDetailLayer" class="badgeDetailLayer" hidden aria-hidden="true">
+ <div id="badgeDetailBackdrop" class="badgeDetailBackdrop"></div>
+ <section class="badgeDetailSheet" role="dialog" aria-modal="true" aria-labelledby="badgeDetailTitle">
+  <div class="badgeDetailTopbar">
+   <button id="badgeDetailPrev" class="soft" type="button" aria-label="이전 배지">←</button>
+   <span id="badgeDetailNo">No.000</span>
+   <button id="badgeDetailNext" class="soft" type="button" aria-label="다음 배지">→</button>
+   <button id="badgeDetailClose" class="round" type="button" aria-label="닫기">×</button>
+  </div>
+  <div id="badgeDetailArt"></div>
+  <div class="badgeDetailChips"><span id="badgeDetailCategory" class="kicker"></span><span id="badgeDetailNature" class="kicker badgeNatureChip"></span></div>
+  <h2 id="badgeDetailTitle"></h2>
+  <p id="badgeDetailStory"></p>
+  <div id="badgeDetailStars"></div>
+  <strong id="badgeDetailState"></strong>
+  <div class="badgeDetailRecord" aria-label="획득 기록">
+   <div><span>획득 횟수</span><b id="badgeDetailCount">0회</b></div>
+   <div><span>마지막 획득</span><b id="badgeDetailLast">-</b></div>
+  </div>
+ </section>
+</div>
+<div id="badgeAcquisitionLayer" class="badgeAcquisitionLayer" hidden aria-hidden="true">
+ <div id="badgeAcquisitionBackdrop" class="badgeAcquisitionBackdrop"></div>
+ <section class="badgeAcquisitionCard" role="dialog" aria-modal="true" aria-labelledby="badgeAcquisitionHeading">
+  <button id="badgeAcquisitionClose" class="round badgeAcquisitionClose" type="button" aria-label="닫기">×</button>
+  <span id="badgeAcquisitionKicker" class="badgeAcquisitionKicker">NEW BADGE</span>
+  <h2 id="badgeAcquisitionHeading">새 배지 발견</h2>
+  <span id="badgeAcquisitionNo" class="badgeAcquisitionNo">No.000</span>
+  <div id="badgeAcquisitionArt" class="badgeAcquisitionArt"></div>
+  <div class="badgeAcquisitionMeta"><span id="badgeAcquisitionNature"></span><span id="badgeAcquisitionTier"></span></div>
+  <h3 id="badgeAcquisitionTitle"></h3>
+  <p id="badgeAcquisitionBody"></p>
+  <div id="badgeAcquisitionTierChange" class="badgeAcquisitionTierChange" hidden></div>
+  <div id="badgeAcquisitionStars"></div>
+  <div class="badgeAcquisitionActions">
+   <button id="badgeAcquisitionContinue" class="primary wide" type="button">확인</button>
+   <button id="badgeAcquisitionCatalog" class="soft wide" type="button">도감에서 보기</button>
+  </div>
+ </section>
+</div>
 <section id="special" class="view parchment subflow">
  <button class="back" id="specialBack">← 지도</button>
  <header class="pageTitle specialPageTitle"><span>원할 때만 여는 초대</span><h1>특별 탐험</h1><p>지금 하고 싶을 때만 해도 돼. 지나가도 아무 손해가 없어.</p></header>
@@ -308,8 +397,12 @@ window.addEventListener("unhandledrejection",event=>{
 <script src="badge-evidence-contract-runtime.js"></script>
 <script src="badge-behavior-runtime.js"></script>
 <script src="badge-shared-contract-runtime.js"></script>
+ <script src="badge-source-observation-runtime.js"></script>
 <script src="badge-theme-expression-runtime.js"></script>
 <script src="badge-visual-runtime.js"></script>
+<script src="badge-art-pack-runtime.js"></script>
+<script src="badge-catalog-ui-runtime.js"></script>
+<script src="badge-acquisition-presentation.js"></script>
 <script src="learning-context-runtime.js"></script>
 <script src="vocabulary-material-runtime.js"></script>
 <script src="openai-semantic-provider.js"></script>
@@ -343,9 +436,10 @@ window.addEventListener("unhandledrejection",event=>{
 <script src="special-controller.js"></script>
 <script src="imagination-controller.js"></script>
 <script src="settings-profile-controller.js"></script>
+<script src="badge-catalog-controller.js"></script>
 <script src="badge-controller.js"></script>
 <script src="bridge-context-controller.js"></script>
 <script src="interaction-support-controller.js"></script>
 <script src="bootstrap-controller.js"></script>
 <script src="writing-flow-controller.js"></script>
-<script src="app.js"></script>\n<script src="family-expansion-app.js"></script><script src="snap-bridge.js"></script><script>if(new URLSearchParams(location.search).has("runtime-smoke")){const s=document.createElement("script");s.src="scripts/browser-runtime-selftest.js";document.body.appendChild(s)}</script></body></html>
+<script src="app.js"></script>\n<script src="family-expansion-app.js"></script><script src="snap-bridge.js"></script><script>if(new URLSearchParams(location.search).has("runtime-smoke")){for(const src of ["scripts/browser-runtime-selftest.js","scripts/badge-catalog-binding-selftest.js"]){const s=document.createElement("script");s.src=src;document.body.appendChild(s)}}</script></body></html>
