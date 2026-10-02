@@ -1,5 +1,5 @@
-validation_sha=cb4b2bd139ebc0560c540b0fd44c8fa84cffb8e7
-checkout_sha=cb4b2bd139ebc0560c540b0fd44c8fa84cffb8e7
+validation_sha=1976825073c49c014161b0b2dedd4fa98aca7fdf
+checkout_sha=1976825073c49c014161b0b2dedd4fa98aca7fdf
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 73/73
 browser_status=0
@@ -909,7 +909,7 @@ CDP_STAGE DOM_SELFTEST_WAIT
 CDP_STAGE DOM_SELFTEST_PASS
 CDP_STAGE RECOVERY_NAVIGATE
 CDP_STAGE RECOVERY_LOAD_EVENT
-CDP_STAGE RECOVERY_TARGET {"id":"E8722CDD1C1B7F803B31A155D85D625C","url":"http://127.0.0.1:4173/index.html?runtime-recovery=1","title":"Snap &amp; Pop · 아이디어를 Snap! 이야기로 Pop!"}
+CDP_STAGE RECOVERY_TARGET {"id":"29115242406926D49D59EC6485AE74A4","url":"http://127.0.0.1:4173/index.html?runtime-recovery=1","title":"Snap &amp; Pop · 아이디어를 Snap! 이야기로 Pop!"}
 CDP_STAGE RECOVERY_CONTEXT_READY 2
 CDP_STAGE RECOVERY_RECONNECTED
 CDP_STAGE RECOVERY_NAVIGATION_QUIESCENT
