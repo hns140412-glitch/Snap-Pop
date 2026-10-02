@@ -1,8 +1,8 @@
-validation_sha=b13810da515890b65a861c11f7f863c5af4cb0fc
-checkout_sha=b13810da515890b65a861c11f7f863c5af4cb0fc
+validation_sha=4576fc41b7649245b2cafd33382e316ef571c022
+checkout_sha=4576fc41b7649245b2cafd33382e316ef571c022
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 73/73
-browser_status=5
+browser_status=1
 browser_marker=
 viewport=390x844
 generated_by=github-actions-branch-only
@@ -909,16 +909,27 @@ CDP_STAGE DOM_SELFTEST_WAIT
 CDP_STAGE DOM_SELFTEST_PASS
 CDP_STAGE RECOVERY_NAVIGATE
 CDP_STAGE RECOVERY_LOAD_EVENT
-CDP_STAGE RECOVERY_TARGET {"id":"D7AECE15D0DA89DDD01385BAFA2FDF09","url":"http://127.0.0.1:4173/index.html?runtime-recovery=1","title":"Snap &amp; Pop · 아이디어를 Snap! 이야기로 Pop!"}
+CDP_STAGE RECOVERY_TARGET {"id":"9605897921EF5673E3B852A5A1F3DBE0","url":"http://127.0.0.1:4173/index.html?runtime-recovery=1","title":"Snap &amp; Pop · 아이디어를 Snap! 이야기로 Pop!"}
 CDP_STAGE RECOVERY_CONTEXT_READY 2
 CDP_STAGE RECOVERY_RECONNECTED
 CDP_STAGE RECOVERY_NAVIGATION_QUIESCENT
 CDP_STAGE RECOVERY_RUNTIME_COMMAND_PASS
 CDP_STAGE RECOVERY_DOM_COMMAND_PASS #document
 CDP_STAGE RECOVERY_DIALOG_STATE CLOSED
-CDP_STAGE RECOVERY_TRANSIENT_EVAL_TIMEOUT 1
-CDP_STAGE RECOVERY_TRANSIENT_EVAL_TIMEOUT 2
-CDP_STAGE RECOVERY_TRANSIENT_EVAL_TIMEOUT 3
-CDP_STAGE RECOVERY_TRANSIENT_EVAL_TIMEOUT 4
-CDP_STAGE RECOVERY_FATAL
-CDP_COMMAND_TIMEOUT Runtime.evaluate
+file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:48
+      if(msg.error)p.reject(new Error(msg.error.message||"CDP_ERROR"));else p.resolve(msg.result);
+                            ^
+
+Error: Could not get index
+    at socket.onmessage (file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:48:29)
+    at [nodejs.internal.kHybridDispatch] (node:internal/event_target:843:20)
+    at WebSocket.dispatchEvent (node:internal/event_target:776:26)
+    at fireEvent (node:internal/deps/undici/undici:12005:14)
+    at websocketMessageReceived (node:internal/deps/undici/undici:12027:7)
+    at node:internal/deps/undici/undici:12745:21
+    at node:internal/deps/undici/undici:12515:11
+    at afterWrite (node:internal/streams/writable:710:5)
+    at onwrite (node:internal/streams/writable:688:7)
+    at Zlib.cb (node:internal/streams/transform:191:7)
+
+Node.js v22.23.3
