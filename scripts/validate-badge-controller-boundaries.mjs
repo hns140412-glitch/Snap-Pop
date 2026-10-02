@@ -4,7 +4,7 @@ const index=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const ctl=fs.readFileSync(new URL("../badge-controller.js",import.meta.url),"utf8");
 function assert(name,condition){if(!condition)throw new Error("FAIL "+name);console.log("PASS",name)}
 assert("badge-controller-loads-before-app",index.indexOf('src="badge-controller.js"')<index.indexOf('src="app.js"'));
-assert("badge-controller-contract-present",ctl.includes("SNAP_POP_BADGE_CONTROLLER_V1"));
+assert("badge-controller-contract-present",ctl.includes("SNAP_POP_BADGE_CONTROLLER_V3_SOURCE_ONLY_AWARD"));
 assert("badge-observation-owned-by-controller",ctl.includes("badgeBehaviorObservations")&&ctl.includes("badgeSharedExperienceEvents"));
 assert("badge-evidence-keeps-explicit-only-contract",ctl.includes("explicitChildAction:true")&&ctl.includes("inferenceAllowed:false")&&ctl.includes("elapsedTimeEvidenceAllowed:false")&&ctl.includes("scoreEvidenceAllowed:false"));
 assert("badge-candidates-remain-review-only",ctl.includes("badgeCandidateReviews")&&!ctl.includes("ACTIVE_CATALOG_INSERT"));
