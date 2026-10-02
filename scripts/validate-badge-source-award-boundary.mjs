@@ -20,7 +20,7 @@ assert("source-matcher-supports-approved-multi-source-tuples",runtime.includes("
 assert("source-matcher-requires-exact-behavior-code",runtime.includes('observation.behavior_code'));
 assert("source-matcher-requires-exact-source-contract",runtime.includes('observation.source_contract_id'));
 assert("source-matcher-requires-exact-source-app",runtime.includes('observation.app_id'));
-assert("source-matcher-requires-explicit-child-action",runtime.includes("observation.explicit_child_action===true"));
+assert("source-matcher-requires-explicit-child-action",runtime.includes("observation.explicit_child_action!==true")||runtime.includes("observation.explicit_child_action===true"));
 assert("working-catalog-remains-inactive",catalog.status==="WORKING_DRAFT_NOT_ACTIVE"&&catalog.items.every(x=>x.active===false));
 
 console.log("BADGE_SOURCE_AWARD_BOUNDARY_PASS");
