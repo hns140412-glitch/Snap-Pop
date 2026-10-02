@@ -1,8 +1,8 @@
-validation_sha=16feefcac70f615c2509dfd517c3f091a10d0668
-checkout_sha=16feefcac70f615c2509dfd517c3f091a10d0668
+validation_sha=4ec2968d5d9e92887f1eac9e5d14e9cd8b984a40
+checkout_sha=4ec2968d5d9e92887f1eac9e5d14e9cd8b984a40
 closure_status=0
 closure_marker=BRANCH_CLOSURE_VALIDATOR_PASS 73/73
-browser_status=1
+browser_status=124
 browser_marker=
 viewport=390x844
 generated_by=github-actions-branch-only
@@ -904,13 +904,3 @@ DOM_BINDING_INTEGRITY_PASS
 
 BRANCH_CLOSURE_VALIDATOR_PASS 73/73
 --- BROWSER ---
-file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:13
-  throw new Error("CDP_TARGET_NOT_FOUND version="+String(version||"UNAVAILABLE"));
-        ^
-
-Error: CDP_TARGET_NOT_FOUND version=UNAVAILABLE
-    at getTarget (file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:13:9)
-    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
-    at async file:///home/runner/work/Snap-Pop/Snap-Pop/scripts/browser-runtime-cdp.mjs:16:14
-
-Node.js v22.23.3
