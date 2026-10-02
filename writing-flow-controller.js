@@ -24,7 +24,7 @@ async function advance(){
   if(!s){deps.toast("지도에서 탐험지를 먼저 골라줘.");deps.show("map");return}
   deps.ensureWritingState(s);const i=s.step||0;s.draft=q("#answer").value.trim();s.answers[i]=s.draft;s.snapshots[i]=s.draft;
   if(!s.draft){s.crewState=s.crewState||{};s.crewState.emptyAdvanceAttempts=(s.crewState.emptyAdvanceAttempts||0)+1;const intervention=window.SnapPopCrewIntervention?.state?.({emptyAdvanceAttempts:s.crewState.emptyAdvanceAttempts,hintLevel:s.crewState.hintLevel||0,language:s.language||"ko"})||{stage:"WAIT",message:(s.language||"ko")==="en"?"No rush. I’ll wait here.":"급할 건 없어. 여기서 기다릴게.",autoRevealHint:false,autoWrite:false};s.crewState.interventionStage=intervention.stage;await store.set("active",s);const identity=await deps.resolvedIdentity();await deps.showCrewReaction(`${deps.crewMemberName(identity)}: ${intervention.message}`,{kind:"observe"});return}
-  if(i<2){deps.bumpWritingAnalysisSeq();s.step=i+1;s.crewState={hintLevel:0,lastReaction:"",cloudReturn:null,lastVoiceLength:0};await store.set("active",s);deps.renderExplore(s);setTimeout(()=>deps.analyzeWritingMove(s),0);return}
+  if(i<2){deps.bumpWritingAnalysisSeq();s.badgeEvidence=s.badgeEvidence||{};s.badgeEvidence.flowContinueRefs=Array.isArray(s.badgeEvidence.flowContinueRefs)?s.badgeEvidence.flowContinueRefs:[];const flowContinueRef=`snap-writing-flow-continue:${s.id}:${i}:${i+1}`;if(!s.badgeEvidence.flowContinueRefs.includes(flowContinueRef))s.badgeEvidence.flowContinueRefs.push(flowContinueRef);s.step=i+1;s.crewState={hintLevel:0,lastReaction:"",cloudReturn:null,lastVoiceLength:0};await store.set("active",s);deps.renderExplore(s);setTimeout(()=>deps.analyzeWritingMove(s),0);return}
   const events=await store.get("completionEvents")||{};
   const completionEventId=s.completionEventId||`completion_${s.id}`;
   if(events[completionEventId]){await store.set("active",null);deps.toast("이미 기록된 탐험이에요.");deps.show("growth");return}
@@ -79,6 +79,25 @@ async function advance(){
       explicit_child_action:true,
       payload:{
         reflectionArtifactRefs:deepThinkingRefs,
+        completionEventId,
+        recordId:record.id,
+        landmark:s.landmark
+      }
+    });
+  }
+  const flowContinueRefs=Array.isArray(s.badgeEvidence?.flowContinueRefs)?s.badgeEvidence.flowContinueRefs.filter(Boolean):[];
+  if(flowContinueRefs.length&&deps.recordBadgeSourceObservation){
+    await deps.recordBadgeSourceObservation({
+      event_id:`badgeflow_${completionEventId}`,
+      app_id:"SNAP_POP",
+      event_family:"FOCUS",
+      behavior_code:"FLOW_IMMERSION",
+      occurred_at:now,
+      source_contract_id:"SNAP_POP_CHILD_FLOW_IMMERSION_V1",
+      evidence_ref:`completion:${completionEventId}`,
+      explicit_child_action:true,
+      payload:{
+        flowContinueActionRefs:flowContinueRefs,
         completionEventId,
         recordId:record.id,
         landmark:s.landmark
