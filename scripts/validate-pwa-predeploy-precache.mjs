@@ -3,6 +3,7 @@ import fs from "node:fs";
 const index=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const sw=fs.readFileSync(new URL("../sw.js",import.meta.url),"utf8");
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const pwaAdapter=fs.readFileSync(new URL("../snap-pwa-update-v01.js",import.meta.url),"utf8");
 const manifest=JSON.parse(fs.readFileSync(new URL("../manifest.json",import.meta.url),"utf8"));
 
 function assert(name,condition){
@@ -18,11 +19,13 @@ if(!precacheMatch) throw new Error("FAIL pwa-precache-array-present");
 const precache=JSON.parse(precacheMatch[1]);
 
 assert("active-service-worker-is-sw-js",
-  app.includes('navigator.serviceWorker.register("sw.js")')&&
+  pwaAdapter.includes("navigator.serviceWorker.register('./sw.js')")&&
+  !app.includes('navigator.serviceWorker.register("sw.js")')&&
   !app.includes('navigator.serviceWorker.register("service-worker.js")')
 );
-assert("precache-version-is-current-predeploy",
-  sw.includes("snap-pop-2026-09-22-predeploy-")
+assert("precache-version-is-release-id-derived",
+  sw.includes("const C='snap-pop:'+RELEASE.release_id")&&
+  sw.includes("importScripts('./snap-release-v01.js')")
 );
 assert("all-production-runtime-scripts-are-precached",
   scriptSrc.every(src=>precache.includes(src))
