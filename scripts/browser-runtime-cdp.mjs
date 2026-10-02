@@ -200,9 +200,12 @@ for(let i=0;i<240;i++){
       swOk=true;
     }
 
-    await send("CacheStorage.requestCacheNames",{securityOrigin}).then(async names=>{
+    let shell=false;
+    let lastCaches=[];
+    for(let attempt=0;attempt<80&&!shell;attempt++){
+      const names=await send("CacheStorage.requestCacheNames",{securityOrigin});
       const caches=names?.caches||[];
-      let shell=false;
+      lastCaches=caches;
       for(const cache of caches){
         const entries=await send("CacheStorage.requestEntries",{cacheId:cache.cacheId,skipCount:0,pageSize:500});
         const urls=(entries?.cacheDataEntries||[]).map(x=>x.requestURL||x.requestUrl||x.request?.url||"");
@@ -211,8 +214,9 @@ for(let i=0;i<240;i++){
           shell=true; break;
         }
       }
-      if(!shell) throw new Error("CACHE_STORAGE_SHELL_NOT_FOUND "+JSON.stringify((names?.caches||[]).map(x=>({id:x.cacheId,name:x.cacheName}))));
-    });
+      if(!shell) await sleep(100);
+    }
+    if(!shell) throw new Error("CACHE_STORAGE_SHELL_NOT_FOUND "+JSON.stringify(lastCaches.map(x=>({id:x.cacheId,name:x.cacheName}))));
     if(!swOk) throw new Error("SERVICE_WORKER_NOT_AVAILABLE");
     console.log("PWA_OFFLINE_SHELL_PASS");
     console.log("BROWSER_RUNTIME_CDP_PASS");
