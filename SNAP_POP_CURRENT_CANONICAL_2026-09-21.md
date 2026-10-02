@@ -763,3 +763,28 @@ Live provider/runtime required:
 
 Do not convert the remaining 11 to runtimeVerified using mocks alone.
 Do not touch Ready & Set or Hide & Seek repos from the Snap-only continuation unless the new task explicitly changes scope.
+
+
+## LAF-INT-003 durability closure — 2026-10-02
+
+Status: **CLOSED**.
+
+Exact validated code SHA: `cb4b2bd139ebc0560c540b0fd44c8fa84cffb8e7`
+Evidence head: `53a0cfb455ff846c4acb271a192703602c344a52`
+
+Validation evidence:
+- Branch Closure #501: SUCCESS
+- Rewrite Closure #321: SUCCESS
+- `BRANCH_CLOSURE_VALIDATOR_PASS 73/73`
+- `PWA_RELOAD_RECOVERY_PASS`
+- recovered token: `snap-pop-runtime-recovery-v1`
+- `PWA_OFFLINE_SHELL_PASS`
+- `BROWSER_RUNTIME_CDP_PASS`
+- viewport: `390x844`
+
+Root cause fixed:
+- `sw.js` contained a literal escaped `\\n` sequence between service-worker event registrations, breaking service-worker parsing and preventing precache creation.
+- browser recovery verification now reads durability through CDP IndexedDB/CacheStorage/Storage domains instead of depending on post-navigation `Runtime.evaluate`.
+
+Evidence index remains conservative: CODED `80/80` · STATIC `80/80` · RUNTIME `69/80` · DEVICE `0/80`.
+No remaining runtime-open requirement is promoted by mock-only evidence. Deploy / Netlify / main merge remain HOLD / NOT_RUN.
