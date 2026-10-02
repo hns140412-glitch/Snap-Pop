@@ -26,10 +26,15 @@ async function openCdp(target){
   const pending=new Map();
   let seq=0;
   let loadFired=false;
+  let loading=false;
+  let lastNavigationAt=Date.now();
   let defaultContextId=null;
   socket.onmessage=event=>{
     const msg=JSON.parse(String(event.data));
-    if(msg.method==="Page.loadEventFired") loadFired=true;
+    if(msg.method==="Page.frameStartedLoading"){ loading=true; lastNavigationAt=Date.now(); }
+    if(msg.method==="Page.frameStoppedLoading"){ loading=false; lastNavigationAt=Date.now(); }
+    if(msg.method==="Page.frameNavigated") lastNavigationAt=Date.now();
+    if(msg.method==="Page.loadEventFired"){ loadFired=true; loading=false; lastNavigationAt=Date.now(); }
     if(msg.method==="Runtime.executionContextCreated" && msg.params?.context?.auxData?.isDefault){
       defaultContextId=msg.params.context.id;
     }
@@ -73,7 +78,7 @@ async function openCdp(target){
     if(out.exceptionDetails) throw new Error(out.exceptionDetails.text||"RUNTIME_EVAL_EXCEPTION");
     return out.result?.value;
   }
-  return {socket,send,evalValue,loadFired:()=>loadFired,contextId:()=>defaultContextId};
+  return {socket,send,evalValue,loadFired:()=>loadFired,contextId:()=>defaultContextId,loading:()=>loading,lastNavigationAt:()=>lastNavigationAt};
 }
 
 const target=await getTarget();
@@ -127,6 +132,17 @@ for(let i=0;i<240;i++){
     }
     console.error("CDP_STAGE RECOVERY_CONTEXT_READY "+session.contextId());
     console.error("CDP_STAGE RECOVERY_RECONNECTED");
+    for(let k=0;k<300;k++){
+      const quietFor=Date.now()-session.lastNavigationAt();
+      if(!session.loading()&&quietFor>=1500) break;
+      await sleep(100);
+    }
+    if(session.loading()||Date.now()-session.lastNavigationAt()<1500){
+      console.error("CDP_STAGE RECOVERY_NAVIGATION_NOT_QUIESCENT");
+      ws.close();
+      process.exit(5);
+    }
+    console.error("CDP_STAGE RECOVERY_NAVIGATION_QUIESCENT");
     try{
       await send("Runtime.getIsolateId");
       console.error("CDP_STAGE RECOVERY_RUNTIME_COMMAND_PASS");
