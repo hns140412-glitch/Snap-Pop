@@ -40,7 +40,7 @@ jobs:
             >/tmp/snap-pop-chrome.log 2>&1 &
           BROWSER_PID=$!
           trap 'kill $BROWSER_PID $SERVER_PID 2>/dev/null || true' EXIT
-          if ! node scripts/browser-runtime-cdp.mjs; then
+          if ! timeout 90s node scripts/browser-runtime-cdp.mjs; then
             echo "=== CHROME LOG ==="
             cat /tmp/snap-pop-chrome.log || true
             echo "=== HTTP LOG ==="
