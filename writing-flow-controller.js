@@ -66,6 +66,25 @@ async function advance(){
       }
     });
   }
+  const deepThinkingRefs=Array.isArray(s.badgeEvidence?.deepThinkingRefs)?s.badgeEvidence.deepThinkingRefs.filter(Boolean):[];
+  if(deepThinkingRefs.length&&deps.recordBadgeSourceObservation){
+    await deps.recordBadgeSourceObservation({
+      event_id:`badgedeep_${completionEventId}`,
+      app_id:"SNAP_POP",
+      event_family:"DEEP_THINKING",
+      behavior_code:"DEEP_THINKING_PERSISTENCE",
+      occurred_at:now,
+      source_contract_id:"SNAP_POP_REFLECTION_TO_COMPLETION_V1",
+      evidence_ref:`completion:${completionEventId}`,
+      explicit_child_action:true,
+      payload:{
+        reflectionArtifactRefs:deepThinkingRefs,
+        completionEventId,
+        recordId:record.id,
+        landmark:s.landmark
+      }
+    });
+  }
   await deps.recordBadgeEvent("WRITING_EXPLORATION",{landmark:s.landmark,finalDraftChars:(s.draft||"").length,learningUnitId:learningCtx?.learning_unit_id||null,completionEventId},"SNAP_POP");
   window.dispatchEvent(new CustomEvent("snap-pop:task-completed",{detail:{
     completionEventId,
