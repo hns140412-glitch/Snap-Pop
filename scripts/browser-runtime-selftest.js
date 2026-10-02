@@ -636,6 +636,10 @@
       let workingActivationBlocked=false;
       try{window.SnapPopBadgeCatalogGuard.validateCatalog({status:"WORKING_DRAFT_NOT_ACTIVE",items:[{id:"x",status:"WORKING_DRAFT",active:true}]})}catch{workingActivationBlocked=true}
       assert("badge-working-draft-activation-fails-closed",workingActivationBlocked===true&&window.SnapPopBadgeCatalogGuard.canActivate(badgeLoaded.catalog.items[0],badgeLoaded.catalog)===false);
+      const incompleteActive={id:"qa-active",status:"APPROVED",active:true,eventFamilies:["SELF_START"],matcher:{behaviorCode:"QA"},activationApproved:true};
+      assert("badge-active-contract-incomplete-fails-closed",window.SnapPopBadgeCatalogGuard.canActivate(incompleteActive,{status:"CURRENT"})===false);
+      const completeActive={...incompleteActive,activationEvidenceRef:"qa://approval",sourceContractId:"QA_SOURCE_V1",dedupePolicy:"SOURCE_EVENT_ID",reawardPolicy:"DISTINCT_SOURCE_EVENT"};
+      assert("badge-complete-approved-contract-can-activate-in-nonworking-catalog",window.SnapPopBadgeCatalogGuard.canActivate(completeActive,{status:"CURRENT"})===true);
 
       const evidenceContract=window.SnapPopBadgeEvidenceContract;
       const errorEvidence=evidenceContract.verify("ERROR_DISCOVERY",{explicitChildAction:true,evidenceRef:"runtime_error",sourceContractId:"SNAP_POP_CHILD_SELF_CORRECTION_V1",errorMarkedByChild:true,beforeArtifactRef:"before",afterArtifactRef:"after"});
