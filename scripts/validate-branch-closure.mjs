@@ -29,7 +29,7 @@ const validators=[
   "validate-crew-intervention-ladder.mjs",
   "validate-badge-behavior-observation.mjs",
   "validate-badge-explicit-evidence-contract.mjs",
-  "validate-badge-evidence-producers.mjs",
+  "validate-badge-evidence-producers.mjs",\n  "validate-badge-flow-immersion.mjs",
   "validate-special-guest-shared-memory.mjs",
   "validate-guest-appearance-gate.mjs",
   "validate-requirement-matrix-reconciliation.mjs",
