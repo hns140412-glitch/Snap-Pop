@@ -178,11 +178,13 @@ for(let i=0;i<240;i++){
       skipCount:0,
       pageSize:500
     });
-    const probeEntry=(data?.objectStoreDataEntries||[]).find(entry=>entry?.key?.value==="${recoveryKey}");
-    const persisted=probeEntry?.value?.value;
+    const remoteValue=obj=>obj?.value ?? obj?.description ?? obj?.unserializableValue ?? null;
+    const entries=data?.objectStoreDataEntries||[];
+    const probeEntry=entries.find(entry=>remoteValue(entry?.key)==="${recoveryKey}");
+    const persisted=remoteValue(probeEntry?.value);
     if(persisted!==probePayload){
       console.error("PWA_RELOAD_RECOVERY_FAIL");
-      console.error("INDEXEDDB_RECOVERY_PROBE_MISMATCH "+JSON.stringify({persisted}));
+      console.error("INDEXEDDB_RECOVERY_PROBE_MISMATCH "+JSON.stringify({persisted,keys:entries.slice(0,25).map(e=>remoteValue(e?.key)),probeEntry}));
       ws.close();
       process.exit(3);
     }
