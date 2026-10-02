@@ -15,13 +15,57 @@ async function proposeBadgeCandidateFromObservations({id,title,families=[],reaso
   return candidate;
 }
 async function recordBadgeSourceObservation(input={}){
-  if(!window.TakyBadgeSourceObservation)return null;
+  if(!window.TakyBadgeSourceObservation||!window.SnapPopBadges)return null;
   try{
     const observation=window.TakyBadgeSourceObservation.normalize(input);
     const ledger=await store.get("badgeSourceObservations")||[];
-    if(ledger.some(x=>x.event_id===observation.event_id))return observation;
+    const existing=ledger.find(x=>x.event_id===observation.event_id);
+    if(existing)return existing;
+
+    await window.SnapPopBadges.load();
+    const matches=window.SnapPopBadges.matchSourceObservation(observation);
     ledger.unshift(observation);
-    await store.set("badgeSourceObservations",ledger.slice(0,1000));
+
+    if(!matches.length){
+      await store.set("badgeSourceObservations",ledger.slice(0,1000));
+      return observation;
+    }
+
+    const applied=await store.get("badgeAwardSourceEvents")||[];
+    if(applied.some(x=>x.event_id===observation.event_id)){
+      await store.set("badgeSourceObservations",ledger.slice(0,1000));
+      return observation;
+    }
+
+    const owned=await store.get("badgeProgress")||{};
+    const presentation=[];
+    const badgeIds=[];
+    for(const item of matches){
+      const key=item.id||item.draftId;
+      if(!key)continue;
+      const prev=owned[key]||{count:0};
+      const previousCount=Math.max(0,Number(prev.count)||0);
+      const nextCount=previousCount+1;
+      owned[key]={count:nextCount,...window.SnapPopBadges.nextProgress(previousCount),lastAt:observation.occurred_at};
+      badgeIds.push(key);
+      presentation.push({badgeId:key,previousCount,nextCount,at:observation.occurred_at});
+    }
+    applied.unshift({
+      event_id:observation.event_id,
+      occurred_at:observation.occurred_at,
+      badge_ids:badgeIds,
+      source_contract_id:observation.source_contract_id
+    });
+    await store.setMany([
+      ["badgeSourceObservations",ledger.slice(0,1000)],
+      ["badgeProgress",owned],
+      ["badgeAwardSourceEvents",applied.slice(0,1000)]
+    ]);
+    if(window.SnapPopBadgeAcquisition){
+      for(const entry of presentation){
+        try{window.SnapPopBadgeAcquisition.present(entry)}catch{}
+      }
+    }
     return observation;
   }catch{return null}
 }
@@ -99,27 +143,8 @@ async function recordBadgeEvent(family,payload={},source="SNAP_POP"){
     const event=window.SnapPopBadges.normalizeEvent({eventId:deps.uid("badgeevt"),family,source,payload,at:new Date().toISOString()});
     const ledger=await store.get("badgeEvents")||[];
     if(ledger.some(x=>x.eventId===event.eventId))return event;
-    ledger.unshift(event);
+    ledger.unshift({...event,disposition:"LEGACY_EVENT_ONLY",badgeAwardAuthorized:false});
     await store.set("badgeEvents",ledger.slice(0,1000));
-    const matches=window.SnapPopBadges.matchEvent(event);
-    if(matches.length){
-      const owned=await store.get("badgeProgress")||{};
-      const presentation=[];
-      for(const item of matches){
-        const key=item.id||item.draftId;
-        const prev=owned[key]||{count:0};
-        const previousCount=Math.max(0,Number(prev.count)||0);
-        const nextCount=previousCount+1;
-        owned[key]={count:nextCount,...window.SnapPopBadges.nextProgress(previousCount),lastAt:event.at};
-        presentation.push({badgeId:key,previousCount,nextCount,at:event.at});
-      }
-      await store.set("badgeProgress",owned);
-      if(window.SnapPopBadgeAcquisition){
-        for(const entry of presentation){
-          try{window.SnapPopBadgeAcquisition.present(entry)}catch{}
-        }
-      }
-    }
     return event;
   }catch{return null}
 }
@@ -146,7 +171,7 @@ async function renderBadgePreview(){
   </div>
   <div class="badgePreviewMeta"><b>${esc(model.title)}</b><span>${esc(model.tier)} · 별 ${model.stars}/5 · 획득/수여 아님</span><span>${model.themeExpression?.assetState==="UNRESOLVED"?"테마 표현 자산 검토 전":"검토된 테마 표현 자산"}</span></div>`;
 }
-return Object.freeze({contract:"SNAP_POP_BADGE_CONTROLLER_V2_SOURCE_OBSERVATION",proposeBadgeCandidateFromObservations,recordBadgeSourceObservation,recordBadgeBehaviorObservation,recordBadgeBehaviorEvidence,recordBadgeEvent,renderBadgePreview});
+return Object.freeze({contract:"SNAP_POP_BADGE_CONTROLLER_V3_SOURCE_ONLY_AWARD",proposeBadgeCandidateFromObservations,recordBadgeSourceObservation,recordBadgeBehaviorObservation,recordBadgeBehaviorEvidence,recordBadgeEvent,renderBadgePreview});
 }
 window.SnapPopBadgeController=Object.freeze({instance(deps){if(!singleton)singleton=create(deps);return singleton}});
 })();
