@@ -34,7 +34,21 @@ assert("active-working-draft-fails-closed",blocked);
 
 assert("reviewed-active-item-can-pass",
   guard.canActivate(
-    {id:"reviewed",status:"CANONICAL_ACTIVE",active:true},
+    {
+      id:"reviewed",
+      status:"CANONICAL_ACTIVE",
+      active:true,
+      activationApproved:true,
+      activationEvidenceRef:"human-approval:test",
+      sourceMatchers:[{
+        appId:"SNAP_POP",
+        eventFamily:"DEEP_THINKING",
+        behaviorCode:"DEEP_THINKING_PERSISTENCE",
+        sourceContractId:"SNAP_POP_REFLECTION_TO_COMPLETION_V1"
+      }],
+      dedupePolicy:"SOURCE_EVENT_ID",
+      reawardPolicy:"DISTINCT_SOURCE_EVENT_ONLY"
+    },
     {status:"ACTIVE_REVIEWED"}
   )===true
 );
