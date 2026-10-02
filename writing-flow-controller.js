@@ -47,17 +47,19 @@ async function advance(){
   await deps.recordBadgeBehaviorObservation("WRITING_EXPLORATION",{explicitCompletion:true,landmark:s.landmark,finalDraftChars:(s.draft||"").length,completionEventId},"SNAP_POP");
   const helpRefs=Array.isArray(s.badgeEvidence?.helpRequests)?s.badgeEvidence.helpRequests.filter(Boolean):[];
   if(helpRefs.length&&deps.recordBadgeSourceObservation){
+    const helpUseBehaviorCode=helpRefs.length===1?"MINIMAL_HINT_SOLVE":"HELP_USED_AND_RESUMED";
     await deps.recordBadgeSourceObservation({
       event_id:`badgehelpuse_${completionEventId}`,
       app_id:"SNAP_POP",
       event_family:"HELP_USE",
-      behavior_code:"HELP_USED_AND_RESUMED",
+      behavior_code:helpUseBehaviorCode,
       occurred_at:now,
       source_contract_id:"SNAP_POP_HINT_TO_COMPLETION_V1",
       evidence_ref:`completion:${completionEventId}`,
       explicit_child_action:true,
       payload:{
         helpEventRefs:helpRefs,
+        helpHintCount:helpRefs.length,
         completionEventId,
         recordId:record.id,
         landmark:s.landmark
