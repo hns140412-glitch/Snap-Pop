@@ -641,6 +641,19 @@
       const completeActive={...incompleteActive,activationEvidenceRef:"qa://approval",sourceContractId:"QA_SOURCE_V1",dedupePolicy:"SOURCE_EVENT_ID",reawardPolicy:"DISTINCT_SOURCE_EVENT"};
       assert("badge-complete-approved-contract-can-activate-in-nonworking-catalog",window.SnapPopBadgeCatalogGuard.canActivate(completeActive,{status:"CURRENT"})===true);
 
+      const sourceContract=window.TakyBadgeSourceObservation;
+      assert("badge-source-observation-runtime-present",!!sourceContract&&sourceContract.families.length===25);
+      const sourceObservation=sourceContract.normalize({
+        event_id:"qa-source-1",app_id:"SNAP_POP",event_family:"HELP_REQUEST",
+        behavior_code:"SELF_HELP_REQUEST",occurred_at:new Date().toISOString(),
+        source_contract_id:"SNAP_POP_HINT_REQUEST_V1",evidence_ref:"qa://hint",
+        explicit_child_action:true,payload:{landmark:"cave",step:1}
+      });
+      assert("badge-source-observation-is-observation-only",sourceObservation.disposition==="OBSERVATION_ONLY"&&sourceObservation.badge_award_authorized===false&&sourceObservation.economy_mutation_authorized===false&&sourceObservation.catalog_activation_allowed===false);
+      let sourceWeakBlocked=false;
+      try{sourceContract.normalize({event_id:"qa-source-weak",app_id:"SNAP_POP",event_family:"FOCUS",behavior_code:"LONG_FOCUS",source_contract_id:"QA",evidence_ref:"qa://weak",explicit_child_action:true,payload:{elapsedMs:99999}})}catch{sourceWeakBlocked=true}
+      assert("badge-source-observation-blocks-weak-proxy-only-input",sourceWeakBlocked===true);
+
       const evidenceContract=window.SnapPopBadgeEvidenceContract;
       const errorEvidence=evidenceContract.verify("ERROR_DISCOVERY",{explicitChildAction:true,evidenceRef:"runtime_error",sourceContractId:"SNAP_POP_CHILD_SELF_CORRECTION_V1",errorMarkedByChild:true,beforeArtifactRef:"before",afterArtifactRef:"after"});
       const thinkEvidence=evidenceContract.verify("DEEP_THINKING",{explicitChildAction:true,evidenceRef:"runtime_think",sourceContractId:"SNAP_POP_CHILD_REFLECTION_ARTIFACT_V1",childChoseToReflect:true,reflectionArtifactRef:"reflection"});
