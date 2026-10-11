@@ -1,10 +1,10 @@
 (() => {
   'use strict';
 
-  const BRIDGE_VERSION = '2026.09.07-a';
+  const BRIDGE_VERSION = '2026.09.10-c';
   const CONTEXT_KEY = 'snap_pop_shared_context_v1';
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
-  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','subject','concept_skill_target','learning_target_id'];
+  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','subject','concept_skill_target','learning_target_id','target_time_ms','session_start_at','paused_at','issue_ms'];
 
   const EventEnvelope = globalThis.TakyEventEnvelope;
   const ScopeGuard = globalThis.SnapReadyScopeGuardV01;
@@ -72,6 +72,7 @@
       goal_id: context.goal_id || null,
       task_id: context.task_id || null,
       lap_id: context.lap_id || null,
+      child_id: context.child_id || null,
       payload
     };
     let outbox = [];
@@ -156,7 +157,7 @@
         String(error?.message || 'CENTRAL_ENQUEUE_UNAVAILABLE')));
   }
 
-  function safeReturnUrl(taskState = 'PARTIAL') {
+  function safeReturnUrl(taskState = 'PARTIAL', eventIdValue = null) {
     const ready=trustedReturnTarget();
     if (!ready || !context.session_id || !context.task_id || !context.lap_id) return null;
     try {
@@ -165,6 +166,7 @@
       if (context.goal_id) url.searchParams.set('goal_id', context.goal_id);
       if (context.task_id) url.searchParams.set('task_id', context.task_id);
       if (context.lap_id) url.searchParams.set('lap_id', context.lap_id);
+      if (eventIdValue) url.searchParams.set('event_id', eventIdValue);
       url.searchParams.set('task_state', taskState);
       url.searchParams.set('from_app', 'snap-pop');
       return url.href;
@@ -175,13 +177,13 @@
 
   function returnToBase(taskState = 'PARTIAL', payload = {}) {
     const normalized = ['COMPLETED','PARTIAL','BLOCKED','HELP_NEEDED'].includes(taskState) ? taskState : 'PARTIAL';
-    emit(
+    const event = emit(
       normalized === 'COMPLETED' ? 'TASK_COMPLETED' :
       normalized === 'BLOCKED' ? 'TASK_BLOCKED' :
       normalized === 'HELP_NEEDED' ? 'HELP_NEEDED' : 'TASK_PARTIAL',
       payload
     );
-    const url = safeReturnUrl(normalized);
+    const url = safeReturnUrl(normalized, event.event_id);
     if (url) location.assign(url);
     else toast('베이스캠프 연결 주소가 없어요. 현재 표현 기록은 이 기기에 남아 있어요.');
   }
@@ -333,6 +335,7 @@
     const checks = {
       noLocalTimer: true,
       sessionIdPresentWhenLinked: !context.return_target || !!context.session_id,
+      goalIdPresentWhenLinked: !context.return_target || !!context.goal_id,
       taskIdPresentWhenLinked: !context.return_target || !!context.task_id,
       lapIdPresentWhenLinked: !context.return_target || !!context.lap_id,
       safeReturnTarget: !context.return_target || !!trustedReturnTarget(),
@@ -343,9 +346,37 @@
     return { ok:Object.values(checks).every(Boolean), checks };
   }
 
+  async function syncFamilyCharacterProfile() {
+    const memberId = context.child_id || null;
+    const adapter = window.SnapFamilyCharacterProfileAdapterV1;
+    if (!memberId || !adapter) return { state:'NO_BINDING' };
+    try {
+      const resolved = await adapter.resolve(memberId);
+      const p = resolved?.projection;
+      if (!p) return { state:'NO_PROFILE' };
+      let runtimeRef = null, assetSource = 'POINTER_ONLY';
+      const assetAdapter = window.SnapCharacterAssetReadAdapterV1;
+      if (assetAdapter?.status?.().available) {
+        try {
+          const read = await assetAdapter.resolveRead({ member_id:p.member_id, character_id:p.character_id, asset_ref:p.master_asset_ref });
+          runtimeRef = read?.read_url || null;
+          if (runtimeRef) assetSource = 'SIGNED_READ';
+        } catch {}
+      }
+      const runtimeProjection = { ...p, master_private_ref:p.master_asset_ref, master_asset_ref:runtimeRef, asset_resolution:assetSource };
+      try { await set('familyCharacterProfile', runtimeProjection); } catch {}
+      window.SnapFamilyCharacterProfile = Object.freeze(runtimeProjection);
+      try { window.dispatchEvent(new CustomEvent('taky-family-character-profile', { detail:{ ...runtimeProjection } })); } catch {}
+      return { state:runtimeRef?'BOUND':'BOUND_POINTER_ONLY', source:resolved.source, character_id:p.character_id };
+    } catch (error) {
+      return { state:'FAILED', error:String(error?.message || error) };
+    }
+  }
+
   function boot() {
     document.documentElement.dataset.snapBridge = BRIDGE_VERSION;
     bootContext();
+    void syncFamilyCharacterProfile();
     injectStyles();
     ensureBaseCampChip();
     ensureWordChip();
@@ -368,6 +399,7 @@
       flushCentralEvidenceOnce,
       closeCentralEvidence,
       centralEvidenceStatus,
+      syncFamilyCharacterProfile,
       validate
     });
   }
