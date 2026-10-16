@@ -1,14 +1,32 @@
 const assert=require('node:assert/strict');
 const {chromium}=require('D:/Git PWA/Play Camp/node_modules/playwright-core');
+const {spawn}=require('node:child_process');
+const path=require('node:path');
 
 (async()=>{
- const browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'});
+ // Start a fresh loopback fixture: the regression must not pass only because
+ // another process happened to serve port 4340 on this machine.
+ const root=path.resolve(__dirname,'..');
+ const fixture=path.resolve('D:/Git PWA/TAKY/ENFORCEMENT/family_qa_local_static_host.cjs');
+ const port=47000+Math.floor(Math.random()*1000);
+ const server=spawn(process.execPath,[fixture,root,String(port)],{windowsHide:true,stdio:['ignore','pipe','pipe']});
+ let browser;
+ try {
+   await new Promise((resolve,reject)=>{
+     const timer=setTimeout(()=>reject(new Error('Snap local QA host did not start')),8000);
+     server.stdout.on('data',bytes=>{
+       if(String(bytes).includes('TAKY_QA_FIXTURE_READY')){clearTimeout(timer);resolve();}
+     });
+     server.once('error',err=>{clearTimeout(timer);reject(err)});
+     server.once('exit',code=>{clearTimeout(timer);reject(new Error('Snap local QA host exited: '+code))});
+   });
+   browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'});
  const context=await browser.newContext({serviceWorkers:'block',viewport:{width:390,height:844}});
  const page=await context.newPage();
  const errors=[];
  page.on('pageerror',e=>errors.push('PAGE:'+String(e)));
  page.on('response',r=>{if(r.status()>=400&&!r.url().endsWith('/favicon.ico'))errors.push('HTTP_'+r.status()+':'+r.url())});
- await page.goto('http://127.0.0.1:4340/',{waitUntil:'domcontentloaded',timeout:12000});
+ await page.goto('http://127.0.0.1:'+port+'/',{waitUntil:'domcontentloaded',timeout:12000});
  await page.waitForFunction(()=>document.querySelectorAll('#landmarks .landmark').length===7,{timeout:10000});
 
  const mind=page.locator('#landmarks .landmark').filter({hasText:'마음 기상대'});
@@ -54,17 +72,31 @@ const {chromium}=require('D:/Git PWA/Play Camp/node_modules/playwright-core');
  // Negative control: merely repeating the same meaningless answer in an
  // expansion flow must not advance to completion/rewards as if validated.
  const expBefore=await page.evaluate(()=>get('exp'));
+ const promptAtStart=await page.locator('#question').innerText();
  await page.locator('#answer').fill('qzxqzx');
+ await page.locator('#nextBtn').click();
+ assert.equal(await page.locator('#question').innerText(),promptAtStart,
+   'Meaningless repeated characters advanced the initial expression stage');
+ assert.equal(await page.evaluate(()=>get('exp')),expBefore,
+   'Meaningless initial content earned EXP');
+ // A real short first idea remains allowed, but copying it into the next
+ // expansion step must request new detail instead of pretending learning.
+ const firstIdea='오늘 기억나는 건 운동장에서 친구를 만난 일이야.';
+ await page.locator('#answer').fill(firstIdea);
  await page.locator('#nextBtn').click();
  const promptAfterFirst=await page.locator('#question').innerText();
- await page.locator('#answer').fill('qzxqzx');
+ assert.notEqual(promptAfterFirst,promptAtStart,'Valid initial idea did not advance');
+ await page.locator('#answer').fill(firstIdea);
  await page.locator('#nextBtn').click();
- const promptAfterRepeat=await page.locator('#question').innerText();
- assert.equal(promptAfterRepeat,promptAfterFirst,
+ assert.equal(await page.locator('#question').innerText(),promptAfterFirst,
    'Repeated unchanged answer advanced the expression stage without new evidence');
  const expAfter=await page.evaluate(()=>get('exp'));
  assert.equal(expAfter,expBefore,'Unverified repeated text earned exploration EXP');
  assert.deepEqual(errors,[]);
  console.log(JSON.stringify({pass:true,landmarks:7,mind_diary_completed:true,record_provenance:true,secret_note_opened:true,errors:0},null,2));
- await context.close();await browser.close();
-})().catch(e=>{console.error(e);process.exit(1)});
+ await context.close();
+ } finally {
+   await browser?.close().catch(()=>{});
+   server.kill();
+ }
+})().catch(e=>{console.error(e);process.exitCode=1});
