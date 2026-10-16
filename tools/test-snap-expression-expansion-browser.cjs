@@ -51,6 +51,19 @@ const {chromium}=require('D:/Git PWA/Play Camp/node_modules/playwright-core');
  assert.match(secretQ,/기억나는 장면|단어 하나/);
  const steps=await page.locator('#steps').innerText();
  assert.match(steps,/기억 포착/);assert.match(steps,/무전기 탐문/);assert.match(steps,/비밀 글 완성/);
+ // Negative control: merely repeating the same meaningless answer in an
+ // expansion flow must not advance to completion/rewards as if validated.
+ const expBefore=await page.evaluate(()=>get('exp'));
+ await page.locator('#answer').fill('qzxqzx');
+ await page.locator('#nextBtn').click();
+ const promptAfterFirst=await page.locator('#question').innerText();
+ await page.locator('#answer').fill('qzxqzx');
+ await page.locator('#nextBtn').click();
+ const promptAfterRepeat=await page.locator('#question').innerText();
+ assert.equal(promptAfterRepeat,promptAfterFirst,
+   'Repeated unchanged answer advanced the expression stage without new evidence');
+ const expAfter=await page.evaluate(()=>get('exp'));
+ assert.equal(expAfter,expBefore,'Unverified repeated text earned exploration EXP');
  assert.deepEqual(errors,[]);
  console.log(JSON.stringify({pass:true,landmarks:7,mind_diary_completed:true,record_provenance:true,secret_note_opened:true,errors:0},null,2));
  await context.close();await browser.close();
