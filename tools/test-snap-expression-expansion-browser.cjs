@@ -57,6 +57,7 @@ const path=require('node:path');
  assert.equal(saved.latest.sourceRef,'1l-aFFOuDS0ECThDcgx8QDL0aswMw4Q6d');
  assert.equal(saved.latest.sourceSha256,'74e68d2e0de124b284c5bfbfb52505f5499c8b49ada706bf82ae04624dfbccd6');
  assert.deepEqual(saved.latest.answers,answers);
+ assert.equal(saved.latest.verificationStatus,'PARTICIPATION_STRUCTURE_ONLY_NOT_INDEPENDENT_LEARNING_MASTERY');
  assert.equal(saved.gem,1);
  assert.equal(saved.active,null);
 
@@ -75,6 +76,7 @@ const path=require('node:path');
  const promptAtStart=await page.locator('#question').innerText();
  await page.locator('#answer').fill('qzxqzx');
  await page.locator('#nextBtn').click();
+ await page.waitForTimeout(350); // async IndexedDB handler must settle before assessing no advance
  assert.equal(await page.locator('#question').innerText(),promptAtStart,
    'Meaningless repeated characters advanced the initial expression stage');
  assert.equal(await page.evaluate(()=>get('exp')),expBefore,
@@ -84,10 +86,12 @@ const path=require('node:path');
  const firstIdea='오늘 기억나는 건 운동장에서 친구를 만난 일이야.';
  await page.locator('#answer').fill(firstIdea);
  await page.locator('#nextBtn').click();
+ await page.waitForFunction(start=>document.querySelector('#question')?.textContent!==start,promptAtStart,{timeout:3000});
  const promptAfterFirst=await page.locator('#question').innerText();
  assert.notEqual(promptAfterFirst,promptAtStart,'Valid initial idea did not advance');
  await page.locator('#answer').fill(firstIdea);
  await page.locator('#nextBtn').click();
+ await page.waitForTimeout(350);
  assert.equal(await page.locator('#question').innerText(),promptAfterFirst,
    'Repeated unchanged answer advanced the expression stage without new evidence');
  const expAfter=await page.evaluate(()=>get('exp'));
