@@ -23,5 +23,18 @@ for(const [id,pack,ref,sha] of [
 for(const marker of ['function stepsFor(m)','steps=stepsFor(m)','expansionPack:m.expansionPack||null','sourceRef:m.sourceRef||null','sourceSha256:m.sourceSha256||null']){
  assert.ok(app.includes(marker),'app missing '+marker);
 }
-assert.ok(sw.includes("snap-pop-rev12-expression-expansion-v2"));
+// Retain expression expansion while binding the actually approved coastal
+// home background. Image identity is established by the existing visual ID.
+const path=require('node:path'),crypto=require('node:crypto');
+const index=fs.readFileSync('index.html','utf8');
+const styles=fs.readFileSync('styles.css','utf8');
+const coast=path.resolve('assets/world/snap_pop_beach_asset.png');
+assert.ok(fs.existsSync(coast),'approved coastal image must be in the app');
+assert.equal(crypto.createHash('sha256').update(fs.readFileSync(coast)).digest('hex'),
+  'f15af01680e2db44ef8af1dff749169f1082ddd15b3760a96da7ff2211eb8259');
+assert.ok(index.includes('class="scene" src="assets/world/snap_pop_beach_asset.png"'));
+assert.ok(sw.includes("snap-pop-rev12-approved-coast-source-20261023"));
+assert.ok(sw.includes("'assets/world/snap_pop_beach_asset.png'"));
+assert.ok(!sw.includes("'assets/world/golden_world_scene.jpg'"));
+assert.match(styles,/\.mapWorld:before,\.mapWorld:after\{content:none;display:none\}/);
 console.log(JSON.stringify({pass:true,canonical_preserved:5,expansion_added:2,total:7,engine:'EXISTING_3_STEP'},null,2));
