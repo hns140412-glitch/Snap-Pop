@@ -4,7 +4,7 @@
   const BRIDGE_VERSION = '2026.09.10-c';
   const CONTEXT_KEY = 'snap_pop_shared_context_v1';
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
-  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','target_time_ms','session_start_at','paused_at','issue_ms'];
+  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','crew_event','from_app','word','word_context','child_id','school_stage','subject','concept_skill_target','learning_target_id','literacy_flow','academic_vocab_term','academic_vocab_level','reading_material_ondok','target_time_ms','session_start_at','paused_at','issue_ms'];
 
   const iso = () => new Date().toISOString();
   const eventId = () => `snap_event_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
@@ -26,6 +26,9 @@
       const value = p.get(key);
       if (value) incoming[key] = value;
     });
+    if (!incoming.crew_event && window.SnapExplorerCrewInboundCrewEvent) {
+      incoming.crew_event = String(window.SnapExplorerCrewInboundCrewEvent);
+    }
     return incoming;
   }
 
@@ -33,7 +36,7 @@
 
   function bootContext() {
     const incoming = readIncomingContext();
-    if (incoming.session_id || incoming.task_id || incoming.word) {
+    if (incoming.session_id || incoming.task_id || incoming.word || incoming.crew_event) {
       context = { ...context, ...incoming, received_at: iso(), task_completed: false };
       persistContext(context);
     }
@@ -50,11 +53,20 @@
       task_id: context.task_id || null,
       lap_id: context.lap_id || null,
       child_id: context.child_id || null,
-      payload
+      payload: {
+        ...payload,
+        ...((context.subject || context.concept_skill_target || context.learning_target_id) ? { learning_scope: {
+          ...(context.subject ? { subject:context.subject } : {}),
+          ...(context.concept_skill_target ? { concept_skill_target:context.concept_skill_target } : {}),
+          ...(context.learning_target_id ? { learning_target_id:context.learning_target_id } : {})
+        }} : {})
+      }
     };
     let outbox = [];
     try { outbox = JSON.parse(sessionStorage.getItem(OUTBOX_KEY) || '[]') || []; } catch {}
     sessionStorage.setItem(OUTBOX_KEY, JSON.stringify([...outbox, event].slice(-120)));
+    // Same-tab consumers need the canonical event too; preserve outbox/postMessage ownership.
+    try { window.dispatchEvent(new CustomEvent('taky-learning-event', { detail:event })); } catch {}
     try {
       if (window.opener && !window.opener.closed && context.return_target) {
         window.opener.postMessage({ type:'TAKY_LEARNING_EVENT', event }, new URL(context.return_target).origin);
@@ -73,6 +85,7 @@
       if (context.task_id) url.searchParams.set('task_id', context.task_id);
       if (context.lap_id) url.searchParams.set('lap_id', context.lap_id);
       if (eventIdValue) url.searchParams.set('event_id', eventIdValue);
+      if (context.crew_event) url.searchParams.set('crew_event', context.crew_event);
       url.searchParams.set('task_state', taskState);
       url.searchParams.set('from_app', 'snap-pop');
       return url.href;
@@ -92,6 +105,14 @@
     const url = safeReturnUrl(normalized, event.event_id);
     if (url) location.assign(url);
     else toast('베이스캠프 연결 주소가 없어요. 현재 표현 기록은 이 기기에 남아 있어요.');
+  }
+
+  function requestGuideRadio(reason = 'guide_support', payload = {}) {
+    return emit('GUIDE_RADIO_REQUEST', { reason, ...payload });
+  }
+
+  function requestImaginationCloud(reason = 'concept_support', payload = {}) {
+    return emit('IMAGINATION_CLOUD_REQUEST', { reason, ...payload });
   }
 
   async function waitForDB() {
@@ -118,7 +139,7 @@
     style.textContent = `
       .snap-bridge-chip{position:fixed;right:14px;z-index:9998;border:0;border-radius:999px;padding:11px 15px;font-weight:900;box-shadow:0 10px 28px rgba(0,0,0,.22)}
       #snapBaseCampChip{bottom:calc(82px + env(safe-area-inset-bottom));background:#fff6df;color:#173d38}
-      #snapWordChip{left:14px;right:auto;bottom:calc(132px + env(safe-area-inset-bottom));background:#173d38;color:#fff;max-width:calc(100vw - 28px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}`;
+      #snapWordChip{left:140px;right:auto;bottom:calc(132px + env(safe-area-inset-bottom));background:#173d38;color:#fff;max-width:calc(100vw - 217px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;pointer-events:none}`;
     document.head.appendChild(style);
   }
 
@@ -240,6 +261,8 @@
       context: () => ({ ...context }),
       emit,
       returnToBase,
+      requestGuideRadio,
+      requestImaginationCloud,
       syncFamilyCharacterProfile,
       validate
     });
