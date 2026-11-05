@@ -9,8 +9,13 @@
   const WORLD_BINDING=Object.freeze({
     world_state:'BASE_WORLD',
     theme_expression:'GOLDEN_WORLD',
-    runtime_asset:'assets/world/golden_world_scene.jpg',
-    review_source:'docs/UI_REVIEW_REV10.md',
+    // 2026-11-05 merge: golden_world_scene.jpg was recorded (2026-10-17) as differing
+    // from the approved source; the approved original coast image is bound instead.
+    runtime_asset:'assets/world/snap_pop_beach_asset.png',
+    approved_visual_id:'TAKY-LAF-SNAP-HOME-COAST-20260927-A',
+    approved_sha256:'f15af01680e2db44ef8af1dff749169f1082ddd15b3760a96da7ff2211eb8259',
+    review_source:'TAKY-ASSETS/registry/known-approved-provenance.json',
+    superseded_runtime_asset:'assets/world/golden_world_scene.jpg',
     lineage_source:'assets/reference/approved_visual_source.png',
     review_status:'REVIEWED_RUNTIME_CANDIDATE',
     release_pass:false,

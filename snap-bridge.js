@@ -1,10 +1,13 @@
 (() => {
   'use strict';
 
-  const BRIDGE_VERSION = '2026.09.07-a';
+  const BRIDGE_VERSION = '2026.11.05-merged';
   const CONTEXT_KEY = 'snap_pop_shared_context_v1';
   const OUTBOX_KEY = 'snap_pop_shared_outbox_v1';
-  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','from_app','word','word_context','child_id','subject','concept_skill_target','learning_target_id'];
+  const PARAMS = ['session_id','goal_id','task_id','lap_id','return_target','crew_event','from_app','word','word_context','child_id','subject','concept_skill_target','learning_target_id','school_stage','literacy_flow','academic_vocab_term','academic_vocab_level','reading_material_ondok','target_time_ms','session_start_at','paused_at','issue_ms'];
+  // Display/continuity-only fields (crew handoff, literacy flow, timing). They
+  // never grant identity, scope or return trust; the Ready scope guard owns those.
+  const AUX_FIELDS = ['crew_event','school_stage','literacy_flow','academic_vocab_term','academic_vocab_level','reading_material_ondok','target_time_ms','session_start_at','paused_at','issue_ms'];
 
   const EventEnvelope = globalThis.TakyEventEnvelope;
   const ScopeGuard = globalThis.SnapReadyScopeGuardV01;
@@ -31,7 +34,19 @@
       const value = p.get(key);
       if (value) incoming[key] = value;
     });
+    if (!incoming.crew_event && window.SnapExplorerCrewInboundCrewEvent) {
+      incoming.crew_event = String(window.SnapExplorerCrewInboundCrewEvent);
+    }
     return incoming;
+  }
+
+  function pickAux(raw) {
+    const out = {};
+    AUX_FIELDS.forEach(key => {
+      const value = String(raw?.[key] ?? '').trim();
+      if (value) out[key] = value;
+    });
+    return out;
   }
 
   let context = readStoredContext();
@@ -40,13 +55,15 @@
   function bootContext() {
     const incoming = readIncomingContext();
     const params=new URLSearchParams(location.search);
-    const hasIncoming=PARAMS.some(key=>params.has(key));
+    const hasIncoming=PARAMS.some(key=>params.has(key)) || !!incoming.crew_event;
     // NEVER merge old run fields into a different new run. A child_id is a
     // continuity label, not identity proof; Ready must validate on receipt.
     const result=ScopeGuard.prepareContext(incoming,context,trustedReadyTargets,
       {incoming:hasIncoming,now:iso()});
     handoffRejection=result.ok?null:result.reason;
-    context=result.context;
+    // Aux fields follow the same run: dropped when the handoff is rejected.
+    const aux=result.ok?pickAux(hasIncoming?incoming:context):{};
+    context={...result.context,...aux};
     persistContext(context);
   }
 
@@ -56,12 +73,20 @@
   }
 
   function emit(type, payload = {}) {
+    const scopedPayload = {
+      ...payload,
+      ...((context.subject || context.concept_skill_target || context.learning_target_id) ? { learning_scope: {
+        ...(context.subject ? { subject:context.subject } : {}),
+        ...(context.concept_skill_target ? { concept_skill_target:context.concept_skill_target } : {}),
+        ...(context.learning_target_id ? { learning_target_id:context.learning_target_id } : {})
+      }} : {})
+    };
     const envelope = EventEnvelope.create({
       source:'snap-pop',
       event_type:type,
       occurred_at:iso(),
       correlation_id:context.session_id || context.task_id || null,
-      payload
+      payload:scopedPayload
     });
     const event = {
       ...envelope,
@@ -72,11 +97,14 @@
       goal_id: context.goal_id || null,
       task_id: context.task_id || null,
       lap_id: context.lap_id || null,
-      payload
+      child_id: context.child_id || null,
+      payload:scopedPayload
     };
     let outbox = [];
     try { outbox = JSON.parse(sessionStorage.getItem(OUTBOX_KEY) || '[]') || []; } catch {}
     sessionStorage.setItem(OUTBOX_KEY, JSON.stringify([...outbox, event].slice(-120)));
+    // Same-tab consumers need the canonical event too; preserve outbox/postMessage ownership.
+    try { window.dispatchEvent(new CustomEvent('taky-learning-event', { detail:event })); } catch {}
     try {
       const ready=trustedReturnTarget();
       if (window.opener && !window.opener.closed && ready) {
@@ -156,7 +184,7 @@
         String(error?.message || 'CENTRAL_ENQUEUE_UNAVAILABLE')));
   }
 
-  function safeReturnUrl(taskState = 'PARTIAL') {
+  function safeReturnUrl(taskState = 'PARTIAL', eventIdValue = null) {
     const ready=trustedReturnTarget();
     if (!ready || !context.session_id || !context.task_id || !context.lap_id) return null;
     try {
@@ -165,6 +193,8 @@
       if (context.goal_id) url.searchParams.set('goal_id', context.goal_id);
       if (context.task_id) url.searchParams.set('task_id', context.task_id);
       if (context.lap_id) url.searchParams.set('lap_id', context.lap_id);
+      if (eventIdValue) url.searchParams.set('event_id', eventIdValue);
+      if (context.crew_event) url.searchParams.set('crew_event', context.crew_event);
       url.searchParams.set('task_state', taskState);
       url.searchParams.set('from_app', 'snap-pop');
       return url.href;
@@ -175,15 +205,23 @@
 
   function returnToBase(taskState = 'PARTIAL', payload = {}) {
     const normalized = ['COMPLETED','PARTIAL','BLOCKED','HELP_NEEDED'].includes(taskState) ? taskState : 'PARTIAL';
-    emit(
+    const event = emit(
       normalized === 'COMPLETED' ? 'TASK_COMPLETED' :
       normalized === 'BLOCKED' ? 'TASK_BLOCKED' :
       normalized === 'HELP_NEEDED' ? 'HELP_NEEDED' : 'TASK_PARTIAL',
       payload
     );
-    const url = safeReturnUrl(normalized);
+    const url = safeReturnUrl(normalized, event.event_id);
     if (url) location.assign(url);
     else toast('베이스캠프 연결 주소가 없어요. 현재 표현 기록은 이 기기에 남아 있어요.');
+  }
+
+  function requestGuideRadio(reason = 'guide_support', payload = {}) {
+    return emit('GUIDE_RADIO_REQUEST', { reason, ...payload });
+  }
+
+  function requestImaginationCloud(reason = 'concept_support', payload = {}) {
+    return emit('IMAGINATION_CLOUD_REQUEST', { reason, ...payload });
   }
 
   async function waitForDB() {
@@ -210,7 +248,7 @@
     style.textContent = `
       .snap-bridge-chip{position:fixed;right:14px;z-index:9998;border:0;border-radius:999px;padding:11px 15px;font-weight:900;box-shadow:0 10px 28px rgba(0,0,0,.22)}
       #snapBaseCampChip{bottom:calc(82px + env(safe-area-inset-bottom));background:#fff6df;color:#173d38}
-      #snapWordChip{left:14px;right:auto;bottom:calc(132px + env(safe-area-inset-bottom));background:#173d38;color:#fff;max-width:calc(100vw - 28px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}`;
+      #snapWordChip{left:140px;right:auto;bottom:calc(132px + env(safe-area-inset-bottom));background:#173d38;color:#fff;max-width:calc(100vw - 217px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;pointer-events:none}`;
     document.head.appendChild(style);
   }
 
@@ -343,9 +381,37 @@
     return { ok:Object.values(checks).every(Boolean), checks };
   }
 
+  async function syncFamilyCharacterProfile() {
+    const memberId = context.child_id || null;
+    const adapter = window.SnapFamilyCharacterProfileAdapterV1;
+    if (!memberId || !adapter) return { state:'NO_BINDING' };
+    try {
+      const resolved = await adapter.resolve(memberId);
+      const p = resolved?.projection;
+      if (!p) return { state:'NO_PROFILE' };
+      let runtimeRef = null, assetSource = 'POINTER_ONLY';
+      const assetAdapter = window.SnapCharacterAssetReadAdapterV1;
+      if (assetAdapter?.status?.().available) {
+        try {
+          const read = await assetAdapter.resolveRead({ member_id:p.member_id, character_id:p.character_id, asset_ref:p.master_asset_ref });
+          runtimeRef = read?.read_url || null;
+          if (runtimeRef) assetSource = 'SIGNED_READ';
+        } catch {}
+      }
+      const runtimeProjection = { ...p, master_private_ref:p.master_asset_ref, master_asset_ref:runtimeRef, asset_resolution:assetSource };
+      try { await set('familyCharacterProfile', runtimeProjection); } catch {}
+      window.SnapFamilyCharacterProfile = Object.freeze(runtimeProjection);
+      try { window.dispatchEvent(new CustomEvent('taky-family-character-profile', { detail:{ ...runtimeProjection } })); } catch {}
+      return { state:runtimeRef?'BOUND':'BOUND_POINTER_ONLY', source:resolved.source, character_id:p.character_id };
+    } catch (error) {
+      return { state:'FAILED', error:String(error?.message || error) };
+    }
+  }
+
   function boot() {
     document.documentElement.dataset.snapBridge = BRIDGE_VERSION;
     bootContext();
+    void syncFamilyCharacterProfile();
     injectStyles();
     ensureBaseCampChip();
     ensureWordChip();
@@ -362,6 +428,9 @@
         authenticated:false}),
       emit,
       returnToBase,
+      requestGuideRadio,
+      requestImaginationCloud,
+      syncFamilyCharacterProfile,
       requestRubricReview,
       emitLearningOutcome,
       configureCentralEvidence,

@@ -10,16 +10,9 @@ button,textarea{font:inherit}button{cursor:pointer}
 .round{width:38px;height:38px;border:1px solid #d6bd7555;border-radius:14px;background:#ffffff0b;color:#f3dfa3;display:grid;place-items:center}.round img{width:22px;height:22px}
 main{padding-top:calc(var(--top) + env(safe-area-inset-top));padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom))}
 .view{display:none;min-height:calc(100svh - var(--top) - var(--nav) - env(safe-area-inset-top) - env(safe-area-inset-bottom))}.view.active{display:block}
-.mapWorld{height:calc(100svh - var(--top) - var(--nav) - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:610px;position:relative;overflow:hidden;background:linear-gradient(#81b6ce 0 25%,#6d996e 25% 67%,#294e3a 67%)}
-.scene{position:absolute;left:0;right:0;top:0;width:100%;height:61%;object-fit:cover;object-position:45% 50%;filter:saturate(.98) contrast(1.03)}
-.mapWorld:before{content:"";position:absolute;z-index:1;left:-15%;right:-15%;bottom:0;height:58%;background:
-radial-gradient(ellipse at 50% 18%,#729f72 0 18%,transparent 19%),
-radial-gradient(ellipse at 18% 35%,#4f7a52 0 26%,transparent 27%),
-radial-gradient(ellipse at 82% 36%,#557f56 0 25%,transparent 26%),
-linear-gradient(#61895d,#355a43 58%,#244534);clip-path:polygon(0 20%,18% 7%,35% 19%,51% 0,70% 18%,88% 7%,100% 24%,100% 100%,0 100%)}
-.mapWorld:after{content:"";position:absolute;z-index:2;inset:42% 0 0;background:
-linear-gradient(118deg,transparent 0 39%,#c5d9bcaa 40% 44%,transparent 45%),
-linear-gradient(68deg,transparent 0 59%,#b8ceb0a0 60% 64%,transparent 65%);opacity:.68}
+.mapWorld{height:calc(100svh - var(--top) - var(--nav) - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:610px;position:relative;overflow:hidden;background:#64bce4}
+.scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;filter:none}
+.mapWorld:before,.mapWorld:after{content:none;display:none}
 .atmo{position:absolute;z-index:3;inset:0;background:linear-gradient(180deg,transparent 42%,#12372a18 62%,#062b25a8 100%);pointer-events:none}
 .landmark{position:absolute;z-index:8;transform:translate(-50%,-50%);border:1px solid #ceb66d;background:#0a3b32e8;color:#fff8dd;border-radius:999px;padding:8px 11px;box-shadow:0 8px 20px #001c1645;font-family:"Noto Serif CJK KR","Batang",serif;font-weight:700;font-size:11px;white-space:nowrap}
 .landmark:before{content:"";position:absolute;left:50%;top:-7px;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:#e6c86f;border:2px solid #0a3b32}
@@ -36,7 +29,7 @@ radial-gradient(circle at 80% -5%,#fffaf0,#f3e7cc 50%,#e3d2ad 100%);position:rel
 .cards{display:grid;gap:9px}.card,.gemRow,.setting,.wish,.gemHold,.growthCard,.paper{background:#fff9ebd8;border:1px solid #cbb27a;border-radius:19px;box-shadow:0 8px 24px #6b533218}
 .card,.gemRow{padding:13px}.card b,.gemRow b,.setting b,.wish b{font-family:"Noto Serif CJK KR","Batang",serif}.card p{font-size:12px;line-height:1.5;margin:6px 0;color:#4d6358}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:15px 0}.steps span{text-align:center;font-size:9.5px;padding:9px 2px;border:1px solid #d3c09a;border-radius:10px;background:#ecdfc3}.steps .on{background:#0c4036;color:#fff}.steps .done{background:#d4e1c9}
-.paper{padding:15px}.paper h2{font-family:"Noto Serif CJK KR","Batang",serif;font-size:20px;line-height:1.35;margin:11px 0 4px}.paper>p{font-size:12px;color:#607067;margin:0 0 10px}.guideLine{display:flex;flex-direction:column;gap:3px;color:#465c51;font-size:11px}.guideLine b{font-family:"Noto Serif CJK KR","Batang",serif}
+.paper{padding:15px}.paper h2{font-family:"Noto Serif CJK KR","Batang",serif;font-size:20px;line-height:1.35;margin:11px 0 4px}.paper>p{font-size:12px;color:#607067;margin:0 0 10px}.guideLine{display:flex;align-items:center;gap:10px;color:#465c51;font-size:11px;min-height:38px}.guideLine b{font-family:"Noto Serif CJK KR","Batang",serif}.crewCopy{display:flex;flex-direction:column;gap:3px;min-width:0}.crewVisual{width:58px;height:72px;flex:0 0 58px;position:relative;overflow:hidden;border-radius:14px;background:#efe5cf;border:1px solid #d6c49f}.crewVisual>img,.crewVisual>#crewVisualComposite{width:100%;height:100%;display:block;object-fit:contain}.crewVisual>#crewVisualComposite{position:relative}
 textarea{width:100%;min-height:190px;resize:vertical;border:1px solid #d9c9a8;border-radius:14px;padding:13px;background:#fffdf7;color:#18372e;font-size:14px;line-height:1.6;outline:none}textarea:focus{border-color:#6d8d6d;box-shadow:0 0 0 3px #6d8d6d24}
 .tools{display:flex;gap:8px;align-items:center;margin-top:10px}.tools button{display:flex;align-items:center;gap:6px}.tools img{width:19px;height:19px}.voice{margin-left:auto;border:1px solid #c5a859;border-radius:999px;background:#0c4036;color:#fff0b9;padding:11px 13px;font-weight:800;display:flex;gap:6px;align-items:center}.voice img{width:20px;height:20px}
 .gemHold{padding:14px;display:flex;gap:12px;align-items:center;margin-bottom:13px}.gemVoid{width:54px;height:54px;border:2px dashed #9f8751;border-radius:15px;background:#efe5cf}.gemHold>div:last-child,.gemRow>div,.wish>div,.setting>div{display:flex;flex-direction:column;gap:4px}.gemHold span,.gemRow span,.wish span,.setting span{font-size:10.5px;color:#637168}.gemRow{display:flex;justify-content:space-between;align-items:center}

@@ -64,7 +64,8 @@ assert(!snapRubric.includes('auto_verification:true'));
 console.log('PASS: Snap exposes human-rubric review requests and forbids automatic production verification');
 
 const visualBinding=require('../snap-reviewed-visual-binding-v1.js');
-assert.equal(visualBinding.WORLD_BINDING.runtime_asset,'assets/world/golden_world_scene.jpg');
+assert.equal(visualBinding.WORLD_BINDING.runtime_asset,'assets/world/snap_pop_beach_asset.png');
+assert.equal(visualBinding.WORLD_BINDING.approved_visual_id,'TAKY-LAF-SNAP-HOME-COAST-20260927-A');
 assert.equal(visualBinding.WORLD_BINDING.review_status,'REVIEWED_RUNTIME_CANDIDATE');
 assert.equal(visualBinding.WORLD_BINDING.release_pass,false);
 assert.equal(visualBinding.CREW_BINDING.review_status,'HOLD_NO_APPROVED_INDIVIDUAL_ASSET');
@@ -74,7 +75,7 @@ assert(visualBinding.FORBIDDEN_DIRECT_RUNTIME_ASSETS.includes('assets/character/
 assert(visualBinding.FORBIDDEN_DIRECT_RUNTIME_ASSETS.includes('assets/guide/maltipoo_guide_hd.jpg'));
 assert.equal(visualBinding.CROSS_APP_VISUAL_IMPORT_POLICY.ready_core6_auto_import,false);
 assert(snapIndex.includes('snap-reviewed-visual-binding-v1.js'));
-assert(snapIndex.includes('assets/world/golden_world_scene.jpg'));
+assert(snapIndex.includes('assets/world/snap_pop_beach_asset.png'));
 assert(!snapIndex.includes('src="assets/reference/approved_visual_source.png"'));
 const resolved=visualBinding.resolve({world_state:'BASE_WORLD',theme_expression:'GOLDEN_WORLD',crew_visual:'STATIC_REFERENCE_LINEAGE_ONLY'});
 assert.equal(resolved.ok,true);
