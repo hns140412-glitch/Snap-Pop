@@ -1,6 +1,9 @@
 
 const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
-let db, marks=[], selected=null, lastMain="map";
+const RELEASE=globalThis.SnapPopReleaseDescriptor;
+if(!globalThis.TakyReleaseContract?.validateDescriptor?.(RELEASE)?.ok)throw new Error('INVALID_SNAP_RELEASE_DESCRIPTOR');
+let db, marks=[], selected=null, lastMain="map", snapActiveExploration=false;
+globalThis.SnapPopPwaSafePoint=()=>!snapActiveExploration;
 globalThis.SnapExplorerCrewInboundCrewEvent=new URLSearchParams(location.search).get('crew_event')||'';
 const crewAppConsumer=(()=>{try{return globalThis.TakyExplorerCrewAppConsumerV2?.create?.({app_id:'snap-pop',storage:localStorage,locationHref:location.href,replaceUrl:u=>history.replaceState(null,'',u)})||null}catch(e){console.warn('crew app consumer unavailable',e);return null}})();
 const TURNAROUND_FRONT_APPROVED=Object.freeze({
@@ -60,11 +63,11 @@ const STEPS=[["생각 꺼내기","무엇이 먼저 떠올랐어?","완벽한 문
 function stepsFor(m){const x=Array.isArray(m?.steps)&&m.steps.length===3?m.steps:null;return x&&x.every(s=>Array.isArray(s)&&s.length>=3&&s.slice(0,3).every(v=>String(v||"").trim()))?x:STEPS}
 function openDB(){return new Promise((ok,no)=>{const r=indexedDB.open("snap_pop_rev10",1);r.onupgradeneeded=()=>r.result.createObjectStore("state");r.onsuccess=()=>{db=r.result;ok()};r.onerror=()=>no(r.error)})}
 function get(k){return new Promise(ok=>{const r=db.transaction("state").objectStore("state").get(k);r.onsuccess=()=>ok(r.result)})}
-function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>ok();r.onerror=()=>no(r.error)})}
+function set(k,v){return new Promise((ok,no)=>{const r=db.transaction("state","readwrite").objectStore("state").put(v,k);r.onsuccess=()=>{if(k==="active"){snapActiveExploration=!!v;if(!snapActiveExploration)window.dispatchEvent(new CustomEvent("snap-pop-safe-point"))}ok()};r.onerror=()=>no(r.error)})}
 function toast(t){$("#toast").textContent=t;$("#toast").classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>$("#toast").classList.remove("show"),1800)}
 function show(id){$$(".view").forEach(v=>v.classList.remove("active"));$("#"+id).classList.add("active");const sub=["settings","shop"].includes(id);$("#nav").hidden=sub;if(!sub)lastMain=id;$$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.view===id));scrollTo(0,0);if(id==="records")renderRecords();if(id==="gems")renderGems();if(id==="growth")renderGrowth()}
 function html(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-async function init(){await openDB();marks=await fetch("data/landmarks.json").then(r=>r.json());renderLandmarks();await updateStatus();renderRecords();renderGems();renderGrowth();const active=await get("active");if(active)renderExplore(active);await renderCrewCompanion(active?"SNAP_EXPLORE":"SNAP_HOME")}
+async function init(){await openDB();marks=await fetch("data/landmarks.json").then(r=>r.json());renderLandmarks();await updateStatus();renderRecords();renderGems();renderGrowth();const active=await get("active");snapActiveExploration=!!active;if(active)renderExplore(active);else window.dispatchEvent(new CustomEvent("snap-pop-safe-point"));await renderCrewCompanion(active?"SNAP_EXPLORE":"SNAP_HOME")}
 function renderLandmarks(){const host=$("#landmarks");host.innerHTML="";marks.forEach(m=>{const b=document.createElement("button");b.className="landmark";b.textContent=m.title;b.style.left=m.x+"%";b.style.top=m.y+"%";b.onclick=async()=>{selected=m;$$(".landmark").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");const a=await get("active"),g=await get("gems")||{};$("#selTitle").textContent=m.title;$("#selDesc").textContent=m.desc;$("#selProgress").textContent="진행 "+(a?.landmark===m.id?(a.step||0):0)+" / 3";$("#selShard").textContent="보석 조각 "+((g[m.id]||0)%6)+" / 6";$("#selection").hidden=false};host.appendChild(b)})}
 $("#startBtn").onclick=async()=>{if(!selected)return;let s=await get("active");if(!s||s.landmark!==selected.id)s={landmark:selected.id,step:0,answers:["","",""]};await set("active",s);renderExplore(s);show("explore");if($("#autoRead").checked){const q=stepsFor(selected)[s.step]||stepsFor(selected)[0];speak(q[1]+" "+q[2])}}
 function renderExplore(s){const m=marks.find(x=>x.id===s.landmark)||marks[0],steps=stepsFor(m),i=Math.min(2,s.step||0);$("#exploreTitle").textContent="탐험 진행 · "+m.title;$("#question").textContent=steps[i][1];$("#hint").textContent=steps[i][2];$("#answer").value=s.answers[i]||"";$("#guideLine").textContent=["처음엔 작은 조각 하나면 충분해.","오, 그 생각 옆에 뭐가 더 숨어 있을까?","이제 네 문장으로 딱 묶어보자."][i];$("#nextBtn").textContent=i===2?"탐험 완료":"다음 단계";$("#steps").innerHTML=steps.map((x,n)=>`<span class="${n===i?"on":n<i?"done":""}">${n+1}. ${html(x[0])}</span>`).join("");void renderCrewCompanion("SNAP_EXPLORE_STEP_"+i)}
@@ -113,5 +116,4 @@ globalThis.SnapExplorerCrewAuthorityConsumer?.boot?.({
   radio:document.getElementById('homeRadio')
 });
 void renderCrewCompanion('SNAP_BOOT');
-if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
 init().catch(e=>{console.error(e);toast("앱 데이터를 준비하지 못했어요.")});

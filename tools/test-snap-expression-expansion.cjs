@@ -33,7 +33,9 @@ assert.ok(fs.existsSync(coast),'approved coastal image must be in the app');
 assert.equal(crypto.createHash('sha256').update(fs.readFileSync(coast)).digest('hex'),
   'f15af01680e2db44ef8af1dff749169f1082ddd15b3760a96da7ff2211eb8259');
 assert.ok(index.includes('class="scene" src="assets/world/snap_pop_beach_asset.png"'));
-assert.ok(sw.includes("snap-pop-rev12-approved-coast-source-20261023"));
+// Cache name is release-derived on main (const C='snap-pop:'+RELEASE.release_id).
+assert.ok(sw.includes("const C='snap-pop:'+RELEASE.release_id"));
+assert.ok(fs.readFileSync('snap-release-v01.js','utf8').includes("release_id:'snap-pop-rev12-approved-coast-source-20261023'"));
 assert.ok(sw.includes("'assets/world/snap_pop_beach_asset.png'"));
 assert.ok(!sw.includes("'assets/world/golden_world_scene.jpg'"));
 assert.match(styles,/\.mapWorld:before,\.mapWorld:after\{content:none;display:none\}/);
