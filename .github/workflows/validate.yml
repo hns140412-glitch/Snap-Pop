@@ -31,7 +31,7 @@ jobs:
       - name: Validate Snap human-rubric verification adapter
         run: node tests/snap-rubric-verifier.test.js
       - name: Validate Ready return scope guard
-        run: node tests/snap-ready-scope-guard.test.js
+        run: node tests/snap-ready-scope-guard.test.js && node tests/snap-basic-skills-landmarks.test.js
       - name: Install Playwright
         run: |
           npm install --no-save @playwright/test@1.55.0
