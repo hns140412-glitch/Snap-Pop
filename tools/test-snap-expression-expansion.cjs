@@ -35,7 +35,7 @@ assert.equal(crypto.createHash('sha256').update(fs.readFileSync(coast)).digest('
 assert.ok(index.includes('class="scene" src="assets/world/snap_pop_beach_asset.png"'));
 // Cache name is release-derived on main (const C='snap-pop:'+RELEASE.release_id).
 assert.ok(sw.includes("const C='snap-pop:'+RELEASE.release_id"));
-assert.ok(fs.readFileSync('snap-release-v01.js','utf8').includes("release_id:'snap-pop-rev12-approved-coast-source-20261023'"));
+assert.ok(fs.readFileSync('snap-release-v01.js','utf8').includes("release_id:'snap-pop-rev12-learning-link-20261114'"));
 assert.ok(sw.includes("'assets/world/snap_pop_beach_asset.png'"));
 assert.ok(!sw.includes("'assets/world/golden_world_scene.jpg'"));
 assert.match(styles,/\.mapWorld:before,\.mapWorld:after\{content:none;display:none\}/);
