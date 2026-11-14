@@ -1,0 +1,17 @@
+/* 가족 학습 연결 sheet — Snap parchment tokens (deep teal / paper / gold), matches the 설정 view. */
+.sp-ll{position:fixed;inset:0;z-index:10000;display:flex;align-items:flex-end;justify-content:center;background:rgba(6,47,43,.55)}
+.sp-ll[hidden]{display:none}
+.sp-ll-sheet{width:min(520px,100%);max-height:92vh;overflow:auto;box-sizing:border-box;padding:18px 18px calc(18px + env(safe-area-inset-bottom));border-radius:24px 24px 0 0;background:var(--paper,#f4ecd8);color:var(--ink,#17372e);border:1px solid #cbb27a;box-shadow:0 -12px 40px rgba(6,47,43,.3)}
+@media (min-width:760px){.sp-ll{align-items:center}.sp-ll-sheet{border-radius:24px}}
+.sp-ll-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sp-ll-head h2{margin:0;font-size:20px;font-family:"Noto Serif CJK KR","Batang",serif;color:var(--deep,#062f2b)}
+.sp-ll-x{min-height:44px;padding:0 14px;border:0;border-radius:12px;background:var(--paper2,#e8dcc0);color:var(--deep,#062f2b);font:inherit;font-weight:800}
+.sp-ll-lead{margin:10px 0 14px;font-size:14px;line-height:1.55;color:#4d6358}
+.sp-ll-login{display:grid;gap:10px}
+.sp-ll-btn{min-height:48px;padding:0 16px;border:1px solid var(--gold,#b4954b);border-radius:14px;background:#fff9eb;color:var(--deep,#062f2b);font:inherit;font-size:16px;font-weight:800}
+.sp-ll-btn[hidden],.sp-ll-ghost[hidden]{display:none}
+.sp-ll-ghost{min-height:44px;border:0;background:none;color:#637168;font:inherit;text-decoration:underline}
+.sp-ll-status,.sp-ll-sync{margin:0;font-size:13px;color:#4d6358}
+.sp-ll-sync{margin-top:12px;font-weight:800}
+.sp-ll-choices{display:grid;gap:8px}
+#snapLearnLink #familyGoogleTarget:empty{display:none}
