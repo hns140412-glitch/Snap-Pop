@@ -75,7 +75,7 @@ function boot(){
  try{addSettingsRow()}catch{}
  const F=window.TakyFamilySigninV1;
  if(!F){renderSync('로그인 모듈을 불러오지 못했어요.');return}
- signin=F.createFamilySignin();
+ signin=F.createFamilySignin({viaCentral:true});
  window.addEventListener('taky-central-auth-ready',()=>void onBound());
  window.addEventListener('taky-central-auth-cleared',onCleared);
  signin.mount();
